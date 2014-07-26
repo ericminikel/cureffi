@@ -3,8 +3,8 @@ title: CureFFI.org
 twitter_username: cureffi
 github_username: ericminikel
 description: "Eric Vallabh Minikel's blog"
-baseurl: "http://ericminikel.github.io/cureffi/"
-url: "http://ericminikel.github.io/cureffi/"
+baseurl: "http://ericminikel.github.io/cureffi"
+url: "http://ericminikel.github.io/cureffi"
 
 # Build settings
 markdown: kramdown
