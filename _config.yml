@@ -1,8 +1,14 @@
 # Site settings
+<<<<<<< HEAD
 title: CureFFI.org
 twitter_username: cureffi
 github_username: ericminikel
 description: "CureFFI.org"
+=======
+title: Your awesome title
+email: your-email@domain.com
+description: "Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description."
+>>>>>>> 9da9edf3d2db95e121ed35be08b57a61ccf1f175
 baseurl: ""
 url: "http://yourdomain.com"
 
