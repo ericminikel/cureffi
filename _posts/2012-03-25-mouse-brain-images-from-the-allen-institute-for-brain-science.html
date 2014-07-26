@@ -1,0 +1,21 @@
+---
+layout: post
+title: "Mouse brain images from the Allen Institute for Brain Science"
+author: ericminikel
+date: 2012-03-25 23:34:46
+---
+<p>Thinking more about <a href="/2012/03/24/jain-2010-machines-that-learn-to-segment-images-a-crucial-technology-for-connectomics/">my post yesterday on machine learning for image segmentation</a>, I&#8217;m excited to implement a machine learning approach to figuring out how to recognize astrocytes.  At a minimum, I could automate the trying out of all the different options in CellProfiler, which would already be helpful and might well find something that works.  And I could also try implementing a search over convolutional networks (CNs) like Jain et al describe.  And hopefully in the process I&#8217;ll learn a lot about machine learning, about image segmentation and gain some more familiarity with CellProfiler in particular.</p>
+<p>One challenge is I don&#8217;t yet have access to a large volume of high-resolution images of prion-diseased and healthy brain tissue.  I need an image set to practice on and get started learning this stuff.  Yesterday I was forwarded a link to some data hosted at the <a href="http://www.brain-map.org/">Allen Institute for Brain Science</a>, which self-describes as &#8220;A growing collection of online public resources integrating extensive gene expression and neuroanatomical data, complete with a novel suite of search and viewing tools.&#8221;  For instance I <em>think</em> what I&#8217;m looking at <a href="http://mouse.brain-map.org/search/show?page_num=0&amp;page_size=20&amp;no_paging=false&amp;exact_match=false&amp;search_term=prnp&amp;search_type=gene">here</a> is a rotatable 3D map of where PRNP is expressed in the mouse brain.  It looks like they may also have the kind of image data I&#8217;m looking for.  <a href="http://developingmouse.brain-map.org/data/compare/ivt.html?ispopup=true&amp;include=100041106,100093189,100033940,100085365,100054845,100075307">These</a> I think are cross sectional images of where PRNP is expressed (I&#8217;m still not clear how these images were taken&#8211; is this with GFP swapped in at the PRNP locus??)  On the web the images are all hidden in composites where you can only download the current field of view &#8212; to download whole images at high resolution you have to go through their <a href="http://community.brain-map.org/confluence/download/attachments/525267/TheABAAPI_Final.pdf?version=4">API</a>.  After a bit of fiddling I was able to find the images for PRNP expression through this series of requests:</p>
+<p>Search for PRNP</p>
+<p>http://mouse.brain-map.org/aba/api/gene/search?term=PRNP</p>
+<p>Get imageseries list for PRNP</p>
+<p>http://mouse.brain-map.org/aba/api/gene/Prnp.xml</p>
+<p>Get list of images in each imageseries for PRNP</p>
+<p>http://mouse.brain-map.org/aba/api/imageseries/1405.xml</p>
+<p>http://mouse.brain-map.org/aba/api/imageseries/1406.xml</p>
+<p>Get any particular image (whole image, full resolution) from the imageseries (just swap in &amp;path= any downloadImagePath from the xml docs above):</p>
+<p>http://mouse.brain-map.org/aba/api/image?zoom=-1&#038;path=/external/aibssan/production4/Prnp_Baylor_7917/zoomify/primary/null/Prnp_44_null_B.aff</p>
+<p>Easy enough&#8211;that actually got me a whole 4MB image.  Here&#8217;s what these images look like (this is a lower res version):</p>
+<p><a href="/wp-content/uploads/2012/03/allen_sample_image.jpg"><img class="alignnone size-medium wp-image-493" title="allen_sample_image" src="/wp-content/uploads/2012/03/allen_sample_image-300x275.jpg"/></a></p>
+<p>&nbsp;</p>
+<p>It&#8217;s a jpg, which is a little odd&#8211; aren&#8217;t images from microscopy usually stored in a lossless format?  In any event, the quality is quite good.  I still need to figure out what I&#8217;m looking at though.  This seems to be a whole brain, in which case I would think the little dots are too big to be individual cells?</p>

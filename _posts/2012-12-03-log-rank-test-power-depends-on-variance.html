@@ -1,0 +1,107 @@
+---
+layout: post
+title: "Log-rank test power depends on variance"
+author: ericminikel
+date: 2012-12-03 01:00:20
+---
+<p>&#8230;assuming the times of the underlying events are normally distributed.</p>
+<p>I brought this issue up in <a href="/2012/11/30/power-analysis-for-mouse-studies-using-the-t-test-vs-log-rank-test/">my last biostatistics post</a>, comparing the log-rank vs. t tests for calculating power for mouse studies.  My claim is that, for mouse studies where all the mice are expected to show symptoms in the course of the study, at times that are approximately normally distributed, you can&#8217;t very well use the log-rank test to calculate power.  It will give you outlandish answers implying you need 17,000 mice to have 90% power, and that&#8217;s because the log-rank power calculation implicitly assumes an underlying Poisson process, and thus an exponential distribution of times to events.  Instead, what you need is a test where the power depends on the variance in your actual mouse model, which is probably more normal than it is exponential.</p>
+<p>Last night I connected with @a who pointed out that there are lots of ways to get confused about this:<a href="http://en.wikipedia.org/wiki/Logrank_test#Asymptotic_distribution"> the log-rank <em>test statistic</em> has variance 1 regardless of the data</a>&#8211; does that mean variance doesn&#8217;t matter in the log-rank test??  And the log-rank test converts everything to ordinal data, which makes it less clear exactly how variance of the original data comes into play.  But intuitively you can prove to yourself that variance does still matter.  Imagine control and treatment groups with normally distributed ages of onset, with different means&#8211; the treatment group lives slightly longer.  If variance = 0, all of the control mice will get sick before any of the treatment mice do; as variance rises, the amount of the <a href="http://en.wikipedia.org/wiki/Probability_density_function">PDF</a>s that overlap will rise and so the times to onset in the two groups will become more intercalated.</p>
+<p>But at @a&#8217;s suggestion, in this post I am going to use a simulation to show that, if the times to &#8220;events&#8221; for mice are normally distributed, the actual power of a log-rank test to detect a difference <em>does</em> depend on variance in that normal distribution.</p>
+<p>First, I assume that all mice will have an event eventually—there is no <a href="http://en.wikipedia.org/wiki/Censoring_(statistics)">censoring</a>.  Therefore I&#8217;m going to wrap the requisite code from the R <code>survival</code> library in my own function to make it easier to call:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">install.packages(<span style="color: #ba2121;">"survival"</span>)
+library(survival)
+simplesurvtest <span style="color: #666666;">=</span> <span style="color: #008000; font-weight: bold;">function</span>(vec1,vec2) { <span style="color: #408080; font-style: italic;"># vec1, vec2: lists of survival times of mice in control and treatment groups</span>
+    days <span style="color: #666666;">=</span> c(vec1,vec2) <span style="color: #408080; font-style: italic;"># make a single vector with times for both mice</span>
+    group <span style="color: #666666;">=</span> c(rep(<span style="color: #666666;">0</span>,length(vec1)),rep(<span style="color: #666666;">1</span>,length(vec2))) <span style="color: #408080; font-style: italic;"># make a matching vector indicating control/treatment status</span>
+    status <span style="color: #666666;">=</span> rep(<span style="color: #666666;">1</span>,length(vec1)<span style="color: #666666;">+</span>length(vec2)) <span style="color: #408080; font-style: italic;"># "status" = 1 = "had an event" for all mice</span>
+    mice <span style="color: #666666;">=</span> data.frame(days,status,group) <span style="color: #408080; font-style: italic;"># convert to data frame</span>
+    <span style="color: #008000; font-weight: bold;">return</span> (survdiff(Surv(days,status<span style="color: #666666;">==1</span>)~group,data <span style="color: #666666;">=</span> mice)) <span style="color: #408080; font-style: italic;"># return log-rank test results</span>
+}</pre>
+</div>
+<p>Next, I assume times to event for both groups are normally distributed, the control group&#8217;s normal distribution has mean <code>m</code> (say, 120 days) and there is an effect size <code>es</code> of the drug such that the treatment group&#8217;s mean is <code>m*(1+es)</code> (say, for a 10% delay in onset you get 120*1.1 = 132 days).  I&#8217;ll also assume the control and treatment groups&#8217; normal distributions have the same standard deviation <code>sd</code>, which I think of as a property of the mouse model itself.</p>
+<p>Thus for <code>n</code> mice in each of the two groups, and statistical significance at the alpha threshold desired, and a given <code>m</code>, <code>es</code>, and <code>sd</code>, I&#8217;ll run <code>niter</code> iterations and calculate power as the fraction of times that a significant result was found.  So this function will do all that for me:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">logrankpowersim <span style="color: #666666;">=</span> <span style="color: #008000; font-weight: bold;">function</span>(n,m,es,sd,niter,alpha) {
+    numsignificant <span style="color: #666666;">=</span> <span style="color: #666666;">0</span> <span style="color: #408080; font-style: italic;"># number of iterations in which a significant difference was found</span>
+    <span style="color: #008000; font-weight: bold;">for</span> (iter in <span style="color: #666666;">1</span>:niter) {
+        control <span style="color: #666666;">=</span> rnorm(n<span style="color: #666666;">=</span>n,m<span style="color: #666666;">=</span>m,sd<span style="color: #666666;">=</span>sd) <span style="color: #408080; font-style: italic;"># generate normal distribution for control group</span>
+	    treatment <span style="color: #666666;">=</span> rnorm(n<span style="color: #666666;">=</span>n,m<span style="color: #666666;">=</span>m<span style="color: #666666;">*</span>(<span style="color: #666666;">1+</span>es),sd<span style="color: #666666;">=</span>sd) <span style="color: #408080; font-style: italic;"># generate normal dist for treatment group</span>
+	    a <span style="color: #666666;">=</span> simplesurvtest(control,treatment) <span style="color: #408080; font-style: italic;"># do a log-rank test</span>
+	    p <span style="color: #666666;">=</span> <span style="color: #666666;">1-</span>pchisq(a$chisq,df<span style="color: #666666;">=1</span>) <span style="color: #408080; font-style: italic;"># extract p value from log-rank test</span>
+	    <span style="color: #008000; font-weight: bold;">if</span> (p <span style="color: #666666;">&lt;</span> alpha) { <span style="color: #408080; font-style: italic;"># check if it is significant at the desired threshold</span>
+	        numsignificant <span style="color: #666666;">=</span> numsignificant <span style="color: #666666;">+</span> <span style="color: #666666;">1</span>
+	    }
+	}
+	power <span style="color: #666666;">=</span> numsignificant<span style="color: #666666;">/</span>niter
+	<span style="color: #008000; font-weight: bold;">return</span> (power)
+}</pre>
+</div>
+<p>So to run a test on a few different standard deviations, do something like this:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">m <span style="color: #666666;">=</span> <span style="color: #666666;">120</span>
+es <span style="color: #666666;">=</span> <span style="color: #666666;">.10</span>
+n <span style="color: #666666;">=</span> <span style="color: #666666;">10</span>
+alpha <span style="color: #666666;">=</span> <span style="color: #666666;">.05</span>
+niter <span style="color: #666666;">=</span> <span style="color: #666666;">100</span>
+sds <span style="color: #666666;">=</span> c(<span style="color: #666666;">4</span>,<span style="color: #666666;">8</span>,<span style="color: #666666;">20</span>,<span style="color: #666666;">40</span>) <span style="color: #408080; font-style: italic;"># list of standard deviations in days to onset that you want to test</span>
+<span style="color: #008000; font-weight: bold;">for</span> (sd in sds) {
+    cat(logrankpowersim(n<span style="color: #666666;">=</span>n,m<span style="color: #666666;">=</span>m,es<span style="color: #666666;">=</span>es,sd<span style="color: #666666;">=</span>sd,niter<span style="color: #666666;">=</span>niter,alpha<span style="color: #666666;">=</span>alpha)) <span style="color: #408080; font-style: italic;"># cat() in R is like echo...</span>
+	cat(<span style="color: #ba2121;">"\n"</span>) <span style="color: #408080; font-style: italic;"># except it doesn't add its own line breaks <img src="/wp-includes/images/smilies/icon_smile.gif" alt=":)" class="wp-smiley"/> </span>
+}</pre>
+</div>
+<p>And here are results:</p>
+<p><table style="width:100%; " class="easy-table easy-table-default " border="0">
+<thead>
+<tr><th>sd</th>
+<th>power</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>4 days</td>
+<td>100%</td>
+</tr>
+
+<tr><td>8 days</td>
+<td>78%</td>
+</tr>
+
+<tr><td>20 days</td>
+<td>31%</td>
+</tr>
+
+<tr><td>40 days</td>
+<td>7%</td>
+</tr>
+</tbody></table></p>
+<p>Sure enough: more variance means less power.</p>
+<p>Moreover, in support of my claim that the <a href="https://stat.ethz.ch/pipermail/r-help/2008-February/153203.html">log-rank power calcuation</a> assumes an exponential distribution, I can re-create the result I got in the last post, of ~90% power with 17,530 mice for a 6% effect size at alpha = .01, if I do use an exponential distribution:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">logrankpowersim_exp <span style="color: #666666;">=</span> <span style="color: #008000; font-weight: bold;">function</span>(n,m,es,niter,alpha) {
+    numsignificant <span style="color: #666666;">=</span> <span style="color: #666666;">0</span> <span style="color: #408080; font-style: italic;"># number of iterations in which a significant difference was found</span>
+    <span style="color: #008000; font-weight: bold;">for</span> (iter in <span style="color: #666666;">1</span>:niter) {
+        control <span style="color: #666666;">=</span> rexp(n<span style="color: #666666;">=</span>n,rate<span style="color: #666666;">=1/</span>m) <span style="color: #408080; font-style: italic;"># generate exponential distribution for control group</span>
+	    treatment <span style="color: #666666;">=</span> rexp(n<span style="color: #666666;">=</span>n,rate<span style="color: #666666;">=1/</span>(m<span style="color: #666666;">*</span>(<span style="color: #666666;">1+</span>es))) <span style="color: #408080; font-style: italic;"># generate exponential dist for treatment group</span>
+	    a <span style="color: #666666;">=</span> simplesurvtest(control,treatment) <span style="color: #408080; font-style: italic;"># do a log-rank test</span>
+	    p <span style="color: #666666;">=</span> <span style="color: #666666;">1-</span>pchisq(a$chisq,df<span style="color: #666666;">=1</span>) <span style="color: #408080; font-style: italic;"># extract p value from log-rank test</span>
+	    <span style="color: #008000; font-weight: bold;">if</span> (p <span style="color: #666666;">&lt;</span> alpha) { <span style="color: #408080; font-style: italic;"># check if it is significant at the desired threshold</span>
+	        numsignificant <span style="color: #666666;">=</span> numsignificant <span style="color: #666666;">+</span> <span style="color: #666666;">1</span>
+	    }
+	}
+	power <span style="color: #666666;">=</span> numsignificant<span style="color: #666666;">/</span>niter
+	<span style="color: #008000; font-weight: bold;">return</span> (power)
+}
+
+m <span style="color: #666666;">=</span> <span style="color: #666666;">120</span>
+es <span style="color: #666666;">=</span> <span style="color: #666666;">.06</span>
+n <span style="color: #666666;">=</span> <span style="color: #666666;">17530/2</span>
+alpha <span style="color: #666666;">=</span> <span style="color: #666666;">.01</span>
+niter <span style="color: #666666;">=</span> <span style="color: #666666;">1000</span>
+logrankpowersim_exp(n<span style="color: #666666;">=</span>n,m<span style="color: #666666;">=</span>m,es<span style="color: #666666;">=</span>es,niter<span style="color: #666666;">=</span>niter,alpha<span style="color: #666666;">=</span>alpha)</pre>
+</div>
+<p>Result: .898</p>
+<p>This supports my claim that the log-rank test power calculation assumes the underlying data are exponentially distributed.</p>
+<p>In sum, the log-rank test is not the right model to assume when you are doing a power calculation, if your actual data are normally distributed and uncensored, which is usually the case in studies of prion-infected mice.  In fact, even if the data have a moderate amount of deviation from normality and there is going to be some censoring, I would still say you should calculate power with a t test, because the log-rank power calculation is just <em>so</em> far off.</p>
+<p>The log-rank test is perfect for studies of people, where not everyone will have an &#8220;event&#8221; and so huge samples are needed to find significance.  But if it took thousands of mice to get a significant result, people wouldn&#8217;t use mouse models. We design mouse models to be quick and reliable so that we can study a complex disease in a short amount of time at a manageable cost.  That ends up meaning you&#8217;ll get something closer to a normal distribution.</p>
+<p>Does this discredit the use of the log-rank test for mouse studies?  Not totally: the test actually <em>does</em> give reasonable results, it&#8217;s more just the power calculation I have a problem with.  The test arguably still has its place for its ability to handle censoring.  That said, after spending some more time thinking about the nature of the underlying data, I am becoming somewhat more of a proponent of the t test for these studies.</p>

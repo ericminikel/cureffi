@@ -1,0 +1,201 @@
+---
+layout: post
+title: "Properties of CNS drugs vs. all FDA-approved drugs"
+author: ericminikel
+date: 2013-10-04 18:41:56
+---
+<p><strong>motivation</strong></p>
+<p>Armed with <a title="List of FDA-approved drugs and CNS drugs with SMILES" href="/2013/10/04/list-of-fda-approved-drugs-and-cns-drugs-with-smiles/">my new list</a> of FDA-approved drugs and annotation as to which are CNS drugs, I set out to characterize the chemical space of CNS drugs as another exercise to learn a bit of cheminformatics.</p>
+<p>I didn&#8217;t address this in my last post, but the method I used for defining CNS drugs basically amounts to whether they are licensed for a CNS indication. This isn&#8217;t a perfect proxy for blood brain barrier permeability, which is the property I am really interested in.  There are false negatives &#8211; plenty of drugs cross the blood-brain barrier yet aren&#8217;t licensed for any CNS-related purpose (say, simvastatin).  <a href="http://www.linkedin.com/pub/emily-ricq/1/b01/26b">Emily Ricq</a> pointed out there might also be false positives &#8211; drugs with a CNS indication that actually stay in the periphery and act <em>in trans</em>, though I haven&#8217;t found an example yet.  And of course, my list probably isn&#8217;t complete.  Still, my hope is that this list of CNS drugs might provide a pretty decent outline of what chemical space BBB-permeable drugs tend to occupy.</p>
+<p><strong>background &amp; setup</strong></p>
+<p>To do this, I set out to calculate a number of properties of each of the drugs on my list &#8211; CNS and otherwise &#8211; and then plot and examine the ranges of different properties along with some principal components.</p>
+<p>As Rajarshi Guha pointed out last time, there&#8217;s no need to include every imaginable descriptor, and just using a handful of key physicochemical properties can be enough for a good analysis.</p>
+<p>In casting around for a list of properties to start from, I noticed each <a href="http://zinc.docking.org/">ZINC</a> catalog entry also has a link for &#8220;Properties&#8221;, a small tab-delimited text file (the extension is .xls but they&#8217;re not actually Excel files) with the ZINC id, SMILES and nine physicochemical properties.  These are defined in the ZINC paper [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC1360656/">Irwin &amp; Stoichet 2005</a>] Here&#8217;s what each of those properties means:</p>
+<ul>
+<li><code>MWT</code>: <a href="http://en.wikipedia.org/wiki/Molecular_mass">molecular weight</a>.</li>
+<li><code>LogP</code>: <a href="http://en.wikipedia.org/wiki/Partition_coefficient">partition coefficient</a>, a measure of relative solubility in a hydrophobic vs. hydrophilic solvent, usually octanol and water.  True logP must be determined empirically, but can be <a href="http://en.wikipedia.org/wiki/Partition_coefficient#Prediction">predicted computationally</a> by several different methods.  According to [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC1360656/">Irwin &amp; Stoichet 2005</a>] the values in ZINC are predicted using the fragment-based method employed by <a href="http://www.molinspiration.com/">molinspiration</a> [<a href="http://www.ncbi.nlm.nih.gov/pubmed/11020286/">Ertl 2000</a>] and are similar to xLogP by [<a href="http://pubs.acs.org/doi/pdf/10.1021/ci960169p">Wang 1997</a>].</li>
+<li><code>Desolv_apolar</code>: apolar desolvation energy (kcal/mol).  There weren&#8217;t any really good web resources on this concept &#8211; the best I could find was <a href="http://sanjuan.cs.uwindsor.ca/ppipaw/index.php/help/documentation/59">this</a>.  It appears to be the energy required to remove solvent from the compound, i.e. the reduction in free energy achieved by dissolving the compound.  In this case, the solvent is assumed to be apolar.</li>
+<li><code>Desolv_polar</code>: apolar desolvation energy (kcal/mol).  Presumably same as above but with a polar solvent.</li>
+<li><code>HBD</code>: number of hydrogen bond donors (i.e. parts willing to be the positively charged or H side of a putative hydrogen bond).  According to <a href="http://en.wikipedia.org/wiki/Lipinski's_rule_of_five">Lipinski&#8217;s Rule of Five</a> a drug ought to have no more than five.</li>
+<li><code>HBA</code>: number of hydrogen bond acceptors (i.e. parts willing to be the negatively charged side of a putative hydrogen bond).  According to <a href="http://en.wikipedia.org/wiki/Lipinski's_rule_of_five">Lipinski&#8217;s Rule of Five</a> a drug ought to have no more than ten.</li>
+<li><code>tPSA</code>: topological <a href="http://en.wikipedia.org/wiki/Polar_surface_area">polar surface area</a>. A measure of polarity and of hydrophilicity.  <span style="color: #333333; font-style: normal; line-height: 24px;">tPSA is a major determinant of blood brain barrier penetrance; </span><a style="font-style: normal; line-height: 24px;" href="/2013/09/23/a-quick-intro-to-chemical-informatics-in-r/#comment-452">Armin Giese has cited</a><span style="color: #333333; font-style: normal; line-height: 24px;"> a rule of thumb that this should be &lt; 80 or 90 Å² for a drug to penetrate the CNS.</span></li>
+<li><code>Charge</code>: net charge of the molecule</li>
+<li><code>NRB</code>: number of rotatable bonds.  This describes the conformational flexibility of the molecule and is also a determinant of drug-likeness and oral bioavailability.  A <a href="http://en.wikipedia.org/wiki/Lipinski's_rule_of_five#Variants">non-standard variant</a> of Lipinski&#8217;s Rule of Five holds that a drug ought to have fewer than ten rotatable bonds [<a href="http://www.ncbi.nlm.nih.gov/pubmed/12036371">Veber 2002</a>].</li>
+</ul>
+<p>In addition, the ZINC paper also lists several other properties which don&#8217;t appear in the downloadable Properties files but which nevertheless sound important [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC1360656/">Irwin &amp; Stoichet 2005</a>]:</p>
+<ul>
+<li>number of chiral centers</li>
+<li>number of chiral double bonds (E/Z isomerism)</li>
+<li>number of rigid fragments</li>
+</ul>
+<p>Unfortunately not all of these items appear to be available in the <a href="http://pele.farmbio.uu.se/nightly-1.2.x/dnames.html">list of CDK descriptors</a>.  The relevant descriptors I was able to find are:</p>
+<ul>
+<li>Weight.MW</li>
+<li>XLogP.XLogP*</li>
+<li>TPSA.TopoPSA</li>
+<li>HBondAcceptorCount.nHBAcc</li>
+<li>HBondDonorCount.nHBDon</li>
+<li>RotatableBondsCount.nRotB</li>
+</ul>
+<p>Weirdly, net charge is not one of the available descriptors, but this is trivial to calculate from SMILES: total number of <code>+</code> minus total number of <code>-</code>. Still this leaves me without the desolvation energies, number of chiral carbons and double bonds, and number of rigid fragments.  If anyone has ideas of how to get these, let me know.</p>
+<p>Then there&#8217;s the matter of which logP prediction algorithm to use.  As noted above, ZINC&#8217;s method is most similar to xLogP.  I was at first put off from using XLogP.XLogP because calling this descriptor on <a href="http://en.wikipedia.org/wiki/Aminophylline">aminophylline</a> threw a null pointer exception (<a href="/wp-content/uploads/2013/10/xlogp-nullpointerexception.r.txt">minimum script to reproduce error</a>).  I tried using ALogP.ALogP instead, but this often (38 = 2.2% of <a title="List of FDA-approved drugs and CNS drugs with SMILES" href="/2013/10/04/list-of-fda-approved-drugs-and-cns-drugs-with-smiles/">1691 FDA-approved drugs</a>) returns NA values, which I would need some way to handle for principal components analysis.  Then I read <a href="http://blog.rguha.net/?p=896">this excellent post</a> by Rajarshi Guha ground-truthing different logP prediction algorithms, which stated that aLogP was vastly inferior to xLogP.  So finally I returned to xLogP and just threw out molecules that caused errors, using <a href="http://stackoverflow.com/questions/8093914/skip-to-next-value-of-loop-upon-error-in-r-trycatch">the same try-catch logic</a> I was using to skip unparseable SMILES strings.</p>
+<p>In the end, here&#8217;s the code I wound up with:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">setwd(<span style="color: #ba2121;">'c:/sci/037cinf/analysis/1'</span>)
+options(stringsAsFactors<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">FALSE</span>)
+library(stringr)
+library(rcdk)
+
+<span style="color: #408080; font-style: italic;"># /wp-content/uploads/2013/10/drugs.txt</span>
+fda_drugs <span style="color: #666666;">=</span> read.table(<span style="color: #ba2121;">'c:/sci/037cinf/analysis/1/drugs.txt'</span>,sep<span style="color: #666666;">=</span><span style="color: #ba2121;">'\t'</span>,header<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">TRUE</span>)
+
+<span style="color: #408080; font-style: italic;"># get list of molecular descriptors, minus #28 IPLearning which makes R hang</span>
+descriptors <span style="color: #666666;">=</span> get.desc.names(type<span style="color: #666666;">=</span><span style="color: #ba2121;">'all'</span>)[<span style="color: #666666;">-28</span>]
+
+<span style="color: #408080; font-style: italic;"># note these indices are _after_ eliminating the original item #28</span>
+descriptors_to_use <span style="color: #666666;">=</span> descriptors <span style="color: #408080; font-style: italic;"># respectively HBA, HBD, NRB, TPSA, MWT, XLOGP</span>
+compounds <span style="color: #666666;">=</span> data.frame(id<span style="color: #666666;">=</span>integer(),name<span style="color: #666666;">=</span>character(),cpdset<span style="color: #666666;">=</span>character(),smiles<span style="color: #666666;">=</span>character(),
+                       hba<span style="color: #666666;">=</span>integer(),hbd<span style="color: #666666;">=</span>integer(),nrb<span style="color: #666666;">=</span>integer(),
+                       tpsa<span style="color: #666666;">=</span>numeric(),mwt<span style="color: #666666;">=</span>numeric(),xlogp<span style="color: #666666;">=</span>numeric(),
+                       charge<span style="color: #666666;">=</span>integer())
+starttime <span style="color: #666666;">=</span> Sys.time()
+<span style="color: #008000; font-weight: bold;">for</span> (i in <span style="color: #666666;">1</span>:dim(fda_drugs)[<span style="color: #666666;">1</span>]) {
+  <span style="color: #008000; font-weight: bold;">if</span> (fda_drugs$smiles[i] <span style="color: #666666;">==</span> <span style="color: #ba2121;">""</span>) { next }
+  <span style="color: #408080; font-style: italic;"># try catch logic from http://stackoverflow.com/questions/8093914/skip-to-next-value-of-loop-upon-error-in-r-trycatch</span>
+  parse_smiles_error <span style="color: #666666;">=</span> tryCatch ( 
+    { cpd_object <span style="color: #666666;">=</span> parse.smiles(fda_drugs$smiles[i]) },
+    error <span style="color: #666666;">=</span> <span style="color: #008000; font-weight: bold;">function</span>(e) e
+  )
+  <span style="color: #008000; font-weight: bold;">if</span>(inherits(parse_smiles_error,<span style="color: #ba2121;">"error"</span>)) next
+  id <span style="color: #666666;">=</span> i
+  name <span style="color: #666666;">=</span> fda_drugs$generic_name[i]
+  <span style="color: #008000; font-weight: bold;">if</span>(fda_drugs$cns_drug[i]) {
+    cpdset <span style="color: #666666;">=</span> <span style="color: #ba2121;">'fda_cns'</span>
+  } <span style="color: #008000; font-weight: bold;">else</span> {
+    cpdset <span style="color: #666666;">=</span> <span style="color: #ba2121;">'fda_non_cns'</span>
+  }
+  smiles <span style="color: #666666;">=</span> fda_drugs$smiles[i]
+  hba <span style="color: #666666;">=</span> eval.desc(cpd_object, descriptors_to_use[<span style="color: #666666;">1</span>])
+  hbd <span style="color: #666666;">=</span> eval.desc(cpd_object, descriptors_to_use[<span style="color: #666666;">2</span>])
+  nrb <span style="color: #666666;">=</span> eval.desc(cpd_object, descriptors_to_use[<span style="color: #666666;">3</span>])
+  tpsa <span style="color: #666666;">=</span> eval.desc(cpd_object, descriptors_to_use[<span style="color: #666666;">4</span>])
+  mwt <span style="color: #666666;">=</span> eval.desc(cpd_object, descriptors_to_use[<span style="color: #666666;">5</span>])
+  xlogp_error <span style="color: #666666;">=</span> tryCatch( 
+    <span style="color: #408080; font-style: italic;"># throws null pointer exception on aminophylline</span>
+    { xlogp <span style="color: #666666;">=</span> eval.desc(cpd_object, descriptors_to_use[<span style="color: #666666;">6</span>]) },
+    error <span style="color: #666666;">=</span> <span style="color: #008000; font-weight: bold;">function</span>(e) e
+  )
+  <span style="color: #008000; font-weight: bold;">if</span>(inherits(xlogp_error,<span style="color: #ba2121;">"error"</span>)) next <span style="color: #408080; font-style: italic;"># just skip any molecules that throw null pointed exceptions on xlogp</span>
+  <span style="color: #408080; font-style: italic;"># tried this, now discarded: # alogp = eval.desc(cpd_object, descriptors_to_use[7])[1]</span>
+  nplus <span style="color: #666666;">=</span> str_count(smiles,<span style="color: #ba2121;">"[+]"</span>) <span style="color: #408080; font-style: italic;"># + is not a metacharacter inside [] in POSIX regular expressions, see http://farazmahmood.wordpress.com/2008/11/10/regular-expression-escaping-meta-characters-within-character-classes/</span>
+  nminus <span style="color: #666666;">=</span> str_count(smiles,<span style="color: #ba2121;">"[-]"</span>)
+  charge <span style="color: #666666;">=</span> nplus <span style="color: #666666;">-</span> nminus
+  named_row <span style="color: #666666;">=</span> cbind(id,name,cpdset,smiles,hba,hbd,nrb,tpsa,mwt,xlogp,charge)
+  rownames(named_row) <span style="color: #666666;">=</span> id
+  compounds <span style="color: #666666;">=</span> rbind(compounds,named_row)
+}
+elapsed <span style="color: #666666;">=</span> Sys.time() <span style="color: #666666;">-</span> starttime
+elapsed
+colnames(compounds) <span style="color: #666666;">=</span> c(<span style="color: #ba2121;">"id"</span>,<span style="color: #ba2121;">"name"</span>,<span style="color: #ba2121;">"cpdset"</span>,<span style="color: #ba2121;">"smiles"</span>,<span style="color: #ba2121;">"hba"</span>,<span style="color: #ba2121;">"hbd"</span>,<span style="color: #ba2121;">"nrb"</span>,<span style="color: #ba2121;">"tpsa"</span>,<span style="color: #ba2121;">"mwt"</span>,<span style="color: #ba2121;">"xlogp"</span>,<span style="color: #ba2121;">"charge"</span>)</pre>
+</div>
+<p><strong>analysis</strong></p>
+<p>I began by plotting the molecular weight vs. xLogP:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">plot(compounds$mwt, compounds$xlogp, pch<span style="color: #666666;">=19</span>, col<span style="color: #666666;">=</span><span style="color: #ba2121;">'#999999'</span>,
+     xlab<span style="color: #666666;">=</span><span style="color: #ba2121;">'MWT'</span>,ylab<span style="color: #666666;">=</span><span style="color: #ba2121;">'XLogP'</span>,main<span style="color: #666666;">=</span><span style="color: #ba2121;">'CNS vs. all FDA-approved drugs, MWT and XLogP'</span>)
+points(compounds$mwt[compounds$cpdset<span style="color: #666666;">==</span><span style="color: #ba2121;">'fda_cns'</span>], compounds$xlogp[compounds$cpdset<span style="color: #666666;">==</span><span style="color: #ba2121;">'fda_cns'</span>],pch<span style="color: #666666;">=19</span>,col<span style="color: #666666;">=</span><span style="color: #ba2121;">'orange'</span>)
+legend(<span style="color: #ba2121;">'bottomleft'</span>,c(<span style="color: #ba2121;">'All FDA-approved drugs'</span>,<span style="color: #ba2121;">'CNS drugs'</span>),col<span style="color: #666666;">=</span>c(<span style="color: #ba2121;">'#999999'</span>,<span style="color: #ba2121;">'orange'</span>),pch<span style="color: #666666;">=19</span>,cex<span style="color: #666666;">=.8</span>)</pre>
+</div>
+<p><a href="/wp-content/uploads/2013/10/mwt.v.logp_.png"><img class="alignnone size-full wp-image-3087" alt="mwt.v.logp" src="/wp-content/uploads/2013/10/mwt.v.logp_.png"/></a></p>
+<p>A single outlier has totally dominated the range of the plot.  Here&#8217;s where I&#8217;m glad I went to <a title="List of FDA-approved drugs and CNS drugs with SMILES" href="/2013/10/04/list-of-fda-approved-drugs-and-cns-drugs-with-smiles/">all that effort</a> to have a table that matches common names to SMILES.  I can now ask, what <em>is</em> that thing?</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">compounds[compounds$mwt <span style="color: #666666;">&gt;</span> <span style="color: #666666;">6000</span>,]</pre>
+</div>
+<p>It turns out to be <a href="http://en.wikipedia.org/wiki/Inulin">inulin</a> &#8211; not insulin, but a different thing. It&#8217;s a large sugary biomolecule used for monitoring kidney function.  Mind you, <em>in<span style="text-decoration: underline;">s</span>ulin</em> would be twice as large again, at <a href="http://www.drugbank.ca/molecules/5961">~12 kDa</a>.  But insulin, like most of the biologicals, was implicitly filtered out because DrugBank stores an amino acid sequence, not a SMILES string, for it, so I never parsed it and included it in the analysis.  There are plenty of therapeutic antibodies yet much larger than insulin and none of those are here either.  Since we&#8217;re not being exhaustive regardless, I decided to exclude inulin from the rest of the analysis to focus on the true small molecules.  With it gone, here&#8217;s what the plot looks like:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">inulin <span style="color: #666666;">=</span> compounds$mwt <span style="color: #666666;">&gt;</span> <span style="color: #666666;">6000</span>
+plot(compounds$mwt[!inulin], compounds$xlogp[!inulin], pch<span style="color: #666666;">=19</span>, col<span style="color: #666666;">=</span><span style="color: #ba2121;">'#999999'</span>,
+     xlab<span style="color: #666666;">=</span><span style="color: #ba2121;">'MWT'</span>,ylab<span style="color: #666666;">=</span><span style="color: #ba2121;">'XLogP'</span>,main<span style="color: #666666;">=</span><span style="color: #ba2121;">'CNS vs. all FDA-approved drugs, MWT and XLogP'</span>)
+points(compounds$mwt[compounds$cpdset<span style="color: #666666;">==</span><span style="color: #ba2121;">'fda_cns'</span>], compounds$xlogp[compounds$cpdset<span style="color: #666666;">==</span><span style="color: #ba2121;">'fda_cns'</span>],pch<span style="color: #666666;">=19</span>,col<span style="color: #666666;">=</span><span style="color: #ba2121;">'orange'</span>)
+legend(<span style="color: #ba2121;">'bottomleft'</span>,c(<span style="color: #ba2121;">'All FDA-approved drugs'</span>,<span style="color: #ba2121;">'CNS drugs'</span>),col<span style="color: #666666;">=</span>c(<span style="color: #ba2121;">'#999999'</span>,<span style="color: #ba2121;">'orange'</span>),pch<span style="color: #666666;">=19</span>,cex<span style="color: #666666;">=.8</span>)</pre>
+</div>
+<p><a href="/wp-content/uploads/2013/10/mwt.v.logp_.2.png"><img class="alignnone size-full wp-image-3088" alt="mwt.v.logp.2" src="/wp-content/uploads/2013/10/mwt.v.logp_.2.png"/></a></p>
+<p>Now we can see that virtually all CNS drugs have a molecular weight less than about 600 Da and an xLogP between about 5 and -5.  Interesting that they&#8217;re of moderate xLogP in the scheme of all drugs &#8211; one often hears of CNS drugs needing to be relatively hydrophobic, but they aren&#8217;t the <em>most</em> extreme hydrophobes either.  But though I call this &#8220;moderate&#8221;, the range here is quite considerable when you remember that logP is the <em>log</em> of the ratio of concentration in octanol vs. water.  So a logP of 5 means there is 10<sup>5</sup> as much of the molecule in the octanol as in the water, and -5 means the converse.  That&#8217;s a big difference.</p>
+<p>Among the non-CNS drugs, the spread is even starker &#8211; a few drugs have 10<sup>10</sup> the concentration in octanol as in water, and vice versa.  I wondered which drugs these are and what they look like.</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># from /2013/09/23/a-quick-intro-to-chemical-informatics-in-r/</span>
+rcdkplot <span style="color: #666666;">=</span> <span style="color: #008000; font-weight: bold;">function</span>(molecule,width<span style="color: #666666;">=500</span>,height<span style="color: #666666;">=500</span>,<span style="color: #666666;">...</span>) {
+  <span style="color: #408080; font-style: italic;">#par(mar=c(0,0,0,0)) # set margins to zero since this isn't a real plot</span>
+  temp1 <span style="color: #666666;">=</span> view.image.2d(molecule,width,height) <span style="color: #408080; font-style: italic;"># get Java representation into an image matrix. set number of pixels you want horiz and vertical</span>
+  plot(<span style="color: #008000; font-weight: bold;">NA</span>,<span style="color: #008000; font-weight: bold;">NA</span>,xlim<span style="color: #666666;">=</span>c(<span style="color: #666666;">1</span>,<span style="color: #666666;">10</span>),ylim<span style="color: #666666;">=</span>c(<span style="color: #666666;">1</span>,<span style="color: #666666;">10</span>),xaxt<span style="color: #666666;">=</span><span style="color: #ba2121;">'n'</span>,yaxt<span style="color: #666666;">=</span><span style="color: #ba2121;">'n'</span>,xlab<span style="color: #666666;">=</span><span style="color: #ba2121;">''</span>,ylab<span style="color: #666666;">=</span><span style="color: #ba2121;">''</span>,<span style="color: #666666;">...</span>) <span style="color: #408080; font-style: italic;"># create an empty plot</span>
+  rasterImage(temp1,<span style="color: #666666;">1</span>,<span style="color: #666666;">1</span>,<span style="color: #666666;">10</span>,<span style="color: #666666;">10</span>) <span style="color: #408080; font-style: italic;"># boundaries of raster: xmin, ymin, xmax, ymax. here i set them equal to plot boundaries</span>
+}
+
+par(mfrow<span style="color: #666666;">=</span>c(<span style="color: #666666;">2</span>,<span style="color: #666666;">3</span>))
+<span style="color: #008000; font-weight: bold;">for</span> (i in which(compounds$xlogp <span style="color: #666666;">&gt;</span> <span style="color: #666666;">10</span>)) {
+  rcdkplot(parse.smiles(compounds$smiles[i])[[<span style="color: #666666;">1</span>]],main<span style="color: #666666;">=</span>compounds$name[i])
+}</pre>
+</div>
+<p>Here are the most hydrophobic drugs, with the most octanol-favoring partition coefficient:</p>
+<p><a href="/wp-content/uploads/2013/10/most.hydrophobic.drugs_.png"><img class="alignnone size-full wp-image-3094" alt="most.hydrophobic.drugs" src="/wp-content/uploads/2013/10/most.hydrophobic.drugs_.png"/></a></p>
+<p>They&#8217;re almost pure hydrocarbon, with only an O or two here and there.  And the most hydrophilic drugs:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">par(mfrow<span style="color: #666666;">=</span>c(<span style="color: #666666;">2</span>,<span style="color: #666666;">2</span>))
+<span style="color: #008000; font-weight: bold;">for</span> (i in which(compounds$xlogp <span style="color: #666666;">&lt;</span> <span style="color: #666666;">-10</span>)) {
+  <span style="color: #008000; font-weight: bold;">if</span> (i <span style="color: #666666;">%in%</span> c(<span style="color: #666666;">586</span>,<span style="color: #666666;">604</span>,<span style="color: #666666;">608</span>)) next <span style="color: #408080; font-style: italic;"># skip one that throws an error - "Molecule must be connected"</span>
+  rcdkplot(parse.smiles(compounds$smiles[i])[[<span style="color: #666666;">1</span>]],main<span style="color: #666666;">=</span>compounds$name[i])
+}</pre>
+</div>
+<p>And here are the most hydrophilic ones:</p>
+<p>&nbsp;</p>
+<p><a href="/wp-content/uploads/2013/10/most.hydrophilic.drugs_.png"><img class="alignnone size-full wp-image-3095" alt="most.hydrophilic.drugs" src="/wp-content/uploads/2013/10/most.hydrophilic.drugs_.png"/></a></p>
+<p>These are almost completely coated in polarizable <a href="http://en.wikipedia.org/wiki/Heteroatom">heteroatoms</a>.</p>
+<p>Next I plotted tPSA vs. xLogP.  I would expect these to be correlated and they are, though the correlation is a bit noisier than I might have thought:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">plot(compounds$tpsa[!inulin], compounds$xlogp[!inulin], pch<span style="color: #666666;">=19</span>, col<span style="color: #666666;">=</span><span style="color: #ba2121;">'#999999'</span>,
+     xlab<span style="color: #666666;">=</span><span style="color: #ba2121;">'tPSA'</span>,ylab<span style="color: #666666;">=</span><span style="color: #ba2121;">'XLogP'</span>,main<span style="color: #666666;">=</span><span style="color: #ba2121;">'CNS vs. all FDA-approved drugs, tPSA and XLogP'</span>)
+points(compounds$tpsa[compounds$cpdset<span style="color: #666666;">==</span><span style="color: #ba2121;">'fda_cns'</span>], compounds$xlogp[compounds$cpdset<span style="color: #666666;">==</span><span style="color: #ba2121;">'fda_cns'</span>],pch<span style="color: #666666;">=19</span>,col<span style="color: #666666;">=</span><span style="color: #ba2121;">'orange'</span>)
+abline(v<span style="color: #666666;">=90</span>,col<span style="color: #666666;">=</span><span style="color: #ba2121;">'red'</span>)
+legend(<span style="color: #ba2121;">'bottomleft'</span>,c(<span style="color: #ba2121;">'All FDA-approved drugs'</span>,<span style="color: #ba2121;">'CNS drugs'</span>),col<span style="color: #666666;">=</span>c(<span style="color: #ba2121;">'#999999'</span>,<span style="color: #ba2121;">'orange'</span>),pch<span style="color: #666666;">=19</span>,cex<span style="color: #666666;">=.8</span>)</pre>
+</div>
+<p><a href="/wp-content/uploads/2013/10/tpsa.vs_.xlogp_.png"><img class="alignnone size-full wp-image-3096" alt="tpsa.vs.xlogp" src="/wp-content/uploads/2013/10/tpsa.vs_.xlogp_.png"/></a></p>
+<p>The CNS drugs certainly skew towards lower tPSA, though ~12% of them are above the 90 Å² threshold cited <a href="/2013/09/23/a-quick-intro-to-chemical-informatics-in-r/#comment-452">here</a> and 3% (6 out of 221) are above the looser 120 Å² mentioned <a href="/2013/09/23/a-quick-intro-to-chemical-informatics-in-r/#comment-453">here</a>.  Some of these might be false positives &#8211; nominally CNS drugs that aren&#8217;t actually BBB-permeable.  For instance, the highest tPSA was 136.22 Å² for <a href="http://en.wikipedia.org/wiki/Meloxicam">meloxicam</a>, an <a href="http://en.wikipedia.org/wiki/Non-steroidal_anti-inflammatory_drug">NSAID</a>.  I didn&#8217;t find any data on BBB permeability but it has been investigated as a treatment for traumatic brain injury, where it has been suggested to help BBB integrity [<a href="http://www.ncbi.nlm.nih.gov/pubmed/19660237">Hakan 2010</a>].  This could potentially be a proper CNS indication that doesn&#8217;t actually involve crossing the BBB itself.</p>
+<p>Next I looked at hydrogen bond donors vs. acceptors.  Since both relate to size, I&#8217;d expect a correlation, and indeed, they have a Pearson&#8217;s correlation of .91.</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">plot(compounds$hba[!inulin], compounds$hbd[!inulin], pch<span style="color: #666666;">=19</span>, col<span style="color: #666666;">=</span><span style="color: #ba2121;">'#999999'</span>,
+     xlab<span style="color: #666666;">=</span><span style="color: #ba2121;">'HBA'</span>,ylab<span style="color: #666666;">=</span><span style="color: #ba2121;">'HBD'</span>,main<span style="color: #666666;">=</span><span style="color: #ba2121;">'CNS vs. all FDA-approved drugs, HBA and HBD'</span>)
+points(compounds$hba[compounds$cpdset<span style="color: #666666;">==</span><span style="color: #ba2121;">'fda_cns'</span>], compounds$hbd[compounds$cpdset<span style="color: #666666;">==</span><span style="color: #ba2121;">'fda_cns'</span>],pch<span style="color: #666666;">=19</span>,col<span style="color: #666666;">=</span><span style="color: #ba2121;">'orange'</span>)
+legend(<span style="color: #ba2121;">'bottomright'</span>,c(<span style="color: #ba2121;">'All FDA-approved drugs'</span>,<span style="color: #ba2121;">'CNS drugs'</span>),col<span style="color: #666666;">=</span>c(<span style="color: #ba2121;">'#999999'</span>,<span style="color: #ba2121;">'orange'</span>),pch<span style="color: #666666;">=19</span>,cex<span style="color: #666666;">=.8</span>)</pre>
+</div>
+<p><a href="/wp-content/uploads/2013/10/hba.v.hbd_.png"><img class="alignnone size-full wp-image-3097" alt="hba.v.hbd" src="/wp-content/uploads/2013/10/hba.v.hbd_.png"/></a></p>
+<p>Recall that <a href="http://en.wikipedia.org/wiki/Lipinski's_rule_of_five">Lipinski&#8217;s Rule of Five</a> suggests that drugs for <em>any </em>indication should have ≤ 5 hydrogen bond donors and ≤ 10 hydrogen bond acceptors. Many of the non-CNS drugs violate this guideline, but all of the CNS drugs obey it.</p>
+<p>Molecular weight and number of rotational bonds were also highly correlated, with a Pearson&#8217;s of .83:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">plot(compounds$mwt[!inulin], compounds$nrb[!inulin], pch<span style="color: #666666;">=19</span>, col<span style="color: #666666;">=</span><span style="color: #ba2121;">'#999999'</span>,
+     xlab<span style="color: #666666;">=</span><span style="color: #ba2121;">'MWT'</span>,ylab<span style="color: #666666;">=</span><span style="color: #ba2121;">'NRB'</span>,main<span style="color: #666666;">=</span><span style="color: #ba2121;">'CNS vs. all FDA-approved drugs, MWT and NRB'</span>)
+points(compounds$mwt[compounds$cpdset<span style="color: #666666;">==</span><span style="color: #ba2121;">'fda_cns'</span>], compounds$nrb[compounds$cpdset<span style="color: #666666;">==</span><span style="color: #ba2121;">'fda_cns'</span>],pch<span style="color: #666666;">=19</span>,col<span style="color: #666666;">=</span><span style="color: #ba2121;">'orange'</span>)
+legend(<span style="color: #ba2121;">'bottomright'</span>,c(<span style="color: #ba2121;">'All FDA-approved drugs'</span>,<span style="color: #ba2121;">'CNS drugs'</span>),col<span style="color: #666666;">=</span>c(<span style="color: #ba2121;">'#999999'</span>,<span style="color: #ba2121;">'orange'</span>),pch<span style="color: #666666;">=19</span>,cex<span style="color: #666666;">=.8</span>)</pre>
+</div>
+<p><a href="/wp-content/uploads/2013/10/mwt.v.nrb_.png"><img class="alignnone size-full wp-image-3098" alt="mwt.v.nrb" src="/wp-content/uploads/2013/10/mwt.v.nrb_.png"/></a></p>
+<p>And one more surprise &#8211; though almost all CNS drugs (and all drugs generally) are neutral, a handful of CNS drugs (7 of them) <em>do</em> actually have a net charge:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">barplot(table(compounds$charge[compounds$cpdset<span style="color: #666666;">==</span><span style="color: #ba2121;">'fda_cns'</span>]),col<span style="color: #666666;">=</span><span style="color: #ba2121;">'orange'</span>,xlab<span style="color: #666666;">=</span><span style="color: #ba2121;">'charge'</span>,ylab<span style="color: #666666;">=</span><span style="color: #ba2121;">'frequency'</span>,main<span style="color: #666666;">=</span><span style="color: #ba2121;">'Charge of CNS drugs'</span>)</pre>
+</div>
+<p><a href="/wp-content/uploads/2013/10/charge.barplot.cns_.png"><img class="alignnone size-full wp-image-3099" alt="charge.barplot.cns" src="/wp-content/uploads/2013/10/charge.barplot.cns_.png"/></a></p>
+<p>This list includes lithium (Li<sup>+</sup>) of course, as well as <a href="http://en.wikipedia.org/wiki/Gamma-Aminobutyric_acid">GABA</a>.  Now, I&#8217;m not sure how much stock to put in these charge figures since charge depends for instance on the pH you&#8217;re assuming the molecule is at and therefore whether acids are protonated or not.  I know that ZINC uses a SMILES string chosen to represent a realistic state somewhere in pH 5 &#8211; 9.5 [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC1360656/">Irwin &amp; Stoichet 2005</a>] but I didn&#8217;t find any info on how DrugBank chooses the protonation state of molecules that it represents in the SMILES strings.</p>
+<p>Finally, I did a quick principal components analysis.  There are only a few descriptors here anyway, but I was still a bit surprised that the first two PCs explain 99.97% of variance; the other PCs didn&#8217;t seem worth looking at.</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">compounds_ni <span style="color: #666666;">=</span> compounds[!inulin,]
+
+cpd_mat <span style="color: #666666;">=</span> as.matrix(compounds_ni[,<span style="color: #666666;">5</span>:<span style="color: #666666;">11</span>])
+covmatrix <span style="color: #666666;">=</span> cov(cpd_mat) <span style="color: #408080; font-style: italic;"># calculate covariance matrix</span>
+eig <span style="color: #666666;">=</span> eigen(covmatrix) 
+pc <span style="color: #666666;">=</span> cpd_mat <span style="color: #666666;">%*%</span> eig$vectors 
+
+plot(pc[,<span style="color: #666666;">1</span>],pc[,<span style="color: #666666;">2</span>],pch<span style="color: #666666;">=19</span>,col<span style="color: #666666;">=</span><span style="color: #ba2121;">'#999999'</span>,xlab<span style="color: #666666;">=</span><span style="color: #ba2121;">'PC1 (94.7%)'</span>,ylab<span style="color: #666666;">=</span><span style="color: #ba2121;">'PC2 (5.3%)'</span>,
+     main <span style="color: #666666;">=</span> <span style="color: #ba2121;">'PC1 vs. PC2 of FDA-approved drugs'</span>)
+points(pc[compounds_ni$cpdset<span style="color: #666666;">==</span><span style="color: #ba2121;">'fda_cns'</span>,<span style="color: #666666;">1</span>],pc[compounds_ni$cpdset<span style="color: #666666;">==</span><span style="color: #ba2121;">'fda_cns'</span>,<span style="color: #666666;">2</span>],pch<span style="color: #666666;">=19</span>,col<span style="color: #666666;">=</span><span style="color: #ba2121;">'orange'</span>)
+legend(<span style="color: #ba2121;">'bottomright'</span>,c(<span style="color: #ba2121;">'All FDA-approved drugs'</span>,<span style="color: #ba2121;">'CNS drugs'</span>),col<span style="color: #666666;">=</span>c(<span style="color: #ba2121;">'#999999'</span>,<span style="color: #ba2121;">'orange'</span>),pch<span style="color: #666666;">=19</span>,cex<span style="color: #666666;">=.8</span>)</pre>
+</div>
+<p><a href="/wp-content/uploads/2013/10/pc1.pc2_.cns_.png"><img class="alignnone size-full wp-image-3100" alt="pc1.pc2.cns" src="/wp-content/uploads/2013/10/pc1.pc2_.cns_.png"/></a></p>
+<p>And again, the CNS drugs cluster together, occupying a considerably smaller chemical space than the set of all approved drugs.  This is all well-known information.  It&#8217;s exciting for me that I was able to reproduce this result with this simple dataset.</p>

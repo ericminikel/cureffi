@@ -1,0 +1,100 @@
+---
+layout: post
+title: "Biochemistry 08: the citric acid cycle and the electron transport chain"
+author: ericminikel
+date: 2013-11-08 17:14:59
+---
+<p>These are notes from lecture 8 of <a href="http://www.extension.harvard.edu/courses/introduction-biochemistry">Harvard Extension’s biochemistry class</a>.</p>
+<p><strong>quick review of mitochondrial structure</strong></p>
+<p>To understand this post, it&#8217;s useful to know the mitochondrial structure (<em>see also <a title="Cell Biology 03: Targeting proteins to organelles" href="/2013/02/17/cell-biology-03-targeting-proteins-to-organelles/">Cell Biology 03</a></em>). Here&#8217;s a rad CC BY Wikimedia Commons diagram by Kelvinsong &amp; Sowlos:</p>
+<p><a href="http://en.wikipedia.org/wiki/File:Mitochondrion_structure.svg"><img alt="mitochondria" src="/wp-content/uploads/2013/11/mitochondria.png"/></a></p>
+<p><strong>citric acid cycle</strong></p>
+<p>Khan Academy&#8217;s introduction:</p>
+<p><iframe src="//www.youtube.com/embed/juM2ROSLWfw?rel=0" height="315" width="560" allowfullscreen="" frameborder="0"></iframe></p>
+<p>The <a href="http://en.wikipedia.org/wiki/Citric_acid_cycle">citric acid cycle</a> or Kreb&#8217;s cycle is the cell&#8217;s metabolic hub, as it not only generate energy from pyruvate (the product of <a title="Biochemistry 07: glucose metabolism" href="/2013/10/26/biochemistry-07-glucose-metabolism/">glycolysis</a>) but along the way also can consume and produce metabolites relevant to host of other processes. It&#8217;s called a &#8220;cycle&#8221; and not a &#8220;pathway&#8221; because it both begins and ends with <a href="http://en.wikipedia.org/wiki/Oxaloacetic_acid">oxaloacetate</a>. It takes place inside the mitochondrial matrix.</p>
+<p>Pyruvate from glycolysis does not enter directly into the citric acid cycle. First it passes through a &#8220;transition phase&#8221; where it is undergoes oxidative decarboxylation to CO<sub>2</sub> at the hands of the <a href="http://en.wikipedia.org/wiki/Pyruvate_dehydrogenase_complex">pyruvate dehydrogenase complex</a>, transferring acetyl groups to coenzyme A to yield <a href="http://en.wikipedia.org/wiki/Acetyl-CoA">acetyl-CoA</a>.  This can be considered as step 0 and is depicted at the top of the below diagram. <a href="http://ghr.nlm.nih.gov/condition/pyruvate-dehydrogenase-deficiency">Pyruvate dehydrogenase deficiency</a> causes a neurodevelopmental disorder and can result from mutations in many of the different genes involved in the complex.</p>
+<p><a href="/wp-content/uploads/2013/11/Citric_acid_cycle_with_aconitate_2.svg_.png"><img class="alignnone size-full wp-image-3217" alt="Citric_acid_cycle_with_aconitate_2.svg" src="/wp-content/uploads/2013/11/Citric_acid_cycle_with_aconitate_2.svg_.png"/></a></p>
+<p><em>Source: this is <a href="http://en.wikipedia.org/wiki/File:Citric_acid_cycle_with_aconitate_2.svg">a Wikimedia Commons featured image by multiple authors</a>.</em></p>
+<p>What&#8217;s not depicted in this diagram is there are a few ways to enter the CAC. Pyruvate can come either from glycolysis or amino acid catabolism. Amino acid catabolism or fatty acid catabolism can also yield acetyl-CoA directly.</p>
+<p>As the <a href="http://en.wikipedia.org/wiki/Pyruvate_dehydrogenase_complex">pyruvate dehydrogenase complex</a> is the chief entry point into the CAC, its proper regulation is key for controlling the rate of cellular energy production. It is tightly regulated by allosteric regulation by products of the CAC / electron transport chain:</p>
+<p><table style="width:100%; " class="easy-table easy-table-default " border="0">
+<thead>
+<tr><th>inhibited by</th>
+<th>activated by</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>NADH<br/>Acetyl-CoA<br/>ATP</td>
+<td>NAD+<br/>CoA<br/>AMP</td>
+</tr>
+</tbody></table></p>
+<p>tl;dr: when ample fuel is available, i.e. the [ATP]/[AMP] ratio and [NADH]/[NAD+] ratios are high, there&#8217;s no need to continue running the cycle.</p>
+<p>Three other highly exergonic CAC steps are also checkpoints for regulation: citrate synthase, isocitrate dehydrogenase, and the alpha ketoglutarate dehydrogenase complex. Orthogonally, you can think of 4 main mechanisms by which the CAC is regulated:</p>
+<ol>
+<li>substrate availability. availability of oxaloacetate and acetyl-CoA as inputs.</li>
+<li>product inhibition. for instance NADH not only inhibits the pyruvate dehydrogenase complex (above table) but also inhibits other regulatory steps.</li>
+<li>allosteric activation. for instance ADP (whose accumulation is a sign of energy need) activates enzymes such as the pyruvate dehydrogenase complex (above table)</li>
+<li>competitive feedback inhibition. for instance, succinyl-CoA, an intermediate, competes with acteyl-CoA for the attention of citrate synthase.</li>
+</ol>
+<p>It also makes sense to have glycolysis and CAC running at about the same rate (think <a href="http://en.wikipedia.org/wiki/Just_in_time_(business)">just in time delivery</a>), so there&#8217;s a mechanism for their co-regulation. Citrate, an intermediate in the CAC, inhibits PFK-1, a step in glycolysis.</p>
+<p>The CAC is described as &#8220;amphibolic&#8221; because it is both catabolic and anabolic &#8211; it both produces and consumes intermediates relevant to a host of other pathways. Here&#8217;s a video describing these roads in and out of the CAC.  The diagram at 0:06, which should be the thumbnail below, is a concise overview.</p>
+<p><iframe src="//www.youtube.com/embed/61DIlOp86q4?rel=0&amp;start=6" height="315" width="420" allowfullscreen="" frameborder="0"></iframe></p>
+<p>Pyruvate can actually feed into the cycle in two ways. As discussed above, it can be spent on creating acetyl-CoA. Think of that as submitting a job to the computing cluster. Pyruvate can also be converted to oxaloacetate by <a href="http://en.wikipedia.org/wiki/Pyruvate_carboxylase">pyruvate carboxylase</a>- think of that as adding a node to the computing cluster. In other words, while acetyl-CoA is just consumed in the CAC, oxaloacetate is consumed and then regenerated (the cycle starts and ends with it), and so the amount of oxaloacetate available can be limiting and thus determine the number of instances of the citric acid cycle that can run in parallel. Converting pyruvate to oxaloacetate and thus increasing the number of parallel CAC jobs is a way of increasing the rate at which intermediates are produced for other cellular processes. This is especially important when intermediates are being rapidly siphoned off for other processes, causing acetyl-CoA to accumulate while very few of the CAC cycles are actually running to completion. Under this circumstance, acetyl-CoA feeds back to activate pyruvate decarboxylase, thus causing more OAA to be generated and more CAC cycles to run in parallel.</p>
+<p>That process is especially important in the liver and kidney because they perform gluconeogenesis. In this process, intermediates from other processes enter the CAC and then oxaloacetate is siphoned off to create glucose. Under these conditions, the CAC is not replenishing its own supply of OAA, and so pyruvate carboxylase activity is key. This activity is higher in the liver and kidney than elsewhere.</p>
+<p>The CAC&#8217;s contribution to cellular ATP supplies is indirect. It produces NADH, FADH<sub>2</sub>, and GTP, which enter the electron transport chain to produce ATP.  Here&#8217;s a diagram I made of how ATP is produced in glucose metabolism:</p>
+<p><a href="/wp-content/uploads/2013/11/energy-flow-diagram.png"><img class="alignnone size-full wp-image-3257" alt="energy-flow-diagram" src="/wp-content/uploads/2013/11/energy-flow-diagram.png"/></a></p>
+<p>Note that this depicts a production of 32 ATP / glucose. The exact figure depends on things like the leakiness of membranes and such, see <a href="http://en.wikipedia.org/wiki/Cellular_respiration#Aerobic_respiration">discussion on Wikipedia</a>.  The theoretical maximum is 38 ATP, some people think the actual figure is closer to 29 or 30. The above graphic assumes 2.5 ATP/NADH and 1.5 ATP/FADH2.</p>
+<p><strong>quick review of oxidative phosphorylation</strong></p>
+<p>Glycolysis and the CAC both oxidize fuels to CO<sub>2</sub> in order to reduce NAD<sup>+</sup> to NADH and FAD to FADH<sub>2</sub>. In the electron transport chain, NADH and FADH2 are then exergonically reoxidated to release the energy which will be used to oxidatively phosphorylate ADP to ATP. In the electron transport chain, e- are transferred through multiple complexes to ultimately reduce O<sub>2</sub> to H<sub>2</sub>O.</p>
+<p>Remember that redox is the transfer of electrons. Q is ubiquinone, popularly known as <a href="http://en.wikipedia.org/wiki/Coenzyme_Q10">CoQ10</a>.  QH2 is called ubiquinol.</p>
+<p>NADH + Q ↔ NAD<sup>+</sup> + QH2</p>
+<p>A substance&#8217;s tendency to accept electrons is quantified as its <em>reduction potential</em>, denoted ε°&#8217;. Electrons flow spontaneously from the substance with the lower reduction potential to the substance with the higher reduction potential. For example, Q&#8217;s ε°&#8217; is .045, and NADH&#8217;s is -.315, so electrons will flow from NADH to Q. You can add the half reactions together to get the reduction potential for the whole reaction:</p>
+<table>
+<tbody>
+<tr>
+<td>reaction</td>
+<td>reduction potential</td>
+</tr>
+<tr>
+<td>Q + 2H+ + 2e- ↔ QH2</td>
+<td>ε°&#8217; = .045 V</td>
+</tr>
+<tr>
+<td>NADH ↔ NAD+ + 2H+ + 2e-</td>
+<td>ε°&#8217; = .315V</td>
+</tr>
+<tr>
+<td>NADH + Q ↔ NAD+ + QH2</td>
+<td>Δε°&#8217; = .360 V</td>
+</tr>
+</tbody>
+</table>
+<p>Note that in the second line, both the equation and the sign of the reduction potential have been swapped.</p>
+<p>Gibbs free energy and reduction potential are related as follows:</p>
+<p>ΔG = -nFΔε</p>
+<p>Where F = one Faraday, a constant equal to 96,485 J/(V·mol) and n = number of moles of electron transferred per mole of reactant.  ΔG is large and negative when Δε is large and positive. Thus electrons flow from compounds with low ε to compounds with high ε. Their desire to do so is what drives ATP production in the electron transport chain.</p>
+<p><strong>electron transport chain</strong></p>
+<p>Khan Academy&#8217;s introduction:</p>
+<p><iframe src="//www.youtube.com/embed/mfgCcFXUZRk?rel=0" height="315" width="560" allowfullscreen="" frameborder="0"></iframe></p>
+<p>The electron transport chain&#8217;s ultimate purpose is to create a proton gradient which is then used to drive ATP production.  The mitochondrial outer membrane is porous, so the intermembrane space has the same ionic composition as the cytosol. The ETC creates a proton gradient across the inner membrane.</p>
+<p>To do this, it transfers &#8220;reducing equivalents&#8221; from the cytosol into the matrix via the <a href="http://en.wikipedia.org/wiki/Malate-aspartate_shuttle">malate-aspartate shuttle system</a>.  Also the adenine nucleotide translocase moves ATP out of the matrix and brings ADP into the matrix. P<sub>i</sub> used to create more ATP in the matrix is imported via an H<sup>+</sup> symporter which takes advantage of the proton gradient.</p>
+<p>In the electron transfer chain, electrons flow from Complex I to Complex II to Q to Complex III to cytochrome c to Complex IV.  This series of complexes trades electrons in a way that allows e<sup>-</sup> to migrate up to higher and higher reduction potential (i.e. the direction they want to go). The final step is reduction of O<sub>2</sub> to H<sub>2</sub>O.  The energy release at some steps pumps H<sup>+</sup> into the intermembrane space.</p>
+<p>Complex II, which is <a href="http://en.wikipedia.org/wiki/Succinate_dehydrogenase">succinate dehydrogenase</a>, does not directly contribute to the proton gradient, but it is another source of electrons. It oxidizes succinate to fumarate, thus reducing FAD to FADH and then using FADH to reduce Q. It thus contributes electrons to the &#8220;quinone pool&#8221;.</p>
+<p>Complex III conducts the Q cycle. Ubiquinone (Q) is reduced to the semiquinone radical (QH) which is reduced to ubiquinol (QH2).  In the Q cycle, QH2 donates electrons to cytochrome b and ISP, and protons to the intermebrane space, thus becoming Q. ISP sends its newfound electron to cytochrome c1 which gives it to cytochrome c, which was the point of this entire convoluted operation. Q is then is re-reduced to QH2 by another mechanism within the Q cycle.</p>
+<p>Note: the fact that a proton gradient can later be used to drive ATP synthesis is referred to as &#8220;proton motive force&#8221; or &#8220;the chemiosmotic theory&#8221;.</p>
+<p>Once the proton gradient is created, <strong>F<sub>1</sub>F<sub>0</sub> ATP synthase</strong> (sometimes called Complex V) is responsible for harnessing it to create ATP. It has an F1 component (composed of α, β and γ subunits) facing into the matrix and an F0 component (composed of a, b and c subunits) embedded in the inner membrane. Each of the 12 c subunits of the F0 complex has an H<sup>+</sup> binding site, and the cylinder of these units rotates 30° every time. The gamma subunit has only three possible positions, so it moves 120° once for every 4 protons. Each time it does this, it alters the conformation of the beta subunit.</p>
+<p>ADP and Pi bind β in the loose (L) conformation. The γ rotation causes β to move to a tight (T) conformation, producing ATP. The γ then rotates another 120°, causing β to change to the open (O) conformation and releasing ATP. Thus you get 3 ATP per full turn</p>
+<p><object width="480" height="380" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"><param name="flashvars" value="config=http://www.dnatube.com/nuevo/econfig.php?key=f9fc8ea15d152add0729"/><param name="allowscriptaccess" value="always"/><param name="wmode" value="transparent"/><param name="allowfullscreen" value="true"/><param name="src" value="http://www.dnatube.com/nuevo/player.swf"/><embed width="480" height="380" type="application/x-shockwave-flash" src="http://www.dnatube.com/nuevo/player.swf" flashvars="config=http://www.dnatube.com/nuevo/econfig.php?key=f9fc8ea15d152add0729" allowscriptaccess="always" wmode="transparent" allowfullscreen="true"/></object></p>
+<p><a href="http://en.wikipedia.org/wiki/Uncoupling_protein">Uncouplers</a> can allow the proton gradient to dissipate without producing ATP.  This means that the energy of metabolism just gets dissipated as heat (e.g. via the uncoupling protein <a href="http://en.wikipedia.org/wiki/Thermogenin">thermogenin</a>, gene symbol = UCP1) rather than harnessed for ATP production. It&#8217;s an important mechanism for keeping body temperature up during hibernation in bears as well as in human infants (in brown adipose tissue). There are also small molecule uncouplers such as <a href="http://en.wikipedia.org/wiki/2,4-dinitrophenol">DNP</a>, which was used as a diet pill for a few years.</p>
+<p>Thermogenesis in infants and bears is regulated hormonally. The thermogenin channel is normally blocked open by ATP, ADP, GTP or GDP. Epinephrine signaling can turn on heat production. Epinephrine → GPCR → AC → cAMP → PKA → triacylglycerol lipase cleaves triacylglycerol into free fatty acids which will displace the nucleotides, blocking the channel open.</p>
+<p>Brown fat was long believed to be unique to infants but has recently been shown to exist in adult mice and humans [reviewed in <a href="http://www.ncbi.nlm.nih.gov/pubmed/23550082">Lee 2013</a>].</p>
+<p>Both the ETC and ATP synthase are also popular targets for toxins. Rotenone inhibits Complex I (though then electrons can still enter the chain through succinate and start at Complex II), cyanide ions (CN<sup>-</sup>) inhibit Complex IV and the antibiotic oligomycin inhibits F0.</p>
+<p>In the lab, the ETC can be studied in isolated mitochondria with O<sup>2</sup> consumption as a marker of ETC progression.  Adding ADP + P<sub>i</sub> will allow the ETC to run very slowly; once you add succinate it really takes off. If you add CN<sup>-</sup>, it then stops.  ATP is pretty much in lockstep with O<sub>2</sub> consumption through all this.</p>
+<p>If you add oligomycin to block ATP synthase, this actually stops the ETC even though ATP synthase is downstream of the ETC. This is because without ATP synthase to relieve the proton gradient, the gradient becomes so steep that the ETC can no longer fight it.</p>
+<p>A few final notes on the co-regulation of glycolysis, CAC and ETC:</p>
+<ul>
+<li>When ATP consumption increases, the ATP/ADP ratio decreases and this results in increases in all of the processes&#8217; activities. ADP activates PFK-1, increasing glycolysis. ADP activates regulatory enzymes in the CAC. And the ETC also increases for unexplained reasons.</li>
+<li>When ATP production increases, the ATP/ADP ratio increases and this inhibits all of the processes. ATP inhibits PFK-1, slowing glycolysis; ATP inhibits pyruvate dehydrogenase, slowing the CAC, and the ETC is also slowed.</li>
+<li>If the ETC or ATP synthase are inhibited, glycolysis speeds up to generate more ATP to compensate.  But since the ETC is not running, NADH accumulates, increasing the NADH/NAD+ ratio. This slows down the CAC.</li>
+</ul>
+<p>&nbsp;</p>

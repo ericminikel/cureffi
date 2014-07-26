@@ -1,0 +1,171 @@
+---
+layout: post
+title: "Mapping proteomics data to UniProt, RefSeq and gene symbols"
+author: ericminikel
+date: 2013-03-15 22:39:26
+---
+<p><strong>update: this post was substantially revised on 2013-03-18 to correctly handle different isoforms of proteins</strong></p>
+<p>This week at work we finally got some new (human) proteomics data we&#8217;ve been waiting on for a while. It&#8217;s <a href="http://en.wikipedia.org/wiki/Isobaric_tag_for_relative_and_absolute_quantitation">iTRAQ</a> data, meaning that short subsequences of amino acids were quantified and then looked up in a reference proteome.  I couldn&#8217;t find a good online introduction to how iTRAQ works, but the original paper introducing it appears to be <a href="http://www.ncbi.nlm.nih.gov/pubmed/17177251">Wiese 2007</a>.  In our case, we didn&#8217;t get any of the truly <em>raw </em>data, instead we got calls of protein levels for 2801 proteins across all our samples.  Each protein is identified by its <a href="http://www.uniprot.org">UniProt</a> id, such as B4DFA2.  To be precise, these are <code style="font-style: inherit;">UniProtKB AC</code> ids, distinct from <code style="font-style: inherit;">UniProtKB ID</code> ids.</p>
+<p>A few weeks ago I had downloaded the UniProt human proteome from <a href="http://www.uniprot.org/downloads">downloads</a> &gt; <a href="ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/proteomes/">proteomes</a> (see also the <a href="ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/proteomes/README">proteomes readme</a>).  At that time, UniProt had 87,621 proteins; now it has 87,656.  According to the <a href="http://www.uniprot.org/downloads">downloads</a> page, UniProt updates every 4 weeks. Versioning is by <span style="text-decoration: underline;">date</span> - see <a href="ftp://ftp.uniprot.org/pub/databases/uniprot/relnotes.txt">release notes</a>.  UniProt does have version numbers for <em>proteins</em> but not for <em>releases</em> &#8211; so as of March 6, 2013, protein A0AVT1 is on its version 70 while Q9UBC2 is on its version 111.  Therefore the date, 2013-03-06, is the only proper version identifier for this <em>release. </em>Note that the proteome file itself <em>contains no version identifiers at all</em> &#8211; you&#8217;ll have to give it a name or put it in a folder that specifies the version.  The proteome comes in <a href="http://en.wikipedia.org/wiki/FASTA_format">FASTA</a> format; my <a title="Finding all the polyQ genes in the human genome" href="/2013/02/12/finding-all-the-polyq-genes-in-the-human-genome/">polyQ post</a> has a very short python script to convert it to something tab-delimited (and parse the gene symbol, where present, out of the description) if you like.</p>
+<p>In our proteomics dataset, each protein also has a &#8220;sequence&#8221; provided, which looks sort of, but not quite, like an amino acid sequence, for instance:</p>
+<pre>B4DFA2	sQLScVVVDDIER;lLDYVPIGPR;iAEESNFPFIk</pre>
+<p>If you grep for these all-caps substrings between the semicolons, they <em>are</em> present in the HUMAN.fasta proteome for the given UniProt id &#8211; just not in that order, and with plenty of other stuff between them.  So these appear to be the individual fragments quantified in iTRAQ and then used to determine the identity of the protein.  I&#8217;m not clear on how definitively these are able to distinguish the protein products of different splicing variants (isoforms) given that they don&#8217;t exhaustively cover the protein.</p>
+<p>UniProt provides mapping tables so you can figure out what RefSeq transcripts these proteins correspond to.  Under <a href="http://www.uniprot.org/downloads">downloads</a> &gt; <a href="ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/idmapping/">ID mapping data</a> (see <a href="ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/idmapping/README">readme</a>).  The full mapping files are huge (~2GB) but I only want human, so <a href="ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/idmapping/by_organism/HUMAN_9606_idmapping.dat.gz">HUMAN_9606_idmapping.dat.gz</a> will do.</p>
+<p>Three lines of bash:</p>
+<pre>wget ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/idmapping/by_organism/HUMAN_9606_idmapping.dat.gz
+gunzip HUMAN_9606_idmapping.dat.gz
+grep RefSeq_NT HUMAN_9606_idmapping.dat | cut -f1,3 &gt; uniprot-refseqnt.tab</pre>
+<p>Will get you a two-column lookup table matching the UniProt ids to RefSeq transcripts:</p>
+<pre>$ head uniprot-refseqnt.tab 
+P31946 NM_003404.3
+P31946 NM_139323.2
+P62258 NM_006761.4
+Q04917 NM_003405.3
+P61981 NM_012479.3
+P31947 NM_006142.3
+P27348 NM_006826.2
+P63104 NM_001135699.1
+P63104 NM_001135700.1
+P63104 NM_001135701.1</pre>
+<p>Note it&#8217;s much shorter than the proteome:</p>
+<pre>$ cat uniprot-refseqnt.tab | wc -l
+41614</pre>
+<p>And the relationship between proteins and transcripts is many-to-many.  The number of unique proteins and transcripts represented is yet fewer:</p>
+<pre>$ cut -f1 uniprot-refseqnt.tab | sort | uniq | wc -l
+25794
+$ cut -f2 uniprot-refseqnt.tab | sort | uniq | wc -l
+33654</pre>
+<p>Earlier I implied that the <code>UniProtKB_AC</code> ids are the unique identifiers of both my proteomics data and the UniProt reference human proteome.  That is <em>sort of</em> true.  In fact, both the reference proteome and my data contain different isoforms of the same proteins.  For instance:</p>
+<pre>$ cat 2013-03-06/uniprot.tab | cut -f1 | grep Q9ULK2
+Q9ULK2
+Q9ULK2-2
+Q9ULK2-3</pre>
+<p>And as far as UniProt seems to be concerned, only the first six characters Q9ULK2 comprise the <code>UniProtKB_AC</code> id, even though the longer form is required to uniquely specify an entry in the <code>HUMAN.fasta</code> reference, which I have here parsed into <code>uniprot.tab</code>.  UniProt&#8217;s mapping files, including <code>HUMAN_9606_idmapping.dat.gz</code> which I have here parsed into <code>uniprot-refseqnt.tab</code>, as well as any mapping files you obtain through their web GUI (which we&#8217;ll do in a moment) <em>only</em> map the six character base IDs and will fail to match any isoforms with a suffix such as <code>-2</code>.</p>
+<p>To prove to yourself that the RefSeq mapping table does not include isoforms, try getting the substring of the <code>UniProtKB_AC</code> id column starting from the seventh character:</p>
+<pre>cat 2013-03-06/uniprot-refseqnt.tab | awk '{print substr($1,7,10)}' | sort -u
+# returns only the empty string</pre>
+<p>(Thanks to adambliss <a href="/2013/03/15/mapping-proteomics-data-to-uniprot-refseq-and-gene-symbol/#comment-263">below</a> for the <code>sort -u</code> trick)</p>
+<p>Whereas if you do this for the reference proteome:</p>
+<pre>cat 2013-03-06/uniprot.tab | awk '{print substr($1,7,10)}' | sort -u
+# you get everything from -2 to -35</pre>
+<p>So in a moment we will need to perform id mapping based on just the six-character core id, which I will hereafter call <code>uniprotkb_ac6</code>, and then handle isoforms separately.  But since both my proteomics data and the reference proteome <em>do</em> contain isoforms, first I am interested to check whether all of my proteins are even in the reference.    To do that, I cut from each file the column with just the full (isoform-specific) uniprot ids and use <code style="font-style: inherit;">diff</code> to compare the two and see which, if any, of my proteins are not in the reference proteome:</p>
+<pre>$ cat protein_Expression_matrices_all_2801_proteins.txt | cut -f1 | tail -n+9 | head -n-7 | sort -u &gt; proteomics.uniprotkb_ac_full
+$ cat 2013-03-06/uniprot.tab | cut -f1 | sort -u &gt; uniprot.uniprotkb_ac_full
+$ diff uniprot.uniprotkb_ac_full proteomics.uniprotkb_ac_full | grep $'&gt;' | wc -l
+223
+$ diff uniprot.uniprotkb_ac_full proteomics.uniprotkb_ac_full | grep $'&gt;' | head -3
+&gt; A2RRF3
+&gt; A6NE29
+&gt; A6NFM2</pre>
+<p>About 8% of my quantified proteins are missing from the reference.  When I Googled the first example, A2RRF3, I found it was indeed a UniProt protein &#8211; but the reference symbol had managed to already change in the time since our proteomics provider generated the data a few weeks ago:</p>
+<p><a href="http://www.uniprot.org/uniprot/Q9UBC2?version=*"><img class="alignnone size-full wp-image-1807" title="" src="/wp-content/uploads/2013/03/uniprot-a2rrf3-q9ubc2-update.jpg"/></a></p>
+<p>Still others had been wholesale <em>deleted</em> from UniProt:</p>
+<p><a href="http://www.uniprot.org/uniprot/A6NGQ5"><img class="alignnone size-full wp-image-1808" title="" src="/wp-content/uploads/2013/03/uniprot-a6ngq5-deleted.jpg"/></a></p>
+<p>The <a href="http://www.uniprot.org/faq/11">UniProt FAQ on deletions</a> says most deletions happen when the putative protein-coding sequence in the relevant DNA reference is deleted, or when someone realizes that an <a href="http://en.wikipedia.org/wiki/Open_reading_frame">open reading frame</a> doesn&#8217;t actually encode a protein like they thought it did.  Clearly someone is wrong, then &#8211; either the deleted entries <em>do </em>actually have real proteins associated with them, or our proteomics provider is wrong to think they detected some of these proteins.</p>
+<p>Now it&#8217;s clear we have three mapping issues to resolve:</p>
+<ol>
+<li>Old uniprotkb_ac6 ids to new uniprotkb_ac6 ids (*I learned the hard way this mapping cannot be done with the full id, only with the six character core)</li>
+<li>New uniprotkb_ac6 ids to RefSeq transcript ids</li>
+<li>Preserving isoform-specific information when doing mapping #1 above.</li>
+</ol>
+<p>This means I need to separate the isoform-specific information from the uniprotkb_ac6 id but keep it around for later.  I take our protein data file (which has <em>old</em> ids) and the reference (which has <em>new </em>2013-03-06 ids) and add two columns to the front of each: the core uniprotkb_ac6, and then just the isoform suffix.  For the proteomics data, I also start from line 9 and end at line -7 to remove the header and some other extraneous stuff:</p>
+<pre>cat protein_Expression_matrices_all_2801_proteins.txt | awk '{print substr($1,1,6)"\t"substr($1,7,10)"\t"$0}' | tail -n+9 | head -n-7 &gt; proteomics.all
+cat 2013-03-06/uniprot.tab | awk '{print substr($1,1,6)"\t"substr($1,7,10)"\t"$0}' &gt; uniprot.all</pre>
+<p>(Aside: I am a <a href="http://superuser.com/questions/323060/what-is-the-general-consensus-on-useless-use-of-cat">useless use of cat</a> enthusiast for (1) clarity and (2) ease of pressing up key and then editing the downstream commands without pressing left all the way to home. <strong>update &#8211; </strong><a href="/2013/03/15/mapping-proteomics-data-to-uniprot-refseq-and-gene-symbol/#comment-263">but crtl-a works!</a>)</p>
+<p>OK, so first time I did this I didn&#8217;t realize UniProt couldn&#8217;t map isoforms, so I uploaded a list of unique <em>full</em> ids including the isoform info (ex. Q92945<span style="text-decoration: underline;">-2</span>) to UniProt&#8217;s Retrieve tool, and the isoform-specific ids were &#8216;rejected&#8217;:</p>
+<p><img title="" src="/wp-content/uploads/2013/03/uniprot-retrieve1.jpg"/></p>
+<p>The output lists which proteins are rejected, replaced or deleted:</p>
+<p><img title="" src="/wp-content/uploads/2013/03/uniprot-rejected-replaced-deleted.jpg"/></p>
+<p>Clearly UniProt&#8217;s tool is designed to only handle the six-character ids.  Here is how I get a list of just the unique (old) uniprotkb_ac6 ids from my proteomics data so that I can map those to their (new) counterparts in the current 2013-03-06 release:</p>
+<pre>$ cat proteomics.all | cut -f1 | sort -u &gt; proteomics.uniprotkb_ac6_old
+$ wc -l proteomics.uniprotkb_ac6_old
+2799 proteomics.uniprotkb_ac6_old</pre>
+<p>And when I upload that list to the Retrieve tool, none are &#8216;rejected&#8217; &#8211; plenty are still &#8216;deleted&#8217;.  Retrieve is useful for knowing what happened to your proteins but it doesn&#8217;t actually let you build mapping tables.  The mapping between current <code>uniprotkb_ac6 </code>ids is <em>not </em>included in the HUMAN_9606_idmapping.dat.gz file we downloaded earlier, nor is it available through any API. As far as I can tell, this mapping is only possible through the web GUI&#8217;s ID Mapping interface:</p>
+<p><img class="alignnone size-full wp-image-1839" title="" src="/wp-content/uploads/2013/03/uniprot-create-mapping-table-2.jpg"/></p>
+<p>The mapping table you download will include all of the replaced ids, but the deleted ones will simply be omitted.  You may notice that the &#8220;To&#8221; dropdown menu in the ID Mapping tool has &#8220;RefSeq Nucleotide&#8221; as one option.  That looks easy: could we just map directly from the (outdated) UniProtKB_AC6 identifiers in the proteomics data to the current RefSeq transcript ids?  Alternately could we download the list of <em>new </em>UniProtKB_AC6 ids, then re-upload those to get RefSeq transcripts?  You&#8217;d think so, but when I try either of these approaches, very few proteins map (only 877 of 2646 unique new UniProtKB_AC6 ids find a corresponding transcript) and some things fail to map that obviously should &#8211; for instance, Q9UBC2 does not map to a transcript:</p>
+<p><img class="alignnone size-full wp-image-1814" title="" src="/wp-content/uploads/2013/03/uniprot-q9ubc2-does-not-map.jpg"/></p>
+<p>Even though it totally <em>does</em> have RefSeq transcripts associated with it:</p>
+<p><a href="http://www.uniprot.org/uniprot/Q9UBC2"><img class="alignnone size-full wp-image-1815" title="" src="/wp-content/uploads/2013/03/uniprot-q9ubc2-does-have-transcripts.jpg"/></a></p>
+<p>So to my mind the safest thing to do is use UniProt&#8217;s ID Mapping service to convert old to new UniProtKB_AC6 ids, then just look <em>those</em> up in the full human mapping table we downloaded and grepped earlier (<code>uniprot-refseqnt.tab</code>).  RefSeq mappings (as shown above for instance) <em>are </em>present in that table:</p>
+<pre>$ grep Q9UBC2 uniprot-refseqnt.tab 
+Q9UBC2 NM_001258374.1
+Q9UBC2 NM_021235.2</pre>
+<p>At this point I&#8217;ve got four files:</p>
+<ul>
+<li>Proteomics data, i.e. protein levels</li>
+<li>Mapping from old to new UniProt ids</li>
+<li>Mapping from new UniProt ids to RefSeq transcripts</li>
+<li>UniProt human proteome</li>
+</ul>
+<p>And here&#8217;s the table schema if I want to join these in SQL:</p>
+<p><img class="alignnone size-full wp-image-1840" title="" src="/wp-content/uploads/2013/03/uniprot-mapping-table-schema-2.jpg"/></p>
+<p>Note that I&#8217;m making the assumption that even if a protein&#8217;s <code>uniprotkb_ac6</code> id has changed, the old protein&#8217;s <code>-2</code> isoform will still correspond to the new protein&#8217;s <code>-2</code> isoform.  I don&#8217;t know whether that&#8217;s a safe assumption (and nothing on UniProt&#8217;s website appears to answer this question) so I&#8217;ll need to be careful about isoform-specific analyses later on.  But if you dig the above E-R diagram anyway, here are the create table statements:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #008000; font-weight: bold;">drop</span> <span style="color: #008000; font-weight: bold;">table</span> if <span style="color: #008000; font-weight: bold;">exists</span> proteomics_proteins;
+<span style="color: #008000; font-weight: bold;">create</span> <span style="color: #008000; font-weight: bold;">table</span> proteomics_proteins (
+   pid <span style="color: #008000;">serial</span> <span style="color: #008000; font-weight: bold;">primary</span> <span style="color: #008000; font-weight: bold;">key</span>,
+   uniprotkb_ac6_old <span style="color: #008000;">varchar</span>,
+   isoform <span style="color: #008000;">varchar</span>,
+   uniprotkb_ac_full_old <span style="color: #008000;">varchar</span>,
+   sequence <span style="color: #008000;">varchar</span>,
+   description <span style="color: #008000;">varchar</span>,
+   rest_of_the_data <span style="color: #008000;">varchar</span>
+);
+<span style="color: #008000; font-weight: bold;">drop</span> <span style="color: #008000; font-weight: bold;">table</span> if <span style="color: #008000; font-weight: bold;">exists</span> uniprot_version_mapping;
+<span style="color: #008000; font-weight: bold;">create</span> <span style="color: #008000; font-weight: bold;">table</span> uniprot_version_mapping (
+   uniprotkb_ac6_old <span style="color: #008000;">varchar</span>,
+   uniprotkb_ac6_20130306 <span style="color: #008000;">varchar</span>
+);
+<span style="color: #008000; font-weight: bold;">drop</span> <span style="color: #008000; font-weight: bold;">table</span> if <span style="color: #008000; font-weight: bold;">exists</span> uniprot_20130306;
+<span style="color: #008000; font-weight: bold;">create</span> <span style="color: #008000; font-weight: bold;">table</span> uniprot_20130306 (
+   uniprotkb_ac6_20130306 <span style="color: #008000;">varchar</span>,
+   isoform <span style="color: #008000;">varchar</span>,
+   uniprotkb_ac_full_20130306 <span style="color: #008000;">varchar</span>,
+   gene_symbol <span style="color: #008000;">varchar</span>,
+   description <span style="color: #008000;">varchar</span>,
+   sequence <span style="color: #008000;">varchar</span>
+);
+<span style="color: #008000; font-weight: bold;">drop</span> <span style="color: #008000; font-weight: bold;">table</span> if <span style="color: #008000; font-weight: bold;">exists</span> uniprot_refseq_mapping;
+<span style="color: #008000; font-weight: bold;">create</span> <span style="color: #008000; font-weight: bold;">table</span> uniprot_refseq_mapping (
+   uniprotkb_ac6_20130306 <span style="color: #008000;">varchar</span>,
+   refseq_transcript <span style="color: #008000;">varchar</span>
+);
+<span style="color: #408080; font-style: italic;">-- copy the tables from disk here</span>
+<span style="color: #008000; font-weight: bold;">alter</span> <span style="color: #008000; font-weight: bold;">table</span> proteomics_proteins <span style="color: #008000; font-weight: bold;">add</span> <span style="color: #008000; font-weight: bold;">column</span> gene_symbol <span style="color: #008000;">varchar</span>;
+<span style="color: #008000; font-weight: bold;">update</span> proteomics_proteins <span style="color: #008000; font-weight: bold;">set</span> gene_symbol <span style="color: #666666;">=</span> <span style="color: #008000; font-weight: bold;">substring</span>(<span style="color: #008000; font-weight: bold;">substring</span>(description <span style="color: #008000; font-weight: bold;">from</span> <span style="color: #ba2121;">'GN=[A-Za-z0-9]*'</span>) <span style="color: #008000; font-weight: bold;">from</span> <span style="color: #666666;">4</span>);</pre>
+</div>
+<p>Note that more than one protein can match one gene symbol, so purists might spin that off into a separate match table &#8211; but since the gene symbols are already included in the reference proteome and in my proteomics data, I just left them there.  When I join my new tables together:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #008000; font-weight: bold;">select</span>   <span style="color: #008000; font-weight: bold;">distinct</span> pp.uniprotkb_ac_full_old
+<span style="color: #008000; font-weight: bold;">from</span>     proteomics_proteins pp, uniprot_version_mapping uv, uniprot_refseq_mapping ur, uniprot_20130306 u
+<span style="color: #008000; font-weight: bold;">where</span>    uv.uniprotkb_ac6_20130306 <span style="color: #666666;">=</span> ur.uniprotkb_ac6_20130306
+<span style="color: #008000; font-weight: bold;">and</span>      uv.uniprotkb_ac6_20130306 <span style="color: #666666;">=</span> u.uniprotkb_ac6_20130306
+<span style="color: #008000; font-weight: bold;">and</span>      pp.uniprotkb_ac6_old <span style="color: #666666;">=</span> uv.uniprotkb_ac6_old
+<span style="color: #008000; font-weight: bold;">and</span>      pp.isoform <span style="color: #666666;">=</span> u.isoform
+;</pre>
+</div>
+<p>I get 2160 of my 2801 proteins.  This set is limited to those that map to both (1) at least one RefSeq transcript and (2) a corresponding isoform in the current UniProt reference.  This set includes Q9UBC2, the example I gave above that <em>didn&#8217;t</em> map to RefSeq through the ID Mapping tool online but <em>does</em> map using the mapping table I created locally.  So 2160 of 2801 is an improvement, but still, what&#8217;s with some proteins not mapping to a transcript?  When I look at the proteins that still don&#8217;t map:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #008000; font-weight: bold;">select</span>   <span style="color: #666666;">*</span>
+<span style="color: #008000; font-weight: bold;">from</span>     uniprot_version_mapping uv, uniprot_20130306 u
+<span style="color: #008000; font-weight: bold;">where</span>    uv.uniprotkb_ac6_20130306 <span style="color: #666666;">=</span> u.uniprotkb_ac6_20130306
+<span style="color: #008000; font-weight: bold;">and</span>      <span style="color: #008000; font-weight: bold;">not</span> <span style="color: #008000; font-weight: bold;">exists</span> (<span style="color: #008000; font-weight: bold;">select</span> <span style="color: #008000; font-weight: bold;">null</span> <span style="color: #008000; font-weight: bold;">from</span> uniprot_refseq_mapping ur <span style="color: #008000; font-weight: bold;">where</span> ur.uniprotkb_ac6_20130306 <span style="color: #666666;">=</span> uv.uniprotkb_ac6_20130306)
+;</pre>
+</div>
+<p>I find that they almost all <em>do</em> have gene symbols in the UniProt reference proteome (here&#8217;s a quick sample):</p>
+<p><img class="alignnone size-full wp-image-1817" title="" src="/wp-content/uploads/2013/03/uniprot-many-ids-without-transcripts-do-have-gene-symbols.jpg"/></p>
+<p>So it isn&#8217;t as though no one knows the genomic location that codes for these proteins.  Apparently they just haven&#8217;t been assigned to a specific location yet.  In the downstream analysis, then, it&#8217;s not yet clear whether it will make sense to use protein, transcript or gene as the relevant unit of analysis.  Gene would be most inclusive, particularly since even many of the &#8216;deleted&#8217; or &#8216;rejected&#8217; UniProt ids from my proteomics data still have gene symbols.  But gene symbols are neither universal nor unique among my quantified proteins:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #008000; font-weight: bold;">select</span>   <span style="color: #666666;">*</span>
+<span style="color: #008000; font-weight: bold;">from</span>     proteomics_proteins pp
+<span style="color: #008000; font-weight: bold;">where</span>    gene_symbol <span style="color: #008000; font-weight: bold;">is</span> <span style="color: #008000; font-weight: bold;">null</span>
+;
+<span style="color: #408080; font-style: italic;">-- 6 proteins have no gene_symbol</span>
+<span style="color: #008000; font-weight: bold;">select</span>   gene_symbol, <span style="color: #008000; font-weight: bold;">count</span>(<span style="color: #666666;">*</span>) n
+<span style="color: #008000; font-weight: bold;">from</span>     proteomics_proteins pp
+<span style="color: #008000; font-weight: bold;">group</span> <span style="color: #008000; font-weight: bold;">by</span> <span style="color: #666666;">1</span>
+<span style="color: #008000; font-weight: bold;">order</span> <span style="color: #008000; font-weight: bold;">by</span> <span style="color: #666666;">2</span> <span style="color: #008000; font-weight: bold;">desc</span>
+;
+<span style="color: #408080; font-style: italic;">-- some gene_symbol are associated with &gt; 1 protein</span></pre>
+</div>
+<p>The multiple proteins per gene symbol includes 20 different proteins that all have the gene symbol listed simply as &#8216;HLA&#8217;.  Even once mapping to transcripts and genes is done, the question of how to handle ambiguity and multiplicity in the downstream analysis will not be trivial.</p>

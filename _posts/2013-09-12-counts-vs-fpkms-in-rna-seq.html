@@ -1,0 +1,294 @@
+---
+layout: post
+title: "Counts vs. FPKMs in RNA-seq"
+author: ericminikel
+date: 2013-09-12 09:44:37
+---
+<p><strong>motivation</strong></p>
+<p>Most of the time, the reason people perform RNA-seq is to quantify gene expression levels.  In theory, RNA-seq is <a href="http://en.wikipedia.org/wiki/Level_of_measurement#Ratio_scale">ratio-level data</a>, and you should be legitimately able to compare Gene A in Sample 1 vs. Sample 2 as well as Gene A vs. Gene B within Sample 1.</p>
+<p>There are two main ways of measuring the expression of a gene, or transcript, or whatever, in RNA-seq data:</p>
+<ol>
+<li><strong>counts</strong> are simply the number of reads overlapping a given feature such as a gene.</li>
+<li><strong>FPKMs</strong> or <span style="text-decoration: underline;">F</span>ragments <span style="text-decoration: underline;">P</span>er <span style="text-decoration: underline;">K</span>ilobase of exon per <span style="text-decoration: underline;">M</span>illion reads are much more complicated.  Fragment means fragment of DNA, so the two reads that comprise a paired-end read count as one.  Per kilobase of exon means the counts of fragments are then normalized by dividing by the total length of all exons in the gene (or transcript).  This bit of magic makes it possible to compare Gene A to Gene B even if they are of different lengths.  Per million reads means this value is then normalized against the library size.  This bit of magic makes it possible to compare Gene A in Sample 1 to Sample 2 even if Sample 1&#8242;s RNA-seq library has 60 million pairs of reads and Sample 2&#8242;s library has only 30 million pairs of reads.</li>
+</ol>
+<p>(In fact, as this post will show, there are more differences between the two methods than just these &#8211; I&#8217;ll return to this in the conclusion.)</p>
+<p>To my mind, normalizing by exonic length and library size seems like a no-brainer, so I use FPKMs and had never understood why anyone would use counts.  But if you really want to defend your analysis you need to be able to answer any question with &#8220;Yes, I tried that and here&#8217;s what I found,&#8221; and so I wanted to repeat my analysis using counts.  Meanwhile, a colleague who&#8217;s into counts told me that FPKMs apply too much normalization, glossing away some of the difference between one sample and another.  Why would that be the case?  I decided as long as I was going to repeat my analyses using counts I might as well do a side-by-side comparison with FPKMs in order to really understand how the behavior differs.</p>
+<p>To compare the two, I turned to my go-to RNA-seq dataset: <a title="Tissue-specific gene expression data based on Human BodyMap 2.0" href="/2013/07/11/tissue-specific-gene-expression-data-based-on-human-bodymap-2-0/">Human BodyMap 2.0</a>.  For the purposes of this exercise, I&#8217;ll look only at known transcripts.</p>
+<p><strong>how to calculate FPKMs</strong></p>
+<p>I previously calculated <a title="Tissue-specific gene expression data based on Human BodyMap 2.0" href="/2013/07/11/tissue-specific-gene-expression-data-based-on-human-bodymap-2-0/">FPKMs for the Human BodyMap 2.0 data</a>, and <a href="https://gist.github.com/ericminikel/7533289">here is the bash script</a> I used to do it.  I used <a href="http://cufflinks.cbcb.umd.edu/">Cufflinks</a> [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3146043/">Trapnell 2010</a>].</p>
+<p><strong>how to calculate counts</strong></p>
+<p>You can calculate counts using <a href="https://code.google.com/p/bedtools/">bedtools</a> <a href="http://bedtools.readthedocs.org/en/latest/content/tools/multicov.html">multicov</a>, but you need a transcript annotation file in BED format to tell bedtools where to look &#8211; unlike Cufflinks with the <code>-N 1</code> setting, multicov is not going to go out and discover novel transcripts for you. To make the counts directly comparable to the FPKMs I calculated earlier, I wanted to use <a href="ftp://ftp.ensembl.org/pub/release-70/gtf/homo_sapiens/Homo_sapiens.GRCh37.70.gtf.gz">that same transcript annotation file</a> and convert it from GTF to BED format.</p>
+<p>Right off the bat, things get complicated.  I noticed that the original transcript annotation file has one row per every combination of one transcript with an exon or coding sequence or start or stop codon.  Consider PRNP, which only has two exons (exon 1 is the 5&#8242; UTR and exon 2 is the coding sequence and 3&#8242;UTR) and really only one transcript &#8211; there are no major splicing variations I&#8217;m aware of.  It has 18 rows in this file.</p>
+<pre>cat Homo_sapiens.GRCh37.70.gtf | grep PRNP | wc -l
+18</pre>
+<p>That&#8217;s because 4 distinct versions of PRNP somehow made it into Ensembl&#8217;s database as distinct transcripts &#8211; some blatantly have the wrong coding sequence coordinates (the real coding sequence ends at chr20:4680625 in hg19).</p>
+<p>In any case, if it&#8217;s that bad for PRNP you can imagine how many rows are present for genes that legitimately have a lot of splicing variants:</p>
+<pre>cat Homo_sapiens.GRCh37.70.gtf | grep "gene_name \"TTN\"" | wc -l
+3393</pre>
+<p>This presents us with a problem.  Now, if we <em>wanted</em> counts for each possible exon, we could just use the <a href="https://code.google.com/p/bedops/wiki/gtf2bed">gtf2bed</a> tool in <a href="https://code.google.com/p/bedops/">bedops</a> which will convert <a href="ftp://ftp.ensembl.org/pub/release-70/gtf/homo_sapiens/Homo_sapiens.GRCh37.70.gtf.gz">that original GTF file</a> into a BED file, line by line:</p>
+<pre>gtf2bed &lt; ../gtf/Homo_sapiens.GRCh37.70.gtf &gt; ../gtf/Homo_sapiens.GRCh37.70.bed</pre>
+<p>(Run time: ~ 5 mins). But more likely our unit of analysis is transcripts or gene symbols.  If we were to do counts by exon and then group by transcript or gene symbol and take the sum of exon counts, we&#8217;d be quadruple-counting each exon in PRNP and counting each exon in TTN many more times than that!  What we need is to convert the GTF file to one row per, say, gene symbol, if gene symbol is our unit of analysis.</p>
+<p>It turns out that <a href="https://twitter.com/simulx">Erik Aronesty</a>&#8216;s <a href="https://code.google.com/p/ea-utils/">ea-utils</a> contains <a href="http://ea-utils.googlecode.com/svn/trunk/clipper/gtf2bed">a Perl script</a> to do just that.  It is named gtf2bed just like the bedops tool above, so for clarity I&#8217;ve renamed it <code>gtf2bed_2.pl</code>.  To download and run it:</p>
+<pre>wget http://ea-utils.googlecode.com/svn/trunk/clipper/gtf2bed -O gtf2bed_2.pl
+gtf2bed_2.pl Homo_sapiens.GRCh37.70.gtf gene_name &gt; Homo_sapiens.GRCh37.70.gtf.gene_name.bed</pre>
+<p>Which takes ~1 minute.  (Warning: if you&#8217;re using this post as a pipeline, note that using the resulting BED file without modification can give very nonsensical results for genes listed in multiple loci &#8211; see discussion of SNORD60 further on in this post).</p>
+<p>If you open the resulting bed file you&#8217;ll see that the first three columns are simply the chromosome, (earliest) transcription start site and (latest) transcription end site for the gene &#8211; or in other words, the union of all transcribed sites in that gene over all possible transcripts.</p>
+<p>Now, gtf2bed_2.pl observes very proper <a href="http://genome.ucsc.edu/FAQ/FAQformat.html#format1">BED12 format</a> and therefore <em>does</em> preserve the exon structure information in the form of the blockSizes and blockStarts columns.  But multicov doesn&#8217;t read anything but the first three columns.  Therefore when you do counts on this file we just created, you&#8217;ll be counting introns and exons alike.  As far as I can tell by asking around, this is how everyone does their RNA-seq counts.</p>
+<p>Contrast this with FPKMs, where Cufflinks will count only exonic reads and will normalize by a gene&#8217;s (or transcript&#8217;s) total exon length, if you do counts (at least according to this pipeline / unless you do other, fancier stuff) you are including intronic reads.  So counts &#8211; unlike FPKMs &#8211; will be affected by how much pre-mRNA contamination (and therefore intronic coverage) you have in your libraries.</p>
+<p>With all that said, next I ran <a href="http://bedtools.readthedocs.org/en/latest/content/tools/multicov.html">multicov</a>, like so:</p>
+<pre>bedtools multicov -bams GRCh37.HumanBodyMap.adipose.1.bam GRCh37.HumanBodyMap.adrenal.1.bam GRCh37.HumanBodyMap.blood.1.bam GRCh37.HumanBodyMap.brain.1.bam GRCh37.HumanBodyMap.breast.1.bam GRCh37.HumanBodyMap.colon.1.bam GRCh37.HumanBodyMap.heart.1.bam GRCh37.HumanBodyMap.kidney.1.bam GRCh37.HumanBodyMap.liver.1.bam GRCh37.HumanBodyMap.lung.1.bam GRCh37.HumanBodyMap.lymph.1.bam GRCh37.HumanBodyMap.ovary.1.bam GRCh37.HumanBodyMap.prostate.1.bam GRCh37.HumanBodyMap.skeletal_muscle.1.bam GRCh37.HumanBodyMap.testes.1.bam GRCh37.HumanBodyMap.thyroid.1.bam -bed ../gtf/Homo_sapiens.GRCh37.70.gtf.gene_name.bed &gt; counts.bed</pre>
+<p>Which took about 50 hours of CPU time.</p>
+<p>By the way, generating the list of BAM files for this command is annoying; this time I did it with <code>echo -n</code>:</p>
+<pre>for tissue in {adipose,adrenal,blood,brain,breast,colon,heart,kidney,liver,lung,lymph,ovary,prostate,skeletal_muscle,testes,thyroid}; do    echo -n "GRCh37.HumanBodyMap.$tissue.1.bam "; done</pre>
+<p>The resulting file will have the original 12-column bed file created by gtf2bed_2.pl plus, in this case, 16 additional columns for each of the 16 BAMs I called counts on using multicov.</p>
+<p><strong>a couple of covariates</strong></p>
+<p>Since FPKMs are, in theory, just counts normalized by library size and transcript size, I figured I should have those two values on hand for this analysis as well.  I calculated the library size as number of reads in each BAM with <code>samtools view -c</code>:</p>
+<pre>for tissue in {adipose,adrenal,blood,brain,breast,colon,heart,kidney,liver,lung,lymph,ovary,prostate,skeletal_muscle,testes,thyroid}
+do
+   bsub -q medium -W 05:00 "samtools view -c /data/HD/dataset/humanbodymap2.0/GRCh37.HumanBodyMap.$tissue.1.bam &gt; /data/HD/dataset/humanbodymap2.0/$tissue.readcount"
+done</pre>
+<p>Which takes a surprisingly long time (~30 min/BAM), hence the need to submit each one as a job.</p>
+<p>The other covariate I wanted was the length of each gene.  But <em>which</em> length, you ask?  Using the BED file I just created, it&#8217;s easy to get the length from the earliest transcription start site to the latest possible transcription end site:</p>
+<pre>cat Homo_sapiens.GRCh37.70.gtf.gene_name.bed | awk '{print $4"\t"$3-$2}' &gt; gene.lengths.txt</pre>
+<p>If you want the exonic length, that&#8217;s slightly tricker.  Obviously, Cufflinks knows this information in some form since it&#8217;s used for normalization, so I looked back at the <code style="font-style: inherit;">isoforms.fpkm_tracking</code> file from Cufflinks and saw that indeed it has a length value for each transcript.   You can pull that out like so:</p>
+<pre>cat combined/all.isoforms.fpkm_tracking | grep adipose | awk '{print $2" "$9}' &gt; transcripts.length # $2 is Ensemble transcript ID, $9 is length</pre>
+<p>But <code>genes.fpkm_tracking</code> does not have this for genes, presumably since choosing one length as &#8220;the&#8221; length for a gene with multiple transcripts is awkward.  With some fancier scripting and bedtools <a href="http://bedtools.readthedocs.org/en/latest/content/tools/merge.html"><code>merge</code></a>, you could get the length of the union of all possible exons in a gene, sort of analogous to <code>gene.lengths.txt</code> file we just created, which is the length of the union of all possible transcripts. But I won&#8217;t necessarily need that for today.</p>
+<p>For the sake of argument, I also calculated straight-up average lengths for each gene symbol, crude though that is.  First I grabbed gene symbols and length in bash:</p>
+<pre>cat combined/all.isoforms.fpkm_tracking | grep adipose | awk '{print $6" "$9}' &gt; genesymbols.length # $6 is gene symbol</pre>
+<p>and then just some SQL wrapped in R:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">library(sqldf)
+lengths <span style="color: #666666;">=</span> read.table(<span style="color: #ba2121;">'genesymbols.length'</span>)
+colnames(lengths)<span style="color: #666666;">=</span>c(<span style="color: #ba2121;">'gene_symbol'</span>,<span style="color: #ba2121;">'bases'</span>)
+avlen <span style="color: #666666;">=</span> sqldf(<span style="color: #ba2121;">"select gene_symbol, avg(bases) avlen from lengths group by 1 order by 1;"</span>)
+write.table(avlen,<span style="color: #ba2121;">'genesymbols.av.length'</span>,row.names<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">FALSE</span>,col.names<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">FALSE</span>,quote<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">FALSE</span>)</pre>
+</div>
+<p><strong>comparison</strong></p>
+<p>With the counts, FPKMs and covariates in hand I set out to understand how and why these measures differed from one another.</p>
+<p>First, the boring setup stuff:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># Eric Minikel</span>
+<span style="color: #408080; font-style: italic;"># 2013-09-11</span>
+<span style="color: #408080; font-style: italic;"># CureFFI.org</span>
+<span style="color: #408080; font-style: italic;"># Comparing counts vs. FPKMs for the same Human BodyMap 2.0 data</span>
+
+setwd(<span style="color: #ba2121;">'c:/sci/026rplcl/hbm'</span>)
+options(stringsAsFactors<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">FALSE</span>)
+library(reshape2)
+library(sqldf)
+
+<span style="color: #408080; font-style: italic;"># read in data</span>
+fpkms <span style="color: #666666;">=</span> read.csv(<span style="color: #ba2121;">'gene.matrix.csv'</span>) <span style="color: #408080; font-style: italic;"># see /2013/07/11/tissue-specific-gene-expression-data-based-on-human-bodymap-2-0/</span>
+counts <span style="color: #666666;">=</span> read.table(<span style="color: #ba2121;">'counts.gene_name.bed'</span>,sep<span style="color: #666666;">=</span><span style="color: #ba2121;">'\t'</span>)
+genelengths <span style="color: #666666;">=</span> read.table(<span style="color: #ba2121;">'gene.lengths.txt'</span>,sep<span style="color: #666666;">=</span><span style="color: #ba2121;">'\t'</span>)
+libsizes <span style="color: #666666;">=</span> read.table(<span style="color: #ba2121;">'readcounts.txt'</span>,sep<span style="color: #666666;">=</span><span style="color: #ba2121;">'\t'</span>)
+exoniclengths <span style="color: #666666;">=</span> read.table(<span style="color: #ba2121;">'genesymbols.av.exonic.length'</span>)
+refseq <span style="color: #666666;">=</span> read.table(<span style="color: #ba2121;">'hg19.refseq.gene_.symbols.txt'</span>) <span style="color: #408080; font-style: italic;"># /wp-content/uploads/2013/09/hg19.refseq.gene_.symbols.txt</span>
+
+<span style="color: #408080; font-style: italic;"># make informative column names</span>
+tissue.names <span style="color: #666666;">=</span> c(<span style="color: #ba2121;">"adipose"</span>,<span style="color: #ba2121;">"adrenal"</span>,<span style="color: #ba2121;">"blood"</span>,<span style="color: #ba2121;">"brain"</span>,<span style="color: #ba2121;">"breast"</span>,<span style="color: #ba2121;">"colon"</span>,<span style="color: #ba2121;">"heart"</span>,<span style="color: #ba2121;">"kidney"</span>,<span style="color: #ba2121;">"liver"</span>,<span style="color: #ba2121;">"lung"</span>,<span style="color: #ba2121;">"lymph"</span>,<span style="color: #ba2121;">"ovary"</span>,<span style="color: #ba2121;">"prostate"</span>,<span style="color: #ba2121;">"skeletal_muscle"</span>,<span style="color: #ba2121;">"testes"</span>,<span style="color: #ba2121;">"thyroid"</span>)
+bed12.colnames <span style="color: #666666;">=</span> c(<span style="color: #ba2121;">"chrom"</span>,<span style="color: #ba2121;">"chromStart"</span>,<span style="color: #ba2121;">"chromEnd"</span>,<span style="color: #ba2121;">"name"</span>,<span style="color: #ba2121;">"score"</span>,<span style="color: #ba2121;">"strand"</span>,<span style="color: #ba2121;">"thickStart"</span>,<span style="color: #ba2121;">"thickEnd"</span>,<span style="color: #ba2121;">"itemRgb"</span>,<span style="color: #ba2121;">"blockCount"</span>,<span style="color: #ba2121;">"blockSizes"</span>,<span style="color: #ba2121;">"blockStarts"</span>)
+colnames(counts) <span style="color: #666666;">=</span> c(bed12.colnames,tissue.names)
+colnames(genelengths) <span style="color: #666666;">=</span> c(<span style="color: #ba2121;">"genesymbol"</span>,<span style="color: #ba2121;">"length"</span>)
+colnames(libsizes) <span style="color: #666666;">=</span> c(<span style="color: #ba2121;">"tissue"</span>,<span style="color: #ba2121;">"reads"</span>)
+colnames(fpkms)[<span style="color: #666666;">1</span>] <span style="color: #666666;">=</span> <span style="color: #ba2121;">"genesymbol"</span>
+colnames(exoniclengths) <span style="color: #666666;">=</span> c(<span style="color: #ba2121;">"genesymbol"</span>,<span style="color: #ba2121;">"length"</span>)
+colnames(refseq)[<span style="color: #666666;">1</span>] <span style="color: #666666;">=</span> <span style="color: #ba2121;">"genesymbol"</span>
+<span style="color: #408080; font-style: italic;"># double check that genes are not double counted, as we'll need 1:1 joins later</span>
+dim(fpkms)[<span style="color: #666666;">1</span>] <span style="color: #666666;">==</span> length(unique(fpkms$genesymbol)) <span style="color: #408080; font-style: italic;"># TRUE</span>
+dim(counts)[<span style="color: #666666;">1</span>] <span style="color: #666666;">==</span> length(unique(counts$name)) <span style="color: #408080; font-style: italic;"># TRUE</span>
+
+<span style="color: #408080; font-style: italic;"># melt the matrices down to 3-column relational form</span>
+fpkm_rel <span style="color: #666666;">=</span> melt(fpkms)
+colnames(fpkm_rel) <span style="color: #666666;">=</span> c(<span style="color: #ba2121;">"genesymbol"</span>,<span style="color: #ba2121;">"tissue"</span>,<span style="color: #ba2121;">"fpkm"</span>)
+count_rel <span style="color: #666666;">=</span> melt(counts[,c(<span style="color: #666666;">4</span>,<span style="color: #666666;">13</span>:<span style="color: #666666;">28</span>)]) <span style="color: #408080; font-style: italic;"># col 4 is "name" i.e. gene symbol, and cols 13:28 are the count values by tissue</span>
+colnames(count_rel) <span style="color: #666666;">=</span> c(<span style="color: #ba2121;">"genesymbol"</span>,<span style="color: #ba2121;">"tissue"</span>,<span style="color: #ba2121;">"count"</span>)
+
+<span style="color: #408080; font-style: italic;"># join datasets together</span>
+sql_query <span style="color: #666666;">=</span> <span style="color: #ba2121;">"</span>
+<span style="color: #ba2121;">select   f.genesymbol, f.tissue, f.fpkm, c.count, gl.length glength, el.length elength, ls.reads</span>
+<span style="color: #ba2121;">from     fpkm_rel f, count_rel c, genelengths gl, exoniclengths el, libsizes ls</span>
+<span style="color: #ba2121;">where    f.genesymbol == c.genesymbol</span>
+<span style="color: #ba2121;">and      f.tissue == c.tissue</span>
+<span style="color: #ba2121;">and      f.tissue == ls.tissue</span>
+<span style="color: #ba2121;">and      f.genesymbol == gl.genesymbol</span>
+<span style="color: #ba2121;">and      f.genesymbol == el.genesymbol</span>
+<span style="color: #ba2121;">order by 1, 2</span>
+<span style="color: #ba2121;">;</span>
+<span style="color: #ba2121;">"</span>
+merged <span style="color: #666666;">=</span> sqldf(sql_query)</pre>
+</div>
+<p>Now we can ask questions.</p>
+<p>Most basic question: are counts and FPKMs correlated?  I would certainly hope so!  We can ask this a couple ways.  First, let&#8217;s ask this question across all gene symbol &#8211; tissue combinations.</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">cor.test(merged$fpkm, merged$count, method<span style="color: #666666;">=</span><span style="color: #ba2121;">'pearson'</span>)  <span style="color: #408080; font-style: italic;"># rho = .006, p = 1.7e-7</span>
+cor.test(merged$fpkm, merged$count, method<span style="color: #666666;">=</span><span style="color: #ba2121;">'spearman'</span>) <span style="color: #408080; font-style: italic;"># rho = .81,  p &lt; 2e-16</span></pre>
+</div>
+<p>This is strange. In linear space (<a href="http://udel.edu/~mcdonald/statregression.html">Pearson&#8217;s correlation</a>), the counts and FPKMs are significantly but barely correlated, with rho = .006. In rank space (<a href="http://udel.edu/~mcdonald/statspearman.html">Spearman&#8217;s correlation</a>) they&#8217;re quite strongly correlated, rho = .81. What could these data possibly <em>look</em> like?</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">plot(merged$count,merged$fpkm,pch<span style="color: #666666;">=16</span>,xlab<span style="color: #666666;">=</span><span style="color: #ba2121;">'count'</span>,ylab<span style="color: #666666;">=</span><span style="color: #ba2121;">'fpkm'</span>,main<span style="color: #666666;">=</span><span style="color: #ba2121;">'FPKMs vs. Counts across all tissue-gene combinations'</span>)</pre>
+</div>
+<p><img alt="count.fpkm.allcombinations" src="/wp-content/uploads/2013/09/count.fpkm_.allcombinations1.png"/></p>
+<p>This is so extreme: in this view there appear to be basically two kinds of genes: those with some counts but ~0 FPKMs, and those with some FPKMs but ~0 counts. Amazing that we saw any correlation at all.</p>
+<p>This is even true if we take the average value for each gene across the multiple tissues considered here:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">sql_query <span style="color: #666666;">=</span> <span style="color: #ba2121;">"</span>
+<span style="color: #ba2121;">select   f.genesymbol, avg(f.fpkm) av_fpkm, avg(c.count) av_count, max(gl.length) glength, max(el.length) elength</span>
+<span style="color: #ba2121;">from     fpkm_rel f, count_rel c, genelengths gl, exoniclengths el</span>
+<span style="color: #ba2121;">where    f.genesymbol == c.genesymbol</span>
+<span style="color: #ba2121;">and      f.tissue == c.tissue</span>
+<span style="color: #ba2121;">and      f.genesymbol == gl.genesymbol</span>
+<span style="color: #ba2121;">and      f.genesymbol == el.genesymbol</span>
+<span style="color: #ba2121;">group by 1</span>
+<span style="color: #ba2121;">order by 1</span>
+<span style="color: #ba2121;">;</span>
+<span style="color: #ba2121;">"</span>
+gene_avgs <span style="color: #666666;">=</span> sqldf(sql_query)
+png(<span style="color: #ba2121;">'count.fpkm.gene_avgs.png'</span>,width<span style="color: #666666;">=600</span>,height<span style="color: #666666;">=600</span>)
+plot(gene_avgs$av_count, gene_avgs$av_fpkm, pch<span style="color: #666666;">=16</span>, xlim<span style="color: #666666;">=</span>c(<span style="color: #666666;">0</span>,<span style="color: #666666;">2</span>e7),xlab<span style="color: #666666;">=</span><span style="color: #ba2121;">'count'</span>,ylab<span style="color: #666666;">=</span><span style="color: #ba2121;">'fpkm'</span>,main<span style="color: #666666;">=</span><span style="color: #ba2121;">'FPKMs vs. Counts across all genes'</span>)
+text(gene_avgs$av_count, gene_avgs$av_fpkm, labels<span style="color: #666666;">=</span>gene_avgs$genesymbol, pos<span style="color: #666666;">=4</span>, cex<span style="color: #666666;">=.8</span>)
+dev.off()</pre>
+</div>
+<p><a href="/wp-content/uploads/2013/09/count.fpkm_.gene_avgs.png"><img class="alignnone size-full wp-image-2907" alt="count.fpkm.gene_avgs" src="/wp-content/uploads/2013/09/count.fpkm_.gene_avgs.png"/></a></p>
+<p>The two most extreme outliers were IGHJ6 and SNORD60, so I looked those up individually.</p>
+<p>IGHJ6 is only 61 bp long,at <a href="http://genome.ucsc.edu/cgi-bin/hgTracks?position=chr14:106329408-106329468&amp;hgsid=346508375&amp;wgEncodeGencodeBasicV17=pack&amp;wgEncodeGencodeBasicV17_sel=1&amp;wgEncodeGencodeV17ViewGenes_sel=1&amp;hgFind.matches=IGHJ6,">chr14:106,329,408-106,329,468</a>, so it&#8217;s no wonder that it could have low counts but high FPKMs.  SNORD60, on the other hand, is <em>also</em> a short gene, a <a href="http://en.wikipedia.org/wiki/Small_nucleolar_RNA">snoRNA</a> of only 83 bp at <a href="http://genome.ucsc.edu/cgi-bin/hgTracks?position=chr16:2205024-2205106&amp;hgsid=346508375&amp;knownGene=pack&amp;hgFind.matches=uc002cov.1,">chr16:2,205,024-2,205,106</a>.  So what is SNORD60&#8242;s deal?</p>
+<p>First I looked at the raw data:</p>
+<pre>&gt; merged[merged$genesymbol == "SNORD60",]
+       genesymbol          tissue    fpkm    count    length     reads
+757057    SNORD60         adipose  0.0000 14505444 204056070 230869369
+757058    SNORD60         adrenal 74.5446 15192949 204056070 225117311
+757059    SNORD60           blood  0.0000 21499048 204056070 245219969
+757060    SNORD60           brain  0.0000 13608390 204056070 211339298
+757061    SNORD60          breast  0.0000 13390021 204056070 228919690
+757062    SNORD60           colon  0.0000 13993551 204056070 245132643
+757063    SNORD60           heart  0.0000 12458671 204056070 242604430
+757064    SNORD60          kidney  0.0000 14331012 204056070 240567067
+757065    SNORD60           liver  0.0000 14009809 204056070 237551123
+757066    SNORD60            lung  0.0000 17199850 204056070 239849248
+757067    SNORD60           lymph  0.0000 15231013 204056070 246072774
+757068    SNORD60           ovary 30.6890 17222316 204056070 242895572
+757069    SNORD60        prostate 83.4049 17971399 204056070 247988054
+757070    SNORD60 skeletal_muscle  0.0000 14695613 204056070 247086914
+757071    SNORD60          testes  0.0000 16086969 204056070 245716717
+757072    SNORD60         thyroid  0.0000 16319587 204056070 244072431</pre>
+<p>13-21 million reads but zero FPKMs in many tissues.  It didn&#8217;t take long to find the source of the problem: in the BED file I used to create counts, SNORD60 is 204 Mb long:</p>
+<pre>$ cat ../gtf/Homo_sapiens.GRCh37.70.gtf.gene_name.bed | grep SNORD60
+1       2205023 206261093       SNORD60 0       -       2205023 206261093       0       3       83,73,86,       0,126263247,204055984,</pre>
+<p>Which turns out to be because in the original GTF file it is listed with three exons in completely different genomic loci.</p>
+<pre>$ cat ../gtf/Homo_sapiens.GRCh37.70.gtf | grep SNORD60
+1       snoRNA  exon    206261008       206261093       .       -       .        gene_id "ENSG00000252692"; transcript_id "ENST00000516883"; exon_number "1"; gene_name "SNORD60"; gene_biotype "snoRNA"; transcript_name "SNORD60.2-201"; exon_id "ENSE00002089160";
+16      snoRNA  exon    2205024 2205106 .       -       .        gene_id "ENSG00000206630"; transcript_id "ENST00000383903"; exon_number "1"; gene_name "SNORD60"; gene_biotype "snoRNA"; transcript_name "SNORD60-201"; exon_id "ENSE00001498913";
+10      snoRNA  exon    128468271       128468343       .       -       .        gene_id "ENSG00000199321"; transcript_id "ENST00000362451"; exon_number "1"; gene_name "SNORD60"; gene_biotype "snoRNA"; transcript_name "SNORD60.1-201"; exon_id "ENSE00001437214";</pre>
+<p>So when I ran gtf2bed_2.pl to convert this GTF to a BED file, it simply chose the lowest start base and highest end base as the endpoints of a transcript.</p>
+<p>It proved surprisingly difficult to find some way of filtering such cases out.  The histogram of gene lengths in my BED file is just as extreme as the plots earlier:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">hist(genelengths$length,breaks<span style="color: #666666;">=100</span>,col<span style="color: #666666;">=</span><span style="color: #ba2121;">'yellow'</span>,main<span style="color: #666666;">=</span><span style="color: #ba2121;">"Histogram of gene lengths"</span>,xlab<span style="color: #666666;">=</span><span style="color: #ba2121;">'Length (bp)'</span>)</pre>
+</div>
+<p><a href="/wp-content/uploads/2013/09/gene.length.histo_.png"><img class="alignnone size-full wp-image-2908" alt="gene.length.histo" src="/wp-content/uploads/2013/09/gene.length.histo_.png"/></a></p>
+<p>Looking for some cutoff to filter out the genes whose length is obviously an error, I Googled &#8220;longest human gene&#8221; and found <a href="http://en.wikipedia.org/wiki/Dystrophin">DMD</a>, which measures almost 2.3Mb.  The histogram of genes ≤ 2.3Mb looks slightly better than the first histogram:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">hist(genelengths$length[genelengths$length <span style="color: #666666;">&lt;</span> <span style="color: #666666;">2300000</span>],breaks<span style="color: #666666;">=100</span>,col<span style="color: #666666;">=</span><span style="color: #ba2121;">'yellow'</span>,main<span style="color: #666666;">=</span><span style="color: #ba2121;">"Histogram of gene lengths"</span>,xlab<span style="color: #666666;">=</span><span style="color: #ba2121;">'Length (bp)'</span>)</pre>
+</div>
+<p><a href="/wp-content/uploads/2013/09/gene.length.histo_.2.3Mb.png"><img class="alignnone size-full wp-image-2909" alt="gene.length.histo.2.3Mb" src="/wp-content/uploads/2013/09/gene.length.histo_.2.3Mb.png"/></a></p>
+<p>This is closer to the exponential distribution I would expect, though I suspect that there are still some erroneously long genes in this distribution too.</p>
+<p>If this subset, of genes &lt; 2.3Mb, is more rational and has at least eliminated some of the most outrageous errors, I would have hoped that it would be possible to explain much of the variability in counts vs. FPKMs within this subset:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">m <span style="color: #666666;">=</span> lm(av_fpkm ~ av_count, data <span style="color: #666666;">=</span> subset(gene_avgs, glength <span style="color: #666666;">&lt;</span> <span style="color: #666666;">2300000</span>))
+summary(m)</pre>
+</div>
+<p>But no, linear model of FPKMs ~ counts gives an R^2 of only .008. Including gene length in the model didn&#8217;t help:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">m <span style="color: #666666;">=</span> lm(av_fpkm ~ av_count <span style="color: #666666;">+</span> glength, data <span style="color: #666666;">=</span> subset(gene_avgs, glength <span style="color: #666666;">&lt;</span> <span style="color: #666666;">2300000</span>))
+summary(m) <span style="color: #408080; font-style: italic;"># .009</span></pre>
+</div>
+<p>And explicitly dividing counts by gene length only helped a little bit, getting us up to an R^2 of .016:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">gene_avgs$av_count_over_glength <span style="color: #666666;">=</span> gene_avgs$av_count<span style="color: #666666;">/</span>gene_avgs$glength
+m <span style="color: #666666;">=</span> lm(av_fpkm ~ av_count_over_glength, data <span style="color: #666666;">=</span> subset(gene_avgs, glength <span style="color: #666666;">&lt;</span> <span style="color: #666666;">2300000</span>))
+summary(m) <span style="color: #408080; font-style: italic;"># .016</span></pre>
+</div>
+<p>This dataset includes 52,686 Ensembl gene symbols, so I wondered if perhaps the data would be better behaved if we only considered the <a href="/wp-content/uploads/2013/09/hg19.refseq.gene_.symbols.txt">23,705 hg19 RefSeq genes</a>. This helped only a little bit, getting us up to an R^2 of .026:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">in_refseq <span style="color: #666666;">=</span> gene_avgs$genesymbol <span style="color: #666666;">%in%</span> refseq$genesymbol
+m <span style="color: #666666;">=</span> lm(av_fpkm ~ av_count_over_glength, data <span style="color: #666666;">=</span> subset(gene_avgs, glength <span style="color: #666666;">&lt;</span> <span style="color: #666666;">2300000</span> <span style="color: #666666;">&amp;</span> in_refseq))
+summary(m) <span style="color: #408080; font-style: italic;"># .026</span></pre>
+</div>
+<p>And when I went back to all gene-tissue combinations with this more limited dataset I finally got a rho of .26 for a Pearson&#8217;s correlation, and a .83 for Spearman&#8217;s.</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">cor.test(merged$fpkm[merged$genesymbol <span style="color: #666666;">%in%</span> refseq$genesymbol <span style="color: #666666;">&amp;</span> merged$glength <span style="color: #666666;">&lt;</span> <span style="color: #666666;">2300000</span>], merged$count[merged$genesymbol <span style="color: #666666;">%in%</span> refseq$genesymbol <span style="color: #666666;">&amp;</span> merged$glength <span style="color: #666666;">&lt;</span> <span style="color: #666666;">2300000</span>], method <span style="color: #666666;">=</span> <span style="color: #ba2121;">'pearson'</span>)
+<span style="color: #408080; font-style: italic;"># rho = .26</span>
+cor.test(merged$fpkm[merged$genesymbol <span style="color: #666666;">%in%</span> refseq$genesymbol <span style="color: #666666;">&amp;</span> merged$glength <span style="color: #666666;">&lt;</span> <span style="color: #666666;">2300000</span>], merged$count[merged$genesymbol <span style="color: #666666;">%in%</span> refseq$genesymbol <span style="color: #666666;">&amp;</span> merged$glength <span style="color: #666666;">&lt;</span> <span style="color: #666666;">2300000</span>], method <span style="color: #666666;">=</span> <span style="color: #ba2121;">'spearman'</span>)
+<span style="color: #408080; font-style: italic;"># rho = .83</span></pre>
+</div>
+<p>This is still not as tight a correlation as I had hoped, considering that these two measures are supposed to be broadly measuring the same thing &#8211; gene expression &#8211; in the exact same dataset. For comparison, when I run my standard gene expression QC pipeline on RNA-seq data for different samples but called using the same pipeline, I often find a Pearson&#8217;s correlation between samples of .85 or better. Whereas here, for the same data called with two different pipelines, I get a Pearson&#8217;s of only .26. This is perhaps another unfortunate reminder of just how irreproducible gene expression findings can be. The technologies used (including the different bioinformatic pipelines) introduce more variability than is present in the underlying samples themselves.</p>
+<p>I figured one possible explanation might be the difference between exonic length and total gene length. Here counts are assessed over total gene length, and I&#8217;ve then divided them by total gene length, whereas FPKMs are assessed over exons and normalized by exonic length. Within this relatively well-behaved set of genes ≤ 2.3Mb and in RefSeq, the correlation between total length and exonic length is still only 0.19 in linear space and 0.49 in rank space:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">cor.test(gene_avgs$elength[gene_avgs$glength <span style="color: #666666;">&lt;</span> <span style="color: #666666;">2300000</span> <span style="color: #666666;">&amp;</span> in_refseq], gene_avgs$glength[gene_avgs$glength <span style="color: #666666;">&lt;</span> <span style="color: #666666;">2300000</span> <span style="color: #666666;">&amp;</span> in_refseq], method<span style="color: #666666;">=</span><span style="color: #ba2121;">'pearson'</span>)
+<span style="color: #408080; font-style: italic;"># rho = .19, p &lt; 2e-16</span>
+cor.test(gene_avgs$elength[gene_avgs$glength <span style="color: #666666;">&lt;</span> <span style="color: #666666;">2300000</span> <span style="color: #666666;">&amp;</span> in_refseq], gene_avgs$glength[gene_avgs$glength <span style="color: #666666;">&lt;</span> <span style="color: #666666;">2300000</span> <span style="color: #666666;">&amp;</span> in_refseq], method<span style="color: #666666;">=</span><span style="color: #ba2121;">'spearman'</span>)
+<span style="color: #408080; font-style: italic;"># rho = .49, p &lt; 2e-16</span></pre>
+</div>
+<p>Which suggests that at least part of the problem here is just that counts, which include exons and introns, are measuring something very different than FPKMs, which include only exons.</p>
+<p>So it seems these two metrics are just measuring something different, and getting different answers (as evidenced by the low correlation between them). That suggests that at most one of the two methods &#8211; counts and FPKMs &#8211; is suitable for comparing Gene A to Gene B. At least at a <a href="http://en.wikipedia.org/wiki/Level_of_measurement#Ratio_scale">ratio level</a>, that is. Arguably, since the Spearman&#8217;s correlation is stronger, both could be okay for <a href="http://en.wikipedia.org/wiki/Level_of_measurement#Ordinal_scale">ordinal-level</a> analyses.</p>
+<p>That&#8217;s just comparing Gene A to Gene B. But often the answer we&#8217;re looking for in our analyses is to find genes whose expression level correlates with some variable of interest &#8211; say, a genotype, drug treatment, or timepoint. Such results will be reproducible between counts and FPKMs only to the extent that counts and FPKMs for each individual gene are correlated across samples. In this case, our &#8220;samples&#8221; are the 16 different tissues in Human BodyMap 2.0. To assess how reproducible the level of each gene is across different tissues, I made a &#8220;volcano plot,&#8221; first, of Pearson&#8217;s correlations:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">fpkm_mat  <span style="color: #666666;">=</span> acast(merged[merged$genesymbol <span style="color: #666666;">%in%</span> refseq$genesymbol <span style="color: #666666;">&amp;</span> merged$glength <span style="color: #666666;">&lt;</span> <span style="color: #666666;">2300000</span>, c(<span style="color: #ba2121;">"genesymbol"</span>,<span style="color: #ba2121;">"tissue"</span>,<span style="color: #ba2121;">"fpkm"</span>)],  formula <span style="color: #666666;">=</span> genesymbol ~ tissue, value.var <span style="color: #666666;">=</span> <span style="color: #ba2121;">"fpkm"</span>)
+count_mat <span style="color: #666666;">=</span> acast(merged[merged$genesymbol <span style="color: #666666;">%in%</span> refseq$genesymbol <span style="color: #666666;">&amp;</span> merged$glength <span style="color: #666666;">&lt;</span> <span style="color: #666666;">2300000</span>, c(<span style="color: #ba2121;">"genesymbol"</span>,<span style="color: #ba2121;">"tissue"</span>,<span style="color: #ba2121;">"count"</span>)], formula <span style="color: #666666;">=</span> genesymbol ~ tissue, value.var <span style="color: #666666;">=</span> <span style="color: #ba2121;">"count"</span>)
+
+pvals <span style="color: #666666;">=</span> numeric()
+rhos <span style="color: #666666;">=</span> numeric()
+<span style="color: #008000; font-weight: bold;">for</span> (i in <span style="color: #666666;">1</span>:dim(fpkm_mat)[<span style="color: #666666;">1</span>]) {
+    correl <span style="color: #666666;">=</span> cor.test(fpkm_mat[i,], count_mat[i,], method<span style="color: #666666;">=</span><span style="color: #ba2121;">'pearson'</span>) <span style="color: #408080; font-style: italic;"># Pearson's correlation</span>
+    pvals <span style="color: #666666;">=</span> c(pvals, correl$p.value) <span style="color: #408080; font-style: italic;"># append p value</span>
+    rhos <span style="color: #666666;">=</span> c(rhos, correl$estimate) <span style="color: #408080; font-style: italic;"># append rho</span>
+}
+pos.cor <span style="color: #666666;">=</span> rhos <span style="color: #666666;">&gt;</span> <span style="color: #666666;">0</span> <span style="color: #666666;">&amp;</span> pvals <span style="color: #666666;">&lt;</span> <span style="color: #666666;">.05</span>
+neg.cor <span style="color: #666666;">=</span> rhos <span style="color: #666666;">&lt;</span> <span style="color: #666666;">0</span> <span style="color: #666666;">&amp;</span> pvals <span style="color: #666666;">&lt;</span> <span style="color: #666666;">.05</span>
+plot(rhos, <span style="color: #666666;">-</span>log10(pvals), pch<span style="color: #666666;">=19</span>, main<span style="color: #666666;">=</span><span style="color: #ba2121;">"Pearson's correlation between FPKM and counts across tissues, for each gene symbol"</span>, cex.main<span style="color: #666666;">=.7</span>)
+points(rhos[pos.cor], <span style="color: #666666;">-</span>log10(pvals[pos.cor]), pch<span style="color: #666666;">=19</span>, col <span style="color: #666666;">=</span> <span style="color: #ba2121;">'blue'</span>)
+points(rhos[neg.cor], <span style="color: #666666;">-</span>log10(pvals[neg.cor]), pch<span style="color: #666666;">=19</span>, col <span style="color: #666666;">=</span> <span style="color: #ba2121;">'red'</span>)
+pearson_volcano <span style="color: #666666;">=</span> data.frame(rownames(fpkm_mat),rhos,pvals)
+sum(pos.cor,na.rm<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">TRUE</span>)<span style="color: #666666;">/</span>dim(fpkm_mat)[<span style="color: #666666;">1</span>]
+<span style="font-family: 'Courier 10 Pitch', Courier, monospace; font-size: 13px; font-style: normal; line-height: 1.5; background-color: #f8f8f8;">sum(pvals </span><span style="color: #666666;">&gt;</span><span style="color: #666666;">.05</span><span style="font-family: 'Courier 10 Pitch', Courier, monospace; font-size: 13px; font-style: normal; line-height: 1.5; background-color: #f8f8f8;">,na.rm</span><span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">TRUE</span><span style="font-family: 'Courier 10 Pitch', Courier, monospace; font-size: 13px; font-style: normal; line-height: 1.5; background-color: #f8f8f8;">) </span><span style="color: #666666;">/</span><span style="font-family: 'Courier 10 Pitch', Courier, monospace; font-size: 13px; font-style: normal; line-height: 1.5; background-color: #f8f8f8;"> dim(fpkm_mat)[</span><span style="color: #666666;">1</span><span style="font-family: 'Courier 10 Pitch', Courier, monospace; font-size: 13px; font-style: normal; line-height: 1.5; background-color: #f8f8f8;">]
+</span>sum(neg.cor,na.rm<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">TRUE</span>)<span style="color: #666666;">/</span>dim(fpkm_mat)[<span style="color: #666666;">1</span>]
+sum(is.na(rhos) <span style="color: #666666;">|</span> is.na(pvals)) <span style="color: #666666;">/</span> dim(fpkm_mat)[<span style="color: #666666;">1</span>]</pre>
+</div>
+<p><a href="/wp-content/uploads/2013/09/pearson.volcano.png"><img class="alignnone size-full wp-image-2913" alt="pearson.volcano" src="/wp-content/uploads/2013/09/pearson.volcano.png"/></a></p>
+<p>The results are much better than I expected:</p>
+<p><table style="width:100%; " class="easy-table easy-table-default " border="0">
+<thead>
+<tr><th>Pearson's correlation</th>
+<th>% of genes</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>positive (p &lt; .05)</td>
+<td>83%</td>
+</tr>
+
+<tr><td>none (p &gt; .05)</td>
+<td>6%</td>
+</tr>
+
+<tr><td>negative (p &lt; .05)</td>
+<td>0.01%</td>
+</tr>
+
+<tr><td>NA*</td>
+<td>11%</td>
+</tr>
+</tbody></table></p>
+<p><em>*The NA values result from rows where either all tissues had 0 counts or all had 0 FPKMs, thus the correlation test failed.</em></p>
+<p>Surprisingly, when I re-ran this with Spearman&#8217;s, the results were virtually identical (all of the numbers in the above table were within a fraction of a percent).</p>
+<p>So for most genes, the difference between various samples&#8217; expression levels of that gene is at least nominally reproducible between the two metrics considered here: counts and FPKMs.  However, I hesitate to assign too much significance to this finding because what I&#8217;m using here as my example dataset is expression across different <em>tissues</em>, as opposed to different <em>individuals</em>.  Gene expression differences between tissues are pretty large and pretty fundamental to biology, and I would expect differences between individuals to be far more subtle.  Whether the same inter-individual differences show up in counts as show up in FPKMs, I can&#8217;t say in this example.</p>
+<p><strong>conclusions</strong></p>
+<p>The name &#8220;FPKM&#8221; &#8211; fragments per kilobase of exon per million reads &#8211; implies that FPKM is a measure of gene expression normalized by exonic length and library size, in contrast to raw counts.  However in the course of this example I&#8217;ve realized there are several other differences between counts and FPKMs:</p>
+<ul>
+<li>When a read overlaps multiple exon definitions or multiple transcript definitions, Cufflinks makes a decision about which transcript(s) to assign the read to when it calculates FPKMs.  The calculation of counts, at least in the simple pipeline I&#8217;ve presented here, is not nearly so sophistocated.</li>
+<li>As a result of that, counts are normally only assessed by gene symbol.  If they were assessed by transcript, many reads would be double-counted (or even counted tens of times) as many genes have a multiplicity of transcripts.  In comparison there are relatively few genomic loci where two distinct genes overlap.</li>
+<li>FPKMs only count exonic alignments, counts (at least this pipeline) include introns.  A gene&#8217;s total length (including introns) is only modestly correlated with its exonic length (rho = .19), so this makes a big difference.</li>
+<li>Count-generating pipelines are generally not capable of transcript discovery.  Instead you have to feed them a list of genomic loci with known genes (with FPKMs this is optional).  It&#8217;s important to be careful that the merging of transcripts into one row per gene doesn&#8217;t create nonsensical results like we saw for SNORD60 above.</li>
+</ul>
+<p>All of these differences seem to contribute to accounting for why the FPKMs and counts that I called here &#8211; on the exact same dataset &#8211; have so little correlation with each other (R^2 &lt; .01 even after removing gene length outliers).  In spite of this, the FPKMs and counts <em>for any one gene</em> may be somewhat more reproducible, though this analysis considered different tissues (which have enormous differences in gene expression) and not different individuals (which have subtle differences in gene expression).</p>
+<p>Since counts and FPKMs seem to be measuring pretty different things, it&#8217;s up for debate which is the more valid measurement.  I&#8217;ll put myself out there and argue a bit for FPKMs.  mRNA-seq libraries are enriched for mRNAs, usually through polyA selection, thus hopefully eliminating most intronic coverage.  Given that you&#8217;re using a laboratory method specifically to only get mRNAs, your pipeline should match that and only count exons. Clearly, FPKMs also represent a more sophisticated method involving assignment of reads to particular transcripts and normalization for exonic length and library size, all good things.  I haven&#8217;t heard anyone deny this; the argument I&#8217;ve heard for counts has been that they&#8217;re a different measurement that may have more variability and more power for certain things.  But nothing I&#8217;ve seen here has convinced me that this extra variability reflects anything meaningful that you would want to analyze.</p>
+<p>That said, my original motivation for this post &#8211; you always want to do the analysis both ways so you can answer any questions &#8211; still stands.</p>

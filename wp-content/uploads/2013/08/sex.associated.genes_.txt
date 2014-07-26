@@ -1,0 +1,42 @@
+Chromosome                                           Gene.Symbol
+      chrY                                               RBMY2FP
+      chrY                                                NLGN4Y
+      chrX                                                   JPX
+      chrX                                             LOC389906
+      chrX                                                 TXLNG
+      chrX                 LOC389906 /// LOC441528 /// LOC729162
+      <NA>                                           ANKRD20A12P
+      chr6                                                  SOBP
+      <NA>                                          LOC100291323
+      chrY                                                 DDX3Y
+      chrX                                                 RPS4X
+      chrX                                                EIF1AX
+      chrX                                                  CD99
+      chrX                                                 DDX3X
+      chrX                                                 SMC1A
+      chrY                                                RPS4Y1
+      chrX                                                 KDM5C
+      chrX                                                 HDHD1
+      chrX                                                 KDM6A
+      chrX                                                  PRKX
+      chrY                                                EIF1AY
+      chrX                                                  KAL1
+      chrY                                                  PRKY
+      chrY                                                 USP9Y
+      chrY                                                 KDM5D
+      chrY                                                TMSB4Y
+      chrY                                                   ZFY
+      chrX                                                  MSL3
+      chrY                                                   UTY
+      chrX                                                 ZRSR2
+      chrY                       DAZ1 /// DAZ2 /// DAZ3 /// DAZ4
+      chrX                                                PNPLA4
+      chrX                                                CA5BP1
+      chrY                                               TXLNG2P
+      chrX                                                  XIST
+      chrX                                                   ZFX
+      chrY                                                TTTY15
+      chr5 FAM153A /// FAM153B /// LOC100507387 /// LOC100507427
+      chrX                            LOC100506453 /// LOC389906
+      chrX                                                EIF2S3
+      chrX                                                  TSIX

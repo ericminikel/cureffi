@@ -1,0 +1,33 @@
+---
+layout: post
+title: "How to convert SAM to FASTQ with Unix command line tools"
+author: ericminikel
+date: 2013-07-04 15:41:14
+---
+<p><strong>use case</strong></p>
+<p>I aligned some RNA-seq data using <a href="http://research-pub.gene.com/gmap/">Gsnap</a> and used the <code>--split-output</code> option to create separate SAM files depending on how read pairs aligned (concordant vs. discordant, unique vs. multiple, mapped vs. unmapped).  Now I want to take the completely unmapped read pairs and <a title="Aligning unmapped reads to viral genomes" href="/2013/01/25/aligning-unmapped-reads-to-viral-genomes/">throw them against some viral genomes</a> to see if any align.</p>
+<p><strong>problem</strong></p>
+<p>I am starting from a SAM file of unaligned read pairs sorted by name, called samplename.nomapping.sam, and I want to align them to a new reference genome.  Easier said than done:</p>
+<ul>
+<li><a href="http://bio-bwa.sourceforge.net/bwa.shtml">bwa</a> has an option bwa aln -b to use BAM files as input, but no option for uncompressed SAM files.</li>
+<li>I can convert my SAM to a BAM with <code>samtools view -Sbh</code>, but after <code>bwa aln</code>, the next step, <code>bwa samse</code>, still requires raw FASTQs as one of the inputs.</li>
+<li><a href="http://picard.sourceforge.net/command-line-overview.shtml#SamToFastq">Picard <code>SamToFastq</code></a> won&#8217;t decompose my SAM to a FASTQ because it &#8220;Cannot add sequence that already exists in SAMSequenceDictionary: chr1&#8243;.  Googling this error didn&#8217;t return anything informative for this scenario.</li>
+</ul>
+<p>I figured, how much time to I really want to spend getting these tools to work?  For this simple purpose, it should be possible to just brute force convert the SAMs to FASTQs on the Unix command line.</p>
+<p><strong>solution</strong></p>
+<pre>cat samplename.nomapping.sam | grep -v ^@ | awk 'NR%2==1 {print "@"$1"\n"$10"\n+\n"$11}' &gt; unmapped/samplename_1.fastq 
+cat samplename.nomapping.sam | grep -v ^@ | awk 'NR%2==0 {print "@"$1"\n"$10"\n+\n"$11}' &gt; unmapped/samplename_2.fastq</pre>
+<p>Here&#8217;s the breakdown:</p>
+<ul>
+<li><code>grep -v ^@</code> removes the SAM header lines</li>
+<li><code>NR%2==1</code> executes on only the odd-numbered rows (this is to split paired-end output &#8211; my input SAM file is name-sorted, so paired reads occupy consecutive lines)</li>
+<li><code>NR%2==0</code> executes on only the even-numbered rows</li>
+<li><code>"@"$1"\n"$10"\n+\n"$11</code> grabs the read name ($1), read ($10), and base quality scores ($11) and writes them out per the <a href="http://maq.sourceforge.net/fastq.shtml">FASTQ spec</a></li>
+</ul>
+<p>If you have single-end reads, this should do:</p>
+<pre>cat samplename.nomapping.sam | grep -v ^@ | awk '{print "@"$1"\n"$10"\n+\n"$11}' &gt; unmapped/samplename.fastq</pre>
+<p>And if you have paired-end but you want to treat them as single-end, this should do:</p>
+<pre>cat samplename.nomapping.sam | grep -v ^@ | awk 'NR%2==1 {print "@"$1"_1\n"$10"\n+\n"$11}' &gt; unmapped/samplename.fastq 
+cat samplename.nomapping.sam | grep -v ^@ | awk 'NR%2==0 {print "@"$1"_2\n"$10"\n+\n"$11}' &gt;&gt; unmapped/samplename.fastq</pre>
+<p><strong>disclaimer</strong></p>
+<p>Viruses do have introns &#8211; for instance, some Epstein-Barr virus introns are mentioned in [<a href="http://www.ncbi.nlm.nih.gov/books/NBK47431/">Young 2007</a>] so aligning viral reads with BWA &#8211; as opposed to a proper RNA-seq aligner like <a href="http://tophat.cbcb.umd.edu/">TopHat</a> or <a href="http://research-pub.gene.com/gmap/">Gsnap</a> - is not optimal.</p>

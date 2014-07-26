@@ -1,0 +1,15 @@
+---
+layout: post
+title: "annovar with GRCh37"
+author: ericminikel
+date: 2012-11-12 23:28:24
+---
+<p>Just a quick note.  In the <a title="An alternative exome sequencing pipeline using bowtie2 and samtools" href="/2012/09/07/an-alternative-exome-sequencing-pipeline-using-bowtie2-and-samtools/">bowtie2/samtools pipeline</a> I used <a href="http://www.openbioinformatics.org/annovar/">annovar</a> to add annotations to my VCF files.  It was a bit difficult to get set up the first time, but I have since come to appreciate how uniquely useful annovar is: I posted <a href="http://gatkforums.broadinstitute.org/discussion/1551/best-way-to-get-additional-annotations">an ask-the-community question</a> to the GATK forum a couple months ago asking if people knew of any alternatives, and it&#8217;s now had <span style="color: #333333; font-style: normal; line-height: 24px;">53 views and no suggestions for alternatives.  annovar is really the only software out ther</span>e for systematically adding in all that outside information: dbSNP, 1000G, phyloP, SIFT, etc. that are so helpful for interpreting your data, and once you get it set up it&#8217;s quick and effective.</p>
+<p>Now, annovar is made to work with hg19, so what can you do if you are using GRCh37 as your reference genome?  Well, no warranties here, but I discovered you <em>can</em> trick annovar into thinking your VCF is hg19:</p>
+<pre># make it look like it's hg19
+sed 's/^/chr/' variants.final.vcf | sed 's/^chr#/#/' | sed 's/chrMT/chrM/' &gt; variants.pseudo.hg19.final.vcf
+# convert your vcf to an annovar file
+perl ~/bin/annovar/convert2annovar.pl --format vcf4 --includeinfo variants.pseudo.hg19.final.vcf &gt; variants.annovar
+# do the annotation
+perl ~/bin/annovar/summarize_annovar.pl --buildver hg19 --ver1000g 1000g2012feb --verdbsnp 132 variants.annovar ~/bin/annovar/humandb -outfile annovar/variants</pre>
+<p>And it completes without errors and as far as I can spot-check, it seems to have gotten all the annotations correct.  Again, this is clearly cheating and so there&#8217;s probably something wrong in there somewhere, but as a first pass this seems to mostly work.</p>

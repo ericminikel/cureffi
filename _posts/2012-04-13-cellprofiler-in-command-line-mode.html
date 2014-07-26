@@ -1,0 +1,15 @@
+---
+layout: post
+title: "CellProfiler in command line mode"
+author: ericminikel
+date: 2012-04-13 06:12:16
+---
+<p>Brilliant!  This small, trivial breakthrough has just saved me a ton of time.  There are instructions on the CellProfiler Wiki for <a href="https://github.com/CellProfiler/CellProfiler/wiki#wiki-Running_CellProfiler_from_the_command_line">how to run CP from the command line</a>:</p>
+<blockquote><p>For a full list of command-line options, run CellProfiler like this:</p>
+<pre> python CellProfiler.py --help</pre>
+<p>To run CellProfiler 2.0 without the graphical user interface, use this:</p>
+<pre> python CellProfiler.py -c -r -i ~/my_image_directory -o ~/my_output_directory -p ~/my_pipe.mat</pre>
+</blockquote>
+<p>Which is all well and good except, despite my downloading and installing <a href="https://github.com/CellProfiler/CellProfiler/wiki/CellProfiler-Developer%27s-version-installation-for-PC">all the dozen or so libraries and things needed for CellProfiler</a>, I still can&#8217;t actually get it to compile.  But!  The small, trivial breakthrough is just that you can just run the compiled version in command line mode too:</p>
+<pre>CellProfiler.exe -c -r -i ~/my_image_directory -o ~/my_output_directory -p ~/my_pipe.mat</pre>
+<p>Which is awesome, since my compiled version works, and since (related breakthrough) you can edit the pipeline (.cp) files in a text editor (or, say, programmatically in Python).  So without actually doing anything to the source code (though it&#8217;s still nice to have to understand it) you can, say, loop through the different thresholding methods and see which one works for your project.</p>

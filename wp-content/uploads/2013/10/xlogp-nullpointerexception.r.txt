@@ -1,0 +1,5 @@
+library(rcdk)
+aminophylline = parse.smiles("NCCN.CN1C2=C(NC=N2)C(=O)N(C)C1=O.CN1C2=C(NC=N2)C(=O)N(C)C1=O")
+eval.desc(aminophylline,"org.openscience.cdk.qsar.descriptors.molecular.XLogPDescriptor")
+# Error in .jcall(b, "Lorg/openscience/cdk/qsar/DescriptorValue;", "calculate",  : 
+#  java.lang.NullPointerException

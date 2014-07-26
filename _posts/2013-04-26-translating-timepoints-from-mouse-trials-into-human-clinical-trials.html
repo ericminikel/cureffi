@@ -1,0 +1,116 @@
+---
+layout: post
+title: "Translating timepoints from mouse trials into human clinical trials"
+author: ericminikel
+date: 2013-04-26 02:45:16
+---
+<p>A new compound, <a href="/2013/04/26/anle138b-the-new-most-promising-experimental-compound-for-treating-prion-diseases/">anle138b</a>, has recently been touted as the most promising anti-prion drug candidate yet discovered [<a href="http://www.ncbi.nlm.nih.gov/pubmed/23604588">Wagner 2013</a> (<a href="http://link.springer.com/content/pdf/10.1007%2Fs00401-013-1114-9.pdf">ft</a>, <a href="http://link.springer.com/content/esm/art:10.1007/s00401-013-1114-9/file/MediaObjects/401_2013_1114_MOESM1_ESM.pdf">supp1</a>, <a href="http://link.springer.com/content/esm/art:10.1007/s00401-013-1114-9/file/MediaObjects/401_2013_1114_MOESM2_ESM.pdf">supp2</a>)].<em>  </em> And rightly so: it is orally bioavailable, crosses the blood-brain barrier, shows no toxicity in animals even at enormous doses, and has fairly large effects on survival even when animals are treated late in the course of prion disease.</p>
+<p>That word &#8211; &#8216;late&#8217; &#8211; is very important here.  Hosts of compounds have shown an ability to delay symptoms of prion disease if administered early in the incubation period, long before symptoms.  But 85% of prion disease cases in humans are sporadic CJD patients [<a href="http://www.ncbi.nlm.nih.gov/pubmed/21091283">Appleby &amp; Lyketsos 2011</a>], who will never know they have a disease until they are already sick.  A compound that is going to work for these people has to work in mice that are already showing symptoms of disease.</p>
+<p>But that turns out to be a tricky thing to quantify, because whether mice are showing symptoms depends in part on how hard you look.  Mallucci&#8217;s first paper on Cre-mediated PrP knockout in mice [<a href="http://www.ncbi.nlm.nih.gov/pubmed/14593181">Mallucci 2003</a>] didn&#8217;t report any symptoms prior to 10 weeks post infection (wpi), but a few years later, through more meticulous behavioral testing, she was able to find certain symptoms starting at 8 wpi, in the exact same mouse model [<a href="http://www.ncbi.nlm.nih.gov/pubmed/17270731">Mallucci 2007</a>].</p>
+<p><a href="http://www.ncbi.nlm.nih.gov/pubmed/23604588">Wagner 2013</a> makes the claim that the mice treated with anle138b at 80 dpi and 120 dpi were treated &#8220;after onset of disease&#8221;.  That is certainly true for 120 dpi &#8211; Wagner provides his own data for weight loss beginning by that time &#8211; but for 80 dpi he cites <a href="http://www.ncbi.nlm.nih.gov/pubmed/17270731">Mallucci 2007</a>.  That&#8217;s where comparisons get tricky.  Mallucci found behavioral symptoms at 8 wpi = 56 dpi, in a model where mice die at ~12 wpi = 84 dpi.  That&#8217;s a much faster mouse model than Wagner&#8217;s model, in which controls live to ~180 dpi, so symptoms may well appear earlier.</p>
+<p>That prompts me to re-iterate my statement from the anle138b post: different prion mouse models get sick at different times.  Incubation time of prions in mice is exquisitely correlated with both the PrP expression level of the mouse and the infectious titer of the inoculum.  It&#8217;s also affected by prion strain and mouse background.  So comparisons between models need to adjust accordingly.</p>
+<p>Whether or not Wagner&#8217;s mice had symptoms at 80 dpi, it looks like they definitely did by 120 dpi.  Yet other investigators have treated similar mouse models at similar timepoints &#8211; say, treatment at 100 dpi in a model where controls lived to 180 dpi in [<a href="http://www.ncbi.nlm.nih.gov/pubmed/18198391">Riemer 2008</a> (<a href="http://vir.sgmjournals.org/content/89/2/594.full.pdf">ft</a>)] &#8211; and not made the claim of treating already-sick mice.  That&#8217;s probably just because, again, finding early symptoms depends on how hard you look.  Importantly, Wagner&#8217;s mice were <em>not </em>at the stage that researchers call &#8216;clinical signs&#8217; or &#8216;clinical onset&#8217; (impaired gait, etc) at the time when they began treatment.</p>
+<p>Terms like &#8216;late&#8217; and &#8216;after onset&#8217; are a bit subjective, and to anchor this conversation in real past experience, I think a comparison to <a href="/2012/12/13/the-rise-and-fall-of-pentosan-polysulfate-in-prion-disease/">pentosan polysulfate</a> (PPS) is merited. Wagner et al largely omit PPS from their summary of other proposed anti-prion compounds (Fig S20 on p. 31 of <a href="http://link.springer.com/content/esm/art:10.1007/s00401-013-1114-9/file/MediaObjects/401_2013_1114_MOESM1_ESM.pdf">supp1</a>), because they only consider compounds that have been administered peripherally to animals infected intracerebrally.  I completely agree on the importance of only considering such stringent mouse models going forward, but by omitting the original PPS experiments in mice [<a href="http://www.ncbi.nlm.nih.gov/pubmed/15113880">Doh-Ura 2004</a>], Wagner et al have left out an important piece of prion history.</p>
+<p>Doh-Ura used a very rapid mouse model in which controls die at 51 dpi.  Doh-Ura didn&#8217;t look hard for early symptoms; he reported that the animals exhibit &#8220;ambiguous signs of reduced activity about 2 days prior to death&#8221;.  Because PPS does not cross the blood-brain barrier, it was administered by continuous intraventricular infusion with a surgically implanted cannula.  It extended survival by a huge amount in mice infected with 263K prions (the primary model used), but its effects were time-dependent.  It more than doubled incubation time if administered starting at 7 dpi, but had no significant effect when given at 42 dpi.  Because the raw numbers in terms of days post-infection are so different between Doh-Ura&#8217;s study and Wagner&#8217;s study, I find it useful to convert dpi numbers into a new figure as follows:</p>
+<blockquote><p>%diseasecourse =  treatment started dpi / control survival</p></blockquote>
+<p>And I also convert therapeutic effects into a percentage delay:</p>
+<blockquote><p>%delay = treatment survival / control survival &#8211; 1</p></blockquote>
+<p>When I do this and compare PPS with anle138b, I get the following table (PPS numbers are eyeballed from Doh-Ura <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC400350/figure/f2/">Fig 2B</a> since he doesn&#8217;t give the raw data):</p>
+<p><table style="width:100%; " class="easy-table easy-table-default " border="0">
+<thead>
+<tr><th>drug</th>
+<th>treatment started dpi</th>
+<th>treatment survival</th>
+<th>control survival</th>
+<th>%delay</th>
+<th>%diseasecourse</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>PPS 460ug/kg/day</td>
+<td>7</td>
+<td>125</td>
+<td>51</td>
+<td>145%</td>
+<td>14%</td>
+</tr>
+
+<tr><td>PPS 460ug/kg/day</td>
+<td>21</td>
+<td>95</td>
+<td>51</td>
+<td>86%</td>
+<td>41%</td>
+</tr>
+
+<tr><td>PPS 460ug/kg/day</td>
+<td>35</td>
+<td>75</td>
+<td>51</td>
+<td>47%</td>
+<td>69%</td>
+</tr>
+
+<tr><td>PPS 460ug/kg/day</td>
+<td>42</td>
+<td>51</td>
+<td>51</td>
+<td>0%</td>
+<td>82%</td>
+</tr>
+
+<tr><td>anle138b 5mg/day</td>
+<td>0</td>
+<td>355</td>
+<td>180</td>
+<td>97%</td>
+<td>0%</td>
+</tr>
+
+<tr><td>anle138b 5mg/day</td>
+<td>80</td>
+<td>242</td>
+<td>168</td>
+<td>44%</td>
+<td>48%</td>
+</tr>
+
+<tr><td>anle138b 5mg/day</td>
+<td>120</td>
+<td>224</td>
+<td>172</td>
+<td>30%</td>
+<td>70%</td>
+</tr>
+</tbody></table></p>
+<p>You can see that Doh-Ura&#8217;s trial of PPS at 42 dpi was ~80% of the way through the disease course, later than any timepoint tested by Wagner.  The fact that Doh-Ura reported no symptoms until &#8216;ambiguous signs of reduced activity&#8217; at 49 dpi while Wagner reported that 80 and 120 dpi (respectively 48% and 70% of the way through the control survival time) already constituted &#8216;treatment after onset of disease&#8217; might reflect real differences in mouse models, but more likely just reflects how hard they looked for symptoms.</p>
+<p>When I plot these data in R:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">ppsx<span style="color: #666666;">=</span>c(<span style="color: #666666;">14</span>,<span style="color: #666666;">41</span>,<span style="color: #666666;">69</span>,<span style="color: #666666;">82</span>)
+ppsy<span style="color: #666666;">=</span>c(<span style="color: #666666;">145</span>,<span style="color: #666666;">86</span>,<span style="color: #666666;">47</span>,<span style="color: #666666;">0</span>)
+anlex<span style="color: #666666;">=</span>c(<span style="color: #666666;">0</span>,<span style="color: #666666;">48</span>,<span style="color: #666666;">70</span>)
+anley<span style="color: #666666;">=</span>c(<span style="color: #666666;">97</span>,<span style="color: #666666;">44</span>,<span style="color: #666666;">30</span>)
+main <span style="color: #666666;">=</span> <span style="color: #ba2121;">"extension of survival of PPS vs. anle138b"</span>
+sub <span style="color: #666666;">=</span> <span style="color: #ba2121;">"PPS [Doh-Ura 2004], anle138b [Wagner 2013]"</span>
+xlab <span style="color: #666666;">=</span> <span style="color: #ba2121;">"% of disease course that had passed before treatment began"</span>
+ylab <span style="color: #666666;">=</span> <span style="color: #ba2121;">"% extension of survival in treatment group vs. control"</span>
+plot(ppsx,ppsy,col<span style="color: #666666;">=</span><span style="color: #ba2121;">"purple"</span>,pch<span style="color: #666666;">=19</span>,xlim<span style="color: #666666;">=</span>c(<span style="color: #666666;">-.01</span>,<span style="color: #666666;">100</span>),xlab<span style="color: #666666;">=</span>xlab,ylab<span style="color: #666666;">=</span>ylab,main<span style="color: #666666;">=</span>main,sub<span style="color: #666666;">=</span>sub)
+points(anlex,anley,col<span style="color: #666666;">=</span><span style="color: #ba2121;">"orange"</span>,pch<span style="color: #666666;">=19</span>)
+points(anlex,anley,col<span style="color: #666666;">=</span><span style="color: #ba2121;">"orange"</span>,type<span style="color: #666666;">=</span><span style="color: #ba2121;">"l"</span>)
+points(ppsx,ppsy,col<span style="color: #666666;">=</span><span style="color: #ba2121;">"purple"</span>,type<span style="color: #666666;">=</span><span style="color: #ba2121;">"l"</span>)
+legend(<span style="color: #ba2121;">"topright"</span>,legend<span style="color: #666666;">=</span>c(<span style="color: #ba2121;">"PPS"</span>,<span style="color: #ba2121;">"anle138b"</span>),col<span style="color: #666666;">=</span>c(<span style="color: #ba2121;">"purple"</span>,<span style="color: #ba2121;">"orange"</span>),pch<span style="color: #666666;">=19</span>)</pre>
+</div>
+<p>Then you can see the difference in survival between the two compounds:</p>
+<p><img class="alignnone size-full wp-image-2067" title="" src="/wp-content/uploads/2013/04/pps-vs-anle138b1.png"/></p>
+<p>By these measures, PPS was actually more effective at all tested timepoints in terms of extending survival than anle138b, and yet <em>still</em> it had no effect when it was administered at 42 dpi, ~80% of the way through the disease course, a later timepoint than any tested by Wagner.</p>
+<p>In spite of the evidence that PPS did <em>not</em> work late in disease, it went on to clinical trials in Japan and the U.K., which were roundly unsuccessful.  To be sure, PPS was a rather problematic drug which had to be infused intraventricularly via cannula in humans just as it had been in mice.  But PPS didn&#8217;t fail clinical trials due to cannula-related complications (though there were some of those too), it failed on <em>efficacy</em>, showing no effect at all on survival of treated patients.</p>
+<p>Maybe that was due to strain specificity or <a href="/2013/04/26/translating-timepoints-from-mouse-trials-into-human-clinical-trials/#comment-306">other problems</a> in translating drugs from mouse to humans, but one can make a good argument that the timepoint of treatment is sufficient to explain PPS&#8217;s failure.  If you read carefully the official report on the U.K. clinical trial [<a href="/wp-content/uploads/2012/12/bone-2008-intraventricular-pentosan-polysulphate-in-human-prion-diseases-.pdf">Bone 2008</a>], you&#8217;ll see that most of the patients were already <em>unable to walk</em> by the time they began pentosan polysulfate treatment. That&#8217;s a lot worse than Doh-Ura&#8217;s &#8220;ambiguous signs of reduced activity&#8221; which the mice reached only in their last day or two of life, and probably represents a timepoint far later (perhaps at ~170-180 dpi) than any timepoint where Wagner began treating mice with anle-138b.</p>
+<p>True, you can notice symptoms in mice very early if you look hard enough. And one would certainly hope that we humans are better at recognizing symptoms in our fellow humans than we are at recognizing symptoms in mice.  It could be speculated that some even earlier timepoint in Wagner&#8217;s mice &#8211; 30, 40, 50 dpi? &#8211; corresponds to when we would notice symptoms in humans.</p>
+<p>However, the path from first symptoms to a diagnosis can be long, at least when there is no family history of prion disease.  From the time when patients first show symptoms, family members need to notice, become worried, see a doctor, get referred to a specialist, and then the specialist has to run a battery of tests and puzzle over what the problem is.  sCJD is notorious for appearing to neurologists as lyme disease, a viral infection, an adverse drug reaction, or a host of other possible conditions [<a href="http://www.ncbi.nlm.nih.gov/pubmed/21239650">Murray 2011</a>].  Once a diagnosis finally is made, then also allow time for a referral to a specialized center such as Cleveland Clinic or MRC Prion Unit.  No wonder the patients treated with PPS were in such bad shape by the time they finally entered the clinical trial.</p>
+<p>So treating mice at a time when some subtle behavioral symptoms or weight loss are present may not represent a timepoint at which humans will be treated.  On the other hand, if we were to simply accept that patients will not be available for treatment until they are already in such a debilitated state, then we are basically accepting that no treatment is possible.  By the time a patient is bedridden, a large fraction of neurons in the most-affected brain regions have probably already been lost, and though a total knockout of PrP (were it possible) would still stop the spread of prions, it would not bring back cognitive function, because <a href="http://en.wikipedia.org/wiki/Neurogenesis">neurogenesis</a> in adults is fairly limited.</p>
+<p>Therefore we simply need to find a way to act earlier.  Mallucci has made an excellent case for the existence of a window for intervention in prion disease where neurons are <em>impaired</em> but not yet <em>lost </em>[<a href="http://www.ncbi.nlm.nih.gov/pubmed/19597349/">White &amp; Mallucci 2009</a>, <a href="http://www.ncbi.nlm.nih.gov/pubmed/22622579">Moreno 2012</a>].  Mallucci&#8217;s stage is one where some behavioral symptoms are present in mice and so it may correspond to a stage in humans where we <em>could </em>diagnose the disease, even if we aren&#8217;t doing so consistently yet.</p>
+<p>And having a treatment available would itself drive earlier diagnosis.  Murray&#8217;s diagnostic paper, oriented towards clinical neurologists, is very enlightening in this regard.  The abstract declares that the paper &#8220;highlights the relatively rare <span style="text-decoration: underline;">treatable</span> mimics which must not be missed&#8221; (my underlining).  Table 2 lists about 15 other conditions (some as broad as &#8216;viral encephalitis&#8217;) that can be difficult to distinguish from sCJD, and &#8211; this is crucial &#8211; the caption on the table reads &#8220;Those in bold represent potentially <span style="text-decoration: underline;">treatable</span> conditions which must not be missed&#8221; (again, my underlining). The paper discusses the various diagnostic tools for sCJD including the test for 14-3-3 protein but finally, in the Practice Points, it summarizes that, for sCJD, &#8220;Disease duration is the most reliable distinguishing feature&#8221; [<a href="http://www.ncbi.nlm.nih.gov/pubmed/21239650">Murray 2011</a>].</p>
+<p>This is the practice of neurology today: there are a <em>lot</em> of conditions that can cause overlapping sets of symptoms, and it is difficult to wade through them all to find the right diagnosis, so doctors justifiably prioritize looking at the diagnoses that would be treatable.  So simply having a treatment available will make a difference in diagnosis &#8211; it will get CJD to be one of the bold items in Murray&#8217;s list.</p>
+<p>Despite the critical view I&#8217;ve taken here of how &#8216;late&#8217; 80 dpi and 120 dpi really are, I actually do not disagree at all with Wagner&#8217;s general claim that anle138b is the most promising treatment yet proposed for prion diseases.  Its BBB permeability, oral bioavailability, low toxicity, large and (by <em>in vitro</em> PMCA at least) non-strain-specific inhibitory effects are a compelling package of attributes that no previous drug has combined.  I am hopeful that it will make its way to clinical trials soon.  When it does, it will take an all-out effort to get patients treated as early as humanly possible.</p>
+<p>And, when it does, we will also need to consider the ambiguous questions about what &#8216;success&#8217; will look like.  From what we see in mice, anle138b does not reverse disease, it just extends survival.  Until we have a clinical trial, we are unlikley to know whether or not that will translate into any improvement in quality of life for patients who are already debilitated by prion diseases.  If a drug extends life without improvement in <em>quality</em> of life, can we call that a success?  Clinical trials follow pre-defined <a href="http://en.wikipedia.org/wiki/Clinical_endpoint">clinical endpoints</a>, of which time to death is often one, so yes, a drug could potentially be approved even if it didn&#8217;t improve quality of life.  If such a drug got approved, would <em>that</em> be a success?</p>
+<p>I tend to think yes, because the existence of an approved drug would further raise public and physician awareness and the priority placed on diagnoses of prion disease, making it possible for patients to be treated earlier and earlier in the disease course when it might start to make a real quality of life difference too.  And it would also be our first step at fighting these diseases, to be combined with future treatments yet to be discovered.</p>

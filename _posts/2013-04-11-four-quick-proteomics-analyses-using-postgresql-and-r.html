@@ -1,0 +1,286 @@
+---
+layout: post
+title: "Four quick proteomics analyses using PostgreSQL and R"
+author: ericminikel
+date: 2013-04-11 15:03:12
+---
+<p>I have proteomics data quantifying the levels of 2801 proteins in 24 biological samples.  In addition I have metadata on the 24 samples and one or more variables of interest.  A variable of interest could be anything &#8211; say, dosage of a drug that the cells were treated with, quantity of a particular protein of interest, quantitative phenotype of the patient who donated the cell line.</p>
+<p>This post will present code for four quick analyses of these data using PostgreSQL and R as tools:</p>
+<ol start="0">
+<li><a href="#0" target="_blank">Generate some basic descriptive statistics to understand the data.</a></li>
+<li><a href="#1">Is any protein&#8217;s expression level correlated with the variable of interest?</a></li>
+<li><a href="#2" target="_blank">Are any principal components correlated with the variable of interest?</a></li>
+<li><a href="#3" target="_blank">Is any protein&#8217;s expression level correlated with the variable of interest after controlling for covariates?</a></li>
+</ol>
+<p>The motivation for these questions is as follows.  Suppose we&#8217;re trying to figure out what protein drives a phenotype, or what protein(s) affected by a drug &#8211; #1 tries to answer that.  But a phenotype (or a drug&#8217;s effect) may be bigger than just one or a few proteins and may have an impact on the global protein expression profile across cells &#8211; #2 tries to determine whether that is the case.  Finally, if the cell lines have very different protein expression profiles for whatever reason, that might muddy the answer to #1, so #3 re-asks the question from #1 with a control for a few principal components.</p>
+<p><a name="0"></a><strong>0. Generate some basic descriptive statistics to understand the data.</strong></p>
+<p>I first introduced my proteomics dataset in <a title="Mapping proteomics data to UniProt, RefSeq and gene symbols" href="/2013/03/15/mapping-proteomics-data-to-uniprot-refseq-and-gene-symbol/">this post</a>.   When I got it, it was already finished data &#8211; the protein levels had already been &#8216;called&#8217; and I never got to see the raw mass spec data.  After cleaning up the data with a few unix command line tools, I have a 2801&#215;53 table.  Rows: 2801 proteins.  Columns: uniprot protein id, protein description, iTRAQ protein fragments, and then 50 columns of sample protein quantification.  Those 50 columns represent 50 &#8216;runs&#8217; which are 24 biological samples with 2 technical replicates each, except lucky sample 1 which got 4 technical replicates.</p>
+<p>Our proteomics company, <a href="http://www.proteomics.com/">Proteome Sciences</a>, did not provide any information on their data normalization procedure nor on the meaning of missing values in their data.  I wrote to them through their contact us page asking these 2 questions, and they never wrote back.  Absent any guidance from the people who created the data, my first question was to see if I could get some idea of how the data had been normalized.  Here&#8217;s what I found.  I read the table into R and by slicing the data in columns versus in rows, I could see they had normalized within each run, not within each protein.</p>
+<pre>&gt; prot = read.table('run-protein-levels.txt',sep='\t',header=TRUE)
+&gt; dim(prot)
+[1] 2801 53
+# different columns (runs) all have pretty much the same mean:
+&gt; mean(prot[,8],na.rm=TRUE)
+[1] -0.08057101
+&gt; mean(prot[,9],na.rm=TRUE)
+[1] -0.08055821
+&gt; mean(prot[,10],na.rm=TRUE)
+[1] -0.08056104
+# different rows have different means:
+&gt; x = prot[12,4:53]
+&gt; sum(x,na.rm=TRUE)/sum(!is.na(x))
+[1] -0.09357906
+&gt; x = prot[13,4:53]
+&gt; sum(x,na.rm=TRUE)/sum(!is.na(x))
+[1] -0.04419777
+&gt; x = prot[14,4:53]
+&gt; sum(x,na.rm=TRUE)/sum(!is.na(x))
+[1] -0.07317855
+&gt; x = prot[15,4:53]
+&gt; sum(x,na.rm=TRUE)/sum(!is.na(x))
+[1] -0.2118259</pre>
+<p>I can&#8217;t figure out what &#8216;normalization&#8217; procedure they followed.  The data are far from normal (these figures are almost exactly the same for every run).  (Skewness and kurtosis are from the <a href="http://cran.r-project.org/web/packages/fBasics/index.html">fBasics</a> package for R):</p>
+<pre>&gt; min(prot[,8],na.rm=TRUE)
+[1] -3.346263
+&gt; max(prot[,8],na.rm=TRUE)
+[1] 1.537259
+&gt; mean(prot[,8],na.rm=TRUE)
+[1] -0.08057101
+&gt; sd(prot[,8],na.rm=TRUE)
+[1] 0.2176508
+&gt; library(fBasics) # for skewness &amp; kurtosis
+&gt; skewness(prot[,8],na.rm=TRUE)
+[1] -2.534116
+attr(,"method")
+[1] "moment"
+&gt; kurtosis(prot[,8],na.rm=TRUE)
+[1] 34.84668
+attr(,"method")
+[1] "excess"</pre>
+<p>A min of -3.35, max 1.54, considerable skewness and loads of positive excess kurtosis.  For every run.  Bizarre indeed.  Perhaps there is some logic to this, but without knowing what that logic might be, I may just end up <a href="http://en.wikipedia.org/wiki/Standard_score">z-scoring</a> everything later.</p>
+<p>There are 3998 missing values, about 2.8% of the whole dataset:</p>
+<pre>&gt; sum(is.na(prot))
+[1] 3998
+&gt; sum(is.na(prot))/(50*2801)
+[1] 0.02854695</pre>
+<p>And no indication of why NA values arise: does it mean &#8220;no protein detected&#8221; or &#8220;an error occurred and no measurement was obtained&#8221; or something else?  This interpretation is important for some downstream analyses; luckily as we&#8217;ll see the number of cases where both technical replicates are NA is fewer, few enough that it probably doesn&#8217;t matter <em>too </em>much how I handle them.</p>
+<p>A final important QC measure: technical replicates of the same sample should be quite similar to each other &#8211; more similar than, say, two different samples are to each other.  If technical replicates were no more similar than two samples are, then I&#8217;d say noise overwhelms signal in the dataset.</p>
+<p>My column names reflect the sample id and then the technical replicate number, but aren&#8217;t in order, so first I&#8217;ll <a href="http://stackoverflow.com/questions/7334644/r-rearrange-column-names-of-dataframe-alphabetically-or-order-user-wants">sort the columns by name</a> and then z-score them all:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">protz <span style="color: #666666;">=</span> prot[,order(names(prot))] <span style="color: #408080; font-style: italic;"># create a new dataframe with columns sorted by name</span>
+<span style="color: #408080; font-style: italic;"># loop through and z-score every column</span>
+<span style="color: #008000; font-weight: bold;">for</span> (i in <span style="color: #666666;">4</span>:<span style="color: #666666;">53</span>) {
+  protz[,i] <span style="color: #666666;">=</span> (prot[,order(names(prot))][,i]<span style="color: #666666;">-</span>mean(prot[,order(names(prot))][,i],na.rm<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">TRUE</span>))<span style="color: #666666;">/</span>sd(prot[,order(names(prot))][,i],na.rm<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">TRUE</span>)
+}</pre>
+</div>
+<p>And then I&#8217;ll loop through comparing each pair of technical replicates and storing the <a href="http://en.wikipedia.org/wiki/Pearson_product-moment_correlation_coefficient">Pearson correlation</a> values in a vector:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">technical.cors <span style="color: #666666;">=</span> vector(mode<span style="color: #666666;">=</span><span style="color: #ba2121;">"numeric"</span>,length<span style="color: #666666;">=25</span>) <span style="color: #408080; font-style: italic;"># to store results</span>
+indices <span style="color: #666666;">=</span> seq(<span style="color: #666666;">4</span>,<span style="color: #666666;">53</span>,<span style="color: #666666;">2</span>) <span style="color: #408080; font-style: italic;"># list of every other index, i.e. first of each pair of technical reps</span>
+<span style="color: #008000; font-weight: bold;">for</span> (i in indices) {
+  technical.cors[which(indices<span style="color: #666666;">==</span>i)] <span style="color: #666666;">=</span> cor.test(protz[,i],protz[,i<span style="color: #666666;">+1</span>])$estimate
+}</pre>
+</div>
+<p>Result: the correlation between pairs of technical replicates ranges from .56 to .79, average .66.  Now as for correlation between different samples:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">npairs <span style="color: #666666;">=</span> choose(<span style="color: #666666;">50</span>,<span style="color: #666666;">2</span>) <span style="color: #666666;">-</span> choose(<span style="color: #666666;">4</span>,<span style="color: #666666;">2</span>) <span style="color: #666666;">-</span> <span style="color: #666666;">23</span> <span style="color: #408080; font-style: italic;"># number of pairs of replicates from different biological samples</span>
+sample.cors <span style="color: #666666;">=</span> vector(mode<span style="color: #666666;">=</span><span style="color: #ba2121;">"numeric"</span>,length<span style="color: #666666;">=</span>npairs) <span style="color: #408080; font-style: italic;"># to hold results</span>
+counter <span style="color: #666666;">=</span> <span style="color: #666666;">1</span>
+<span style="color: #008000; font-weight: bold;">for</span> (i in <span style="color: #666666;">4</span>:<span style="color: #666666;">53</span>) {
+  <span style="color: #008000; font-weight: bold;">for</span> (j in <span style="color: #666666;">4</span>:<span style="color: #666666;">53</span>) {
+     <span style="color: #008000; font-weight: bold;">if</span> (i <span style="color: #666666;">&lt;</span> j <span style="color: #666666;">&amp;&amp;</span> substring(names(protz)[i],<span style="color: #666666;">1</span>,<span style="color: #666666;">3</span>)<span style="color: #666666;">!=</span>substring(names(protz)[j],<span style="color: #666666;">1</span>,<span style="color: #666666;">3</span>)) { <span style="color: #408080; font-style: italic;"># if sample names are different</span>
+         sample.cors[counter] <span style="color: #666666;">=</span> cor.test(protz[,i],protz[,j])$estimate <span style="color: #408080; font-style: italic;"># store a correlation result</span>
+         counter <span style="color: #666666;">=</span> counter <span style="color: #666666;">+</span> <span style="color: #666666;">1</span>
+     }
+  }
+}
+mean(sample.cors)
+min(sample.cors)
+max(sample.cors)
+sum(sample.pvals <span style="color: #666666;">&lt;</span> <span style="color: #666666;">.05</span>)<span style="color: #666666;">/</span>npairs</pre>
+</div>
+<p>Result here: average Pearson&#8217;s correlation between two replicates from different biological samples is .06, minimum -.24, max .51.  Only 75% of the correlations are even nominally significant at p &lt; .05.</p>
+<p>This is most curious.  Recently I asked a similar question of some microarray data and found that gene expression profiles had a correlation of ~.86, pretty consistently, between different biological samples.  That makes sense to me: provided your samples are all from the same tissue or cell type, some genes will be highly expressed and others not very highly expressed, in every sample.  To have only .66 correlation even between different technical replicates of <em>the same sample</em> and then to have almost no correlation at all between different samples seems odd to me.  Does this mean the data are just very noisy?  Or might it be a result of the normalization procedure?  I welcome any suggestions.</p>
+<p>I&#8217;d also be curious for thoughts on the best way to handle the technical replicates, given that they&#8217;re not always so concordant.  For instance I had thought of throwing out data points (i.e. sample-protein combinations: cells in the matrix) where technical replicates disagree by more than some threshold amount.  But for now I am just going to do the simplest possible thing, and average them.  Where one is missing I&#8217;ll just keep the other, thus cutting down on my number of NA values.</p>
+<p>To combine columns like this in R, <a href="http://stat.ethz.ch/R-manual/R-patched/library/base/html/which.html"><code>which</code></a> and <a href="http://stat.ethz.ch/R-manual/R-patched/library/base/html/colSums.html"><code>rowMeans</code></a> are helpful:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># create a new data frame based on the old one</span>
+protz_sampleagg <span style="color: #666666;">=</span> protz[,<span style="color: #666666;">1</span>:<span style="color: #666666;">27</span>] <span style="color: #408080; font-style: italic;"># 3 descriptor cols + 24 samples</span>
+<span style="color: #408080; font-style: italic;"># name the columns in the new array according to unique sample ids</span>
+names(protz_sampleagg) <span style="color: #666666;">=</span> c(names(protz)[<span style="color: #666666;">1</span>:<span style="color: #666666;">3</span>], sort(unique(substring(names(protz)[<span style="color: #666666;">4</span>:<span style="color: #666666;">53</span>],<span style="color: #666666;">1</span>,<span style="color: #666666;">3</span>))) )
+<span style="color: #008000; font-weight: bold;">for</span> (i in names(protz_sampleagg)[<span style="color: #666666;">4</span>:<span style="color: #666666;">27</span>]) { <span style="color: #408080; font-style: italic;"># loop through sample ids</span>
+  <span style="color: #408080; font-style: italic;"># get indices of columns corresponding technical repolicates for this sample</span>
+  whichcols <span style="color: #666666;">=</span> which( substring(names(protz),<span style="color: #666666;">1</span>,<span style="color: #666666;">3</span>) <span style="color: #666666;">==</span> i )
+  <span style="color: #408080; font-style: italic;"># take average, removing missing vals</span>
+  protz_sampleagg[i] <span style="color: #666666;">=</span> rowMeans(protz[,whichcols],na.rm<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">TRUE</span>)
+}</pre>
+</div>
+<p>Or a different way of achieving the same thing: since I already have this matrix of protein levels relationalized into a PostgreSQL database (per <a title="Mapping proteomics data to UniProt, RefSeq and gene symbols" href="/2013/03/15/mapping-proteomics-data-to-uniprot-refseq-and-gene-symbol/">these instructions</a>), I can  group by sample id and uniprot id, take the average, and then use my <a title="Automatically creating pivot table column names in PostgreSQL" href="/2013/03/19/automatically-creating-pivot-table-column-names-in-postgresql/">automatic pivot table function</a> to cast it back into a matrix.  After creating the pivot table function, I just do this:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #008000; font-weight: bold;">drop</span> <span style="color: #008000; font-weight: bold;">table</span> if <span style="color: #008000; font-weight: bold;">exists</span> avglevels;
+<span style="color: #008000; font-weight: bold;">create</span> <span style="color: #008000; font-weight: bold;">table</span> avglevels <span style="color: #008000; font-weight: bold;">as</span>
+<span style="color: #008000; font-weight: bold;">select</span> ps_sampleid, uniprotkb_ac_full_old, <span style="color: #008000; font-weight: bold;">avg</span>(<span style="color: #008000; font-weight: bold;">level</span>) avlevel <span style="color: #008000; font-weight: bold;">from</span> proteomics_levels pl, proteomics_runs pr <span style="color: #008000; font-weight: bold;">where</span> pl.runid <span style="color: #666666;">=</span> pr.runid <span style="color: #008000; font-weight: bold;">group</span> <span style="color: #008000; font-weight: bold;">by</span> <span style="color: #666666;">1</span>,<span style="color: #666666;">2</span> <span style="color: #008000; font-weight: bold;">order</span> <span style="color: #008000; font-weight: bold;">by</span> <span style="color: #666666;">1</span>,<span style="color: #666666;">2</span>;
+<span style="color: #008000; font-weight: bold;">select</span> pivotcode(<span style="color: #ba2121;">'avglevels'</span>,<span style="color: #ba2121;">'uniprotkb_ac_full_old'</span>,<span style="color: #ba2121;">'lpad(ps_sampleid::varchar,2,''0'')'</span>,<span style="color: #ba2121;">'max(avlevel)'</span>,<span style="color: #ba2121;">'numeric'</span>);</pre>
+</div>
+<p>(BTW, <a href="http://www.postgresql.org/docs/9.2/static/functions-string.html"><code>lpad</code></a> is to turn sample ids such as &#8217;1&#8242; into &#8217;01&#8242;).  I then slightly modify the output, changing the lpad statement back to just ps_sampleid, to get this query:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;">-- slightly modified the output before running: had to change 'lpad(ps_sampleid::varchar,2,''0'')' back to just ps_sampleid in the two quoted subqueries:</span>
+<span style="color: #008000; font-weight: bold;">select</span> <span style="color: #666666;">*</span> <span style="color: #008000; font-weight: bold;">from</span> crosstab (
+ <span style="color: #ba2121;">'select uniprotkb_ac_full_old,ps_sampleid,max(avlevel) from avglevels group by 1,2 order by 1,2'</span>,
+ <span style="color: #ba2121;">'select distinct ps_sampleid from avglevels order by 1'</span>
+ )
+ <span style="color: #008000; font-weight: bold;">as</span> newtable (
+ uniprotkb_ac_full_old <span style="color: #008000;">varchar</span>,_01 <span style="color: #008000;">numeric</span>,_02 <span style="color: #008000;">numeric</span>,_03 <span style="color: #008000;">numeric</span>,_04 <span style="color: #008000;">numeric</span>,_05 <span style="color: #008000;">numeric</span>,_06 <span style="color: #008000;">numeric</span>,_07 <span style="color: #008000;">numeric</span>,_08 <span style="color: #008000;">numeric</span>,_09 <span style="color: #008000;">numeric</span>,_10 <span style="color: #008000;">numeric</span>,_11 <span style="color: #008000;">numeric</span>,_12 <span style="color: #008000;">numeric</span>,_13 <span style="color: #008000;">numeric</span>,_14 <span style="color: #008000;">numeric</span>,_15 <span style="color: #008000;">numeric</span>,_16 <span style="color: #008000;">numeric</span>,_17 <span style="color: #008000;">numeric</span>,_18 <span style="color: #008000;">numeric</span>,_19 <span style="color: #008000;">numeric</span>,_20 <span style="color: #008000;">numeric</span>,_21 <span style="color: #008000;">numeric</span>,_22 <span style="color: #008000;">numeric</span>,_23 <span style="color: #008000;">numeric</span>,_24 <span style="color: #008000;">numeric</span>
+ );</pre>
+</div>
+<p>And that query will return a matrix which you could write out to disk and read back into R, or query directly from R via <a href="https://code.google.com/p/rpostgresql/">RPostgreSQL</a>.  The PostgreSQL and R results should be identical, with two caveats: if you z-scored, you need to have done it in the same order both times (always before or always after combining technical replicates), and depending on your number formats R may have given you a lexical sort instead of a numeric sort on the column names.</p>
+<p>Either way, at this point we have a table with rows as proteins and columns as samples.  My goal in the next analysis will be to ask whether any protein&#8217;s level correlates with a variable of interest.  That&#8217;s easier to do if the proteins are columns, so I may want to transpose my matrix:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">tprot <span style="color: #666666;">=</span> data.frame(t(protz_sampleagg[,<span style="color: #666666;">4</span>:<span style="color: #666666;">27</span>])) <span style="color: #408080; font-style: italic;"># transpose the actual protein levels portion of the matrix</span>
+colnames(tprot) <span style="color: #666666;">=</span> as.character(protz_sampleagg[,<span style="color: #666666;">1</span>]) <span style="color: #408080; font-style: italic;"># use the uniprot symbols from the first column as the new col names</span></pre>
+</div>
+<p>Also useful to note: the process of aggregating by sampleid has greatly reduced the number of missing values in the dataset &#8211; above it was ~2.8% of the matrix, now it&#8217;s just 0.25%:</p>
+<pre>&gt; sum(is.na(tprot))
+[1] 169
+&gt; sum(is.na(tprot))/(24*2801)
+[1] 0.002513983</pre>
+<p>And with that I&#8217;m ready for Question 1.</p>
+<p><a name="1"></a><strong>1. Is any protein&#8217;s expression level correlated with the variable of interest?</strong></p>
+<p>To answer this question I will simply loop through the proteins and correlate each one with my variable of interest.  Before you do this: check and then double check that the samples are sorted in the same order in the variable of interest vector as they are in the protein level matrix.  If they&#8217;re different (for instance, one is sorted numerically and the other lexically) it is incredibly easy to get a false negative.</p>
+<p>Once that&#8217;s done, this R script will loop through proteins and do all the correlations, check for lowest p value and make a qq plot of all the p values.</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># set up vectors to hold correlation results</span>
+p <span style="color: #666666;">=</span> vector(length<span style="color: #666666;">=2801</span>,mode<span style="color: #666666;">=</span><span style="color: #ba2121;">"numeric"</span>) <span style="color: #408080; font-style: italic;"># p value</span>
+cor <span style="color: #666666;">=</span> vector(length<span style="color: #666666;">=2801</span>,mode<span style="color: #666666;">=</span><span style="color: #ba2121;">"numeric"</span>) <span style="color: #408080; font-style: italic;"># rho</span>
+protsym <span style="color: #666666;">=</span> vector(length<span style="color: #666666;">=2801</span>,mode<span style="color: #666666;">=</span><span style="color: #ba2121;">"character"</span>) <span style="color: #408080; font-style: italic;"># uniprot id</span>
+<span style="color: #008000; font-weight: bold;">for</span> (i in <span style="color: #666666;">1</span>:<span style="color: #666666;">2801</span>) { <span style="color: #408080; font-style: italic;"># loop through all quantified proteins</span>
+  correl <span style="color: #666666;">=</span> cor.test(tprot[,i],var_of_interest) <span style="color: #408080; font-style: italic;"># do a pearson's correlation</span>
+  <span style="color: #408080; font-style: italic;"># extract relevant numbers from the pearson's correlation result</span>
+  p[i] <span style="color: #666666;">=</span> correl$p.value
+  cor[i] <span style="color: #666666;">=</span> correl$estimate
+  protsym[i] <span style="color: #666666;">=</span> as.character(names(tprot)[i])
+}
+<span style="color: #408080; font-style: italic;"># compile into a data frame</span>
+results <span style="color: #666666;">=</span> data.frame(protsym,cor,p)
+<span style="color: #408080; font-style: italic;"># lowest p value</span>
+min(p)
+<span style="color: #408080; font-style: italic;"># lowest p value after bonferroni correction</span>
+min(p<span style="color: #666666;">*2801</span>)
+<span style="color: #408080; font-style: italic;"># make a qq plot of p values</span>
+n <span style="color: #666666;">=</span> <span style="color: #666666;">2801</span>
+observed <span style="color: #666666;">=</span> sort(results$p) <span style="color: #408080; font-style: italic;"># actual p values for proteins</span>
+expected <span style="color: #666666;">=</span> seq(<span style="color: #666666;">1/</span>n,<span style="color: #666666;">1</span>,<span style="color: #666666;">1/</span>n) <span style="color: #408080; font-style: italic;"># under null, p values are uniformly distributed between 0 and 1</span>
+o <span style="color: #666666;">=</span> <span style="color: #666666;">-</span>log10(observed) <span style="color: #408080; font-style: italic;"># log transform the p values</span>
+e <span style="color: #666666;">=</span> <span style="color: #666666;">-</span>log10(expected) <span style="color: #408080; font-style: italic;"># log transform the expected p values</span>
+plot(e,o,pch<span style="color: #666666;">=19</span>,xlab<span style="color: #666666;">=</span><span style="color: #ba2121;">"expected -log10(p)"</span>,ylab<span style="color: #666666;">=</span><span style="color: #ba2121;">"observed -log10(p)"</span>,main<span style="color: #666666;">=</span><span style="color: #ba2121;">"qq plot of protein level correlation with variable of interest"</span>)
+abline(a<span style="color: #666666;">=0</span>,b<span style="color: #666666;">=1</span>,col<span style="color: #666666;">=</span><span style="color: #ba2121;">"red"</span>) <span style="color: #408080; font-style: italic;"># add a line representing the null</span></pre>
+</div>
+<p>I tend to do my QQ plots &#8220;manually&#8221; as the above code does, but Stephen Turner has posted some nice functions for automatic QQ plots in R <a href="http://gettinggeneticsdone.blogspot.com/2010/07/qq-plots-of-p-values-in-r-using-base.html">here</a> and <a href="http://gettinggeneticsdone.blogspot.com/2009/11/qq-plots-of-p-values-in-r-using-ggplot2.html">here</a>. <strong>update:</strong> <a href="http://www.inside-r.org/packages/cran/gap/docs/qqunif"><code>qqunif</code></a> from the <a href="http://cran.r-project.org/web/packages/gap/"><code>gap</code></a> library is the best solution for automatic QQs that I have seen so far.</p>
+<p>And just to be able to show an example QQ plot here, I made up a set of fake &#8216;observed&#8217; values using one line:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">observed <span style="color: #666666;">=</span> sort(runif(n<span style="color: #666666;">=2801</span>,min<span style="color: #666666;">=0</span>,max<span style="color: #666666;">=1</span>))</pre>
+</div>
+<p>Which gives you uniformly distributed p values between 0 and 1, which is what you&#8217;d see under the null hypothesis.  So if you run the above code using these &#8216;observed&#8217; values you&#8217;ll probably see something like this:</p>
+<p><img class="alignnone size-full wp-image-2016" title="r-qqplot-example-protein-level-v-variable-of-interest" src="/wp-content/uploads/2013/04/r-qqplot-example-protein-level-v-variable-of-interest.png"/></p>
+<p>Which would be wholly consistent with the null hypothesis that no protein is significantly correlated with the variable of interest.</p>
+<p><a name="2"></a><strong>2. Are any principal components correlated with the variable of interest?</strong></p>
+<p>In addition to knowing whether any <em>one</em> protein is correlated with the variable of interest, you might wonder whether the variable of interest explains a good fraction of the overall variance in protein expression profiles among your samples, or exerts a sort of protein level &#8216;signature&#8217; across the dataset.  It seems to me that a simple way to assess this would be to create <a href="https://en.wikipedia.org/wiki/Principal_component_analysis">principal components</a> from the matrix and then ask whether any principal components are correlated with the variable of interest.</p>
+<p>For instance, I&#8217;ve posted code for <a href="/2012/10/15/population-covariates-using-1000-genomes/">how to create population covariates</a> in exome analysis using MDS plotting, which is similar to principal components analysis.  If you do MDS plotting on a combined dataset of two sets of people genotyped using two different methods (say, different sequencing platforms, or one set from sequencing and one set from a SNP array) you sometimes find that the first MDS dimension (i.e. first principal component) explains a lot of variance simply by separating the two genotyping methods.  That&#8217;s useful information, even if interpreting it (is one genotyping method especially error prone? did I have strands flipped on some SNPs? or is this a normal level of discordance between methods? etc.) is not trivial.</p>
+<p>I implemented principal components analysis in R following <a href="http://statmath.wu.ac.at/~hornik/QFS1/principal_component-vignette.pdf">this awesome tutorial by Kurt Hornik</a>.  An important point is that PCA cannot tolerate missing values.  There&#8217;s <a href="http://stats.stackexchange.com/questions/35561/replacement-of-na-values-for-pca-analysis">an excellent stats.stackexchange discussion</a> about what to do about this.  The key, of course, is to know what the missing values represent in the real world, a question which my proteomics provider never answered.  But <a href="http://stats.stackexchange.com/a/35565">as one user pointed out</a>, if the number of missing values is small it doesn&#8217;t matter that much what you do with them.  Since only 169 cells (0.25%) are missing for me, I&#8217;m going to fill them with the column mean &#8211; the average expression level for that protein:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">tprot_fill <span style="color: #666666;">=</span> tprot <span style="color: #408080; font-style: italic;"># copy matrix</span>
+<span style="color: #008000; font-weight: bold;">for</span> (colno in <span style="color: #666666;">1</span>:<span style="color: #666666;">2801</span>) { <span style="color: #408080; font-style: italic;"># loop through columns</span>
+   avlevel <span style="color: #666666;">=</span> mean(tprot[,colno],na.rm<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">TRUE</span>) <span style="color: #408080; font-style: italic;"># get column mean</span>
+   tprot_fill[,colno][is.na(tprot_fill[,colno])] <span style="color: #666666;">=</span> avlevel <span style="color: #408080; font-style: italic;"># fill missing cells with column mean</span>
+}</pre>
+</div>
+<p>And then here&#8217;s the PCA code, inspired by the above-cited<a href="http://statmath.wu.ac.at/~hornik/QFS1/principal_component-vignette.pdf"> tutorial</a>:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">covmatrix <span style="color: #666666;">=</span> cov(tprot_fill) <span style="color: #408080; font-style: italic;"># calculate covariance matrix</span>
+eigenvalues <span style="color: #666666;">=</span> eigen(covmatrix)$values <span style="color: #408080; font-style: italic;"># get eigenvalues</span>
+eigenvectors <span style="color: #666666;">=</span> eigen(covmatrix)$vectors <span style="color: #408080; font-style: italic;"># get eigenvectors</span>
+pc <span style="color: #666666;">=</span> as.matrix(tprot_fill) <span style="color: #666666;">%*%</span> eigenvectors <span style="color: #408080; font-style: italic;"># multiply matrices to get principal components</span>
+<span style="color: #408080; font-style: italic;"># double check that covariance of the PCs equals the eigenvalues on the diagonal and is ~0 elsewhere</span>
+cov(pc)[<span style="color: #666666;">1</span>:<span style="color: #666666;">3</span>,<span style="color: #666666;">1</span>:<span style="color: #666666;">3</span>]
+eigenvalues[<span style="color: #666666;">1</span>:<span style="color: #666666;">3</span>]
+<span style="color: #408080; font-style: italic;"># examine results</span>
+(eigenvalues<span style="color: #666666;">/</span>sum(eigenvalues))[<span style="color: #666666;">1</span>:<span style="color: #666666;">10</span>] <span style="color: #408080; font-style: italic;"># get fraction of variance explained by each of first 10 PCs</span>
+cumsum(eigenvalues<span style="color: #666666;">/</span>sum(eigenvalues))[<span style="color: #666666;">1</span>:<span style="color: #666666;">10</span>] <span style="color: #408080; font-style: italic;"># running total of variance explained by first 10 PCs</span></pre>
+</div>
+<p>Once you&#8217;ve got these, you may find it of interest to plot the 24 samples in the space of the first 2 PCs and see what it looks like:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">plot(pc[,<span style="color: #666666;">1</span>],pc[,<span style="color: #666666;">2</span>],pch<span style="color: #666666;">=19</span>,xlab<span style="color: #666666;">=</span><span style="color: #ba2121;">"PC1"</span>,ylab<span style="color: #666666;">=</span><span style="color: #ba2121;">"PC2"</span>,main<span style="color: #666666;">=</span><span style="color: #ba2121;">"First 2 PCs of 24 proteomics samples"</span>)</pre>
+</div>
+<p>You may also learn something interesting about your data by looking at the distribution of variance explained by the various PCs.  Since I have 24 samples, I&#8217;ll only get n-1 = 23 meaningful PCs (though the above code actually returns 2801 PCs, cols 24:2801 explain ~0 variance), but I plot the first 50 of them because the dropoff after #23 reminds you where zero is.</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">plot(seq(<span style="color: #666666;">1</span>,<span style="color: #666666;">50</span>,<span style="color: #666666;">1</span>),eigenvalues[<span style="color: #666666;">1</span>:<span style="color: #666666;">50</span>]<span style="color: #666666;">/</span>sum(eigenvalues[<span style="color: #666666;">1</span>:<span style="color: #666666;">50</span>]),pch<span style="color: #666666;">=19</span>)</pre>
+</div>
+<p>For comparison, here is code create a matrix of completely random data and then calculate PCs:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">randommatrix <span style="color: #666666;">=</span> matrix(rnorm(n<span style="color: #666666;">=24*2801</span>,m<span style="color: #666666;">=0</span>,sd<span style="color: #666666;">=1</span>),nrow<span style="color: #666666;">=24</span>)
+covmatrix<span style="color: #666666;">=</span>cov(randommatrix)
+eigenvalues <span style="color: #666666;">=</span> eigen(covmatrix)$values <span style="color: #408080; font-style: italic;"># get eigenvalues</span>
+xlab <span style="color: #666666;">=</span> <span style="color: #ba2121;">"PC# (rank order)"</span>
+ylab <span style="color: #666666;">=</span> <span style="color: #ba2121;">"Variance explained"</span>
+main <span style="color: #666666;">=</span> <span style="color: #ba2121;">"Variance explained by PCs in random data"</span>
+ylim <span style="color: #666666;">=</span> c(<span style="color: #666666;">0</span>,<span style="color: #666666;">.25</span>)
+plot(seq(<span style="color: #666666;">1</span>,<span style="color: #666666;">50</span>,<span style="color: #666666;">1</span>),eigenvalues[<span style="color: #666666;">1</span>:<span style="color: #666666;">50</span>]<span style="color: #666666;">/</span>sum(eigenvalues[<span style="color: #666666;">1</span>:<span style="color: #666666;">50</span>]),pch<span style="color: #666666;">=19</span>,xlab<span style="color: #666666;">=</span>xlab,ylab<span style="color: #666666;">=</span>ylab,ylim<span style="color: #666666;">=</span>ylim,main<span style="color: #666666;">=</span>main)</pre>
+</div>
+<p>And it will give you a plot something like this:</p>
+<p><img class="alignnone size-full wp-image-2017" title="variance-explained-by-randommatrix-pcs" src="/wp-content/uploads/2013/04/variance-explained-by-randommatrix-pcs.png"/></p>
+<p>The first PC explains about 5.0% of variance, then it drops off gradually to PC23 which explains 3.6% of variance, then after that it abruptly drops off to zero. <em> Interpretation: it takes all 23 PCs to explain the random data.</em>  Random data has high information entropy and cannot easily be condensed down to just a few PCs.  In contrast to this result for randomly generated data, I find that in <em>real</em> datasets, PC1 usually explains much more than 5% of variance and the variance explained by each PC drops off more gradually to zero before you even hit the theoretical limit of n-1.  This is just an observation; I am still looking for a good statistics reference to explain how to more meaningfully interpret these facts.  In any event, it may be worth plotting the variance explained by proteomics PCs.</p>
+<p>The real question here was whether the variable of interest is correlated with one of the PCs.  Here&#8217;s a loop to test them all, though if the variable of interest is really quite important I would expect it to be represented in the first one or two PCs.</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">variance_explained <span style="color: #666666;">=</span> eigenvalues<span style="color: #666666;">/</span>sum(eigenvalues) <span style="color: #408080; font-style: italic;"># calculate variance explained by each PC</span>
+lastpc <span style="color: #666666;">=</span> max(which(variance_explained<span style="color: #666666;">&gt;.001</span>)) <span style="color: #408080; font-style: italic;"># index of last PC that explains more than 0.1% of variance</span>
+cors <span style="color: #666666;">=</span> vector(mode<span style="color: #666666;">=</span><span style="color: #ba2121;">"numeric"</span>,length<span style="color: #666666;">=</span>lastpc) <span style="color: #408080; font-style: italic;"># to hold results</span>
+pvals <span style="color: #666666;">=</span> vector(mode<span style="color: #666666;">=</span><span style="color: #ba2121;">"numeric"</span>,length<span style="color: #666666;">=</span>lastpc) <span style="color: #408080; font-style: italic;"># to hold results</span>
+<span style="color: #008000; font-weight: bold;">for</span> (i in <span style="color: #666666;">1</span>:lastpc) {
+  correl <span style="color: #666666;">=</span> cor.test(pc[,i],var_of_interest)
+  pvals[i] <span style="color: #666666;">=</span> correl$p.value
+  cors[i] <span style="color: #666666;">=</span> correl$estimate
+}
+min(pvals) <span style="color: #408080; font-style: italic;"># smallest p value - do any look extremely significant?</span>
+which(pvals<span style="color: #666666;">==</span>min(pvals)) <span style="color: #408080; font-style: italic;"># and if so, which?</span></pre>
+</div>
+<p><a name="3"></a><strong>3. Is any protein&#8217;s expression level correlated with the variable of interest after controlling for covariates?</strong></p>
+<p>One possible outcome of your above analysis in Question 2 is that you find that your first PC or two explain a lot of variance but are not correlated with the variable of interest.  Perhaps those PCs reflect something else about differences in cell culture across samples, or how the sample was processed, or population stratification among the people who donated samples.  Certainly you could imagine that sex might matter, and that might be captured in one of the PCs or you might want to throw it in separately as a covariate.  I&#8217;ll assume the latter case here.</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># vectors to hold results</span>
+p <span style="color: #666666;">=</span> vector(length<span style="color: #666666;">=2801</span>,mode<span style="color: #666666;">=</span><span style="color: #ba2121;">"numeric"</span>)
+est <span style="color: #666666;">=</span> vector(length<span style="color: #666666;">=2801</span>,mode<span style="color: #666666;">=</span><span style="color: #ba2121;">"numeric"</span>)
+protsym <span style="color: #666666;">=</span> vector(length<span style="color: #666666;">=2801</span>,mode<span style="color: #666666;">=</span><span style="color: #ba2121;">"character"</span>)
+<span style="color: #008000; font-weight: bold;">for</span> (i in <span style="color: #666666;">1</span>:<span style="color: #666666;">2801</span>) { <span style="color: #408080; font-style: italic;"># loop over proteins</span>
+  m <span style="color: #666666;">=</span> lm(tprot[,i]~var_of_interest<span style="color: #666666;">+</span>sex<span style="color: #666666;">+</span>pc[,<span style="color: #666666;">1</span>]<span style="color: #666666;">+</span>pc[,<span style="color: #666666;">2</span>]) <span style="color: #408080; font-style: italic;"># linear model to explain protein level</span>
+  p[i] <span style="color: #666666;">=</span> summary(m)$coefficients[<span style="color: #ba2121;">"var_of_interest"</span>,<span style="color: #ba2121;">"Pr(&gt;|t|)"</span>] <span style="color: #408080; font-style: italic;"># extract p value</span>
+  cor[i] <span style="color: #666666;">=</span> summary(m)$coefficients[<span style="color: #ba2121;">"var_of_interest"</span>,<span style="color: #ba2121;">"Estimate"</span>] <span style="color: #408080; font-style: italic;"># extract coefficient</span>
+  protsym[i] <span style="color: #666666;">=</span> as.character(names(tprot)[i])
+}
+results2 <span style="color: #666666;">=</span> data.frame(protsym,cor,p) <span style="color: #408080; font-style: italic;"># assemble into a data frame</span>
+min(results2$p) <span style="color: #408080; font-style: italic;"># lowest p value</span>
+min(results2$p)<span style="color: #666666;">*2801</span> <span style="color: #408080; font-style: italic;"># lowest p value after bonferroni correction</span></pre>
+</div>
+<p>And of course you could qq plot the p values as demonstrated earlier.</p>
+<p>In fact, sex can be not only a covariate but also a useful QC check.  One would certainly expect at least <em>some</em> proteins should be significantly higher in women than men or vice versa. So we can loop through again pulling out the p value for sex correlation with proteins, and if none of those are significant that would be a bad sign:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #008000; font-weight: bold;">for</span> (i in <span style="color: #666666;">1</span>:<span style="color: #666666;">2801</span>) { <span style="color: #408080; font-style: italic;"># loop over proteins</span>
+  m <span style="color: #666666;">=</span> lm(tprot[,i]~var_of_interest<span style="color: #666666;">+</span>sex<span style="color: #666666;">+</span>pc[,<span style="color: #666666;">1</span>]<span style="color: #666666;">+</span>pc[,<span style="color: #666666;">2</span>]) 
+  p[i] <span style="color: #666666;">=</span> summary(m)$coefficients[<span style="color: #ba2121;">"sex"</span>,<span style="color: #ba2121;">"Pr(&gt;|t|)"</span>]  <span style="color: #408080; font-style: italic;"># this time pull out p value for sex </span>
+  cor[i] <span style="color: #666666;">=</span> summary(m)$coefficients[<span style="color: #ba2121;">"sex"</span>,<span style="color: #ba2121;">"Estimate"</span>] <span style="color: #408080; font-style: italic;"># and its coefficient</span>
+  protsym[i] <span style="color: #666666;">=</span> as.character(names(tprot)[i])
+}
+min(p)
+min(p)<span style="color: #666666;">*2801</span></pre>
+</div>
+<p>If your Bonferroni-corrected lowest p value for sex vs. protein level is not significantly, I&#8217;d be rather worried about the noisiness of your dataset.</p>
+<p><strong>conclusion</strong></p>
+<p>This was just a few quick analyses to get started analyzing some proteomics data.  You could certainly do more sophisticated stuff with these data, and by combining these with gene expression data from microarray or RNA-seq.</p>
+<p><strong>update</strong></p>
+<p>Thanks to my colleague <a href="http://www.linkedin.com/pub/ashok-ragavendran/28/765/598">Ashok Ragavendran</a> for suggesting several corrections and improvements to the this post &#8211; edits above plus these two points:</p>
+<p>1. It would be valuable to have an interaction term model with my variable of interest and sex.  I didn&#8217;t realize that in <a href="http://stat.ethz.ch/R-manual/R-patched/library/stats/html/lm.html"><code>lm</code></a>, <code>*</code> is shorthand for including each variable separately <em>and</em> an interaction term, so for each protein you can do either:</p>
+<pre>m = lm(tprot[,i]~var_of_interest*sex)</pre>
+<p>or</p>
+<pre>m = lm(tprot[,i]~var_of_interest+sex+var_of_interest:sex)</pre>
+<p>2. As for multiple testing, <a href="http://en.wikipedia.org/wiki/Bonferroni_correction">Bonferroni correction</a> is probably far too conservative.  The built-in R function <code>p.adjust</code> includes <a href="http://en.wikipedia.org/wiki/False_discovery_rate#Benjamini.E2.80.93Hochberg_procedure">Benjamini-Hochberg FDR correction</a> which is probably more appropriate:</p>
+<pre>p.adjust(p,method="hochberg")</pre>
+<p>But I don&#8217;t fully understand the math behind it yet and hate using tools as black boxes &#8211; if anyone knows a good tutorial on how to do FDR correction &#8220;manually&#8221; in R (equivalent to <a href="http://statmath.wu.ac.at/~hornik/QFS1/principal_component-vignette.pdf">this tutorial on PCA</a>) please let me know.</p>

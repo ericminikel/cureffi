@@ -1,0 +1,382 @@
+---
+layout: post
+title: "UAB day 2: analysis, expression and epigenomics"
+author: ericminikel
+date: 2012-12-12 16:14:52
+---
+<p>Today I am blogging from day 2 of the <a href="http://www.soph.uab.edu/ssg/nhgri_r25/secondshortcourse">UAB short course on sequencing</a>.</p>
+<p><strong>Speaker 1: <a href="http://www.hudsonalpha.org/users/bboone">Braden Boone</a> &#8211; Data handling and analysis for high-performance sequencing</strong></p>
+<p>Outline of data analysis workflow for Illumina HiSeq sequencing:</p>
+<ul>
+<li>HiSeq control software (real time):<br/>
+- Sequencing images (actual optical images of flowcells)<br/>
+- Image analysis<br/>
+- Base calling (*.bcl files)</li>
+<li>Hudson Alpha uses Illumina&#8217;s <a href="http://support.illumina.com/sequencing/sequencing_software/casava.ilmn">CASAVA 1.8</a> for all downstream steps<br/>
+- FastQ generation<br/>
+- Alignment<br/>
+- Variant calling</li>
+</ul>
+<p><strong>Speaker 2: <a href="http://www.hudsonalpha.org/g-cooper-lab">Greg Cooper</a> &#8211; Variant analysis and annotation</strong></p>
+<p>Quality control</p>
+<ul>
+<li>Example analysis of 1000G samples.  % of variants in dbSNP is stable within people of one ancestry group &#8211; ~88% in Africans, 94% in Europeans, ~93% in Asians.</li>
+<li>Allele frequency spectrum.  Rule of thumb: 99% of variants in one sample should be at 1% or greater allele frequency, in general (n-1%) at (n)% or greater allele frequency.</li>
+<li>Rare and novel variants should be overwhelmingly heterozygous</li>
+<li>Number of (non-reference??) stop codons ~ 100 / genome</li>
+<li>Ti/Tv ratio ~2 whole genome, 3 in protein coding, whereas random errors would be 0.5</li>
+<li>Size distribution of indels: two trends: (1) should be shifted towards small indels (a few bases) and (2) should be shifted towards multiples of 3, i.e. non-frameshift.</li>
+</ul>
+<div>Annoatations as QC for individual variants</div>
+<div></div>
+<div>
+<ul>
+<li>Study frequency vs. database frequency &#8211; if variant is common in your samples and rare in dbSNP / 1000G or vice versa, that is sketchy.  Not necessarily wrong but a red flag.</li>
+<li><a href="http://en.wikipedia.org/wiki/Hardy%E2%80%93Weinberg_principle">HWE</a>  &#8211; e.g. a longevity GWAS reported results driven by genotyping errors, clear because all the top reported SNPs were far out of HWE.</li>
+<li>Be more skeptical of variants inside repeats / segmental duplications because harder to uniquely align.</li>
+</ul>
+<div>Annotations to improve genetic discovery power</div>
+</div>
+<div></div>
+<div>
+<ul>
+<li>High effect size, high allele frequency variants do exist, e.g. warfarin sensitivity SNP, AMD risk SNP (probably these have all already been discovered, don&#8217;t count on more??)</li>
+<li>Low effect size, high allele frequency: e.g. cholesterol, diabetes risk.  Best uncovered by GWAS</li>
+<li>High effect size, low allele frequency</li>
+<li>Low effect size, low allele frequency &#8211; very hard to detect due to low statistical power</li>
+<li>The &#8220;multiple testing&#8221; issue in genome-wide experiments is not really about <em>multiplicity</em>, it&#8217;s about low prior probabilities / low quality hypotheses.  The goal of functional annotation is to generate better priors / use information wisely to focus on high value variants.</li>
+<li>Using information from evolution: purifying selection reduces rates of evolution at functional sites.  Therefore sites with higher levels of sequence conservation are more likely to have greater functional importance.  Relationship is quantitative.</li>
+<li>Shared sequences like motifs, domains etc. are also informative</li>
+<li>Focus on non-synonymous variants b/c enriched for functional effects, disease consequences.</li>
+<li>Stop codons and splice-site disruptions are even more likely important</li>
+<li>Still, most non-synonymous variants are not important.</li>
+<li>Three sources of data for classifying non-synonymous SNPs: (1) biochemical info about amino acids, (2) structural predictions from biophysics, (3) evolutionary information, i.e. sequence conservation with deep phylogenetic comparisons</li>
+<li>Two types of approaches: (1) model-based: classify each mutation according to its similarity to a theoretical definition of deleterious vs. neutral, or (2) trained-classifier: heuristically learn the properties of &#8220;known&#8221; deleterious vs. &#8220;known&#8221; neutral variants.</li>
+<li>List of tools for protein-sequence-based predictions of deleteriousness &#8211; <a href="http://www.ncbi.nlm.nih.gov/pubmed/21850043">Cooper &amp; Shendure 2011</a>.</li>
+<li>SIFT</li>
+<li>MAPP &#8211; measures conservation as a function of biochemical properties ex. how tightly is hydropathy conserved, how tightly is polarity conserved, how tightly is volume conserved.</li>
+<li>Polyphen &#8211; trained classifier based on many features.  Polyphen has 4 categories: synonymous, benign non-syn, possibly damaging, and probably damaging.  These correlate well with allele frequency &#8211; singletons are enriched for &#8220;probably damaging&#8221;; high frequency variants are enriched for &#8220;benign&#8221; in <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2844771/">Ng 2009</a>.</li>
+<li>What about the 99% of variations that are not located in protein coding regions?  How to annotate non-coding variants?</li>
+<li>Comparative genomics: evolutionary approach usually absed on mammalian multiple alignment, b/c non-protein-coding sequence in humans is almost never conserved outside of the mammalian clade</li>
+<li>Functional genomics: promoters, etc.</li>
+<li>Tools: phastCons, GERP, Gumby, PhyloP, SCONE, binCons, Chai Cons, Vista</li>
+<li>GERP scores: In mammalian multiple alignment (~24 mammals?), neutral average 5 substitutions per site.  If 0 substitutions observed at a site, that site gets +5 points for conservation, if 1 substitution, +4 for conservation, etc.</li>
+<li>Are GERP scores meaningful?  Two lines of evidence: (1) Coding regions are heavily enriched for conserved sites according to GERP, and (2) GERP score correlates well with allele frequency: singletons are enriched for variants in highly conserved sites.  So past rates of evolution (measured by GERP) are predictive of current prevalence (i.e. allele frequency).  GERP score also predicts disease influence well in variants that were otherwise identified by amino acid conservation measures.</li>
+<li>Functional annotations for non-coding regions are just now emerging.  Key types of available information:</li>
+<li>Transcription factor binding events (discovered via ChIP-seq)</li>
+<li>Regions of open chromatin (via DNase HS/FAIRE/others)</li>
+<li>Chromatin modifications</li>
+<li>Methylation status</li>
+<li>Identification of promoters, enhancers, silencers, and insulators via integrative analysis of molecular annotation</li>
+<li><a href="http://genome.ucsc.edu/ENCODE/">ENCODE project</a> has the goal of producing a functional map of whole human genome including non-coding. There are now hundreds of ENCODE tracks, all genome-wide and publicly available</li>
+</ul>
+<div>Error rates</div>
+</div>
+<div></div>
+<div>
+<ul>
+<li>All genomic datasets have both random and structured errors</li>
+<li>Sources: ex. depth of coverage, chemistry, PCR mistakes, software limitations</li>
+<li>Each institution, machine, technician, protocol, sample etc will have its own systematic error, and sequencing is sensitive enough to pick all these up.</li>
+<li>Even when errors are rare overall, they might be proportionally enriched in subsets of variants.</li>
+<li>Irony: the most interesting variants are the most likely to be an error.</li>
+<li>Why?  false positive rate != false discovery rate</li>
+<li>Evolution reduces variants in functional regions, yet error is uniform, so the fraction of variants that are errors is elevated in functional regions.</li>
+<li>Example: looking for de novos in trios.  Accepted actual mutation rate is 2.5e-8.  20Mb of exome is prone to non-synonymous variants.  Sequencing false positive rate is 1e-6.  So we expect for every one child there will be 0.5 <em>real</em> de novos and 20 false de novos.  False discovery rate is 97.6%.  And this doesn&#8217;t even account for the possibility that the parent actually did have the variant and you just had a false negative of missing that varint in the parent.</li>
+<li>e.g. <a href="http://www.ncbi.nlm.nih.gov/pubmed/21076407">Vissers 2010</a> &#8211; aggressive QC led to 51 candidate de novos, only 9 of which validated.</li>
+<li>Need to integrate known association singals.  ex. if candidate rare variant in gene X might be correlated with phenbotype Y, that&#8217;s more interesting if it&#8217;s already known that common variants in X are associated with Y.  relevant databases: <a href="http://www.genome.gov/gwastudies/">NHGRI</a>, HapMap and <a href="http://gvs.gs.washington.edu/GVS134/">GVS</a>.</li>
+<li>eQTLs are enriched for functional variants.</li>
+</ul>
+<div>Challenges and future directions</div>
+</div>
+<div></div>
+<div>
+<ul>
+<li>Discrete filters are the norm but are not optimal.  e.g. eliminating everything in dbSNP to look for causes of new rare mendelian diseases.  Better to use a continuous filter like allele frequency.</li>
+<li>Conserved vs. neutral, damaging v. benign are dichotomous rather than quantitative</li>
+<li>Most causal variants, even for rare and monogenic diseases, are NOT non-synonymous, obvious loss-of-function protein coding mutations.</li>
+<li>Fewer than 50% of rare, likely-Mendelian diseases to which exome sequencing has been applied have yielded useful hits.</li>
+<li>New direction: unified predictions of disease relevance.  e.g. Beta-globin associations with thalassemia.</li>
+</ul>
+<div>Q&amp;A</div>
+<div></div>
+<div>
+<ul>
+<li><a href="http://compbio.mit.edu/ChromHMM/">chromHMM</a> or <a href="http://noble.gs.washington.edu/proj/segway/">Segway</a> &#8211; attempts to integrate all information from different ENCODE tracks</li>
+<li>Rule of thumb: if you find a de novo variant in a child and it IS in dbSNP, then it was probably a false negative in the parent.  this will be less true as more rare things are added to dbSNP, but for now is still a good rule of thumb.</li>
+</ul>
+<p><strong>Speaker 3: <a href="http://research.hudsonalpha.org/Myers/?page_id=268">Jay Gertz</a> &#8211; RNA-seq</strong></p>
+<p>Brief history of gene expression assays</p>
+<ul>
+<li>Northern blots &#8211; very low throughput.</li>
+<li>qPCR &amp; nanostring &#8211; low to medium throughput, sensitive.<br/>
+- qPCR: still used. copy RNA to cDNA, make primers for it, and PCR it quantitatively.<br/>
+- nanostring: attach RNA to a glass side, use current to line the molecules up and hybridize fluorescent probes. very sensitive b/c counting single molecules</li>
+<li>Expression microarrays &#8211; revolutionary, first way to look at all genes in an organism in one experiement. glass sides with oligos complementary to sequences of interest.  create fluorolabeled cDNA based on RNA from organism of interest, let it hybridize to the oligos on the slide, and see where fluorescence appears.  This is very high throughput but fairly noisy.  Some mRNAs will bind to other genes&#8217; probes by mistake.</li>
+<li>Sequencing-based RNA assays.  both high throughput and sensitive.  subject of today&#8217;s talk</li>
+</ul>
+<p>Topics for today</p>
+<ul>
+<li>mRNA-Seq &#8211; usually called RNA-seq</li>
+<li>EDGE RNA-seq</li>
+<li>micro RNA-seq</li>
+</ul>
+<p>mRNA-seq</p>
+<ul>
+<li>Step 1: enrichment of mRNAs.  mRNAs are only 3% of all RNA in a cell.  (ribosomal = 80%, transfer = 15%, small = 2%).  you only want to sequence mRNA.  approaches: (1) capture mRNA with poly-dT oligo probes attached to magnetic beads, that hybridize to poly-A tails of mRNA. can use &#8220;locked&#8221; nucleic acids to get tight hybridization.  or (2) use beads to <em>remove</em> rRNA. Ribominus (Invitrogen) and Ribozero (Epicentre).  (3) Crab DSN (duplex-specific nucleases).  Take all RNA, make cDNA, heat to 95C to dissociate, then lower to ~65C and because rRNA are so abundant they are more likely to find their complement, then use a duplex-specific DNase to chew up anything double-stranded.  caveat: this will also reduce transcripts of most highly expressed genes, e.g. actin.</li>
+<li>how to deal with degraded samples (low quality, hard-to-obtain samples).  with mRNA capture, you&#8217;ll bias towards 3&#8242; end of mRNAs.  Ribozero and Crab DSN work better for degraded samples</li>
+<li>Each method requires 100ng &#8211; 1μg of total RNA</li>
+<li>Step 2: construct library.  method is due to <a href="http://server2.icav.up.pt/CPINHO/expl_bia-evf_1283_2012/IIc.pdf">Mortazavi 2008</a>.</li>
+<li>steps: (1) fragment RNA by heat or chemical methods, (2) make double-stranded cDNA from random priming, (3) end-repair to make blunt ends, (4) add A at 3&#8242; using Taq, (5) ligate adapters which have single T overhang to find the A, (6) PCR amplify</li>
+<li>Does not preserve strandedness of RNA</li>
+<li>Directional methods <em>do</em> preserve strandedness.  Two approaches: (1) ligate known adapters to 5&#8242; and 3&#8242; ends of the transcript itself before reverse transcribing to cDNA, or (2) dUTP cDNA method &#8211; mark the complementary strand by synthesizing with U instead of T, then use a selective digester that will digest the strand with the Us in it</li>
+<li>These methods are very effective at getting `99.5% reads from positive strand.  Very important for, ex. antisense transcription</li>
+<li>Efficient library prep protocol using Nextera enzyme mix intended for genomic DNA -see <a href="http://genome.cshlp.org/content/22/1/134.full">Gertz 2011</a>.</li>
+</ul>
+<p>Quality control metrics for RNA-seq</p>
+<ul>
+<li>Alignment &#8211; at least 75% of reads should map to known RefSeq genes</li>
+<li>Complexity of library (number of different molecules after library construction).  Of random sample of 10M reads, how many different genomic positions are represented?  Should be &gt; 85% complexity (i.e. 85% unique positions).  Complexity drops off sharply at 1 pg mRNA (~10 cells); to get good complexity you want at least 10 pg mRNA so at least 100-1000 mammalian cells.</li>
+<li>Coefficient of variation across a transcript &#8211; you want even coverage across a transcript, minimizing 3&#8242; bias which is especially pronounced in degraded samples</li>
+</ul>
+<p>Single-cell RNA-seq</p>
+<ul>
+<li>Key step is amplification of cDNA</li>
+</ul>
+<p>How many reads is enough?</p>
+<ul>
+<li>ENCODE guidelines:</li>
+<li>30M paired-end reads for gene expression</li>
+<li>100-200M paired-end reads for transcript discovery</li>
+<li>The lower the expression of a gene, the more depth you need to get an accurate measure of its expression</li>
+</ul>
+<p>When to use microarray vs. RNA-seq?</p>
+<ul>
+<li>microarray have limited dynamic range &#8211; a small range of expression levels are detectable; RNA-seq can detect much larger range</li>
+<li>Larger fold differences in expression can be detected with RNA-seq and not with microarray</li>
+<li>microarray only gives you expression measurements; RNA-seq also lets you discover new transcripts, get info about splicing, call SNPs.</li>
+<li>RNA-seq is still about 2x more expensive than microarray</li>
+<li>For guidance on depth see <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3227109/">Tarazona 2011</a>.</li>
+</ul>
+<p>Paired vs. single-end reads</p>
+<ul>
+<li>Paired end is MUCH more important in RNA-seq than in genome/exome sequencing.</li>
+<li>1. RNA is much harder to align to genome.  Paired end gives you greater alignment rate</li>
+<li>2. Paired end gives you more splicing information</li>
+<li>Longer reads are also better b/c you can span more exon junctions, but limited by insert size of fragment.  Hudson-Alpha does paired-end 50bp reads.  Paired-end is more important than read length.</li>
+</ul>
+<p>Computational tools for RNA-seq</p>
+<ul>
+<li>With or without a genome you can do: transcript/isoform discovery, expression levels and isoform usage, and viral and bacterial contaminants</li>
+<li>With a genome you can do: RNA editing, calling SNPs, fusion genes</li>
+<li>If your organism has a reference genome, first step is alignment to genome</li>
+<li>Alignment is difficult for two reasons:</li>
+<li>1. exons can be 10 or even 100kb apart in genome but adjacent in transcript</li>
+<li>2. many reads span exon junctions so they don&#8217;t match to the genome itself</li>
+<li>TopHat works well for RNA-seq alignment though it is relatively slow</li>
+<li>To discover transcripts: CuffLinks, Abyss, Scripture</li>
+<li>Compare with annotations from known genes: RefSeq, ENSEMBLE, Gencode (annotations by ENCODE, includes long non-coding RNAs lncRNAs)</li>
+<li>If no reference genome, do de novo assembly of transcripts using Trans-ABySS, Trinity, Velvet.</li>
+<li>Expression measurements: add up reads mapping to a transcript, normalized by both the length of gene and number of aligned reads in that sample or experiment.  this lets you compare across genes.  you don&#8217;t need to normalize by length of gene if you are only interested in comparing same gene&#8217;s expression across different samples.</li>
+<li>Measure is Reads Per Kilobase of transcript per Million mapped reads = RPKM.  FPKM (&#8220;fragments&#8221;) is identical</li>
+<li>Some methods use raw read counts instead of normalized.  This lets you examine power for a particular gene.</li>
+<li>Tools for comparing gene expression: CuffLinks, MyRNA, DEseq, DEGseq, baySeq, edgeR, NOIseq, SAMSeq, DEXSeq.  some require replicates.</li>
+</ul>
+<p>Common computational problems</p>
+<ul>
+<li>Outliers can cause problems &#8211; a gene with identical expression across experiments except one huge outlier point can have a very small p value by edgeR or DEseq methods.</li>
+<li>Different methods all have different biases.  SAMSeq is non-parametric &#8211; looks only at rank of samples, so it&#8217;s not sensitive to outliers. But that&#8217;s true even if 6 out of 20 samples are outliers, at which point they are not really outliers, so it might be missing something that really is significant.</li>
+</ul>
+<p>Other things you can do</p>
+<ul>
+<li>Can align RNA-seq reads to viral and bacterial genomes to detect &#8220;contamination&#8221;. genomes available from <a href="http://www.ncbi.nlm.nih.gov/genome/browse/">NCBI Genome database</a>.</li>
+<li>Call SNPs using Samtools, SNVmix.  Not as good as variant calling on genomic DNA, esp. near junctions, and heterozygous variants can only be called if both transcripts have very similar expression level</li>
+<li>Identify transcript fusion using TopHat-fusion, deFuse, FusionMap, ChimeraScan (he recommends this).  You can discover cancer-specific transcript fusions.</li>
+<li>Very hard to do transcript-specific expression.  You can do it if you already have phased genome (or exome) sequenced.</li>
+</ul>
+<div>EDGE RNA-seq</div>
+<div></div>
+<ul>
+<li> Eco-P15I-tagged Digital Gene Expression (EDGE)</li>
+<li>You cleave to get only the poly-A tail up to a restriction site, then ligate an adapter. Eco-P15I will bind to adapter but then cut 27b downstream of the binding site.  Now you have a 26-28b &#8220;edge tag&#8221; available for sequencing.</li>
+<li>If reference genome available, align and count tags for expression</li>
+<li>If not available, can align to a similar organism&#8217;s reference genome to see which homologous genes are expressed</li>
+<li>Library prep is more laborious but you sequence much less material in order to get same amount of expression information</li>
+</ul>
+<p>micro RNA-seq</p>
+<ul>
+<li>miRNAs regulate expression of mRNAs</li>
+<li>only ~21b long</li>
+<li>methods for analyzing microRNA:</li>
+<li>qPCR &#8211; Taqman assay &#8211; ligation of primer sequence first</li>
+<li>Nanostring &#8211; imaging with fluorescent probes</li>
+<li>microRNA microarrays</li>
+<li>microRNA-seq: the only method for microRNA discovery</li>
+<li>protocol for creating miRNA libraries is similar to direction-specific mRNA-seq: (1)  ligate adapters to miRNAs, (2) reverse transcribe to cDNA, (3) acrylamide gel size selection for 21b + adapter length &#8211; difficult and laborious</li>
+<li>To sequence miRNA you only need 2-5M short single-end reads.  There are only 1700 known miRNAs in mammals.</li>
+<li>Things you can do:</li>
+<li>Quantify miRNA expression (spike-in synthetic RNAs may help compare samples)</li>
+<li>Identify the processed end</li>
+<li>Mutation / editing detection is very difficult due to length &#8211; 21b is hard to align uniquely to genome</li>
+<li>Analysis of miRNA-seq:</li>
+<li>trim adapter from sequence</li>
+<li>align to genome or to known miRNAs</li>
+<li>count reads</li>
+<li>Tools for analyzing: miRNAkey, miRDeep, miRexpress, miRanalyzer</li>
+</ul>
+<p>RNA-seq is become more cost effective.  also you can use DNA barcodes to pool samples in one lane (on Illumina).</p>
+<p><strong>Speaker 4: <a href="http://www.hudsonalpha.org/devin-absher-phd">Devin Absher</a> &#8211; Genome-wide analysis of DNA methylation</strong></p>
+<p>Interest in epigenetics arises in part out of a search for missing heritability that did not end up being explained by GWAS because all the associated variants found through GWAS had relatively low effect size.</p>
+<p>Epigenome reflects genetic factors <em>and</em> environmental factors (on us, and even our parents and grandparents) <em>and</em> disease state itself.</p>
+<p>Recent literature has shown that smoking, diet, etc. affect the epigenome.</p>
+<p>How to best study the epigenome?  There are two major things to study: histone modification and DNA methylation.  The two are highly correlated.  To study histone modifications use ChIP-seq &#8211; pull down modified portions of genome using antibodies to modified histones.  To study DNA methylation, three approaches:</p>
+<ol>
+<li>Immunoprecipiatation/protein-based: MeDIP-seq, MBD-seq</li>
+<li>Restriction enzyme-based: CHARM, MethylSeq/HELP</li>
+<li>Bisulfite-based: Reduced representation (RRBS), whole genome, targeted, combined with above assays</li>
+</ol>
+<p>Most assays rely on &#8220;peak calling&#8221; to make quantitative level of enrichment a binary trait &#8211; which parts of genome &#8220;are&#8221; or &#8220;aren&#8217;t&#8221; methylated.</p>
+<p>Biology of DNA methylation</p>
+<ul>
+<li>Cytosine (C) accounts for almost all methylation in genome &#8211; other bases very rarely get methylated.</li>
+<li>Methylation in gene promoters strongly correlated with lack of expression</li>
+<li>Methylation at other sites can have different effect depending on context.</li>
+<li>Most C methylation occurs in a 5&#8242;-CpG-3&#8242; context.</li>
+<li>3% of cytosines in adult mammalian cells are methylated</li>
+<li>CpG-rich sequences are often found at gene promoter.</li>
+<li>CpG islands are ~200b regions where &gt;50% GC content, CpGobs/CpGexp &gt; 0.6</li>
+<li>Repetitive elements / retrotransposons are very highly methylated</li>
+<li>CpG islands &#8211; very low methylation levels</li>
+<li>CpG &#8220;shores&#8221; bordering islands &#8211; often sites of active regulation through differential methylation. Tend to be a bit more methylated than the islands.  Often in cancer the methylation pattern in the shores changes.</li>
+<li>CpGs outside CpG islands are ~80% methylated</li>
+<li>High methylation typically found in condensed chromatin, low methylation in open chromatin</li>
+<li>Effect on expression depends on gene context</li>
+<li>3&#8242;UTR methylation prevents antisense transcription, thus increasing expression of the gene.  (Whereas methylation 5&#8242; of the gene is associated with reduced expression).</li>
+</ul>
+<div>Reduced representation bisulfite sequencing</div>
+<div></div>
+<div>
+<ul>
+<li>If money was no object, everyone would do whole genome bisulfite sequencing.</li>
+<li>To save money, people often try to enrich for regions of interest before doing bisulfite sequencing.</li>
+<li>Reduced representation bisulfite sequencing (RRBS) due to <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC1258174/">Meissner 2005</a>.</li>
+<li>Takes advantage of restriction enzyme MspI which cuts CpG sequence (regardless of methylation status).  Digest whole genome with this enzyme, then do size selection for small sizes, thus enriching for sites with high CpG content.</li>
+<li>Alternate method: Agilent sells a targeted capture kit (similar to an exome capture kit) designed to get promoter regions and things you&#8217;re interested in for bisulfite sequencing.  This avoids the RRBS issue that CpG-poor genes are underrepresented.</li>
+<li>Each read gives you one data point: a CpG at the restriction site</li>
+<li>And you&#8217;ve biased the sequencing towards CpG-rich genomic regions: CpG islands and shores.</li>
+<li>Steps: digest, ligate adapters, size select, bisulfite conversion</li>
+<li>This method covers about 75% of gene promoters in the human genome quite well</li>
+<li>Bisulfite conversion: methylated cytosines are protected from bisulfite conversion; unmethylated are converted to T.  Analysis ends up like SNP calling: ratio of C to T at a base that is C in the reference genome gives us an estimate of the proportion of C that were methylated at that site across the different chromsomes/cells that went into our sample.</li>
+<li>This works for all cytosines even if not in a CpG context.</li>
+<li>Major issue: strands are no longer complementary because only the C stand gets converted to T (the G on the other side doesn&#8217;t get converted to A).  This is especially a problem with paired-end sequencing because the read from a more heavily modified strand may not align to the right place in the genome.</li>
+<li>One solution: ignore C and T when doing alignment.  Mask out all Cs (or just Cs in a CpG context) by converting in silico to a T at the position of every C.  Do this to both the reads and the reference genome.  Once alignment coordinates are found, go back and pull original reads from FASTQ to get proportion of methylation.  This still doesn&#8217;t solve the strandedness issue.</li>
+<li>Solution for strandedness: convert all reads and both strands of genome C-&gt;T, resulting in two copies of the reference genome, one for each strand.  Then align each read to both genomes and accept only those reads which can be aligned uniquely to only one genome.</li>
+<li>For paried-end reads, need to reverse complement one of the reads so that the first and second read in a pair are capable of aligning to the same strand of the genome. Make sure settings in aligner (e.g. Bowtie) are set to deal with forward-forward pairs.</li>
+<li>This all used to be done manually; now software tools are available: Bowtie, Pash, Bismark, BSMAP, BS Seeker, MethylCoder.</li>
+</ul>
+<div>Distribution of methylation across genome</div>
+</div>
+<div></div>
+<div>
+<ul>
+<li>Bimodal &#8211; very low methylation levels in CpG islands, very high methylation elsewhere.  Not much of the genome is in an intermediate state of methyation, but those parts are of much interest: they are probably intermediately methylated because they have either cell type specific methylation or some kind of dynamic regulation.</li>
+<li>Results are always very cell type specific.  For instance DNA extracted from blood is from white blood cells, which are really a mixture of cell types, each with a different methylation pattern.  For instance a region might be fully methylated in T cells and not at all methylated in B cells and so the overall result will look like an intermediate level of methylation.  And different blood cells have different ratios of these cell types.  An even bigger issue with tumor/normal comparisons because there are often some  normal cells in a tumor.</li>
+<li>Often cells &#8220;choose&#8221; one allele to methylate, giving rise to allele-specific expression. This results in perceived intermediate levels of methylation as well.</li>
+</ul>
+<div>5-OH (read &#8220;hydroxy&#8221;) Methylcytosine aka 5hmc</div>
+</div>
+<div></div>
+<div>
+<ul>
+<li>Cells use this modification over short time periods to change methylation state.</li>
+<li>a UAB group has evidence that hydroxymethylation is involved in memory consolidation in neurons in animals after fear tests, with long-term effect on gene expression.</li>
+<li>Also has influence on splicing: 5-hmc across intron/exon boundaries affects which exons get included in the final transcript</li>
+<li>Bisulfite doesn&#8217;t distinguish between 5mc and 5hmc &#8211; both protect C from conversion to T</li>
+<li>However if you pre-treat DNA with an oxidative reaction you can make 5hmc (but not 5mc) sensitive to bisulfite</li>
+<li>Do two parallel reactions: one standard bisulfite, and one oxidated bisulfite, thus you can sequence twice as much in order to get three-way distinction between C, 5mc and 5hmc</li>
+<li>Nanopore sequencers claim that they can distinguish C, 5mc, and 5hmc without bisulfite conversion.  Hopefully when those become commercially available, bisulfite will no longer be necessary.</li>
+</ul>
+</div>
+<p>Q. what depth is needed for bisulfite sequencing?</p>
+<p>300x needed for bisulfite based on simulations &#8211; this is the point where you saturate the information content.  But no one is doing that depth.  People are doing more like 20x or 30x.  300x would be warranted only if you need highly accurate calls. But because most things are fully or not-at-all methylated, you can distinguish those groups with about 10x.  But then you can only report methylation in 10% increments.  Read depth is important if looking for a 20% vs. 30% difference in methylation in a treatment vs. control group.</p>
+<p>Q. what depth is needed for MeDIP-seq?</p>
+<p>You really need to do pilot experiments to see what depth will be needed for your experiment. In general, methylated C are fairly unevenly distributed across the genome, so  it&#8217;s likely that if you have enough reads to have average 1x whole genome coverage, this will result in pileups of 10-20x at methylation sites.</p>
+<p>Q. how to do quantitative comparisons of methylation levels?</p>
+<p>You need to do this in two steps.  First, do peak-calling in order to remove noise &#8211; you only want to consider sites that have real appreciable methylation.  Once you&#8217;ve called peaks, integrate area under the curve at each peak and compare that between experiments.  However there are many caveats with this approach.  First, methylation is <a href="http://en.wikipedia.org/wiki/Heteroscedasticity">heteroskedastic</a>.  As mentioned above, the histogram of methylation levels (x axis: % methylated at site, y axis: number of sites at this methylation level) is bimodal.  At intermediate methylation levels, the distribution of methylation levels across individuals or across samples is normally distributed, but near the extremes of complete methylation or zero methylation, a normal distribution is impossible (because you can&#8217;t have &lt; 0 or &gt; 100% methylation) so you get a <a href="http://en.wikipedia.org/wiki/Beta_distribution">beta distribution</a> instead.  This heteroskedasticity means it is not valid to use regression models on methylation levels across samples.  One approach is to use an <a href="http://clincancerres.aacrjournals.org/content/11/18/6582.long">m score</a> instead but even this is not a complete solution to the problem.</p>
+<p>Q. what accounts for sites of intermediate methylation levels?</p>
+<p>Probably a few factors:</p>
+<ul>
+<li>Sample contains multiple cell types, some of which are completely methylated and some of which are not at all methylated.</li>
+<li>Allele-specific expression is achieved through total methylation of either only the paternal or only the maternal chromosome.</li>
+<li>There may also be stochastic behavior, suggested by the fact that we see variation in methylation levels at a given site even within clonal cell lines.  But since we don&#8217;t yet have protocols for single-cell methylation analysis, this hasn&#8217;t been proven.</li>
+</ul>
+<p>Q. QC &amp; alignability</p>
+<p>Because bisulfite-seq relies on basically a 3-letter genome, % aligned reads drops from 90% to more like 65-70%.  To filiter and only use best data, we might only consider high-quality alignments and high-quality SNP calls.</p>
+<p>Q. relative value of single base resolution</p>
+<p>Methylation is usually correlated across 50 &#8211; 100 bp windows but not always.  Sometimes a single base&#8217;s methylation is very important for a particular transcription factor&#8217;s ability to bind, so single base pair resolution of bisulfite sequencing can be important.  This is a major advantage of sequencing over methylation arrays, which they still do use at Hudson Alpha.</p>
+<p>N.B. epigenetic analysis tells you about <em>potential </em>for expression, which is often correlated with actual expression (RNA-seq) but not completely.  In lupus / autoimmune diseases you will see hypomethylation meaning that genes are poised for expression, even between bouts of disease when high expression is not seen in RNA.</p>
+<p>Q. arrays vs. sequencing</p>
+<p>Arrays are more accurate than very low-depth sequencing, but less good than high-depth sequencing.  But they also have cross-hybridization, dynamic range problem, etc.  Methyl 450 arrays are generally very good and Hudson Alpha still uses them.</p>
+<p><strong>Speaker 5: <a href="http://www.hudsonalpha.org/richard-m-myers-phd">Rick Myers</a> &#8211; Genome-wide measurement of protein:DNA interactions</strong></p>
+<p>What we know about gene regulation</p>
+<ul>
+<li>Many genes have multiple promoters</li>
+<li>Sequence-specific transcription factors bind in this region</li>
+<li>Other proteins bind at sites further upstream.  Some of these are sequence-specific, others are methylation specific</li>
+<li>cis-acting components: recognize small segments (&lt;21b), &gt; 1M non-coding regulatory elements, located proximal to, distal to or within genes.  24,000 protein-coding genes have been identified and that&#8217;s probably most of them.  So far we have identified 1,000 non-coding RNA genes (miRNA, lincRNA).</li>
+<li>trans components: &gt; 1500 DNA-binding proteins in mammals (maybe as much as a tenth of the proteins in our genome are devoted to regulating other proteins), most recognize small, specific cis elements; others are general (e.g. histones, RNA polymerase)</li>
+<li>how do we get a comprehensive understanding of gene expression, DNA replication, recombination, and other genomic events mediated by DNA binding proteins?</li>
+<li>ENCODE project is one group trying to do comprehensive functional annotation of genome.  It&#8217;s kind of a &#8216;baseline&#8217; &#8211; it doesn&#8217;t look at every cell type, but it does aim to look at every transcription factor, every marker, in at least a few cell types and sometimes a lot of cell types.  Nine-month moratorium on genome-wide analysis has been lifted, the public is welcome to publish anything on this.</li>
+</ul>
+<p>At peak of human genome project (2001-2), max output was 150 million reads / year from all labs working on it nationwide. Today sequencers get 300 million reads / lane.</p>
+<p>ChIP-seq</p>
+<ul>
+<li>Measure occupancy of DNA-binding proteins in living cells [<a href="http://www.ncbi.nlm.nih.gov/pubmed/17540862">Johnson 2007</a>]</li>
+<li>Goal: take a snapshot of what the cell looked like at one moment.</li>
+<li>Step 1: Use a cross-linker (ex. aldehyde) to link proteins to DNA.  This is because although factors bind pretty tightly, they will come off in rough handling as you disassemble the cell to extract DNA, unless you cross-link.</li>
+<li>Step 2: Quickly kill the cell &#8211; ex. freeze and macerate</li>
+<li>Step 3: Isolate chromatin</li>
+<li>Step 4. Shear DNA into 300-500b segments</li>
+<li>Step 5. Use an antibody specific to the protein you&#8217;re interested in to bring down only the segments of DNA bound to that protein.  (So far, ENCODE has done this for 160 transcription factors, about 10% of total; the limiting step is the ability to make antibodies specific to every transcription factor)</li>
+<li>Step 6. Reverse-crosslink by heating</li>
+<li>Step 7. Isolate DNA from protein.</li>
+<li>At this point, DNA is in vanishingly small amounts.  But you&#8217;ll amplify as you build library from this DNA.  Size select, mostly to get rid of small pieces.  Then do sequencing.</li>
+<li>Align reads to genome</li>
+<li>Do &#8220;peak calling&#8221;</li>
+</ul>
+<p>Technical requirements for ChIP-seq</p>
+<ul>
+<li>Validated, specific, high-titer antibodies</li>
+<li>Negative control for every batch.  a.k.a. &#8220;Mock IP&#8221; take some cross-linked, sheared DNA <em>without</em> antibody pull-down and reverse-crosslink and sequence it.  You&#8217;ll find some regions of genome show up at higher-than-normal rates.  This is because sonication of chromatin breaks it more readily in places where a lot of gene regulation is going on, because those areas are histone-free and bound by sequence-specific proteins which do not protect much from shearing.  So you need to subtract peak depth of Mock IP from peak depth of ChIP to isolate the effect of the antibody.</li>
+<li>2 biological replicates for every transcription factor &#8211; you don&#8217;t get exactly the same answer.  Usually you take the intersection of the sets of peaks between the two samples.</li>
+<li>High-quality chromatin from lots of healthy cells</li>
+<li>High-complexity library for NGS</li>
+<li>Sufficiently deep read depth</li>
+<li>Software for peak-calling: QuEST, MACS, SPP, Peakseq, Findpeaks.  HudsonAlpha uses MACS.  These will handle subtraction of Mock IP results and will control for certain systematic errors that happen in these experiments.</li>
+<li>Quality assessment to see if experiment worked</li>
+</ul>
+<p>Directionality of ChIP-seq reads identifies location of binding site.</p>
+<p>How many reads are enough?</p>
+<ul>
+<li>For most proteins, 50 million reads almost completely saturates so that you can call all the peaks that exist.  Some (esp. histones) can require 100 million reads.</li>
+<li>Depends on which DNA-binding protein &#8211; could get 50-90% of existent peaks with 20M reads.  Often 20M-30M reads are used.</li>
+<li>It&#8217;s not just a matter of how many peaks you can call- you will also get better resolution as to exactly where the binding site is, if you have more depth.</li>
+</ul>
+<p>Examples of what we can learn from ChIP-seq</p>
+<ul>
+<li>If two proteins are always seen binding to the same places, that suggests they are part of a complex.</li>
+<li>Ex. ChIP-seq identified NRSF (aka REST1) occupancy in NeuroD exon</li>
+<li>Glucocorticoid receptor &#8211; GR binds hormone cortisol in cytoplasm, translocates to nucleus, activates and represses transcription of many genes</li>
+<li>PER1 &#8211; primary transcription factor regulating circadian rhythms</li>
+<li>About 11% of genes are in bidirectional pairs &#8211; gene A and gene B start about 100 &#8211; 1000b away from each other and go in opposite directions 5&#8242; to 3&#8242;.  This structure is conserved across mammals which suggests it&#8217;s important.  In the 100-1000b in between the genes exists a bidirectional promoter.  These tend to be GC rich and lack a TATA box.  There are several over-represented motifs in bidirectional promoters.  Turns out GABP binds to almost all bidirectional promoters.</li>
+<li>Evolutionary perspective: of our genome, 1% is conserved exons and 3% is conserved non-exons &#8211; mostly promoters and such.</li>
+<li>Allele-specific occupancy (occupancy = protein-DNA binding).  Sometimes ChIP-seq gives you 90% maternal occupancy / 10% paternal occupancy.  You can see that almost all binding is occurring on the maternal allele.</li>
+<li>Would like to apply ChIP-seq to disease as well.</li>
+</ul>
+<div>Q&amp;A</div>
+<p>Q. For disease comparisons, could you use quantitative readout (e.g. amount of binding, area-under-curve) instead of binary peak calling?</p>
+<p>Yes, we sort of can and people want to.  It is difficult though because for example: GABP 4500 sites.  Some have 1000 reads, some have 20 reads.  Is that strong vs. weak binding?  Probably not &#8211; weak binding is probably coming off and not getting sequenced at all.  More likely it is bound in some cells and not others &#8211; because even in cloncal cell lines you have cell cycle, etc. differences.  Another possibility: other factors bound there make the epitope more available or not.  We&#8217;re really not sure what the relative contribution of these different things is.  DNase footprinting can tell you fraction of copies of that site that are occupied or not, but we don&#8217;t usually do that for this.  You can get some hints from quantitative comparison.  People in field including myself will often refer to a strong vs. weak binder even though the truth is we can&#8217;t tease out that signal from what we see.  So yes, you can do a quantitative comparison but it&#8217;s difficult to interpret.</p>
+<p>Q. Cell type specificity</p>
+<p>We see a lot of specificity but be careful &#8211; nothing is completely specific.   Also a lot of binding doesn&#8217;t appear to do anything.  e.g. when hormone is available, GR will bind to 4900 promoters but only 250 of those genes will have increased expression.  So why the other binding &#8211; is it wasted?  Some people think that over evolution, promoter sites are born and die often because they are relatively easy to evolve.  Or maybe the other sites are a &#8220;sink&#8221; to hold onto the transcription factors.</p>
+</div>
+</div>

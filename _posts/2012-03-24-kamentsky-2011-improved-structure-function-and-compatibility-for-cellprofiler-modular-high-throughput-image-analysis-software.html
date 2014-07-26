@@ -1,0 +1,35 @@
+---
+layout: post
+title: "Kamentsky 2011 -  Improved structure, function, and compatibility for CellProfiler: modular high-throughput image analysis software"
+author: ericminikel
+date: 2012-03-24 15:38:24
+---
+<p><strong>Bioinformatics. 2011 Apr 15;27(8):1179-80. Epub 2011 Feb 23.</strong><br/>
+<strong> <a href="http://bioinformatics.oxfordjournals.org/content/early/2011/02/23/bioinformatics.btr095.full.pdf+html">Improved structure, function and compatibility for CellProfiler: modular high-throughput image analysis software.</a></strong><br/>
+<strong> Kamentsky L, Jones TR, Fraser A, Bray MA, Logan DJ, Madden KL, Ljosa V, Rueden C, Eliceiri KW, Carpenter AE.</strong></p>
+<p>Abstract:</p>
+<blockquote><p>There is a strong and growing need in the biology research community for accurate, automated image analysis. Here, we describe CellProfiler 2.0, which has been engineered to meet the needs of its growing user base. It is more robust and user friendly, with new algorithms and features to facilitate high-throughput work. ImageJ plugins can now be run within a CellProfiler pipeline. AVAILABILITY AND IMPLEMENTATION: CellProfiler 2.0 is free and open source, available at http://www.cellprofiler.org under the GPL v. 2 license. It is available as a packaged application for Macintosh OS X and Microsoft Windows and can be compiled for Linux. CONTACT: anne@broadinstitute.org SUPPLEMENTARY INFORMATION: Supplementary data are available at Bioinformatics online.</p></blockquote>
+<p>This two-page paper exists chiefly to explain the improvements made in CellProfiler 2.0 (released in 2011?) versus CellProfiler 1.0.  In brief:</p>
+<ul>
+<li>Uses open source Python instead of proprietary Matlab.</li>
+<li>Object-oriented, modular</li>
+<li>Interoperable&#8211; bridges to C and Java / ImageJ</li>
+<li>Better performance, better algorithms, better UI, offers a batch mode for high throughput</li>
+<li>Can output analysis results directly to MySQL or SQLite</li>
+</ul>
+<div>The paper also highlights two things of particular relevance to those of us interested in neurodegenerative diseases:</div>
+<div>
+<ul>
+<li>&#8220;For neuron image analysis, CellProfiler 2.0 includes operations to enhance neurites and to measure their branching, and algorithms for neuron-specific metrics are in development.&#8221;</li>
+<li>&#8220;In our own research, we have used third-party ImageJ plug-ins via CellProfiler to enhance neurites in images (Supplemental Figure 1A)&#8221;</li>
+</ul>
+</div>
+<p>There&#8217;s no more detail about either of these.  The &#8220;operations to enhance neurites and to measure their branching&#8221; in the first bullet presumably refer to the MeasureNeurons module which I see in my copy of CellProfiler:</p>
+<p><a href="/wp-content/uploads/2012/03/cellprofiler_measureneurons1.png"><img class="alignnone size-medium wp-image-477" title="cellprofiler_measureneurons" src="/wp-content/uploads/2012/03/xcellprofiler_measureneurons1-300x142.png"/></a></p>
+<p>As you can see, the UI is fairly cryptic about what measurements you&#8217;ll be getting out of this module.  It will take me some serious time to figure out how to use this and how to make sense of the output.</p>
+<p>As for the second bullet, here is Supplementary Figure 1A (See also the whole supplementary data <a href="http://bioinformatics.oxfordjournals.org/content/27/8/1179/suppl/DC1">here</a>):</p>
+<p><a href="/wp-content/uploads/2012/03/kamentsky-2011-supplemental-figure-1a.png"><img class="alignnone size-medium wp-image-478" title="kamentsky-2011-supplemental-figure-1a" src="/wp-content/uploads/2012/03/kamentsky-2011-supplemental-figure-1a-199x300.png"/></a></p>
+<p>The caption for this figure: &#8220;(A) CellProfiler 2.0 can run ImageJ plugins. Here, the results of running an ImageJ plug‐in, Tubeness, within a CellProfiler pipeline are shown (contrast‐enhanced, <a href="http://www.longair.net/edinburgh/imagej/tubeness/">http://www.longair.net/edinburgh/imagej/tubeness/</a>)&#8221;</p>
+<p>From the Tubeness link: &#8220;This plugin filters a 3D image stack (or 2D image) to produce a score for how &#8220;tube-like&#8221; each point in the image is.&#8221;</p>
+<p>So far, still nothing about recognizing astrocytes in particular, but I bet this Tubeness plugin will prove useful.</p>
+<p>&nbsp;</p>

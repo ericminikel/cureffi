@@ -1,0 +1,89 @@
+---
+layout: post
+title: "Slope or correlation, not variance explained, allow estimation of heritability"
+author: ericminikel
+date: 2013-04-30 14:53:25
+---
+<p>In an earlier post on <a title="How to calculate heritability" href="/2013/02/04/how-to-calculate-heritability/">how to calculate heritability</a>, two of the models I discussed rely on correlating the phenotypes of related individuals: <a href="http://en.wikipedia.org/wiki/Heritability#Sibling_comparison">sib-sib correlation</a> and <a href="http://en.wikipedia.org/wiki/Heritability#Parent-offspring_regression">parent-offspring regression</a>.  In each case, you can compare two individuals who are expected to share 50% of their genome, and so double the correlation of their phenotypes provides an upper limit on additive heritability of that phenotype. (It&#8217;s an upper limit, not an estimate, because phenotypic similarity could be due partly to genetics and partly to shared environment).</p>
+<p>However until now I&#8217;ve been confused about exactly what number is meant by the &#8220;correlation&#8221; of their phenotypes.  I learned about parent-offspring regression from a recent review [<a href="http://www.ncbi.nlm.nih.gov/pubmed/18319743">Visscher 2008</a>] which says that the <em>slope of the regression line</em> is what is important.  For one parent &#8211; one offspring regression, you take 2x the slope, and for midparent &#8211; offspring regression, you take 1x the slope.</p>
+<p>After I read this I wondered, why the slope and not the variance explained?  Suppose I do a single parent-offspring linear regression and I get a slope of 0.4 (implying h<sup>2</sup> ≤ 80%) but an R<sup>2</sup> of only .12.  Couldn&#8217;t you argue that if the parent&#8217;s phenotype only explains 12% of the variance in the child&#8217;s phenotype, then the trait can&#8217;t be more than 24% heritable?</p>
+<p>To convince myself of which interpretation was correct, I had to do some experiments in R, which I&#8217;ll share in a moment.</p>
+<p>But first, I also had to refresh myself on how the <a href="http://en.wikipedia.org/wiki/Pearson_product-moment_correlation_coefficient">Pearson&#8217;s correlation coefficient</a> (denoted r, rho or ρ) relates to <a href="http://en.wikipedia.org/wiki/Linear_regression">linear regression</a>.  tl;dr: the Pearson&#8217;s correlation r is the square root of the <em>unadjusted</em> R<sup>2</sup> (variance explained) from a linear regression.  In other words, r and R are the same thing.  If you need convincing, just make up any old dataset in R and check that the two are equal:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">setseed(<span style="color: #666666;">9876</span>) <span style="color: #408080; font-style: italic;"># set a random seed so you get the same answer I do</span>
+series1 <span style="color: #666666;">=</span> seq(<span style="color: #666666;">1</span>,<span style="color: #666666;">100</span>,<span style="color: #666666;">1</span>) <span style="color: #408080; font-style: italic;"># make up some data</span>
+series2 <span style="color: #666666;">=</span> series1 <span style="color: #666666;">+</span> rnorm(n<span style="color: #666666;">=100</span>,m<span style="color: #666666;">=0</span>,sd<span style="color: #666666;">=10</span>) <span style="color: #408080; font-style: italic;"># make up some correlated data</span>
+m <span style="color: #666666;">=</span> lm(series2~series1) <span style="color: #408080; font-style: italic;"># linear regression</span>
+unadj.r.sq <span style="color: #666666;">=</span> summary(m)$r.squared <span style="color: #408080; font-style: italic;"># extract unadj R^2 from a linear model</span>
+correl <span style="color: #666666;">=</span> cor.test(series1,series2) <span style="color: #408080; font-style: italic;"># Pearson's correlation</span>
+r <span style="color: #666666;">=</span> as.numeric(correl$estimate) <span style="color: #408080; font-style: italic;"># extract r from cor.test result</span>
+sqrt(unadj.r.sq)
+<span style="color: #408080; font-style: italic;">#[1] 0.9385556</span>
+r
+<span style="color: #408080; font-style: italic;">#[1] 0.9385556</span></pre>
+</div>
+<p>Moving on, my goal is to figure out whether the slope or the variance explained is the figure that relates to heritability.  To do this, I simulated phenotypes for a series of 1000 made-up siblings:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># make up a bunch of random vectors</span>
+set.seed(<span style="color: #666666;">9876</span>)
+a <span style="color: #666666;">=</span> rnorm(n<span style="color: #666666;">=1000</span>,m<span style="color: #666666;">=0</span>,sd<span style="color: #666666;">=1</span>)
+b <span style="color: #666666;">=</span> rnorm(n<span style="color: #666666;">=1000</span>,m<span style="color: #666666;">=0</span>,sd<span style="color: #666666;">=1</span>)
+c <span style="color: #666666;">=</span> rnorm(n<span style="color: #666666;">=1000</span>,m<span style="color: #666666;">=0</span>,sd<span style="color: #666666;">=1</span>)
+<span style="color: #408080; font-style: italic;"># create a series of sib pairs for which a common factor (a) ought to explain ~50% of variance in "phenotype"</span>
+sib1 <span style="color: #666666;">=</span> a<span style="color: #666666;">+</span>b
+sib2 <span style="color: #666666;">=</span> a<span style="color: #666666;">+</span>c
+correl <span style="color: #666666;">=</span> cor.test(sib1,sib2)
+r <span style="color: #666666;">=</span> round(as.numeric(correl$estimate),<span style="color: #666666;">2</span>)
+m <span style="color: #666666;">=</span> lm(sib2~sib1)
+slope <span style="color: #666666;">=</span> round(summary(m)$coefficients[<span style="color: #666666;">2</span>,<span style="color: #666666;">1</span>],<span style="color: #666666;">2</span>)
+adj.rsq <span style="color: #666666;">=</span> round(summary(m)$adj.r.squared,<span style="color: #666666;">2</span>)
+plot(sib1,sib2,pch<span style="color: #666666;">=19</span>,main<span style="color: #666666;">=</span><span style="color: #ba2121;">"made up sib correlation"</span>,sub<span style="color: #666666;">=</span>paste(<span style="color: #ba2121;">"slope = "</span>,slope,<span style="color: #ba2121;">" r = "</span>,r,<span style="color: #ba2121;">" adj R^2="</span>,adj.rsq,sep<span style="color: #666666;">=</span><span style="color: #ba2121;">""</span>))
+abline(m,col<span style="color: #666666;">=</span><span style="color: #ba2121;">"red"</span>)</pre>
+</div>
+<p>The idea is, there are 1000 pairs of siblings, so every index in the <code>sib1</code> and <code>sib2</code> vectors represents a pair, i.e. for all <code>i</code>, <code>sib1[i]</code> is the sibling of <code>sib2[i]</code>.  These vectors hold the phenotypes of the two siblings.  A common factor <code>a</code> contributes about half of the phenotype for each of them.  Because the sibs share half their phenotype and share on average half their genome, this corresponds to a trait that could be up to 100% heritable (or it could all be shared environment effect).  When you run the above code, you get this:</p>
+<p><img class="alignnone size-full wp-image-2086" title="" src="/wp-content/uploads/2013/04/made-up-sib-correlation-1.png"/></p>
+<p>Since I made up the data, I know that the effect of <code>a</code> (representing <em>half</em> the additive genetic effect plus <em>all</em> the childhood shared environmental effect) should explain ~50% of the phenotype.  The slope reflects this (.48 ≈ .50) and the variance explained (.24) does not.  If you double the slope 2*.48 = .96 you get a reasonable estimate of the &#8220;true&#8221; heritability (~100%).</p>
+<p>Or let&#8217;s do another example, in which the heritability should be only ~50%.  Here I set the standard deviation of <code>e</code> and <code>f</code> (representing stochastic or non-shared environmental factors), to 1.7 (≈√3) so that <code>d</code> (the shared genetic factor), should only account for 25% of overall phenotypic variance.</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># an example where the trait should be only ~50% heritable</span>
+set.seed(<span style="color: #666666;">2222</span>)
+d <span style="color: #666666;">=</span> rnorm(n<span style="color: #666666;">=1000</span>,m<span style="color: #666666;">=0</span>,sd<span style="color: #666666;">=1</span>)
+e <span style="color: #666666;">=</span> rnorm(n<span style="color: #666666;">=1000</span>,m<span style="color: #666666;">=0</span>,sd<span style="color: #666666;">=1.7</span>) <span style="color: #408080; font-style: italic;"># 1.7 ~ sqrt(3)</span>
+f <span style="color: #666666;">=</span> rnorm(n<span style="color: #666666;">=1000</span>,m<span style="color: #666666;">=0</span>,sd<span style="color: #666666;">=1.7</span>)
+var(d)
+<span style="color: #408080; font-style: italic;">#[1] 1.006501</span>
+var(e)
+<span style="color: #408080; font-style: italic;">#[1] 3.038408</span>
+var(d)<span style="color: #666666;">/</span>var(c(sib1,sib2))
+<span style="color: #408080; font-style: italic;">#[1] 0.2578496 # this is 1/2 of the "true" heritability</span>
+<span style="color: #408080; font-style: italic;"># now try to measure heritability by regression</span>
+sib1 <span style="color: #666666;">=</span> d<span style="color: #666666;">+</span>e
+sib2 <span style="color: #666666;">=</span> d<span style="color: #666666;">+</span>f
+correl <span style="color: #666666;">=</span> cor.test(sib1,sib2)
+r <span style="color: #666666;">=</span> round(as.numeric(correl$estimate),<span style="color: #666666;">2</span>)
+m <span style="color: #666666;">=</span> lm(sib2~sib1)
+slope <span style="color: #666666;">=</span> round(summary(m)$coefficients[<span style="color: #666666;">2</span>,<span style="color: #666666;">1</span>],<span style="color: #666666;">2</span>)
+adj.rsq <span style="color: #666666;">=</span> round(summary(m)$adj.r.squared,<span style="color: #666666;">2</span>)
+plot(sib1,sib2,pch<span style="color: #666666;">=19</span>,main<span style="color: #666666;">=</span><span style="color: #ba2121;">"another made up sib correlation"</span>,sub<span style="color: #666666;">=</span>paste(<span style="color: #ba2121;">"slope = "</span>,slope,<span style="color: #ba2121;">" r = "</span>,r,<span style="color: #ba2121;">" adj R^2="</span>,adj.rsq,sep<span style="color: #666666;">=</span><span style="color: #ba2121;">""</span>))
+abline(m,col<span style="color: #666666;">=</span><span style="color: #ba2121;">"red"</span>)</pre>
+</div>
+<p><img class="alignnone size-full wp-image-2088" title="" src="/wp-content/uploads/2013/04/made-up-sib-correlation-21.png"/></p>
+<p>Again, 2*slope = .48 is pretty close to a correct heritability estimate (actually, according to <code>2*var(d)/var(c(sib1,sib2))</code> the true heritability ended up being ~51%).  The R<sup>2</sup> is miniscule, at .06.</p>
+<p>So it appears to be 2*slope, not 2*(variance explained), that estimates the upper limit on heritability.  Again, it&#8217;s an upper limit because the &#8220;shared&#8221; factors I spiked in (<code>a</code> and then <code>d</code>) could represent genetic or shared environmental factors.  Indeed, as the collective genius of Wikipedia <a href="http://en.wikipedia.org/wiki/Heritability#Sibling_comparison">has put it</a>:</p>
+<blockquote><p>sibling phenotypic correlation is an index of <em>familiarity</em> – the sum of half the additive genetic variance plus full effect of the common environment</p></blockquote>
+<p>But the use of the term &#8220;correlation&#8221; in this quote alludes to a fact you&#8217;ve probably noticed in both of the above examples: slope ≈ r.</p>
+<p>Of course, there&#8217;s no rule that says r has to equal slope.  By definition, Pearson&#8217;s correlation does <em>not </em>tell you anything about the steepness of slope (though its sign tells you direction of slope), as is beautifully illustrated in this Wikimedia Commons graphic:</p>
+<p><a href="http://en.wikipedia.org/wiki/File:Correlation_examples2.svg"><img title="the Pearson's r is shown above each scatterplot" src="/wp-content/uploads/2013/04/500px-Correlation_examples2.svg_.png"/></a></p>
+<p>Or if that doesn&#8217;t convince you,  just make up some data in R to convince yourself:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">x <span style="color: #666666;">=</span> seq(<span style="color: #666666;">1</span>,<span style="color: #666666;">100</span>,<span style="color: #666666;">1</span>)
+y <span style="color: #666666;">=</span> x<span style="color: #666666;">^2</span>
+r <span style="color: #666666;">=</span> as.numeric(cor.test(x,y)$estimate)
+r
+<span style="color: #408080; font-style: italic;"># 0.9688545 </span>
+slope <span style="color: #666666;">=</span> summary(lm(y~x))$coefficients[<span style="color: #666666;">2</span>,<span style="color: #666666;">1</span>]
+slope
+<span style="color: #408080; font-style: italic;"># [1] 101</span></pre>
+</div>
+<p>That said, it seems that r and slope are likely to be pretty close in any plausible model of a real genetic relationship.  After all, for what earthly biological reason would one sibling&#8217;s phenotype ever be the square of the other&#8217;s?  Especially when you consider there is usually no logical ordering to sib pairs (it&#8217;s random which member of any pair ends up plotted on which axis), you&#8217;re just unlikely to get a really steep slope with a really small r, or a really tight fit (large r) for a slight slope.  They can vary a bit, but I can&#8217;t think of a good reason why the two quantities should be hugely different, so if I ever find that slope and r are wildly different, I&#8217;ll consider that a cue to do double check my data and my analysis.</p>
+<p>The observation that r and slope are likely to be pretty similar may resolve a confusion I&#8217;ve had.  The literature on twin studies [ex. <a href="http://www.ncbi.nlm.nih.gov/pubmed/16721405">Deary 2006</a> (<a href="http://www.nature.com/ejhg/journal/v14/n6/full/5201588a.html">ft</a>); see also the above quote and <a href="http://en.wikipedia.org/wiki/Falconer's_formula">Falconer's formula</a>] and sib-sib correlation tends to refer to the &#8220;correlation&#8221; (presumably r) of the two siblings, while the literature on parent-offspring regression refers to the &#8220;slope&#8221; [<a href="http://www.ncbi.nlm.nih.gov/pubmed/18319743">Visscher 2008</a>].  Perhaps this discrepancy owes simply to the fact that these quantities are very likely to be quite close in any real genetic dataset.  If anyone can think of a reason why r is more correct for sibs and slope is more correct for parent-offspring, leave me a comment.</p>

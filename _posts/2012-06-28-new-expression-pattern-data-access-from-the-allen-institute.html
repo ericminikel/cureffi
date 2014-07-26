@@ -1,0 +1,19 @@
+---
+layout: post
+title: "New expression pattern data access from the Allen Institute"
+author: ericminikel
+date: 2012-06-28 16:51:08
+---
+<p>Today I am attending a webinar hosted by the <a href="http://www.brain-map.org/">Allen Institute</a> on how to access their data including several new things they&#8217;ve added.  The most interesting thing so far is the availability of raw expression data by brain region, along with some visualization tools and gene correlation-finding tools.</p>
+<p>The Allen Institute has gene expression levels for all 20,000+ genes in the mouse and human genomes across brain regions in sagittal section.  You can view the actual images created by in situ hybridization, as <a href="/2012/03/31/making-sense-of-the-allen-institute-mouse-brain-images/">mentioned in a previous post</a>.  What I didn&#8217;t realize is you can also view heat maps of absolute or relative gene expression level across tissues for one or more genes.  Visit, for instance:</p>
+<p><a href="http://human.brain-map.org/microarray/search/show?exact_match=false&amp;search_term=prnp&amp;search_type=gene&amp;page_num=0">http://human.brain-map.org/microarray/search/show?exact_match=false&amp;search_term=prnp&amp;search_type=gene&amp;page_num=0</a></p>
+<p><a href="/wp-content/uploads/2012/06/allen-inst-heatmap.jpg"><img class="alignnone size-large wp-image-620" title="allen-inst-heatmap" src="/wp-content/uploads/2012/06/allen-inst-heatmap-1024x572.jpg"/></a></p>
+<p>The &#8220;color map&#8221; control in the lower right does more than just change the color spectrum&#8211; it also controls whether you are viewing normalized data (z-score of a given gene&#8217;s expression in each tissue relative to all tissues, as I understand it) or absolute data (log2 of actual measured expression level).   Once you&#8217;re looking at the data you&#8217;re interested in, you can use the &#8220;Download this data&#8221; link in the lower left to get a zip file with csvs of the numbers behind the heatmap.</p>
+<p>A few other neat things:</p>
+<ul>
+<li>The &#8220;Find Correlates&#8221; button in the upper right will find <em>other</em> genes that have an expression pattern similar to the probe you&#8217;ve selected, and fill your heat map with those.  (The number &#8220;r&#8221; it gives you for each gene is the Pearson&#8217;s correlation).</li>
+<li>You can use &#8220;Differential Search&#8221; (upper left) to specifically find genes whose expression level is enhanced in a target brain region as compared to a contrast brain region.  So, say you want to find genes more highly expressed in the thalamus than in the cerebral cortex.  This would do that.</li>
+<li>You can use the &#8220;Gene Classification&#8221; (upper left) to find genes believed to be associated with a particular disease (though prion diseases are not in the list).  Note: these gene classifications are from third party sources&#8211; Allen Institute did not create the gene classification lists nor are they based on any objective expression data collected by Allen Institute.</li>
+<li>After you click somewhere on the heat map it will show you details for that point above.  If (like me) you&#8217;re not fluent in names of brain regions, you can click on the brain region in the &#8220;Structure&#8221; menu above left to open a new tab showing where that region sits in the brain region hierarchy.</li>
+</ul>
+<p>&nbsp;</p>

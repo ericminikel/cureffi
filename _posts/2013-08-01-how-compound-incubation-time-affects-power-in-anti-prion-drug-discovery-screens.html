@@ -1,0 +1,248 @@
+---
+layout: post
+title: "How compound incubation time affects power in anti-prion drug discovery screens"
+author: ericminikel
+date: 2013-08-01 13:28:06
+---
+<p>When I reviewed the <a title="Comparison of high-throughput screening approaches used for anti-prion small molecule discovery" href="/2013/07/30/comparison-of-high-throughput-screening-approaches-used-for-anti-prion-small-molecule-discovery/">different strategies used in anti-prion drug discovery</a> recently, I noticed that the number of days that the test compounds were incubated with the cell cultures varied from 1 day to 6 days.  I became curious about how the incubation time affects the assay&#8217;s ability to uncover compounds with different mechanisms of action.  After all, PrP mRNA, PrP<sup>C</sup> and PrP<sup>Sc</sup> each have their own half-life, so the further upstream you start inhibiting, the longer it takes for inhibition to percolate down to the assay&#8217;s readout.</p>
+<p>By way of review, here is what we know about the <a title="Half life of PrP and its mRNA" href="/2013/04/08/half-life-of-prp-and-its-mrna/">half-life</a> of these different molecules from the published literature.</p>
+<p><strong>Half lives of PrP mRNA, PrP<sup>C</sup> and PrP<sup>Sc</sup></strong></p>
+<p><table style="width:100%; " class="easy-table easy-table-default " border="0">
+<thead>
+<tr><th>molecule</th>
+<th>N2a cells</th>
+<th>in vivo</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>PrP mRNA</td>
+<td>7h [<a href="http://www.ncbi.nlm.nih.gov/pubmed/8095862">Pfeifer 1993</a>]</td>
+<td></td>
+</tr>
+
+<tr><td>PrP<sup>C</sup></td>
+<td>5.2h [<a href="http://www.ncbi.nlm.nih.gov/pubmed/1968466/">Borcheldt 1990</a> (<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2116048/pdf/jc1103743.pdf">ft</a>)]<br/>3-6h [<a href="http://www.ncbi.nlm.nih.gov/pubmed/2562814">Caughey 1989</a> (<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC247670/pdf/jvirol00068-0193.pdf">ft</a>)]</td>
+<td>18h [<a href="http://www.ncbi.nlm.nih.gov/pubmed/16186247">Safar 2005</a> (<a href="http://vir.sgmjournals.org/content/86/10/2913.long">ft</a>)]<br/>4.95 days [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/pmid/20699386/">Price 2010</a>]</td>
+</tr>
+
+<tr><td>sPrP<sup>Sc</sup></td>
+<td></td>
+<td>36h [<a href="http://www.ncbi.nlm.nih.gov/pubmed/16186247">Safar 2005</a> (<a href="http://vir.sgmjournals.org/content/86/10/2913.long">ft</a>)]</td>
+</tr>
+
+<tr><td>rPrP<sup>Sc</sup></td>
+<td>30h [<a href="http://www.ncbi.nlm.nih.gov/pubmed/11507642">Peretz 2001</a> (<a href="http://www.nature.com/nature/journal/v412/n6848/full/412739a0.html">ft</a>)]</td>
+<td>36h [<a href="http://www.ncbi.nlm.nih.gov/pubmed/16186247">Safar 2005</a> (<a href="http://vir.sgmjournals.org/content/86/10/2913.long">ft</a>)]</td>
+</tr>
+</tbody></table></p>
+<p><em>rPrP<sup>Sc</sup> = proteinase K-resistant PrP<sup>Sc</sup>, aka PrP-res.</em><br/>
+<em>sPrP<sup>Sc</sup> = proteinase K-sensitive PrP<sup>Sc</sup>.</em></p>
+<p>It makes me a little bit nervous that we still rely on studies more than 20 years old as the sole reference for the half-life of PrP<sup>C</sup> in cell culture.  These studies, conducted before the world had proper monoclonal antibodies against PrP, used &#8220;anti-PrP peptide antiserum&#8221; [<a href="http://www.ncbi.nlm.nih.gov/pubmed/2562814">Caughey 1989</a> (<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC247670/pdf/jvirol00068-0193.pdf">ft</a>)] and various rabbit antisera raised against PrP 27-30 [<a href="http://www.ncbi.nlm.nih.gov/pubmed/1968466/">Borcheldt 1990</a> (<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2116048/pdf/jc1103743.pdf">ft</a>)].  The authors do address <a title="Proteolytic shedding of prion protein" href="/2013/06/29/proteolytic-shedding-of-prion-protein/">shedding</a>, but since no well-defined epitope was used we don&#8217;t know whether or not <a title="Proteolysis of prion protein in the central region: alpha and beta cleavage" href="/2013/06/26/proteolysis-of-prion-protein-in-the-central-region-alpha-and-beta-cleavage/">alpha cleavage</a> may have contributed to the disappearance of PrP<sup>C</sup> in the chase.  Second, given the genomic instability of long-cultured N2a cells, it&#8217;s certain that the N2a clones Caughey and Borcheldt were using are not quite the same N2a clones in use today.  Different subclones of N2a can have dramatically different properties in terms of infectability, both overall and by specific strains [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2409240/">Mahal 2007</a>] &#8211; we don&#8217;t know how much of that could have to do with ability to degrade PrP<sup>C</sup> or rPrP<sup>Sc</sup>.</p>
+<p>And here are the readouts and incubation times used in published <a title="Comparison of high-throughput screening approaches used for anti-prion small molecule discovery" href="/2013/07/30/comparison-of-high-throughput-screening-approaches-used-for-anti-prion-small-molecule-discovery/">high-throughput screens</a>:</p>
+<p><strong>Compound incubation times used in high-throughput anti-prion drug discovery screens</strong></p>
+<div><table style="width:100%; " class="easy-table easy-table-default " border="0">
+<thead>
+<tr><th>study</th>
+<th>readout</th>
+<th>incubation time</th>
+</tr>
+</thead>
+<tbody>
+<tr><td><a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC228499/">Kocisko 2003</a></td>
+<td>rPrP<sup>Sc</sup></td>
+<td>5 days</td>
+</tr>
+
+<tr><td><a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC1143673/">Bertsch 2005</a></td>
+<td>PrP<sup>C</sup> / PrP<sup>Sc</sup> binding</td>
+<td>N/A</td>
+</tr>
+
+<tr><td><a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2838138/">Ghaemmaghami 2010</a></td>
+<td>rPrP<sup>Sc</sup></td>
+<td>6 days</td>
+</tr>
+
+<tr><td><a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3149362/">Poncet-Montange 2011</a></td>
+<td>rPrP<sup>Sc</sup></td>
+<td>5 days</td>
+</tr>
+
+<tr><td><a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3186986/">Leidel 2011</a></td>
+<td>rPrP<sup>Sc</sup></td>
+<td>5 days</td>
+</tr>
+
+<tr><td><a href="http://www.ncbi.nlm.nih.gov/pubmed/23576755">Karapetyan &amp; Sferrazza 2013</a></td>
+<td>PrP<sup>C</sup></td>
+<td>1 day</td>
+</tr>
+</tbody></table></div>
+<p><strong>Simple model of half-life percolation</strong></p>
+<p>Based on the above literature review, I assumed half-lives of 7h for mRNA, 5h for PrP<sup>C</sup> and 30h for rPrP<sup>Sc</sup> in N2a cells, which are the cell model used in all of the relevant screens.  I considered six possible ways that compounds could act to reduce rPrP<sup>Sc</sup>.  Each of the following mechanisms would asymptotically produce the same 50% reduction in rPrP<sup>Sc</sup>, but would get there at different rates.  I&#8217;ve ordered them from slowest to fastest:</p>
+<ul>
+<li>A 50% reduction in mRNA transcription rate.</li>
+<li>A doubling of mRNA degradation rate.</li>
+<li>A 50% reduction in PrP<sup>C</sup> translation rate.</li>
+<li>A doubling of PrP<sup>C</sup> degradation rate.</li>
+<li>A 50% reduction in rPrP<sup>Sc</sup> production rate (due to blocking binding, conversion, etc).</li>
+<li>A doubling of rPrP<sup>Sc</sup> degradation rate.</li>
+</ul>
+<p>I set out to model exactly how rPrP<sup>Sc</sup> lags behind PrP<sup>C</sup> and how PrP<sup>C</sup> lags behind mRNA.  Here&#8217;s the R script I came up with.</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># Eric Vallabh Minikel</span>
+<span style="color: #408080; font-style: italic;"># CureFFI.org</span>
+<span style="color: #408080; font-style: italic;"># 2013-08-01</span>
+<span style="color: #408080; font-style: italic;"># R script to model how exponential decay percolates through PrP mRNA, PrPC and rPrPSc</span>
+
+<span style="color: #408080; font-style: italic;"># key point for this whole model:</span>
+<span style="color: #408080; font-style: italic;"># lambda, the parameter of exponential decay, is equal to ln(2)/halflife  see https://en.wikipedia.org/wiki/Half-life</span>
+<span style="color: #408080; font-style: italic;"># specifically,  tau = halflife/ln(2) = 1/lambda</span>
+<span style="color: #408080; font-style: italic;"># and at steady state, rate of decay = rate of production</span>
+
+<span style="color: #408080; font-style: italic;"># half life parameters in N2a cells</span>
+mrna_half_life <span style="color: #666666;">=</span> <span style="color: #666666;">7</span>    <span style="color: #408080; font-style: italic;"># Pfeiffer 1993  http://www.ncbi.nlm.nih.gov/pubmed/8095862</span>
+prpc_half_life <span style="color: #666666;">=</span> <span style="color: #666666;">5</span>    <span style="color: #408080; font-style: italic;"># Borcheldt 1990 http://www.ncbi.nlm.nih.gov/pubmed/1968466/</span>
+prpres_half_life <span style="color: #666666;">=</span> <span style="color: #666666;">30</span> <span style="color: #408080; font-style: italic;"># Peretz 2001    http://www.ncbi.nlm.nih.gov/pubmed/11507642</span>
+
+<span style="color: #408080; font-style: italic;"># parameters for 6 possible ways that PrP-res could be reduced - you can tweak these</span>
+transcription_rate_dec <span style="color: #666666;">=</span> <span style="color: #666666;">0.50</span> <span style="color: #408080; font-style: italic;"># decrease in transcription rate.     try 0.50</span>
+mrna_deg_rate_inc      <span style="color: #666666;">=</span> <span style="color: #666666;">0.00</span> <span style="color: #408080; font-style: italic;"># increase in mRNA degradation rate.  try 1.00</span>
+translation_rate_dec   <span style="color: #666666;">=</span> <span style="color: #666666;">0.00</span> <span style="color: #408080; font-style: italic;"># decrease in translation rate.       try 0.50</span>
+prpc_deg_rate_inc      <span style="color: #666666;">=</span> <span style="color: #666666;">0.00</span> <span style="color: #408080; font-style: italic;"># increase in PrPC degradation rate.  try 1.00</span>
+prpres_prod_rate_dec   <span style="color: #666666;">=</span> <span style="color: #666666;">0.00</span> <span style="color: #408080; font-style: italic;"># decrease in PrPSc production rate.  try 0.50</span>
+prpres_deg_rate_inc    <span style="color: #666666;">=</span> <span style="color: #666666;">0.00</span> <span style="color: #408080; font-style: italic;"># increase in PrPSc degradation rate. try 1.00</span>
+<span style="color: #408080; font-style: italic;"># the plot title should be changed to reflect the parameters you choose above</span>
+plottitle<span style="color: #666666;">=</span> <span style="color: #ba2121;">'Results of 50% increase in PrPC degradation rate'</span> <span style="color: #408080; font-style: italic;"># make sure to change this when you change the parameters at top.</span>
+
+hrs <span style="color: #666666;">=</span> <span style="color: #666666;">8*24</span> <span style="color: #408080; font-style: italic;"># number of hours to bother modeling - I model out to eight days</span>
+
+<span style="color: #408080; font-style: italic;"># mRNA</span>
+mrna_prod_rate <span style="color: #666666;">=</span> log(<span style="color: #666666;">2</span>)<span style="color: #666666;">/</span>mrna_half_life <span style="color: #666666;">*</span> (<span style="color: #666666;">1</span> <span style="color: #666666;">-</span> transcription_rate_dec)
+mrna_deg_rate <span style="color: #666666;">=</span> log(<span style="color: #666666;">2</span>)<span style="color: #666666;">/</span>mrna_half_life <span style="color: #666666;">*</span> (<span style="color: #666666;">1</span> <span style="color: #666666;">+</span> mrna_deg_rate_inc)
+mrna_init <span style="color: #666666;">=</span> <span style="color: #666666;">1</span>
+
+mrna_deg <span style="color: #666666;">=</span> numeric(hrs) <span style="color: #408080; font-style: italic;"># mRNA degraded each hour</span>
+mrna_pres <span style="color: #666666;">=</span> numeric(hrs) <span style="color: #408080; font-style: italic;"># mRNA present each hour</span>
+mrna_pres[<span style="color: #666666;">1</span>] <span style="color: #666666;">=</span> mrna_init <span style="color: #408080; font-style: italic;"># initial condition</span>
+mrna_prod <span style="color: #666666;">=</span> rep(mrna_prod_rate,hrs) <span style="color: #408080; font-style: italic;"># mRNA produced each hour</span>
+<span style="color: #008000; font-weight: bold;">for</span> (i in <span style="color: #666666;">2</span>:hrs) {
+   mrna_deg[i] <span style="color: #666666;">=</span> mrna_deg_rate <span style="color: #666666;">*</span> mrna_pres[i<span style="color: #666666;">-1</span>]
+   mrna_pres[i] <span style="color: #666666;">=</span> mrna_pres[i<span style="color: #666666;">-1</span>] <span style="color: #666666;">+</span> mrna_prod[i] <span style="color: #666666;">-</span> mrna_deg[i]
+}
+
+<span style="color: #408080; font-style: italic;"># plot just the mRNA</span>
+plot(<span style="color: #666666;">1</span>:hrs,mrna_pres,type<span style="color: #666666;">=</span><span style="color: #ba2121;">'l'</span>,,ylim<span style="color: #666666;">=</span>c(<span style="color: #666666;">0</span>,<span style="color: #666666;">1</span>))
+
+<span style="color: #408080; font-style: italic;"># PrPC</span>
+prpc_prod_rate <span style="color: #666666;">=</span> log(<span style="color: #666666;">2</span>)<span style="color: #666666;">/</span>prpc_half_life <span style="color: #666666;">*</span> (<span style="color: #666666;">1</span> <span style="color: #666666;">-</span> translation_rate_dec)
+prpc_deg_rate <span style="color: #666666;">=</span> log(<span style="color: #666666;">2</span>)<span style="color: #666666;">/</span>prpc_half_life <span style="color: #666666;">*</span> (<span style="color: #666666;">1</span> <span style="color: #666666;">+</span> prpc_deg_rate_inc)
+prpc_init <span style="color: #666666;">=</span> <span style="color: #666666;">1</span>
+
+prpc_deg <span style="color: #666666;">=</span> numeric(hrs)
+prpc_pres <span style="color: #666666;">=</span> numeric(hrs)
+
+prpc_pres[<span style="color: #666666;">1</span>] <span style="color: #666666;">=</span> prpc_init
+
+prpc_prod <span style="color: #666666;">=</span> prpc_prod_rate <span style="color: #666666;">*</span> mrna_pres
+<span style="color: #008000; font-weight: bold;">for</span> (i in <span style="color: #666666;">2</span>:hrs) {
+   prpc_deg[i] <span style="color: #666666;">=</span> prpc_deg_rate <span style="color: #666666;">*</span> prpc_pres[i<span style="color: #666666;">-1</span>]
+   prpc_pres[i] <span style="color: #666666;">=</span> prpc_pres[i<span style="color: #666666;">-1</span>] <span style="color: #666666;">+</span> prpc_prod[i] <span style="color: #666666;">-</span> prpc_deg[i]
+}
+
+<span style="color: #408080; font-style: italic;"># plot mRNA and PrPC</span>
+plot(<span style="color: #666666;">1</span>:hrs,mrna_pres,type<span style="color: #666666;">=</span><span style="color: #ba2121;">'l'</span>,col<span style="color: #666666;">=</span><span style="color: #ba2121;">'red'</span>,ylim<span style="color: #666666;">=</span>c(<span style="color: #666666;">0</span>,<span style="color: #666666;">1</span>))
+points(<span style="color: #666666;">1</span>:hrs,prpc_pres,type<span style="color: #666666;">=</span><span style="color: #ba2121;">'l'</span>,col<span style="color: #666666;">=</span><span style="color: #ba2121;">'orange'</span>)
+
+<span style="color: #408080; font-style: italic;"># rPrPSc or PrP-res</span>
+prpres_prod_rate <span style="color: #666666;">=</span> log(<span style="color: #666666;">2</span>)<span style="color: #666666;">/</span>prpres_half_life <span style="color: #666666;">*</span> (<span style="color: #666666;">1</span> <span style="color: #666666;">-</span> prpres_prod_rate_dec)
+prpres_deg_rate <span style="color: #666666;">=</span> log(<span style="color: #666666;">2</span>)<span style="color: #666666;">/</span>prpres_half_life <span style="color: #666666;">*</span> (<span style="color: #666666;">1</span> <span style="color: #666666;">+</span> prpres_deg_rate_inc)
+prpres_init <span style="color: #666666;">=</span> <span style="color: #666666;">1</span>
+
+prpres_deg <span style="color: #666666;">=</span> numeric(hrs)
+prpres_pres <span style="color: #666666;">=</span> numeric(hrs)
+
+prpres_pres[<span style="color: #666666;">1</span>] <span style="color: #666666;">=</span> prpc_init
+
+prpres_prod <span style="color: #666666;">=</span> prpres_prod_rate <span style="color: #666666;">*</span> prpc_pres
+<span style="color: #008000; font-weight: bold;">for</span> (i in <span style="color: #666666;">2</span>:hrs) {
+   prpres_deg[i] <span style="color: #666666;">=</span> prpres_deg_rate <span style="color: #666666;">*</span> prpres_pres[i<span style="color: #666666;">-1</span>]
+   prpres_pres[i] <span style="color: #666666;">=</span> prpres_pres[i<span style="color: #666666;">-1</span>] <span style="color: #666666;">+</span> prpres_prod[i] <span style="color: #666666;">-</span> prpres_deg[i]
+}
+
+<span style="color: #408080; font-style: italic;"># plot mRNA, PrPC and rPrPSc all together</span>
+plot(<span style="color: #666666;">1</span>:hrs,mrna_pres,type<span style="color: #666666;">=</span><span style="color: #ba2121;">'l'</span>,lwd<span style="color: #666666;">=1</span>,col<span style="color: #666666;">=</span><span style="color: #ba2121;">'red'</span>,ylim<span style="color: #666666;">=</span>c(<span style="color: #666666;">0</span>,<span style="color: #666666;">1</span>),ylab<span style="color: #666666;">=</span><span style="color: #ba2121;">'normalized level'</span>,xlab<span style="color: #666666;">=</span><span style="color: #ba2121;">'hours of incubation'</span>,main<span style="color: #666666;">=</span>plottitle,cex.main<span style="color: #666666;">=.8</span>)
+points(<span style="color: #666666;">1</span>:hrs,prpc_pres,type<span style="color: #666666;">=</span><span style="color: #ba2121;">'l'</span>,lwd<span style="color: #666666;">=1</span>,col<span style="color: #666666;">=</span><span style="color: #ba2121;">'orange'</span>)
+points(<span style="color: #666666;">1</span>:hrs,prpres_pres,type<span style="color: #666666;">=</span><span style="color: #ba2121;">'l'</span>,lwd<span style="color: #666666;">=1</span>,col<span style="color: #666666;">=</span><span style="color: #ba2121;">'purple'</span>)
+legend(<span style="color: #ba2121;">'topright'</span>,c(<span style="color: #ba2121;">'rPrPSc'</span>,<span style="color: #ba2121;">'PrPC'</span>,<span style="color: #ba2121;">'mRNA'</span>),col<span style="color: #666666;">=</span>c(<span style="color: #ba2121;">'purple'</span>,<span style="color: #ba2121;">'orange'</span>,<span style="color: #ba2121;">'red'</span>),pch<span style="color: #666666;">=</span><span style="color: #ba2121;">'-'</span>,cex<span style="color: #666666;">=1</span>)
+
+<span style="color: #408080; font-style: italic;"># points for readouts measured by published compound library screens</span>
+points(<span style="color: #666666;">1*24</span>,prpc_pres[<span style="color: #666666;">1*24</span>],pch<span style="color: #666666;">=19</span>)  <span style="color: #408080; font-style: italic;"># PrPc at 1 day - measured by Karapetyan &amp; Sferrazza 2013 http://www.ncbi.nlm.nih.gov/pubmed/23576755</span>
+points(<span style="color: #666666;">5*24</span>,prpres_pres[<span style="color: #666666;">5*24</span>],pch<span style="color: #666666;">=19</span>)<span style="color: #408080; font-style: italic;"># rPrPSc at 5 days - measured by Kocisko 2003, Leidel 2011, Poncet-Montange 2011 </span>
+points(<span style="color: #666666;">6*24</span>,prpres_pres[<span style="color: #666666;">6*24</span>],pch<span style="color: #666666;">=19</span>)<span style="color: #408080; font-style: italic;"># rPrPSc at 6 days - measured by Ghaemmaghami 2010</span>
+
+<span style="color: #408080; font-style: italic;"># labels for points</span>
+text(<span style="color: #666666;">1*24</span>,prpc_pres[<span style="color: #666666;">1*24</span>],labels<span style="color: #666666;">=</span>paste(round(prpc_pres[<span style="color: #666666;">1*24</span>]<span style="color: #666666;">*100</span>),<span style="color: #ba2121;">'% PrPC after 1 day'</span>,sep<span style="color: #666666;">=</span><span style="color: #ba2121;">''</span>),cex<span style="color: #666666;">=.5</span>,pos<span style="color: #666666;">=4</span>)
+text(<span style="color: #666666;">5*24</span>,prpres_pres[<span style="color: #666666;">5*24</span>],labels<span style="color: #666666;">=</span>paste(round(prpres_pres[<span style="color: #666666;">5*24</span>]<span style="color: #666666;">*100</span>),<span style="color: #ba2121;">'% rPrPSc after 5 days'</span>,sep<span style="color: #666666;">=</span><span style="color: #ba2121;">''</span>),cex<span style="color: #666666;">=.5</span>,pos<span style="color: #666666;">=4</span>)
+text(<span style="color: #666666;">6*24</span>,prpres_pres[<span style="color: #666666;">6*24</span>],labels<span style="color: #666666;">=</span>paste(round(prpres_pres[<span style="color: #666666;">6*24</span>]<span style="color: #666666;">*100</span>),<span style="color: #ba2121;">'% rPrPSc after 6 days'</span>,sep<span style="color: #666666;">=</span><span style="color: #ba2121;">''</span>),cex<span style="color: #666666;">=.5</span>,pos<span style="color: #666666;">=4</span>)
+
+<span style="color: #408080; font-style: italic;"># optional - plot total PrP</span>
+<span style="color: #408080; font-style: italic;"># total_prp = (prpc_pres + prpres_pres) / 2</span>
+<span style="color: #408080; font-style: italic;"># points(1:hrs,total_prp,type='l',col='black')</span></pre>
+</div>
+<p>By plugging in a 50% knockdown of transcription in the parameters at top, I can generate the following plot:</p>
+<p><a href="/wp-content/uploads/2013/08/halflife-50kd-mrna.png"><img class="alignnone size-full wp-image-2649" alt="halflife-50kd-mrna" src="/wp-content/uploads/2013/08/halflife-50kd-mrna.png"/></a></p>
+<p>Which shows that a hypothetical test compound that knocks down PrP transcription by 50% would have shown up as 61% of PrPC (i.e. a 39% knockdown) after 1 day in the <a title="Tacrolimus, astemizole and a new screening approach for drugs that reduce PrP" href="/2013/04/04/tacrolimus-astemizole-and-a-new-screening-approach-for-drugs-that-reduce-prp/">Scripps FRET assay</a> [<a href="http://www.ncbi.nlm.nih.gov/pubmed/23576755">Karapetyan &amp; Sferrazza 2013</a>], and 55% of rPrPSc after 5 days and 53% of rPrPSc after 6 days in the ELISA dot blot assays.</p>
+<p>That&#8217;s probably just about the worst case scenario &#8211; you can&#8217;t go too much further upstream than transcription, though of course you could imagine a molecule that impacts some slow signaling cascade leading to transcriptional change, which is something I&#8217;ve not modeled here.</p>
+<p>By contrast, a compound that doubles the degradation rate of PrP<sup>C</sup> would show up in the assay readout even more quickly:</p>
+<p><a href="/wp-content/uploads/2013/08/halflife-2x-prpc-deg.png"><img class="alignnone size-full wp-image-2650" alt="halflife-2x-prpc-deg" src="/wp-content/uploads/2013/08/halflife-2x-prpc-deg.png"/></a></p>
+<p>After just 1 day, PrP<sup>C</sup> has pretty much reached its asymptotic destination of 50% knockdown.  rPrP<sup>Sc</sup> is slower but gets to 53% and 52% of original level after 5 days and 6 days respectively.</p>
+<p>I ran this script for each of the six possible scenarios, and here&#8217;s what the readouts look like:</p>
+<p><table style="width:100%; " class="easy-table easy-table-default " border="0">
+<thead>
+<tr><th>compound effect</th>
+<th>PrPC after 1 day</th>
+<th>rPrPSc after 5 days</th>
+<th>rPrPSc after 6 days</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>50% reduction in mRNA transcription rate.</td>
+<td>61%</td>
+<td>55%</td>
+<td>53%</td>
+</tr>
+
+<tr><td>Doubling of mRNA degradation rate.</td>
+<td>54%</td>
+<td>54%</td>
+<td>52%</td>
+</tr>
+
+<tr><td>50% reduction in PrPC translation rate.</td>
+<td>52%</td>
+<td>54%</td>
+<td>52%</td>
+</tr>
+
+<tr><td>Doubling of PrPC degradation rate.</td>
+<td>50%</td>
+<td>53%</td>
+<td>52%</td>
+</tr>
+
+<tr><td>50% reduction in rPrPSc production rate.</td>
+<td>N/A</td>
+<td>53%</td>
+<td>52%</td>
+</tr>
+
+<tr><td>Doubling of rPrPSc degradation rate.</td>
+<td>N/A</td>
+<td>50%</td>
+<td>50%</td>
+</tr>
+</tbody></table></p>
+<p><strong>conclusions</strong></p>
+<p>For most mechanisms of action, existing assays have long enough compound incubation times to be reasonably powered to detect inhibitory compounds given the half-lives reported in the literature.  For the most upstream mechanism, inhibition of transcription, a bit of power is lost, but a 50% inhibition still results in a 39% reduction in PrP<sup>C</sup> after 1 day.</p>
+<p>These figures are heavily dependent on the reported half-lives however.  I tried plugging in 18h as the half-life of PrP<sup>C</sup> &#8211; that&#8217;s the value <em>in vivo</em> &#8211; and things got far worse, with a 50% inhibition of transcription resulting in 79% of PrP<sup>C</sup> (i.e. a 21% reduction).  Hopefully the published values for half-lives in N2a cells are accurate and are indeed much lower than <em>in vivo</em>.</p>

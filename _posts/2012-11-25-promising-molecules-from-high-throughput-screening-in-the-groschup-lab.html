@@ -1,0 +1,137 @@
+---
+layout: post
+title: "Promising molecules from high-throughput screening in the Groschup lab"
+author: ericminikel
+date: 2012-11-25 18:25:54
+---
+<p>The <a href="http://www.fli.bund.de/en/startseite/institutes/institute-of-novel-and-emerging-infectious-diseases/scientists/prof-dr-martin-h-groschup.html">Groschup</a> lab at Friedrich-Loeffler-Institut in Riems, Germany has been incredibly prolific in the past couple of years.  These are the folks who brought you the <a href="/2012/10/23/scutellaria-lateriflora/">Scutellaria lateriflora</a> study earlier this year; they also did two high-throughput assays in 2011 leading directly to validation of top hits in scrapie mice.</p>
+<p>The first of these two papers, <a href="http://www.ncbi.nlm.nih.gov/pubmed/21755599">Geissen 2011</a>, documents the whole process from assay to mouse.  The assay started with ScN2a cells and two different SMB cell lines, for a total of three lines of scrapie-infected mouse neuroblastoma cells.  The researchers found that SMB[RC040] cells were the most sensitive so these were used for primary screening.  Cells were plated in 96-well plates and treated with the candidate compounds for 3 days, lysed, digested with proteinase K, and then dot blotted for presence of PrP.  All in all, it sounds pretty similar to <a href="/2012/10/06/screen-reveals-antiprion-compounds-that-act-indirectly/">UCSF&#8217;s ELISA assay for prion inihbitors</a>. The top hits were also subjected to a couple more experiments to narrow down the possible mechanisms of action: (1) a cell-free conversion assay to tease out whether they interfere with PrP<sup>C</sup>-to-PrP<sup>Sc</sup> conversion directly or through other cellular mechanisms, and (2) a dot blot of total PrP content (without PK digestion) to see if they reduced the expression of PrP<sup>C</sup>.  They screened against the DIVERSet1 library, presumably a subset of the <a href="http://www.chembridge.com/screening_libraries/diversity_libraries/index.php">DIVERSet libraries</a> offered by ChemBridge in San Diego.</p>
+<p>All this revealed 530 compounds initially, 14 of which stood up to validation at lower concentrations (intended to tease out specificity).  Of these 14 compounds, dubbed S1 through S14,  one (S3) reduced  expression of PrP<sup>C</sup> and three (S6, S10, S14) worked in a cell-free environment.  These top 14 hits were all then subjected to testing in mice.</p>
+<p>The mouse model was C57I6 mice infected intracerebrally with 10<sup>-2</sup> brain homogenate of RML prions.  The compounds were administered by intraperitoneal injections daily for 20 days starting at 90 days post infection (dpi).  So this is a pleasingly aggressive mouse experiment: the intracerebral route of infection and 90 day incubation time will rule out the possibility that any compound acts simply by affecting transport to the brain, and the intraperitoneal (as opposed to intracerebral) injections of drugs will filter for only drugs that pass the blood brain barrier.  Moreover, 90 days gives the prions a big head start, so an inhibitory compound will have to be pretty powerful to still effect a delay in onset.  Each compound was tested in five mice, though some mice must have died of other causes as some compounds have only three or four mice listed. The endpoint was &#8220;onset of clinical symptoms&#8221; as monitored by an observer.</p>
+<p>Two compounds, S9 and S14, had significant delays in disease onset in the mice:</p>
+<p><table style="width:100%; " class="easy-table easy-table-default " border="0">
+<thead>
+<tr><th>compound</th>
+<th>time to onset</th>
+<th>control time to onset</th>
+<th>n</th>
+<th>p</th>
+<th>percent delay</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>S9</td>
+<td>173.75±8.6 dpi</td>
+<td>158.8±5.6</td>
+<td>4</td>
+<td>&lt;.05</td>
+<td>+9%</td>
+</tr>
+
+<tr><td>S14</td>
+<td>170.3±3.77 dpi</td>
+<td>158.8±5.6</td>
+<td>4</td>
+<td>&lt;.005</td>
+<td>+7%</td>
+</tr>
+</tbody></table></p>
+<p>(I combined the untreated and DMSO controls into one group for the mean and SD above). The skeptic will note that they tested 14 compounds, so you could argue that after multiple testing correction S9 is not significant.  But S14 still would be:</p>
+<pre>&gt; s14 = c(167,167,173,174) 
+&gt; cntl = c(153,153,161,161,163,152,153,161,163,168)
+&gt; t.test(s14,cntl)$p.value*14
+[1] 0.02728294</pre>
+<p>(Aside: this study did actually use Student&#8217;s t test to establish significance, as I&#8217;ve done above, as opposed to many other studies which use the log-rank test).</p>
+<p>We&#8217;ll see more of S9 in the next study below (spoiler: it doesn&#8217;t validate) but the authors say no more about S14 in either study.</p>
+<p>And by the way, none of the 14 compounds showed evidence of toxicity in the mice.</p>
+<p>Besides the exciting news that one or two hits validated in mice, this paper was also a pleasure to read for its lengthy discussion of the functional groups and structural motifs that seem to be common across antiprion compounds.  If you&#8217;ve read posts on this blog about <a href="/2012/09/25/cpd-b-as-a-prion-therapeutic/">cpd-B</a>, <a href="/2012/11/24/curcumin-as-prion-therapeutic/">curcumin</a>, <a href="/2012/10/23/scutellaria-lateriflora/">baicalin</a>, <a href="/2012/10/23/fluphenazine-trimipramine-and-two-styryl-compounds/">styryls &amp; tricyclics</a>, <a href="/2012/10/23/quinacrine/">quinacrine</a>, and <a href="/2012/09/14/the-history-of-tetracyclines-as-treatments-for-prion-disease/">tetracyclines</a>, at some point you probably started to wonder, &#8220;what&#8217;s with all the rings?&#8221;  All 14 hits from this assay were aromatic, with a minimum of two rings per molecule; Geissen provides a hypothesis to explain the preponderance of aromatic rings in antiprion compounds:</p>
+<blockquote><p>It was evident that phenol groups and other ring systems are part of almost all of the inhibitory substances, providing an electronflexible backbone. Often an electronegative substitution (Br, Cl, F, O) was included at terminal positions; some substructures were also part of several compounds: nitrobenzene, phenylbenzamide, benzothiazole, naphthalene, benzylidenehydrazine (Table 1). The clustering and cumulative occurrence of several motifs implies that these structural elements might play an important<br/>
+role in the inhibition of the conversion process, and these data might give useful hints for further investigations based on the modification of basal structures to develop more potent inhibitory agents.</p></blockquote>
+<p>The second study, <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3186986/">Leidel 2011</a>, seems to run the exact same assay over again with the exact same library (DIVERSet 1); I&#8217;m not clear if they actually did run the whole exact thing again or if they ordered a different set of 10,000 compounds from ChemBridge or if they just subjected the original results to different analysis and validation.  In any case, they took the hits from such an assay and analyzed them for common motifs, finding a heretofore unknown class of prion inhibitors: the diphenylpyrazoles.  They then took the most effective of them, dubbed DPP-1:</p>
+<p><img class="alignnone size-full wp-image-1074" title="DPP-1" src="/wp-content/uploads/2012/11/DPP-1.jpg"/></p>
+<p>And subjected it to validation in a few different versions of their mouse model.  For some of the experiments they also tested S9 from the previous study, which they refer to here as a <a href="http://en.wikipedia.org/wiki/Benzothiazole">benzothiazol</a> derivative (BTD) since it contains a benzothiazol group.  (They note that <a href="http://en.wikipedia.org/wiki/Pittsburgh_compound_B">PiB</a> is also a benzothiazol even though it didn&#8217;t label prion plaques in vivo in <a href="/wp-content/uploads/2012/10/boxer-2007-amyloid-imaging-in-distinguishing-atypical-prion-disease-from-alzheimer-disease.pdf">Boxer 2007</a>).</p>
+<p>The validation of DPP-1 in mice began with a &#8220;primary efficiency test&#8221; with intracerebral RML inoculation of C57BL/6 mice and intraperitoneal administration of the drug.  They never state exactly the timeline of treatment but it was presumably the same as in the other study: starting 90 dpi and going for 20 days.  They also tested a few different permutations of treatment times and modes and inoculation modes. This time the p values are by log-rank test.</p>
+<p><table style="width:100%; " class="easy-table easy-table-default " border="0">
+<thead>
+<tr><th>test</th>
+<th>compound</th>
+<th>treatment mode</th>
+<th>mice</th>
+<th>inoculation mode</th>
+<th>time to onset</th>
+<th>control time to onset</th>
+<th>delay</th>
+<th>p</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>primary efficiency</td>
+<td>DPP-1</td>
+<td>intraperitoneal</td>
+<td>C57BL/6</td>
+<td>intracerebral</td>
+<td>174±3.8 dpi</td>
+<td>160±4.1 dpi</td>
+<td>+9%</td>
+<td>&lt;.01</td>
+</tr>
+
+<tr><td>therapeutic approach</td>
+<td>DPP-1</td>
+<td>continuous subcutaneous infusion with osmotic pumps</td>
+<td>Tga-20</td>
+<td>intraperitoneal</td>
+<td>149±3 dpi</td>
+<td>113±6.4 dpi</td>
+<td>+32%</td>
+<td>&lt;.05</td>
+</tr>
+
+<tr><td>therapeutic approach</td>
+<td>S9 (BTD)</td>
+<td>intraperitoneal</td>
+<td>Tga-20</td>
+<td>intraperitoneal</td>
+<td>116±5 dpi</td>
+<td>113±6.4 dpi</td>
+<td>ns</td>
+<td>ns</td>
+</tr>
+
+<tr><td>oral therapeutic approach</td>
+<td>DPP-1</td>
+<td>oral feeding needles for 8 weeks starting 14 dpi</td>
+<td>Tga-20</td>
+<td>intraperitoneal</td>
+<td>155±10 dpi</td>
+<td>113±6.4 dpi</td>
+<td>+37%</td>
+<td>&lt;.05</td>
+</tr>
+
+<tr><td>oral therapeutic approach</td>
+<td>S9 (BTD)</td>
+<td>oral feeding needles for 8 weeks starting 14 dpi</td>
+<td>Tga-20</td>
+<td>intraperitoneal</td>
+<td>117±5 dpi</td>
+<td>113±6.4 dpi</td>
+<td>ns</td>
+<td>ns</td>
+</tr>
+
+<tr><td>prophylactic</td>
+<td>DPP-1</td>
+<td>oral for 8 weeks starting at -14 dpi</td>
+<td>C57BL/6</td>
+<td>intraperitoneal</td>
+<td>212±1.8 dpi</td>
+<td>192±0.5 dpi</td>
+<td>+10%</td>
+<td>&lt;.01</td>
+</tr>
+</tbody></table></p>
+<p>So S9 didn&#8217;t validate, but DPP-1 did.</p>
+<p>Leidel discusses a few possible mechanisms of action of DPP-1.  Diphenylpyrazoles inhibit Hsp90, which may act directly (Hsps aren&#8217;t always good&#8211; sometimes they aid in PrP conversion to toxic form) or indirectly, as it upregulates other Hsps such as Hsp70, which in turn inhibit protein aggregation.  Diphenylpyrazoles also act as antioxidants.</p>
+<p>Discussing the other proposed antiprion compounds for oral administration, Leidel dismisses results for <a title="Curcumin as prion therapeutic" href="/2012/11/24/curcumin-as-prion-therapeutic/">curcumin</a> and states that only <a title="Statins as prion therapeutics" href="/2012/09/28/statins-as-prion-therapeutics/">pravastatin</a> has given a convincing delay in onset in vivo.  It looks like Leidel&#8217;s criteria here are that the mouse has to be infected intracerebrally but treated orally; under those criteria there is no evidence for <a href="/2012/09/14/the-history-of-tetracyclines-as-treatments-for-prion-disease/">tetracyclines</a> (since the mice were always infected peripherally; though there is also no study refuting these findings).  Leidel&#8217;s study came out before the <a href="/2012/09/13/rapamycin-delays-disease-onset-in-gss-mice/">rapamycin</a> or <a href="/2012/10/23/scutellaria-lateriflora/">Scutellaria lateriflora</a> studies, so that&#8217;s why those aren&#8217;t mentioned.  Still, I don&#8217;t totally agree with this harsh a conclusion: simvastatin, at least, was administered orally (in drinking water) in mice infected intracerebrally and had a significant effect in <a href="http://archneur.jamanetwork.com/article.aspx?articleid=795715">Haviv 2008</a>, and I think there is some evidence for <a title="Curcumin as prion therapeutic" href="/2012/11/24/curcumin-as-prion-therapeutic/">curcumin</a>, though it&#8217;s admittedly shakier.  And though it would be great to have an oral therapeutic, <a href="/2012/09/25/cpd-b-as-a-prion-therapeutic/">cpd-B</a>, which has only been tested intravenously, is still promising.</p>
+<p>Overall, though, Leidel is right to assert that DPP-1&#8242;s performance in this study is pretty exceptional compared to what else is out there.  It can be administered orally to mice infected intracerebrally, starting at 14 dpi, with no evidence of toxicity, and give a 37% delay in onset.  That&#8217;s a stronger claim than can be made for any of the other small molecules reviewed on this blog.</p>

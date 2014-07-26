@@ -1,0 +1,22 @@
+---
+layout: post
+title: "Convolutional Networks continued"
+author: ericminikel
+date: 2012-04-13 06:04:42
+---
+<p>I&#8217;ve made a good deal of progress in understanding the Convolutional Network concept <a href="http://www.mitpressjournals.org/doi/full/10.1162/neco.2009.10-08-881">described by Turaga and Murray</a> and <a href="/2012/03/27/turaga-murray-2010-convolutional-networks/">blogged about here previously</a>.  This is in part thanks to Turaga himself, who kindly responded to my email with some questions, and also thanks to the help of mathemagician @a.</p>
+<p>The main thing that was tripping me up was the size of the different images/objects involved.  The magic, it turns out, is all in the difference between &#8220;valid&#8221; and &#8220;full&#8221; convolution (and cross-correlation).  Both of these processes rely on moving one image around another, so when you&#8217;re processing the corner pixel, the kernel spills over the edges of the base image.  You can handle this by wrap-around, zero-padding or symmetry, but in any event, a &#8220;full&#8221; convolution returns all pixels, so the convolution of an NxNxN image with an mxmxm kernel is still NxNxN, while a &#8220;valid&#8221; convolution returns only those pixels which do not rely on zero-padding, so you lose m-1 from each dimension each time you convolute.</p>
+<p>Thus the end image, I<sub>O</sub>, that you come out with after 3 iterations has edge length N-3*m+3.  Then when you do backpropagation to calculate Sb, you do &#8220;full&#8221; cross-correlation, and when you do weight kernel gradients, you do valid again.  My original confusion was about the line:<br/>
+ΔWab = ηI<sub>a</sub>(*)S<sub>b</sub></p>
+<p>Because it seemed to me that I<sub>a</sub> and S<sub>b </sub>are both NxNxN.  In fact Sb is m-1 pixels smaller, on each dimension, than Ia.  Therefore when you &#8220;valid&#8221; cross-correlate them, there are only mxmxm places for Sb to move around Ia.  So the output of this cross-correlation is actually an mxmxm matrix, the same size as Wab.</p>
+<p>So if I understood that correctly I think it solves my major confusion.  I also spent a bit of time reading the LeCun papers that were cited, and one upshot is that the randomly initialized weight kernels are not just initialized with random() i.e. a uniform distribution from 0 to 1.  You want to give them a normal distribution with mean 0 (see <a href="/wp-content/uploads/2012/03/lecun-1998-efficient-backprop.pdf">&#8220;Efficient Backprop&#8221;</a> tip #16, p. 13) and standard deviation as follows:</p>
+<blockquote><p>We initialize all the elements of the filters <em>w<sub>ab</sub></em> and the biases <em>h<sub>a</sub></em> randomly from a normal distribution of standard deviation <img src="http://www.mitpressjournals.org/na101/home/literatum/publisher/mit/journals/content/neco/2010/neco.2010.22.issue-2/neco.2009.10-08-881/production/images/medium/neco.2009.10-08-881inline2.gif" alt=""/>, where |<em>w</em>| is the number of elements in each filter (here, 5<sup>3</sup>) and |<em>b</em>| is the number of input feature maps incident on a particular output feature map. This choice mirrors a suggestion in LeCun, Bottou, Orr, &amp; Muller (<a href="http://www.mitpressjournals.org/doi/full/10.1162/neco.2009.10-08-881">1998</a>) that weight vectors have unit norm.</p></blockquote>
+<p>LeCun&#8217;s Efficient Backprop also has tips on transforming the inputs (p. 9).  It&#8217;s clear one should normalize images to a mean of zero, I&#8217;m less clear what to do with the other tips since my &#8220;input variables&#8221; are pixels in an image:</p>
+<blockquote><p>Transforming the Inputs</p>
+<ol>
+<li> The average of each input variable over the training set should be close to zero</li>
+<li> Scale input variables so that their covariances are about the same</li>
+<li> Input variables should be uncorrelated if possible</li>
+</ol>
+</blockquote>
+<p>But in any case I now feel I may actually understand enough of this to try my hand at an implementation of it in Python.  More fun and games to follow.</p>

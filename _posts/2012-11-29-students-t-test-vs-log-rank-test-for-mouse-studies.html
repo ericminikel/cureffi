@@ -1,0 +1,156 @@
+---
+layout: post
+title: "Student's t test vs. log-rank test for mouse studies"
+author: ericminikel
+date: 2012-11-29 19:12:04
+---
+<p>Of the candidate therapeutic studies <a href="/category/potential-treatments/">reviewed on this blog</a>, most establish statistical significance using a <a href="http://en.wikipedia.org/wiki/Logrank_test">log-rank test</a>, otherwise known as a Mantel-Cox test and almost always presented alongside <a href="https://www.google.com/search?q=kaplan+meier+curve&amp;hl=en&amp;tbo=u&amp;tbm=isch">Kaplan-Meier survival curves</a> [ex. <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3186986/">Leidel 2011</a>, <a href="http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0024844">Chung 2011</a>, <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2169081/">Kawasaki 2007</a>, <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3281244/">Eiden 2012</a>].  A handful, though, use a <a href="http://udel.edu/~mcdonald/statttest.html">Student&#8217;s t test</a> a.k.a. <a href="http://udel.edu/~mcdonald/statanovaintro.html">one-way ANOVA</a> with two categories [ex. <a href="/wp-content/uploads/2012/11/manueldis-1998-dapsone-to-delay-symptoms-in-cjd-.pdf">Manueldis 1998</a>, <a href="/wp-content/uploads/2012/11/priola-2000-porphyrin-and-phthalocyanine-antiscrapie-compounds-.pdf">Priola 2000</a>, <a href="/wp-content/uploads/2012/11/geissen-2011-from-high-throughput-cell-culture-screening-to-mouse-.pdf">Geissen 2011</a>, <a href="/wp-content/uploads/2012/09/cortes-2012-rapamycin-delays-disease-onset-.pdf">Cortes 2012</a>] and some use both [<a href="http://vir.sgmjournals.org/content/89/2/594.full.pdf">Riemer 2008</a>].</p>
+<p>This can actually make a big difference.  Let&#8217;s take for example the data from <a title="Scutellaria lateriflora" href="/2012/10/23/scutellaria-lateriflora/">the <em>Scutellaria lateriflora</em> study</a> and run these two tests on the exact same data using R:</p>
+<pre>&gt; library(survival)
+Loading required package: splines
+&gt; control=c(144,144,144,146,146,154)
+&gt; treatment=c(146,158,176,206,206,206)
+&gt; days = c(control,treatment)
+&gt; group = c(rep(0,6),rep(1,6))
+&gt; status = rep(1,12)
+&gt; mice = data.frame(days,status,group)
+&gt; msurv = with(mice,Surv(days, status == 1))
+&gt; survdiff(Surv(days,status==1)~group,data = mice)
+Call:
+survdiff(formula = Surv(days, status == 1) ~ group, data = mice)
+N Observed Expected (O-E)^2/E (O-E)^2/V
+group=0 6 6 2.67 4.17 8.87
+group=1 6 6 9.33 1.19 8.87
+Chisq= 8.9 on 1 degrees of freedom, <strong>p= 0.0029</strong> 
+&gt; 
+&gt; t.test(control,treatment)
+Welch Two Sample t-test
+data: control and treatment 
+t = -3.2993, df = 5.207, <strong>p-value = 0.02024</strong>
+alternative hypothesis: true difference in means is not equal to 0 
+95 percent confidence interval:
+ -64.896046 -8.437287 
+sample estimates:
+mean of x mean of y 
+ 146.3333 183.0000</pre>
+<p>So with the exact same data we get a tenfold difference in p value: .003 with log-rank and .02 with a t test.  Why?</p>
+<p>It seems especially peculiar that the log-rank test gives a <em>smaller</em> p value.  Unlike the t test, it doesn&#8217;t assume equal variance. Usually, it seems that the fewer assumptions you can make, the less power your test has.  For instance, if we didn&#8217;t want to assume equal variance, we could do a two-sample <a href="http://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test">Kolmogorov-Smirnov test</a> which asks &#8220;what&#8217;s the chance these two samples are drawn from the same distribution?&#8221; without any assumption about variance, and we&#8217;ll always find that it gives a larger (less significant) p value than a t test.  For instance, with the above data:</p>
+<pre>&gt; ks.test(control,treatment)
+Two-sample Kolmogorov-Smirnov test
+data: control and treatment 
+D = 0.8333, <strong>p-value = 0.03101</strong>
+alternative hypothesis: two-sided
+Warning message:
+In ks.test(control, treatment) : cannot compute exact p-values with ties</pre>
+<p>We get p = .03 instead of .02 with the t test.  So what makes the log-rank test more &#8220;powerful&#8221;?</p>
+<p>Well, it&#8217;s not more powerful, actually.  You can make up data for which the log-rank test will give a larger (less significant) p value than the t test, for instance:</p>
+<pre>&gt; control = c(5,5,5,5,5,6)
+&gt; treatment = c(6,6,6,6,6,5)
+&gt; days = c(control,treatment)
+&gt; group = c(rep(0,6),rep(1,6))
+&gt; status = rep(1,12)
+&gt; mice = data.frame(days,status,group)
+&gt; msurv = with(mice,Surv(days, status == 1))
+&gt; survdiff(Surv(days,status==1)~group,data = mice)
+Call:
+survdiff(formula = Surv(days, status == 1) ~ group, data = mice)
+
+        N Observed Expected (O-E)^2/E (O-E)^2/V
+group=0 6        6        4       1.0      4.89
+group=1 6        6        8       0.5      4.89
+
+ Chisq= 4.9  on 1 degrees of freedom, <strong>p= 0.027</strong> 
+&gt; t.test(control,treatment)
+
+        Welch Two Sample t-test
+
+data:  control and treatment 
+t = -2.8284, df = 10, <strong>p-value = 0.0179</strong>
+alternative hypothesis: true difference in means is not equal to 0 
+95 percent confidence interval:
+ -1.1918440 -0.1414893 
+sample estimates:
+mean of x mean of y 
+ 5.166667  5.833333</pre>
+<p>Here we get a slightly smaller (more significant) p value with a t test.  So it&#8217;s really just that these two tests assume different underlying distributions, and so respond differently to different types of data.</p>
+<p>The Student&#8217;s t test asks the question, &#8220;I assume these two samples are both normally distributed and have the same variance; tell me, what&#8217;s the chance they were drawn from distributions with the same mean?&#8221;</p>
+<p>The log-rank test is more complicated.  It asks, &#8220;I assume the total number of events (e.g. deaths of mice) having already occurred at any given time in these two groups is <a href="http://en.wikipedia.org/wiki/Hypergeometric_distribution">hypergeometrically</a> distributed; tell me, what&#8217;s the chance the two groups have the same underlying <a href="http://en.wikipedia.org/wiki/Failure_rate#Failure_rate_in_the_continuous_sense">hazard function</a>?&#8221;  The log-rank test is calculated, as the name suggests, in terms of <em>ranks</em>.  It looks at the order in which events happened and calculates total number of events in each group&#8211;without any regard to how far apart the events were spaced.  In so doing, it reduces <a href="http://en.wikipedia.org/wiki/Level_of_measurement#Ratio_scale">ratio-level data</a> to <a href="http://en.wikipedia.org/wiki/Level_of_measurement#Ordinal_scale">ordinal-level data</a>.  This makes it less sensitive to outliers.</p>
+<p>To prove this to myself I tried two different comparisons.  First I wrapped the survival test in a function to just handle the simple case where an event is eventually observed for each mouse (more on this simple case later):</p>
+<pre>simplesurvtest = function(vec1,vec2) {
+    days = c(vec1,vec2)
+    group = c(rep(0,length(vec1)),rep(1,length(vec2)))
+    status = rep(1,length(vec1)+length(vec2))
+    mice = data.frame(days,status,group)
+    msurv = with(mice,Surv(days, status == 1))
+    return (survdiff(Surv(days,status==1)~group,data = mice))
+}</pre>
+<p><table style="width:100%; " class="easy-table easy-table-default " border="0">
+<thead>
+<tr><th>data</th>
+<th>log-rank p value</th>
+<th>t test p value</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>c(5,5,5,5,5,6) vs. c(5,5,5,5,5,8)</td>
+<td>.551</td>
+<td>.550</td>
+</tr>
+
+<tr><td>c(5,5,5,5,5,6) vs. c(5,5,5,5,5,52)</td>
+<td>.551</td>
+<td>.373</td>
+</tr>
+</tbody></table></p>
+<p>Notice that the addition of a wild outlier in the seceond dataset doesn&#8217;t change the log-rank p value <em>at all</em>, while it <em>does</em> change the t test p value.</p>
+<p>Arguably that&#8217;s a good thing &#8211; maybe you don&#8217;t want to be sensitive to outliers.</p>
+<p>On the other hand you can also make up data to &#8220;trick&#8221; the log-rank test:</p>
+<pre>control = c(1,2,3,4,5,6)
+treatment1 = c(3.01,4.01,5.01,6.01,7.01,8.01)
+treatment2 = treatment - .02
+simplesurvtest(control,treatment1)
+simplesurvtest(control,treatment2)
+t.test(control,treatment1)
+t.test(control,treatment2)</pre>
+<p><table style="width:100%; " class="easy-table easy-table-default " border="0">
+<thead>
+<tr><th>data</th>
+<th>log-rank p value</th>
+<th>t test p value</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>c(1,2,3,4,5,6) vs. c(3.01,4.01,5.01,6.01,7.01,8.01)</td>
+<td>.041</td>
+<td>.092</td>
+</tr>
+
+<tr><td>c(1,2,3,4,5,6) vs. c(2.99,3.99,4.99,5.99,6.99,7.99)</td>
+<td>.173</td>
+<td>.095</td>
+</tr>
+</tbody></table></p>
+<p>Here, the data are virtually identical, but because the <em>order</em> of events is changed, the log-rank test sees a big difference in significance. The t test is not &#8220;fooled&#8221; by this.</p>
+<p>But hey, just because you can &#8220;fool&#8221; a test with very artificial data doesn&#8217;t discredit it&#8211; in any real study you&#8217;ll probably do followup with mice once a day or week, not at arbitrarily small time intervals, and the odds of finding such a &#8220;tricky&#8221; set of data as shown above are vanishingly small.</p>
+<p>The thing that&#8217;s special about the log-rank test, the thing you get in return for giving up the ratio-level nature of your data, is its ability to handle <a href="http://en.wikipedia.org/wiki/Censoring_(statistics)">censoring</a>. Suppose control scrapie mice in your experiment are dying at 120 dpi.  One mouse in the treatment group lives to 130 dpi but then dies of cancer, which you consider an unrelated cause.  You don&#8217;t know when (if ever) this mouse would have died of scrapie, but you know it lived to at least 130 dpi. In the log-rank test, that information is worth something.  In the t test, you have no way to gain information from that mouse.  For instance, <a href="/wp-content/uploads/2012/11/geissen-2011-from-high-throughput-cell-culture-screening-to-mouse-.pdf">Geissen 2011</a> uses a t test and simply throws out the mice that died of other causes.</p>
+<p>The same issue arises if you get to the end of your experiment timeline and some or all mice in the treatment group are still alive (this happened with the high IgA, high IgG mice in <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2474749/">Goni 2008</a>).  There&#8217;s simply no way to run a t test on this data, but the log-rank test handles it through different statuses for the mice.  Here&#8217;s an example in R based on an approximation of the data from Goni&#8217;s <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2474749/figure/F3/">Figure 3</a>:</p>
+<pre>&gt; # Goni 2008 data 
+&gt; control = c(rep(195,5),rep(200,5),rep(205,10))
+&gt; treatment = rep(400,10) # high IgA, high IgG group
+&gt; days = c(control,treatment)
+&gt; group = c(rep(0,20),rep(1,10))
+&gt; status = c(rep(1,20),rep(0,10))
+&gt; mice = data.frame(days,status,group)
+&gt; msurv = with(mice,Surv(days, status == 1))
+&gt; survdiff(Surv(days,status==1)~group,data = mice)
+Call:
+survdiff(formula = Surv(days, status == 1) ~ group, data = mice)
+
+         N Observed Expected (O-E)^2/E (O-E)^2/V
+group=0 20       20    11.33      6.63      22.9
+group=1 10        0     8.67      8.67      22.9
+
+ Chisq= 22.9  on 1 degrees of freedom, p= 1.67e-06</pre>
+<p>The log-rank test is clearly the choice if your data are censored, or if other assumptions (normality, equal variance) of the t test are violated.  If the assumptions of the t test <em>do</em> hold (or if you&#8217;re willing to just throw out the censored data) then either test is probably acceptable.  The <a href="http://en.wikipedia.org/wiki/Logrank_test">Wikipedia page on log-rank</a> notes that &#8220;If censored observations are not present in the data then the Wilcoxon rank sum test is appropriate&#8221; and the <a title="Wilcoxon rank sum test" href="http://en.wikipedia.org/wiki/Wilcoxon_rank_sum_test">Wilcoxon rank sum test page</a> in turn provides <a href="http://en.wikipedia.org/wiki/Wilcoxon_rank_sum_test#Comparison_to_Student.27s_t-test">a comparison to the t test</a> which basically says that a t test is slightly more powerful when its assumptions are met (normality, equal variance) but that the Wilcoxon rank sum test is useful to reduce sensitivity to outliers or when data are originally ordinal-level.</p>
+<p>For now at least, my current thinking is &#8220;use t test if it&#8217;s appropriate, and if it&#8217;s not, then use the log-rank test&#8221;.  But the reading I&#8217;ve done and the examples I&#8217;ve worked through above don&#8217;t give a super clear answer, and I&#8217;m open to being convinced otherwise.  In <a title="Power analysis for mouse studies using the t test vs. log-rank test" href="/2012/11/30/power-analysis-for-mouse-studies-using-the-t-test-vs-log-rank-test/">my next post</a> I&#8217;ll argue that the t test is actually the more appropriate test to assume for power calculations, even if you end up doing a log-rank test once you have the data.</p>
+<p>Addendum: <code>survdiff</code> is an asymptotic log-rank test; there are instructions for doing an exact log-rank test using <code>surv_test</code> in the R <code>coin</code> package <a href="http://cran.r-project.org/web/packages/HSAUR/vignettes/Ch_survival_analysis.pdf">here</a>.</p>

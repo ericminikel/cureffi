@@ -1,0 +1,82 @@
+---
+layout: post
+title: "Cell Biology 08: Cell Cycle Regulation and Checkpoints"
+author: ericminikel
+date: 2013-04-06 17:17:32
+---
+<p>These are notes from lecture 8 of <a href="http://www.extension.harvard.edu/courses/22958">Harvard Extension’s Cell Biology course</a>.</p>
+<p><a title="Cell Biology 07: Microtubules and Cell Division" href="/2013/03/30/cell-biology-07-microtubules-and-cell-division/">Lecture 7</a> introduced the cell cycle and the role of microtubules therein.  This lecture will discuss the regulatory mechanisms and biochemical checkpoints throughout the cell cycle.  Disclaimer: these notes are not my finest work &#8211; a lot of this is just a collection of random facts.</p>
+<p><strong>cyclins and cyclin-dependent kinases (CDKs)</strong></p>
+<p><a href="http://en.wikipedia.org/wiki/Cyclin-dependent_kinase">CDK</a>s are important master regulators of the cell cycle.  Their role is to phosphorylate proteins on either S or T amino acids and thereby regulate the activity of those proteins.  Yeast have just one CDK (Cdk1), while &#8216;metazoans&#8217; (animals) like us have nine, of which four are really critical to the cell cycle and will be introduced today.</p>
+<p>How are the CDKs themselves regulated?  The levels of these proteins remain pretty constant throughout the cell cycle, yet their levels of <em>activity</em> rise and fall cyclically.    CDKs need to hydrolize ATP for energy in order to perform phosphorylation.  They have an ATP binding cleft whose ability to bind ATP is regulated by two mechanisms.  First, CDKs have a &#8216;flexible T loop&#8217; which contains a threonine (T) residue which normally blocks the ATP binding cleft, but not when the T is phosphorylated.  Second, <a href="http://en.wikipedia.org/wiki/Cyclin">cyclins</a> bind CDKs and induce a conformational change that also helps to expose the ATP binding cleft.  Therefore a fully active CDK is one which is both phosphorylated at the T on the T loop <em>and </em>is bound to a cyclin.</p>
+<p>The various activities of the cell cycle, then, are determined by the combination of cyclins and CDKs that are active at each stage, as shown in the following table:</p>
+<p><table style="width:100%; " class="easy-table easy-table-default " border="0">
+<thead>
+<tr><th>cell cycle stage</th>
+<th>cyclins</th>
+<th>CDKs</th>
+<th>comments</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>G1</td>
+<td>Cyclin D</td>
+<td>CDK4&amp;6</td>
+<td>Can react to outside signals such as growth factors or mitogens.</td>
+</tr>
+
+<tr><td>G1/S</td>
+<td>Cyclins E &amp; A</td>
+<td>CDK2</td>
+<td>Regulate centrosome duplication; important for reaching START</td>
+</tr>
+
+<tr><td>S</td>
+<td>Cyclins E &amp; A</td>
+<td>CDK2</td>
+<td>Targets are helicases and polymerases</td>
+</tr>
+
+<tr><td>M</td>
+<td>Cyclins A &amp; B</td>
+<td>CDK1</td>
+<td>Regulate G2/M checkpoint.  The cyclins are synthesized during S but not active until synthesis is complete.  Phosphorylate lots of downstream targets.</td>
+</tr>
+</tbody></table></p>
+<p>All cyclins contain a conserved 100 amino acid &#8216;<a href="http://en.wikipedia.org/wiki/Cyclin#Domain_structure">cyclin box</a>.&#8217;  Cyclin/CDK complexes regulate the cell cycle both by promoting activites for their respective stages, and by inhibiting activites for future cell cycle stages that must not yet be reached.  Therefore cyclins must be able to be both generated <em>and </em>degraded in order for the cell cycle to proceed.</p>
+<p><a href="http://www.wikilectures.eu/index.php/The_Cell_Cycle"><img class="alignnone size-full wp-image-1958" title="cyclin-expression-through-the-cell-cycle-medium" src="/wp-content/uploads/2013/04/cyclin-expression-through-the-cell-cycle-medium.png"/></a></p>
+<p>Antibodies against Cyclin D inhibit entry into the S phase, which can be measured by whether BrdU (a fluorescent nucleotide analog) gets incorporated into DNA (which only happens during synthesis).</p>
+<p>DNA replication starts at &#8216;prereplication complexes&#8217; that get assembled at <a href="http://en.wikipedia.org/wiki/Origin_of_replication"><em>origins of replication</em></a> during early G1 phase.  The S-phase cyclin/CDK complexes phosphorylate these complexes and thereby trigger replication starting from these &#8216;origins&#8217;.</p>
+<p>Here is a bit more about how the CDKs are regulated through phosphorylation.  A <a href="http://en.wikipedia.org/wiki/CDK-activating_kinase">CDK-activating kinase</a> (CAK; a trimeric complex composed of CDK-7, Cyclin H and Mat1) phosphorylates amino acid T160 in CDK, located at the T loop, thereby <em>activating</em> CDK.  CDKs are also regulated by CDK inhibitors <a href="http://en.wikipedia.org/wiki/CDKN1B">p27</a> (CDKN1B gene), <a href="http://en.wikipedia.org/wiki/P21">p21</a> (CDKN1A gene) and <a href="http://en.wikipedia.org/wiki/P57_(gene)">p57</a> (CDKN1C gene), which bind to and inhibit both of the G1 CDKs (CDK4 &amp; CDK6).  p27 does this by physically blocking the cyclin/CDK complex&#8217;s interaction with its targets.  <a href="http://en.wikipedia.org/wiki/CDKN2B">p15</a> (CDKN2B gene) and <a href="http://en.wikipedia.org/wiki/P16_(gene)">p16</a> (CDKN2A gene) are both <a href="http://en.wikipedia.org/wiki/Ink4">Ink4</a>s (&#8220;inhibitors of kinase 4&#8243;, though they also inhibit CDK6) control the mid G1 phase by binding to CDK4 and CDK6 and blocking their binding to cyclin D.  This results in decreased phosphorylation of target proteins.  Overexpression of p16 arrests the cell cycle by inhibiting CDK4/Cyclin D during early G1.</p>
+<p>Another inhibitor called <a href="http://en.wikipedia.org/wiki/Retinoblastoma_protein">Rb</a> prevents entry into the S phase by binding to <a href="http://en.wikipedia.org/wiki/E2F">E2F</a> transcription factors.  E2Fs are transcriptional activators when they act alone but repressors when bound to Rb.  The mid-G1 cyclin/CDK complexes partially phosphorylate Rb, reducing its binding to E2Fs; the late G1 complex of CDK2/Cyclin E completely phsophorylates it, preventing its binding to E2F.  E2Fs can then act as transcriptional activators for genes needed in the S phase.</p>
+<p>S-phase cyclin/CDK complexes accumulate in late G1, but are still bound to an inhibitor called <a href="http://en.wikipedia.org/wiki/Sic1">Sic1</a>.  But G1 CDK/cyclin complexes polyphosphorylate Sic1 at six sites.  When and only when all six sites are phosphorylated (which takes a while), Sic1 is released, whereupon it gets poly<a href="http://en.wikipedia.org/wiki/Ubiquitin#Ubiquitination_.28ubiquitylation.29">ubiquitinated</a> and therefore degraded by the <a href="http://en.wikipedia.org/wiki/Proteasome">proteasome</a>.  The S-phase cyclin/CDK complexes are then free to induce DNA replication.  This mechanism allows the cell to accumulate many of these complexes &#8216;ahead of time&#8217; (starting in G1) but then post-translationally activate them all at once in order to suddenly start massive-scale DNA replication in the S phase.</p>
+<p>Targeting of proteins such as <a href="http://en.wikipedia.org/wiki/Sic1">Sic1</a> to the proteasome is mediated by two complexes <a href="http://en.wikipedia.org/wiki/SCF_complex">SCF</a> (<span style="text-decoration: underline;">S</span>kp, <span style="text-decoration: underline;">C</span>ullin &amp; <span style="text-decoration: underline;">F</span>-Box) and <a href="http://en.wikipedia.org/wiki/Anaphase-promoting_complex">APC/C</a> (<span style="text-decoration: underline;">a</span>naphase <span style="text-decoration: underline;">p</span>romoting <span style="text-decoration: underline;">c</span>omplex / <span style="text-decoration: underline;">c</span>yclosome), each composed of ubiquitin and a <a href="http://en.wikipedia.org/wiki/Ubiquitin_ligase">protein ligase</a>.  These two control three major transiations in the cell cycle:</p>
+<ol>
+<li>the onset of S phase by degradation of Sic1</li>
+<li>beginning of anaphase by degradation of <a href="http://en.wikipedia.org/wiki/Securin">securin</a></li>
+<li>exit from mitosis by degradation of Cyclin B.</li>
+</ol>
+<p>APC/C  is composed of several proteins including but not limited to cullin (APC2), Ring (APC11) and SCF-like protein.  APC/C&#8217;s role is to ubiquitinate (add ubiquitin tags to) proteins, thus flagging them for degradation by the proteasome.  Cdc20 casues APC/C to polyubiquitinate the anaphase inhibitor securin in point (2) above.  Cdh1 causes APC/C to polyubiquitinate Cyclin B in point (3) above.  Cdh1 is itself regulated by phosphorylation &#8211; the G1/S cyclin/CDK complexes phosphorylate it, preventing it from acting too soon; Cdc14 then later activates Cdh1.</p>
+<p>SCF has no binding partner &#8211; rather, its ability to ubiquitinate targets (substrates) is determined by the latter&#8217;s phosphorylation state.   SCF is active throughout the cell cycle; the cell regulates its activity by regulating the phosphorylation of SCF&#8217;s targets.  An example is Sic1 (above).</p>
+<p><a href="http://en.wikipedia.org/wiki/Maturation_promoting_factor">MPF</a> (<span style="text-decoration: underline;">M</span>aturation or <span style="text-decoration: underline;">M</span>itosis <span style="text-decoration: underline;">P</span>romoting <span style="text-decoration: underline;">F</span>actor depending on who you ask) is a fancy word for the cyclin B / CDK1 complex, which is active in the M phase &#8211; actually, required in order for entry to the M phase.  Here&#8217;s how MPF itself is regulated.  CDK1 has two phosphorylation sites (in vertebrates; only one in yeast) at amino acids Y15 and T161.  In animals, phosphorylation of Y15 is inhibitory, while phosphorylation of T161 is activating.  The cyclin/CDK2 complex begins its life wholly unphosphorylated (thus inactive), then <a href="http://en.wikipedia.org/wiki/Wee1">Wee1</a> phosphorylates Y15, CAK then phosphorylates T161 too, then finally <a href="http://en.wikipedia.org/wiki/Cdc25">Cdc25</a> removes the Y15 phosphorylation, allowing the complex to be active (about 100x more activity than with neither site phosphorylated).  Cdc25 overexpression results in premature removal of this Y15 phosphorylation so that the cell enters the M phase before it has had enough time to grow during the G2 phase.  This results in &#8216;wee cells&#8217; which are literally small because the cell growth was inhibited, so that the daughter cells after mitosis are smaller than the mother cell was.  (Hence the name Wee1, which is of course backwards since Wee1 acts <em>against</em> the &#8216;wee cell&#8217; phenotype).</p>
+<p>Once a cell passes the restriction point (R) in late G1, it is committed to passing through the S phase.</p>
+<p>Many cancers involve a loss of p16 leading to cyclin D1 overexpression.  Other cancers (esp. late onset cancers &#8211; breast, lung, bladder) often have hyperphosphorylation of Rb leading to release of E2F to promote the cell cycle.  This hyperphosphorylation can be caused by loss or &#8216;misexpression&#8217; of one or more things (p16,&#8230;?)</p>
+<p><strong>regulatory steps in the cell cycle</strong></p>
+<p>Here is an overview of what are considered to be the 9 fundamental steps of cell cycle regulation.  <em><strong>Cell starts in phase G0 or G1.</strong></em></p>
+<ol>
+<li>DNA replication machinery begins to assemble at <a href="http://en.wikipedia.org/wiki/Origin_of_replication"><em>origins of replication</em></a></li>
+<li>G1 cyclin-CDK complexes inactivate Cdh1</li>
+<li>G1 cyclin-CDK complexes activate the S-phase cyclin-CDK expression</li>
+<li>G1 cyclin-CDK complexes phosphorylate and thereby inactivate S-phase inhibitor(s?)</li>
+<li>SCF polyubiquitinates the phosphorylated S-phase inhibitor, targeting it for proteasome degradation. <em><strong>Cell enters S phase.</strong></em></li>
+<li>S-phase cyclin/CDK activates the preplication complexes that began to assemble in step 1.  <em><strong>S phase and G2 phase happen.</strong></em></li>
+<li>Cdc25 phosphatase activates M-phase cyclin/CDKs.  <em><strong>Cell enters M phase and gets to metaphase.</strong></em></li>
+<li>APC/C and Cdc20 target securin for proteasomal degradation.  <strong><em>Cell advances from metaphase to anaphase.</em></strong></li>
+<li>CdcA phosphatase activates Cdh1, making it possible for APC/C and Cdh1 to target the M-phase cyclins for proteasomal degradation.  <strong><em>Cell returns from M phase to G0 or G1 phase.</em></strong></li>
+</ol>
+<p>Step 7 relies on a mechanism to recognize unreplicated DNA and stalled replication forks in order to ensure that mitosis does not proceed before all DNA has been replicated.  Two proteins are involved in this mechanism: ATR and Chk1 (pronounced &#8216;check one&#8217;).  Both are protein kinases that &#8216;sense&#8217; the state of DNA.  ATR is located at the replication fork and activates other protein kinases, leading to phosphorylation and therefore activation of Chk1 which is also a kinase.  Chk1 then phosphorylates and <em>in</em>activates Cdc25, which would otherwise activate MPF.  ATR thus continues to prevent M phase entry until replication is complete (= when replication forks are gone?).</p>
+<p>Step 8 involves an even more complicated mechanism called the <a href="http://en.wikipedia.org/wiki/Spindle_checkpoint">mitotic spindle assembly checkpoint</a> which prevents entry into anaphase until each and every kinetochore is attached to a microtubule.  Sister chromatids are held together at the centromeres by a multi-protein complex called<em> </em><a href="http://en.wikipedia.org/wiki/Cohesin">cohesin</a> (composed of smc1, smc3 and kleisin).  <a href="http://en.wikipedia.org/wiki/Separase">Separase</a> is an enzyme that cleaves <del>part of cohesin</del> <strong>kleisin</strong>, physically releasing the chromatids.  Securin inhibits separase to prevent separation of the chromatids.  Once all kinetochores are attached, securin is targeted for degradation, thus freeing separase from inhibition and causing entry into anaphase.  The mechanism for &#8216;knowing&#8217; when to target securin for degradation is the really complicated part.  It involves Mad1, Mad2, Cdc20, APC/C.  Mad2 can have an &#8216;open&#8217; or &#8216;closed&#8217; conformation.  &#8217;closed&#8217; Mad2 inactivates Cdc20, thus preventing its association with APC/C.  This pretty Wikimedia commons graphic by Dawn08 gives some sense of how complicated it all is:</p>
+<p><a href="http://en.wikipedia.org/wiki/Spindle_checkpoint"><img class="alignnone size-full wp-image-1947" title="640px-Spindle_checkpoint_vertebrates_-_en" src="/wp-content/uploads/2013/04/640px-Spindle_checkpoint_vertebrates_-_en.png"/></a></p>
+<p>Proper segregation of the daughter chromosomes is monitored by the &#8216;mitotic exit network&#8217;.  At this stage, MPF is inactviated, Cdh1 is dephosphorylated, and the cell can enter telophase.</p>
+<p>There is also a &#8216;spindle position checkpoint&#8217;.  In yeast, Tem1 becomes associated with the spindle pole body at the centrosome.</p>
+<p>&#8216;DNA damage checkpoints&#8217; detect whether DNA has been damaged (e.g. by UV light, chemicals, etc.).  The cell cycle arrests in G1 or S, preventing the copying of damaged bases until they can be repaired.  Arrest in G2 allows double-stranded breaks to be repaired before mitosis.  Tumor suppressor genes are important in preventing replication of damaged DNA.  Cells can sense UV or gamma radiation damage through a protein called ATM/R.  ATM/R phosphorylates and activates Chk2, which then phosphorylates Cdc25, marking it for degradation.  ATM/R also stabilizes the tumor suppressor <a href="http://en.wikipedia.org/wiki/P53">p53</a> (gene: TP53), which is a transcription factor that activates p21, which (inhibits the G1 CDKs? and) arrests the cell cycle in G1.  p53 undergoes loss-of-function mutations in perhaps 50% of cancers, and many of the mutations are dominant negative so only one allele need be mutated.  Mdm2 also regulates p53, and ATM/R prevents Mdm2&#8242;s binding to p53.  p53 is regulated by multiple means, and also has multiple roles in promoting DNA repair, cell cycle arrest, and apoptosis.</p>

@@ -1,0 +1,103 @@
+---
+layout: post
+title: "Study design for therapeutic trials in FFI and E200K mice"
+author: ericminikel
+date: 2013-09-08 15:01:19
+---
+<p><strong>introduction</strong></p>
+<p>Yesterday I connected with <a href="http://www.montana.edu/mri/carlson.html">George Carlson</a> at McLaughlin Research Institute to discuss what a study design could look like for therapeutic trials in two <a href="http://www.prionalliance.org/2013/08/23/ffi-and-e200k-mice-arrive-in-u-s/">newly arrived</a> knock-in mouse models of fatal familial insomnia (FFI) and E200K Creutzfeldt-Jakob Disease (CJD) [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2775465/">Jackson 2009</a>, <a href="http://www.ncbi.nlm.nih.gov/pubmed/23959875">Jackson 2013</a>].  This post will discuss considerations for therapeutic trials in these mouse models, focusing on the FFI  mice because they are better characterized.</p>
+<p><strong>motivation for study</strong></p>
+<p>One of our <a href="http://www.prionalliance.org/research/">research goals</a> at Prion Alliance is to take compounds that have shown efficacy against prions <em>in vivo</em> and validate them in models of genetic prion disease.  The same <em>PRNP</em> mutations that cause genetic prion disease in humans are capable of causing spontaneous prion disease with strikingly similar phenotypic and biochemical properties in mice [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2775465/">Jackson 2009</a>, <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2749997/">Yang 2009</a>, <a href="http://www.ncbi.nlm.nih.gov/pubmed/23959875">Jackson 2013</a>].  We believe this is a clue that these mutations give rise to accurate models of the human disease.  This is important because many anti-prion compounds prove to be strain-specific, and there are now two recent examples of compounds that worked against RML prions but not against human sCJD prions: <a title="2-aminothiazoles: exciting progress and lessons for the field" href="/2013/06/01/2-aminothiazoles-exciting-progress-and-lessons-for-the-field/">2-aminothiazoles</a> and cpd-B [<a href="http://www.ncbi.nlm.nih.gov/pubmed/23965382">Lu &amp; Giles 2013</a> (<a href="http://jpet.aspetjournals.org/content/early/2013/08/21/jpet.113.205799.long">ft</a>)].  Moreover, while as argued <a href="/2013/04/26/translating-timepoints-from-mouse-trials-into-human-clinical-trials/">here</a>, early treatment of prion-infected mice is not an accurate model of therapeutic scenarios for sporadic prion diseases, early treatment of genetic mouse models may be a realistic scenario for prophylactic treatment of asymptomatic human carriers.</p>
+<p><strong>phenotypic readout</strong></p>
+<p>The FFI and E200K mice are currently being crossed to <a href="http://jaxmice.jax.org/strain/009638.html">Tg(GFAP-luc) mice</a> [<a href="http://www.ncbi.nlm.nih.gov/pubmed/15331155">Zhu 2004</a>] which express luciferase under the GFAP promoter, allowing live animal imaging of GFAP upregulation, a marker of astrocytosis and therefore of disease stress in the brain.  The increase in bioluminescence is an accurate proxy for prion replication in the brain [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2736416/">Tamguney 2009</a>] and has recently been validated as a proxy for the therapeutic efficacy of an antiprion small molecule, cpd-B [<a href="http://www.ncbi.nlm.nih.gov/pubmed/23965382">Lu &amp; Giles 2013</a> (<a href="http://jpet.aspetjournals.org/content/early/2013/08/21/jpet.113.205799.long">ft</a>)].</p>
+<p>Bioluminescence imaging (BLI) is important as a readout for the FFI mice because, unlike some other models of prion disease, most do not develop terminal illness.  They do have progressive symptoms of temperature dysregulation, sleep disruption, neuronal loss in the thalamus and astrocytosis, consistent with human FFI [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2775465/">Jackson 2009</a>] but many of these phenotypes are difficult or labor-intensive to monitor, or cannot be assessed on an ongoing basis while the mice are alive.</p>
+<p><strong>variability</strong></p>
+<p>Because these knock-in lines have not been used for therapeutic studies before, the distribution of times to endpoints is not well-established. As a guideline, Walker Jackson provided us with <a href="https://docs.google.com/spreadsheet/ccc?key=0AhObyChB_2VXdHJpMWVudjBWM29pRndha1dUSTQ1ckE&amp;usp=sharing">these notes</a> on histopathology in several of the mice.  Mice were examined at timepoints ranging from 13 to 19 months and all had at least some degree of gliosis in the thalamus (though two are labeled as &#8220;mild&#8221; or &#8220;little&#8221;), and many also had it in the cerebellum.  He also stated that all the mice examined prior to 12 months had been negative.</p>
+<p>Because the notes don&#8217;t form a systematic time series of data points, it is difficult to estimate the range of ages of onset of gliosis in these mice.  However, if it&#8217;s true that all prior to 12 months are negative and all after 14 months are positive, then the standard deviation can be no greater than one month because, given a fixed range of data, variance is maximized when a distribution is perfectly bimodal at the min and max, i.e. all 12s and 14s:</p>
+<pre>sd(c(rep(12,1000),rep(14,1000)))
+[1] 1.00025</pre>
+<p>In practice, the variance might well be greater than that, for two reasons. First, we do not yet know what <em>degree</em> of gliosis will be required in order to show up in BLI. Second, mice used in therapeutic studies will be on an impure genetic background.  Tg(GFAP-luc) mice are maintained on an FVB/N background and the FFI mice are currently on a 129 background (mixed 129/S4 and 129/S2).  After crossing these two lines and then re-crossing to obtain homozygotes, the offspring will be F2s with ~50% FVB/N and ~50% 129 background.  That will increase variability compared to using pure inbred mouse lines.  The FFI knock-in gene causes later, milder phenotypes in Black 6 mice than in 129 mice [Walker Jackson, personal communication] and we can&#8217;t predict what the effect in FVB/N will be.  On the plus side, one advantage of the mixed background is that it will help to show that any therapeutic effects are not limited to one strain of mice.</p>
+<p><strong>power calculations</strong></p>
+<p>I will use the t test for these power calculations, <a title="Power analysis for mouse studies using the t test vs. log-rank test" href="/2012/11/30/power-analysis-for-mouse-studies-using-the-t-test-vs-log-rank-test/">as I&#8217;ve argued is appropriate</a>.  If we assume for a moment that the onset times are normally distributed with a mean of 13 months and a standard deviation of 1 month, a study with n = 15 mice per group would be 80% powered at p &lt; .05 to detect a delay in onset of at least 8% (~1 month) in the treated group:</p>
+<pre>&gt; power.t.test(n=15,delta=NULL,sd=30/395,power=.8,sig.level=.05)
+Two-sample t test power calculation
+ n = 15
+ delta = 0.08048967
+ sd = 0.07594937
+ sig.level = 0.05
+ power = 0.8
+ alternative = two.sided
+NOTE: n is number in *each* group</pre>
+<p>That&#8217;s not a ton of power for, say, <a title="A comparison of statin studies in scrapie-infected mice" href="/2013/05/24/a-comparison-of-statin-studies-in-scrapie-infected-mice/">statins</a>, which have been observed to have an effect size of 5-12%, but it&#8217;s quite ample for anle138b, which nearly doubled survival time when given at 0 dpi and extended survival by 30% even when given at <a title="Timepoint-delay plots for comparing prion therapeutics tested in vivo" href="/2013/06/11/timepoint-delay-plots-for-comparing-prion-therapeutics-tested-in-vivo/">timepoint</a> ~0.66 (see <a title="anle138b: the new most promising experimental compound for treating prion diseases" href="/2013/04/26/anle138b-the-new-most-promising-experimental-compound-for-treating-prion-diseases/">anle138b post</a>).</p>
+<p>Indeed, even if my back-of-the-envelope above is wrong and the standard deviation in the FFI mice is much larger &#8211; say, 90 days &#8211; we&#8217;d still have 80% power for at least a 24% delay in onset:</p>
+<pre>&gt; power.t.test(n=15,delta=NULL,sd=90/395,power=.8,sig.level=.05)
+
+     Two-sample t test power calculation 
+
+              n = 15
+          delta = 0.241469
+             sd = 0.2278481
+      sig.level = 0.05
+          power = 0.8
+    alternative = two.sided
+
+ NOTE: n is number in *each* group</pre>
+<p>And thus still be amply powered (~93% at p &lt; .05) for a 30% delay, let alone a larger delay.</p>
+<p>So far I haven&#8217;t modeled here the fact that mice are only observed at regular intervals for BLI and so the <em>exact</em> date of onset is not known.  This turns out to matter surprisingly little, as I&#8217;ll show in <a title="Statistical power for bioluminescence studies" href="/2013/09/10/statistical-power-for-bioluminescence-studies/">my next post</a>.  In the meantime, <a href="/wp-content/uploads/2013/09/ffi-mice-power-simulation.r.txt">here is an R script</a> that does take this into account, assumes weekly imaging sessions and simulates power for this study as a function of the standard deviation of onset in the FFI mice, with four curves for different hypothetical effect sizes: 10%, 30%, 44% and 97% delay in onset (the latter three values are based on results for <a href="/2013/04/26/anle138b-the-new-most-promising-experimental-compound-for-treating-prion-diseases/">anle138b against RML</a>).  The script produces this plot:</p>
+<p><a href="/wp-content/uploads/2013/09/ffi.mice_.power_.curves.png"><img class="alignnone size-full wp-image-2854" alt="ffi.mice.power.curves" src="/wp-content/uploads/2013/09/ffi.mice_.power_.curves.png"/></a></p>
+<p>Which illustrates how the study would not be well-powered to detect an effect size of just 10% unless the variance in age of onset is on the low end of what we think it might be.  But for a 30% delay (the second curve from bottom) there is a good amount of power until you get to about 90 days standard deviation.  For a 97% delay (the top curve), you&#8217;re basically guaranteed to see a significant result no matter how large the variance.  This plot goes up to a standard deviation of 150 days, which is certainly more than the true value, since a normal distribution with that much variance would imply many mice with ages of onset below zero or beyond the lifetime of mice; even a uniform distribution from 6 months to 18 months would give a standard deviation of only 100 days.</p>
+<p><strong>cost structure</strong></p>
+<p><a href="https://docs.google.com/spreadsheet/ccc?key=0AhObyChB_2VXdHJaZ09leFpwUHQ0dG95SkllcHFjenc&amp;usp=sharing">Here is the full spreadsheet</a> summarizing the cost structure that Dr. Carlson described. We assumed the following parameters:</p>
+<ul>
+<li>n = 15 mice per group</li>
+<li>2 genotypes (FFI and E200K)</li>
+<li>2 groups per genotype (treated from weaning and untreated control)</li>
+<li>Study duration 1.5 years</li>
+<li>BLI beginning at 6 months and lasting for one year.</li>
+</ul>
+<p>Below is a broad summary of costs for this scenario assuming weekly BLI monitoring.</p>
+<p><table style="width:100%; " class="easy-table easy-table-default " border="0">
+<thead>
+<tr><th>item</th>
+<th>cost</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Cage space</td>
+<td>$2,500</td>
+</tr>
+
+<tr><td>Food</td>
+<td>$3,100</td>
+</tr>
+
+<tr><td>Luciferin</td>
+<td>$9,400</td>
+</tr>
+
+<tr><td>Labor</td>
+<td>$5,200</td>
+</tr>
+
+<tr><td>Indirect</td>
+<td>$14,100</td>
+</tr>
+
+<tr><td>TOTAL</td>
+<td>$34,300</td>
+</tr>
+</tbody></table></p>
+<p>Note that this is for one hypothetical study design.  <strong>Update: we&#8217;ve now announced a <a href="/2013/09/16/revised-budget-for-studies-of-anle138b-in-ffi-and-e200k-mice/">revised budget</a> for which we will be fundraising through Prion Alliance.</strong></p>
+<p>I was surprised to learn that <a href="http://en.wikipedia.org/wiki/Firefly_luciferin">luciferin</a> ends up being so expensive.  Luciferin is the small molecule that luciferase breaks down in order to release light.  Every time the mice are imaged, they need to be injected with 1.5 mg of luciferin (&#8220;50 μl of 30 mg/ml D-luciferin potassium salt solution&#8221; [<a href="http://www.ncbi.nlm.nih.gov/pubmed/23965382">Lu &amp; Giles 2013</a> (<a href="http://jpet.aspetjournals.org/content/early/2013/08/21/jpet.113.205799.long">ft</a>)]) <del>at a cost of about $3 each.  Times 60 mice times weekly imaging sessions for a year, this ends up being the largest direct cost.</del> <strong>see <a href="/2013/09/16/revised-budget-for-studies-of-anle138b-in-ffi-and-e200k-mice/">update</a></strong></p>
+<p>Of note, 100% of costs are directly proportional to the number of mice, and &gt; 80% of costs (luciferin, labor and indirect) end up being proportional to the total number of BLI sessions, i.e. to the frequency with which mice are monitored by BLI.  Therefore while it&#8217;s important not to have an underpowered study, it&#8217;s also important not to have an overpowered study, as the costs could be reduced considerably by having fewer mice and/or monitoring them less frequently.  Therefore <a title="Statistical power for bioluminescence studies" href="/2013/09/10/statistical-power-for-bioluminescence-studies/">my next post</a> will address the issue of statistical power in BLI studies and will argue that reducing the frequency of imaging sessions can reduce costs considerably with virtually no loss of statistical power.</p>
+<p>Note that we have not included costs for drugs, as we are presently discussing a trial of <a href="/2013/04/26/anle138b-the-new-most-promising-experimental-compound-for-treating-prion-diseases/">anle138b</a> as a follow-up to <a href="https://www.microryza.com/projects/can-anle138b-delay-the-onset-of-genetic-prion-disease">our current trial of this compound in GSS mice</a>.  Dr. Armin Giese and Dr. Christian Griesinger have offered to provide this test compound for free a second time.</p>
+<p><strong>risks and tradeoffs</strong></p>
+<p>A major risk of launching a therapeutic study immediately is the possibility of an uninterpretable result.  Because we have not yet seen how gliosis presents on BLI in FFI knock-in mice, it is possible that the signal will be too weak to detect or will come much later than expected.  Because we do not yet have hard data on the distribution of times of onset in FFI mice, the variance may be greater than expected, and thus the statistical power of a study less than expected (though as I&#8217;ll show shortly this is not much of a concern for reasonable effect sizes).</p>
+<p>The safest way to proceed towards therapeutic trials in these mouse models would be to backcross the Tg(GFAP-luc) transgene onto 129 background.  To obtain (1-.5<sup>6</sup>) = ~98% purity would require 6 backcrosses, at ~2.5 months each, thus 15 months.  A pilot study of 10-15 mice would also need to be monitored until at least 14 months, possibly longer, using BLI in order to establish the distribution of ages of onset of gliosis in order to perform power calculations for therapeutic studies.  This pilot study could be conducted concurrently with the backcrossing, using mixed FVB/N / 129 mice, or ideally would be conducted afterward using the &gt; 98% 129 mice.</p>
+<p>All of that would delay the start of therapeutic trials by ~15 &#8211; 30 months. In addition, it would cost more than half as much as a therapeutic study itself, since the BLI pilot study would essentially consist of monitoring only control groups and no treated groups (thus ~half the cost) and the six-generation backcrossing of mice would consume additional space and resources.</p>
+<p>For these reasons, Dr. Carlson observed that, counterintuitively, it might actually be a more efficient use of time and money to start therapeutic trials immediately.  I call this counterintuitive because to proceed with a preclinical trial when you can&#8217;t yet do a firm power calculation or be certain you&#8217;ve got a viable phenotypic readout seems rash on first glance.</p>
+<p>But on closer look, it may actually be the most cost effective option.  Suppose doing pilot study would cost about 0.5x the cost of a therapeutic study, as I&#8217;ve argued above.  The two outcomes are <em>yes</em> it works, now let&#8217;s do a therapeutic study for 1.0x (total cost: 1.5x) or <em>no</em> it doesn&#8217;t work, back to the drawing board (total cost: 0.5x).  If you go straight to a therapeutic trial and <em>yes </em>the study design works, great (total cost: 1.0x) and if <em>no </em>it doesn&#8217;t, too bad (total cost: 1.0x).  So if you believe that the probability of <em>yes</em> is &gt; 50%, then it&#8217;s actually <em>more</em> cost-effective to do the therapeutic trial right away, even if you don&#8217;t value calender time at all.  And we do value calendar time: a therapeutic trial could start in early 2014 and give results by mid-2015, while doing a pilot study first would mean no therapeutic results until at least the end of 2016.</p>
+<p><strong>conclusions</strong></p>
+<p>Based on our discussions, launching therapeutic trials of anle138b in FFI and E200K knock-in mice in early 2014 seems feasible.  While a study with a reasonable number of mice (say, 15 per group) would not be well-powered for drugs of small effect size, it should be adequate for the magnitude of effect size (&gt; 30%) shown previously for anle138b [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3661926/">Wagner 2013</a>].</p>
+<p>The greatest risk of such a study is the possibility of an uninterpretable result if the phenotype in control mice proves difficult to assess by BLI due to too low a level of luminescence or too late or variable an onset of gliosis on the mixed genetic background of 129 and FVB/N.  However, conducting a pilot study first to rule out these risks would be costly itself, and would delay the start of trials by probably a year and a half.  Overall, this study would be more risky than <a href="https://www.microryza.com/projects/can-anle138b-delay-the-onset-of-genetic-prion-disease">our current trial of anle138b in GSS mice</a>, but still looks like a fairly sensible option given our commitment to launching trials in these mouse models eventually.</p>
+<p>The biggest issue will be the cost, which according to the parameters assumed above would be considerably more than the current GSS trial, particularly when <a href="http://grants.nih.gov/grants/policy/nihgps_2012/nihgps_ch7.htm">NIH-fundable indirect costs</a> of 70% are included.  However, because the number of imaging sessions is a major cost driver, reducing the frequency of imaging may be able to reduce costs considerably.  My <a title="Statistical power for bioluminescence studies" href="/2013/09/10/statistical-power-for-bioluminescence-studies/">next post</a> will tackle the question of how this would affect statistical power.</p>

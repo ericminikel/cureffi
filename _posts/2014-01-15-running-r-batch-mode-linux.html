@@ -1,0 +1,218 @@
+---
+layout: post
+title: "Running R in batch mode on Linux"
+author: ericminikel
+date: 2014-01-15 14:09:53
+---
+<p>After spending my past year as more or less a solo computational scientist at the <a href="http://chgr.org/">Center for Human Genetic Research</a>, I&#8217;ve now started a new job with the research team at the <a href="http://www.macarthurlab.org/">Daniel MacArthur lab</a>. That means much bigger datasets and a need to be much more smart about programming.  Gone are the days of one-off scripts to be used for one dataset on one machine and then never used again. Here to stay are the days of the reusable, the modular, and the parallel.</p>
+<p>One part of this upgrade is a need to be doing most of my analysis in portable R scripts that can be run in parallel with command line arguments. So for instance, instead of the first line of the file being <code>file = read.table("myfile.txt")</code> the script needs to able to be run with <code>myscript.r --file myfile.txt</code>. This way another wrapper script can fire off hundreds of instances of the same script running on different input files.</p>
+<p>It turns out there are several things that need to be in place in order to start running R scripts in batch mode, and there are a few other people in my department who are just figuring out how to do this too, so I figure it&#8217;s worth sharing in a post.  This way, the people who know what they&#8217;re doing and know what I&#8217;m doing wrong can comment and improve too.</p>
+<p>FYI, I&#8217;m running Linux and using R 3.0.2:</p>
+<pre>$ uname -a
+Linux node1376 2.6.18-194.8.1.el5 #1 SMP Thu Jul 1 19:04:48 EDT 2010 x86_64 x86_64 x86_64 GNU/Linux
+$ which R
+/broad/software/free/Linux/redhat_5_x86_64/pkgs/r_3.0.2/bin/R
+$ which Rscript
+/broad/software/free/Linux/redhat_5_x86_64/pkgs/r_3.0.2/bin/Rscript</pre>
+<p><strong>1. use Rscript</strong></p>
+<p>First things first: the best program to run R scripts in batch mode is <code>Rscript</code>, which comes with R.  There is also <code>R CMD BATCH</code>, which I used to use, but apparently this is <a href="http://stackoverflow.com/questions/3412911/r-exe-rcmd-exe-rscript-exe-and-rterm-exe-whats-the-difference">no longer preferred</a>.  To give you an idea of the difference, let&#8217;s try the simplest possible example script:</p>
+<pre class="brush: r; title: ; notranslate" title="">
+print(&quot;hello world&quot;)
+</pre>
+<p>Save this script as helloworld.r and then try running it with either command:</p>
+<pre>
+$ Rscript helloworld.r
+[1] "hello world"
+$ R CMD BATCH helloworld.r
+$
+</pre>
+<p>Rscript prints its output to <code>stdout</code>, while it appears at first glance that <code>R CMD BATCH</code> has done nothing at all. In fact, <code>R CMD BATCH</code> has written its output to a file called <code>helloworld.r.Rout</code>, and that output includes both the commands and output, just like in interactive mode, along with some runtime stats:</p>
+<pre>
+> print("hello world")
+[1] "hello world"
+>
+> proc.time()
+   user  system elapsed
+  0.479   0.092   0.534
+</pre>
+<p>There might be someway to change this default output mode, but I&#8217;m not sure; either way, let&#8217;s use <code>Rscript</code> instead.</p>
+<p><strong>2. run Rscript with a shebang</strong></p>
+<p>If you tried following along with the above example and it didn&#8217;t work (despite having R installed), it might be because you don&#8217;t have R loaded, which can be done with <code>use</code>:</p>
+<pre class="brush: bash; title: ; notranslate" title="">
+use R-3.0
+</pre>
+<p>I have the above line of code in my <code>~/.my.bashrc</code> file which is executed each time I log into the cluster. </p>
+<p>Instead of typing <code>Rscript helloworld.r</code>, though, you can run the script itself as an executable by having the first line start with a <a href="http://en.wikipedia.org/wiki/Shebang_(Unix)">shebang</a>, which is <code>#!</code>, followed by the path to the place where Rscript is installed, so in my case:</p>
+<pre class="brush: r; title: ; notranslate" title="">
+#!/broad/software/free/Linux/redhat_5_x86_64/pkgs/r_3.0.2/bin/Rscript
+print(&quot;hello world&quot;)
+</pre>
+<p>But if you just try and run this, you&#8217;ll get a message like:</p>
+<pre>
+$ helloworld.r
+bash: helloworld.r: command not found
+</pre>
+<p>There are three (3) problems you need to fix to be able to do this trick:</p>
+<ol>
+<li>The path to Rscript listed in your shebang line needs to be in your <code>PATH</code> variable, which I accomplish by adding one line to my <code>~/.my.bashrc</code> script:
+<pre class="brush: bash; title: ; notranslate" title="">
+export PATH=$PATH:/broad/software/free/Linux/redhat_5_x86_64/pkgs/r_3.0.2/bin/
+</pre>
+</li>
+<li>Your program, <code>helloworld.r</code>, needs to be executable in terms of its permissions.  <code>chmod +x helloworld.r</code> will set just the executable permission bit, or you can set some combination of bits that works for your needs, like <code>chmod 755 helloworld.r</code>.
+</li>
+<li>The operating system needs to be able to find this executable file, so you either need to add <code>.</code> to your PATH as well (<a href="http://stackoverflow.com/a/3128182">not recommended</a>), or just call the script specifying the current directory, so <code>./helloworld.r</code> (recommended).
+</li>
+</ol>
+<p>With that fixed, let&#8217;s try again:</p>
+<pre>
+$ chmod +x helloworld.r
+$ ./helloworld.r
+[1] "hello world"
+</pre>
+<p>If you&#8217;re like me, you&#8217;ll find that 90% of the time you forget to type the <code>./</code>, so it&#8217;s worth a reminder that ctrl-a returns you to the beginning of the line so that you can fix this sort of thing without just pressing the back arrow for half your life.</p>
+<p><strong>3. use <a href="http://cran.r-project.org/web/packages/optparse/optparse.pdf">optparse</a> to read command line arguments</strong></p>
+<p>R has native capability to accept command line arguments using <code><a href="http://stat.ethz.ch/R-manual/R-devel/library/base/html/commandArgs.html">commandArgs</a></code> but if you want to do anything flexible (i.e. optional arguments), then you&#8217;ll find yourself reinventing a lot of wheels.  As helpfully explained <a href="http://stackoverflow.com/a/3434100">here</a>, there are three helpful R packages to choose from: <code><a href="http://cran.r-project.org/web/packages/getopt/index.html">getopt</a></code>, <code><a href="http://cran.r-project.org/web/packages/optparse/index.html">optparse</a></code> and <code><a href="http://cran.r-project.org/web/packages/argparse/index.html">argparse</a></code>.  I chose to use <a href="http://cran.r-project.org/web/packages/optparse/index.html">optparse</a> on the basis that (1) its dependencies are simple &#8211; doesn&#8217;t require Python; but (2) it works similarly to <a href="http://docs.python.org/2/library/optparse.html">optparse in Python</a>, so I figure I&#8217;ll be learning how to do this in two languages at once.</p>
+<p>The <a href="http://www.icesi.edu.co/CRAN/web/packages/optparse/vignettes/optparse.pdf">vignette</a> for <code>optparse</code> has an example script, but even after looking at that example, it took me a long time to figure out how to really use the package. I&#8217;m not sure if it&#8217;s a difference of R version or operating system, but the example in the vignette does things which just plum <em>don&#8217;t work</em> on my system.  In a moment I&#8217;ll walk through a simple example I cooked up that <em>does</em> work on my system. But first:</p>
+<p><strong>4. use <code>cat()</code> to write output</strong></p>
+<p>If you&#8217;ve only run R in interactive mode before, you now need to figure out how to write R&#8217;s output to a place where you can look at it after your script finishes running. As far as I can tell, there are three options for this, none of them (IMHO) perfect: <code><a href="http://stat.ethz.ch/R-manual/R-devel/library/base/html/cat.html">cat</a></code>, <code><a href="http://stat.ethz.ch/R-manual/R-devel/library/base/html/write.html">write</a></code>, and <code><a href="http://stat.ethz.ch/R-manual/R-devel/library/base/html/print.html">print</a></code>.</p>
+<p>What sucks about <code>print</code> is that there is <a href="http://stackoverflow.com/questions/3271939/how-can-i-suppress-the-line-numbers-output-using-r-cmd-batch">apparently</a> no way to have it <em>not</em> print numbers such as <code>[1]</code> in front of your output, e.g.:</p>
+<pre>
+> print("hello world")
+[1] "hello world"
+</pre>
+<p>For what it&#8217;s worth, you can turn off the quotes with <code>quote=FALSE</code>, and you can choose where the output goes using <code>file=stdout()</code> or <code>file=stderr()</code>:</p>
+<pre>
+> print("hello world",quote=FALSE,file=stderr())
+[1] hello world
+</pre>
+<p>Still, not being able to turn numbers off is a dealbreaker for me.</p>
+<p><code>write</code> is just a wrapper that adds line breaks (and not much else?) to <code>cat</code>. What sucks about both of them is that they can&#8217;t write any objects that are too complicated.  To wit:</p>
+<pre>
+> df = data.frame(a=c(1,2,3),b=c(4,5,6))
+> write(df)
+Error in cat(list(...), file, sep, fill, labels, append) : 
+  argument 1 (type 'list') cannot be handled by 'cat'
+</pre>
+<p>There are various <a href="http://stackoverflow.com/questions/11230957/alternative-to-print-and-cat">workarounds</a> for stuff like this, but what a pain.  Still, these <a href="http://stackoverflow.com/questions/3271939/how-can-i-suppress-the-line-numbers-output-using-r-cmd-batch">seem to be</a> the &#8220;correct&#8221; answer, and both <code>write</code> and <code>cat</code> are used in the <a href="http://www.icesi.edu.co/CRAN/web/packages/optparse/vignettes/optparse.pdf"><code>optparse</code> vignette</a>.  I guess the key is, only use them to output simple strings to the user. If you have a bunch of data to output, hopefully you&#8217;re using <a href="http://stat.ethz.ch/R-manual/R-devel/library/utils/html/write.table.html"><code>write.table</code></a> anyway.</p>
+<p><strong>example</strong></p>
+<p>Here&#8217;s a really simple example script demonstrating all of the above tricks:</p>
+<p><script src="https://gist.github.com/8428297.js"></script><noscript><pre><code class="language-r r">#!/broad/software/free/Linux/redhat_5_x86_64/pkgs/r_3.0.2/bin/Rscript
+
+# Eric Vallabh Minikel
+# CureFFI.org
+# 2014-01-14
+# example of how to use optparse in R scripts
+
+# usage: ./exampleRScript1.r -a thisisa -b hiagain
+#        ./exampleRScript1.r --avar thisisa --bvar hiagain
+
+suppressPackageStartupMessages(require(optparse)) # don't say &quot;Loading required package: optparse&quot;
+# manual: http://cran.r-project.org/web/packages/optparse/optparse.pdf
+# vignette: http://www.icesi.edu.co/CRAN/web/packages/optparse/vignettes/optparse.pdf
+
+option_list = list(
+  make_option(c(&quot;-a&quot;, &quot;--avar&quot;), action=&quot;store&quot;, default=NA, type='character',
+              help=&quot;just a variable named a&quot;),
+  make_option(c(&quot;-b&quot;, &quot;--bvar&quot;), action=&quot;store&quot;, default=NA, type='character',
+              help=&quot;just a variable named b&quot;),
+  make_option(c(&quot;-v&quot;, &quot;--verbose&quot;), action=&quot;store_true&quot;, default=TRUE,
+              help=&quot;Should the program print extra stuff out? [default %default]&quot;),
+  make_option(c(&quot;-q&quot;, &quot;--quiet&quot;), action=&quot;store_false&quot;, dest=&quot;verbose&quot;,
+              help=&quot;Make the program not be verbose.&quot;),
+  make_option(c(&quot;-c&quot;, &quot;--cvar&quot;), action=&quot;store&quot;, default=&quot;this is c&quot;,
+              help=&quot;a variable named c, with a default [default %default]&quot;)  
+)
+opt = parse_args(OptionParser(option_list=option_list))
+
+if (opt$v) {
+    # you can use either the long or short name
+    # so opt$a and opt$avar are the same.
+    cat(&quot;avar:\n&quot;)
+    cat(opt$avar)
+    cat(&quot;\n\na:\n&quot;)
+    cat(opt$a)
+    
+    # show the user what b and c are
+    cat(&quot;\n\nb:\n&quot;)
+    cat(opt$b)
+    cat(&quot;\n\nc:\n&quot;)
+    cat(opt$c)
+    cat(&quot;\n\n&quot;)
+    
+    # show the user the difference between cat, write and print
+    cat(&quot;cat(opt$c): \n&quot;)
+    cat(opt$c) # does NOT produce its own \n
+    cat(&quot;\n\nwrite(opt$c,file=stdout()): \n&quot;)
+    write(opt$c,file=stdout()) # does produce its own \n
+    cat(&quot;\n\nprint(opt$c,quote=FALSE): \n&quot;)
+    print(opt$c,quote=FALSE) # no way to remove [1] from in front of line. does produce its own \n.
+    cat(&quot;\n\n&quot;)
+}
+
+# main point of program is here, do this whether or not &quot;verbose&quot; is set
+if(!is.na(opt$avar) &amp; !is.na(opt$bvar)) {
+    cat(&quot;here are strings a and b together at last:\n&quot;)
+    cat(paste(opt$a,opt$b,sep=''))
+    cat(&quot;\n\n&quot;)
+} else {
+    cat(&quot;you didn't specify both variables a and b\n&quot;, file=stderr()) # print error messages to stderr
+}
+
+</code></pre></noscript></p>
+<p>And here&#8217;s one example of how I&#8217;d run it:</p>
+<pre class="brush: bash; title: ; notranslate" title="">
+chmod +x exampleRScript1.r
+./exampleRScript1.r -a thisisA -b thisisB
+</pre>
+<p>Now for a step-by-step walkthrough to show all the things that are tricky about this.  Indeed, part of what&#8217;s tricky here is that if you&#8217;re used to using R in interactive mode, you&#8217;re used to a really easy debugging process.  But when you&#8217;re learning out how to deal with command line parameters, you can only debug that by calling from the command line, at which point it gets harder because the program will finish and close before you can interrogate what went wrong.  (I suppose you could, in your script, save the workspace to a .Rdata file and then open that in interactive mode later to reconstruct the wreckage. If anyone knows a more ingenious solution let me know). Anyway, this took a while for me to figure out, so here are some tricky points.</p>
+<p>First, note the use of <code>default=NA</code> in this bit:</p>
+<pre class="brush: r; title: ; notranslate" title="">
+  make_option(c(&quot;-a&quot;, &quot;--avar&quot;), action=&quot;store&quot;, default=NA, type='character',
+              help=&quot;just a variable named a&quot;),
+</pre>
+<p>If you don&#8217;t assign a default, then if the user doesn&#8217;t specify that flag, the variable simply doesn&#8217;t exist.  This becomes a problem later. For example, you may want to only do X action if variable Y has been set by the user, and while R can do <code>exists("a")</code>, it <em>can&#8217;t</em> do <code>exists("opt$a")</code>, which is what you&#8217;d need since all of the user-set flags come through as elements of <code>opt</code> or whatever you want to name your variable in this line:</p>
+<pre class="brush: r; title: ; notranslate" title="">
+opt = parse_args(OptionParser(option_list=option_list))
+</pre>
+<p>Second, note the use of <code>type='character'</code> in the same section:</p>
+<pre class="brush: r; title: ; notranslate" title="">
+  make_option(c(&quot;-a&quot;, &quot;--avar&quot;), action=&quot;store&quot;, default=NA, type='character',
+              help=&quot;just a variable named a&quot;),
+</pre>
+<p>On my system, if I don&#8217;t specify the <code>type</code> of each argument, then R simply doesn&#8217;t see them <em>at all</em>.  So for instance, if you take the above script and comment out <code>type='character'</code>, and then run it as follows:</p>
+<pre class="brush: bash; title: ; notranslate" title="">
+$ ./exampleRScript1.r -a thisisa -b thisisb
+</pre>
+<p>Then <code>a</code> and <code>b</code> will both be <code>NA</code>. And <em>that&#8217;s</em> only because I set <code>default=NA</code>. If you <em>don&#8217;t</em> do that, then <code>a</code> and <code>b</code> will both be undefined.</p>
+<p>Third, the above problems can be especially difficult to debug if you&#8217;re also not sure whether you&#8217;re even calling the script with the correct syntax on the command line. On my system, I found that the only way that works is to use the flag (whether long or short), then a space, then the value of the variable. Just as above:</p>
+<pre class="brush: bash; title: ; notranslate" title="">
+$ ./exampleRScript1.r -a thisisa -b thisisb
+</pre>
+<p>In the <a href="http://www.icesi.edu.co/CRAN/web/packages/optparse/vignettes/optparse.pdf"><code>optparse</code> vignette</a>, it shows the use of the <code>=</code> sign, so <code>./exampleRScript1.r -a=thisisa</code>, suggesting that must work on someone&#8217;s system somewhere; but for me, using an equals sign brings this error upon my head:</p>
+<pre>
+Error in getopt(spec = spec, opt = args) :
+  short flag "a" requires an argument, but has none
+Calls: parse_args -> getopt
+Execution halted
+</pre>
+<p>Do note, however, that you can use quotes if your variable value has spaces in it, e.g.:</p>
+<pre class="brush: bash; title: ; notranslate" title="">
+$ ./exampleRScript1.r -a &quot;hello world&quot; -b thisisb
+</pre>
+<p>Fourth, note that once a command line parameter has been given, you are welcome to refer to it by its short or long name, so these two lines are identical:</p>
+<pre class="brush: r; title: ; notranslate" title="">
+cat(opt$avar)
+cat(opt$a)
+</pre>
+<p>Fifth, note the use of <code>dest="verbose"</code> below:</p>
+<pre class="brush: r; highlight: [3]; title: ; notranslate" title="">
+  make_option(c(&quot;-v&quot;, &quot;--verbose&quot;), action=&quot;store_true&quot;, default=TRUE,
+              help=&quot;Should the program print extra stuff out? [default %default]&quot;),
+  make_option(c(&quot;-q&quot;, &quot;--quiet&quot;), action=&quot;store_false&quot;, dest=&quot;verbose&quot;,
+              help=&quot;Make the program not be verbose.&quot;),
+</pre>
+<p>This allows <code>-q</code> to set the same variable as <code>-v</code> rather than setting a new variable <code>opt$q</code>.</p>
+<p>And sixth, if for some reason you&#8217;re using <code>R CMD BATCH</code> rather than <code>Rscript</code>, I suspect none of this <code>optparse</code> business will work for you at all. When I tried <code>R CMD BATCH exampleRScript1.r -a thisisa -b thisisb</code>, I found that R interpreted the <code>-a</code> as a destination file for <code>stdout</code>, thus creating a file named <code>-a</code>. In turn, it was hard to figure out how to remove or even view this unwanted file because when I tried to run <code>rm -a</code> or <code>cat -a</code>, bash interpreted <code>-a</code> as an unknown command line parameter rather than as a filename.  (The solution to this was <code>rm ./-a</code> and <code>cat ./-a</code>, as explained helpfully by the <code>rm</code> error message).</p>
+<p>The other thing I&#8217;ll mention quickly is that to make your code robust in batch mode, you will probably need to write more <code>tryCatch</code> blocks than you&#8217;re used to in interactive mode. So see <a href="http://stackoverflow.com/questions/12193779/how-to-write-trycatch-in-r">this nice introduction to R&#8217;s <code>tryCatch</code></a>.</p>
+<p>That&#8217;s all &#8211; please let me know if this is helpful, and any corrections or suggestions of how to do this even better.</p>

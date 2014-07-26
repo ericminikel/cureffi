@@ -1,0 +1,56 @@
+---
+layout: post
+title: "More on Convolutional Networks and Machine Learning"
+author: ericminikel
+date: 2012-03-31 21:45:11
+---
+<p>Last night I met up with @a in a Google+ hangout (by the way, an amazing tool&#8211; why do people still pay for GoToMeeting?), who talked me through the <a href="http://www.mitpressjournals.org/doi/full/10.1162/neco.2009.10-08-881">Turaga &amp; Murray paper</a> <a href="/2012/03/27/turaga-murray-2010-convolutional-networks/">blogged about previously</a>.</p>
+<p>First, convolution.  Convolution as these guys refer to it refers to applying kernels to an image, as in as <a href="http://www.aishack.in/2010/08/image-convolution-examples/">this amazingly clear explanation</a>.  The process of machine learning is basically applying a bunch of these kernels serially as filters to the image, seeing how close you get to the desired segmentation, and then using backpropagation to modify the kernels (and some other parameters) to come closer to the desired segmentation the next time around.</p>
+<p>That&#8217;s the big picture, but the reality has some tricky notation to get a handle on.  First, let&#8217;s understand how you move <em>forward</em> in the network, from input to output, given by Equation 2.1 and this helpful diagram:</p>
+<p>&nbsp;</p>
+<p><a href="/wp-content/uploads/2012/03/turaga-murray-2010-figure2.jpg"><img class="alignnone size-full wp-image-499" title="turaga-murray-2010-figure2" src="/wp-content/uploads/2012/03/turaga-murray-2010-figure2.jpg"/></a></p>
+<p>Equation 2.1:</p>
+<p><a href="/wp-content/uploads/2012/03/turaga-murray-2010-eq2.1.gif"><img class="alignnone size-full wp-image-502" title="turaga-murray-2010-eq2.1" src="/wp-content/uploads/2012/03/turaga-murray-2010-eq2.1.gif" alt="" width="166" height="42"/></a></p>
+<p>And here&#8217;s what I understand so far about the notation:</p>
+<ul>
+<li>For any given pair of nodes connected by an edge, the source node is subscripted as &#8220;b&#8221; and the destination node as &#8220;a&#8221;</li>
+<li>I<sub>a</sub> is the image state at node a, and I<sub>b</sub> is the image state at node b, i.e. after the convolution performed along the ba edge.</li>
+<li>h<sub>a</sub> is a bias applied at node a to all inputs received from all of its input nodes.  This is just a scalar so it corresponds to a brightness offset (?).  It lets you control how fast your program will converge on its final answer.</li>
+<li>w<sub>ab</sub> is a kernel applied as a convolution on the edge from b to a, equivalent to one of the (simpler) kernels in the examples at <a href="http://www.aishack.in/2010/08/image-convolution-examples/">aishack</a>.  Together, w<sub>ab</sub> and h<sub>a</sub> are the things that get adjusted in this model as the machine learns.</li>
+<li>f(x) in Equation 2.1 is the sigmoid function: <em>f</em>(<em>x</em>) = (1 + <em>e</em><sup>−<em>x</em></sup>)<sup>−1 </sup>where x refers to a pixel, so you apply this function to each pixel x in the image to get the new value f(x) for each pixel</li>
+</ul>
+<p>So the way to calculate I<sub>a</sub>, i.e. to produce an image at each node a in the network, is as follows:</p>
+<ol>
+<li>For each input node b, convolute w<sub>ab</sub>*I<sub>b</sub>.</li>
+<li>Sum the results across all input nodes b</li>
+<li>Add the bias h<sub>a</sub>.</li>
+<li>Take the sigmoid function.</li>
+</ol>
+<p>That&#8217;s how you move forward from input to output of the CN.</p>
+<p>The magic of machine learning, though, is in the backpropagation algorithm.  So you&#8217;ve moved forward, you got an output segmentation, and you scored it against a human-drawn ground truth to see how well it performed.  Not very well.  How will it learn to do better next time?  That bit of skulduggery is given by:</p>
+<p>Equation 2.2:</p>
+<p><a href="/wp-content/uploads/2012/03/turaga-murray-2010-eq2.2.gif"><img title="turaga-murray-2010-eq2.2" src="/wp-content/uploads/2012/03/turaga-murray-2010-eq2.2.gif"/></a></p>
+<p>These equations describe how you change the parameters after you&#8217;ve got an output image from one iteration, in order to do better on the next iteration.</p>
+<ul>
+<li>I<sub>O</sub> is the <span style="text-decoration: underline;">o</span>utput <span style="text-decoration: underline;">i</span>mage you got</li>
+<li>I<sup>d</sup><sub>O</sub> is the <span style="text-decoration: underline;">o</span>utput <span style="text-decoration: underline;">i</span>mage you <span style="text-decoration: underline;">d</span>esired</li>
+<li>f&#8217;(I<sub>O</sub>) is the derivative of the sigmoid function of I<sub>O</sub>.</li>
+<li>Circle with dot in the middle is pixel-wise multiplication</li>
+<li>S<sub>O</sub>, calculated from the above things, represents  the difference between the desired and actual output image.</li>
+<li>S<sub>a</sub>, represents the difference between desired and actual at each node a.</li>
+<li>Circle with star in the middle is cross-correlation.</li>
+<li>The second equation is telling you how to determine S<sub>b</sub> from S<sub>a</sub>, i.e. how to work backwards to find the good/badness of each node&#8217;s current settings, starting from the output node.</li>
+<li>η is a constant telling you by how much to change the gradient at each iteration.</li>
+<li>Cross-correlating ηI<sub>a</sub> with S<sub>b</sub> gives you what the change to each kernel w<sub>ab</sub> should be.</li>
+<li>Summing over all the pixels of S<sub>a</sub> (multiplied by η) tells you what the change to the bias at that node should be.</li>
+</ul>
+<p>All this has been immensely illuminating, but I have a lot of lingering questions to sort out.  For one, I need to get a better handle on cross-correlation.  <a href="http://en.wikipedia.org/wiki/Cross-correlation">Wikipedia&#8217;s explanation of cross-correlation</a> has an EE spin to it, focused on signal processing, but for images the principles are the same, just with one extra dimension.  You&#8217;re moving a small image around a large image looking for places where things match up.  It asks the question, &#8220;where in this large image is this smaller image most nearly found?&#8221;  Which leaves me with these questions:</p>
+<ul>
+<li>I<sub>a</sub> and S<sub>b</sub> should both be full-sized images (say, 1000&#215;1000).  How do you cross-correlate images of equal size?  (I can imagine moving them around a few pixels and shaving off edges to see if one of them is just an xy translation of the other, but I&#8217;m not sure this is right)</li>
+<li> If they <em>are</em> both full-size images, their cross-correlation should also be 1000&#215;1000.  But then how can you assign the result of their cross-correlation as w<sub>ab</sub>, which should have dimensions 5&#215;5?</li>
+</ul>
+<p>Then another question is about just how this backpropagation actually works.  Apparently it&#8217;s all there in the above equations, which the authors follow with the statement &#8220;These equations implement an efficient recursive gradient computation that gives the backpropagation algorithm its name.&#8221;  In order for this whole machine learning approach to move intelligently in the right direction and not just conduct an exhaustive search of the 10<sup>who knows how many</sup> possible combinations of kernels and biases, the program needs to know the derivative of its utility (how well its output will fit the final image) as a function of all its kernels and biases.  I would have said there was no way to compute that derivative without just trying minute variations from one&#8217;s current position in a number of dimensions, but apparently those cross-correlations and pixel-wise multiplications actually compute that derivative.</p>
+<p>To understand more about that I think my next move may be to read the LeCun papers that Turaga and Murray cite for their backpropagation algorithm:</p>
+<p><a href="http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf">LeCun, Y., Bottou, L., Bengio, Y., &amp; Haffner, P. (1998). Gradient-based learning applied to document recognition. Proceedings of the IEEE, 86(11), 2278–2324.</a></p>
+<p><a href="http://yann.lecun.com/exdb/publis/pdf/lecun-98b.pdf">LeCun, Y., Bottou, L., Orr, G., &amp; Muller, K. (1998). Efficient backprop In G. Orr &amp; K. Muller (Eds.), Neural networks: Tricks of the trade. Berlin: Springer.</a></p>
+<p>While surfing around I also found <a href="http://code.google.com/p/cuda-convnet/">source code for a CN implementation</a> written by Alex Krizhevsky at University of Toronto.  It&#8217;s in C#, whereas I was thinking of using Python both because I know it better and to stay more compatible with CellProfiler (though you could bridge through Cython I suppose?) but this might be a good reference to see how he implements things.</p>

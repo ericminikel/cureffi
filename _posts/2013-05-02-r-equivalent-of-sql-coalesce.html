@@ -1,0 +1,53 @@
+---
+layout: post
+title: "R equivalent of SQL coalesce"
+author: ericminikel
+date: 2013-05-02 10:52:39
+---
+<p>In SQL there is a function called <a href="http://www.postgresql.org/docs/9.2/static/functions-conditional.html#FUNCTIONS-COALESCE-NVL-IFNULL"><code>coalesce</code></a>, which accepts any number of columns and returns the first non-null value in each row, reading across the columns in the order they&#8217;re passed in.  This is super useful when you&#8217;re trying to relationalize a not-so-<a href="http://en.wikipedia.org/wiki/Relational_model">relational</a> database, where a desired value might be found in one column or in another.</p>
+<p>Today I needed to do the same thing in CRAN R, and a few quick Google searches for &#8220;R equivalent of SQL coalesce&#8221; didn&#8217;t turn up anything.  So I wrote this quick function which accepts any number of R vectors of the same length and returns the first non-NA value in each position.</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># accepts a list of vectors of identical length and returns one vector with the first non-NA value</span>
+coalesce <span style="color: #666666;">=</span> <span style="color: #008000; font-weight: bold;">function</span>(<span style="color: #666666;">...</span>) {
+    <span style="color: #408080; font-style: italic;"># convert input arguments into a list of vectors</span>
+    input_list <span style="color: #666666;">=</span> list(<span style="color: #666666;">...</span>)
+    <span style="color: #408080; font-style: italic;"># check that all input vectors are of same length</span>
+    vectorlength <span style="color: #666666;">=</span> length(input_list[[<span style="color: #666666;">1</span>]])
+    <span style="color: #008000; font-weight: bold;">for</span> (j in <span style="color: #666666;">1</span>:length(input_list)) {
+        <span style="color: #008000; font-weight: bold;">if</span>(length(input_list[[j]]) <span style="color: #666666;">!=</span> vectorlength) {
+            stop(paste(<span style="color: #ba2121;">"Not all vectors are of same length. First vector length: "</span>,vectorlength,<span style="color: #ba2121;">". Vector #"</span>,j,<span style="color: #ba2121;">"'s length: "</span>,length(input_list[[j]]),sep<span style="color: #666666;">=</span><span style="color: #ba2121;">""</span>))
+        }
+    }
+    <span style="color: #408080; font-style: italic;"># create a result vector to fill with first non-NA values</span>
+    result <span style="color: #666666;">=</span> rep(<span style="color: #008000; font-weight: bold;">NA</span>,vectorlength)
+    <span style="color: #408080; font-style: italic;"># fill with first non-NA value</span>
+    <span style="color: #008000; font-weight: bold;">for</span> (i in <span style="color: #666666;">1</span>:length(result)) {
+        <span style="color: #008000; font-weight: bold;">for</span> (j in <span style="color: #666666;">1</span>:length(input_list)) {
+            <span style="color: #008000; font-weight: bold;">if</span>(!is.na(input_list[[j]][i])) {
+                result[i] <span style="color: #666666;">=</span> input_list[[j]][i]
+                <span style="color: #008000; font-weight: bold;">break</span>
+            }
+        }
+    }
+    <span style="color: #008000; font-weight: bold;">return</span>(result)
+}
+
+<span style="color: #408080; font-style: italic;"># examples to show how it works</span>
+most_preferred_measurement <span style="color: #666666;">=</span> seq(<span style="color: #666666;">1</span>,<span style="color: #666666;">10</span>,<span style="color: #666666;">1</span>)
+most_preferred_measurement <span style="color: #666666;">=</span> <span style="color: #008000; font-weight: bold;">NA</span>
+backup_measurement <span style="color: #666666;">=</span> seq(<span style="color: #666666;">11</span>,<span style="color: #666666;">20</span>,<span style="color: #666666;">1</span>)
+backup_measurement <span style="color: #666666;">=</span> <span style="color: #008000; font-weight: bold;">NA</span>
+least_preferred_measurement <span style="color: #666666;">=</span> seq(<span style="color: #666666;">21</span>,<span style="color: #666666;">30</span>,<span style="color: #666666;">1</span>)
+least_preferred_measurement <span style="color: #666666;">=</span> <span style="color: #008000; font-weight: bold;">NA</span>
+other_vector_of_different_length <span style="color: #666666;">=</span> seq(<span style="color: #666666;">31</span>,<span style="color: #666666;">35</span>,<span style="color: #666666;">1</span>)
+coalesce(most_preferred_measurement,backup_measurement,least_preferred_measurement) <span style="color: #408080; font-style: italic;"># this works</span>
+coalesce(most_preferred_measurement,backup_measurement,least_preferred_measurement,other_vector_of_different_length) <span style="color: #408080; font-style: italic;"># this will throw an error</span></pre>
+</div>
+<p>If you run this code, you&#8217;ll see the expected result:</p>
+<pre>&gt; coalesce(most_preferred_measurement,backup_measurement,least_preferred_measurement) # this works
+ [1] 11 2 3 24 NA 16 17 18 9 10
+&gt; coalesce(most_preferred_measurement,backup_measurement,least_preferred_measurement,other_vector_of_different_length) # this will throw an error
+Error in coalesce(most_preferred_measurement, backup_measurement, least_preferred_measurement, : 
+ Not all vectors are of same length. First vector length: 10. Vector #4's length: 5
+&gt;</pre>
+<p>Enjoy!</p>

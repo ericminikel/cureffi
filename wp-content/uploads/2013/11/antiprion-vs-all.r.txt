@@ -1,0 +1,417 @@
+# Anti-prion compounds plotted in the space of drugs and chemical libraries
+
+setwd('c:/sci/037cinf/analysis/1')
+options(stringsAsFactors=FALSE)
+library(stringr)
+library(rcdk) # cheminformatics
+library(sp) # for point-in-polygon operations
+
+# http://www.cureffi.org/wp-content/uploads/2013/10/drugs.txt
+fda_drugs = read.table('c:/sci/037cinf/analysis/1/drugs.txt',sep='\t',header=TRUE)
+
+# created manually from published in vitro work
+# http://www.cureffi.org/wp-content/uploads/2013/11/antiprion_cpds.txt
+antiprion_cpds = read.table('c:/sci/037cinf/data/antiprion_cpds.txt',sep='\t',header=TRUE,comment.char='#',quote='')
+
+# load ZINC libraries screened 
+zinc_msspectrum_prop  = read.table('c:/sci/037cinf/data/msspectrum_prop.xls' ,header=TRUE,sep='\t',quote="",comment.char="")
+zinc_msusdrugs_prop   = read.table('c:/sci/037cinf/data/msusdrugs_prop.xls'  ,header=TRUE,sep='\t',quote="",comment.char="")
+zinc_smdccdivdiv_prop = read.table('c:/sci/037cinf/data/smdccdivdiv_prop.xls',header=TRUE,sep='\t',quote="",comment.char="")
+zinc_chbr_prop        = read.table('c:/sci/037cinf/data/chbr_prop.xls'       ,header=TRUE,sep='\t',quote="",comment.char="")
+
+# ChemBridge is too big, take a random subset of 20,000 rows
+# http://stackoverflow.com/questions/8273313/random-rows-in-dataframe-in-r
+set.seed(1234)
+zinc_chbr_prop_randsub = zinc_chbr_prop[sample(nrow(zinc_chbr_prop),20000,replace=FALSE),]
+rm(zinc_chbr_prop)
+# should check again - the matrix is not very wide, so maybe including all of ChemBridge _is_ feasible.
+
+# remove Inulin, a biological
+fda_drugs = subset(fda_drugs, generic_name != "Inulin")
+
+# set cpdset attribute to indicate which library or chemical set each molecule is part of
+fda_drugs$cpdset                     = "fda"
+fda_drugs$cpdset[fda_drugs$cns_drug] = "fda_cns"
+antiprion_cpds$cpdset = "antiprion"
+zinc_msspectrum_prop$cpdset   = "msspectrum"
+zinc_msusdrugs_prop$cpdset    = "msusdrugs"
+zinc_smdccdivdiv_prop$cpdset  = "smdccdivdiv"
+zinc_chbr_prop_randsub$cpdset = "chbr_randsub"
+
+# combine the zinc libraries
+zinclibs = rbind(zinc_msspectrum_prop,
+            zinc_msusdrugs_prop,
+            zinc_smdccdivdiv_prop,
+            zinc_chbr_prop_randsub)
+
+# convert everything to same 3 columns - we just need compound set, compound name and SMILES for every molecule
+zinclibs = zinclibs[,c("cpdset","ZINC_ID","SMILES")]
+colnames(zinclibs) = c("cpdset","name","smiles")
+antiprion_cpds = antiprion_cpds[,c("cpdset","common_name","smiles")]
+colnames(antiprion_cpds) = c("cpdset","name","smiles")
+fda_drugs = fda_drugs[,c("cpdset","generic_name","smiles")]
+colnames(fda_drugs) = c("cpdset","name","smiles")
+
+# double check that names match
+colnames(zinclibs)
+colnames(antiprion_cpds)
+colnames(fda_drugs)
+
+# merge drugs, antiprion compounds and chemical libraries into one data frame
+mol = rbind(fda_drugs,antiprion_cpds,zinclibs)
+dim(mol)
+
+# get list of rcdk molecular descriptors, minus #28 IPLearning which makes R hang
+descriptors = get.desc.names(type='all')[-28]
+
+# create an empty results dataframe because rbinding new stuff in seems quicker
+# than indexing into a pre-sized df
+res = data.frame(id=integer(),name=character(),cpdset=character(),
+                 smiles=character(),hba=integer(),hbd=integer(),nrb=integer(),
+                 tpsa=numeric(),mwt=numeric(),xlogp=numeric(),charge=integer())
+
+# next block of code scarcely modified from "Properties of CNS drugs vs. all FDA-approved drugs"
+# note these indices are _after_ eliminating the original item #28
+descriptors_to_use = descriptors[c(25,26,39,41,45,48)] # respectively HBA, HBD, NRB, TPSA, MWT, XLOGP
+starttime = Sys.time()
+# test run: # for (i in 1:100) {
+for (i in 1:dim(mol)[1]) {
+  if (mol$smiles[i] == "") { next }
+  # try catch logic from http://stackoverflow.com/questions/8093914/skip-to-next-value-of-loop-upon-error-in-r-trycatch
+  parse_smiles_error = tryCatch ( 
+   { cpd_object = parse.smiles(mol$smiles[i]) },
+     error = function(e) e
+  )
+  if(inherits(parse_smiles_error,"error")) next
+  id = i
+  hba = eval.desc(cpd_object, descriptors_to_use[1])
+  hbd = eval.desc(cpd_object, descriptors_to_use[2])
+  nrb = eval.desc(cpd_object, descriptors_to_use[3])
+  tpsa = eval.desc(cpd_object, descriptors_to_use[4])
+  mwt = eval.desc(cpd_object, descriptors_to_use[5])
+  xlogp_error = tryCatch( 
+    # throws null pointer exception on aminophylline
+    { xlogp = eval.desc(cpd_object, descriptors_to_use[6]) },
+      error = function(e) e
+  )
+  if(inherits(xlogp_error,"error")) next # just skip any molecules that throw null pointed exceptions on xlogp
+  nplus = str_count(mol$smiles[i],"[+]") # + is not a metacharacter inside [] in POSIX regular expressions, see http://farazmahmood.wordpress.com/2008/11/10/regular-expression-escaping-meta-characters-within-character-classes/
+  nminus = str_count(mol$smiles[i],"[-]")
+  charge = nplus - nminus
+  newrow = c(id,mol$name[i],mol$cpdset[i],mol$smiles[i],
+             hba,hbd,nrb,tpsa,mwt,xlogp,charge)
+  names(newrow) = colnames(res)
+  res = rbind(res,newrow)
+}
+elapsed = Sys.time() - starttime
+elapsed
+
+# backup this effort so far in case principal component code makes R hang
+write.table(res,'res.txt',row.names=FALSE,col.names=FALSE,sep='\t',quote=FALSE)
+# re-read from disk
+res = read.table('res.txt',header=TRUE,sep='\t',comment.char='')
+colnames(res) = c("id","name","cpdset","smiles","hba","hbd","nrb","tpsa","mwt","xlogp","charge")
+
+
+## NOTES ON PERFORMANCE
+# interesting - if you write the results into the original table with
+# indexing, e.g. mol$hba[i] = eval.desc(cpd_object, descriptors_to_use[1]),
+# this takes 24 seconds to do 10 rows and 3 mins to do 20 rows.
+# while if you write out to a new df and rbind as you go, it takes 1.1 seconds
+# to do 20 rows, and 4.9 seconds to do 100 rows
+# at 5 sec / 100 rows, should take 500 sec = ~ 8 minutes to do all.
+# instead, it got to i = 23306 in Time difference of 21.09367 mins
+# perhaps the chemical libraries are harder to do? or it started running out of memory?
+# if constant rate, whole thing will take over an hour
+
+# principal components
+
+mol_mat = as.matrix(res[,c('hba','hbd','nrb','tpsa','mwt','xlogp')]) #,'charge')])
+covmatrix = cov(mol_mat) # calculate covariance matrix
+eig = eigen(covmatrix) 
+pc = mol_mat %*% eig$vectors 
+var_explained = paste(formatC((eig$values/sum(eig$values))[1:3]*100,digits=1,format='f'),'%',sep='')
+var_explained
+colnames(pc) = paste("C",1:7,sep="")
+
+cpddata = cbind(res, pc)
+write.table(cpddata,'cpddata.txt',row.names=FALSE,col.names=TRUE,quote=FALSE,sep='\t')
+write.table(var_explained,'var_explained.txt',row.names=FALSE,col.names=TRUE,quote=FALSE,sep='\t')
+
+# break point: code above and below can be run independently.
+# code above takes ~ 2.5 hour, and below takes just a few mins
+
+
+cpddata = read.table('cpddata.txt',header=TRUE,sep='\t',quote='',comment.char='')
+var_explained = read.table('var_explained.txt',header=TRUE,sep='\t',quote='',comment.char='')
+var_explained = var_explained$x
+
+# list of annotations & plotting properties for the different libraries
+all_annot = data.frame(cpdset = c("fda","fda_cns","antiprion","msspectrum","msusdrugs","smdccdivdiv","chbr_randsub"),
+                       desc   = c("All FDA-approved drugs","CNS drugs","Published anti-prion compounds","MSDI Spectrum Collection","MSDI US Drug Collection","UCSF SMDC ChemDiv Diversity","ChemBridge Random 20K subset"),
+                       k      = c("#B3BDFF","#FCD477","#5E0000","#000000","#000000","#000000","#000000"),
+                       pch    = c(19,19,17,15,16,17,18))
+
+# check names and rename principal component columns
+names(cpddata)
+
+
+cpddata = merge(cpddata,all_annot,by='cpdset')
+par(font=1) # turn off bold
+# plot the FDA and CNS drugs alone
+png('fda.cns.pc1.pc2.png',width=600,height=400)
+# grab annotations 
+lib_annot = unique(all_annot[all_annot$cpdset %in% c('fda','fda_cns'),c('cpdset','desc','k','pch')])
+# first plot empty
+plot(NA,NA,xlim=range(cpddata$C1),ylim=range(cpddata$C2),xlab=paste('PC1 (',var_explained[1],')',sep=''),ylab=paste('PC2 (',var_explained[2],')',sep=''),
+     main = "FDA-approved drugs PC1 vs. PC2",
+     cex.main = 1.2)
+# then plot different sets individually in order to control which is on top of others
+# FDA-approved drugs as base
+points(cpddata[cpddata$cpdset=='fda',"C1"],cpddata[cpddata$cpdset=='fda',"C2"],pch=19,cex=3,col=cpddata$k[cpddata$cpdset=='fda'])
+# CNS drugs as overlay
+points(cpddata[cpddata$cpdset=='fda_cns',"C1"],cpddata[cpddata$cpdset=='fda_cns',"C2"],pch=19,cex=3,col=cpddata$k[cpddata$cpdset=='fda_cns'])
+# legend
+legend('topright',lib_annot$desc,col=lib_annot$k,pch=lib_annot$pch,cex=1)
+
+# plot outliers
+outliers = which(  cpddata$C1 %in% c(min(cpddata$C1),max(cpddata$C1)) | 
+                     cpddata$C2 %in% c(min(cpddata$C2)) ) # ,max(cpddata$C2) close to min(cpddata$C1)
+for (outlier in outliers) {
+  points(cpddata[outlier,"C1"],cpddata[outlier,"C2"],pch=19,col='#000000')
+  # plot text on appropriate side so it's visible
+  if(cpddata[outlier,"C1"]==max(cpddata$C1)) {
+    pos = 2
+  } else {
+    pos = 4
+  }
+  text(cpddata[outlier,"C1"],cpddata[outlier,"C2"],labels=cpddata[outlier,'name'],cex=.8,pos=pos)  
+}
+
+dev.off()
+
+# check on the leftmost cns drug
+which(cpddata[cpddata$cpdset=='fda_cns',"C1"]==min(cpddata[cpddata$cpdset=='fda_cns',"C1"]))
+res[180,] # bromocriptine, used in treating Parkinson's, so def CNS
+
+# here is a useful function
+# rcdk cannot plot disconnected molecules (e.g. w/ ionic bonds)
+# so this function will strip away the smaller disconnected parts
+stripsmiles = function(smiles) {
+  parts = strsplit(smiles,"\\.")[[1]]
+  longestpart = parts[which(nchar(parts)==max(nchar(parts)))]
+  return(longestpart)
+}
+
+# size of range. if there's a base function for this I couldn't find it
+rangesize = function(vec) {
+  return (max(vec) - min(vec))
+}
+
+# draw the outliers
+png('fda.outliers.png',width=600,height=250)
+par(mfrow=c(1,3),oma=c(0,0,3,0),mar=c(2,2,2,2))
+for (outlier in outliers) {
+molecule = parse.smiles(stripsmiles(cpddata$smiles[outlier]))[[1]]
+plot(NA,NA,xlim=c(1,10),ylim=c(1,10),xaxt='n',yaxt='n',
+     xlab='',ylab='',main=cpddata$name[outlier])
+temp1 = view.image.2d(molecule,200,200) # convert Java representation to raster
+rasterImage(temp1,1,1,10,10)
+}
+dev.off()
+
+
+# list of annotations & plotting properties for the different libraries
+all_annot = data.frame(cpdset = c("fda","fda_cns","antiprion","msspectrum","msusdrugs","smdccdivdiv","chbr_randsub"),
+                       desc   = c("All FDA-approved drugs","CNS drugs","Published anti-prion compounds","MSDI Spectrum Collection","MSDI US Drug Collection","UCSF SMDC ChemDiv Diversity","ChemBridge Random 20K subset"),
+                       k      = c("#B3BDFF","#FCD477","#5E0000","#000000","#000000","#000000","#000000"),
+                       pch    = c(19,19,17,15,16,17,18))
+
+
+
+# 4-panel plot of each compound library's overlap with the drug / CNS drug space
+png('chemlibs.pc1.pc2.overlay.png',width=900,height=600)
+par(mfrow=c(2,2),oma=c(0,0,3,0),mar=c(4,4,4,4))
+for (chemlib in c("msspectrum","msusdrugs","smdccdivdiv","chbr_randsub")) {
+  # grab annotations for current library
+  lib_annot = unique(cpddata[cpddata$cpdset %in% c('fda','fda_cns',chemlib),c('cpdset','desc','k','pch')])
+  
+  # first plot empty
+  plot(NA,NA,xlim=range(cpddata$C1),ylim=range(cpddata$C2),xlab=paste('PC1 (',var_explained[1],')',sep=''),ylab=paste('PC2 (',var_explained[2],')',sep=''),
+     main = lib_annot$desc[lib_annot$cpdset==chemlib],
+     cex.main = 1.2)
+  # then plot different sets individually in order to control which is on top of others
+  # FDA-approved drugs as base
+  points(cpddata$C1[cpddata$cpdset=='fda'],cpddata$C2[cpddata$cpdset=='fda'],pch=19,cex=3,col=cpddata$k[cpddata$cpdset=='fda'])
+  # CNS drugs as overlay
+  points(cpddata$C1[cpddata$cpdset=='fda_cns'],cpddata$C2[cpddata$cpdset=='fda_cns'],pch=19,cex=3,col=cpddata$k[cpddata$cpdset=='fda_cns'])
+  # then all chemical libraries as smaller points on top
+  points(cpddata$C1[cpddata$cpdset==chemlib],cpddata$C2[cpddata$cpdset==chemlib],pch=cpddata$pch[cpddata$cpdset==chemlib],cex=.6,col=cpddata$k[cpddata$cpdset==chemlib])  #col=res$k[res$cpdset==chemlib])
+  
+  # don't overlay the convex hulls
+#  points(drug_pts[drug_chull_idx,"C1"],drug_pts[drug_chull_idx,"C2"],type='l',lwd=3,col='blue')
+#  points(cns_pts[cns_chull_idx,"C1"],cns_pts[cns_chull_idx,"C2"],type='l',lwd=3,col='orange')
+  
+  # legend
+  legend('topright',lib_annot$desc,col=lib_annot$k,pch=lib_annot$pch,cex=.6)
+}
+mtext("Drugs and chemical libraries PC1 vs. PC2", outer = TRUE, cex = 1.5)
+dev.off()
+
+png('chemlibs.pc1.pc2.mwt.hist.png',width=900,height=600)
+par(mfrow=c(2,2),oma=c(0,0,3,0),mar=c(4,4,4,4))
+for (chemlib in c("msspectrum","msusdrugs","smdccdivdiv","chbr_randsub")) {
+  hist(cpddata$mwt[cpddata$cpdset==chemlib],xlim=c(0,1000),col='black',
+       xlab='Molecular weight',
+       main=all_annot$desc[all_annot$cpdset==chemlib])
+}
+mtext("Molecular weight distribution of chemical libraries", outer = TRUE, cex = 1.5)
+dev.off()
+
+
+
+# plot the FDA and CNS drugs with their convex hulls
+png('fda.cns.pc1.pc2.chulls.png',width=600,height=400)
+# grab annotations 
+lib_annot = unique(all_annot[all_annot$cpdset %in% c('fda','fda_cns'),c('cpdset','desc','k','pch')])
+# first plot empty
+plot(NA,NA,xlim=range(cpddata$C1),ylim=range(cpddata$C2),xlab=paste('PC1 (',var_explained[1],')',sep=''),ylab=paste('PC2 (',var_explained[2],')',sep=''),
+     main = "FDA-approved drugs PC1 vs. PC2",
+     cex.main = 1.2)
+# scatterplot the FDA-approved drugs
+points(cpddata[cpddata$cpdset=='fda',"C1"],cpddata[cpddata$cpdset=='fda',"C2"],pch=19,cex=3,col=cpddata$k[cpddata$cpdset=='fda'])
+# scatterplot the CNS drugs
+points(cpddata[cpddata$cpdset=='fda_cns',"C1"],cpddata[cpddata$cpdset=='fda_cns',"C2"],pch=19,cex=3,col=cpddata$k[cpddata$cpdset=='fda_cns'])
+
+# find convex hull for all drugs
+drug_pts = cpddata[cpddata$cpdset %in% c('fda','fda_cns'),]
+drug_chull_idx = chull(drug_pts$C1,drug_pts$C2)
+points(drug_pts[drug_chull_idx,"C1"],drug_pts[drug_chull_idx,"C2"],type='l',lwd=3,col='blue')
+
+# find the convex hull of the CNS drugs
+cns_pts = cpddata[cpddata$cpdset=='fda_cns',]
+cns_chull_idx = chull(cns_pts$C1,cns_pts$C2)
+points(cns_pts[cns_chull_idx,"C1"],cns_pts[cns_chull_idx,"C2"],type='l',lwd=3,col='orange')
+
+# legend
+legend('topright',c("Drug space","CNS drug space"),col=c('blue','orange'),lwd=3)
+
+dev.off()
+
+
+
+# table to hold convex hull results
+chtable = data.frame(cpdset=character(),desc=character(),cns_frac=numeric(),drug_frac=numeric())
+# now compute fraction within the CNS polygon for all libraries
+for (chemlib in all_annot$cpdset) {
+  in_cns = point.in.polygon(cpddata[cpddata$cpdset==chemlib,"C1"],
+                            cpddata[cpddata$cpdset==chemlib,"C2"],
+                            cns_pts[cns_chull_idx,"C1"],
+                            cns_pts[cns_chull_idx,"C2"])  
+  in_drugs = point.in.polygon(cpddata[cpddata$cpdset==chemlib,"C1"],
+                              cpddata[cpddata$cpdset==chemlib,"C2"],
+                              drug_pts[drug_chull_idx,"C1"],
+                              drug_pts[drug_chull_idx,"C2"])  
+  temp1 = cbind(chemlib,
+                all_annot$desc[all_annot$cpdset==chemlib],
+                sum(in_cns > 0)/length(in_cns),
+                sum(in_drugs > 0)/length(in_drugs))
+  names(temp1) = c('cpdset','desc','cns_frac','drug_frac')
+  chtable = rbind(chtable,temp1)
+}
+chtable
+
+
+dev.off()
+png('druglike.barplot.png',width=600,height=500)
+par(mar=c(10,5,5,5),font=2)
+chtable$cns_frac = as.numeric(chtable$V3)
+chtable$drug_addl = as.numeric(chtable$V4)-as.numeric(chtable$V3)
+plot.idx = c(1,4,5,6,7)
+bp = barplot(rbind(chtable$cns_frac[plot.idx],chtable$drug_addl[plot.idx]),beside=FALSE,
+        names.arg=chtable$desc[plot.idx],col=c("#FCD477","#B3BDFF"),border=NA,
+        yaxt='n',xaxt='n',
+        main="Drug-like content of chemical libraries",
+        ylab="Fraction of drugs in library in given chemical space")
+axis(side=2,at=seq(0,1,.2),labels=paste(seq(0,100,20),"%",sep=""))
+text(bp, par("usr")[3], labels = all_annot$desc[plot.idx], srt = 45, adj = c(1.1,1.1), xpd = TRUE, cex=.9)
+abline(h=0)
+abline(h=1)
+legend('bottomright',c("In CNS drug space","In all drug space"),pch=16,col=c("#FCD477","#B3BDFF"))
+dev.off()
+
+
+# now plot overlay with antiprion cpds
+png('drugs.vs.antiprion.png',width=600,height=400)
+# grab annotations  
+lib_annot = unique(all_annot[all_annot$cpdset %in% c('fda','fda_cns','antiprion'),c('cpdset','desc','k','pch')])
+
+# first plot empty
+plot(NA,NA,xlim=range(cpddata$C1),ylim=range(cpddata$C2),xlab=paste('PC1 (',var_explained[1],')',sep=''),ylab=paste('PC2 (',var_explained[2],')',sep=''),
+     main = "Antiprion compounds in chemical space",
+     cex.main = 1.2)
+# then plot different sets individually in order to control which is on top of others
+# FDA-approved drugs as base
+points(cpddata$C1[cpddata$cpdset=='fda'],cpddata$C2[cpddata$cpdset=='fda'],pch=19,cex=3,col=cpddata$k[cpddata$cpdset=='fda'])
+# CNS drugs as overlay
+points(cpddata$C1[cpddata$cpdset=='fda_cns'],cpddata$C2[cpddata$cpdset=='fda_cns'],pch=19,cex=3,col=cpddata$k[cpddata$cpdset=='fda_cns'])
+# then all chemical libraries as smaller points on top
+#for (chemlib in c("msspectrum","msusdrugs","smdccdivdiv","chbr_randsub")) {
+#  points(pc[res$cpdset==chemlib,1],pc[res$cpdset==chemlib,2],pch=res$pch[res$cpdset==chemlib],cex=.6,col='black')  #col=res$k[res$cpdset==chemlib])
+#}
+# finally, antiprion cpds 
+points(cpddata$C1[cpddata$cpdset=='antiprion'],cpddata$C2[cpddata$cpdset=='antiprion'],pch=cpddata$pch[cpddata$cpdset=='antiprion'],cex=1.5,col=cpddata$k[cpddata$cpdset=='antiprion'])
+
+par(font=2)
+text(cpddata$C1[cpddata$cpdset=='antiprion'],cpddata$C2[cpddata$cpdset=='antiprion'],labels=cpddata$name[cpddata$cpdset=='antiprion'],pos=4,col=cpddata$k[cpddata$cpdset=='antiprion'],cex=.8)
+# legend
+legend('topright',lib_annot$desc,col=lib_annot$k,pch=lib_annot$pch,cex=.6)
+
+dev.off()
+
+
+
+# re-plot zoomed in on the CNS drugs
+# now plot overlay with antiprion cpds
+png('drugs.vs.antiprion.zoomin.png',width=600,height=400)
+
+lib_annot = unique(all_annot[all_annot$cpdset %in% c('fda','fda_cns','antiprion'),c('cpdset','desc','k','pch')])
+plot(NA,NA,xlim=range(cpddata$C1[cpddata$cpdset=='fda_cns']),ylim=range(cpddata$C2[cpddata$cpdset=='fda_cns']),xlab=paste('PC1 (',var_explained[1],')',sep=''),ylab=paste('PC2 (',var_explained[2],')',sep=''),
+     main = "Antiprion compounds in chemical space - CNS cluster",
+     cex.main = 1.2)
+points(cpddata$C1[cpddata$cpdset=='fda'],cpddata$C2[cpddata$cpdset=='fda'],pch=19,cex=3,col=cpddata$k[cpddata$cpdset=='fda'])
+points(cpddata$C1[cpddata$cpdset=='fda_cns'],cpddata$C2[cpddata$cpdset=='fda_cns'],pch=19,cex=3,col=cpddata$k[cpddata$cpdset=='fda_cns'])
+points(cpddata$C1[cpddata$cpdset=='antiprion'],cpddata$C2[cpddata$cpdset=='antiprion'],pch=cpddata$pch[cpddata$cpdset=='antiprion'],cex=1.5,col=cpddata$k[cpddata$cpdset=='antiprion'])
+
+
+# put labels on opposite sides in dense clusters
+cpd_subset = cpddata[cpddata$cpdset=='antiprion',]
+pos = rep(4,dim(cpd_subset)[1]) # default is right
+pos[cpd_subset$name=='tilorone'] = 2
+pos[cpd_subset$name=='arylamide 17'] = 2
+pos[cpd_subset$name=='arylpiperazine 41'] = 2
+par(font=2)
+text(cpd_subset[cpd_subset$cpdset=='antiprion',"C1"],cpd_subset[cpd_subset$cpdset=='antiprion',"C2"],labels=cpd_subset$name[cpd_subset$cpdset=='antiprion'],pos=pos,col=cpd_subset$k[cpd_subset$cpdset=='antiprion'],cex=.8)
+# legend
+legend('bottomright',lib_annot$desc,col=lib_annot$k,pch=lib_annot$pch,cex=.6)
+
+dev.off()
+
+
+
+
+# to browse the available pch offline:
+# par(mfrow=c(5,5),mar=c(0,0,0,0))
+# for(i in 1:25) { plot(1,1,pch=i,cex=3,xaxt='n',yaxt='n'); text(1,1.2,labels=i) }
+
+
+
+# plots:
+# 1. drugs with labels for outliers
+# 2. comparison of libraries with CNS and drugs
+#    discussion of this vs. literature result
+# 3. antiprion cpds, room for optimization
+
+
+# condense to a small table for legend
+

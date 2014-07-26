@@ -1,0 +1,173 @@
+---
+layout: post
+title: "Converting genetic variants to their minimal representation"
+author: ericminikel
+date: 2014-04-24 14:19:48
+---
+<p>Here in the MacArthur lab we do a lot of Mendelian genetics &#8211; sifting through exomes of patients with rare neuromuscular diseases to try to find the causal variant. A few years ago, it was common practice that when looking for a rare disease-causing variant one would automatically rule out any variants that were already in dbSNP. But as dbSNP itself has <a href="http://massgenomics.org/2012/01/the-current-state-of-dbsnp.html">grown and grown</a> to include more and more rare disease variants, that&#8217;s become a better and better way to miss your causal variant. A more nuanced approach is to compare the variants in your sample to reference populations &#8211; 1000 Genomes, ESP, or the <a href="https://twitter.com/dgmacarthur/status/455700745942470656">new 86K exome dataset</a> our lab is working on &#8211; and limit your search to very rare variants, say, those below 1% or 0.1% frequency in the reference population.</p>
+<p>Doing that requires that you be able to <em>find</em> your variant in the reference population if it&#8217;s there. As we&#8217;ve been using this approach for a while now, we&#8217;ve noticed a common error mode. Say we have a dataset of a few hundred joint-called exomes, and a patient has a potentially interesting frameshift variant that looks something like this:</p>
+<pre>
+#CHROM	POS	ID	REF	ALT
+1	1001	.	CT	C
+</pre>
+<p>It will turn up as being absent (0% allele frequency) in 1000 Genomes, which makes it seem like a good candidate so far. But when we look a bit deeper, we find that in fact, loads of people in 1000 Genomes have it. The problem is that one individual in 1000 Genomes has a different allele at the same site, and so the joint-calling has made the variant look like this:</p>
+<pre>
+#CHROM	POS	ID	REF	ALT
+1	1001	.	CTCC	CCC,C,CCCC
+</pre>
+<p>The first allele, CTCC>CCC, refers to precisely the CT>C variant we&#8217;re looking for, but the existence of a CTCC>C variant in a different individual at the same site forces this more verbose representation. Because we&#8217;re trying to match on CHROM, POS, REF, and ALT, the join comes up empty-handed and we wrongly think that the variant is ultra-rare.</p>
+<p>This problem is only going to get more common as the reference populations grow larger and larger, so the other day, <a href="https://github.com/brettpthomas/">Brett Thomas</a> and I sat down to brainstorm a solution. The only tool out there that seems to do something similar is <a href="https://github.com/ekg/vcflib#vcfallelicprimitives"><code>vcflib vcfallelicprimitives</code></a>, but we wanted a solution that could be used in quick scripts without converting a whole VCF and without dropping INFO fields.</p>
+<p>We started by taking a look at some multi-allelic sites in any old joint-called VCF:</p>
+<pre class="brush: bash; title: ; notranslate" title="">
+cat myvcf.vcf | \grep -v ^# | awk '$4 ~ /,/ {print $0}' | less -S # look at rows with a comma in the ALT field
+</pre>
+<p>And after working through 10 or so examples, it became clear that an incredibly simple solution worked for the vast majority of cases:</p>
+<ol>
+<li>Remove any suffix shared between the REF and ALT alleles.</li>
+<li>Remove any prefix shared between the REF and ALT alleles, and increment POS by the number of characters you removed from each.</li>
+</ol>
+<p>The <a href="https://github.com/ericminikel/minimal_representation/blob/master/minimal_representation.py">Python code</a> to do this is as follows:</p>
+<pre class="brush: python; title: ; notranslate" title="">
+def get_minimal_representation(pos, ref, alt): 
+	# If it's a simple SNV, don't remap anything
+	if len(ref) == 1 and len(alt) == 1: 
+		return pos, ref, alt
+	else:
+		# strip off identical suffixes
+		while(alt[-1] == ref[-1] and min(len(alt),len(ref)) &gt; 1):
+			alt = alt[:-1]
+			ref = ref[:-1]
+		# strip off identical prefixes and increment position
+		while(alt[0] == ref[0] and min(len(alt),len(ref)) &gt; 1):
+			alt = alt[1:]
+			ref = ref[1:]
+			pos += 1
+		#print 'returning: ', pos, ref, alt
+		return pos, ref, alt 
+</pre>
+<p>Considering again the example from earlier:</p>
+<pre>
+#CHROM	POS	ID	REF	ALT
+1	1001	.	CTCC	CCC,C,CCCC
+</pre>
+<p>Applying our logic gives the following alleles in minimal representation:</p>
+<pre>
+POS	REF	ALT	&rarr;	POS	REF	ALT
+1001	CTCC	CCC	&rarr;	1001	CT	C
+1001	CTCC	C	&rarr;	1001	CTCC	C
+1001	CTCC	CCCC	&rarr;	1002	T	C
+</pre>
+<p>We <a href="https://github.com/ericminikel/minimal_representation/blob/master/test_minimal_representation.py">confirmed</a> that this code worked against every example we&#8217;d thought of in our brainstorm session.</p>
+<p>But to really test our solution, we needed a pair of VCFs where the same sample had been called alone, and joint-called with thousands of other samples. In an ideal world, the VCFs would have been produced from the exact same BAM using the exact same GATK command line parameters, so that the <em>only</em> differences between them would be due to joint calling. In practice, it&#8217;s apparently difficult to get single-BAM calls from GATK because you can&#8217;t run VQSR on a single sample, and I also wanted to avoid wasting cluster CPU time on joint calling thousands of exomes just for this one exercise. So we settled for this pair of VCFs: the <a href="ftp://ftp-trace.ncbi.nih.gov/giab/ftp/data/NA12878/variant_calls/NIST/">NIST 2.17 calls on NA12878 alone</a>, and the sites from our recent 86K exome joint calling exercise, which included several copies of NA12878.</p>
+<p>The shell script used to pre-process these files is <a href="https://github.com/ericminikel/minimal_representation/blob/master/na12878-validation.bash">here</a>. After subsetting both of the VCFs to only exonic sites, the &#8220;joint&#8221; file contained 6.4M genotype calls, and the &#8220;alone&#8221; file contained 14,980 calls. 15K exonic variants is a bit on the low side &#8211; one European exome should usually contain more like 19-20,000 variants. But if you read the <a href="ftp://ftp-trace.ncbi.nih.gov/giab/ftp/data/NA12878/variant_calls/NIST/README.NIST.v2.17.txt">NIST README</a>, the NIST calls are designed to be as stringent as possible &#8211; only very high quality calls are kept, and variants in segmental duplications (segdups) and short tandem repeat regions (STRs) are thrown out regardless of quality. In any case, the &#8220;alone&#8221; calls being too conservative is not a problem &#8211; for this exercise, what&#8217;s important is that all sites from the &#8220;alone&#8221; set are also called in the &#8220;joint&#8221; set, and as we&#8217;ll see, that turns out to be the case.</p>
+<p>I checked how many multi-allelic sites are called in each file. As expected, there are far fewer in the &#8220;alone&#8221; file, even proportional to the total number of calls. The &#8220;alone&#8221; set has multi-allelic site calls only at the 5 sites where NA12878 herself is het alt, whereas the &#8220;joint&#8221; set has multi-allelic sites at 566,440 places where two different alt alleles were seen across 86K individuals. The alleles at those 566,440 sites are the ones we&#8217;ll need to convert to minimal representation in order to get the alleles in the two files to match.</p>
+<pre class="brush: bash; title: ; notranslate" title="">
+cat $na12878_joint | \grep -v ^# | awk '{print $1,$2,$4,$5}' | awk '$4 ~ /,/ {print $0}' | wc -l
+# 566440
+cat $na12878_alone | \grep -v ^# | awk '{print $1,$2,$4,$5}' | awk '$4 ~ /,/ {print $0}' | wc -l
+# 5
+</pre>
+<p>To convert variants to minimal representation, I first needed to decompose the VCFs into files with one allele per row, like so:</p>
+<pre class="brush: bash; title: ; notranslate" title="">
+# decompose each allele into its own row and print only chr, pos, ref, alt to two files
+cat $na12878_joint | \grep -v ^# | awk '{print $1,$2,$4,$5}' | awk -F'[ ,]' '{for(i=4;i&lt;=NF;i++) {print $1,$2,$3,$i} }' &gt; alleles_joint.txt
+cat $na12878_alone | \grep -v ^# | awk '{print $1,$2,$4,$5}' | awk -F'[ ,]' '{for(i=4;i&lt;=NF;i++) {print $1,$2,$3,$i} }' &gt; alleles_alone.txt
+</pre>
+<p>My next step was to do SQL joins on the two tables. First, to see how many of the &#8220;alone&#8221; variants are present in the &#8220;joint&#8221; file exactly as-is, when joining on chr, pos, ref, and alt. Second, to see how many of the mismatches are fixed by converting both files to minimal representation.</p>
+<p>Since I was working in Python, I started by <a href="https://github.com/ericminikel/minimal_representation/blob/master/na12878-validation-pandas.py">trying to compare the tables in Pandas</a>, a tool I&#8217;ve been wanting to learn. To convert the Pandas DataFrames to minimal representation, first I tried using <code>.loc</code> to loop over the DataFrame and re-assign each row, but with this approach, even processing 100 alleles from each file <a href="https://github.com/ericminikel/minimal_representation/blob/master/check-python-performance.bash">took over 6 minutes</a>, mostly due to calls to <code>numpy.ndarray.copy</code>. Sounds like <code>.loc</code> may <a href="https://github.com/pydata/pandas/issues/6683">not be the best way</a>, so I&#8217;m now trying to figure out how to do it with <code>apply</code> instead, but in the meantime, I just wanted to get the job done.</p>
+<p>So, back to the drawing board, I <a href="https://github.com/ericminikel/minimal_representation/blob/master/na12878-validation.r">re-implemented the minimal representation code in R</a>, which took amazingly more lines of code than in Python &#8211; R is just bad at string manipulation:</p>
+<pre class="brush: r; title: ; notranslate" title="">
+# get the minimal representation for one allele
+minrep_onerow = function(pos, ref, alt) {
+	ref = unlist(strsplit(ref,split=&quot;&quot;)) # string to vector
+	alt = unlist(strsplit(alt,split=&quot;&quot;)) # string to vector
+	if (length(ref) == 1 &amp;&amp; length(alt) == 1) {
+		# do nothing
+	} else {
+		# strip off identical suffixes
+		while(alt[length(alt)] == ref[length(ref)] &amp;&amp; min(length(alt),length(ref)) &gt; 1) {
+			alt = alt[1:length(alt)-1]
+			ref = ref[1:length(ref)-1]
+		}
+		# strip off identical prefixes and increment position
+		while(alt[1] == ref[1] &amp;&amp; min(length(alt),length(ref)) &gt; 1) {
+			alt = alt[2:length(alt)]
+			ref = ref[2:length(ref)]
+			pos = pos + 1
+		}
+	}
+	ref = paste(ref,collapse=&quot;&quot;)
+	alt = paste(alt,collapse=&quot;&quot;)
+	return (list(pos, ref, alt))
+}
+
+# vectorized version of above
+minrep_vectorized = function(pos, ref, alt) {
+	stopifnot(length(pos) == length(ref) &amp;&amp; length(ref) == length(alt))
+	for (i in 1:length(pos)) {
+		list_of_results = minrep_onerow(pos[i],ref[i],alt[i])
+		pos[i] = list_of_results[[1]]
+		ref[i] = list_of_results[[2]]
+		alt[i] = list_of_results[[3]]
+		# if (i %% 1000 == 0) {
+		# 	print(i)
+		# }
+	}
+	return (data.frame(pos, ref, alt))
+}
+</pre>
+<p>The reward was that it ran really quickly &#8211; in less time than it took Pandas to process 100 variants, R did the entire analysis on 6.4M variants. Long story short, before processing, the &#8220;alone&#8221; variant calls contained 135 alleles which were not found in the &#8220;joint&#8221; VCF:</p>
+<pre class="brush: r; title: ; notranslate" title="">
+# how many &quot;alone&quot; variants cannot be found in the &quot;joint&quot; dataset?
+sqldf(&quot;
+select   count(*)
+from     alone a
+where    not exists (
+	     select   null
+	     from     joint j
+	     where    j.chr = a.chr
+	     and      j.pos = a.pos
+	     and      j.ref = a.ref
+	     and      j.alt = a.alt
+	     )
+;&quot;)
+#   count(*)
+# 1      135
+</pre>
+<p>135 out of 14,985 alleles are not found in the reference file. That&#8217;s close to 1% of alleles. That may not seem like a big deal, but in Mendelian genetics, the first thing we do is filter on allele frequency. When searching for causal variants, we&#8217;ll only even look at alleles that have a frequency of, say, 0.1% or less in the reference population. Because these 135 variants (falsely) appear to have a frequency of 0% in the reference dataset, they&#8217;ll all be in there muddying the waters, even though some of them are probably common variants.</p>
+<p>After converting both the &#8220;alone&#8221; and &#8220;joint&#8221; files to minimal representation, the number of mismatches drops from 135 to 4:</p>
+<pre class="brush: r; title: ; notranslate" title="">
+# how many &quot;alone&quot; variants are missing from &quot;joint&quot; once both are in minrep?
+sqldf(&quot;
+select   count(*)
+from     alone_mr a
+where    not exists (
+	     select   null
+	     from     joint_mr j
+	     where    j.chr = a.chr
+	     and      j.pos = a.pos
+	     and      j.ref = a.ref
+	     and      j.alt = a.alt
+	     )
+;&quot;)
+#   count(*)
+# 1        4
+</pre>
+<p>What&#8217;s more, upon closer examination, those 4 turn out <em>not</em> to be annotation mismatches. Here are the 4 variants:</p>
+<pre>
+#   chr       pos ref                                         alt
+# 1   1 152681680   C                         CAGCTCTGGGGGCTGCTGT
+# 2  12  53207583   C CCACCAAAGCCACCAGTGCCGAAACCAGCTCCGAAGCCGCCGG
+# 3  17  26708547  CT                                           C
+# 4  19  18392236   C                                           A
+</pre>
+<p>The first two are long insertions which were called slightly differently in the joint-called data. The last two were simply not called at all.</p>
+<p>This means that at least one of the two VCFs had the wrong genotype for NA12878, but genotyping errors are always going to be a problem. As far as annotation errors go, the conversion to minimal representation solved 131 out of 131 of them in this one example exome &#8211; so as far as we are able to detect, it&#8217;s a 100% solution.</p>
+<p>If we looked at a larger dataset, I am not sure it would quite be 100%. I can imagine a scenario where an indel in one individual forces two nearby SNPs in a different individual to be called as part of one site, even though in an &#8220;alone&#8221;-called file they&#8217;d have been separate SNPs. For instance:</p>
+<pre>
+#CHROM	POS	ID	REF	ALT
+1	1001	.	GCGCG	G,GTGTG
+</pre>
+<p>In this case, one individual&#8217;s 4-bp deletion (GCGCG&gt;G) forces another individual&#8217;s two C&gt;T SNPs to be called as one MNP. If the latter individual were called alone, these might have been called as two separate variants: 1002 C&gt;T and 1004 C&gt;T. However, in NA12878 and in the other VCFs we browsed looking for weird edge cases, we didn&#8217;t actually see any variants like this, so maybe they don&#8217;t exist. I am told that <a href="https://www.broadinstitute.org/gatk/gatkdocs/org_broadinstitute_sting_gatk_walkers_haplotypecaller_HaplotypeCaller.html">HaplotypeCaller</a> increasingly calls nearby (even if not adjacent) SNPs as MNPs anyway, and if two SNPs are too far apart to be spanned by a read, then an indel that spans both sites is unlikely to be callable.</p>
+<p>Having figured out that our solution was good enough to fix ~100% of cases, it was time to implement a quick script to look up a variant of interest in a reference VCF. </p>
+<p>It&#8217;s a work in progress, but so far <a href="https://github.com/ericminikel/minimal_representation/blob/master/lookup_var.py"><code>lookup_var.py</code></a> has worked in <a href="https://github.com/ericminikel/minimal_representation/blob/master/test_lookup_var.bash">every scenario I&#8217;ve tested it</a>. Given a variant (not necessarily in minimal representation), it looks for the same variant (not necessarily in the same or minimal representation) within &plusmn;100bp in a reference VCF file, and if found, it prints out the first 9 columns of the relevant line of the VCF, and then lists all the samples who have that allele called. If you provide a reference table which lists which project each sample is from, then it will also tell you which project each sample is in, for quick reference. (You could easily modify this to give you the BAM path, make IGV screenshots, or something else). This script is relatively slow (several seconds to look up one variant in a large reference VCF) due to the need to find the individuals in whom the variant is present. For most purposes, it will be sufficient to just keep a table of allele frequencies for variants already converted to minimal representation, and look up variants in that. Between these two approaches, hopefully this will greatly improve our ability to figure out if a putative causal variant is really as rare as we think it is.</p>

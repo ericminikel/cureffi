@@ -1,0 +1,22 @@
+---
+layout: post
+title: "Making sense of the Allen Institute mouse brain images"
+author: ericminikel
+date: 2012-03-31 20:41:17
+---
+<p>In a meeting earlier this week I was finally able to get clarification on what all I&#8217;m looking at in the Allen Institute images <a href="/2012/03/25/mouse-brain-images-from-the-allen-institute-for-brain-science/">mentioned in a previous post</a>.</p>
+<p><strong>ISH images</strong></p>
+<p>In these images, purkinje cells are stained purple, while granular cells are stained brown with hematoxylin (aka HE or H&amp;E).  Purkinje cells do not stain well with HE.  The white regions represent the &#8220;molecular layer&#8221;.  Note that in this series of sagittal sections, 17 is the midline and 1 is the outermost section, so 10-12 is around the region where damage to the thalamus from FFI would be most visible.   In the image below, (1) is the &#8220;arrow&#8221; characteristic of the hippocampus; the part of the thalamus immediately below it, labeled as (2), is the most affected in FFI.</p>
+<div><a href="http://developingmouse.brain-map.org/siv?imageId=100738498&amp;imageType=ish,expression&amp;showSubImage=y" target="_blank">http://developingmouse.brain-<wbr>map.org/siv?imageId=100738498&amp;<wbr>imageType=ish,expression&amp;<wbr>showSubImage=y</wbr></wbr></wbr></a></div>
+<div><a href="/wp-content/uploads/2012/03/allen-ish.png"><img class="alignnone size-large wp-image-508" title="allen-ish" src="/wp-content/uploads/2012/03/allen-ish-1024x434.png"/></a></div>
+<div></div>
+<div>Because FFI affects different brain regions to different extents (or at all), detecting damage requires knowing what part of the brain you&#8217;re looking at.  So one ultimate goal of my image segmentation project should be to identify the brain region.  One huge clue is the &#8220;arrow&#8221; (labeled &#8220;1&#8243; in the image above) characteristic of the hippocampus.</div>
+<div></div>
+<div><strong>mRNA expression images</strong></div>
+<p>This series shows mRNA expression of a gene of your choice (PRNP in the example below) via a DIG stain where nitroblue tetrazoleum brings out a blue precipitate, and Tyramide Signal Amplification is used to read the image.   The images are paired with maps of the brain region you&#8217;re looking at.  These could also be used towards machine learning for identifying brain regions.   But mRNA expression won&#8217;t be especially useful for studying FFI because for PRNP <a href="http://www.ncbi.nlm.nih.gov/pubmed/12031342">Ford et al (2002) have found that mRNA and protein expression are uncorrelated</a>.</p>
+<p><a href="http://mouse.brain-map.org/experiment/siv?id=undefined&amp;imageId=100960496" target="_blank">http://mouse.brain-map.org/<wbr>experiment/siv?id=undefined&amp;<wbr>imageId=100960496</wbr></wbr></a></p>
+<p><a href="/wp-content/uploads/2012/03/allen-mRNA.png"><img class="alignnone size-large wp-image-511" title="allen-mRNA" src="/wp-content/uploads/2012/03/allen-mRNA-1024x453.png"/></a></p>
+<p><strong>Connectivity</strong></p>
+<p>This series shows neuronal connections which will eventually be quite useful to us to figure out what the thalamus connects to:</p>
+<p><a href="http://connectivity.brain-map.org/projection/experiment/siv/100147785?ImageId=102287360&amp;ImageType=TWO_PHOTON&amp;InitImage=TWO_PHOTON" target="_blank">http://connectivity.brain-map.<wbr>org/projection/experiment/siv/<wbr>100147785?ImageId=102287360&amp;<wbr>ImageType=TWO_PHOTON&amp;<wbr>InitImage=TWO_PHOTON</wbr></wbr></wbr></wbr></a></p>
+<p><a href="/wp-content/uploads/2012/03/allen-connections.png"><img class="alignnone size-large wp-image-513" title="allen-connections" src="/wp-content/uploads/2012/03/allen-connections-1024x454.png"/></a></p>

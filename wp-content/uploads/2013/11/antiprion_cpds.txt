@@ -1,0 +1,23 @@
+common_name	smiles	citation	citation_name
+congo red	[O-]S(=O)(=O)c5cc(/N=N/c1ccc(cc1)c4ccc(/N=N/c3cc(c2ccccc2c3N)S([O-])(=O)=O)cc4)c(N)c6c5cccc6	http://www.ncbi.nlm.nih.gov/pubmed/1352803	Caughey & Race 1992
+amphotericin b	C[C@H]1/C=C/C=C/C=C/C=C/C=C/C=C/C=C/[C@@H](C[C@H]2[C@@H]([C@H](C[C@](O2)(C[C@H](C[C@H]([C@@H](CC[C@H](C[C@H](CC(=O)O[C@H]([C@@H]([C@@H]1O)C)C)O)O)O)O)O)O)O)C(=O)O)O[C@H]3[C@H]([C@H]([C@@H]([C@H](O3)C)O)N)O	http://www.ncbi.nlm.nih.gov/pubmed/2433387	Pocchiari 1987
+heparin	OC4([H])(C([H])(OC([H])(OC3([H])(C([H])(OC([H])(OC2([H])(C([H])(OC([H])(OC1([H])(C([H])(O[H])C([H])(N([H])C(=O)C([H])([H])[H])C()([H])OC1([H])(C([H])([H])OS(=O)(=O)O[H])))C([H])(OS(=O)(=O)O[H])C2([H])(O[H]))C(=O)O[H]))C([H])(N([H])S(=O)(=O)O[H])C3([H])(OS(=O)(=O)O[H]))C([H])([H])O[H]))C([H])(OS(=O)(=O)O[H])C4([H])(O[H]))C(=O)O[H])	http://www.ncbi.nlm.nih.gov/pubmed/7678300	Caughey & Raymond 1993
+quinacrine	CCN(CC)CCCC(C)Nc1c2ccc(cc2nc3c1cc(cc3)OC)Cl	http://www.ncbi.nlm.nih.gov/pubmed/10775631/	Doh-Ura 2000
+curcumin	O=C(\C=C\c1ccc(O)c(OC)c1)CC(=O)\C=C\c2cc(OC)c(O)cc2	http://www.ncbi.nlm.nih.gov/pubmed/12692251	Caughey 2003
+cpd-b	C1(C2=CC=C(N/N=C\C3=CC=NC=C3)C=C2)=CN=CO1	http://www.ncbi.nlm.nih.gov/pubmed/17881452/	Kawasaki 2007
+anle138b	C1OC2=C(O1)C=C(C=C2)C3=CC(=NN3)C4=CC(=CC=C4)Br	http://www.ncbi.nlm.nih.gov/pubmed/23604588	Wagner 2013
+IND24	CC1=CC=CC(NC2=NC(C(C=C3)=CC=C3C4=CC=CC=C4)=CS2)=N1	http://www.ncbi.nlm.nih.gov/pubmed/24128760	Berry 2013
+chlorpromazine	CN(C)CCCN1c2ccccc2Sc3c1cc(cc3)Cl	http://www.ncbi.nlm.nih.gov/pubmed/11504948/	Korth 2001
+dextran sulfate	OCC2OC(OCC1OC(O)C(OS(=O)(=O)O)C(OS(=O)(=O)O)C1(OS(=O)(=O)O))C(OS(=O)(=O)O)C(OS(=O)(=O)O)C2(OS(=O)(=O)O)	http://www.ncbi.nlm.nih.gov/pubmed/6205119	Ehlers & Diringer 1984
+pentosan polysuflate	C1[C@H]([C@@H]([C@H]([C@@H](O1)O[C@@H]2CO[C@H]([C@@H]([C@H]2OS(=O)(=O)O)OS(=O)(=O)O)O)OS(=O)(=O)O)OS(=O)(=O)O)O	http://www.ncbi.nlm.nih.gov/pubmed/15113880	Doh-Ura 2004
+phthalocyanine tetrasulfonate	C1=CC2=C(C=C1S(=O)(=O)O)C3=NC4=NC(=NC5=NC(=NC6=C7C=CC(=CC7=C(N6)N=C2N3)S(=O)(=O)O)C8=C5C=CC(=C8)S(=O)(=O)O)C9=C4C=CC(=C9)S(=O)(=O)O	http://www.ncbi.nlm.nih.gov/pubmed/10688802	Priola 2000
+suramin	O=C(Nc1cc(ccc1C)C(=O)Nc3c2c(cc(cc2c(cc3)S(=O)(=O)O)S(=O)(=O)O)S(=O)(=O)O)c8cccc(NC(=O)Nc7cc(C(=O)Nc6cc(C(=O)Nc5c4c(cc(cc4c(cc5)S(=O)(=O)O)S(=O)(=O)O)S(=O)(=O)O)ccc6C)ccc7)c8	http://www.ncbi.nlm.nih.gov/pubmed/10775631/	Doh-Ura 2000
+chloroquine	Clc1cc2nccc(c2cc1)NC(C)CCCN(CC)CC	http://www.ncbi.nlm.nih.gov/pubmed/10775631/	Doh-Ura 2000
+tilorone	CCN(CC)CCOC1=CC2=C(C=C1)C3=C(C2=O)C=C(C=C3)OCCN(CC)CC	http://www.ncbi.nlm.nih.gov/pubmed/10775631/	Doh-Ura 2000
+E-64d	CCOC(=O)[C@@H]1[C@H](O1)C(=O)N[C@@H](CC(C)C)C(=O)NCCC(C)C	http://www.ncbi.nlm.nih.gov/pubmed/10775631/	Doh-Ura 2000
+E-64	CC(C)C[C@@H](C(=O)NCCCCN=C(N)N)NC(=O)[C@@H]1[C@H](O1)C(=O)O	http://www.ncbi.nlm.nih.gov/pubmed/10775631/	Doh-Ura 2000
+leupeptin	CC(C)C[C@@H](C(=O)N[C@@H](CC(C)C)C(=O)N[C@@H](CCCN=C(N)N)C=O)NC(=O)C	http://www.ncbi.nlm.nih.gov/pubmed/10775631/	Doh-Ura 2000
+DOSPA	CCCCCCCC/C=C\CCCCCCCCOCC(C[N+](C)(C)CCNC(=O)C(CCCNCCCN)NCCCN)OCCCCCCCC/C=C\CCCCCCCC	http://www.ncbi.nlm.nih.gov/pubmed/10937879/	Winklhofer 2000
+arylpiperazine 41	C4CN(c3ccc(c2nc1ccccc1o2)cc3)CCN4Cc5cccnc5	http://www.ncbi.nlm.nih.gov/pubmed/23847718	Li 2013a
+arylamide 17	CC(C)N4CCN(c3ccc(NC(=O)c2ccc(c1ccccc1)cc2)cc3)CC4	http://www.ncbi.nlm.nih.gov/pubmed/23977416	Li 2013b
+thienyl pyrimidine A6	Nc3nccc(c2ccc(c1cccs1)s2)n3	http://www.ncbi.nlm.nih.gov/pubmed/22016521	Ayrolles-Torro 2011

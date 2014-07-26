@@ -1,0 +1,38 @@
+---
+layout: post
+title: "Tips for dealing with NHGRI GWAS catalog data"
+author: ericminikel
+date: 2012-12-28 18:27:19
+---
+<p>Over the last few years, the U.S. National Human Genome Research Institute has made an effort to compile all the results of published <a title="Genome-wide association studies" href="/2012/08/06/genome-wide-association-studies/">genome-wide association studies</a> into one big table, the <a href="http://www.genome.gov/gwastudies/">GWAS catalog</a>.  This is an awesome dataset, with 9,977 trait-associated SNPs as of this writing, and has already proven to be a useful public resource enabling other research &#8211; for instance, <a href="http://www.plosgenetics.org/article/info:doi/10.1371/journal.pgen.1000888">Nicolae 2010</a>&#8216;s finding that GWA hits are enriched for <a title="expression quantitative trait loci.  SNPs that have an effect on transcriptional regulation of genes." href="http://en.wikipedia.org/wiki/Expression_quantitative_trait_loci">eQTLs</a>.</p>
+<p>The data are a bit tricky to work with.  Here&#8217;s what I&#8217;ve figured out.</p>
+<p>Use <a href="http://www.genome.gov/admin/gwascatalog.txt">this link</a> to download the latest version of the catalog in tab-delimited txt form.  Once you&#8217;ve downloaded it, you might want to read it into R.  Two issues: (1) it contains special characters with HTML escapes such as <code>&amp;#x000e7;</code>, which will a default <code>read.table</code> statement in R will interpret as comments/quotes thus ending a line and giving you errors like <code>line 2 did not have 34 elements</code>, and (2) R will convert scientifically notated p values into factors, making it difficult to recast them to numeric later.  What you need is this line of  R code:</p>
+<pre>gwahits = data.frame(read.table('gwascatalog.txt',header=TRUE,sep='\t',quote="",comment.char="",as.is=TRUE))</pre>
+<p>Once you get to working with the data you&#8217;ll notice that many GWA hits are duplicated &#8211; i.e. the same SNP has been found associated with the same (or different) traits in different studies, so not all rows are unique:</p>
+<pre>&gt; length(paste(gwahits$Chr_id,gwahits$Chr_pos))
+[1] 9977
+&gt; length(unique(paste(gwahits$Chr_id,gwahits$Chr_pos)))
+[1] 7912</pre>
+<p>You&#8217;ll also notice the data are non-<a href="http://en.wikipedia.org/wiki/Relational_model">relational</a>, which is probably my biggest complaint about this (and every) bioinformatics dataset.  For instance, multi-SNP haplotype GWA hits are reported as a single row with comma-separated values such as <code>rs897200, rs7572482, rs7574070</code> and some other SNPs (that impact multiple genes?) are reported with semicolon-separated values such as <code>PBX2;GPSM3</code>.  If you&#8217;re not already with me on the importance of the relational data model, just try to generate some descriptive statistics that include these rows &#8211; for instance, find the total number of GWA hits and minimum p value for each gene. You&#8217;ll probably end up needing to write your own Python script to parse the multiple values into separate rows.</p>
+<p>Chromosomal coordinates aren&#8217;t reported for most of these complex rows (i.e. <code>Chr_id</code> and <code>Chr_pos</code> are <code>NA</code>), which makes it hard to do any <a href="http://genome.ucsc.edu/FAQ/FAQformat.html#format1">BED</a>-style operations.  For instance, I wanted to intersect the GWA hits with a BED file of exons from the <a href="http://genome.ucsc.edu/cgi-bin/hgTables?org=human">UCSC Table Browser</a> in order to see how many GWA hits were exonic.  To create a BED file for this, I had to subset just the unique non-NA rows:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">gwabed <span style="color: #666666;">=</span> data.frame(gwahits$Chr_id,gwahits$Chr_pos,gwahits$Chr_pos)
+gwabed <span style="color: #666666;">=</span> unique(gwabed[!is.na(gwabed$gwahits.Chr_pos),])
+write.table(gwabed,file<span style="color: #666666;">=</span><span style="color: #ba2121;">"gwahits.bed"</span>,eol<span style="color: #666666;">=</span><span style="color: #ba2121;">"\n"</span>,row.names<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">FALSE</span>,col.names<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">FALSE</span>,sep<span style="color: #666666;">=</span><span style="color: #ba2121;">"\t"</span>)</pre>
+</div>
+<p>And then I used <a href="http://code.google.com/p/bedtools/"><code>intersectBed -u</code></a> via bash (add &#8216;chr&#8217; to match UCSC&#8217;s hg19 formatting):</p>
+<pre>sed -i 's/^/chr/' gwahits.bed
+intersectBed -a gwahits.bed -b UCSC_knownGene_exons -u &gt; gwahits_exonic.bed
+intersectBed -a gwahits.bed -b UCSC_knownGenes_WholeGene -u &gt; gwahits_genic.bed</pre>
+<p>I also thought it would be interesting to make a <a href="http://en.wikipedia.org/wiki/Manhattan_plot">Manhattan plot</a> of the GWA hits.  Normally you make Manhattan plots of sets of SNPs from unbiased association studies, so most SNPs are not significant &#8211; here we have a list of SNPs that are selected to all be significant.  I used <a href="http://gettinggeneticsdone.blogspot.com/2010/01/gwas-manhattan-plots-and-qq-plots-using.html">Stephen Turner&#8217;s awesome Manhattan plot code</a> as follows:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">source(<span style="color: #ba2121;">"http://dl.dropbox.com/u/66281/0_Permanent/qqman.r"</span>)
+P <span style="color: #666666;">=</span> as.numeric(gwahits$p.Value)
+CHR <span style="color: #666666;">=</span> gwahits$Chr_id
+BP <span style="color: #666666;">=</span> as.integer(gwahits$Chr_pos)
+gwa2 <span style="color: #666666;">=</span> unique(data.frame(CHR,BP,P))
+manhattan(gwa2,colors<span style="color: #666666;">=</span>rainbow(<span style="color: #666666;">6</span>))</pre>
+</div>
+<p>Producing this plot:</p>
+<p><a href="/wp-content/uploads/2012/12/gwa.manhattan.png"><img class="alignnone size-full wp-image-1363" title="gwa.manhattan" src="/wp-content/uploads/2012/12/gwa.manhattan.png"/></a></p>
+<p>Note the magnitude of the log scale on the y-axis.  I was surprised that, even though these are <em>all</em> trait-associated SNPs (and I selected for unique SNPs), you still see the characteristic pattern from which Manhattan plots get their name: the peaks of association form skyscrapers.  I suppose that the accumulation of many associated SNPs clustered closely together reflects the fact that dozens of mutations in one important gene (or group of genes) could all be associated with traits related to that gene.  For instance I note that the huge dense spike on Chromosome 6 (in purple) appears to correspond to the <a href="http://en.wikipedia.org/wiki/Human_leukocyte_antigen">HLA</a>, the site of a dense cluster of immune system genes and ground zero for autoimmune disease risk factors.</p>

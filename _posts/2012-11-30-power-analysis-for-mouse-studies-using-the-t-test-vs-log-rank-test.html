@@ -1,0 +1,136 @@
+---
+layout: post
+title: "Power analysis for mouse studies using the t test vs. log-rank test"
+author: ericminikel
+date: 2012-11-30 01:32:04
+---
+<p>In <a href="/2012/11/29/students-t-test-vs-log-rank-test-for-mouse-studies/">my last post</a> I looked at the Student&#8217;s t test vs. log-rank test for determining significance in survival differences between control and treatment groups in a mouse study.  You can argue that each test is better in particular circumstances, and which one you use might depend on your data.</p>
+<p>That&#8217;s kind of a lame answer, though, especially if you&#8217;re still designing your study and you want to know how many mice you need.  Power analysis for these two tests might give you a pretty different answer.</p>
+<p>First let&#8217;s talk through power analysis at a concept level.  Four variables are related to one another: α (false discovery rate), 1-β (power; β=false negative rate), n (sample size), and θ (effect size).  There&#8217;s a <a href="http://en.wikipedia.org/wiki/Ideal_gas_law">PV=nRT</a> sort of relationship between these four: any three determine the other one.  Here I&#8217;m assuming effect size is expressed in standard deviations (e.g. the effect size you&#8217;re looking for could be &#8220;the treatment increases mean survival by 0.5 standard deviations&#8221; thus θ=Δ/σ; otherwise you should consider Δ = μ<sub>treatment</sub>-μ<sub>control </sub>(absolute effect size e.g. &#8220;increase survival by 10 days&#8221;) and σ<sup>2</sup> (variance) as two separate inputs.</p>
+<p>To get started, how do we do a power analysis for these tests?  For the t test you can use a simple built-in R function, <code>power.t.test</code>. I&#8217;m going to digress here for a bit because I feel the need to understand any tool I&#8217;m going to use rather than just black boxing it.  Something I love about R is that you can just type a function&#8217;s name at the prompt to see its source code.  Here is what  <code>power.t.test </code>looks like:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #008000; font-weight: bold;">function</span> (n <span style="color: #666666;">=</span> <span style="color: #008000; font-weight: bold;">NULL</span>, delta <span style="color: #666666;">=</span> <span style="color: #008000; font-weight: bold;">NULL</span>, sd <span style="color: #666666;">=</span> <span style="color: #666666;">1</span>, sig.level <span style="color: #666666;">=</span> <span style="color: #666666;">0.05</span>, power <span style="color: #666666;">=</span> <span style="color: #008000; font-weight: bold;">NULL</span>, 
+    type <span style="color: #666666;">=</span> c(<span style="color: #ba2121;">"two.sample"</span>, <span style="color: #ba2121;">"one.sample"</span>, <span style="color: #ba2121;">"paired"</span>), alternative <span style="color: #666666;">=</span> c(<span style="color: #ba2121;">"two.sided"</span>, 
+        <span style="color: #ba2121;">"one.sided"</span>), strict <span style="color: #666666;">=</span> <span style="color: #008000; font-weight: bold;">FALSE</span>) 
+{
+    <span style="color: #008000; font-weight: bold;">if</span> (sum(sapply(list(n, delta, sd, power, sig.level), is.null)) <span style="color: #666666;">!=</span> 
+        <span style="color: #666666;">1</span>) 
+        stop(<span style="color: #ba2121;">"exactly one of 'n', 'delta', 'sd', 'power', and 'sig.level' must be NULL"</span>)
+    <span style="color: #008000; font-weight: bold;">if</span> (!is.null(sig.level) <span style="color: #666666;">&amp;&amp;</span> !is.numeric(sig.level) <span style="color: #666666;">||</span> any(<span style="color: #666666;">0</span> <span style="color: #666666;">&gt;</span> 
+        sig.level <span style="color: #666666;">|</span> sig.level <span style="color: #666666;">&gt;</span> <span style="color: #666666;">1</span>)) 
+        stop(<span style="color: #ba2121;">"'sig.level' must be numeric in [0, 1]"</span>)
+    type <span style="color: #666666;">&lt;-</span> match.arg(type)
+    alternative <span style="color: #666666;">&lt;-</span> match.arg(alternative)
+    tsample <span style="color: #666666;">&lt;-</span> switch(type, one.sample <span style="color: #666666;">=</span> <span style="color: #666666;">1</span>, two.sample <span style="color: #666666;">=</span> <span style="color: #666666;">2</span>, paired <span style="color: #666666;">=</span> <span style="color: #666666;">1</span>)
+    tside <span style="color: #666666;">&lt;-</span> switch(alternative, one.sided <span style="color: #666666;">=</span> <span style="color: #666666;">1</span>, two.sided <span style="color: #666666;">=</span> <span style="color: #666666;">2</span>)
+    <span style="color: #008000; font-weight: bold;">if</span> (tside <span style="color: #666666;">==</span> <span style="color: #666666;">2</span> <span style="color: #666666;">&amp;&amp;</span> !is.null(delta)) 
+        delta <span style="color: #666666;">&lt;-</span> abs(delta)
+    p.body <span style="color: #666666;">&lt;-</span> quote({
+        nu <span style="color: #666666;">&lt;-</span> (n <span style="color: #666666;">-</span> <span style="color: #666666;">1</span>) <span style="color: #666666;">*</span> tsample
+        pt(qt(sig.level<span style="color: #666666;">/</span>tside, nu, lower.tail <span style="color: #666666;">=</span> <span style="color: #008000; font-weight: bold;">FALSE</span>), nu, ncp <span style="color: #666666;">=</span> sqrt(n<span style="color: #666666;">/</span>tsample) <span style="color: #666666;">*</span> 
+            delta<span style="color: #666666;">/</span>sd, lower.tail <span style="color: #666666;">=</span> <span style="color: #008000; font-weight: bold;">FALSE</span>)
+    })
+    <span style="color: #008000; font-weight: bold;">if</span> (strict <span style="color: #666666;">&amp;</span> tside <span style="color: #666666;">==</span> <span style="color: #666666;">2</span>) 
+        p.body <span style="color: #666666;">&lt;-</span> quote({
+            nu <span style="color: #666666;">&lt;-</span> (n <span style="color: #666666;">-</span> <span style="color: #666666;">1</span>) <span style="color: #666666;">*</span> tsample
+            qu <span style="color: #666666;">&lt;-</span> qt(sig.level<span style="color: #666666;">/</span>tside, nu, lower.tail <span style="color: #666666;">=</span> <span style="color: #008000; font-weight: bold;">FALSE</span>)
+            pt(qu, nu, ncp <span style="color: #666666;">=</span> sqrt(n<span style="color: #666666;">/</span>tsample) <span style="color: #666666;">*</span> delta<span style="color: #666666;">/</span>sd, lower.tail <span style="color: #666666;">=</span> <span style="color: #008000; font-weight: bold;">FALSE</span>) <span style="color: #666666;">+</span> 
+                pt(<span style="color: #666666;">-</span>qu, nu, ncp <span style="color: #666666;">=</span> sqrt(n<span style="color: #666666;">/</span>tsample) <span style="color: #666666;">*</span> delta<span style="color: #666666;">/</span>sd, 
+                  lower.tail <span style="color: #666666;">=</span> <span style="color: #008000; font-weight: bold;">TRUE</span>)
+        })
+    <span style="color: #008000; font-weight: bold;">if</span> (is.null(power)) 
+        power <span style="color: #666666;">&lt;-</span> eval(p.body)
+    <span style="color: #008000; font-weight: bold;">else</span> <span style="color: #008000; font-weight: bold;">if</span> (is.null(n)) 
+        n <span style="color: #666666;">&lt;-</span> uniroot(<span style="color: #008000; font-weight: bold;">function</span>(n) eval(p.body) <span style="color: #666666;">-</span> power, c(<span style="color: #666666;">2</span>, <span style="color: #666666;">1</span>e<span style="color: #666666;">+07</span>))$root
+    <span style="color: #008000; font-weight: bold;">else</span> <span style="color: #008000; font-weight: bold;">if</span> (is.null(sd)) 
+        sd <span style="color: #666666;">&lt;-</span> uniroot(<span style="color: #008000; font-weight: bold;">function</span>(sd) eval(p.body) <span style="color: #666666;">-</span> power, delta <span style="color: #666666;">*</span> 
+            c(<span style="color: #666666;">1</span>e<span style="color: #666666;">-07</span>, <span style="color: #666666;">1</span>e<span style="color: #666666;">+07</span>))$root
+    <span style="color: #008000; font-weight: bold;">else</span> <span style="color: #008000; font-weight: bold;">if</span> (is.null(delta)) 
+        delta <span style="color: #666666;">&lt;-</span> uniroot(<span style="color: #008000; font-weight: bold;">function</span>(delta) eval(p.body) <span style="color: #666666;">-</span> power, 
+            sd <span style="color: #666666;">*</span> c(<span style="color: #666666;">1</span>e<span style="color: #666666;">-07</span>, <span style="color: #666666;">1</span>e<span style="color: #666666;">+07</span>))$root
+    <span style="color: #008000; font-weight: bold;">else</span> <span style="color: #008000; font-weight: bold;">if</span> (is.null(sig.level)) 
+        sig.level <span style="color: #666666;">&lt;-</span> uniroot(<span style="color: #008000; font-weight: bold;">function</span>(sig.level) eval(p.body) <span style="color: #666666;">-</span> 
+            power, c(<span style="color: #666666;">1</span>e<span style="color: #666666;">-10</span>, <span style="color: #666666;">1</span> <span style="color: #666666;">-</span> <span style="color: #666666;">1</span>e<span style="color: #666666;">-10</span>))$root
+    <span style="color: #008000; font-weight: bold;">else</span> stop(<span style="color: #ba2121;">"internal error"</span>)
+    NOTE <span style="color: #666666;">&lt;-</span> switch(type, paired <span style="color: #666666;">=</span> <span style="color: #ba2121;">"n is number of *pairs*, sd is std.dev. of *differences* within pairs"</span>, 
+        two.sample <span style="color: #666666;">=</span> <span style="color: #ba2121;">"n is number in *each* group"</span>, <span style="color: #008000; font-weight: bold;">NULL</span>)
+    METHOD <span style="color: #666666;">&lt;-</span> paste(switch(type, one.sample <span style="color: #666666;">=</span> <span style="color: #ba2121;">"One-sample"</span>, two.sample <span style="color: #666666;">=</span> <span style="color: #ba2121;">"Two-sample"</span>, 
+        paired <span style="color: #666666;">=</span> <span style="color: #ba2121;">"Paired"</span>), <span style="color: #ba2121;">"t test power calculation"</span>)
+    structure(list(n <span style="color: #666666;">=</span> n, delta <span style="color: #666666;">=</span> delta, sd <span style="color: #666666;">=</span> sd, sig.level <span style="color: #666666;">=</span> sig.level, 
+        power <span style="color: #666666;">=</span> power, alternative <span style="color: #666666;">=</span> alternative, note <span style="color: #666666;">=</span> NOTE, 
+        method <span style="color: #666666;">=</span> METHOD), class <span style="color: #666666;">=</span> <span style="color: #ba2121;">"power.htest"</span>)
+}</pre>
+</div>
+<p>I had to pore over this several times before I figured out what it was doing.  The key here is this expression which determines power:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">pt(qt(sig.level<span style="color: #666666;">/</span>tside, nu, lower.tail <span style="color: #666666;">=</span> <span style="color: #008000; font-weight: bold;">FALSE</span>), nu, ncp <span style="color: #666666;">=</span> sqrt(n<span style="color: #666666;">/</span>tsample)<span style="color: #666666;">* </span>delta<span style="color: #666666;">/</span>sd, lower.tail <span style="color: #666666;">=</span> <span style="color: #008000; font-weight: bold;">FALSE</span>)</pre>
+</div>
+<p>Let me explain what the relationship here is (for a two-sample, two-sided t test):</p>
+<ul>
+<li><code>tsample</code> is the number of groups: 2 for a two-sample test, 1 for a one-sample test</li>
+<li><code>delta</code> is Δ, the absolute effect size (μ<sub>treatment</sub>-μ<sub>control</sub>)</li>
+<li><code>sd</code> is σ, the standard deviation</li>
+<li><code>delta/sd</code> is θ, the effect size in units of standard deviations</li>
+<li><code>nu</code>, the total degrees of freedom, is the number of mice (n) per group times tsample</li>
+<li><code>ncp</code>, the noncentrality parameter for the t distribution, is sqrt(n/tsample)*theta</li>
+<li><code>sig.level</code> is α, the false discovery rate</li>
+<li><code>tside</code> is the sidedness of the test, i.e. 2 for 2-sided</li>
+<li><code>sig.level/tside</code> just adjusts to calculate based on one tail, so if alpha = .05 in a two-tailed test, you need to make sure .05/2 = .025 of the probability lies below the .025 quantile.</li>
+<li><code>qt</code> is the inverse CDF of the t distribution, so <code>qt(.025, nu, lower.tail = FALSE)</code> gives you the t value at which 2.5% of the cumulative probability lies below that t value.</li>
+<li><code>pt</code> is the CDF of the t distribution, so the overall expression gives the fraction of cumulative probability lying below the t value from the above bullet point, in a t distribution with the given non-centrality parameter.</li>
+</ul>
+<p>So this is the expression if you have the other inputs and you want to determine power.  R doesn&#8217;t actually have expressions to determine the other variables&#8211; instead, it uses <code>uniroot</code>, which is just an iterative approach to find the value that gives the specified power (like &#8216;goalseek&#8217; in Excel).</p>
+<p>So notice that in <code>power.t.test</code>, you put in Δ and σ as parameters and what it actually uses is <code>delta/sd</code> = Δ/σ = θ, the effect size in terms of standard deviations.</p>
+<p>This is important.  Power depends on variance.  It really and truly does.  Think of it this way: Δ = signal and σ = noise.  It&#8217;s hard to see the signal of a drug&#8217;s effect through the noise of high variance in mouse phenotype.</p>
+<p>As an example, consider <a href="http://vir.sgmjournals.org/content/89/2/594.full.pdf">Riemer 2008</a>&#8216;s data on <a href="/2012/11/24/curcumin-as-prion-therapeutic/">curcumin in scrapie mice</a>.  Riemer tested curcumin in groups of about 17 mice, standard deviation in the control and treatment group were each about ±9 days, and let&#8217;s assume that 90% power at the α=.01 threshold was desired.  This study was 90% powered to detect delays in disease onset of at least 12 days (~6% delay in onset):</p>
+<pre>&gt; power.t.test(n=17,delta=NULL,sd=9,power=.9,sig.level=.01)
+
+     Two-sample t test power calculation 
+
+              n = 17
+          delta = 12.5691
+             sd = 9
+      sig.level = 0.01
+          power = 0.9
+    alternative = two.sided
+
+ NOTE: n is number in *each* group</pre>
+<p>In some other studies (e.g. <a href="/wp-content/uploads/2012/09/cortes-2012-rapamycin-delays-disease-onset-.pdf">Cortes 2012</a>), standard deviation for survival has been as small as ±4 days.  If Riemer&#8217;s mice had such little variance, then Riemer&#8217;s study would have been 90% powered to detect changes down to about 5 or 6 days (~3% delay in onset):</p>
+<pre>&gt; power.t.test(n=17,delta=NULL,sd=4,power=.9,sig.level=.01)
+
+     Two-sample t test power calculation 
+
+              n = 17
+          delta = 5.586265
+             sd = 4
+      sig.level = 0.01
+          power = 0.9
+    alternative = two.sided
+
+ NOTE: n is number in *each* group</pre>
+<p>So variance matters. As it should.</p>
+<p>My problem with power analysis for the log-rank test is that it doesn&#8217;t account for variance. I can&#8217;t claim to completely understand the reasons for this, but it seems to be steeped in the fact that hazard rates are usually modeled as exponential distributions, thus implying that the hazards themselves occur as Poisson processes.  In an <a href="http://en.wikipedia.org/wiki/Exponential_distribution">exponential distribution</a> with rate λ, the expected value and the standard deviation are both just 1/λ.  That&#8217;s a property of the distribution.  It&#8217;s not like a normal distribution where you get to specify the mean and standard deviation separately.  So the effect size (difference in rates) already includes all the information about the difference in variance.</p>
+<p><a href="http://mayoresearch.mayo.edu/mayo/research/staff/therneau_tm.cfm">Terry Therneau</a>, author of the R survival package and <a href="http://www.stat.ubc.ca/~rollin/teach/533/survival.pdf">this awesome documentation</a>, also contributed <a href="https://stat.ethz.ch/pipermail/r-help/2008-February/153203.html">this explanation</a> of how to calculate power for the log-rank test, easily the most concise explanation of it on the web.  I wrote a quick R function to wrap the logic he put forth:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># alpha = false discovery rate</span>
+<span style="color: #408080; font-style: italic;"># power = desired power</span>
+<span style="color: #408080; font-style: italic;"># prop = proportion of total mice in treatment vs. control group (ex. .2 for 20% v. 80%)</span>
+<span style="color: #408080; font-style: italic;"># hazardratio = effect size, e.g. to detect 10% delay in onset use 1.1</span>
+logrankpower <span style="color: #666666;">=</span> <span style="color: #008000; font-weight: bold;">function</span>(alpha,power,prop,hazardratio) {
+    <span style="color: #008000; font-weight: bold;">return</span> ( ((qnorm(<span style="color: #666666;">1-</span>alpha<span style="color: #666666;">/2</span>) <span style="color: #666666;">+</span> qnorm(power))<span style="color: #666666;">^2</span>) <span style="color: #666666;">/</span> ((prop)<span style="color: #666666;">*</span>(<span style="color: #666666;">1-</span>prop)<span style="color: #666666;">*</span> log(hazardratio)<span style="color: #666666;">^2</span>) )
+}</pre>
+</div>
+<p>And it gives me some peculiar answers.  I get the same 341 that <a href="https://stat.ethz.ch/pipermail/r-help/2008-February/153203.html">he states</a>, so I think I wrote the function correctly.  This power analyis would say that in order to have 90% power at the α=.01 threshold to detect a 6% change in age at death in scrapie mice with 50/50 treatment/control mice, you would need to observe 17,529 deaths of mice:</p>
+<pre>&gt; logrankpower(.01,.9,.5,1.06)
+[1] 17529.57</pre>
+<p>Whereas, as shown above, the t test says you&#8217;ve got that amount of power with 34 mice (17 per group).  But if you&#8217;re modeling the deaths as an exponential distribution, and the average age of onset is 200 days, then the exponential distribution requires that the standard deviation <em>also</em> be 200 days.  Which is clearly not the case.</p>
+<p>And neither is it the case that the ages at death of these mice follow an exponential distribution (where probability density is always highest at zero, no matter how low the rate) which would look like this:</p>
+<pre>hist(rexp(1000,rate=1/120))</pre>
+<p><a href="/wp-content/uploads/2012/11/histogram-of-exponential-distribution.png"><img class="alignnone size-full wp-image-1119" title="histogram-of-exponential-distribution" src="/wp-content/uploads/2012/11/histogram-of-exponential-distribution.png"/></a></p>
+<p>Instead it looks much more like a normal distribution:</p>
+<pre>hist(rnorm(1000,m=120,sd=9),xlim=c(0,150))</pre>
+<p><a href="/wp-content/uploads/2012/11/histogram-of-normal-distribution.png"><img class="alignnone size-full wp-image-1120" title="histogram-of-normal-distribution" src="/wp-content/uploads/2012/11/histogram-of-normal-distribution.png"/></a></p>
+<p>Remember that the Poisson process is used to model <em>rare events</em>, whereas mice infected with scrapie die very reliably.  The exponential distribution might be perfect for, say, clinical trials of drugs that lower risk of cardiovascular disease, where the &#8220;event&#8221; is someone having a heart attack, and (1) most people in the study won&#8217;t have one whether or not they get the drug, purely by chance, and (2) those who do have heart attacks might have them right away; there is no &#8220;incubation period&#8221;.</p>
+<p>Now, the log-rank test itself (as far as I can tell) does not <em>exactly</em> assume an underlying Poisson model.  Because it only looks at the order of events and not the absolute times, it does <em>not</em> incorrectly assume that the deaths of mice follow an exponential distribution like that shown in the histogram above.</p>
+<p>But this power calculation does seem to assume that, and that&#8217;s why it gives outlandish answers like 17,529 mice.</p>
+<p>Based on my current understanding, my thinking is that power calculations for mouse studies should be based on a t test because its assumptions—normality, equal variance that you specify, all mice reaching an endpoint (whether that&#8217;s symptom onset, death, etc.) eventually—seem to be pretty well met for prion-infected mice.  If your therapeutic is so awesome that some mice make it to the end of the study with no symptoms, then you can&#8217;t really use a t test on your data, but then again, if your therapeutic is that effective, you probably won&#8217;t have any trouble establishing statistical significance anyway.</p>

@@ -1,0 +1,40 @@
+---
+layout: post
+title: 'A simple mathematical example of the glycoform "selection model"'
+author: ericminikel
+date: 2013-06-08 23:09:29
+---
+<p><strong>introduction</strong></p>
+<p>Recently I <a title="Prion protein N-linked glycosylation: review and assessment of therapeutic potential" href="/2013/05/05/prion-protein-n-linked-glycosylation-review-and-assessment-of-therapeutic-potential/">introduced the glycosylation of prion protein</a> (PrP).  In brief: strain information appears to be encoded exclusively in conformation, with no need for glycosylation  [<a href="http://www.ncbi.nlm.nih.gov/pubmed/7791905">Bessen 1995</a>, <a href="http://www.ncbi.nlm.nih.gov/pubmed/19297485">Piro 2009</a>], at least in most prion strains.  However, different strains present with different ratios of the three principal glycoforms of PrP &#8211; di-, mono- and un-glycosylated, and these ratios are stable over transmission through multiple species of animal [<a href="http://www.ncbi.nlm.nih.gov/pubmed/8878476">Collinge 1996</a>, <a href="http://www.ncbi.nlm.nih.gov/pubmed/9333232">Hill 1997</a>] and over propagation <em>in vitro</em>.  A plausible model to explain this phenomenon is the &#8216;selection model&#8217; [<a href="http://www.ncbi.nlm.nih.gov/pubmed/8878476">Collinge 1996</a>] namely that different strains &#8211; where strain is determined by conformation &#8211; have differential abilities to convert PrP<sup>C</sup> depending on the glycosylation state of PrP<sup>C</sup>.  Because the glycosylation of PrP<sup>C</sup> varies by brain region even in uninfected animals [<a href="http://www.ncbi.nlm.nih.gov/pubmed/10499442">DeArmond 1999</a>], the &#8216;selection model&#8217; could potentially contribute to explaining the known phenomenon of <em>strain-specific neurotropism</em>, meaning that different strains exhibit their most damaging effects on different brain regions.</p>
+<p>It&#8217;s not trivial to wrap one&#8217;s mind around the &#8216;selection model&#8217;.  The purpose of this post is to present a mathematical model of how it could work.</p>
+<p><strong>model</strong></p>
+<p>Cells can produce PrP<sup>C</sup> in four glycosylation states: diglycosylated, mono181, mono197, and unglycosylated.  Here I&#8217;ll present a simple model with nice round large numbers.</p>
+<p>Suppose Strain A has a conformation such that it efficiently converts PrPC glycosylated at N181, and inefficiently converts PrPC unglycosylated at this site.  In a unit of time <em>t</em>, it is able to convert 80% of diglycosylated PrPC molecules to which it is exposed, 80% of mono181 molecules, 20% of mono197 and 20% of unglycosylated.</p>
+<p>Strain B &#8216;prefers&#8217; minimal glycosylation.  In a given unit of time it can convert only 20% of diglycosylated molecules, 50% of mono181 and mono197 molecules, and 80% of unglycosylated molecules.</p>
+<p>In Brain Region 1, glycoproteins get heavily glycosylated.  Per unit of time, it produces 250 diglycosylated PrP<sup>C</sup> molecules, and 50 each of mono181, mono197 and unglycosylated.</p>
+<p>In Brain Region 2, the PrP<sup>C</sup> expression level is the same but less glycosylation occurs.  Per unit of time, it produces 50 diglycosylated molecules, 50 each of mono181, mono197 and 250 unglycosylated molecules.</p>
+<p>Let&#8217;s see how many PrP<sup>C</sup> molecules will be converted to PrP<sup>Sc</sup> in each brain region in each strain:</p>
+<p><table style="width:100%; " class="easy-table easy-table-default " border="0">
+<thead>
+<tr><th>prion strain</th>
+<th>brain region 1</th>
+<th>brain region 2</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>A</td>
+<td>80%*250+80%*50+20%*50+20%*50 = <strong>260</strong> PrP<sup>Sc</sup> molecules</td>
+<td>80%*50+80%*50+20%*50+20%*250 = <strong>140</strong> PrP<sup>Sc</sup> molecules</td>
+</tr>
+
+<tr><td>B</td>
+<td>20%*250+50%*50+50%*50+80%*50 = <strong>140</strong> PrP<sup>Sc</sup> molecules molecules</td>
+<td>20%*50+50%*50+50%*50+80%*250 = <strong>260</strong> PrP<sup>Sc</sup> molecules</td>
+</tr>
+</tbody></table></p>
+<p>So if different conformations of PrP<sup>Sc</sup> have different abilities to convert different glycoforms of PrP, and different brain regions produce the four glycoforms in different proportions, then different amounts of PrP<sup>Sc</sup> will be produced in different brain regions by different strains.</p>
+<p>Meanwhile, PrP-res accumulation tracks pretty well with the extent of pathology across brain regions – at least this has been reported in CJD [<a href="http://www.ncbi.nlm.nih.gov/pubmed/8651649">Parchi 1996</a>] and FFI [<a href="http://www.ncbi.nlm.nih.gov/pubmed/9222180">Cortelli 1997</a>].  So we&#8217;d expect that Strain A would devastate Brain Region 1, while leaving Brain Region 2 relatively intact, and the opposite would be true for Strain B.</p>
+<p>In other words, glycoform selection provides a potential explanation for strain-specific neurotropism.</p>
+<p><strong>does it work with real data?</strong></p>
+<p>The numbers used in the toy example above may not be very realistic.  For one, &lt; 3% of PrP<sup>C</sup> molecules ever get converted to PrP<sup>Sc</sup>, at least in cell culture [<a href="http://www.ncbi.nlm.nih.gov/pubmed/1680859">Caughey &amp; Raymond 1991</a> (<a href="http://www.jbc.org/content/266/27/18217.full.pdf">ft</a>)].  And glycoform ratios in real prion strains are not as dramatically different as the difference between Strain A and Strain B above.  Also, prion strains might &#8220;prefer&#8221; particular PrP<sup>C</sup> glycoforms on two different dimensions: which sites are glycosylated (di/mono181/mono197/un) and also what glycan chains are attached.  There is some info on how glycan chains vary by brain region [<a href="http://www.ncbi.nlm.nih.gov/pubmed/10499442">DeArmond 1999</a>], but I couldn&#8217;t find any good data on the ratio of di/mono/un-glycosylated PrP<sup>C</sup> varies by brain region.</p>
+<p>I am thinking of using <a href="http://rsb.info.nih.gov/ij/">ImageJ</a> and <a href="http://lukemiller.org/index.php/2010/11/analyzing-gels-and-western-blots-with-image-j/">this tutorial</a> to do densitometric scanning on Western blots of human and rodent PrP<sup>Sc</sup> from different strains [<a href="http://www.ncbi.nlm.nih.gov/pubmed/8878476">Collinge 1996</a>, <a href="http://www.ncbi.nlm.nih.gov/pubmed/9121579">Somerville 1997</a>] to quantify the glycoform ratio.  If I can also find some data on how the ratio varies for PrP<sup>C</sup> by brain region, I could actually plug in the numbers and see if they predict the neurotropism observed in these strains.</p>

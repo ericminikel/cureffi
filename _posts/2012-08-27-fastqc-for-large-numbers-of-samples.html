@@ -1,0 +1,98 @@
+---
+layout: post
+title: "FastQC for large numbers of samples"
+author: ericminikel
+date: 2012-08-27 20:34:29
+---
+<p>Suppose you&#8217;re analyzing exome data, all the way from <a href="http://en.wikipedia.org/wiki/FASTQ_format">FASTQ</a> files as your starting point.  Guides such as the <a href="http://seqanswers.com/wiki/How-to/exome_analysis">how-to at seqanswers</a> will suggest that somewhere near the beginning of your pipeline you should do some quality control on the FASTQ files themselves.  Of course, after you align your reads to a genome you will look at quality control metrics such as coverage, but this is more fundamental than that&#8211; this is looking at the quality of the reads themselves that are coming off of your sequencer.  The most widely used tool for this is <a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/">FastQC</a>.  It&#8217;s pretty easy to use and there is a nice instructional video which helps explain how to interpret the results:</p>
+<p><iframe src="http://www.youtube.com/embed/bz93ReOv87Y" frameborder="0" width="560" height="315"></iframe></p>
+<p>FastQC runs in under an hour on a ~2GB .fq.gz file (you don&#8217;t need to unzip before running) and outputs an HTML file with graphs and images showing the quality of your data.  Graphically it&#8217;s pretty slick, but if you have hundreds and hundreds of samples, you&#8217;re not going to open up HTML page and pore over the results with your own two eyes.  You need some way of looking at these data in aggregate.</p>
+<p>Luckily FastQC also outputs a plain text version of its results, which, although not quite database-ready out of the box, is easy to convert.  Today I wrote a Python script to walk a directory, find all the FastQC output files and scrape the information into a PostgreSQL database.  Because the schema of results is different for every test that FastQC runs and I didn&#8217;t want to create 10 different tables, I kept it simple and just read all the details into a couple of plain text columns.</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #008000; font-weight: bold;">import</span> <span style="color: #0000ff; font-weight: bold;">os</span>
+<span style="color: #008000; font-weight: bold;">import</span> <span style="color: #0000ff; font-weight: bold;">sys</span>
+<span style="color: #008000; font-weight: bold;">import</span> <span style="color: #0000ff; font-weight: bold;">psycopg2</span>
+
+conn <span style="color: #666666;">=</span> psycopg2<span style="color: #666666;">.</span>connect(database<span style="color: #666666;">=</span><span style="color: #ba2121;">"mydb"</span>, user<span style="color: #666666;">=</span><span style="color: #ba2121;">"postgres"</span>, password<span style="color: #666666;">=</span><span style="color: #ba2121;">"password"</span>)
+c <span style="color: #666666;">=</span> conn<span style="color: #666666;">.</span>cursor()
+
+create_table_sql <span style="color: #666666;">=</span> <span style="color: #ba2121;">"""</span>
+<span style="color: #ba2121;">drop table if exists fastqc_summary;</span>
+<span style="color: #ba2121;">create table fastqc_summary (</span>
+<span style="color: #ba2121;">fileid varchar,</span>
+<span style="color: #ba2121;">module varchar,</span>
+<span style="color: #ba2121;">status varchar</span>
+<span style="color: #ba2121;">);</span>
+<span style="color: #ba2121;">drop table if exists fastqc_details;</span>
+<span style="color: #ba2121;">create table fastqc_details (</span>
+<span style="color: #ba2121;">id serial primary key,</span>
+<span style="color: #ba2121;">fileid varchar,</span>
+<span style="color: #ba2121;">module varchar,</span>
+<span style="color: #ba2121;">col1 varchar,</span>
+<span style="color: #ba2121;">ocols varchar</span>
+<span style="color: #ba2121;">);</span>
+<span style="color: #ba2121;">"""</span>
+
+c<span style="color: #666666;">.</span>execute(create_table_sql)
+conn<span style="color: #666666;">.</span>commit()
+
+<span style="color: #008000; font-weight: bold;">for</span> root, dirs, files <span style="color: #aa22ff; font-weight: bold;">in</span> os<span style="color: #666666;">.</span>walk(<span style="color: #ba2121;">"c:/your/dir/here/"</span>): <span style="color: #408080; font-style: italic;"># walk a directory containing FastQC output for multiple samples</span>
+    <span style="color: #008000; font-weight: bold;">for</span> name <span style="color: #aa22ff; font-weight: bold;">in</span> files:
+        <span style="color: #008000; font-weight: bold;">if</span> (name <span style="color: #666666;">==</span> <span style="color: #ba2121;">"fastqc_data.txt"</span>):
+            fileid <span style="color: #666666;">=</span> name <span style="color: #408080; font-style: italic;"># use string slicing here if you only want part of the filename as the id</span>
+            <span style="color: #008000; font-weight: bold;">with</span> <span style="color: #008000;">open</span>(os<span style="color: #666666;">.</span>path<span style="color: #666666;">.</span>join(root,name),<span style="color: #ba2121;">"r"</span>) <span style="color: #008000; font-weight: bold;">as</span> f: <span style="color: #408080; font-style: italic;"># automatically close the file when done</span>
+                <span style="color: #008000; font-weight: bold;">for</span> line <span style="color: #aa22ff; font-weight: bold;">in</span> f<span style="color: #666666;">.</span>readlines():
+                    line <span style="color: #666666;">=</span> line<span style="color: #666666;">.</span>strip() <span style="color: #408080; font-style: italic;"># trim endline</span>
+                    <span style="color: #008000; font-weight: bold;">if</span> (line[:<span style="color: #666666;">2</span>] <span style="color: #666666;">==</span> <span style="color: #ba2121;">"&gt;&gt;"</span> <span style="color: #aa22ff; font-weight: bold;">and</span> line[:<span style="color: #666666;">12</span>] <span style="color: #666666;">!=</span> <span style="color: #ba2121;">"&gt;&gt;END_MODULE"</span>): <span style="color: #408080; font-style: italic;"># for each module grab summary data</span>
+                        module <span style="color: #666666;">=</span> line[<span style="color: #666666;">2</span>:<span style="color: #666666;">-5</span>] <span style="color: #408080; font-style: italic;"># grab module name</span>
+                        status <span style="color: #666666;">=</span> line[<span style="color: #666666;">-4</span>:] <span style="color: #408080; font-style: italic;"># and overall status pass/warn/fail</span>
+                        sql <span style="color: #666666;">=</span> <span style="color: #ba2121;">"insert into fastqc_summary(fileid,module,status) values(</span><span style="color: #bb6688; font-weight: bold;">%s</span><span style="color: #ba2121;">,</span><span style="color: #bb6688; font-weight: bold;">%s</span><span style="color: #ba2121;">,</span><span style="color: #bb6688; font-weight: bold;">%s</span><span style="color: #ba2121;">);"</span>
+                        data <span style="color: #666666;">=</span> (fileid,module,status)
+                        c<span style="color: #666666;">.</span>execute(sql,data)
+                    <span style="color: #008000; font-weight: bold;">elif</span> (line[:<span style="color: #666666;">2</span>] <span style="color: #666666;">!=</span> <span style="color: #ba2121;">"&gt;&gt;"</span> <span style="color: #aa22ff; font-weight: bold;">and</span> line[:<span style="color: #666666;">2</span>] <span style="color: #666666;">!=</span> <span style="color: #ba2121;">"##"</span>): <span style="color: #408080; font-style: italic;"># grab details under each module</span>
+                        cols <span style="color: #666666;">=</span> line<span style="color: #666666;">.</span>split(<span style="color: #ba2121;">"</span><span style="color: #bb6622; font-weight: bold;">\t</span><span style="color: #ba2121;">"</span>)
+                        col1 <span style="color: #666666;">=</span> cols[<span style="color: #666666;">0</span>]
+                        ocols <span style="color: #666666;">=</span> <span style="color: #ba2121;">"|"</span><span style="color: #666666;">.</span>join(cols[<span style="color: #666666;">1</span>:])
+                        sql <span style="color: #666666;">=</span> <span style="color: #ba2121;">"insert into fastqc_details(fileid,module,col1,ocols) values(</span><span style="color: #bb6688; font-weight: bold;">%s</span><span style="color: #ba2121;">,</span><span style="color: #bb6688; font-weight: bold;">%s</span><span style="color: #ba2121;">,</span><span style="color: #bb6688; font-weight: bold;">%s</span><span style="color: #ba2121;">,</span><span style="color: #bb6688; font-weight: bold;">%s</span><span style="color: #ba2121;">);"</span>
+                        data <span style="color: #666666;">=</span> (fileid,module,col1,ocols)
+                        c<span style="color: #666666;">.</span>execute(sql,data)
+
+conn<span style="color: #666666;">.</span>commit()
+c<span style="color: #666666;">.</span>close()
+conn<span style="color: #666666;">.</span>close()</pre>
+</div>
+<p>Once you&#8217;ve got this data read into PostgreSQL, it&#8217;s easy to figure out what (if anything) is wrong with your data.  Here are a few SQL queries I found useful as a starting point:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;">-- how many modules passed, warned and failed</span>
+<span style="color: #008000; font-weight: bold;">select</span> status, <span style="color: #008000; font-weight: bold;">count</span>(<span style="color: #666666;">*</span>) n <span style="color: #008000; font-weight: bold;">from</span> fastqc_summary <span style="color: #008000; font-weight: bold;">group</span> <span style="color: #008000; font-weight: bold;">by</span> status;
+
+<span style="color: #408080; font-style: italic;">-- see which modules failed</span>
+<span style="color: #008000; font-weight: bold;">select</span> <span style="color: #666666;">*</span> <span style="color: #008000; font-weight: bold;">from</span> fastqc_summary <span style="color: #008000; font-weight: bold;">where</span> status <span style="color: #666666;">=</span> <span style="color: #ba2121;">'fail'</span>;
+
+<span style="color: #408080; font-style: italic;">-- get all details for failed modules</span>
+<span style="color: #008000; font-weight: bold;">select</span>   <span style="color: #666666;">*</span>
+<span style="color: #008000; font-weight: bold;">from</span>     fastqc_summary s, fastqc_details d
+<span style="color: #008000; font-weight: bold;">where</span>    s.fileid <span style="color: #666666;">=</span> d.fileid
+<span style="color: #008000; font-weight: bold;">and</span>      s.module <span style="color: #666666;">=</span> d.module
+<span style="color: #008000; font-weight: bold;">and</span>      s.status <span style="color: #666666;">=</span> <span style="color: #ba2121;">'fail'</span>
+<span style="color: #008000; font-weight: bold;">order</span> <span style="color: #008000; font-weight: bold;">by</span> id;
+
+<span style="color: #408080; font-style: italic;">-- see which modules failed in the most samples</span>
+<span style="color: #008000; font-weight: bold;">select</span> module, <span style="color: #008000; font-weight: bold;">count</span>(<span style="color: #666666;">*</span>) n <span style="color: #008000; font-weight: bold;">from</span> fastqc_summary <span style="color: #008000; font-weight: bold;">where</span> status <span style="color: #666666;">=</span> <span style="color: #ba2121;">'fail'</span> <span style="color: #008000; font-weight: bold;">group</span> <span style="color: #008000; font-weight: bold;">by</span> module <span style="color: #008000; font-weight: bold;">order</span> <span style="color: #008000; font-weight: bold;">by</span> module;
+
+<span style="color: #408080; font-style: italic;">-- see which modules warned in the most samples</span>
+<span style="color: #008000; font-weight: bold;">select</span> module, <span style="color: #008000; font-weight: bold;">count</span>(<span style="color: #666666;">*</span>) n <span style="color: #008000; font-weight: bold;">from</span> fastqc_summary <span style="color: #008000; font-weight: bold;">where</span> status <span style="color: #666666;">=</span> <span style="color: #ba2121;">'warn'</span> <span style="color: #008000; font-weight: bold;">group</span> <span style="color: #008000; font-weight: bold;">by</span> module <span style="color: #008000; font-weight: bold;">order</span> <span style="color: #008000; font-weight: bold;">by</span> module;
+
+<span style="color: #408080; font-style: italic;">-- see which samples had one or more failed modules</span>
+<span style="color: #008000; font-weight: bold;">select</span> fileid, <span style="color: #008000; font-weight: bold;">count</span>(<span style="color: #666666;">*</span>) n <span style="color: #008000; font-weight: bold;">from</span> fastqc_summary <span style="color: #008000; font-weight: bold;">where</span> status <span style="color: #666666;">=</span> <span style="color: #ba2121;">'fail'</span> <span style="color: #008000; font-weight: bold;">group</span> <span style="color: #008000; font-weight: bold;">by</span> fileid <span style="color: #008000; font-weight: bold;">order</span> <span style="color: #008000; font-weight: bold;">by</span> fileid;
+
+<span style="color: #408080; font-style: italic;">-- see which samples had one or more modules with failure or warning</span>
+<span style="color: #008000; font-weight: bold;">select</span> fileid, <span style="color: #008000; font-weight: bold;">count</span>(<span style="color: #666666;">*</span>) n <span style="color: #008000; font-weight: bold;">from</span> fastqc_summary <span style="color: #008000; font-weight: bold;">where</span> status <span style="color: #008000; font-weight: bold;">in</span>(<span style="color: #ba2121;">'fail'</span>,<span style="color: #ba2121;">'warn'</span>) <span style="color: #008000; font-weight: bold;">group</span> <span style="color: #008000; font-weight: bold;">by</span> fileid <span style="color: #008000; font-weight: bold;">order</span> <span style="color: #008000; font-weight: bold;">by</span> fileid;
+
+<span style="color: #408080; font-style: italic;">-- see quantity of data for each sample</span>
+<span style="color: #008000; font-weight: bold;">select</span> <span style="color: #666666;">*</span> <span style="color: #008000; font-weight: bold;">from</span> fastqc_details <span style="color: #008000; font-weight: bold;">where</span> col1 <span style="color: #666666;">=</span> <span style="color: #ba2121;">'Total Sequences'</span> <span style="color: #008000; font-weight: bold;">order</span> <span style="color: #008000; font-weight: bold;">by</span> ocols;
+
+<span style="color: #408080; font-style: italic;">-- see GC content for each sample</span>
+<span style="color: #008000; font-weight: bold;">select</span> <span style="color: #666666;">*</span> <span style="color: #008000; font-weight: bold;">from</span> fastqc_details <span style="color: #008000; font-weight: bold;">where</span> col1 <span style="color: #666666;">=</span> <span style="color: #ba2121;">'%GC'</span> <span style="color: #008000; font-weight: bold;">order</span> <span style="color: #008000; font-weight: bold;">by</span> ocols;</pre>
+</div>
+<p>&nbsp;</p>

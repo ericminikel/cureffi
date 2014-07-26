@@ -1,0 +1,58 @@
+---
+layout: post
+title: "Histone marks at 5' vs. 3' ends of genes: a gentle slope or sudden dropoff?"
+author: ericminikel
+date: 2013-06-14 13:51:35
+---
+<p>Today at work a discussion came up about <a href="http://en.wikipedia.org/wiki/Histone_code">histone modifications</a> vs. position within a gene, particularly with regards to H3K9 acetylation.  H3K9ac is an activating epigenetic marker &#8211; it is associated with increased levels of transcription and is thought to opens up chromatin, making it easier for RNA polymerase to get in and transcribe.  Levels of H3L9 acetylation are generally higher at the 5&#8242; (start) of a transcript than at the 3&#8242; (end) of a transcript.  Wikipedia <a href="http://en.wikipedia.org/wiki/Histone_code#Modifications">even says</a>, &#8220;H3K9ac is found in actively transcribed promoters&#8221; &#8211; i.e. 5&#8242; ends.  Our director <a href="http://genetics.med.harvard.edu/faculty/gusella">Jim Gusella</a> asked the question, does H3K9 acetylation gently slope off across the length of the gene, or is it a sudden dropoff?  <a href="http://dms.hms.harvard.edu/BBS/fac/MacDonald.php">Marcy MacDonald</a> asked the same question of H3K36me3, which is another activating mark but one which is  generally <a href="http://en.wikipedia.org/wiki/Histone_code#Modifications">associated with</a> &#8220;actively transcribed gene bodies&#8221; rather than just promoters.</p>
+<p>It occurred to me we should be able to answer these questions using <a href="http://encodeproject.org/">ENCODE</a> data.  ENCODE has done hundreds of genome-wide <a href="http://en.wikipedia.org/wiki/ChIP-sequencing">ChIP-seq</a> experiments, pulling down various histone modifications (or transcription factors, etc.) and asking what parts of genomic DNA they were bound to.</p>
+<p>So I looked up the <a href="http://genome.ucsc.edu/cgi-bin/hgTrackUi?hgsid=339011587&amp;g=wgEncodeSydhHistone">available ENCODE data</a> for these two histone marks.  There was only one cell line, NT2-D1, in which <em>both</em> H3K9ac and H3K36me3 have been measured. <a href="http://genome.ucsc.edu/cgi-bin/hgEncodeVocab?ra=encode%2Fcv.ra&amp;term=%22NT2-D1%22">NT2-D1</a> is a &#8220;malignant pluripotent embryonal carcinoma&#8221;.  (Sadly they <a href="http://encodeproject.org/cgi-bin/hgTracks?hgsid=339021531&amp;hgt_=1371232706&amp;db=hg19&amp;tsCurTab=advancedTab&amp;hgt_tsDelRow=&amp;hgt_tsAddRow=&amp;hgt_tsPage=&amp;tsSimple=&amp;tsName=&amp;tsDescr=&amp;tsGroup=Any&amp;tsType=Any&amp;hgt_mdbVar1=cell&amp;hgt_mdbVal1=NT2-D1&amp;hgt_mdbVar2=antibody&amp;hgt_mdbVal2=Any&amp;hgt_tSearch=search">did not do</a> transcription level or RNA polymerase in this cell line, otherwise it would be interesting to throw that in as well).  I grabbed the &#8220;Signal&#8221; (note: not &#8220;Peak&#8221;) data for these two histone marks from the UCSC Table Browser like so:</p>
+<p><a href="/wp-content/uploads/2013/06/nt2-d1.h3k9ac.getdata.png"><img class="alignnone size-large wp-image-2408" title="" src="/wp-content/uploads/2013/06/nt2-d1.h3k9ac.getdata-1024x595.png"/></a></p>
+<p><a href="/wp-content/uploads/2013/06/nt2-d1.h3k36me3.getdata.png"><img class="alignnone size-large wp-image-2409" title="" src="/wp-content/uploads/2013/06/nt2-d1.h3k36me3.getdata-1024x459.png"/></a></p>
+<p>Note that I used the &#8216;defined regions&#8217; option and pasted in BED formatted list of the start and stop positions of RefSeq transcripts of my two favorite genes, HTT (chr4) and PRNP (chr20), as examples to play with:</p>
+<pre>chr4	3076407	3245687
+chr20	4666796	4682234</pre>
+<p>Then I wrote this quick R script to process the raw data I got out and turn it into some plots.</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">setwd(<span style="color: #ba2121;">'c:/sci/026rplcl/data/ref/'</span>)
+
+h3k36me3 <span style="color: #666666;">=</span> read.table(<span style="color: #ba2121;">'nt2-d1.h3k36me3'</span>,skip<span style="color: #666666;">=2</span>)
+h3k9ac <span style="color: #666666;">=</span> read.table(<span style="color: #ba2121;">'nt2-d1.h3k9ac'</span>,skip<span style="color: #666666;">=2</span>)
+
+colnames(h3k36me3) <span style="color: #666666;">=</span> c(<span style="color: #ba2121;">'chr'</span>,<span style="color: #ba2121;">'startb'</span>,<span style="color: #ba2121;">'endb'</span>,<span style="color: #ba2121;">'depth'</span>)
+colnames(h3k9ac) <span style="color: #666666;">=</span> c(<span style="color: #ba2121;">'chr'</span>,<span style="color: #ba2121;">'startb'</span>,<span style="color: #ba2121;">'endb'</span>,<span style="color: #ba2121;">'depth'</span>)
+
+<span style="color: #408080; font-style: italic;"># add gene names to the tables. note this lazy method only works if you are looking at &lt;= 1 gene per chromosome <img src="/wp-includes/images/smilies/icon_smile.gif" alt=":)" class="wp-smiley"/> </span>
+matchgene <span style="color: #666666;">=</span> data.frame(c(<span style="color: #ba2121;">'chr4'</span>,<span style="color: #ba2121;">'chr20'</span>),c(<span style="color: #ba2121;">'HTT'</span>,<span style="color: #ba2121;">'PRNP'</span>),c(<span style="color: #ba2121;">'+'</span>,<span style="color: #ba2121;">'+'</span>))
+colnames(matchgene) <span style="color: #666666;">=</span> c(<span style="color: #ba2121;">'chr'</span>,<span style="color: #ba2121;">'gene'</span>,<span style="color: #ba2121;">'strand'</span>)
+
+h3k36me3 <span style="color: #666666;">=</span> merge(h3k36me3,matchgene,by<span style="color: #666666;">=</span><span style="color: #ba2121;">'chr'</span>)
+h3k9ac <span style="color: #666666;">=</span> merge(h3k9ac,matchgene,by<span style="color: #666666;">=</span><span style="color: #ba2121;">'chr'</span>)
+
+<span style="color: #008000; font-weight: bold;">for</span> (geneid in matchgene$gene) {
+  png(paste(geneid,<span style="color: #ba2121;">'.png'</span>,sep<span style="color: #666666;">=</span><span style="color: #ba2121;">''</span>))
+  temp1 <span style="color: #666666;">=</span> subset(h3k36me3, gene<span style="color: #666666;">==</span>geneid) <span style="color: #408080; font-style: italic;"># get data for current gene of interest</span>
+  temp1 <span style="color: #666666;">=</span> temp1[with(temp1,order(startb)),] <span style="color: #408080; font-style: italic;"># make sure it's in order by base pair position</span>
+  temp2 <span style="color: #666666;">=</span> subset(h3k9ac, gene<span style="color: #666666;">==</span>geneid)
+  temp2 <span style="color: #666666;">=</span> temp2[with(temp2,order(startb)),]
+  ylim <span style="color: #666666;">=</span> c(<span style="color: #666666;">0</span>,max(c(temp1$depth,temp2$depth)))
+  plot(temp1$startb,temp1$depth,pch<span style="color: #666666;">=19</span>,type<span style="color: #666666;">=</span><span style="color: #ba2121;">'l'</span>,lwd<span style="color: #666666;">=2</span>,col<span style="color: #666666;">=</span><span style="color: #ba2121;">'orange'</span>,ylim<span style="color: #666666;">=</span>ylim,xlab<span style="color: #666666;">=</span><span style="color: #ba2121;">'bp'</span>,ylab<span style="color: #666666;">=</span><span style="color: #ba2121;">'sequence depth'</span>,main<span style="color: #666666;">=</span>geneid) <span style="color: #408080; font-style: italic;"># plot H3K36me3</span>
+  points(temp2$startb,temp2$depth,pch<span style="color: #666666;">=19</span>,type<span style="color: #666666;">=</span><span style="color: #ba2121;">'l'</span>,lwd<span style="color: #666666;">=2</span>,col<span style="color: #666666;">=</span><span style="color: #ba2121;">'blue'</span>,ylim<span style="color: #666666;">=</span>ylim,xlab<span style="color: #666666;">=</span><span style="color: #ba2121;">'bp'</span>,ylab<span style="color: #666666;">=</span><span style="color: #ba2121;">'sequence depth'</span>,main<span style="color: #666666;">=</span>geneid) <span style="color: #408080; font-style: italic;"># plot H3K9ac</span>
+  <span style="color: #008000; font-weight: bold;">if</span> (matchgene$strand[matchgene$gene<span style="color: #666666;">==</span>geneid] <span style="color: #666666;">==</span> <span style="color: #ba2121;">'-'</span>) { <span style="color: #408080; font-style: italic;"># add the 3' and 5' labels</span>
+    axis(side<span style="color: #666666;">=1</span>,pos<span style="color: #666666;">=0</span>,at<span style="color: #666666;">=</span>c(min(temp1$startb),max(temp1$startb)),labels<span style="color: #666666;">=</span>c(<span style="color: #ba2121;">"3'"</span>,<span style="color: #ba2121;">"5'"</span>),lwd<span style="color: #666666;">=0</span>)  
+  } <span style="color: #008000; font-weight: bold;">else</span> <span style="color: #008000; font-weight: bold;">if</span> (matchgene$strand[matchgene$gene<span style="color: #666666;">==</span>geneid] <span style="color: #666666;">==</span> <span style="color: #ba2121;">'+'</span>) {
+    axis(side<span style="color: #666666;">=1</span>,pos<span style="color: #666666;">=0</span>,at<span style="color: #666666;">=</span>c(min(temp1$startb),max(temp1$startb)),labels<span style="color: #666666;">=</span>c(<span style="color: #ba2121;">"5'"</span>,<span style="color: #ba2121;">"3'"</span>),lwd<span style="color: #666666;">=0</span>)  
+  }
+  legend(<span style="color: #ba2121;">'topright'</span>,c(<span style="color: #ba2121;">'H3K36me3'</span>,<span style="color: #ba2121;">'H3K9ac'</span>),col<span style="color: #666666;">=</span>c(<span style="color: #ba2121;">'orange'</span>,<span style="color: #ba2121;">'blue'</span>),pch<span style="color: #666666;">=15</span>,cex<span style="color: #666666;">=1.5</span>)
+  dev.off()
+}</pre>
+</div>
+<p>And here&#8217;s the result:</p>
+<p><a href="/wp-content/uploads/2013/06/HTT.png"><img class="alignnone size-full wp-image-2410" title="HTT H3K9ac &amp; H3K36me3 marks by genomic position" src="/wp-content/uploads/2013/06/HTT.png"/></a></p>
+<p><a href="/wp-content/uploads/2013/06/PRNP.png"><img class="alignnone size-full wp-image-2411" title="PRNP H3K9ac &amp; H3K36me3 marks by genomic position" src="/wp-content/uploads/2013/06/PRNP.png"/></a></p>
+<p>A couple of things jump out from at least these two examples:</p>
+<ul>
+<li>H3K9ac is a sharp dropoff &#8211; it&#8217;s high right in the promoter and then drops off quickly to very little enrichment for the rest of the gene</li>
+<li>H3K36me3 is more consistent throughout the gene, and appears to maybe be slightly more enriched towards the 3&#8242;</li>
+</ul>
+<p>Both of the enrichment profiles are pretty jagged, and I&#8217;m not clear on whether that reflects actual differences in enrichment levels across the gene, or sequencing artifacts (<a title="PRNP deletions in 1000 Genomes are not real" href="/2013/03/31/prnp-deletions-in-1000-genomes-are-not-real/">GC content</a>, alignability, etc.).</p>

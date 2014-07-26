@@ -1,0 +1,60 @@
+---
+layout: post
+title: "Issues with the conventional BWA-Picard-GATK exome sequencing pipeline"
+author: ericminikel
+date: 2012-09-07 16:50:29
+---
+<p>For the past week or so I have been working on putting together a pipeline for human exome sequencing. I&#8217;ve got raw FASTQ files, two per sample with about 25M paired-end reads each (these files are around 6 GB unzipped), for 50 samples. I want to call variants in order to do some analysis.  So the vision is something like this:</p>
+<p>raw unaligned paired-end reads (FASTQ) -&gt; aligned reads (BAM) -&gt; variants (VCF) -&gt; SQL database, PED &amp; MAP files for PLINK, etc.</p>
+<p>This is bread and butter and shouldn&#8217;t be that hard. But it is. I started out following <a href="http://seqanswers.com/wiki/How-to/exome_analysis">the &#8220;how to&#8221; at seqanswers</a> and made it in pretty deep before being stymied by three separate software problems:</p>
+<p><strong>1. <a href="http://bio-bwa.sourceforge.net/bwa.shtml">bwa sampe</a> has speed and memory allocation problems.</strong>  For some of my samples it ran successfully and finished in a few hours, but other jobs (on same-sized input files) had been running for 24 hours and I finally had to kill them. I learned from <a href="http://seqanswers.com/forums/showthread.php?t=11652">seqanswers</a> that using -A to disable Smith-Waterman alignment can speed things up so I tried again with that, but then I started getting segmentation faults. bwa sampe would start, run for about two seconds and then:</p>
+<pre>[bwa_sai2sam_pe_core] convert to sequence coordinate...
+Segmentation fault (core dumped)</pre>
+<p>This memory allocation issue is documented on <a href="http://www.biostars.org/post/show/46868/bwa-sampe-segmentation-fault/">biostars</a>, <a href="http://sourceforge.net/mailarchive/forum.php?thread_name=CAAx9Y03LjBU3wFhbqZSCmonB42p_gg-H8GwddJYU1B4jzg4-Ag%40mail.gmail.com&amp;forum_name=bio-bwa-help">sourceforge</a>, <a href="http://seqanswers.com/forums/showthread.php?t=2077">seqanswers</a> and <a href="http://bioincloud.wordpress.com/2012/06/27/running-bwa-aligner-problems/">bioincloud</a>.  It appears to be an unresolved bug in the software.  These fora contain some suggestions as to how to resolve it, but none worked for me and I ran into this problem consistently across different versions of bwa (0.5.9, 0.6.1, and 0.6.2). Doing an <a href="http://linux.die.net/man/1/strace">strace</a> does indeed reveal that the system is unable to allocate memory. But I&#8217;m running this with 8GB of memory; how much does BWA need?! (And by the way, I then tried removing the -A flag again and I still got segmentation faults).</p>
+<p><strong>2. <a href="http://picard.sourceforge.net/">Picard</a> does not seem to like the format of SAM files produced by BWA.</strong>  It didn&#8217;t want to run MarkDuplicates because my SAM file was unsorted.  OK, I figured, I&#8217;ll run Picard&#8217;s SortSam tool first.  When I did that, I got a format problem: a non-numeric value in ISIZE column for mitochondrial DNA reads:</p>
+<pre>[Tue Aug 28 12:45:16 EDT 2012] net.sf.picard.sam.SortSam done. Elapsed time: 0.01 minutes.
+Runtime.totalMemory()=125435904
+FAQ: http://sourceforge.net/apps/mediawiki/picard/index.php?title=Main_Page
+Exception in thread "main" net.sf.samtools.SAMFormatException: Error parsing text SAM file. Non-numeric value in ISIZE column; Line 3982
+Line: FCC0CHTACXX:1:1101:14789:3170#TAGCTTAT 117 chrM 304415842 0 100M = -1610645157 2379906297 TGCGACTTGGAAGCGGATTCAGAGGACAGGACAGAACACTTGGGCAAGTGAATCTCTGTCTGTCTGTCTGTCTCATTGGTTGGTTTATTTCCATTTTCTT B@&lt;:&gt;CDDDBDDBDEEEEEEFEFCCHHFHHGGIIIHIGJJJIIGGGIIIIJJJIIGJIJGG@CEIFJIJJJJIJIJIJJJJIJJJGIHHGHFFEFFFCCC RG:Z:1868 XT:A:R NM:i:2 SM:i:0 AM:i:0 X0:i:2 X1:i:0 XM:i:2 XO:i:0 XG:i:0 MD:Z:39G45G14 XA:Z:chrM,-391302964,100M,2;
+at net.sf.samtools.SAMTextReader.reportFatalErrorParsingLine(SAMTextReader.java:223)
+at net.sf.samtools.SAMTextReader.access$400(SAMTextReader.java:40)
+at net.sf.samtools.SAMTextReader$RecordIterator.parseInt(SAMTextReader.java:293)
+at net.sf.samtools.SAMTextReader$RecordIterator.parseLine(SAMTextReader.java:394)
+at net.sf.samtools.SAMTextReader$RecordIterator.next(SAMTextReader.java:278)
+at net.sf.samtools.SAMTextReader$RecordIterator.next(SAMTextReader.java:250)
+at net.sf.samtools.SAMFileReader$AssertableIterator.next(SAMFileReader.java:641)
+at net.sf.samtools.SAMFileReader$AssertableIterator.next(SAMFileReader.java:619)
+at net.sf.picard.sam.SortSam.doWork(SortSam.java:68)
+at net.sf.picard.cmdline.CommandLineProgram.instanceMain(CommandLineProgram.java:177)
+at net.sf.picard.cmdline.CommandLineProgram.instanceMainWithExit(CommandLineProgram.java:119)
+at net.sf.picard.sam.SortSam.main(SortSam.java:57)</pre>
+<p>I couldn&#8217;t find any notes about this problem online.  I did try to sort using <a href="http://samtools.sourceforge.net/">samtools</a> instead and then go back to Picard&#8217;s MarkDuplicates with the ASSUME SORTED option, as suggested <a href="http://sourceforge.net/apps/mediawiki/picard/index.php?title=Main_Page#Q:_I_sorted_my_file_with_samtools_sort.__Why_does_a_Picard_program_complain_that_the_file_is_not_sorted.3F">here</a>, but with the VALIDATION_STRINGENCY=LENIENT option MarkDuplicates found the need to ignore a warning on every single mitochondrial DNA read:</p>
+<pre>java -jar ~/bin/picard-tools-1.74/MarkDuplicates.jar \
+INPUT=1sorted.bam \
+OUTPUT=1dedup.bam \
+ASSUME_SORTED=true \
+METRICS_FILE=metrics \
+CREATE_INDEX=true \
+VALIDATION_STRINGENCY=LENIENT
+
+...
+Ignoring SAM validation error: ERROR: Record 691, Read name FCC0CHTACXX:1:1302:4748:176644#GGCTACAT, Mate Alignment start (436154938) must be &lt;= reference sequence length (16571) on reference chrM
+Ignoring SAM validation error: ERROR: Record 692, Read name FCC0CHTACXX:1:2104:8494:167812#GGCTACAT, Mate Alignment start should != 0 because reference name != *.
+Ignoring SAM validation error: ERROR: Record 693, Read name FCC0CHTACXX:1:1201:21002:183608#GGCTACAT, Mate Alignment start should != 0 because reference name != *.
+Ignoring SAM validation error: ERROR: Record 694, Read name FCC0CHTACXX:1:2303:3184:35872#GGCTACAT, Mate Alignment start (436154812) must be &lt;= reference sequence length (16571) on reference chrM
+...</pre>
+<p>And on and on.  You can set VALIDATION_STRINGENCY to SILENT to ignore these, but to just ignore all the warnings seems foolish.  I did find <a href="http://seqanswers.com/forums/showthread.php?t=16905">one discussion of a related picard issue with mtDNA</a> but I used the same FASTA index file for all steps of my process, so I don&#8217;t see how that could be the issue.</p>
+<p><strong>3. GATK can&#8217;t load my reference sequence dictionary.</strong>  Due to problems 1 and 2 above, I didn&#8217;t have BAMs for all my samples and hadn&#8217;t been able to mark duplicate reads, but I figured I would at least try calling variants on just one sample to see if it would work.  It didn&#8217;t:</p>
+<pre>java -Xmx4g -jar ~/bin/gatk-2.1-5/GenomeAnalysisTK.jar \
+-glm BOTH \
+-R ../hg19.fa \
+-T UnifiedGenotyper \
+-I 1.bam \
+-o 1.vcf
+
+...
+##### ERROR MESSAGE: Invalid command line: Failed to load reference dictionary
+...</pre>
+<p>This issue is the subject of plenty of comments in web forums <a href="http://seqanswers.com/forums/showthread.php?t=8270">[1]</a><a href="http://seqanswers.com/forums/showthread.php?t=20599">[2]</a><a href="http://gatkforums.broadinstitute.org/discussion/1305/reference-dictionary-issues">[3]</a>, and after perusing them I think I found the issue: the hg19.dict file I was trying to use was of 0 bytes.  <a href="http://unmaimable2.rssing.com/browser.php?indx=1023066&amp;item=3373">This comment</a> suggested re-creating it with Picard&#8217;s <a href="http://picard.sourceforge.net/command-line-overview.shtml#CreateSequenceDictionary">CreateSequenceDictionary</a>, but the documentation for that feature seems to suggest that it creates a SAM or BAM file, not a .dict file.</p>
+<p>At this point I gave up.  All of these issues are probably fixable, but as they piled up it started to seem easier to just start over with an entirely different approach.  In a moment I will post about the pipeline I finally created using alternative tools.  That said, after attending <a href="/2012/09/07/improvements-in-gatk-2-x/">yesterday&#8217;s lecture on GATK at the Broad</a>, I now think perhaps GATK is worth a second try, and perhaps if I use GATK end-to-end some of these compatibility problems will be avoided.  More on that later if I do get it to work.</p>

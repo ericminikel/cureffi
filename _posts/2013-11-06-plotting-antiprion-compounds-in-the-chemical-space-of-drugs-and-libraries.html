@@ -1,0 +1,248 @@
+---
+layout: post
+title: "Plotting antiprion compounds in the chemical space of drugs and libraries"
+author: ericminikel
+date: 2013-11-06 13:51:35
+---
+<p><strong>introduction</strong></p>
+<p>Recently I&#8217;ve <a title="Comparison of high-throughput screening approaches used for anti-prion small molecule discovery" href="/2013/07/30/comparison-of-high-throughput-screening-approaches-used-for-anti-prion-small-molecule-discovery/">reviewed antiprion high-throughput screens</a>, learned <a title="A quick intro to chemical informatics in R" href="/2013/09/23/a-quick-intro-to-chemical-informatics-in-r/">a few basics of cheminformatics</a>, gotten <a title="List of FDA-approved drugs and CNS drugs with SMILES" href="/2013/10/04/list-of-fda-approved-drugs-and-cns-drugs-with-smiles/">a list of CNS drugs</a>, and <a title="Properties of CNS drugs vs. all FDA-approved drugs" href="/2013/10/04/properties-of-cns-drugs-vs-all-fda-approved-drugs/">compared the chemical space of CNS drugs vs. all drugs</a>. The goal of the present post is to examine how well 1) known antiprion compounds and 2) chemical libraries screened for antiprion compounds overlap with the chemical space of drugs generally and CNS drugs specifically.</p>
+<p><strong>antiprion compounds</strong></p>
+<p>Over a hundred of compounds have been reported to inhibit prion replication in cell culture or to extend survival in animal models. I&#8217;ve now reviewed most of the reported <em>in vivo</em> experiments <a title="Prion Therapeutic Review" href="/prion-therapeutic-review/">here</a>.  Many of the compounds studied have indirect mechanisms of action &#8211; see for instance <a title="A comparison of statin studies in scrapie-infected mice" href="/2013/05/24/a-comparison-of-statin-studies-in-scrapie-infected-mice/">statins</a>, rapalogues and other <a title="Prion protein degradation in lysosomes and the effect of autophagy-activating drugs" href="/2013/07/11/prion-protein-degradation-in-lysosomes-and-the-effect-of-autophagy-activating-drugs/">autophagy activators</a>, <a title="PERK inhibitors to save mice from prion disease?" href="/2013/10/11/perk-inhibitors-to-save-mice-from-prion-disease/">PERK inhibitors</a>, and so on &#8211; and some of these do and some do not affect prion replication. In this post, however, I am interested in the most potent anti-prion compounds &#8211; small molecules which can abolish prion replication almost completely, at least for a little while.  Some of these are highly effective <em>in vivo</em>, while others are not due to their toxicity, pharmacokinetics, or drug resistance issues, but all (as far as I know) have a well-replicated strong effect at least in cell culture. The mechanism for some of these is not known (e.g. <a title="Polyene antifungal drugs for prion disease" href="/2013/03/17/polyene-antifungal-drugs-for-prion-disease/">amphotericin b</a>), but as far as is known, most of these seem to bind either to  PrP<sup>C</sup> or to PrP<sup>Sc</sup>.  Below is the (non-exhaustive) list I came up with, and <a href="/wp-content/uploads/2013/11/antiprion_cpds.txt">here</a> is a tab-delimited file with SMILES for all these. For new compounds still in the lead development stage (for instance <a href="http://www.ncbi.nlm.nih.gov/pubmed/23847718">Li 2013a</a>, <a href="http://www.ncbi.nlm.nih.gov/pubmed/23977416">Li 2013b</a>) I just chose one representative compound.</p>
+<p><table style="width:100%; " class="easy-table easy-table-default " border="0">
+<thead>
+<tr><th>compound name</th>
+<th>citation</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>amphotericin b</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/pubmed/2433387">Pocchiari 1987</a></td>
+</tr>
+
+<tr><td>anle138b</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/pubmed/23604588">Wagner 2013</a></td>
+</tr>
+
+<tr><td>arylamide 17</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/pubmed/23977416">Li 2013b</a></td>
+</tr>
+
+<tr><td>arylpiperazine 41</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/pubmed/23847718">Li 2013a</a></td>
+</tr>
+
+<tr><td>chloroquine</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/pubmed/10775631/">Doh-Ura 2000</a></td>
+</tr>
+
+<tr><td>chlorpromazine</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/pubmed/11504948/">Korth 2001</a></td>
+</tr>
+
+<tr><td>congo red</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/pubmed/1352803">Caughey &amp; Race 1992</a></td>
+</tr>
+
+<tr><td>cpd-b</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/pubmed/17881452/">Kawasaki 2007</a></td>
+</tr>
+
+<tr><td>curcumin</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/pubmed/12692251">Caughey 2003</a></td>
+</tr>
+
+<tr><td>dextran sulfate</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/pubmed/6205119">Ehlers &amp; Diringer 1984</a></td>
+</tr>
+
+<tr><td>DOSPA</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/pubmed/10937879/">Winklhofer 2000</a></td>
+</tr>
+
+<tr><td>E-64</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/pubmed/10775631/">Doh-Ura 2000</a></td>
+</tr>
+
+<tr><td>E-64d</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/pubmed/10775631/">Doh-Ura 2000</a></td>
+</tr>
+
+<tr><td>heparin</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/pubmed/7678300">Caughey &amp; Raymond 1993</a></td>
+</tr>
+
+<tr><td>IND24</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/pubmed/24128760">Berry 2013</a></td>
+</tr>
+
+<tr><td>leupeptin</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/pubmed/10775631/">Doh-Ura 2000</a></td>
+</tr>
+
+<tr><td>pentosan polysuflate</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/pubmed/15113880">Doh-Ura 2004</a></td>
+</tr>
+
+<tr><td>phthalocyanine tetrasulfonate</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/pubmed/10688802">Priola 2000</a></td>
+</tr>
+
+<tr><td>quinacrine</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/pubmed/10775631/">Doh-Ura 2000</a></td>
+</tr>
+
+<tr><td>suramin</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/pubmed/10775631/">Doh-Ura 2000</a></td>
+</tr>
+
+<tr><td>thienyl pyrimidine A6</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/pubmed/22016521">Ayrolles-Torro 2011</a></td>
+</tr>
+
+<tr><td>tilorone</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/pubmed/10775631/">Doh-Ura 2000</a></td>
+</tr>
+</tbody></table></p>
+<p><strong>chemical libraries</strong></p>
+<p>I went to ZINC in search of the compound lists for chemical libraries that have been used in <a title="Comparison of high-throughput screening approaches used for anti-prion small molecule discovery" href="/2013/07/30/comparison-of-high-throughput-screening-approaches-used-for-anti-prion-small-molecule-discovery/">antiprion high-throughput screens</a>. Two were easy to find: the <a href="http://zinc.docking.org/catalogs/msusdrugs">MSDI US Drug Collection</a> and <a href="http://zinc.docking.org/catalogs/msspectrum">MSDI Spectrum Collection</a>. The others were more difficult.  Prusiner&#8217;s group has published a screen of 10,135 compounds [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2838138/">Ghaemmaghami 2010</a>] that appear to have been a subset of the 50,000-compound ChemDiv &#8220;<a href="https://smdc.ucsf.edu/documents/documents/CurrentCompounds_2011.pdf">Diversity Collecton</a>&#8221; maintained at UCSF&#8217;s Small Molecule Discovery Center (SMDC).  I was able to get data on all 50,000 compounds from ZINC&#8217;s entry for <a href="http://zinc.docking.org/catalogs/smdccdivdiv">SMDC ChemDiv Diversity</a>, but wasn&#8217;t able to determine which 10,135 were screened, so I included all 50,000 in this analysis. Armin Giese&#8217;s group has screened DIVERSet 1 &amp; 2, two 10,000-molecule subsets of the overall ChemBridge DIVERSet collection. I couldn&#8217;t even find a list of the DIVERSet compounds, let alone the specific DIVERSet 1 &amp; 2 subsets, so I downloaded <a href="http://zinc.docking.org/catalogs/chbr">the whole ChemBridge library</a> annotations and selected a random subset of 20,000 of them (for speed).</p>
+<p><strong>mapping chemical space</strong></p>
+<p>Inspired by [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2686115/">Singh 2009</a>], I set out to use <a href="http://cran.r-project.org/web/packages/rcdk/rcdk.pdf">rcdk</a> to calculate chemical properties on these molecules and then reduce dimensionality with a principal components analysis.  My analysis used the same six chemical properties as [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2686115/">Singh 2009</a>]: MWT, NRB, tPSA, LogP, HBA, and HBD (see <a title="A quick intro to chemical informatics in R" href="/2013/09/23/a-quick-intro-to-chemical-informatics-in-r/">this post</a> for definitions), plus one other property &#8211; net charge. For the compound libraries, I actually started from the <a href="http://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system">SMILES</a> in the &#8220;Properties&#8221; files in ZINC, but re-calculated all the properties to make sure I didn&#8217;t get batch effects driving differences between these and the other compounds I wanted to compare them to. The core of this is pretty much my code from <a title="Properties of CNS drugs vs. all FDA-approved drugs" href="/2013/10/04/properties-of-cns-drugs-vs-all-fda-approved-drugs/">this post</a> with minor modifications.</p>
+<p>Here is <a href="https://gist.github.com/ericminikel/7534190">the whole R script</a> used for this post. Most of it isn&#8217;t that exciting, so I&#8217;ll only include a few choice snippets directly in the post.</p>
+<p><strong>results</strong></p>
+<p>I created one combined dataset of all FDA-approved drugs including CNS drugs (from <a href="http://www.drugbank.ca/">DrugBank</a> via <a title="List of FDA-approved drugs and CNS drugs with SMILES" href="/2013/10/04/list-of-fda-approved-drugs-and-cns-drugs-with-smiles/">this post</a>), plus the antiprion compounds listed above plus some or all of the contents of four chemical libraries <a title="Comparison of high-throughput screening approaches used for anti-prion small molecule discovery" href="/2013/07/30/comparison-of-high-throughput-screening-approaches-used-for-anti-prion-small-molecule-discovery/">screened</a> to discover antiprion compounds. I calculated 7 chemical properties and found that principal components 1 and 2 together explained 99.9% of variance in the compounds&#8217; properties.</p>
+<p>Plotting just the drugs and CNS drugs, it&#8217;s easy to see how the CNS drugs occupy a smaller space than all drugs do.</p>
+<p><a href="/wp-content/uploads/2013/11/fda.cns_.pc1_.pc2_.png"><img class="alignnone size-full wp-image-3237" alt="fda.cns.pc1.pc2" src="/wp-content/uploads/2013/11/fda.cns_.pc1_.pc2_.png"/></a></p>
+<p>It&#8217;s also notable that there are a few weird, not-very-drug-like outliers in the set of FDA-approved drugs. I&#8217;ve highlighted three outliers above.  To draw these molecules, I had to write a quick bit of R code to solve the problem that <a href="http://cran.r-project.org/web/packages/rcdk/rcdk.pdf">rcdk</a> cannot plot disconnected molecules. This happens with drugs sold as a salt, where the ions are portrayed as separate molecules separated by a <code>.</code> in the SMILES. To get and plot the drug itself, I simply split each SMILES string on periods and take the longest substring:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># rcdk cannot plot disconnected molecules (e.g. w/ ionic bonds)</span>
+<span style="color: #408080; font-style: italic;"># so this function will strip away the smaller disconnected parts</span>
+stripsmiles <span style="color: #666666;">=</span> <span style="color: #008000; font-weight: bold;">function</span>(smiles) {
+  parts <span style="color: #666666;">=</span> strsplit(smiles,<span style="color: #ba2121;">"\\."</span>)[[<span style="color: #666666;">1</span>]]
+  longestpart <span style="color: #666666;">=</span> parts[which(nchar(parts)<span style="color: #666666;">==</span>max(nchar(parts)))]
+  <span style="color: #008000; font-weight: bold;">return</span>(longestpart)
+}</pre>
+</div>
+<p>With that done, here&#8217;s what the three outliers denoted above look like:</p>
+<p><a href="/wp-content/uploads/2013/11/fda.outliers.png"><img class="alignnone size-full wp-image-3238" alt="fda.outliers" src="/wp-content/uploads/2013/11/fda.outliers.png"/></a></p>
+<p>Lithium, with a molecular weight of just 7, is by far the smallest drug. <a href="http://en.wikipedia.org/wiki/Fondaparinux">Fondaparinux</a> (an anticoagulant), on the other end of the spectrum, is preposterously large and complex. No one is going to try to discover new drugs this complex.  In fact, I always thought that big molecules like this only became drugs serendipitously because they were derived from natural products, whereas no one would actually set out to synthesize such a monster. However, when I searched I learned that fondaparinux is actually synthetic, not natural &#8211; Sanofi&#8217;s synthesis pathway contains <em>50 steps</em> and a recent publication has whittled this down to a new pathway with &#8220;only&#8221; 36 steps and a yield of .017% [<a href="http://www.ncbi.nlm.nih.gov/pubmed/23474455">Lin 2013</a>].</p>
+<p>In fact, the above plot actually understates how extremely large and weird many approved drugs are. For instance, DrugBank represents the glycosaminoglycan <a href="http://www.drugbank.ca/drugs/DB01109">heparin</a> (an antiprion compound and also an approved drug) as <a href="http://structures.wishartlab.com/molecules/DB01109/image.png">a tetramer</a>, when in fact it&#8217;s a heterogeneous polymer of many more than 4 subunits &#8211; typical molecular weight in preparations used pharmaceutically runs from 3 to 30 kDa. The principal components plot above is based on molecular weights and other properties calculated from the SMILES, which for many such compounds represents just one or a few units, not the huge polymer used in practice.</p>
+<p>The take-home is, the chemical space of currently approved drugs is actually much <em>larger </em>than the space in which one would want to look for new drugs.</p>
+<p>That point is driven home by a comparison of the principal component space of the libraries versus that of drugs.</p>
+<p><a href="/wp-content/uploads/2013/11/chemlibs.pc1_.pc2_.overlay.png"><img class="alignnone size-full wp-image-3239" alt="chemlibs.pc1.pc2.overlay" src="/wp-content/uploads/2013/11/chemlibs.pc1_.pc2_.overlay.png" width="600" height="400"/></a></p>
+<p>As you can see, even the MSDI US Drug Collection (upper right) doesn&#8217;t include <em>all</em> FDA-approved drugs. It includes only the small ones. And the diversity libraries (bottom row) occupy an even smaller principal component space &#8211; they&#8217;re even more selected for desirable drug-like properties.</p>
+<p>In fact, you can see that the UCSF ChemDiv set has a pretty sharp cutoff along PC1 (which mostly captures size). This suggested to me that the folks at the UCSF Small Molecule Discovery Center have imposed a strict molecular weight cutoff for inclusion in libraries.  Plotting histograms of molecular weight for each library confirmed this:</p>
+<p><a href="/wp-content/uploads/2013/11/chemlibs.pc1_.pc2_.mwt_.hist_.png"><img class="alignnone size-full wp-image-3240" alt="chemlibs.pc1.pc2.mwt.hist" src="/wp-content/uploads/2013/11/chemlibs.pc1_.pc2_.mwt_.hist_.png" width="600" height="400"/></a></p>
+<p>SMDC (bottom left) includes no molecules of &gt; 500 Da. ChemBridge (lower right) is pretty heavily filtered for lower molecular weight compounds too, though it&#8217;s not as sharp a dropoff.</p>
+<p>Going back to my finding that the chemical libraries occupy only a subset of the drug principal component space, note that this result is quite different from the situation examined in [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2686115/">Singh 2009</a>].  Singh looked at four chemical libraries and found only modest overlap with the drug space. Singh also found that the first two PCs explained only 84% of variance, compared to 99.9% here. Unfortunately I couldn&#8217;t find those four chemical libraries in ZINC to check whether my pipeline would replicate Singh&#8217;s result. However, I based my analysis on the same chemical properties as Singh (plus charge, but I re-ran my analysis without charge and got the same answer as reported here) so I&#8217;m reasonably sure that my result reflects the genuinely different content of these chemical libraries compared to those that Singh examined.</p>
+<p>In other words, it looks like the folks who&#8217;ve screened for antiprion compounds have done a pretty good job of picking chemical libraries that are enriched for molecules that (at least in a very crude principal components analysis) fall squarely within the drug space.</p>
+<p>To quantify that, I wanted to ask how many of the chemical library compounds are within (A) the drug space, and (B) the CNS drug space. I tackled this problem in two steps:</p>
+<ol>
+<li>Convert the point cloud of drugs into a polygon outlining the space. This meant calculating a <strong><a title="the smallest convex polygon containing all given points" href="http://en.wikipedia.org/wiki/Convex_hull">convex hull</a></strong> using R&#8217;s <a href="http://stat.ethz.ch/R-manual/R-devel/library/grDevices/html/chull.html"><code>chull</code></a> function.</li>
+<li>For every compound in each chemical library, check whether it&#8217;s in the polygon via a <strong><a href="http://en.wikipedia.org/wiki/Point_in_polygon">point-in-polygon</a></strong> operation using R&#8217;s <a href="http://cran.r-project.org/web/packages/sp/sp.pdf"><code>sp</code></a> library&#8217;s <code>point.in.polygon</code> function.</li>
+</ol>
+<p>Here&#8217;s what the code looks like to generate and plot the convex hulls over the points themselves:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># plot the FDA and CNS drugs with their convex hulls</span>
+png(<span style="color: #ba2121;">'fda.cns.pc1.pc2.chulls.png'</span>,width<span style="color: #666666;">=600</span>,height<span style="color: #666666;">=400</span>)
+<span style="color: #408080; font-style: italic;"># grab annotations </span>
+lib_annot <span style="color: #666666;">=</span> unique(all_annot[all_annot$cpdset <span style="color: #666666;">%in%</span> c(<span style="color: #ba2121;">'fda'</span>,<span style="color: #ba2121;">'fda_cns'</span>),c(<span style="color: #ba2121;">'cpdset'</span>,<span style="color: #ba2121;">'desc'</span>,<span style="color: #ba2121;">'k'</span>,<span style="color: #ba2121;">'pch'</span>)])
+<span style="color: #408080; font-style: italic;"># first plot empty</span>
+plot(<span style="color: #008000; font-weight: bold;">NA</span>,<span style="color: #008000; font-weight: bold;">NA</span>,xlim<span style="color: #666666;">=</span>range(cpddata$C1),ylim<span style="color: #666666;">=</span>range(cpddata$C2),xlab<span style="color: #666666;">=</span>paste(<span style="color: #ba2121;">'PC1 ('</span>,var_explained[<span style="color: #666666;">1</span>],<span style="color: #ba2121;">')'</span>,sep<span style="color: #666666;">=</span><span style="color: #ba2121;">''</span>),ylab<span style="color: #666666;">=</span>paste(<span style="color: #ba2121;">'PC2 ('</span>,var_explained[<span style="color: #666666;">2</span>],<span style="color: #ba2121;">')'</span>,sep<span style="color: #666666;">=</span><span style="color: #ba2121;">''</span>),
+     main <span style="color: #666666;">=</span> <span style="color: #ba2121;">"FDA-approved drugs PC1 vs. PC2"</span>,
+     cex.main <span style="color: #666666;">=</span> <span style="color: #666666;">1.2</span>)
+<span style="color: #408080; font-style: italic;"># scatterplot the FDA-approved drugs</span>
+points(cpddata[cpddata$cpdset<span style="color: #666666;">==</span><span style="color: #ba2121;">'fda'</span>,<span style="color: #ba2121;">"C1"</span>],cpddata[cpddata$cpdset<span style="color: #666666;">==</span><span style="color: #ba2121;">'fda'</span>,<span style="color: #ba2121;">"C2"</span>],pch<span style="color: #666666;">=19</span>,cex<span style="color: #666666;">=3</span>,col<span style="color: #666666;">=</span>cpddata$k[cpddata$cpdset<span style="color: #666666;">==</span><span style="color: #ba2121;">'fda'</span>])
+<span style="color: #408080; font-style: italic;"># scatterplot the CNS drugs</span>
+points(cpddata[cpddata$cpdset<span style="color: #666666;">==</span><span style="color: #ba2121;">'fda_cns'</span>,<span style="color: #ba2121;">"C1"</span>],cpddata[cpddata$cpdset<span style="color: #666666;">==</span><span style="color: #ba2121;">'fda_cns'</span>,<span style="color: #ba2121;">"C2"</span>],pch<span style="color: #666666;">=19</span>,cex<span style="color: #666666;">=3</span>,col<span style="color: #666666;">=</span>cpddata$k[cpddata$cpdset<span style="color: #666666;">==</span><span style="color: #ba2121;">'fda_cns'</span>])
+
+<span style="color: #408080; font-style: italic;"># find convex hull for all drugs</span>
+drug_pts <span style="color: #666666;">=</span> cpddata[cpddata$cpdset <span style="color: #666666;">%in%</span> c(<span style="color: #ba2121;">'fda'</span>,<span style="color: #ba2121;">'fda_cns'</span>),]
+drug_chull_idx <span style="color: #666666;">=</span> chull(drug_pts$C1,drug_pts$C2)
+points(drug_pts[drug_chull_idx,<span style="color: #ba2121;">"C1"</span>],drug_pts[drug_chull_idx,<span style="color: #ba2121;">"C2"</span>],type<span style="color: #666666;">=</span><span style="color: #ba2121;">'l'</span>,lwd<span style="color: #666666;">=3</span>,col<span style="color: #666666;">=</span><span style="color: #ba2121;">'blue'</span>)
+
+<span style="color: #408080; font-style: italic;"># find the convex hull of the CNS drugs</span>
+cns_pts <span style="color: #666666;">=</span> cpddata[cpddata$cpdset<span style="color: #666666;">==</span><span style="color: #ba2121;">'fda_cns'</span>,]
+cns_chull_idx <span style="color: #666666;">=</span> chull(cns_pts$C1,cns_pts$C2)
+points(cns_pts[cns_chull_idx,<span style="color: #ba2121;">"C1"</span>],cns_pts[cns_chull_idx,<span style="color: #ba2121;">"C2"</span>],type<span style="color: #666666;">=</span><span style="color: #ba2121;">'l'</span>,lwd<span style="color: #666666;">=3</span>,col<span style="color: #666666;">=</span><span style="color: #ba2121;">'orange'</span>)
+
+<span style="color: #408080; font-style: italic;"># legend</span>
+legend(<span style="color: #ba2121;">'topright'</span>,c(<span style="color: #ba2121;">"Drug space"</span>,<span style="color: #ba2121;">"CNS drug space"</span>),col<span style="color: #666666;">=</span>c(<span style="color: #ba2121;">'blue'</span>,<span style="color: #ba2121;">'orange'</span>),lwd<span style="color: #666666;">=3</span>)
+
+dev.off()</pre>
+</div>
+<p><a href="/wp-content/uploads/2013/11/fda.cns_.pc1_.pc2_.chulls.png"><img class="alignnone size-full wp-image-3241" alt="fda.cns.pc1.pc2.chulls" src="/wp-content/uploads/2013/11/fda.cns_.pc1_.pc2_.chulls.png"/></a></p>
+<p>And here&#8217;s the code to loop through each chemical library and quantify the number of its compounds that fall within each hull:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># table to hold convex hull results</span>
+chtable <span style="color: #666666;">=</span> data.frame(cpdset<span style="color: #666666;">=</span>character(),desc<span style="color: #666666;">=</span>character(),cns_frac<span style="color: #666666;">=</span>numeric(),drug_frac<span style="color: #666666;">=</span>numeric())
+<span style="color: #408080; font-style: italic;"># now compute fraction within the CNS polygon for all libraries</span>
+<span style="color: #008000; font-weight: bold;">for</span> (chemlib in all_annot$cpdset) {
+  in_cns <span style="color: #666666;">=</span> point.in.polygon(cpddata[cpddata$cpdset<span style="color: #666666;">==</span>chemlib,<span style="color: #ba2121;">"C1"</span>],
+                            cpddata[cpddata$cpdset<span style="color: #666666;">==</span>chemlib,<span style="color: #ba2121;">"C2"</span>],
+                            cns_pts[cns_chull_idx,<span style="color: #ba2121;">"C1"</span>],
+                            cns_pts[cns_chull_idx,<span style="color: #ba2121;">"C2"</span>])  
+  in_drugs <span style="color: #666666;">=</span> point.in.polygon(cpddata[cpddata$cpdset<span style="color: #666666;">==</span>chemlib,<span style="color: #ba2121;">"C1"</span>],
+                              cpddata[cpddata$cpdset<span style="color: #666666;">==</span>chemlib,<span style="color: #ba2121;">"C2"</span>],
+                              drug_pts[drug_chull_idx,<span style="color: #ba2121;">"C1"</span>],
+                              drug_pts[drug_chull_idx,<span style="color: #ba2121;">"C2"</span>])  
+  temp1 <span style="color: #666666;">=</span> cbind(chemlib,
+                all_annot$desc[all_annot$cpdset<span style="color: #666666;">==</span>chemlib],
+                sum(in_cns <span style="color: #666666;">&gt;</span> <span style="color: #666666;">0</span>)<span style="color: #666666;">/</span>length(in_cns),
+                sum(in_drugs <span style="color: #666666;">&gt;</span> <span style="color: #666666;">0</span>)<span style="color: #666666;">/</span>length(in_drugs))
+  names(temp1) <span style="color: #666666;">=</span> c(<span style="color: #ba2121;">'cpdset'</span>,<span style="color: #ba2121;">'desc'</span>,<span style="color: #ba2121;">'cns_frac'</span>,<span style="color: #ba2121;">'drug_frac'</span>)
+  chtable <span style="color: #666666;">=</span> rbind(chtable,temp1)
+}</pre>
+</div>
+<p>Here&#8217;s a barplot of the results:</p>
+<p><a href="/wp-content/uploads/2013/11/druglike.barplot.png"><img class="alignnone size-full wp-image-3242" alt="druglike.barplot" src="/wp-content/uploads/2013/11/druglike.barplot.png"/></a></p>
+<p>Or for those who prefer tables over barplots:</p>
+<p><table style="width:100%; " class="easy-table easy-table-default " border="0">
+<thead>
+<tr><th>Library</th>
+<th>In CNS drug space</th>
+<th>In drug space</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>All FDA-approved drugs</td>
+<td>71%</td>
+<td>100%</td>
+</tr>
+
+<tr><td>MSDI Spectrum Collection</td>
+<td>81%</td>
+<td>99%</td>
+</tr>
+
+<tr><td>MSDI US Drug Collection</td>
+<td>80%</td>
+<td>100%</td>
+</tr>
+
+<tr><td>UCSF SMDC ChemDiv Diversity</td>
+<td>96%</td>
+<td>100%</td>
+</tr>
+
+<tr><td>ChemBridge Random 20K subset</td>
+<td>97%</td>
+<td>100%</td>
+</tr>
+</tbody></table></p>
+<p>Surprisingly to me, 71% of all FDA-approved drugs fall within the principal component space of <a title="List of FDA-approved drugs and CNS drugs with SMILES" href="/2013/10/04/list-of-fda-approved-drugs-and-cns-drugs-with-smiles/">the 221 CNS drugs</a>. Of course, that doesn&#8217;t mean all 71% of those actually cross the blood-brain barrier, it just sort of means they don&#8217;t have any really obvious red flags (high molecular weight, high hydrophilicity) that show up in the principal components.</p>
+<p>In comparison, all of the chemical libraries screened here are even more enriched for potential CNS drug space. In the large libraries 96-97% of molecules are in the CNS drug convex hull. That&#8217;s an excellent starting point for finding potential antiprion drugs that could get into the brain.  Indeed, the subsets of these libraries that were actually used in screens [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2838138/">Ghaemmaghami 2010</a>, <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC1143673/">Bertsch 2005</a>, <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3186986/">Leidel 2011</a>, <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3661926/">Wagner 2013</a>] may have been even more enriched.</p>
+<p>On the flip side, it&#8217;s worth acknowledging that my <a title="List of FDA-approved drugs and CNS drugs with SMILES" href="/2013/10/04/list-of-fda-approved-drugs-and-cns-drugs-with-smiles/">CNS drug list</a> could contain false positives that aren&#8217;t actually blood brain barrier permeable drugs.  The true CNS drug space could be smaller than I&#8217;ve plotted here. However, I spot checked the left- and right-most outliers on PC1 &#8211; <a href="http://en.wikipedia.org/wiki/Bromocriptine">bromocriptine</a> and <a href="http://en.wikipedia.org/wiki/Lithium_(medication)">lithium</a> &#8211; and they are indeed CNS drugs.</p>
+<p>Next I wanted to take a look at the known antiprion compounds. Here&#8217;s where they stack up on the PC plot:</p>
+<p><a href="/wp-content/uploads/2013/11/drugs.vs_.antiprion.png"><img class="alignnone size-full wp-image-3243" alt="drugs.vs.antiprion" src="/wp-content/uploads/2013/11/drugs.vs_.antiprion.png"/></a></p>
+<p>Notice that all of the sulfated glycans and anions fall way on the left, in the space where there are some existing FDA-approved drugs but no one is really looking for new drugs (no chemical libraries overlap). And again, this plot underestimates just how large these molecules really are &#8211; for instance, the SMILES I used for <a title="The rise and fall of pentosan polysulfate in prion disease" href="/2012/12/13/the-rise-and-fall-of-pentosan-polysulfate-in-prion-disease/">pentosan polysulfate</a> is just a dimer.</p>
+<p>It is likely that many if not all of these large compounds share a common mechanism, a possibility discussed long ago for some of them [<a href="http://www.ncbi.nlm.nih.gov/pubmed/7678300">Caughey &amp; Raymond 1993</a>]. Perhaps they antagonize PrP&#8217;s relationship with endogenous glycosaminogylcans. Phthalocyanine tetrasulfonate has been shown to bind PrP<sup>C</sup> [<a href="http://www.ncbi.nlm.nih.gov/pubmed/22480824">Dee 2012</a>], and that may be true of several or all of the others here.</p>
+<p>Now let&#8217;s zoom in on the cluster of antiprion compounds that fall within the CNS drug space:</p>
+<p><a href="/wp-content/uploads/2013/11/drugs.vs_.antiprion.zoomin.png"><img class="alignnone size-full wp-image-3244" alt="drugs.vs.antiprion.zoomin" src="/wp-content/uploads/2013/11/drugs.vs_.antiprion.zoomin.png"/></a></p>
+<p>Do all of these compounds share a mechanism too? Many of them do, after all, look fairly similar to each other &#8211; flat, aromatic molecules of similar size. Treatment with IND24 causes prions to develop resistance to not only IND24 but also cpd-b and quinacrine [<a href="http://www.ncbi.nlm.nih.gov/pubmed/24128760">Berry 2013</a>], suggesting at least those 3 share a mechanism. As far as I know, none of these compounds have been shown to bind PrP<sup>C</sup>, and some are specifically reported to interact only with oligomers, i.e. with PrP<sup>Sc</sup> [<a href="http://www.ncbi.nlm.nih.gov/pubmed/23604588">Wagner 2013</a>, <a href="http://www.ncbi.nlm.nih.gov/pubmed/22016521">Ayrolles-Torro 2011</a>].</p>
+<p><strong>discussion</strong></p>
+<p>PrP<sup>C</sup>&#8216;s C-terminal half is often described as a globular domain. (See <a href="http://www.ncbi.nlm.nih.gov/pubmed/21324909">Hafner-Bratkovic 2011</a> for some interesting experiments showing the requirement of &#8220;unlocking&#8221; this domain for prion conversion). In the very simplified &#8220;molten globule&#8221; model of protein folding, polypeptides form secondary structure and then, driven by the hydrophobic effect (the desire of adjacent water molecules for greater entropy) collapse with the hydrophobic residues at the center and hydrophilic residues pointed out. Therefore compounds that bind PrP<sup>C</sup> are relatively more likely to be hydrophilic in order to bind the available residues.</p>
+<p>In contrast, PrP<sup>Sc</sup> has long been described as &#8220;a hydrophobic protein&#8221; [<a href="http://www.ncbi.nlm.nih.gov/pubmed/6273882">Prusiner 1981</a>]. It&#8217;s never been clear to me (though I imagine someone knows) what the driving force is behind PrP<sup>C</sup> → PrP<sup>Sc</sup> conversion.  Is it enthalpy, because the new bonds of oligomerization can let PrP reach a lower energy well? Or is it entropy / the hydrophobic effect, where caged water along an unfavorably exposed hydrophobic surface or PrP<sup>Sc</sup> can be freed by the binding of yet another PrP molecule to the nascent oligomer?</p>
+<p>If the latter, you could imagine a fundamental physical explanation for some of the current difficulties in anti-prion drug discovery. If you can bind PrP<sup>C</sup> you&#8217;re likely to have a drug that works across all prion strains, but the drug will probably have to be hydrophilic like PrP<sup>C</sup> is, and therefore won&#8217;t get into the brain. On the other hand, you can bind PrP<sup>Sc</sup>&#8216;s hydrophobic surface with a hydrophobic molecule that can get into the brain, but its binding might prove to be dependent on the particular conformation of PrP<sup>Sc</sup>, meaning that it won&#8217;t work against all strains and that even the strains it does work on can develop resistance.</p>
+<p>If this model is correct, you can imagine a few ways to optimize one&#8217;s chances of finding a good drug. The fact is, we need to be in the CNS drug space &#8211; that much is non-negotiable. So the options are 1) to find a drug in this space that binds PrP<sup>Sc</sup> but somehow does so regardless of strain, or 2) to find a drug in this space that binds some more hydrophobic surface of PrP<sup>C</sup>.</p>
+<p>There are probably ways to improve our odds of finding one of these things. Combining cell-free assays involving human prion strains with cell-based rodent prion strain assays in a cheminformatic meta-analysis (as was done in the lead-up to anle138b [<a style="font-style: normal;" href="http://www.ncbi.nlm.nih.gov/pubmed/23604588">Wagner 2013</a>]) could help to find hydrophobic compounds that <em style="color: #000000;">do</em> bind PrP<sup style="color: #000000; font-style: normal;">Sc</sup> regardless of strain. Meanwhile, if there are any hydrophobic bindable surfaces of PrP<sup>C</sup>, then using libraries heavily enriched for small, hydrophobic potential CNS drugs (like those described here) in assays designed specifically to detect molecules that bind PrP<sup>C</sup> could discover ways to attack those.</p>
+<p>I invite any comments on how accurate this model I&#8217;ve imagined is. I&#8217;m not well-read on the structural biology of prions and would appreciate pointers to relevant literature as well.</p>

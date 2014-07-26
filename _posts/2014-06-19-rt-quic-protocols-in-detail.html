@@ -1,0 +1,101 @@
+---
+layout: post
+title: "RT-QuIC protocols in detail"
+author: ericminikel
+date: 2014-06-19 17:25:03
+---
+<p><div id="attachment_4018" style="width: 610px" class="wp-caption alignnone"><img src="/wp-content/uploads/2014/06/rt-quic-platereaders-rml.png">Six platereaders running RT-QuIC reactions in parallel.</p></div></p>
+<p>This month Sonia and I are in Hamilton, Montana to learn RT-QuIC under the auspices of Byron Caughey. We have been grateful for the extreme diligence and patience of Christina Orr&ugrave; and Matteo Manca, who have walked us through every step at the bench. This post will go through the protocols used here as I attempt to understand the logic behind how everything is done.</p>
+<p><em>Important disclaimer: as usual, content on CureFFI.org is not peer-reviewed and may contain errors. This post is intended as a helpful guide and not as an official protocol to follow.</em></p>
+<p>The overall workflow is as follows:</p>
+<p><img src="/wp-content/uploads/2014/06/rt-quic-protocol-flowchart.png"/></p>
+<p>Here are the relevant protocols and other documents in use here:</p>
+<ul>
+<li><a href="/wp-content/uploads/2014/06/pcol_rt-quic-buffers_manca_20140617.pdf">RT-QuIC Buffers Recipe</a></li>
+<li><a href="/wp-content/uploads/2014/06/pcol_brain-homogenate-preparation_orru_20140616.pdf">Brain homogenate preparation</a></li>
+<li><a href="/wp-content/uploads/2014/06/pcol_rprp-preparation_orru_20140616.pdf">rPrP preparation protocol</a></li>
+<li><a href="/wp-content/uploads/2014/06/pcol_rt-quic-example-expt_orru_20140616.pdf">An RT-QuIC example experiment</a></li>
+<li><a href="/wp-content/uploads/2014/06/plate-layout.pdf">Blank plate layout for planning experiments</a></li>
+</ul>
+<p>I won&#8217;t repeat all the details of the above protocols in this blog post, but I do want to share a few tidbits that I hope will add value. First, I want to explain why each ingredient is present in the recipe. Christina Orru and Andy Hughson were very helpful in explaining this. In some cases there is an element of path dependence &#8211; we tried it once this way and it worked so we kept it &#8211; at this point, Andy has a pretty good idea of what each ingredient is doing, and has titrated each one down to see if it essential. Second, I&#8217;ll offer some details I observed on how people run the experiment in practice. Third, I&#8217;ll discuss some of the numbers involved in RT-QuIC.</p>
+<p><strong>brain homogenate preparation protocol</strong></p>
+<p>In the brain homogenate preparation protocol, the process begins with brain samples homogenized in a buffer at 10% wt/vol, which means that for instance, .1g of brain gets homogenized in 1mL of buffer. Here are the ingredients in the buffer:</p>
+<ul>
+<li><strong><a href="http://en.wikipedia.org/wiki/Phosphate_buffered_saline">PBS</a></strong> at pH 7.4. PBS is just an aqueous solution with roughly the same <a href="http://en.wikipedia.org/wiki/Osmotic_concentration">osmotic concentration</a> as cells have.</li>
+<li><strong><a href="http://en.wikipedia.org/wiki/Ethylenediaminetetraacetic_acid">EDTA</a></strong>. EDTA is a small molecule chelator of metal cations, and is said to remove metals that might interfere with the reaction. Wikipedia says that it may deprive metal-dependent proteases of metals so that they can&#8217;t degrade proteins.</li>
+<li><strong>NaCl</strong> is present at 5M*.6mL/20mL = 150 mM, which is approximately its physiological concentration. Salt can form ionic bonds with charged amino acids in proteins, so physiological concentrations of salt are important for preserving the folded states of proteins <em>in vivo</em>. (Relatedly, it was recently reported that NaCl used in brain homogenate preparation is important for promoting protease resistance of PrP<sup>Sc</sup> [<a href="http://www.ncbi.nlm.nih.gov/pubmed/24338008">Concha-Marambio 2014</a>].)</li>
+<li><strong><a href="http://en.wikipedia.org/wiki/Triton_X-100">Triton X-100</a></strong> is a detergent which helps solubilize cell membranes and proteins found in them.</li>
+<li><strong>Protease inhibitor</strong> <a href="http://lifescience.roche.com/shop/products/complete-mini-edta-free">(Roche 11836170001)</a> to prevent protein degradation.</li>
+</ul>
+<p>The mixture is homogenized by douncing, beads or grinders, and then centrifuged at 2000g for two minutes, and only the supernatant is what gets used. This supernatant is what is called 10% brain homogenate (BH).</p>
+<p><strong>RT-QuIC example experiment</strong></p>
+<p>In a typical experiment, the seeding activity of the brain homogenate will be tested at six dilutions. The diluent is PBS with 0.1% SDS and 1x <strong><a href="https://www.lifetechnologies.com/order/catalog/product/17502048">N2 media supplement</a></strong>. Here&#8217;s what those are there for:</p>
+<ul>
+<li><strong>N2 media supplement</strong> is marketed as a cell culture media, but is here simply to provide &#8220;any old protein&#8221; to outcompete PrP for binding to the side of the tube. Andy Hughson has found that adding <em>some</em> other protein when making serial dilutions is important &#8211; otherwise you often find that extreme dilutions like 10<sup>-8</sup> or 10<sup>-9</sup>, you have lost your seed because all of the PrP has bound to the side of the tube and come out of solution. Adding a molar excess of some other protein solves this &#8211; it is analogous to &#8220;blocking&#8221; a Western blot membrane with milk. Any old protein will work &#8211; Andy says he has tried several including thyroglobulin and bovine serum albumin (BSA), and every one he tried worked fine. He used to recommend that people use BSA for this purpose, but different commercial offerings of BSA vary in their composition, so he instead now recommends using N2, whose chief constituent is thryoglobulin, simply because N2 is a single commercial product of very uniform composition, so different labs that order it get the same product. There is nothing magical about N2 in particular.</li>
+<li><strong>SDS</strong> also helps solubilize PrP<sup>Sc</sup>. Byron Caughey warns that without any SDS, it is possible that by the 10<sup>-8</sup> or 10<sup>-9</sup> diultion you will actually lose all of the PrP<sup>Sc</sup> seed because, for instance, it may stick to the tube.</li>
+</ul>
+<p>In the example experiment given above, the first dilution is 1:20, i.e. 5 &mu;L of the 10% BH in 95 &mu;L of diluent, for a 10%/20 = 0.5% or 5e-3 brain homogenate. The subsequent dilutions are all 1:10 (though with different volumes), so that the six dilutions represent from 5e-3 BH to 5e-8 BH. The 5e-3 dilution is labeled [500pg/&mu;L], which refers to the approximate concentration of PrP<sup>Sc</sup> from quantitative Western blots. Now, you started with .1g of brain in 1 mL, and you&#8217;ve now diluted another 1:20 fold, so this dilution contains .1/(1e-3)/20 = 5 g/L of brain tissue, and the concentration indicated is (500e-12)/(1e-6) = 5e-4 g/L. This therefore implies that PrP<sup>Sc</sup> is 1/10,000 of mass of infected brain tissue. More on this later.</p>
+<p>The final reaction volume in each well in the 96-well plate for RT-QuIC is 100 &mu;L. If you work backwards from the inputs listed in the protocol, you&#8217;ll find that the desired final concentration of everything in the 100 &mu;L is as shown in the table below. The table also contains a brief note about the purpose of the ingredient, but some of these will be discussed in more detail shortly.</p>
+<table>
+<tr>
+<td><strong>substance</strong></td>
+<td><strong>concentration</strong></td>
+<td><strong>purpose</strong></td>
+<tr>
+<td>PBS</td>
+<td>1X</td>
+<td>Buffer with physiological osmotic concentration</td>
+</tr>
+<tr>
+<td>EDTA</td>
+<td>1 mM</td>
+<td>Chelate metal ions</td>
+</tr>
+<tr>
+<td>ThT</td>
+<td>10 &mu;M</td>
+<td>Fluorescent readout</td>
+</tr>
+<tr>
+<td>NaCl</td>
+<td>~300 mM*</td>
+<td>Partial denaturant</td>
+</tr>
+<tr>
+<td>rPrP</td>
+<td>.1 mg/mL</td>
+<td>Conversion substrate</td>
+</tr>
+<tr>
+<td>Brain homogenate</td>
+<td>Whatever dilution (e.g. 10<sup>-5</sup>) &divide; 50</td>
+<td>Seed the reaction</td>
+</table>
+<p>*8.5 &mu;L of 2M NaCl in 100 &mu;L volume is 170 mM. However, 1X PBS also contains on the order of 130 mM NaCl, which is the physiological concentration, so the total concentration of NaCl in the RT-QuIC reaction is ~300 mM.</p>
+<p>Here&#8217;s a bit more detail (mostly provided by Andy Hughson) on why some of these ingredients are present:</p>
+<ul>
+<li><strong>PBS</strong> simply provides a physiological osmostic concentration, which can be important for various reasons &#8211; see discussion on NaCl below.</li>
+<li><strong>EDTA</strong> acts as a metal cation chelator, and the 1mM concentration is high enough that EDTA will always be in molar excess of any metal ion concentration that one is reasonably likely to encounter. In fact, they have run RT-QuIC reactions without EDTA, and they work, so EDTA is not strictly essential. Instead, it serves to normalize between batches of recombinant PrP. Different batches of recombinant can end up with different concentrations of metal ions present in solution, which introduces undesired experimental variability. By adding a molar excess of EDTA to remove all of the metal ions, you make results more consistent batch-to-batch.</li>
+<li><strong>NaCl</strong> is an important part of protein folding under physiological conditions. Andy Hughson explained that charged amino acids in proteins can either form ionic bonds with ions floating in solution such as Na<sup>+</sup> and Cl<sup>-</sup>, or they can form ionic bonds with one another, known as &#8220;salt bridges&#8221;. The equilibrium between these two possible states helps to determine the natively folded state of a protein. When NaCl concentration is higher or lower than normal, that fold can be destabilized. In particular, when the NaCl concentration is above physiological levels, as it is in the RT-QuIC reaction (300 &mu;M compared to ~130&mu;M physiological), the salt ions compete with salt bridges in the protein, liberating the amino acids from ionic bonds with one another and thus reducing constraints on the protein&#8217;s fold. This lowers the barrier to PrP unfolding and then refolding into amyloid in RT-QuIC. As a general matter, increased salt, temperature and shaking speed each speed up the RT-QuIC reaction, so you can trade off different combinations of these variables in order to make the best tradeoff between sensitivity, specificity and reaction time.</li>
+<li><strong>SDS</strong> is not explicitly added to the mixture, but the 2 &mu;L of brain homogenate contains 0.1% SDS, so the final reaction volume actually does end up containing .002% SDS, and this little bit of detergent appears to be important &#8211; it may help rPrP to interact with the seed. Too much SDS interferes with ThT.</li>
+</ul>
+<p>Note that rPrP is prone to oligomerize. For this reason, it is kept cold in separate aliquots until you are ready to use it. It is never vortexed. Prior to use it is filtered through a 100 kDa filter in a centrifuge at ~4000g to remove all higher multimeric species of PrP. rPrP is on the order of 23 kDa &#8211; see below &#8211; so this removes anything larger than a tetramer. Filters can be reused once (just once), but the sample may require spinning at a higher velocity the second time once the filter is partially clogged.</p>
+<p>Here, everyone mixes the above reagents together into a &#8220;master mix&#8221; or RT-QuIC cocktail under the hood immediately before beginning the experiment. However, Christina Orr&ugrave; noted that the PBS, EDTA, NaCl and diluting mQ water are all stable, non-reactive and can be stored at room temperature. Therefore many other labs that do RT-QuIC simply mix these four into one cocktail ahead of time rather than mixing them under the hood while setting up a plate. The main reason the Caughey lab has not taken this shortcut is that some of their experiments are still aimed at improving the protocols, which requires having more flexibility in how much of each thing you add.</p>
+<p>When working under the hood, the arrangement of items is important to ensure you can work efficiently and avoid cross-contamination:</p>
+<p><img src="/wp-content/uploads/2014/06/rt-quic-hood-layout-600px.png"/></p>
+<p>For mixing and distributing the buffer solution, the same pipette tip can be reused multiple times but should be discarded if the SDS is starting to form bubbles in or on it. Any pipette tip that touches brain homogenate samples should be used only once &#8211; they are not reused even for replicates of the same sample at the same dilution. When ejecting the sample into the buffer in the 96-well plate, it is more important to not create bubbles than it is to completely eject the solution, so you can use the pipette to wash the sample up and down a few times in buffer, but do not fully depress the plunger.</p>
+<p>In terms of plate layout, they usually run everything in quadruplicate, running one sample on the top four rows of the plate and the other on the bottom four rows.</p>
+<p>In the platereader, the current protocol calls for alternating cycles of 1 minute shaking and 1 minute incubating, and then 1 minute of fluorescence reading every 45 minutes. This 45 minute interval has proven adequate for all of their current needs.</p>
+<p><strong>rPrP preparation</strong></p>
+<p>We won&#8217;t be learning this protocol until next week, at which time I&#8217;ll either update this post or write a new one.</p>
+<p><strong>data analysis</strong></p>
+<p>Everyone analyzes their QuIC data by copying it into an Excel spreadsheet which has formulas in place, and then laboriously renaming columns and selecting subsets of data to plot and changing colors and markers. The standard seems to be that serial dilutions of the same brain homogenate are depicted in the same color and line width but with different markers. Once I get some of my own data I&#8217;ll get to work on an R script to do the analysis and plotting.</p>
+<p><strong>Some musings on the numbers</strong></p>
+<p>While learning all this, I also wanted to get a hand on the numbers involved. The final reaction volume for RT-QuIC is 100 &mu;L per well of a 96-well plate. Measuring seeding activity in one sample requires 6 wells for the serial dilutions. The 100 &mu;L volume in each well contains 30 &mu;L of a recombinant PrP (rPrP) solution which has been diluted to 0.1 mg/mL concentration. That means each well contains (30e-6 L)*(.1e-3 g)/(1e-3 L) = 3e-6 g (that&#8217;s 3 &mu;g) of rPrP in 100 &mu;L volume, for a concentration of 3e-6/100e-6 = 0.03 g/L. Recombinant PrP is unglycosylated and GPI-anchorless, so the sequence for rHuPrP, for instance, is:</p>
+<pre>
+>HuPrP23-230
+KRPKPGGWNTGGSRYPGQGSPGGNRYPPQGGGGWGQPHGGGWGQPHGGGWGQPHGGGWGQPHGGGWGQGGGTHSQWNKPSKPKTNMKHMAGAAAAGAVVGGLGGYMLGSAMSRPIIHFGSDYEDRYYRENMHRYPNQVYYRPMDEYSNQNNFVHDCVNITIKQHTVTTTTKGENFTETDVKMMERVVEQMCITQYERESQAYYQRGSS
+</pre>
+<p>I fed this into the <a href="http://www.bioinformatics.org/sms/prot_mw.html">the bioinformatics.org molecular weight calculator</a> and it is 22.71 kDa. One kilodalton means 1000 grams per mole. So each well contains (3e-6 g / 22.71e3 g/mol) * 6.022e23 = about 8.0e13 molecules of PrP. The concentration of rPrP in RT-QuIC is (0.03 g/L) / (22.71e3 g/mol) = 1.3e-6 M.</p>
+<p>Now, take for instance the 5e-6 dilution of brain homogenate, which is said to contain 500 fg/&mu;L PrP<sup>Sc</sup>. Of this BH, 2 &mu;L goes into a well for RT-QuIC detection, meaning that the final concentration of BH in the well is a 5e-6/50 = 1e-7 dilution, with 10 fg/&mu;L. 10 fg/&mu;L means 10e-15/1e-6 = 1e-8 g/L. <em>In vivo</em>-derived PrP<sup>Sc</sup> will be GPI-anchored, variably glycosylated and some combination of full length and beta-cleaved, so let&#8217;s just ballpark its molecular weight at 30 kDa = 30e3 g/mol. Therefore the concentration of PrP<sup>Sc</sup> molecules in the well is 1e-8 g/L / 30e3 g/mol &asymp; 3e-13 M. That means that at this dilution, the rPrP at 1.3e-6 M is detecting a PrP<sup>Sc</sup> seed that is 7 logs less abundant than itself! And that&#8217;s just considering PrP<sup>Sc</sup> molecules as monomers, which of course they aren&#8217;t &#8211; they&#8217;re aggregated, and the bioactive principle is really the &#8220;sticky ends&#8221; of the prion fibrils or oligomers, which are even scarcer. </p>
+<p>Another observation is that if PrP<sup>Sc</sup> is a ten thousandth of the mass of an infected brain, then a a mouse brain, which <a href="http://mste.illinois.edu/malcz/DATA/BIOLOGY/Animals.html">weighs</a> about .4g, would contain 4e-5g of PrP<sup>Sc</sup>, which at approximately 33 kDa would give us 1e-9 mol of PrP, or about 1e15 molecules. An infected mouse brain contains on the order of 1e8 ID<sub>50</sub> of infectivity, so that would give on the order of 1e7 PrP molecules per infectious unit.</p>

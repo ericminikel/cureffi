@@ -1,0 +1,238 @@
+---
+layout: post
+title: "An introduction to Murcko fragments and structure-activity relationships using rcdk"
+author: ericminikel
+date: 2014-01-02 20:41:24
+---
+<p>Over the past few months I&#8217;ve learned a few basics of chemical informatics. I started with <a title="A quick intro to chemical informatics in R" href="/2013/09/23/a-quick-intro-to-chemical-informatics-in-r/">a few basics</a> of how to use <a href="http://cran.r-project.org/web/packages/rcdk/rcdk.pdf">rcdk</a>- that&#8217;s <a href="http://rguha.net/">Rajarshi Guha</a>&#8216;s cheminformatics package for R [<a href="http://www.jstatsoft.org/v18/i05/paper">Guha 2007</a>] - used these to compare the properties of <a title="Properties of CNS drugs vs. all FDA-approved drugs" href="/2013/10/04/properties-of-cns-drugs-vs-all-fda-approved-drugs/">CNS drugs vs. other drugs</a> as well as <a title="Plotting antiprion compounds in the chemical space of drugs and libraries" href="/2013/11/06/plotting-antiprion-compounds-in-the-chemical-space-of-drugs-and-libraries/">antiprion compounds</a>.</p>
+<p>As a next step, this post will walk through me learning how to use rcdk to do a basic analysis looking for structure-activity relationships in a dataset. This is inspired in part by my recent discovery that there are <a title="Data from two high-throughput screens to deplete PrP available in PubChem" href="/2013/11/18/data-from-two-high-throughput-screens-to-deplete-prp-available-in-pubchem/">two large datasets</a> from anti-PrP screens in PubChem.</p>
+<p>Wikipedia defines <a href="http://en.wikipedia.org/wiki/Structure%E2%80%93activity_relationship">structure-activity relationship</a> (SAR) as &#8220;the relationship between the chemical or 3D structure of a molecule and its biological activity&#8221;. In practice, if someone says that a high-throughput screening dataset &#8220;has an SAR&#8221; they mean that some of the hits from the chemical screen share common structural features that are probably responsible for their activity in the assay and provide a reasonable jumping-off point for further lead compound optimization. If a dataset is said to &#8220;have no SAR&#8221; that means the hits are a bunch of totally random compounds that look nothing like each other &#8211; a bad sign.</p>
+<p>I didn&#8217;t manage to find a really elegant step-by-step SAR tutorial on the web, but from what I gather the process is basically two steps:</p>
+<ol>
+<li>break molecules into fragments</li>
+<li>look for fragments associated with bioactivity in the assay</li>
+</ol>
+<p>Consider the <a title="New high-throughput screening hits from the Prusiner lab" href="/2013/11/18/new-high-throughput-screening-hits-from-the-prusiner-lab/">most recent antiprion compound screen</a> from the Prusiner lab [<a href="http://www.ncbi.nlm.nih.gov/pubmed/24183589">Silber 2013</a>].  They screened ~50,000 compounds and found 970 hits after counterscreening. They found 20 molecular fragments that were enriched among these 970 hits, or put differently, they could group many of these 970 hits into 20 &#8220;leads&#8221;. Of the 20 leads, 14 were deemed worthy of followup, and so the top 2 hits from each lead category (i.e. top 2 hits containing each fragment) were selected for downstream experiments.</p>
+<p>The fragments considered in that study were <strong>Murcko fragments</strong>.  The inventors of this concept [<a href="http://www.ncbi.nlm.nih.gov/pubmed/8709122">Bemis &amp; Murcko 1996</a>] define a <em>ring system</em> as one or more rings sharing an edge, and a <em>framework</em> as the union of rings plus <em>linker atoms</em> connecting them.  As far as I can tell, the term Murcko fragment is most often used to refer to &#8220;ring systems&#8221; as defined by Bemis and Murcko. (However, some of the fragments used in the Prusiner paper were ring systems plus &#8220;side chain atoms&#8221; and/or &#8220;linker atoms&#8221;).</p>
+<p><strong>fragments in rcdk</strong></p>
+<p>If you ask rcdk for Murcko fragments, it will give you <em>ring systems</em> in the molecule as well as <em>frameworks</em> in the molecule.  Let&#8217;s try this with an example of an antiprion molecule we know well: <a href="/2012/11/24/curcumin-as-prion-therapeutic/" title="Curcumin as prion therapeutic">curcumin</a>.  First some quick setup:</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="line-height: 125%">require(rcdk) <span style="color: #408080; font-style: italic"># chemical informatics functionality in R</span>
+require(gap)  <span style="color: #408080; font-style: italic"># for qq plots later</span>
+options(stringsAsFactors<span style="color: #666666">=</span><span style="color: #008000; font-weight: bold">FALSE</span>)
+setwd(<span style="color: #BA2121">&#39;c:/sci/037cinf/analysis/sar/&#39;</span>)
+
+<span style="color: #408080; font-style: italic"># plot molecules in R plot window instead of separate Java window</span>
+rcdkplot <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">function</span>(molecule,width<span style="color: #666666">=500</span>,height<span style="color: #666666">=500</span>,marg<span style="color: #666666">=0</span>,main<span style="color: #666666">=</span><span style="color: #BA2121">&#39;&#39;</span>) {
+    par(mar<span style="color: #666666">=</span>c(marg,marg,marg,marg)) <span style="color: #408080; font-style: italic"># set margins to zero since this isn&#39;t a real plot</span>
+    temp1 <span style="color: #666666">=</span> view.image.2d(molecule,width,height) <span style="color: #408080; font-style: italic"># get Java representation into an image matrix. set number of pixels you want horiz and vertical</span>
+    plot(<span style="color: #008000; font-weight: bold">NA</span>,<span style="color: #008000; font-weight: bold">NA</span>,xlim<span style="color: #666666">=</span>c(<span style="color: #666666">1</span>,<span style="color: #666666">10</span>),ylim<span style="color: #666666">=</span>c(<span style="color: #666666">1</span>,<span style="color: #666666">10</span>),xaxt<span style="color: #666666">=</span><span style="color: #BA2121">&#39;n&#39;</span>,yaxt<span style="color: #666666">=</span><span style="color: #BA2121">&#39;n&#39;</span>,xlab<span style="color: #666666">=</span><span style="color: #BA2121">&#39;&#39;</span>,ylab<span style="color: #666666">=</span><span style="color: #BA2121">&#39;&#39;</span>,main<span style="color: #666666">=</span>main) <span style="color: #408080; font-style: italic"># create an empty plot</span>
+    rasterImage(temp1,<span style="color: #666666">1</span>,<span style="color: #666666">1</span>,<span style="color: #666666">10</span>,<span style="color: #666666">10</span>) <span style="color: #408080; font-style: italic"># boundaries of raster: xmin, ymin, xmax, ymax. here i set them equal to plot boundaries</span>
+}
+</pre>
+</div>
+<p>Now, here&#8217;s what curcumin looks like:</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="line-height: 125%">curcumin <span style="color: #666666">=</span> parse.smiles(<span style="color: #BA2121">&quot;O=C(\\C=C\\c1ccc(O)c(OC)c1)CC(=O)\\C=C\\c2cc(OC)c(O)cc2&quot;</span>)[[<span style="color: #666666">1</span>]] 
+rcdkplot(curcumin)
+</pre>
+</div>
+<p><a href="/wp-content/uploads/2014/01/curcumin.png"><img src="/wp-content/uploads/2014/01/curcumin.png"/></a></p>
+<p>And rcdk finds that it contains exactly one Murcko ring system and one Murcko framework:</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="line-height: 125%">curc.frags <span style="color: #666666">=</span> get.murcko.fragments(curcumin)
+curc.frags
+<span style="color: #408080; font-style: italic">#[[1]]</span>
+<span style="color: #408080; font-style: italic">#[[1]]$rings</span>
+<span style="color: #408080; font-style: italic">#[1] &quot;c1ccccc1&quot;</span>
+<span style="color: #408080; font-style: italic">#</span>
+<span style="color: #408080; font-style: italic">#[[1]]$frameworks</span>
+<span style="color: #408080; font-style: italic">#[1] &quot;c1ccc(cc1)C=CCCCC=Cc2ccccc2&quot;</span>
+png(<span style="color: #BA2121">&#39;curcumin.murcko.fragments.png&#39;</span>,width<span style="color: #666666">=600</span>,height<span style="color: #666666">=300</span>)
+par(mfrow<span style="color: #666666">=</span>c(<span style="color: #666666">1</span>,<span style="color: #666666">2</span>))
+rcdkplot(parse.smiles(curc.frags[[<span style="color: #666666">1</span>]]<span style="color: #666666">$</span>rings)[[<span style="color: #666666">1</span>]])
+rcdkplot(parse.smiles(curc.frags[[<span style="color: #666666">1</span>]]<span style="color: #666666">$</span>frameworks)[[<span style="color: #666666">1</span>]])
+dev.off()
+</pre>
+</div>
+<p><a href="/wp-content/uploads/2014/01/curcumin.murcko.fragments.png"><img src="/wp-content/uploads/2014/01/curcumin.murcko.fragments.png"/></a></p>
+<p>As expected, by Murcko&#8217;s definition, curcumin contains only one unique ring system (benzene, left). There&#8217;s also only one framework, defined as the rings plus the linker atoms in between (right).  So far I&#8217;m happy with the defaults.</p>
+<p>When I turn to a second example, <a href="/2013/04/26/anle138b-the-new-most-promising-experimental-compound-for-treating-prion-diseases/" title="anle138b: the new most promising experimental compound for treating prion diseases">anle138b</a>, things get a bit more complicated.  </p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="line-height: 125%">anle138b <span style="color: #666666">=</span> parse.smiles(<span style="color: #BA2121">&quot;C1OC2=C(O1)C=C(C=C2)C3=CC(=NN3)C4=CC(=CC=C4)Br&quot;</span>)[[<span style="color: #666666">1</span>]]
+rcdkplot(anle138b)
+</pre>
+</div>
+<p><a href="/wp-content/uploads/2014/01/anle138b-2d.png"><img src="/wp-content/uploads/2014/01/anle138b-2d.png"/></a></p>
+<p>As you can see above, anle138b contains four unique ring systems: <a href="http://en.wikipedia.org/wiki/Benzene">benzene</a>, <a href="http://en.wikipedia.org/wiki/Pyrazole">pyrazole</a>, <a href="/2013/09/04/methylenedioxyphenyl/" title="Methylenedioxyphenyl">methylenedioxyphenyl</a>, and <code>C1OC=CO1</code> (the subset of the methylenedioxyphenyl without the benzene; not sure if this has a name).  Yet, using the default settings, <code>get.murcko.fragments</code> recognizes only two:</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="line-height: 125%">anle138b.frags <span style="color: #666666">=</span> get.murcko.fragments(anle138b)
+anle138b.frags
+<span style="color: #408080; font-style: italic"># [[1]]</span>
+<span style="color: #408080; font-style: italic"># [[1]]$rings</span>
+<span style="color: #408080; font-style: italic"># [1] &quot;c1ccccc1&quot;        &quot;c1ccc2OCOc2(c1)&quot;</span>
+<span style="color: #408080; font-style: italic"># </span>
+<span style="color: #408080; font-style: italic"># [[1]]$frameworks</span>
+<span style="color: #408080; font-style: italic"># [1] &quot;c1cccc(c1)c2n[nH]cc2&quot;                  &quot;c1n[nH]c(c1)c2ccc3OCOc3(c2)&quot;          </span>
+<span style="color: #408080; font-style: italic"># [3] &quot;c1cccc(c1)c2n[nH]c(c2)c3ccc4OCOc4(c3)&quot;</span>
+png(<span style="color: #BA2121">&#39;anle138b.murcko.fragments.png&#39;</span>,width<span style="color: #666666">=600</span>,height<span style="color: #666666">=120</span>)
+par(mfrow<span style="color: #666666">=</span>c(<span style="color: #666666">1</span>,<span style="color: #666666">5</span>))
+rcdkplot(parse.smiles(anle138b.frags[[<span style="color: #666666">1</span>]]<span style="color: #666666">$</span>rings[<span style="color: #666666">1</span>])[[<span style="color: #666666">1</span>]])
+rcdkplot(parse.smiles(anle138b.frags[[<span style="color: #666666">1</span>]]<span style="color: #666666">$</span>rings[<span style="color: #666666">2</span>])[[<span style="color: #666666">1</span>]])
+rcdkplot(parse.smiles(anle138b.frags[[<span style="color: #666666">1</span>]]<span style="color: #666666">$</span>frameworks[<span style="color: #666666">1</span>])[[<span style="color: #666666">1</span>]])
+rcdkplot(parse.smiles(anle138b.frags[[<span style="color: #666666">1</span>]]<span style="color: #666666">$</span>frameworks[<span style="color: #666666">2</span>])[[<span style="color: #666666">1</span>]])
+rcdkplot(parse.smiles(anle138b.frags[[<span style="color: #666666">1</span>]]<span style="color: #666666">$</span>frameworks[<span style="color: #666666">3</span>])[[<span style="color: #666666">1</span>]])
+dev.off()
+</pre>
+</div>
+<p><a href="/wp-content/uploads/2014/01/anle138b.murcko.fragments.png"><img src="/wp-content/uploads/2014/01/anle138b.murcko.fragments.png"/></a></p>
+<p>It pulls out the benzene and methylenedioxyphenyl (from left: 1, 2) and then three frameworks (3, 4, 5).  It turns out that rcdk <em>does</em> recognize pyrazole as a Murcko fragment, it&#8217;s just that pyrazole contains only 5 atoms, while the default minimum is 6. If we tweak this we can get pyrazole out as a ring:</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="line-height: 125%">anle138b.frags <span style="color: #666666">=</span> get.murcko.fragments(anle138b,min.frag.size<span style="color: #666666">=3</span>)
+anle138b.frags[[<span style="color: #666666">1</span>]]<span style="color: #666666">$</span>rings
+<span style="color: #408080; font-style: italic"># [1] &quot;c1ccccc1&quot;        &quot;c1n[nH]cc1&quot;      &quot;c1ccc2OCOc2(c1)&quot;</span>
+</pre>
+</div>
+<p>Still, the <code>C1OC=CO1</code> element is missing, not sure why that is.  In any event, we&#8217;ve at least got something we can work with here.</p>
+<p><strong>toy SAR example</strong></p>
+<p>Before diving into any serious SAR for the <a href="/2013/11/18/data-from-two-high-throughput-screens-to-deplete-prp-available-in-pubchem/" title="Data from two high-throughput screens to deplete PrP available in PubChem">anti-PrP datasets</a>, I wanted to start with a toy example.  The <a href="/2013/10/04/list-of-fda-approved-drugs-and-cns-drugs-with-smiles/" title="List of FDA-approved drugs and CNS drugs with SMILES">set of all FDA-approved drugs</a> is a (regrettably) small dataset, and it contains 7 <a href="http://en.wikipedia.org/wiki/Statin">statins</a> which share a well-characterized mechanism: they are all <a href="/2013/09/22/biochemistry-03-enzyme-kinetics/" title="Biochemistry 03: enzyme kinetics">competitive inhibitors</a> of HMG-CoA reductase.  So as a toy example, let&#8217;s pretend that the US drugs were some random compound library that we screened to find compounds that reduce cellular cholesterol synthesis, and these 7 compounds were the hits.</p>
+<p>First, let&#8217;s load up the structures of FDA-approved drugs and find the statins among them:</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="line-height: 125%"><span style="color: #408080; font-style: italic"># load FDA drug list</span>
+drugs <span style="color: #666666">=</span> read.table(<span style="color: #BA2121">&#39;/wp-content/uploads/2013/10/drugs.txt&#39;</span>,
+                   sep<span style="color: #666666">=</span><span style="color: #BA2121">&#39;\t&#39;</span>,header<span style="color: #666666">=</span><span style="color: #008000; font-weight: bold">TRUE</span>,allowEscapes<span style="color: #666666">=</span><span style="color: #008000; font-weight: bold">FALSE</span>,quote<span style="color: #666666">=</span><span style="color: #BA2121">&#39;&#39;</span>,comment.char<span style="color: #666666">=</span><span style="color: #BA2121">&#39;&#39;</span>)
+<span style="color: #408080; font-style: italic"># remove those with no SMILES or with a really huge smiles</span>
+<span style="color: #408080; font-style: italic"># otherwise R will hang on the macromolecules</span>
+drugs <span style="color: #666666">=</span> drugs[nchar(drugs<span style="color: #666666">$</span>smiles) <span style="color: #666666">&gt;</span> <span style="color: #666666">0</span> <span style="color: #666666">&amp;</span> nchar(drugs<span style="color: #666666">$</span>smiles) <span style="color: #666666">&lt;</span> <span style="color: #666666">200</span>,]
+drug.objects <span style="color: #666666">=</span> parse.smiles(drugs<span style="color: #666666">$</span>smiles) <span style="color: #408080; font-style: italic"># create rcdk IAtomContainer objects for each drug</span>
+<span style="color: #408080; font-style: italic"># check that lengths are same</span>
+dim(drugs) <span style="color: #408080; font-style: italic"># 1467 3</span>
+length(drug.objects) <span style="color: #408080; font-style: italic"># 1467</span>
+
+statins <span style="color: #666666">=</span> c(<span style="color: #BA2121">&quot;atorvastatin&quot;</span>,<span style="color: #BA2121">&quot;fluvastatin&quot;</span>,<span style="color: #BA2121">&quot;lovastatin&quot;</span>,<span style="color: #BA2121">&quot;pitavastatin&quot;</span>,<span style="color: #BA2121">&quot;pravastatin&quot;</span>,<span style="color: #BA2121">&quot;rosuvastatin&quot;</span>,<span style="color: #BA2121">&quot;simvastatin&quot;</span>)
+drugs[tolower(drugs<span style="color: #666666">$</span>generic_name) <span style="color: #666666">%in%</span> statins,] <span style="color: #408080; font-style: italic"># check that the statins are in the drug list</span>
+</pre>
+</div>
+<p>And now let&#8217;s take a look at the statin structures:</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="line-height: 125%"><span style="color: #408080; font-style: italic"># examine statin structures</span>
+png(<span style="color: #BA2121">&#39;statin.structures.png&#39;</span>,width<span style="color: #666666">=1200</span>,height<span style="color: #666666">=600</span>)
+par(mfrow<span style="color: #666666">=</span>c(<span style="color: #666666">2</span>,<span style="color: #666666">4</span>))
+<span style="color: #008000; font-weight: bold">for</span> (statin <span style="color: #008000; font-weight: bold">in</span> statins) {
+    rcdkplot(drug.objects[tolower(drugs<span style="color: #666666">$</span>generic_name) <span style="color: #666666">==</span> statin][[<span style="color: #666666">1</span>]],marg<span style="color: #666666">=2</span>,main<span style="color: #666666">=</span>statin)
+}
+dev.off()
+</pre>
+</div>
+<p><a href="/wp-content/uploads/2014/01/statin.structures.png"><img src="/wp-content/uploads/2014/01/statin.structures-1024x512.png"/></a></p>
+<p>To my eye, there are clearly some structural similarities between these molecules, presumably reflecting their similar biological activity.  That suggests that perhaps this is a decent toy dataset to play around with. As a motivation for figuring out how to do an SAR, though, let&#8217;s remind ourselves that a fragment might be observed to recur in hit molecules either because (1) it&#8217;s important for their biological activity, or (2) because it was really common in the compound library you screened in the first place. To rule out (2), we&#8217;ll need to do some statistics to see if the common fragments in the statins are really enriched above their background frequency in the FDA-approved drugs.</p>
+<p>For starters, let&#8217;s get a list of all the Murcko fragments that appear in any FDA-approved drug:</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="line-height: 125%"><span style="color: #408080; font-style: italic"># get all murcko fragments</span>
+mfrags <span style="color: #666666">=</span> get.murcko.fragments(drug.objects,min.frag.size<span style="color: #666666">=3</span>) 
+
+<span style="color: #408080; font-style: italic"># get a list of all possible fragments in any of these drugs</span>
+allfrags <span style="color: #666666">=</span> unique(unlist(mfrags))
+length(allfrags) <span style="color: #408080; font-style: italic"># 2035</span>
+
+<span style="color: #408080; font-style: italic"># get only the ring systems</span>
+allrings <span style="color: #666666">=</span> unique(unlist(lapply(mfrags,<span style="color: #BA2121">&quot;[[&quot;</span>,<span style="color: #666666">1</span>)))
+length(allrings) <span style="color: #408080; font-style: italic"># 556</span>
+</pre>
+</div>
+<p>If we consider rings and frameworks, there are 2035 fragments. If we only consider rings, there are 556.  As a basic first foray into SAR, let's say I want to check each and every fragment to see whether it is significantly enriched in the "hits" from my assay (the statins).  To do this, I'll want a big boolean matrix where the rows are drugs and the columns are fragments, and the cells are <code>TRUE</code> if the drug contains the fragment and <code>FALSE</code> if it does not. R fanatics, I could not for the life of me figure out a functional way (using <code>apply</code>) to convert <code>mfrags</code> into a matrix, so I'm going to fall back on a loop instead. Let me know if you have a genius solution.  Otherwise, this works:</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="line-height: 125%"><span style="color: #408080; font-style: italic"># convert to a matrix</span>
+mat <span style="color: #666666">=</span> matrix(nrow<span style="color: #666666">=</span>length(drug.objects), ncol<span style="color: #666666">=</span>length(allrings))
+<span style="color: #008000; font-weight: bold">for</span> (i <span style="color: #008000; font-weight: bold">in</span> <span style="color: #666666">1:</span>length(drug.objects)) {
+    mat[i,] <span style="color: #666666">=</span> allrings <span style="color: #666666">%in%</span> mfrags[[i]]<span style="color: #666666">$</span>rings
+}
+</pre>
+</div>
+<p>Above I&#8217;ve decided to look for enrichment in only the rings. As an aside, if you want to consider both rings and frameworks, then it may be useful to collapse the internal structure of <code>mfrags</code> to just one vector per list item with this line of code:</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="line-height: 125%"><span style="color: #408080; font-style: italic"># aside: if you want rings and frameworks thrown in together, </span>
+<span style="color: #408080; font-style: italic"># do.call(c,mfrags[[1]]) will concatenate the elements of mfrags[[1]] into a vector</span>
+<span style="color: #408080; font-style: italic"># lapply then does this to each element of the list</span>
+mfrags_all <span style="color: #666666">=</span> lapply(mfrags,do.call,what<span style="color: #666666">=</span>c)
+</pre>
+</div>
+<p>At this point we&#8217;ve got all the 1s and 0s necessary to test for whether a fragment is associated with a compound being a &#8220;hit&#8221;.  One way to think about this question is to ask whether a molecule&#8217;s status as having or lacking a fragment is <em>independent of</em> its status as being or not being a hit.  That question can be asked using a <a href="http://udel.edu/~mcdonald/statfishers.html">Fisher exact test of independence</a> (or, if your n were larger, a Chi squared test of independence):</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="line-height: 125%">is_statin <span style="color: #666666">=</span> tolower(drugs<span style="color: #666666">$</span>generic_name) <span style="color: #666666">%in%</span> statins <span style="color: #408080; font-style: italic"># is each drug a statin?</span>
+pvals <span style="color: #666666">=</span> numeric(length(allrings)) <span style="color: #408080; font-style: italic"># vector to hold p vals</span>
+<span style="color: #008000; font-weight: bold">for</span> (j <span style="color: #008000; font-weight: bold">in</span> <span style="color: #666666">1:</span>length(allrings)) { <span style="color: #408080; font-style: italic"># iterate over rings</span>
+    hasfrag <span style="color: #666666">=</span> mat[,j] <span style="color: #408080; font-style: italic"># does each drug contain this fragment?</span>
+    contingency_table <span style="color: #666666">=</span> table(data.frame(is_statin,hasfrag)) <span style="color: #408080; font-style: italic"># 2x2 table</span>
+    pvals[j] <span style="color: #666666">=</span> fisher.test(contingency_table)<span style="color: #666666">$</span>p.value <span style="color: #408080; font-style: italic"># Fisher test of independence</span>
+}
+png(<span style="color: #BA2121">&#39;murcko.ring.statin.qqplot.png&#39;</span>,width<span style="color: #666666">=500</span>,height<span style="color: #666666">=500</span>)
+qqunif(pvals,pch<span style="color: #666666">=19</span>,cex.main<span style="color: #666666">=.8</span>,
+    main<span style="color: #666666">=</span><span style="color: #BA2121">&#39;Association of Murcko ring systems with statin activity\namong FDA-approved drugs&#39;</span>)
+dev.off()
+</pre>
+</div>
+<p><a href="/wp-content/uploads/2014/01/murcko.ring_.statin.qqplot.png"><img src="/wp-content/uploads/2014/01/murcko.ring_.statin.qqplot.png"/></a></p>
+<p>The QQ plot above suggests that there is indeed at least one fragment that is significantly enriched among the statins. What is it?</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="line-height: 125%">allrings[pvals <span style="color: #666666">&lt;</span> <span style="color: #666666">.000001</span>]
+<span style="color: #408080; font-style: italic"># [1] &quot;C=1CCC2CCCC=C2(C=1)&quot;</span>
+<span style="color: #408080; font-style: italic"># what statins contain it?</span>
+drugs<span style="color: #666666">$</span>generic_name[is_statin <span style="color: #666666">&amp;</span> mat[,which(pvals <span style="color: #666666">&lt;</span> <span style="color: #666666">.000001</span>)]]
+<span style="color: #408080; font-style: italic"># &quot;Lovastatin&quot;  &quot;Pravastatin&quot; &quot;Simvastatin&quot;</span>
+<span style="color: #408080; font-style: italic"># how many other drugs contain it</span>
+sum(<span style="color: #666666">!</span>is_statin <span style="color: #666666">&amp;</span> mat[,which(pvals <span style="color: #666666">&lt;</span> <span style="color: #666666">.000001</span>)])
+<span style="color: #408080; font-style: italic"># 0</span>
+rcdkplot(parse.smiles(allrings[pvals <span style="color: #666666">&lt;</span> <span style="color: #666666">.000001</span>])[[<span style="color: #666666">1</span>]],marg<span style="color: #666666">=1</span>,main<span style="color: #666666">=</span>allrings[pvals <span style="color: #666666">&lt;</span> <span style="color: #666666">.000001</span>])
+</pre>
+</div>
+<p><a href="/wp-content/uploads/2014/01/statins.most_.enriched.ring_.system.png"><img src="/wp-content/uploads/2014/01/statins.most_.enriched.ring_.system.png"/></a></p>
+<p>This fragment is present in 3 of the 7 statins, while it is present in 0 other drugs. That&#8217;s some pretty significant enrichment, with p = 6.7e-8.</p>
+<p>That&#8217;s pretty cool, but let&#8217;s also go back and dissect what was done here.  Note that p values are ordinarily supposed to be uniformly distributed between 0 and 1 under the null hypothesis, but Fisher&#8217;s exact test very often gives a p value of 1 as an answer, which makes the QQ plot above look a bit odd.  QQ plotting implicitly assumes something along the lines of a Bonferroni correction for multiple testing correction &#8211; i.e. a p value is only significant if it&#8217;s <em>more</em> significant than the diagonal line would suggest based on the number of tests performed.  If we had chosen 7 <em>random</em> compounds with no biological activity in common, and tested 556 ring fragments for enrichment in them, then we might expect that .05*556 &asymp; 28 of them would be &#8220;significantly&#8221; enriched at p = .05, thus making this nominal significance not meaningful.</p>
+<p>But this assumption is probably far too conservative for the conditions here.  Fragments that occur in exactly one molecule in the entire drug collection could <em>never</em> be significantly enriched among the &#8220;hits&#8221;, and so they shouldn&#8217;t be considered to contribute to the multiple test burden. How big a problem is that? Are many fragments quite rare? Let&#8217;s look at a histogram of how frequent each of the 556 rings is in our drug collection:</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="line-height: 125%">hist(colSums(mat),col<span style="color: #666666">=</span><span style="color: #BA2121">&#39;yellow&#39;</span>,breaks<span style="color: #666666">=100</span>,
+    xlab<span style="color: #666666">=</span><span style="color: #BA2121">&#39;# of molecules containing a given fragment&#39;</span>,
+    ylab<span style="color: #666666">=</span><span style="color: #BA2121">&#39;# of fragments like this&#39;</span>,
+    main<span style="color: #666666">=</span><span style="color: #BA2121">&#39;Histogram of fragment frequencies&#39;</span>)
+</pre>
+</div>
+<p><a href="/wp-content/uploads/2014/01/frag.freq_.hist1_.png"><img src="/wp-content/uploads/2014/01/frag.freq_.hist1_.png"/></a></p>
+<p>Indeed, it looks a bit like an exponential distribution, with 351 of the 556 rings appearing in exactly 1 drug.  There&#8217;s one wild outlier at the right &#8211; benzene appears in almost half of drugs.</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="line-height: 125%">sum(colSums(mat)<span style="color: #666666">==1</span>)
+<span style="color: #408080; font-style: italic"># [1] 351</span>
+</pre>
+</div>
+<p>So the multiple testing burden isn&#8217;t nearly as bad here as I&#8217;ve assumed in my QQ plot above. In fact, only 8 fragments are even present at all in at least one hit:</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="line-height: 125%">sum(colSums(mat[is_statin,]) <span style="color: #666666">&gt;</span> <span style="color: #666666">0</span>)
+<span style="color: #408080; font-style: italic"># 8</span>
+</pre>
+</div>
+<p>So couldn&#8217;t we just test those and ignore the other 548 fragments?  I&#8217;m interested in hearing reader&#8217;s arguments as to why yes or why no. In general I tend to err on the side of statistically conservative, so I&#8217;m going to say no, we still need to consider a larger multiple test burden than just 8 fragments. My argument is that under the null hypothesis, these are just 7 random molecules that turned up as &#8220;hits&#8221; due to noise in the assay, and the number of fragments present at an appreciable frequency in our chemical library bears on the likelihood of finding one fragment &#8220;significantly&#8221; enriched by chance.</p>
+<p>Probably the most correct way to deal with multiple tests is to permute: repeatedly select a random subset of &#8220;hits&#8221; equal to the number of true hits, and see what the lowest p value you get is. Then if you want a 5% false discovery rate, select a p value where only 5% of the permutations have a lower p value. I won&#8217;t go into that level of analysis here in this post.</p>
+<p>For now, at a minimum we can say that what I&#8217;ve done here is overly conservative and so the fragment is definitely significant, and the next few dots down the QQ plot might also be significant as well.</p>
+<p>If I had considered all frameworks instead of just rings, the modeling task could get more complicated: if both a ring and a framework containing that ring are significant, then which is really important?  Is the particular framework important or is just the ring important, and that&#8217;s the only or predominant framework within which the ring occurs?  And so on.</p>
+<p><strong>which fragments are you looking at?</strong></p>
+<p>Getting away from the statistics questions, let&#8217;s address another issue with the result above: it is limited to ring systems as originally defined by Murcko.  When I look at the statin structures in the graphic above, I see two other fragments that look interesting.  One is this thing, which is in 5 of the 7 molecules:</p>
+<p><a href="/wp-content/uploads/2014/01/statin-fragment1.png"><img src="/wp-content/uploads/2014/01/statin-fragment1.png"/></a></p>
+<p>And another is fluorobenzene, which is present in 4 of the 7:</p>
+<p><a href="/wp-content/uploads/2014/01/fluorobenzene.png"><img src="/wp-content/uploads/2014/01/fluorobenzene.png"/></a></p>
+<p>I&#8217;d really like to know if these fragments are involved in statins&#8217; biological activity or not. My back-of-the-envelope guess is that they <em>are</em> significant, because in the histogram of fragment frequencies earlier, only one fragment (benzene) is very frequent, appearing in about half of drugs, while both fluorobenzene and this other thing appear in more than half of statins, suggesting enrichment</p>
+<p>But I can&#8217;t actually count how many drugs contain fluorobenzene because, according to Murcko definitions, it&#8217;s not a fragment. The F is what&#8217;s dubbed a &#8220;side chain atom&#8221; [<a href="http://www.ncbi.nlm.nih.gov/pubmed/8709122">Bemis &amp; Murcko 1996</a>] and it is not considered in ring systems nor in frameworks.</p>
+<p>To try to get at fluorobenzene, I turned to the other fragmenting system available in rcdk, <code>get.exhaustive.fragments</code>.  After having R hang several times, I realized that this function is far more computationally intensive than <code>get.murcko.fragments</code>.  I was finally able to run a single example to check performance:</p>
+<div class="highlight" style="background: #f8f8f8">
+<pre style="line-height: 125%">start_time <span style="color: #666666">=</span> Sys.time()
+get.exhaustive.fragments(drug.objects[[which(drugs<span style="color: #666666">$</span>generic_name<span style="color: #666666">==</span><span style="color: #BA2121">&#39;Rosuvastatin&#39;</span>)]],min.frag.size<span style="color: #666666">=3</span>)
+Sys.time() <span style="color: #666666">-</span> start_time
+<span style="color: #408080; font-style: italic"># Time difference of 3.394177 mins</span>
+</pre>
+</div>
+<p>Computing the fragments for just one drug, Rosuvastatin, took &gt; 3 minutes to find the 118 fragments of at least 3 atoms. Surprisingly, increasing the <code>min.frag.size</code> parameter only made matters worse: with <code>min.frag.size = 7</code>, this code took 12 minutes to produce 102 fragments.  If Rosuvastatin is representative, then at that rate, it would take a few days to compute exhaustive fragments on the whole US drug collection.</p>
+<p>That&#8217;s certainly an option, though if I have to turn to a compute farm just to do one toy example for my blog, then I&#8217;ll be a bit worried about how much compute time it will take to do any real analysis. </p>
+<p>Another issue is that even exhaustive fragments are limited to <em>contiguous</em> fragments. Might biological activity sometimes be due to a discontinuous property of the molecule?  I found it interesting that in the Prusiner lab screening paper cited above [<a href="http://www.ncbi.nlm.nih.gov/pubmed/24183589">Silber 2013</a>], the SAR focused on contiguous fragments but the manual examination of the compounds by the medicinal chemists led to some &#8220;discontinuous&#8221; observations (my bold):</p>
+<blockquote><p>Upon closer examination of the hits across different chemical leads, several trends became evident. A conjugated aromatic or heteroaromatic ring system was prominent in all lead structures. <strong>This ring system is comprised of more than two aryl or heteroaryl groups joined in a fused or linear fashion. In the case of linear aromatic systems, two aromatic rings can be linked directly via a carbon-carbon bond or a linker such as an amide or double bond.</strong> Further analysis revealed that compounds with better potency (&lt;1 &mu;M) were from leads having core structures possessing a flat coplanar or near coplanar conformation&#8230;</p></blockquote>
+<p>The bolded logic is vaguely reminiscent of a regular expression of sorts: <code>(hetero)?aryl((carbon-carbon|amide|double bond)(hetero)?aryl){1,}</code>.  This makes me wonder if it would be possible to implement regex-like logic on molecular structures to find discontinuous patterns that are enriched among assay hits. Of course, a vast number of potential regular expressions will match any given string, and so the concept of simply &#8220;fragmenting&#8221; a molecule would not apply &#8211; one would need to be very smart about choosing regexes to bother to try to match.</p>
+<p><strong>conclusion</strong></p>
+<p>All of the code from this post is available in <a href="https://gist.github.com/ericminikel/8229983">this GitHub Gist</a>.  This was the most basic imaginable example just to get my head around how to use fragments in SAR.  Hopefully now I&#8217;ve got enough of an idea to start trying to apply this to real datasets and learn more things as I go.</p>

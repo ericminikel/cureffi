@@ -1,0 +1,125 @@
+---
+layout: post
+title: "PRNP deletions in 1000 Genomes are not real"
+author: ericminikel
+date: 2013-03-31 20:53:04
+---
+<p>One possible therapeutic strategy for prion diseases is to reduce or eliminate all PrP &#8211; that is, including healthy PrP<sup>C</sup> and not just diseased PrP<sup>Sc</sup>.  For instance, non-allele-specific <a title="Prospects for gene therapy of prion diseases" href="/2013/03/03/prospects-for-gene-therapy-of-prion-diseases/">gene therapy</a>, or non-isoform-specific <a title="Anti-PrP vaccines" href="/2012/11/18/anti-prp-vaccines/">active immunization</a> or passive immunization could target all PrP.  Therefore it&#8217;s of great interest to know what the consequences of not having any PrP would be.</p>
+<p>As <a title="Can humans live without PrP?" href="/2013/03/20/can-humans-live-without-prp/">reviewed in a recent post</a>, mice [<a href="http://www.ncbi.nlm.nih.gov/pubmed/8100741">Bueler 1993</a>], cows [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2813193/">Richt 2007</a>] and goats [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3542104/">Benestad 2012</a>] all survive without PrP.  In fact, they seem quite healthy and have barely any phenotype at all under normal conditions [mice reviewed in <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2634447/">Steele 2007</a>].  Therefore it would be <em>quite</em> surprising if humans couldn&#8217;t survive without PrP.  Still, we&#8217;ve never found someone without PrP, so our only evidence comes from these animal studies.</p>
+<p>It was with great interest, then, that I noticed <a title="Can humans live without PrP?" href="/2013/03/20/can-humans-live-without-prp/">recently</a> that <a href="http://www.ncbi.nlm.nih.gov/dbvar/">dbVar</a> contains an unvalidated report of a <a href="http://www.ncbi.nlm.nih.gov/dbvar/variants/esv141127/">4kb deletion</a> covering all of PRNP exon 1, removing the transcription start site and all of the 5&#8242;UTR and presumably leading to no PRNP expression on the affected allele.  This deletion was reported by the 1000 Genomes Project flagship paper [<a href="http://www.ncbi.nlm.nih.gov/pubmed/20981092">1000 Genomes Consortium  2010</a>], in sample NA19238, a YRI female who is the mother in the Yoruban trio that was very deeply sequenced as part of the 1000 Genomes pilot.  What&#8217;s more, NA19238 is suspected to also be the mother of NA18913, who is the father in a different trio [<a href="http://www.ncbi.nlm.nih.gov/pubmed/19696932">Roberson 2009</a>, see <a href="http://www.plosone.org/article/info:doi/10.1371/journal.pone.0006711#pone-0006711-g006">Fig 6</a>].  Though 1000 Genomes doesn&#8217;t have any phenotypic data per se, a putative grandmother would probably be of at least middle age and must obviously capable of the rigorous informed consent process of 1000 Genomes, effectively ruling out any dramatically shortened life or cognitive deficit.  So even if this were just a hemizygous deletion of PRNP, it would be a lot more information than we have had so far about the phenotype of PRNP deletion in humans.</p>
+<p>The fact that this would have been a big deal is your first clue that it might not be real.  As <a href="http://www.genomesunzipped.org/2012/02/all-genomes-are-dysfunctional-broken-genes-in-healthy-individuals.php">Daniel MacArthur says</a>:</p>
+<blockquote><p>The more interesting something is, the less likely it is to be real.</p></blockquote>
+<p>That&#8217;s just a bit of Bayesian reasoning: random errors in sequencing and variant calling are distributed uniformly across the genome, while prior probabilities of really shocking things like PRNP deletions are lower.</p>
+<p>Still, it was worth looking into.  My first step was to look at the underlying sequence data to see if it supported the existence of a deletion there, and since <a href="http://ccr.coriell.org/Sections/Search/Sample_Detail.aspx?Ref=GM19238&amp;PgId=166">you can buy NA19238&#8242;s cell lines from Coriell</a> I figured if it looked real we could Sanger sequence it.</p>
+<p>First I wanted to know why this site was called as a deletion in the first place.  I downloaded the list of variant calls from <a href="http://www.ncbi.nlm.nih.gov/dbvar/studies/estd59/">estd59</a> (the id for all the 1000 Genomes variants in dbVar) and grepped for <a href="http://www.ncbi.nlm.nih.gov/dbvar/variants/esv141127">essv271793</a> (the id of this particular deletion):</p>
+<pre>$ cat supporting_variants_for_estd59.csv | grep essv271793
+"estd59","essv271793","CNV","Loss","","Sequencing","14","No","NA19238","None","","GRCh37 (hg19)","NC_000020.10","20","","","","","4665551","4669450","Remapped","1"
+"estd59","essv271793","CNV","Loss","","Sequencing","14","No","NA19238","None","","NCBI36 (hg18)","NC_000020.9","20","","","","","4613551","4617450","Submitted Genomic",""</pre>
+<p>Of note: the &#8216;analysis ID&#8217; is 14.  Analysis 14 is defined <a href="http://www.ncbi.nlm.nih.gov/dbvar/studies/estd59/#experdetailstab">here</a> as:</p>
+<blockquote><p>Sequencing platform: Whole Genome Illumina. Mapping algorithm: MAQ. Type of computational approach: read depth analysis.</p></blockquote>
+<p>So this site was called as a deletion due to read depth.  I downloaded the <a href="ftp://ftp-trace.ncbi.nih.gov/1000genomes/ftp/pilot_data/data/NA19238/alignment/">NA19238 BAMs</a> from the 1000 Genomes pilot and used bedtools <a href="http://bedtools.readthedocs.org/en/latest/content/tools/coverage.html"><code>coverageBed</code></a> to calculate coverage over the site of interest plus a couple of kb on either side (using the b36/hg18 base pair positions, and note use of <code>-d</code> to calculate depth at every individual base):</p>
+<pre>cat &gt; delplus2kb.b36.bed
+20 4611551 4619450
+coverageBed -abam NA19238.chrom20.SLX.maq.SRP000032.2009_07.bam -b delplus2kb.b36.bed -d &gt; NA19238.cov.del.b36</pre>
+<p>And then I pulled the coverage data into R and plotted it.  Note that because <a href="http://stackoverflow.com/questions/8285759/r-barplot-axis-scaling">R&#8217;s <code>barplot()</code> function does not keep the x axis true to scale</a>, my code is a bit convoluted to get everything to line up.</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">cov <span style="color: #666666;">=</span> read.table(<span style="color: #ba2121;">"NA19238.cov.del.b36"</span>,col.names<span style="color: #666666;">=</span>c(<span style="color: #ba2121;">"chr"</span>,<span style="color: #ba2121;">"start"</span>,<span style="color: #ba2121;">"end"</span>,<span style="color: #ba2121;">"relpos"</span>,<span style="color: #ba2121;">"depth"</span>))
+xlab <span style="color: #666666;">=</span> <span style="color: #ba2121;">"chr20:4611551-4619450"</span>
+ylab <span style="color: #666666;">=</span> <span style="color: #ba2121;">"read depth"</span>
+main <span style="color: #666666;">=</span> <span style="color: #ba2121;">"NA19238"</span>
+sub <span style="color: #666666;">=</span> <span style="color: #ba2121;">"Site of proposed 3.9kb PRNP deletion"</span>
+bp_plotted <span style="color: #666666;">=</span> barplot(cov$depth,xlab<span style="color: #666666;">=</span>xlab,ylab<span style="color: #666666;">=</span>ylab,main<span style="color: #666666;">=</span>main,sub<span style="color: #666666;">=</span>sub) <span style="color: #408080; font-style: italic;"># capture the x axis spacing used by barplot()</span>
+falsezero<span style="color: #666666;">=4611551</span> <span style="color: #408080; font-style: italic;"># position on chr20 where plot begins</span>
+<span style="color: #408080; font-style: italic;"># position of PRNP gene elements</span>
+prnp_tx<span style="color: #666666;">=</span>c(<span style="color: #666666;">4615156</span>,<span style="color: #666666;">4630234</span>) <span style="color: #408080; font-style: italic;"># FYI </span>
+prnp_exon1<span style="color: #666666;">=</span>c(<span style="color: #666666;">4615156</span>,<span style="color: #666666;">4615382</span>) <span style="color: #408080; font-style: italic;"># FYI</span>
+prnp_exon2<span style="color: #666666;">=</span>c(<span style="color: #666666;">4627856</span>,<span style="color: #666666;">4630234</span>) <span style="color: #408080; font-style: italic;"># FYI</span>
+<span style="color: #408080; font-style: italic;"># calculate range of PRNP transcript on barplot</span>
+prnp_tx_start_index <span style="color: #666666;">=</span> which(cov$relpos<span style="color: #666666;">==4615156-</span>falsezero)
+prnp_tx_end_index <span style="color: #666666;">=</span> dim(cov)[<span style="color: #666666;">1</span>] <span style="color: #408080; font-style: italic;">#which(cov$relpos==4630234-falsezero) - beyond end of plot</span>
+prnp_tx_fixedx <span style="color: #666666;">=</span> bp_plotted[prnp_tx_start_index:prnp_tx_end_index]
+<span style="color: #408080; font-style: italic;"># calculate range of PRNP exon 1 on plot</span>
+prnp_ex1_x <span style="color: #666666;">=</span> seq(<span style="color: #666666;">4615156</span>,<span style="color: #666666;">4615382</span>,<span style="color: #666666;">10</span>)
+prnp_ex1_start_index <span style="color: #666666;">=</span> which(cov$relpos<span style="color: #666666;">==4615156-</span>falsezero)
+prnp_ex1_end_index <span style="color: #666666;">=</span> which(cov$relpos<span style="color: #666666;">==4615382-</span>falsezero)
+prnp_ex1_fixedx <span style="color: #666666;">=</span> bp_plotted[prnp_ex1_start_index:prnp_ex1_end_index]
+<span style="color: #408080; font-style: italic;"># add PRNP exon 1 and transcript to plot</span>
+points(prnp_tx_fixedx,rep(<span style="color: #666666;">1</span>,length(prnp_tx_fixedx)),col<span style="color: #666666;">=</span><span style="color: #ba2121;">"yellow"</span>,pch<span style="color: #666666;">=</span><span style="color: #ba2121;">'.'</span>)
+points(prnp_ex1_fixedx,rep(<span style="color: #666666;">1</span>,length(prnp_ex1_fixedx)),col<span style="color: #666666;">=</span><span style="color: #ba2121;">"yellow"</span>,pch<span style="color: #666666;">=15</span>)
+axis(side<span style="color: #666666;">=1</span>,at<span style="color: #666666;">=</span>bp_plotted)],lab<span style="color: #666666;">=</span>c(<span style="color: #ba2121;">"4611551"</span>,<span style="color: #ba2121;">"PRNP exon 1"</span>,<span style="color: #ba2121;">"PRNP intron 1"</span>,<span style="color: #ba2121;">"4619450"</span>))
+<span style="color: #408080; font-style: italic;"># calculate a smoothed 500bp running average of coverage - takes ~30 seconds</span>
+running_avg <span style="color: #666666;">=</span> vector(mode<span style="color: #666666;">=</span><span style="color: #ba2121;">"numeric"</span>,length<span style="color: #666666;">=</span>dim(cov)[<span style="color: #666666;">1</span>])
+<span style="color: #008000; font-weight: bold;">for</span> (i in <span style="color: #666666;">1</span>:dim(cov)[<span style="color: #666666;">1</span>]) {
+   running_avg[i] <span style="color: #666666;">=</span> mean(cov$depth[max(i<span style="color: #666666;">-250</span>,<span style="color: #666666;">1</span>):min(i<span style="color: #666666;">+250</span>,dim(cov)[<span style="color: #666666;">1</span>])])
+}
+<span style="color: #408080; font-style: italic;"># add the smoothed average to the plot.</span>
+points(bp_plotted,running_avg,col<span style="color: #666666;">=</span><span style="color: #ba2121;">"red"</span>,pch<span style="color: #666666;">=</span><span style="color: #ba2121;">'.'</span>)</pre>
+</div>
+<p>With the result:</p>
+<p><a href="/wp-content/uploads/2013/03/NA19238.cov_.png"><img class="alignnone size-full wp-image-1892" title="NA19238.cov" src="/wp-content/uploads/2013/03/NA19238.cov_.png"/></a></p>
+<p>The black bars are the actual read depth, the red line is a smoothed 500bp rolling average, and the yellow represents PRNP gene elements.  Sure enough, you can see a massive drop in read depth for about ~2kb right around PRNP exon 1.  But I could also see two things that made me suspicious this might not be real.  First, the dropoff in coverage is just a little bit too gradual &#8211; you can&#8217;t see clear breakpoints.  Second, the average depth on either side of the deletion is about 20x, while the supposedly deleted area drops to ~5x.  There&#8217;s always a lot of noise, of course, but a hemizygous deletion should drop by half, to ~10x, and a homozygous deletion should drop to ~0x, so this ~5x was pretty far from looking correct for either case.</p>
+<p>If this were a real deletion, there should be informative traces of it in the sequence data besides just read depth.  For instance, these libraries are paired-end 36bp reads with insert size of about 300, so you&#8217;d expect to find at least some read pairs that span the deletion and thus have an insert size of ~2000 in the BAM file.  I used <code><a href="http://samtools.sourceforge.net/samtools.shtml">samtools</a> view</code> to slice out the reads from this range and sorted the <a href="http://samtools.sourceforge.net/SAM1.pdf">TLEN</a> field to find the largest inserts:</p>
+<pre>$ samtools view NA19238.chrom20.SLX.maq.SRP000032.2009_07.bam 20:4611551-4619450 | cut -f9 | sort -nr | head
+476
+464
+456
+455
+450
+448
+441
+440
+440
+439
+$ samtools view NA19238.chrom20.SLX.maq.SRP000032.2009_07.bam 20:4611551-4619450 | cut -f9 | sort -nr | tail
+-440
+-440
+-441
+-446
+-448
+-450
+-455
+-456
+-464
+-476</pre>
+<p>No inserts larger than 500bp.  Another sign that this deletion is not real.  Still curious what was going on, I downloaded the BAMs for NA19238&#8242;s family members <a href="ftp://ftp-trace.ncbi.nih.gov/1000genomes/ftp/pilot_data/data/NA19239/">NA19239</a> and <a href="ftp://ftp-trace.ncbi.nih.gov/1000genomes/ftp/pilot_data/data/NA19240/">NA19240</a>, and for the other deep trio from the 1000 Genomes pilot, the CEU (European Americans in Utah) trio of <a href="ftp://ftp-trace.ncbi.nih.gov/1000genomes/ftp/pilot_data/data/NA12891/">NA12891</a>, <a href="ftp://ftp-trace.ncbi.nih.gov/1000genomes/ftp/pilot_data/data/NA12892/">NA12892</a> and <a href="ftp://ftp-trace.ncbi.nih.gov/1000genomes/ftp/pilot_data/data/NA12878/">NA12878</a>.  All six of them have more or less the same pattern at this site according to their SLX sequence data, but it&#8217;s somewhat less clear in <a href="http://en.wikipedia.org/wiki/ABI_Solid_Sequencing">SOLiD</a> sequence data (available for two subjects, bottom row):</p>
+<p><a href="/wp-content/uploads/2013/03/1kg-deep-trios-prnp-deletion-site.pdf"><img class="alignnone size-full wp-image-1893" title="deep-trios-prnp-deletion" src="/wp-content/uploads/2013/03/deep-trios-prnp-deletion.png"/></a></p>
+<p>Now you can see how vanishingly unlikely this is seeming: a never-before-reported deletion that just happens to be present in all members of two trios, one European and one Yoruban.  Much more likely to be a sequencing artifact.</p>
+<p>But I was still curious why this particular sequencing artifact emerged.  I went down the hall to ask my colleagues in the <a href="http://talkowski.mgh.harvard.edu/">Talkowski Lab</a>, who are experts in calling structural variants from sequence data. They agreed this didn&#8217;t look like a real deletion, and <a href="http://www.linkedin.com/pub/ian-blumenthal/36/73/7a0">Ian Blumenthal</a> suggested I try looking at the <a href="http://genome.ucsc.edu/cgi-bin/hgTrackUi?hgsid=331355595&amp;c=chr20&amp;g=wgEncodeMapability">Mapability</a> track in the UCSC Genome Browser.  That track captures some of the variation in sequence depth due to non-uniqueness of sequence across the genome.  While I was fiddling around in the genome browser I noticed a track for <a href="http://genome.ucsc.edu/cgi-bin/hgTrackUi?hgsid=331355595&amp;c=chr20&amp;g=gc5Base">GC Percent</a> and turned that on as well:</p>
+<p><a href="http://genome.ucsc.edu/cgi-bin/hgTracks?hgHubConnect.destUrl=..%2Fcgi-bin%2FhgTracks&amp;clade=mammal&amp;org=Human&amp;db=hg18&amp;position=chr20%3A4%2C611%2C551-4%2C619%2C450&amp;hgt.positionInput=chr20%3A4%2C611%2C551-4%2C619%2C450&amp;hgt.suggestTrack=gc5base,wgEncodeMapability&amp;Submit=submit&amp;hgsid=330167849"><img class="alignnone size-large wp-image-1895" title="" src="/wp-content/uploads/2013/03/ucsc-genome-browser-mapability-gc-percent-highlighted-1024x440.png"/></a></p>
+<p>Mapability (blue above) turned out to be pretty decent at this site, but GC content (black) was quite elevated.  I recalled that at the <a href="/2012/12/11/uab-day-1-intro-to-sequencing/">UAB sequencing course</a> last year, <a href="http://www.hudsonalpha.org/shawn-levy-phd">Shawn Levy</a> introduced some of the difficulties with GC content.  The higher the <a href="http://en.wikipedia.org/wiki/GC-content">GC content</a>, the more thermally stable the DNA, so it doesn&#8217;t melt as well and is poorly amplified with PCR.    Therefore high-GC genomic regions tend to be underrepresented in sequence data, and this problem is especially bad if you start with only small amount of input DNA and then do a lot of PCR cycles (see also <a href="/2012/12/11/how-pcr-duplicates-arise-in-next-generation-sequencing/">PCR duplicates</a>).</p>
+<p>I clicked View &gt; DNA in the Genome Browser to get the reference sequence at this site, removed the line endings and then read the file into R to calculate a rolling average of GC content that I could mash up with my read depth plot:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># read in a text file with the DNA bases for this 8kb region on one line</span>
+dna<span style="color: #666666;">=</span>read.table(<span style="color: #ba2121;">"DNA-20-4611551-4619450-stripped.txt"</span>)
+d <span style="color: #666666;">=</span>as.character(dna$V1[<span style="color: #666666;">1</span>]) <span style="color: #408080; font-style: italic;"># convert from factor to string</span>
+dnabases<span style="color: #666666;">=</span>substring(d, seq(<span style="color: #666666;">1</span>,nchar(d),<span style="color: #666666;">1</span>), seq(<span style="color: #666666;">1</span>,nchar(d),<span style="color: #666666;">1</span>)) <span style="color: #408080; font-style: italic;"># adapted from http://stackoverflow.com/questions/2247045/r-chopping-a-string-into-a-vector-of-character-elements</span>
+<span style="color: #408080; font-style: italic;"># calculate a rolling 500bp average of gc content</span>
+gc<span style="color: #666666;">=</span>vector(mode<span style="color: #666666;">=</span><span style="color: #ba2121;">"numeric"</span>,length<span style="color: #666666;">=</span>length(dnabases))
+<span style="color: #008000; font-weight: bold;">for</span> (i in <span style="color: #666666;">1</span>:length(dnabases)) {
+   gc[i] <span style="color: #666666;">=</span> mean(dnabases[max(i<span style="color: #666666;">-250</span>,<span style="color: #666666;">1</span>):min(i<span style="color: #666666;">+250</span>,length(dnabases))]<span style="color: #666666;">%in%</span>c(<span style="color: #ba2121;">'G'</span>,<span style="color: #ba2121;">'C'</span>))
+}
+gc <span style="color: #666666;">=</span> gc[<span style="color: #666666;">1</span>:dim(cov)[<span style="color: #666666;">1</span>]] <span style="color: #408080; font-style: italic;"># cleave off the last base - incompatibility in 0- vs. 1-based numbering</span>
+points(bp_plotted,gc<span style="color: #666666;">*40</span>,col<span style="color: #666666;">=</span><span style="color: #ba2121;">"purple"</span>,pch<span style="color: #666666;">=</span><span style="color: #ba2121;">'.'</span>) <span style="color: #408080; font-style: italic;"># plot the GC content</span>
+axis(side<span style="color: #666666;">=4</span>,at<span style="color: #666666;">=</span>seq(<span style="color: #666666;">0</span>,<span style="color: #666666;">40</span>,<span style="color: #666666;">4</span>),lab<span style="color: #666666;">=</span>seq(<span style="color: #666666;">0</span>,<span style="color: #666666;">1</span>,<span style="color: #666666;">.1</span>)) <span style="color: #408080; font-style: italic;"># add an axis for GC content</span>
+mtext(text<span style="color: #666666;">=</span><span style="color: #ba2121;">"GC content"</span>,side<span style="color: #666666;">=4</span>) <span style="color: #408080; font-style: italic;"># label the axis</span></pre>
+</div>
+<p>And there it was, a smoking gun:</p>
+<p><a href="/wp-content/uploads/2013/03/NA19238.cov_.gc_.png"><img class="alignnone size-full wp-image-1896" title="" src="/wp-content/uploads/2013/03/NA19238.cov_.gc_.png"/></a></p>
+<p>GC content (purple) is hugely elevated at exactly the site where the read depth (red) is depleted.  They match up almost perfectly.</p>
+<p>I asked my colleague <a href="http://www.linkedin.com/pub/vamsee-pillalamarri/11/6b8/702">Vamsee Pillalamarri</a> in the <a href="http://talkowski.mgh.harvard.edu/">Talkowski Lab</a> if he could check one of his datasets at the same site, and he sent me back this read depth plot from one of the samples he&#8217;s currently working on:</p>
+<p><img class="alignnone size-full wp-image-1898" title="Image by Talkowski Laboratory, courtesy of Vamsee Pillalamarri" src="/wp-content/uploads/2013/03/prnp-deletion-site-coverage-talkowski-lab.png"/></p>
+<p>He has zero coverage at the exact same site as the deletion was called in NA19238.  There you have it: after all this, it&#8217;s just a GC content issue.  Glad I decided to look at the sequencing reads before ordering the cells and Sangering them!</p>
+<p><strong>update 2013-04-01: </strong>While I was doing this analysis I noticed that dbVar also contains a call of a <a href="http://www.ncbi.nlm.nih.gov/dbvar/variants/esv141539/">nearby 1Mb deletion covering PRNP and several other genes in NA12891</a>, reported by the same study as the above deletion.  Such a very large deletion seems even less likely than the 4kb NA19238 deletion above, but I figured while I&#8217;m at it and have the NA12891 BAMs on hand anyway I might as well check.</p>
+<p>First I checked what analysis had led to this variant call:</p>
+<pre>$ cat supporting_variants_for_estd59.csv | grep essv274112
+"estd59","essv274112","CNV","Loss","","Sequencing","19","No","NA12891","None","","GRCh37 (hg19)","NC_000020.10","20","","","4082925","5007416","4082755","5007606","Remapped","1"
+"estd59","essv274112","CNV","Loss","","Sequencing","19","No","NA12891","None","","NCBI36 (hg18)","NC_000020.9","20","","","4030925","4955416","4030755","4955606","Submitted Genomic",""</pre>
+<p><a href="http://www.ncbi.nlm.nih.gov/dbvar/studies/estd59/#experdetailstab">Analysis 19</a> is read pair mapping using <a href="http://mrfast.sourceforge.net/">mrFAST</a>:</p>
+<blockquote><p>Sequencing platform: Whole Genome Illumina. Mapping algorithm: mrFAST. Type of computational approach: read pair mapping.</p></blockquote>
+<p>Again, as I&#8217;ve reasoned above, a true deletion should show itself in more than one way.  Though this &#8216;deletion&#8217; may have been called based on aberrant read pairs, if it&#8217;s real it should also result in reduced read depth.  It doesn&#8217;t.  I created a bed file with three elements, one for the deletion and one each for the 1Mb before and after it, and calculated coverage using <code><a href="http://bedtools.readthedocs.org/en/latest/content/tools/coverage.html">coverageBed</a> -hist</code>:</p>
+<pre>$ cat &gt; NA12891.del.b36.bed # the 1 Mb before and after the deletion too
+20 3030755 4030755
+20 4030755 4955606
+20 4955606 5955606
+$ coverageBed -abam NA12891.chrom20.SLX.maq.SRP000032.2009_07.bam -b NA12891.del.b36.bed -hist&gt; NA12891del.cov.b36.hist</pre>
+<p>Result: average read depth is 33.1 for 1Mb before the &#8216;deletion, 34.8 in the &#8216;deletion&#8217; and 35.4 for 1 Mb after the &#8216;deletion&#8217;.  I didn&#8217;t bother to take the time to figure out what mrFAST had actually seen as aberrant in NA12891 &#8211; it might well represent a real inversion or translocation, but those wouldn&#8217;t affect PRNP transcription.  Based on the read depth we can pretty well rule out a true deletion.</p>
