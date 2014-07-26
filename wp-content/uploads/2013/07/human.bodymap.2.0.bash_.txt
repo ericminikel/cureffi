@@ -1,0 +1,116 @@
+# Eric Minikel
+# CureFFI.org
+# 2013-07-04
+# Bash script to generate FPKMs from Ensembl Human Bodymap 2.0 RNA-seq data
+
+# Announcement of Human BodyMap 2.0 data availability: http://www.ensembl.info/blog/2011/05/24/human-bodymap-2-0-data-from-illumina/
+# BAM list: ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/
+
+# STEP 1: DOWNLOAD THE BAMS FROM ENSEMBL
+
+mkdir /data/HD/dataset/humanbodymap2.0
+cat > wget.bash
+#!/bin/bash
+cd /data/HD/dataset/humanbodymap2.0
+wget ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/GRCh37.HumanBodyMap.adipose.1.bam
+wget ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/GRCh37.HumanBodyMap.adipose.1.bam.bai
+wget ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/GRCh37.HumanBodyMap.adrenal.1.bam
+wget ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/GRCh37.HumanBodyMap.adrenal.1.bam.bai
+wget ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/GRCh37.HumanBodyMap.blood.1.bam
+wget ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/GRCh37.HumanBodyMap.blood.1.bam.bai
+wget ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/GRCh37.HumanBodyMap.brain.1.bam
+wget ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/GRCh37.HumanBodyMap.brain.1.bam.bai
+wget ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/GRCh37.HumanBodyMap.breast.1.bam
+wget ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/GRCh37.HumanBodyMap.breast.1.bam.bai
+wget ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/GRCh37.HumanBodyMap.colon.1.bam
+wget ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/GRCh37.HumanBodyMap.colon.1.bam.bai
+wget ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/GRCh37.HumanBodyMap.heart.1.bam
+wget ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/GRCh37.HumanBodyMap.heart.1.bam.bai
+wget ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/GRCh37.HumanBodyMap.kidney.1.bam
+wget ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/GRCh37.HumanBodyMap.kidney.1.bam.bai
+wget ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/GRCh37.HumanBodyMap.liver.1.bam
+wget ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/GRCh37.HumanBodyMap.liver.1.bam.bai
+wget ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/GRCh37.HumanBodyMap.lung.1.bam
+wget ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/GRCh37.HumanBodyMap.lung.1.bam.bai
+wget ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/GRCh37.HumanBodyMap.lymph.1.bam
+wget ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/GRCh37.HumanBodyMap.lymph.1.bam.bai
+wget ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/GRCh37.HumanBodyMap.merged.1.bam
+wget ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/GRCh37.HumanBodyMap.merged.1.bam.bai
+wget ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/GRCh37.HumanBodyMap.ovary.1.bam
+wget ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/GRCh37.HumanBodyMap.ovary.1.bam.bai
+wget ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/GRCh37.HumanBodyMap.pooled.1.bam
+wget ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/GRCh37.HumanBodyMap.pooled.1.bam.bai
+wget ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/GRCh37.HumanBodyMap.prostate.1.bam
+wget ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/GRCh37.HumanBodyMap.prostate.1.bam.bai
+wget ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/GRCh37.HumanBodyMap.skeletal_muscle.1.bam
+wget ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/GRCh37.HumanBodyMap.skeletal_muscle.1.bam.bai
+wget ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/GRCh37.HumanBodyMap.testes.1.bam
+wget ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/GRCh37.HumanBodyMap.testes.1.bam.bai
+wget ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/GRCh37.HumanBodyMap.thyroid.1.bam
+wget ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/GRCh37.HumanBodyMap.thyroid.1.bam.bai
+
+bsub -q long -W 160:00 < wget.bash
+
+cd /data/HD/dataset/gtf
+wget ftp://ftp.ensembl.org/pub/release-70/gtf/homo_sapiens/Homo_sapiens.GRCh37.70.gtf.gz
+gunzip Homo_sapiens.GRCh37.70.gtf.gz
+
+# STEP 2: REMOVE @RG TAGS TO MAKE BAMS COMPATIBLE WITH CUFFLINKS** (see below)
+
+cd /data/HD/dataset/humanbodymap2.0
+mkdir no-rg
+for file in GRCh37.*.bam
+do
+    bsub -q medium "cd /data/HD/dataset/humanbodymap2.0; samtools view -h $file | grep -v ^@RG | samtools view -Sbh - > no-rg/$file"
+done
+
+bsub -q medium "cd /data/HD/dataset/humanbodymap2.0; samtools view -h $file | grep -v ^@RG | samtools view -Sbh - > no-rg/$file"
+
+# STEP 3: QUANTIFY KNOWN (REFSEQ) TRANSCRIPTS WITH CUFFLINKS
+
+cd /data/HD/dataset/humanbodymap2.0
+for file in *.bam
+do
+    bsub -q long -W 160:00 "cd /data/HD/dataset/humanbodymap2.0; cufflinks -o ./cufflinks/$file -G /data/HD/dataset/gtf/Homo_sapiens.GRCh37.70.gtf ./no-rg/$file"
+done
+
+# STEP 4: GROUP CUFFLINKS OUTPUT ACROSS TISSUES
+
+cd /data/HD/dataset/humanbodymap2.0
+# prep header rows
+cat cufflinks/GRCh37.HumanBodyMap.adipose.1.bam/isoforms.fpkm_tracking | head -1 | awk '{print "TISSUE\t"$0}' > combined/all.isoforms.fpkm_tracking
+cat cufflinks/GRCh37.HumanBodyMap.adipose.1.bam/genes.fpkm_tracking | head -1 | awk '{print "TISSUE\t"$0}' > combined/all.genes.fpkm_tracking
+# combine files
+for tissue in {adipose,adrenal,blood,brain,breast,colon,heart,kidney,liver,lung,lymph,ovary,prostate,skeletal_muscle,testes,thyroid}
+do
+    # combine isoforms data into one file, adding a column for tissue type
+    cat cufflinks/GRCh37.HumanBodyMap.$tissue.1.bam/isoforms.fpkm_tracking | tail -n +2 | awk -v tissue=$tissue '{print tissue"\t"$0}' >> combined/all.isoforms.fpkm_tracking
+    # combine gene symbol data into one file, adding a column for tissue type
+    cat cufflinks/GRCh37.HumanBodyMap.$tissue.1.bam/genes.fpkm_tracking | tail -n +2 | awk -v tissue=$tissue '{print tissue"\t"$0}' >> combined/all.genes.fpkm_tracking
+done
+
+# STEP 5: CAST INTO MATRIX
+
+R # open R and run rest of code in R
+require(reshape2)
+genes = read.table('combined/all.genes.fpkm_tracking',header=TRUE)
+gene.matrix = acast(data = genes, formula = gene_short_name ~ TISSUE, fun.aggregate=sum, value.var="FPKM")
+write.csv(gene.matrix,'combined/gene.matrix.csv',row.names=TRUE,quote=TRUE)
+
+isoforms = read.table('combined/all.isoforms.fpkm_tracking',header=TRUE)
+isoform.matrix = acast(data = isoforms, formula = tracking_id ~ TISSUE, fun.aggregate=mean, value.var="FPKM") # fun.aggregate doesn't matter b/c no duplicates
+write.csv(isoform.matrix,'combined/isoform.matrix.csv',row.names=TRUE,quote=TRUE)
+
+##### ** re: Step 2 - some quick notes about the debugging process for figuring out why cufflinks wouldn't work with the Human BodyMap BAMs:
+# # creating a smaller file to use for debugging
+# samtools view -h GRCh37.HumanBodyMap.prostate.1.bam GL000210.1 | samtools view -Sbh - -o prostate.gl.bam
+# 
+# # debugging: figuring out that the presence of the single line is sufficient to reproduce segmentation fault
+# # offending line: @RG     ID:prostate_75_fcb      PL:     PU:     ST:     LB:     DS:     SM:prostate     CN:
+# samtools view -h prostate.gl.bam | grep -v ID:prostate_75_fcb >  prostate.gl.1rg.sam
+# samtools view -Sbh prostate.gl.1rg.sam > prostate.gl.1rg.bam
+# cufflinks prostate.gl.1rg.bam # actually works
+# 
+# samtools view -h prostate.gl.bam | grep -v ID:prostate_50_fca_2 >  prostate.gl.otherrg.sam
+# samtools view -Sbh prostate.gl.otherrg.sam > prostate.gl.otherrg.bam
+# cufflinks prostate.gl.otherrg.bam # totally does not work

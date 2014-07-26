@@ -1,0 +1,11 @@
+# Site settings
+title: CureFFI.org
+twitter_username: cureffi
+github_username: ericminikel
+description: "CureFFI.org"
+baseurl: ""
+url: "http://yourdomain.com"
+
+# Build settings
+markdown: kramdown
+permalink: pretty

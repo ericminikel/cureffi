@@ -1,0 +1,444 @@
+---
+layout: post
+title: "An alternative exome sequencing pipeline using bowtie2 and samtools"
+author: ericminikel
+date: 2012-09-07 19:13:02
+---
+<p>In <a href="/2012/09/07/issues-with-the-conventional-bwa-picard-gatk-exome-sequencing-pipeline/">my last post</a> I documented the technical issues I encountered when trying to run <a href="http://seqanswers.com/wiki/How-to/exome_analysis">the widely used exome sequencing pipeline posted at seqanswers</a>.  That pipeline is based on <a href="http://bio-bwa.sourceforge.net/">BWA</a> for alignment, <a href="http://picard.sourceforge.net/">Picard</a> for some intermediate processing steps, and <a href="http://www.broadinstitute.org/gatk/">GATK</a> for variant calling among other steps.  After I was unable to get that approach to work, I started over from scratch and created an alternative pipeline based primarily around <a href="http://bowtie-bio.sourceforge.net/bowtie2/">bowtie2</a> for alignment and <a href="http://samtools.sourceforge.net/">samtools</a> for processing and variant calling.  The purpose of this post is to document this alternative pipeline.</p>
+<p><strong>Overview</strong>: This pipeline is for analyzing human exome data.  It assumes you have paired-end reads in the form of FASTQ files from your sequencing company and that your goal is to align these to the genome and then call variants for further analysis.</p>
+<p>Below I will include code and estimated running times for every step.  For the record, I&#8217;ve got 50 samples with paired-end reads, so 100 FASTQ files, ranging from about 15 to 30 million reads each, and I am running this on an HP Red Hat Linux cluster with 8GB memory and 8 cores per node.  But IMHO, the details aren&#8217;t important&#8211; your running times will obviously be different than mine, but this will give you a sense of the order of magnitude of how long these things will take.  That&#8217;s helpful because then you know whether to kill them if they&#8217;ve been running too long, and you can set running time limits on your jobs (using <a href="http://www.vub.ac.be/BFUCC/LSF/bsub.1.html">bsub</a>&#8216;s -W option if you&#8217;re on an LSF scheduler) which will help keep your priority nice and high on shared resources.</p>
+<p><strong>0. Prep steps</strong>.  You can go ahead and start step 1 and then come back and do these things while waiting for other steps to run.</p>
+<p><strong>0.1:</strong> By Step 3 you will need a bowtie2-formatted index of hg19.  You could index it yourself but I am told this takes several hours.  Instead just download it:</p>
+<pre>wget ftp://ftp.cbcb.umd.edu/pub/data/bowtie2_indexes/incl/hg19.zip
+unzip hg19.zip</pre>
+<p><strong>0.2:</strong> Also by the time you get to step 3: you will need a samtools index of hg19 which exactly matches the bowtie2 index you just downloaded. What does that mean? hg19 has separate fasta files for all the human chromosomes plus a bunch of random contigs. Which ones you include, and in which order, matters. If you do step 3 with the index found at the above link, which includes random contigs, but then you try to run samtools with an hg19.fa that does not include the random contigs (or, gasp, has them in lexicographic order, i.e. chr1, chr10, chr11 &#8230;. chr2, chr 20, &#8230; instead of numerical order) it won&#8217;t work.</p>
+<p>So download hg19, unzip it, concatenate <em>exactly the files included in the above bowtie index in exactly the same order</em> into a new hg19-bt2.fa (thus named to remind you that its contents are designed to match those of the bowtie2 index you downloaded) and then create a samtools reference index (*.fai) on it:</p>
+<pre>wget ftp://hgdownload.cse.ucsc.edu/goldenPath/hg19/bigZips/chromFa.tar.gz
+gunzip chromFa.tar.gz
+cat chr1.fa chr2.fa chr3.fa chr4.fa chr5.fa chr6.fa chr7.fa chr8.fa chr9.fa chr10.fa chr11.fa chr12.fa chr13.fa chr14.fa chr15.fa chr16.fa chr17.fa chr18.fa chr19.fa chr20.fa chr21.fa chr22.fa chrX.fa chrY.fa chrM.fa chr1_gl000191_random.fa chr1_gl000192_random.fa chr4_gl000193_random.fa chr4_gl000194_random.fa chr7_gl000195_random.fa chr8_gl000196_random.fa chr8_gl000197_random.fa chr9_gl000198_random.fa chr9_gl000199_random.fa chr9_gl000200_random.fa chr9_gl000201_random.fa chr11_gl000202_random.fa chr17_gl000203_random.fa chr17_gl000204_random.fa chr17_gl000205_random.fa chr17_gl000206_random.fa chr18_gl000207_random.fa chr19_gl000208_random.fa chr19_gl000209_random.fa chr21_gl000210_random.fa chrUn_gl000211.fa chrUn_gl000212.fa chrUn_gl000213.fa chrUn_gl000214.fa chrUn_gl000215.fa chrUn_gl000216.fa chrUn_gl000217.fa chrUn_gl000218.fa chrUn_gl000219.fa chrUn_gl000220.fa chrUn_gl000221.fa chrUn_gl000222.fa chrUn_gl000223.fa chrUn_gl000224.fa chrUn_gl000225.fa chrUn_gl000226.fa chrUn_gl000227.fa chrUn_gl000228.fa chrUn_gl000229.fa chrUn_gl000230.fa chrUn_gl000231.fa chrUn_gl000232.fa chrUn_gl000233.fa chrUn_gl000234.fa chrUn_gl000235.fa chrUn_gl000236.fa chrUn_gl000237.fa chrUn_gl000238.fa chrUn_gl000239.fa chrUn_gl000240.fa chrUn_gl000241.fa chrUn_gl000242.fa chrUn_gl000243.fa chrUn_gl000244.fa chrUn_gl000245.fa chrUn_gl000246.fa chrUn_gl000247.fa chrUn_gl000248.fa chrUn_gl000249.fa &gt; hg19-bt2.fa
+samtools faidx hg19-bt2.fa</pre>
+<p>This will create hg19-bt2.fa.fai which is what you need at step 8.</p>
+<p>For future compatibility when new versions of bowtie2 and/or the hg reference sequence come out: I got the above list and order of files included in the bowtie2 index by examining the file make_hg19.sh which is included in the bowtie2 hg19.zip file you downloaded above.</p>
+<p><strong>0.3</strong>: By step 8 you will want a BED file listing the genomic regions that constitute the human exome.  Now, even though you targeted the exome when you created your library for sequencing, you will get <em>some</em> reads aligning to non-targeted regions. However, odds are that your coverage of non-targeted regions will be too low to have meaningful results from any variants there anyway, so you may as well not even call those variants in the first place. Instead, save time by only calling variants in your targeted regions, i.e. the exome. If you used the Illumina TruSeq exome capture kit, the official BED file for it is <a href="http://support.illumina.com/sequencing/sequencing_kits/truseq_exome_enrichment_kit/downloads.ilmn">here</a> but you need to log in to download; if you trust things people post on the internet, someone has uploaded a free copy <a href="http://seqanswers.com/forums/archive/index.php/t-12722.html">here</a>.  If your exome capture kit was NimbleGen SeqCap, the relevant page is <a href="http://www.nimblegen.com/seqcapez/">here</a> and the actual files are here: <a href="http://www.nimblegen.com/downloads/annotation/ez_exome_v2/SeqCapEZ_Exome_v2.0_Design_Annotation_files.zip">v2.0</a> and <a href="http://www.nimblegen.com/downloads/annotation/ez_exome_v3/SeqCapEZ_Exome_v3.0_Design_Annotation_files.zip">v3.0</a>.</p>
+<p><strong>1. decompression: gunzip</strong></p>
+<p>All of the tools you&#8217;re about to use <em>can</em> run directly on .gz files without unzipping.  However, I have found it&#8217;s not uncommon for .gz files to get corrupted while you&#8217;re downloading them from your sequencing company.  If that happens, your alignment job might run for 3 hours and finish 95% of the file before encountering an invalid compression block and crashing, leaving you with nothing.  The better to know sooner before investing the three hours of CPU time. gunzip first, which takes just a few minutes, and you&#8217;ll find out right away if there are any files you need to re-download.</p>
+<pre>gunzip -c 1_1.fq.gz 1_1.fq</pre>
+<p>3 minutes per fq.gz file</p>
+<p>If there&#8217;s a corrupted file you&#8217;ll get a message like <code>invalid compressed data--format violated</code>.</p>
+<p>Important note: gunzip&#8217;s default behavior is to remove the compressed file when it&#8217;s done; to be safe you should probably <a href="http://superuser.com/questions/45650/how-do-you-gunzip-a-file-and-keep-the-gz-file">keep it using the -c flag</a> as I&#8217;ve done above.</p>
+<p><strong>2. raw reads quality control: fastqc</strong></p>
+<pre>fastqc 1_1.fq -f fastq -o fastqc/</pre>
+<p>8 minutes per fq file</p>
+<p>I&#8217;ve provided a script to load the FastQC output data into PostgreSQL to analyze in bulk <a href="/2012/08/27/fastqc-for-large-numbers-of-samples/">here</a>.</p>
+<p><strong>3. alignment: bowtie2 piped directly to samtools view</strong></p>
+<pre>bowtie2 --end-to-end --very-fast --rg-id "@RG\tID:1\tLB:project_name\tSM:1\tPL:ILLUMINA" -x hg19 -q -1 1_1.fq -2 2_2.fq | samtools view - -Sb -h -t hg19-bt2.fa.fai -o 1.bam</pre>
+<p>4 hours per pair of fq files</p>
+<p>Notice that this is running the fastest possible settings, <a href="http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml#alignment-options">&#8211;end-to-end</a> <a href="http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml#preset-options-in---end-to-end-mode">&#8211;very-fast</a>, and piping directly to samtools which avoids writing a SAM to disk, which speeds things up according to <a href="http://seqanswers.com/forums/archive/index.php/t-19397.html">this</a>.  Before running this step I did a little experiment to see whether <a href="http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml#end-to-end-alignment-versus-local-alignment">&#8211;end-to-end or &#8211;local</a> was faster.  I had some per base sequence content issues at the ends of reads in some of my samples according to FastQC, so I thought soft clipping the ends when necessary might be a good thing and I might prefer &#8211;local.  I started two processes on identical input data and killed them after about 10 minutes to see how much data they&#8217;d written to the BAM file.  Results:</p>
+<p>end-to-end: 1150550016 bytes in 626 seconds = 1,837,939 bytes/sec<br/>
+local: 683245568 bytes in 606 seconds = 1,127,467 bytes/sec</p>
+<p>So end-to-end is about 50% faster.  I didn&#8217;t do any experiments on &#8211;very-fast versus &#8211;fast, &#8211;sensitive and &#8211;very-sensitive though.  Just note that depending on your needs, the more sensitive options might be important.</p>
+<p>Also note that as mentioned in step 0, I used an already-indexed hg19 from UCSC available <a href="ftp://ftp.cbcb.umd.edu/pub/data/bowtie2_indexes/incl/hg19.zip">here</a>, rather than indexing it myself with bowtie2.</p>
+<p><strong>4. sorting: samtools sort</strong></p>
+<pre>samtools sort 1.bam 1.srtd -m 8000000000</pre>
+<p>20 minutes per bam</p>
+<p>By default, samtools only uses 500 MB of memory. If you have more, use more:hence the <code>-m 8000000000</code> option used above. It will be faster and not create paged files on your disk (which it then leaves there after it is done).</p>
+<p><strong>5. reheadering: samtools reheader</strong></p>
+<p>This step is necessary because samtools sort (and Picard&#8217;s SortSam from what I&#8217;m told, though I never got it to run myself) will sort a BAM by coordinates but then <em>not</em> update the header to indicate that the BAM is sorted.  First use view -H to retrieve the original header (this takes just a couple seconds):</p>
+<pre>samtools view -H 1.srtd.bam &gt; 1originalheader.sam</pre>
+<p>Then open up the SAM file and edit it. On the first line change <code>SO:unsorted</code> to <code>SO:sorted</code>. (While you&#8217;re at it, double check that the <code>@RG</code> line is well-formed. For some reason mine had gotten corrupted and had two &#8220;ID&#8221; tags in it.  If you&#8217;re doing all this programmatically, say, from Python, it&#8217;s easy to mess up the tabs).  Then apply the edited header to the BAM file using reheader:</p>
+<pre>samtools reheader 1reheader.sam 1.srtd.bam &gt; 1.srtd.reh.bam</pre>
+<p>3 minutes per bam</p>
+<p><strong>6. removing PCR duplicates: samtools rmdup</strong></p>
+<pre>samtools rmdup 1.srtd.reh.bam 1.srtd.reh.ddup.bam</pre>
+<p>12 minutes per bam</p>
+<p>According to FastQC I had about 27% PCR duplicates. This removes them. Picard&#8217;s MarkDuplicates is supposed to just mark them rather than remove them, but <a href="/2012/09/07/issues-with-the-conventional-bwa-picard-gatk-exome-sequencing-pipeline/">I couldn&#8217;t get Picard to work</a> and I&#8217;m also not sure what the benefit is of marking them rather than totally removing them.</p>
+<p><strong>7. indexing: samtools index</strong></p>
+<pre>samtools index 1.srtd.reh.ddup.bam</pre>
+<p>1 minute per bam</p>
+<p>This creates a .bam.bai file in the same directory.  I&#8217;m not actually sure if samtools mpileup even uses the .bai index that this creates, but I figured it can&#8217;t hurt.</p>
+<p><strong>8. calling variants: samtools mpileup piped to bcftools view</strong></p>
+<p>First create a list of bams to use:</p>
+<pre>ls *.srtd.reh.ddup.bam &gt; bamlist.txt</pre>
+<p>Then pile them up, call variants only on the targeted regions according to your BED file (see discussion above), and pipe it directly to bcftools to create a vcf file, all in one line:</p>
+<pre>samtools mpileup -d 200 -D -B -f ../hg19/fasta/hg19-bt2.fa -b bamlist.txt -l ../bed/SeqCap_EZ_Exome_v2.bed -u | bcftools view - -v -c -g &gt; variants.vcf</pre>
+<p>16 hours for 50 bams*</p>
+<p>Remember, <code>hg19-bt2.fa</code> is the reference sequence for which we created a samtools reference index, <code>hg19-bt2.fa.fai</code>, for use in step 3. Here we use it again.</p>
+<p>In <a href="http://samtools.sourceforge.net/mpileup.shtml">the mpileup example on samtools website</a>, it shows a command that pipes through bcftools twice&#8211; once to create a bcf and then again to convert that to vcf. I don&#8217;t know why they do this. The above, going directly from mpileup&#8217;s output into a vcf, worked great for me.</p>
+<p>*If, while your program is running, you want to check on its progress and that its output is well formed, here&#8217;s a trick. First, do this:</p>
+<pre>head -1000 variants.vcf</pre>
+<p>Then look at the output. Does it have everything you want in it? Good. Now go down to where the data is and see how wide the lines are. Mine were about 800 chars average.  So now you can list details (<code>ll</code>) to get the file size, divide by 800, there you go, that&#8217;s an estimate of the number of lines thus far written to the file. Now that you have an idea how many lines there are, use <code>head</code> to retrieve most of them (be conservative so you don&#8217;t hit EOF) and pipe them to <code>tail</code> to see what&#8217;s at the end.</p>
+<pre>head -10000 variants.vcf | tail -</pre>
+<p>You will see the most recent genomic positions where variants were called.  Say you&#8217;ve gotten through the first 180M bases of chr1 in an hour. That&#8217;s about 1/16 of the genome, so you can estimate you&#8217;ll probably take about 16 hours to finish.</p>
+<p><strong>9. annotating variants: annovar</strong></p>
+<p>At this step, you&#8217;ve already got raw variants&#8211; chromosome, position, reference allele, alternate allele. &#8220;Annotating&#8221; refers to overlaying humankind&#8217;s existing knowledge of our genome onto this information. What gene does this variant fall in? How highly conserved is that position? And so on.</p>
+<p>I used <a href="http://www.openbioinformatics.org/annovar/">annovar</a>, which was a bit tricky to get started with but is quite powerful once you get rolling. Before you can use annovar, you need to download all the databases containing the annotation information. annovar does not have any lookup service that automatically finds the most recent versions of every database and uses them; instead you have specify what you want.  The defaults are not always the most recent versions of everything (e.g. hg18, dbSNP130, and so on) though the annovar website lists more recent versions of these.  You&#8217;ll probably need a few tries to get the right places to download these databases from and specify the right command-line parameters in order to use them. As of September 3, 2012, these commands (executed from the directory where annovar is installed) seem to reflect the most recent verisons of everything and viable places to find them, but I&#8217;m sure that won&#8217;t be true for long:</p>
+<pre>annotate_variation.pl -downdb -buildver hg19 gene humandb
+annotate_variation.pl -downdb -buildver hg19 band humandb/
+annotate_variation.pl -downdb -buildver hg19 tfbs humandb/
+annotate_variation.pl -downdb -buildver hg19 mce28way humandb/
+annotate_variation.pl -downdb -buildver hg19 segdup humandb/
+annotate_variation.pl -downdb -buildver hg19 mirna humandb/
+annotate_variation.pl -downdb -buildver hg19 mirnatarget humandb/
+annotate_variation.pl -downdb -buildver hg19 evofold humandb/
+annotate_variation.pl -downdb -buildver hg19 dgv humandb/
+annotate_variation.pl -downdb -buildver hg19 omimgene humandb/
+annotate_variation.pl -downdb -buildver hg19 gwascatalog humandb/
+annotate_variation.pl -downdb -buildver hg19 phastConsElements28wayPlacMammal humandb/
+annotate_variation.pl -downdb -buildver hg19 1000g2012feb humandb/
+annotate_variation.pl -downdb -buildver hg19 snp132 humandb/
+annotate_variation.pl -downdb -buildver hg19 avsift humandb/
+annotate_variation.pl -downdb -buildver hg19 jb_all humandb/
+annotate_variation.pl -downdb -buildver hg19 phastConsElements46way humandb/
+# ones you have to get directly from annovar use -webfrom annovar
+annotate_variation.pl -downdb -webfrom annovar -buildver hg19 ljb_all humandb/
+annotate_variation.pl -downdb -webfrom annovar -buildver hg19 esp5400_all humandb/</pre>
+<p>Then, to actually run annovar, do this:</p>
+<pre># convert your vcf to an annovar file
+perl ~/bin/annovar/convert2annovar.pl --format vcf4 --includeinfo variants.vcf &gt; variants.annovar
+# do the annotation
+perl ~/bin/annovar/summarize_annovar.pl --buildver hg19 --ver1000g 1000g2012feb --verdbsnp 132 variants.annovar ~/bin/annovar/humandb -outfile annovar/variantsann</pre>
+<p>Together these two commands take about 30 minutes.</p>
+<p><strong>10. converting to plink format: vcftools</strong></p>
+<p><a href="http://pngu.mgh.harvard.edu/~purcell/plink/">PLINK</a> can do a lot. It can actually do a whole GWAS for you, if your needs are pretty standard. Even if you&#8217;re planning to do your own modeling and analysis, you might want to use PLINK to model population substructure, which is to say, to group samples into different groups (ethnic groups or families) in order to control for their relation to each other. To get started with PLINK, you have to have <a href="http://pngu.mgh.harvard.edu/~purcell/plink/data.shtml#ped">ped</a> and <a href="http://pngu.mgh.harvard.edu/~purcell/plink/data.shtml#map">map</a> files, or the <a href="http://pngu.mgh.harvard.edu/~purcell/plink/data.shtml#tr">transposed version</a>, which are tped and tfam files. You can do this as such:</p>
+<pre>vcftools --vcf variants.vcf --plink-tped</pre>
+<p>This took about 30 seconds.</p>
+<p>One irritating thing is that when vcftools converts vcf files to tped/tfam files, it leaves strings such as &#8220;chr1&#8243; in the chromosome field, which PLINK doesn&#8217;t recognize and so if you do any association testing in PLINK, PLINK will lose that information and output 0 in the chromosome column for every row. To avoid this, I wrote this python script to change the chromosome names to numbers (mapping for X, Y, and M described <a href="http://pngu.mgh.harvard.edu/~purcell/plink/data.shtml#map">here</a>) and give the SNPs names that include the chromosome number:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #008000; font-weight: bold;">import</span> <span style="color: #0000ff; font-weight: bold;">sys</span>
+
+i <span style="color: #666666;">=</span> <span style="color: #008000;">open</span>(<span style="color: #ba2121;">"c:/path/orig.tped"</span>,<span style="color: #ba2121;">"r"</span>)
+o <span style="color: #666666;">=</span> <span style="color: #008000;">open</span>(<span style="color: #ba2121;">"c:/path/fixed.tped"</span>,<span style="color: #ba2121;">"w"</span>)
+
+<span style="color: #008000; font-weight: bold;">for</span> line <span style="color: #aa22ff; font-weight: bold;">in</span> i<span style="color: #666666;">.</span>readlines():
+    cols <span style="color: #666666;">=</span> line<span style="color: #666666;">.</span>split(<span style="color: #ba2121;">"</span><span style="color: #bb6622; font-weight: bold;">\t</span><span style="color: #ba2121;">"</span>)
+    <span style="color: #008000; font-weight: bold;">if</span> (line[:<span style="color: #666666;">3</span>] <span style="color: #666666;">==</span> <span style="color: #ba2121;">"chr"</span>):
+        cols[<span style="color: #666666;">0</span>] <span style="color: #666666;">=</span> cols[<span style="color: #666666;">0</span>][<span style="color: #666666;">3</span>:]<span style="color: #408080; font-style: italic;"># strip off the letters 'chr'</span>
+        cols[<span style="color: #666666;">1</span>] <span style="color: #666666;">=</span> <span style="color: #ba2121;">"."</span><span style="color: #666666;">.</span>join((cols[<span style="color: #666666;">0</span>],cols[<span style="color: #666666;">1</span>])) <span style="color: #408080; font-style: italic;"># add chr no to pos to form snp id</span>
+        <span style="color: #008000; font-weight: bold;">if</span> (cols[<span style="color: #666666;">0</span>] <span style="color: #666666;">==</span> <span style="color: #ba2121;">"X"</span>):
+            cols[<span style="color: #666666;">0</span>] <span style="color: #666666;">=</span> <span style="color: #ba2121;">"23"</span>
+        <span style="color: #008000; font-weight: bold;">elif</span> (cols[<span style="color: #666666;">0</span>] <span style="color: #666666;">==</span> <span style="color: #ba2121;">"Y"</span>):
+            cols[<span style="color: #666666;">0</span>] <span style="color: #666666;">=</span> <span style="color: #ba2121;">"24"</span>
+        <span style="color: #008000; font-weight: bold;">elif</span> (cols[<span style="color: #666666;">0</span>] <span style="color: #666666;">==</span> <span style="color: #ba2121;">"XY"</span>):
+            cols[<span style="color: #666666;">0</span>] <span style="color: #666666;">=</span> <span style="color: #ba2121;">"25"</span>
+        <span style="color: #008000; font-weight: bold;">elif</span> (cols[<span style="color: #666666;">0</span>] <span style="color: #666666;">==</span> <span style="color: #ba2121;">"M"</span>):
+            cols[<span style="color: #666666;">0</span>] <span style="color: #666666;">=</span> <span style="color: #ba2121;">"26"</span>
+        fixedline <span style="color: #666666;">=</span> <span style="color: #ba2121;">"</span><span style="color: #bb6622; font-weight: bold;">\t</span><span style="color: #ba2121;">"</span><span style="color: #666666;">.</span>join(cols)
+        o<span style="color: #666666;">.</span>write(fixedline)
+    <span style="color: #008000; font-weight: bold;">else</span>:
+        o<span style="color: #666666;">.</span>write(line)
+
+i<span style="color: #666666;">.</span>close()
+o<span style="color: #666666;">.</span>close()</pre>
+</div>
+<p>Another issue is that at this point your tfam file has no sex or phenotype information. PLINK will still run without this information, but you won&#8217;t be able to use a lot of the cooler features. I found it easiest to just copy and paste that information into the relevant columns of the tfam file (believe it or not, I actually used Excel for this).</p>
+<p><strong>11. calculate coverage: bedtools</strong></p>
+<p>In step 1, FastQC gave you quality metrics on your reads themselves.  Now that you&#8217;ve done alignment, one of the basic QC metrics you&#8217;ll want to know is what your coverage is, which means, how many reads overlap each point on the genome.  Since you&#8217;re just doing exome sequencing, you probably only need to calculate coverage for the targeted parts, so we&#8217;ll again use the BED file you downloaded in step 0.3.</p>
+<p>The only tool I could find to calculate coverage is <a href="http://code.google.com/p/bedtools/">bedtools</a>, though it&#8217;s a bit overkill. I just wanted a few basic stats: average coverage of target, % of bases with at least 8x coverage, etc, but bedtools only knows how to give you reams and reams of very detailed data.  Hey, at least that gives you flexibility.  In -hist mode, the coverageBed tool will give you a histogram of depth of coverage for every base in each targeted stretch, and then a summary at the end with histogram of coverage for the whole target.  In all, this will create about 400MB worth of histogram data for a several-GB BAM file, which gets kind of burdensome.  I only cared about the summary histogram of target coverage, so I piped bedtools output directly to <code>tail</code> to get a much smaller file containing the summary rows that I cared about:</p>
+<pre>coverageBed -abam 1.srtd.reh.ddup.bam -b SeqCap_EZ_Exome_v2.bed -hist | tail -10000 - &gt; 1.coverage</pre>
+<p>5 minutes per bam</p>
+<p>Then I wrote a Python script to read the summary rows from all my samples into a PostgreSQL table:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #008000; font-weight: bold;">import</span> <span style="color: #0000ff; font-weight: bold;">sys</span>
+<span style="color: #008000; font-weight: bold;">import</span> <span style="color: #0000ff; font-weight: bold;">csv</span>
+<span style="color: #008000; font-weight: bold;">import</span> <span style="color: #0000ff; font-weight: bold;">psycopg2</span>
+
+ctsql<span style="color: #666666;">=</span><span style="color: #ba2121;">"""</span>
+<span style="color: #ba2121;">drop table if exists exome_coverage_histo;</span>
+<span style="color: #ba2121;">create table exome_coverage_histo (</span>
+<span style="color: #ba2121;">sample_id integer,</span>
+<span style="color: #ba2121;">depth integer,</span>
+<span style="color: #ba2121;">bases integer</span>
+<span style="color: #ba2121;">);</span>
+<span style="color: #ba2121;">"""</span>
+
+conn <span style="color: #666666;">=</span> psycopg2<span style="color: #666666;">.</span>connect(database<span style="color: #666666;">=</span><span style="color: #ba2121;">"mydb"</span>, user<span style="color: #666666;">=</span><span style="color: #ba2121;">"postgres"</span>, password<span style="color: #666666;">=</span><span style="color: #ba2121;">"password"</span>)
+conn<span style="color: #666666;">.</span>autocommit <span style="color: #666666;">=</span> <span style="color: #008000;">True</span>
+cur <span style="color: #666666;">=</span> conn<span style="color: #666666;">.</span>cursor()
+
+cur<span style="color: #666666;">.</span>execute(ctsql)
+
+localdir <span style="color: #666666;">=</span> <span style="color: #ba2121;">"c:/your/path/here/"</span>
+
+<span style="color: #008000; font-weight: bold;">for</span> i <span style="color: #aa22ff; font-weight: bold;">in</span> <span style="color: #008000;">range</span>(<span style="color: #666666;">0</span>,<span style="color: #666666;">50</span>):
+    f <span style="color: #666666;">=</span> <span style="color: #008000;">open</span>(localdir<span style="color: #666666;">+</span><span style="color: #008000;">str</span>(i)<span style="color: #666666;">+</span><span style="color: #ba2121;">".coverage"</span>,<span style="color: #ba2121;">"r"</span>)
+    c <span style="color: #666666;">=</span> csv<span style="color: #666666;">.</span>reader(f, delimiter<span style="color: #666666;">=</span><span style="color: #ba2121;">"</span><span style="color: #bb6622; font-weight: bold;">\t</span><span style="color: #ba2121;">"</span>)
+    <span style="color: #008000; font-weight: bold;">for</span> row <span style="color: #aa22ff; font-weight: bold;">in</span> c:
+        <span style="color: #008000; font-weight: bold;">if</span> (row[<span style="color: #666666;">0</span>] <span style="color: #666666;">&lt;&gt;</span> <span style="color: #ba2121;">"all"</span>):
+            <span style="color: #008000; font-weight: bold;">continue</span>
+        cur<span style="color: #666666;">.</span>execute(<span style="color: #ba2121;">"insert into exome_coverage_histo(sample_id,depth,bases)values(</span><span style="color: #bb6688; font-weight: bold;">%s</span><span style="color: #ba2121;">,</span><span style="color: #bb6688; font-weight: bold;">%s</span><span style="color: #ba2121;">,</span><span style="color: #bb6688; font-weight: bold;">%s</span><span style="color: #ba2121;">);"</span>,(i,<span style="color: #008000;">int</span>(row[<span style="color: #666666;">1</span>]),<span style="color: #008000;">int</span>(row[<span style="color: #666666;">2</span>])))
+    f<span style="color: #666666;">.</span>close()
+
+cur<span style="color: #666666;">.</span>close()
+conn<span style="color: #666666;">.</span>close()</pre>
+</div>
+<p>That took about 2 minutes to run.  And then you can get your summary stats with a few SQL queries:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;">-- Average coverage of target by sample</span>
+<span style="color: #008000; font-weight: bold;">select</span> sample_id, <span style="color: #008000; font-weight: bold;">sum</span>(depth<span style="color: #666666;">*</span>bases)::<span style="color: #008000;">numeric</span> <span style="color: #666666;">/</span> <span style="color: #008000; font-weight: bold;">sum</span>(bases)::<span style="color: #008000;">numeric</span> <span style="color: #008000; font-weight: bold;">as</span> avg_coverage
+<span style="color: #008000; font-weight: bold;">from</span> exome_coverage_histo
+<span style="color: #008000; font-weight: bold;">group</span> <span style="color: #008000; font-weight: bold;">by</span> sample_id
+<span style="color: #008000; font-weight: bold;">order</span> <span style="color: #008000; font-weight: bold;">by</span> avg_coverage
+;
+
+<span style="color: #408080; font-style: italic;">-- Average coverage of target across all samples</span>
+<span style="color: #008000; font-weight: bold;">select</span> <span style="color: #008000; font-weight: bold;">sum</span>(depth<span style="color: #666666;">*</span>bases)::<span style="color: #008000;">numeric</span> <span style="color: #666666;">/</span> <span style="color: #008000; font-weight: bold;">sum</span>(bases)::<span style="color: #008000;">numeric</span> <span style="color: #008000; font-weight: bold;">as</span> avg_coverage
+<span style="color: #008000; font-weight: bold;">from</span> exome_coverage_histo
+;
+
+<span style="color: #408080; font-style: italic;">-- Percent of target covered at 8x or greater, by sample</span>
+<span style="color: #008000; font-weight: bold;">select</span> sample_id, <span style="color: #008000; font-weight: bold;">sum</span>(<span style="color: #008000; font-weight: bold;">case</span> <span style="color: #008000; font-weight: bold;">when</span> depth <span style="color: #666666;">&gt;=</span> <span style="color: #666666;">8</span> <span style="color: #008000; font-weight: bold;">then</span> bases <span style="color: #008000; font-weight: bold;">else</span> <span style="color: #666666;">0</span> <span style="color: #008000; font-weight: bold;">end</span>)::<span style="color: #008000;">numeric</span> <span style="color: #666666;">/</span> <span style="color: #008000; font-weight: bold;">sum</span>(bases)::<span style="color: #008000;">numeric</span> <span style="color: #008000; font-weight: bold;">as</span> fraction8x
+<span style="color: #008000; font-weight: bold;">from</span> exome_coverage_histo
+<span style="color: #008000; font-weight: bold;">group</span> <span style="color: #008000; font-weight: bold;">by</span> sample_id
+<span style="color: #008000; font-weight: bold;">order</span> <span style="color: #008000; font-weight: bold;">by</span> fraction8x
+;
+
+<span style="color: #408080; font-style: italic;">-- Percent of target covered at 8x or greater, across all samples</span>
+<span style="color: #008000; font-weight: bold;">select</span> <span style="color: #008000; font-weight: bold;">sum</span>(<span style="color: #008000; font-weight: bold;">case</span> <span style="color: #008000; font-weight: bold;">when</span> depth <span style="color: #666666;">&gt;=</span> <span style="color: #666666;">8</span> <span style="color: #008000; font-weight: bold;">then</span> bases <span style="color: #008000; font-weight: bold;">else</span> <span style="color: #666666;">0</span> <span style="color: #008000; font-weight: bold;">end</span>)::<span style="color: #008000;">numeric</span> <span style="color: #666666;">/</span> <span style="color: #008000; font-weight: bold;">sum</span>(bases)::<span style="color: #008000;">numeric</span> <span style="color: #008000; font-weight: bold;">as</span> fraction8x
+<span style="color: #008000; font-weight: bold;">from</span> exome_coverage_histo
+;</pre>
+</div>
+<p><strong>12. converting results to database format: Python and PostgreSQL</strong></p>
+<p>Unless you&#8217;re using PLINK for all of the analysis you plan to do, you&#8217;ll probably want to be able to pull results into R (or Stata, Matlab, etc.) to do a bit more with. It&#8217;s frustrating, then, that both VCF files and annovar&#8217;s annotated CSV files are so terribly non-relational.  If you want to pull your variants into a MySQL database, Ensembl provides a perl script <a href="http://useast.ensembl.org/info/docs/variation/import_vcf.html">here</a>, though <a href="http://useast.ensembl.org/info/docs/variation/variation-database-schema.pdf">the Ensembl E-R diagram</a> is quite a monster.  In an effort to create something that would be simple and that I&#8217;d understand through-and-through, I wrote my own Python script to populate a PostgreSQL database.  It&#8217;s not perfect&#8211; some (actually, much) relationality is still lost in my schema, and you have to be careful how your genotypes are coded too: this script assumes that your VCF is unphased and contains only two alleles (ref and alt) per line; if you have multi-allelic variants or you called haplotypes you&#8217;ll need to modify this.</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #008000; font-weight: bold;">import</span> <span style="color: #0000ff; font-weight: bold;">sys</span>
+<span style="color: #008000; font-weight: bold;">import</span> <span style="color: #0000ff; font-weight: bold;">math</span>
+<span style="color: #008000; font-weight: bold;">import</span> <span style="color: #0000ff; font-weight: bold;">psycopg2</span> <span style="color: #408080; font-style: italic;"># http://www.initd.org/psycopg/</span>
+
+create_table_sql <span style="color: #666666;">=</span> <span style="color: #ba2121;">"""</span>
+<span style="color: #ba2121;">drop table if exists variants;</span>
+<span style="color: #ba2121;">create table variants (</span>
+<span style="color: #ba2121;"> vid serial primary key,</span>
+<span style="color: #ba2121;"> chrom varchar,</span>
+<span style="color: #ba2121;"> pos integer,</span>
+<span style="color: #ba2121;"> id varchar,</span>
+<span style="color: #ba2121;"> ref varchar,</span>
+<span style="color: #ba2121;"> alt varchar,</span>
+<span style="color: #ba2121;"> qual numeric,</span>
+<span style="color: #ba2121;"> filter varchar,</span>
+<span style="color: #ba2121;"> dp numeric,</span>
+<span style="color: #ba2121;"> dp4 varchar,</span>
+<span style="color: #ba2121;"> mq numeric,</span>
+<span style="color: #ba2121;"> fq numeric,</span>
+<span style="color: #ba2121;"> af1 numeric,</span>
+<span style="color: #ba2121;"> ac1 numeric,</span>
+<span style="color: #ba2121;"> g3 varchar,</span>
+<span style="color: #ba2121;"> hwe numeric,</span>
+<span style="color: #ba2121;"> clr numeric,</span>
+<span style="color: #ba2121;"> ugt numeric,</span>
+<span style="color: #ba2121;"> cgt numeric,</span>
+<span style="color: #ba2121;"> pv4 varchar,</span>
+<span style="color: #ba2121;"> indel varchar,</span>
+<span style="color: #ba2121;"> pc2 varchar,</span>
+<span style="color: #ba2121;"> pchi2 numeric,</span>
+<span style="color: #ba2121;"> qchi2 numeric,</span>
+<span style="color: #ba2121;"> pr numeric,</span>
+<span style="color: #ba2121;"> vdb numeric</span>
+<span style="color: #ba2121;">);</span>
+<span style="color: #ba2121;">drop table if exists sample_variants;</span>
+<span style="color: #ba2121;">create table sample_variants(</span>
+<span style="color: #ba2121;"> svid serial primary key,</span>
+<span style="color: #ba2121;"> vid integer,</span>
+<span style="color: #ba2121;"> sid integer,</span>
+<span style="color: #ba2121;"> variant_alleles integer,</span>
+<span style="color: #ba2121;"> gt varchar,</span>
+<span style="color: #ba2121;"> pl varchar,</span>
+<span style="color: #ba2121;"> dp numeric,</span>
+<span style="color: #ba2121;"> gq numeric</span>
+<span style="color: #ba2121;">);</span>
+<span style="color: #ba2121;">"""</span>
+
+conn <span style="color: #666666;">=</span> psycopg2<span style="color: #666666;">.</span>connect(database<span style="color: #666666;">=</span><span style="color: #ba2121;">"mydb"</span>, user<span style="color: #666666;">=</span><span style="color: #ba2121;">"postgres"</span>, password<span style="color: #666666;">=</span><span style="color: #ba2121;">"password"</span>)
+c <span style="color: #666666;">=</span> conn<span style="color: #666666;">.</span>cursor()
+
+c<span style="color: #666666;">.</span>execute(create_table_sql)
+conn<span style="color: #666666;">.</span>commit()
+
+inpath <span style="color: #666666;">=</span> <span style="color: #ba2121;">"c:/your/path/here/variants.vcf"</span>
+vcf <span style="color: #666666;">=</span> <span style="color: #008000;">open</span>(inpath,<span style="color: #ba2121;">"r"</span>)
+
+<span style="color: #008000; font-weight: bold;">for</span> line <span style="color: #aa22ff; font-weight: bold;">in</span> vcf<span style="color: #666666;">.</span>readlines():
+    <span style="color: #008000; font-weight: bold;">if</span>(<span style="color: #008000;">len</span>(line) <span style="color: #666666;">&lt;</span> <span style="color: #666666;">2</span>):
+        <span style="color: #008000; font-weight: bold;">continue</span>
+    <span style="color: #008000; font-weight: bold;">if</span>(line[:<span style="color: #666666;">2</span>] <span style="color: #666666;">==</span> <span style="color: #ba2121;">"##"</span>):
+        <span style="color: #008000; font-weight: bold;">continue</span>
+    <span style="color: #008000; font-weight: bold;">if</span>(line[<span style="color: #666666;">0</span>] <span style="color: #666666;">==</span> <span style="color: #ba2121;">"#"</span>): <span style="color: #408080; font-style: italic;"># header row</span>
+        header <span style="color: #666666;">=</span> line[<span style="color: #666666;">1</span>:]<span style="color: #666666;">.</span>strip() <span style="color: #408080; font-style: italic;"># remove # sign and newline</span>
+        colnames <span style="color: #666666;">=</span> header<span style="color: #666666;">.</span>split(<span style="color: #ba2121;">"</span><span style="color: #bb6622; font-weight: bold;">\t</span><span style="color: #ba2121;">"</span>)
+        <span style="color: #008000; font-weight: bold;">for</span> i <span style="color: #aa22ff; font-weight: bold;">in</span> <span style="color: #008000;">range</span>(<span style="color: #008000;">len</span>(colnames)):
+            colnames[i] <span style="color: #666666;">=</span> colnames[i]<span style="color: #666666;">.</span>lower()
+        <span style="color: #008000; font-weight: bold;">continue</span>
+    <span style="color: #408080; font-style: italic;"># write to variants table</span>
+    cols <span style="color: #666666;">=</span> line<span style="color: #666666;">.</span>strip()<span style="color: #666666;">.</span>split(<span style="color: #ba2121;">"</span><span style="color: #bb6622; font-weight: bold;">\t</span><span style="color: #ba2121;">"</span>)
+    cols[<span style="color: #666666;">0</span>] <span style="color: #666666;">=</span> cols[<span style="color: #666666;">0</span>][<span style="color: #666666;">3</span>:] <span style="color: #408080; font-style: italic;"># remove the word "chr"</span>
+    infolist <span style="color: #666666;">=</span> cols[<span style="color: #666666;">7</span>]<span style="color: #666666;">.</span>split(<span style="color: #ba2121;">";"</span>) <span style="color: #408080; font-style: italic;"># info column needs special treatment</span>
+    infofields <span style="color: #666666;">=</span> []
+    <span style="color: #008000; font-weight: bold;">for</span> infoitem <span style="color: #aa22ff; font-weight: bold;">in</span> infolist:
+        infotokens <span style="color: #666666;">=</span> infoitem<span style="color: #666666;">.</span>split(<span style="color: #ba2121;">"="</span>)
+        name<span style="color: #666666;">=</span>infotokens[<span style="color: #666666;">0</span>]<span style="color: #666666;">.</span>lower()
+        <span style="color: #008000; font-weight: bold;">if</span>(name <span style="color: #666666;">==</span> <span style="color: #ba2121;">"indel"</span>):
+            value <span style="color: #666666;">=</span> <span style="color: #ba2121;">"indel"</span>
+        <span style="color: #008000; font-weight: bold;">else</span>:
+            value<span style="color: #666666;">=</span>infotokens[<span style="color: #666666;">1</span>]
+        infofields<span style="color: #666666;">.</span>append((name,value))
+    sql <span style="color: #666666;">=</span> <span style="color: #ba2121;">"insert into variants ("</span>
+    sql <span style="color: #666666;">+=</span> <span style="color: #ba2121;">","</span><span style="color: #666666;">.</span>join(colnames[<span style="color: #666666;">0</span>:<span style="color: #666666;">7</span>]) <span style="color: #666666;">+</span> <span style="color: #ba2121;">","</span>
+    data <span style="color: #666666;">=</span> <span style="color: #008000;">tuple</span>(cols[<span style="color: #666666;">0</span>:<span style="color: #666666;">7</span>])
+    ncols <span style="color: #666666;">=</span> <span style="color: #666666;">7</span>
+    <span style="color: #008000; font-weight: bold;">for</span> infofield <span style="color: #aa22ff; font-weight: bold;">in</span> infofields:
+        sql <span style="color: #666666;">+=</span> infofield[<span style="color: #666666;">0</span>] <span style="color: #666666;">+</span> <span style="color: #ba2121;">","</span> <span style="color: #408080; font-style: italic;"># name</span>
+        data <span style="color: #666666;">+=</span> (infofield[<span style="color: #666666;">1</span>],)  <span style="color: #408080; font-style: italic;"># value</span>
+        ncols <span style="color: #666666;">+=</span> <span style="color: #666666;">1</span>
+    sql <span style="color: #666666;">=</span> sql[:<span style="color: #666666;">-1</span>] <span style="color: #408080; font-style: italic;"># remove final comma</span>
+    sql <span style="color: #666666;">+=</span> <span style="color: #ba2121;">") values ("</span>
+    sql <span style="color: #666666;">+=</span> <span style="color: #ba2121;">"</span><span style="color: #bb6688; font-weight: bold;">%s</span><span style="color: #ba2121;">,"</span><span style="color: #666666;">*</span>ncols
+    sql <span style="color: #666666;">=</span> sql[:<span style="color: #666666;">-1</span>] <span style="color: #408080; font-style: italic;"># remove final comma</span>
+    sql <span style="color: #666666;">+=</span> <span style="color: #ba2121;">") returning vid;"</span>
+    c<span style="color: #666666;">.</span>execute(sql,data)
+    vid <span style="color: #666666;">=</span> c<span style="color: #666666;">.</span>fetchone()[<span style="color: #666666;">0</span>] <span style="color: #408080; font-style: italic;"># retrive the newly created vid primary key</span>
+    <span style="color: #408080; font-style: italic;"># write to sample variants table</span>
+    formatlist <span style="color: #666666;">=</span> cols[<span style="color: #666666;">8</span>]<span style="color: #666666;">.</span>split(<span style="color: #ba2121;">":"</span>) <span style="color: #408080; font-style: italic;"># format column needs special treatment</span>
+    gtindex <span style="color: #666666;">=</span> <span style="color: #666666;">0</span>
+    <span style="color: #008000; font-weight: bold;">for</span> i <span style="color: #aa22ff; font-weight: bold;">in</span> <span style="color: #008000;">range</span>(<span style="color: #008000;">len</span>(formatlist)):
+        formatlist[i] <span style="color: #666666;">=</span> formatlist[i]<span style="color: #666666;">.</span>lower()
+        <span style="color: #008000; font-weight: bold;">if</span> (formatlist[i] <span style="color: #666666;">==</span> <span style="color: #ba2121;">"gt"</span>):
+            gtindex <span style="color: #666666;">=</span> i
+    <span style="color: #008000; font-weight: bold;">for</span> j <span style="color: #aa22ff; font-weight: bold;">in</span> <span style="color: #008000;">range</span>(<span style="color: #666666;">9</span>,<span style="color: #008000;">len</span>(cols)): <span style="color: #408080; font-style: italic;"># for all samples</span>
+        sid <span style="color: #666666;">=</span> colnames[j]
+        vinfolist <span style="color: #666666;">=</span> cols[j]<span style="color: #666666;">.</span>split(<span style="color: #ba2121;">":"</span>)
+        <span style="color: #008000; font-weight: bold;">assert</span> <span style="color: #008000;">len</span>(vinfolist) <span style="color: #666666;">==</span> <span style="color: #008000;">len</span>(formatlist), <span style="color: #ba2121;">"Sample format does not match stated format"</span>
+        <span style="color: #408080; font-style: italic;"># extract allele count from genotype</span>
+        gt <span style="color: #666666;">=</span> vinfolist[gtindex]
+        variant_alleles <span style="color: #666666;">=</span> <span style="color: #666666;">0</span>
+        <span style="color: #008000; font-weight: bold;">if</span>(gt <span style="color: #666666;">==</span> <span style="color: #ba2121;">"0/0"</span>):
+            variant_alleles <span style="color: #666666;">=</span> <span style="color: #666666;">0</span>
+        <span style="color: #008000; font-weight: bold;">elif</span>(gt <span style="color: #666666;">==</span> <span style="color: #ba2121;">"0/1"</span> <span style="color: #aa22ff; font-weight: bold;">or</span> gt <span style="color: #666666;">==</span> <span style="color: #ba2121;">"1/0"</span>):
+            variant_alleles <span style="color: #666666;">=</span> <span style="color: #666666;">1</span>
+        <span style="color: #008000; font-weight: bold;">elif</span>(gt <span style="color: #666666;">==</span> <span style="color: #ba2121;">"1/1"</span>):
+            variant_alleles <span style="color: #666666;">=</span> <span style="color: #666666;">2</span>
+        sql <span style="color: #666666;">=</span> <span style="color: #ba2121;">"insert into sample_variants (vid,sid,variant_alleles,"</span> <span style="color: #666666;">+</span> <span style="color: #ba2121;">","</span><span style="color: #666666;">.</span>join(formatlist) <span style="color: #666666;">+</span> <span style="color: #ba2121;">") values ("</span> <span style="color: #666666;">+</span> <span style="color: #ba2121;">"</span><span style="color: #bb6688; font-weight: bold;">%s</span><span style="color: #ba2121;">,"</span><span style="color: #666666;">*</span>(<span style="color: #666666;">3+</span><span style="color: #008000;">len</span>(formatlist))
+        sql <span style="color: #666666;">=</span> sql[:<span style="color: #666666;">-1</span>] <span style="color: #408080; font-style: italic;"># remove final comma</span>
+        sql <span style="color: #666666;">+=</span> <span style="color: #ba2121;">");"</span>
+        data <span style="color: #666666;">=</span> (vid,sid,variant_alleles)
+        data <span style="color: #666666;">+=</span> <span style="color: #008000;">tuple</span>(vinfolist)
+        c<span style="color: #666666;">.</span>execute(sql,data)
+    <span style="color: #008000; font-weight: bold;">if</span>(vid <span style="color: #666666;">%</span> <span style="color: #666666;">10000</span> <span style="color: #666666;">==</span> <span style="color: #666666;">0</span>):
+        <span style="color: #008000; font-weight: bold;">print</span> <span style="color: #ba2121;">"Processed "</span> <span style="color: #666666;">+</span> <span style="color: #008000;">str</span>(vid) <span style="color: #666666;">+</span> <span style="color: #ba2121;">" samples."</span>
+
+conn<span style="color: #666666;">.</span>commit()
+
+vcf<span style="color: #666666;">.</span>close()
+
+c<span style="color: #666666;">.</span>close()
+conn<span style="color: #666666;">.</span>close()</pre>
+</div>
+<p>The above took about an hour to run, with about 500,000 variants.  And then here&#8217;s a script to load up your annotations from annovar, which takes only a few minutes (<strong>**UPDATED 2012-09-12.  The previous version posted here excluded the vcf_ columns which are necessary in order to join this data to the vcf tables we created above.</strong>)</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #008000; font-weight: bold;">import</span> <span style="color: #0000ff; font-weight: bold;">sys</span>
+<span style="color: #008000; font-weight: bold;">import</span> <span style="color: #0000ff; font-weight: bold;">csv</span>
+<span style="color: #008000; font-weight: bold;">import</span> <span style="color: #0000ff; font-weight: bold;">psycopg2</span> <span style="color: #408080; font-style: italic;"># http://www.initd.org/psycopg/</span>
+
+create_table_sql <span style="color: #666666;">=</span> <span style="color: #ba2121;">"""</span>
+<span style="color: #ba2121;">drop table if exists annovar;</span>
+<span style="color: #ba2121;">create table annovar (</span>
+<span style="color: #ba2121;"> func varchar,</span>
+<span style="color: #ba2121;"> gene varchar,</span>
+<span style="color: #ba2121;"> exonicfunc varchar,</span>
+<span style="color: #ba2121;"> aachange varchar,</span>
+<span style="color: #ba2121;"> conserved varchar,</span>
+<span style="color: #ba2121;"> segdup numeric,</span>
+<span style="color: #ba2121;"> esp5400_all numeric,</span>
+<span style="color: #ba2121;"> n1000g2012feb_all numeric,</span>
+<span style="color: #ba2121;"> dbsnp132 varchar,</span>
+<span style="color: #ba2121;"> avsift numeric,</span>
+<span style="color: #ba2121;"> ljb_phylop numeric,</span>
+<span style="color: #ba2121;"> ljb_phylop_pred varchar,</span>
+<span style="color: #ba2121;"> ljb_sift numeric,</span>
+<span style="color: #ba2121;"> ljb_sift_pred varchar,</span>
+<span style="color: #ba2121;"> ljb_polyphen2 numeric,</span>
+<span style="color: #ba2121;"> ljb_polyphen2_pred varchar,</span>
+<span style="color: #ba2121;"> ljb_lrt numeric,</span>
+<span style="color: #ba2121;"> ljb_lrt_pred varchar,</span>
+<span style="color: #ba2121;"> ljb_mutationtaster numeric,</span>
+<span style="color: #ba2121;"> ljb_mutationtaster_pred varchar,</span>
+<span style="color: #ba2121;"> ljb_gerp__ numeric,</span>
+<span style="color: #ba2121;"> chromosome varchar, </span>
+<span style="color: #ba2121;"> pstart integer,</span>
+<span style="color: #ba2121;"> pend integer,</span>
+<span style="color: #ba2121;"> ref_allele varchar,</span>
+<span style="color: #ba2121;"> obs_allele varchar,</span>
+<span style="color: #ba2121;"> vcf_chrom varchar,</span>
+<span style="color: #ba2121;"> vcf_pos integer,</span>
+<span style="color: #ba2121;"> vcf_id varchar,</span>
+<span style="color: #ba2121;"> vcf_ref varchar,</span>
+<span style="color: #ba2121;"> vcf_alt varchar,</span>
+<span style="color: #ba2121;"> vcf_qual numeric,</span>
+<span style="color: #ba2121;"> vcf_filter varchar</span>
+<span style="color: #ba2121;">);</span>
+<span style="color: #ba2121;">"""</span>
+
+conn <span style="color: #666666;">=</span> psycopg2<span style="color: #666666;">.</span>connect(database<span style="color: #666666;">=</span><span style="color: #ba2121;">"mydb"</span>, user<span style="color: #666666;">=</span><span style="color: #ba2121;">"postgres"</span>, password<span style="color: #666666;">=</span><span style="color: #ba2121;">"password"</span>)
+c <span style="color: #666666;">=</span> conn<span style="color: #666666;">.</span>cursor()
+
+c<span style="color: #666666;">.</span>execute(create_table_sql)
+conn<span style="color: #666666;">.</span>commit()
+
+inpath <span style="color: #666666;">=</span> <span style="color: #ba2121;">"c:/your/path/here/variantsann.exome_summary.csv"</span>
+anno <span style="color: #666666;">=</span> <span style="color: #008000;">open</span>(inpath,<span style="color: #ba2121;">"r"</span>)
+annocsv <span style="color: #666666;">=</span> csv<span style="color: #666666;">.</span>reader(anno,delimiter<span style="color: #666666;">=</span><span style="color: #ba2121;">','</span>, quotechar<span style="color: #666666;">=</span><span style="color: #ba2121;">'"'</span>)
+
+ncols <span style="color: #666666;">=</span> <span style="color: #666666;">26+7</span> <span style="color: #408080; font-style: italic;"># first 26 columns are annovar data, next 7 join to vcf data</span>
+
+rowid <span style="color: #666666;">=</span> <span style="color: #666666;">0</span>
+<span style="color: #008000; font-weight: bold;">for</span> line <span style="color: #aa22ff; font-weight: bold;">in</span> annocsv:
+    <span style="color: #008000; font-weight: bold;">if</span>( rowid <span style="color: #666666;">==</span> <span style="color: #666666;">0</span> ): <span style="color: #408080; font-style: italic;"># skip header row</span>
+        rowid <span style="color: #666666;">+=1</span>
+        <span style="color: #008000; font-weight: bold;">continue</span>
+    cols <span style="color: #666666;">=</span> line[:ncols]
+    cols[<span style="color: #666666;">21</span>] <span style="color: #666666;">=</span> cols[<span style="color: #666666;">21</span>][<span style="color: #666666;">3</span>:] <span style="color: #408080; font-style: italic;"># trim the characters "chr" from the chromosome column</span>
+    cols[<span style="color: #666666;">26</span>] <span style="color: #666666;">=</span> cols[<span style="color: #666666;">26</span>][<span style="color: #666666;">3</span>:] <span style="color: #408080; font-style: italic;"># trim the characters "chr" from the vcf_chrom column</span>
+    <span style="color: #008000; font-weight: bold;">for</span> i <span style="color: #aa22ff; font-weight: bold;">in</span> <span style="color: #008000;">range</span>(ncols):
+        <span style="color: #008000; font-weight: bold;">if</span> (cols[i] <span style="color: #666666;">==</span> <span style="color: #ba2121;">""</span>): <span style="color: #408080; font-style: italic;"># replace empty strings with nulls</span>
+            cols[i] <span style="color: #666666;">=</span> <span style="color: #008000;">None</span>
+    sql <span style="color: #666666;">=</span> <span style="color: #ba2121;">"insert into annovar values("</span> <span style="color: #666666;">+</span> <span style="color: #ba2121;">"</span><span style="color: #bb6688; font-weight: bold;">%s</span><span style="color: #ba2121;">,"</span><span style="color: #666666;">*</span>ncols
+    sql <span style="color: #666666;">=</span> sql[:<span style="color: #666666;">-1</span>]
+    sql <span style="color: #666666;">+=</span> <span style="color: #ba2121;">");"</span>
+    data <span style="color: #666666;">=</span> <span style="color: #008000;">tuple</span>(cols)
+    c<span style="color: #666666;">.</span>execute(sql,data)
+    rowid <span style="color: #666666;">+=</span> <span style="color: #666666;">1</span>
+    <span style="color: #008000; font-weight: bold;">if</span>(rowid<span style="color: #666666;">%10000==0</span>):
+        <span style="color: #008000; font-weight: bold;">print</span> <span style="color: #ba2121;">"Processed "</span> <span style="color: #666666;">+</span> <span style="color: #008000;">str</span>(rowid) <span style="color: #666666;">+</span> <span style="color: #ba2121;">" rows."</span>
+
+conn<span style="color: #666666;">.</span>commit()
+anno<span style="color: #666666;">.</span>close()
+
+c<span style="color: #666666;">.</span>close()
+conn<span style="color: #666666;">.</span>close()</pre>
+</div>
+<p><strong>UPDATE 2012-09-12: You&#8217;ll want to add a vid column to the annovar table which matches the vids in the vcf tables.  This SQL code does that and also creates some indices which will help speed up certain queries:</strong></p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;">-- join tables in order to add vids that match those in the variants table</span>
+<span style="color: #008000; font-weight: bold;">create</span> <span style="color: #008000; font-weight: bold;">index</span> annvoar_chridx <span style="color: #008000; font-weight: bold;">on</span> annovar(vcf_chrom);
+<span style="color: #008000; font-weight: bold;">create</span> <span style="color: #008000; font-weight: bold;">index</span> annvoar_posidx <span style="color: #008000; font-weight: bold;">on</span> annovar(vcf_pos);
+<span style="color: #008000; font-weight: bold;">alter</span> <span style="color: #008000; font-weight: bold;">table</span> annovar <span style="color: #008000; font-weight: bold;">add</span> <span style="color: #008000; font-weight: bold;">column</span> vid <span style="color: #008000;">integer</span>;
+<span style="color: #008000; font-weight: bold;">update</span> annovar a
+<span style="color: #008000; font-weight: bold;">set</span>    vid <span style="color: #666666;">=</span> v.vid
+<span style="color: #008000; font-weight: bold;">from</span>   variants v
+<span style="color: #008000; font-weight: bold;">where</span>  v.chrom <span style="color: #666666;">=</span> a.vcf_chrom
+<span style="color: #008000; font-weight: bold;">and</span>    v.pos <span style="color: #666666;">=</span> a.vcf_pos
+<span style="color: #008000; font-weight: bold;">and</span>    v.<span style="color: #008000; font-weight: bold;">ref</span> <span style="color: #666666;">=</span> a.vcf_ref
+<span style="color: #008000; font-weight: bold;">and</span>    v.alt <span style="color: #666666;">=</span> a.vcf_alt
+;
+<span style="color: #008000; font-weight: bold;">create</span> <span style="color: #008000; font-weight: bold;">index</span> annovar_vid_pkey <span style="color: #008000; font-weight: bold;">on</span> annovar(vid);
+<span style="color: #008000; font-weight: bold;">alter</span> <span style="color: #008000; font-weight: bold;">table</span> annovar <span style="color: #008000; font-weight: bold;">add</span> <span style="color: #008000; font-weight: bold;">primary</span> <span style="color: #008000; font-weight: bold;">key</span> (vid);
+<span style="color: #408080; font-style: italic;">-- other indices which may be helpful</span>
+<span style="color: #008000; font-weight: bold;">create</span> <span style="color: #008000; font-weight: bold;">index</span> sample_variants_vidx <span style="color: #008000; font-weight: bold;">on</span> sample_variants(vid);
+<span style="color: #008000; font-weight: bold;">create</span> <span style="color: #008000; font-weight: bold;">index</span> sample_variants_sidx <span style="color: #008000; font-weight: bold;">on</span> sample_variants(sid);
+<span style="color: #008000; font-weight: bold;">create</span> <span style="color: #008000; font-weight: bold;">index</span> variants_chridx <span style="color: #008000; font-weight: bold;">on</span> variants(chrom);
+<span style="color: #008000; font-weight: bold;">create</span> <span style="color: #008000; font-weight: bold;">index</span> variants_posidx <span style="color: #008000; font-weight: bold;">on</span> variants(pos);</pre>
+</div>
+<p>Which should all run in a minute or two.</p>
+<p>Now that your data are in SQL you can easily apply filters on coverage or variant type, drill down to individual samples, pull data into R, and much much more.</p>
+<p><strong>A few thoughts</strong></p>
+<p>After my difficulty using <a href="/2012/09/07/issues-with-the-conventional-bwa-picard-gatk-exome-sequencing-pipeline/">BWA/Picard/GATK</a>, I&#8217;m just relieved that all of the software tools listed in this post actually did their job and now I have data to analyze.  That said, GATK really is becoming a standard tool, so I plan to spend at least a bit more time seeing if I can get it to work.  At <a href="/2012/09/07/improvements-in-gatk-2-x/">the Broad lecture on GATK yesterday</a> one speaker listed some of the ongoing challenges in sequencing, among which was calling multi-nucleotide polymorphisms (MNPs).  If a variant is 9 nucleotides long, some variant callers will call it as 9 SNPs, when actually it&#8217;s 1 MNP.  This is indeed a problem I have noticed in my data, and while it sounded as though GATK isn&#8217;t quite perfect in this realm either, it sounded as though they&#8217;d been working hard on it and had made some improvements.</p>
+<p><strong>Conclusion</strong></p>
+<p>Now you&#8217;re ready to do some analysis!  Easy, right?  The next time someone talks to you about the $1000 genome and how quick and easy sequencing is these days, point them to this blog post.</p>

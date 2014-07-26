@@ -1,0 +1,30 @@
+---
+layout: post
+title: "The magic of blur and contrast"
+author: ericminikel
+date: 2012-06-11 02:04:02
+---
+<p>Last week&#8217;s <a href="/2012/06/06/literature-review-image-segmentation-on-he-stained-tissue-samples/">literature review</a> has really paid off. A few key ideas that emerged from it for me were:</p>
+<ul>
+<li> <strong>Blur</strong>. Image segmentation has been shown to work on more zoomed-out H&amp;E images where the objects are too small to have internal texture.  To mimic this effect with zoomed-in images, blur away the internal texture before segmentation.</li>
+<li> <strong>Contrast enhancement</strong>. Rescale the image to use the full intensity range and/or use nonlinear transformations to make the neurons bright enough that an algorithm can pick up both the neurons and the astrocytes at the same time.</li>
+<li><strong> Size filters</strong>. Filter the objects by size after segmentation to separate neurons from astrocytes.</li>
+</ul>
+<p>I started to roll these concepts into a new CellProfiler pipeline and was almost immediately impressed by the results. This level of segmentation accuracy still probably isn&#8217;t good enough for any serious feature analysis, but it&#8217;s a whole lot better than <a href="/2012/05/13/color-transformations-for-segmenting-complex-images/">what I was getting</a>. Here are preliminary results:</p>
+<p><a href="/wp-content/uploads/2012/06/left.png"><img class="alignnone size-full wp-image-608" title="left" src="/wp-content/uploads/2012/06/left.png"/></a></p>
+<p>You can download the pipeline <a href="/wp-content/uploads/2012/06/cp-hestain-2012-06-10.txt">here</a> (.txt; rename to .cp after you download).  (N.B. the above image has been downsampled for web viewing; as a result the pipeline won&#8217;t work on it)</p>
+<p>The basic concept of the pipeline is:</p>
+<ol>
+<li>Deconvolute colors and use the hematoxylin signature</li>
+<li>Blur</li>
+<li>Enhance the contrast</li>
+<li>Blur again</li>
+<li>Segment</li>
+</ol>
+<p>I spent some time playing with the modules and their parameters, with varied results:</p>
+<ul>
+<li><strong>Smoothing</strong>: The &#8220;smooth keeping edges&#8221; filter preserves the edges of the astrocytes better and thus results in a better segmentation. But it also keeps too much of the internal texture of the neuron nucleoli, leading to split objects. Tweaking the edge intensity difference parameter looks promising but I couldn&#8217;t manage to get it just right. The Gaussian filter, meanwhile, makes the neurons easier to segment (particularly with larger filter sizes, say &gt;10) but then causes some mergers and overly generous edges on the astrocytes.</li>
+<li><strong>Rescaling intensity</strong>: The default settings work pretty well here. But I also tried setting a custom intensity range to expand. This is tough because the neurons are barely brighter than the background. Their intensity ranges overlap within the .33-.36 range. This is why I ended up putting a blur <em>before</em> the rescaling, to try to get the neurons more uniformly bright before rescaling.</li>
+<li><strong>Threshold correction</strong>: The threshold correction factor on IdentifyPrimaryObjects matters a lot. Setting it to .8 or so gives really good astrocyte recognition but loses some neurons. Setting it all the way down to .2 finds many neurons but gives the astrocytes too large of borders.</li>
+</ul>
+<p>So I think I&#8217;m getting a lot closer here but the details matter a lot. I think the next step to really nail this segmentation will be to adapt the machine learning script to vary the parameters of not only the <a href="http://www.cellprofiler.org/CPmanual/IdentifyPrimaryObjects.html">IdentifyPrimaryObjects</a> module but also the <a href="http://www.cellprofiler.org/CPmanual/RescaleIntensity.html">RescaleIntensity</a> and <a href="http://www.cellprofiler.org/CPmanual/Smooth.html">Smooth</a> modules.</p>

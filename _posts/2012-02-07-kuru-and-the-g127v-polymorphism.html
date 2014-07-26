@@ -1,0 +1,20 @@
+---
+layout: post
+title: "Kuru and the G127V Polymorphism"
+author: ericminikel
+date: 2012-02-07 03:56:41
+---
+<p>I highly recommend the Nov. 2009 article <a href="http://www.nejm.org/doi/full/10.1056/NEJMoa0809716">A Novel Protective Prion Protein Variant that Colocalizes with Kuru Exposure</a> from New England Journal of Medicine.  It&#8217;s not only informative but also a real pleasure to read and is available free online with nice inline pop-up citations.</p>
+<p>Here are some things I learned.  The focus of the article is a new polymorphism, G127V, identified in 51 people in the Fore region of Papua New Guinea, where the kuru outbreak started about a hundred years ago and reached epidemic proportions about fifty years ago.  This polymorphism has not been identified anywhere outside Papua New Guinea and is somewhat less prevalent even in neighboring regions that never experienced kuru outbreak. No kuru sufferers with the 127GV genotype were identified, leading the researchers to the conclusion that &#8220;Heterozygosity at codon 127 provides strong, and possibly complete, resistance to kuru.&#8221;   The researchers also found that the 129 codon is out of Hardy-Weinberg equilibrium in that the heterozygous genotype (129MV) is overrepresented <em>among survivors</em>, suggesting that heterozygosity at this codon makes people more resistant to kuru.  (This is interesting relative to FFI because <a href="/wp-content/uploads/2012/01/Kong-et-al-2003-Inherited-Prion-Diseases.pdf">this chapter from Prion Biology and Disease</a> states that there is no statistically significant difference in age of onset between people heterozygous or homozygous at 129.)</p>
+<p>I feel that this G127V finding holds some clues about prion disease that we need to unravel.  Here are a couple of questions:</p>
+<ol>
+<li>If codons 127 and 129 both affect the relative propensity of PrP to template onto a misfolded protein, can we develop a small molecule that interferes at this site and prevents templating?</li>
+<li>We know that D178N and other mutations increase the propensity of PrP to misfold, while G127V (or at least the state of heterozygosity i.e. 127GV) decrease the propensity to misfold.  These are all clues as to the structure of PrP<sup>Sc</sup>, which, once known, will help us figure out what molecules might bind it and prevent it templating other PrP.</li>
+</ol>
+<p>This NEJM article was also a powerhouse of bioinformatics methods that I&#8217;d like to learn:</p>
+<ul>
+<li>They looked at the distribution of 1039 <em>other</em> (non-PRNP-related) SNPs among the people whose genes they sequenced in order to assess whether they were all sampled from a homogeneous underlying population, i.e. that there was <em>not</em> population stratification. They did this using EIGENSTRAT, now part of the <a href="http://genepath.med.harvard.edu/~reich/Software.htm">EIGENSOFT software package</a>.</li>
+<li>As mentioned above, they looked at whether 129 was in Hardy-Weinberg equilibrium.  I would have thought this would be a pretty simple statistical test on whether the distribution of MM / MV / VV follows the p<sup>2</sup> / 2pq / q<sup>2</sup> distribution, but perhaps it&#8217;s more complex&#8211; the researchers used a software tool called <a href="http://pngu.mgh.harvard.edu/~purcell/plink/">PLINK</a>.</li>
+<li>I don&#8217;t yet understand the methodology well enough to even summarize it here, but they were able to estimate how long ago the common ancestor of all the people with the G127V polymorphism occurred (result: 10 generations ago).  The technique is called ESTIAGE and it (along with all the other stats/bioinformatics methods they use) is described in the somewhat heavier <a href="http://www.nejm.org/doi/suppl/10.1056/NEJMoa0809716/suppl_file/nejm_mead_2056sa1.pdf">Supplemental Appendix</a>.</li>
+</ul>
+<p>My next move, though I don&#8217;t expect it to be as informative, will be to watch the documentary <a href="http://www.imdb.com/title/tt1544565/">Kuru: the Science and the Sorcery</a>.</p>

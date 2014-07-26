@@ -1,0 +1,73 @@
+---
+layout: post
+title: "Finding all the polyQ genes in the human genome"
+author: ericminikel
+date: 2013-02-12 18:28:16
+---
+<p>Recently I had reason to want a list of all the <a href="http://en.wikipedia.org/wiki/Polyglutamine_tract">polyglutamine</a> (polyQ) genes in the human genome.  This seems like it should be a really trivial thing to conjure up, yet I found it surprisingly difficult.  Here&#8217;s what did and didn&#8217;t work.</p>
+<p>tl;dr: <strong>What <em>did</em> work</strong>: I downloaded a FASTA file of the human proteome from <a href="http://www.uniprot.org/">uniprot</a>, containing the amino acid sequences for ~87K proteins.  It looks like this:</p>
+<pre>$ head HUMAN.fasta 
+&gt;sp|A0A183|LCE6A_HUMAN Late cornified envelope protein 6A OS=Homo sapiens GN=LCE6A PE=2 SV=1
+MSQQKQQSWKPPNVPKCSPPQRSNPCLAPYSTPCGAPHSEGCHSSSQRPEVQKPRRARQK
+LRCLSRGTTYHCKEEECEGD
+&gt;sp|A0A5B9|TRBC2_HUMAN T-cell receptor beta-2 chain C region OS=Homo sapiens GN=TRBC2 PE=1 SV=1
+DLKNVFPPEVAVFEPSEAEISHTQKATLVCLATGFYPDHVELSWWVNGKEVHSGVSTDPQ
+PLKEQPALNDSRYCLSSRLRVSATFWQNPRNHFRCQVQFYGLSENDEWTQDRAKPVTQIV
+SAEAWGRADCGFTSESYQQGVLSATILYEILLGKATLYAVLVSALVLMAMVKRKDSRG
+&gt;sp|A0AUZ9|KAL1L_HUMAN KAT8 regulatory NSL complex subunit 1-like protein OS=Homo sapiens GN=KANSL1L PE=1 SV=2
+MTPALREATAKGISFSSLPSTMESDKMLYMESPRTVDEKLKGDTFSQMLGFPTPEPTLNT
+NFVNLKHFGSPQSSKHYQTVFLMRSNSTLNKHNENYKQKKLGEPSCNKLKNILYNGSNIQ</pre>
+<p>And since I&#8217;m always thinking <a href="http://en.wikipedia.org/wiki/Relational_model">relationally</a>, I wrote a one-minute Python script to convert the FASTA into a tab-separated format so that the amino acid sequence for each gene would be on the same line as the spid (uniprot&#8217;s unique identifier) and gene symbol (if any):</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #008000; font-weight: bold;">import</span> <span style="color: #0000ff; font-weight: bold;">sys</span>
+i <span style="color: #666666;">=</span> sys<span style="color: #666666;">.</span>stdin
+o <span style="color: #666666;">=</span> sys<span style="color: #666666;">.</span>stdout
+prot <span style="color: #666666;">=</span> <span style="color: #ba2121;">""</span>
+<span style="color: #008000; font-weight: bold;">for</span> line <span style="color: #aa22ff; font-weight: bold;">in</span> i<span style="color: #666666;">.</span>readlines():
+    <span style="color: #008000; font-weight: bold;">if</span> line[<span style="color: #666666;">0</span>] <span style="color: #666666;">==</span> <span style="color: #ba2121;">"&gt;"</span>: <span style="color: #408080; font-style: italic;"># start of a new FASTA header</span>
+        <span style="color: #408080; font-style: italic;"># the previous protein is now done, write it out and start over.</span>
+        <span style="color: #008000; font-weight: bold;">if</span> prot <span style="color: #666666;">!=</span> <span style="color: #ba2121;">""</span>:
+            o<span style="color: #666666;">.</span>write(<span style="color: #ba2121;">"</span><span style="color: #bb6622; font-weight: bold;">\t</span><span style="color: #ba2121;">"</span><span style="color: #666666;">.</span>join([spid,genesymbol,fulldesc,prot])<span style="color: #666666;">+</span><span style="color: #ba2121;">"</span><span style="color: #bb6622; font-weight: bold;">\n</span><span style="color: #ba2121;">"</span>)
+            prot <span style="color: #666666;">=</span> <span style="color: #ba2121;">""</span>
+        spid <span style="color: #666666;">=</span> line<span style="color: #666666;">.</span>strip()<span style="color: #666666;">.</span>split()[<span style="color: #666666;">0</span>]<span style="color: #666666;">.</span>split(<span style="color: #ba2121;">"|"</span>)[<span style="color: #666666;">1</span>] <span style="color: #408080; font-style: italic;"># parse spid from line</span>
+        <span style="color: #408080; font-style: italic;"># parse gene symbol if any</span>
+        <span style="color: #008000; font-weight: bold;">if</span> (<span style="color: #ba2121;">"GN="</span> <span style="color: #aa22ff; font-weight: bold;">in</span> line):
+            genesymbol <span style="color: #666666;">=</span> line<span style="color: #666666;">.</span>strip()<span style="color: #666666;">.</span>split(<span style="color: #ba2121;">"GN="</span>)[<span style="color: #666666;">1</span>]<span style="color: #666666;">.</span>split(<span style="color: #ba2121;">" "</span>)[<span style="color: #666666;">0</span>]
+        <span style="color: #008000; font-weight: bold;">else</span>:
+            genesymbol <span style="color: #666666;">=</span> <span style="color: #ba2121;">""</span>
+        fulldesc <span style="color: #666666;">=</span> line<span style="color: #666666;">.</span>strip() <span style="color: #408080; font-style: italic;"># and just grab the full description of the protein</span>
+    <span style="color: #008000; font-weight: bold;">else</span>:
+        prot <span style="color: #666666;">+=</span> line<span style="color: #666666;">.</span>strip() <span style="color: #408080; font-style: italic;"># for non-header lines, concatenate the amino acid sequences</span>
+o<span style="color: #666666;">.</span>write(<span style="color: #ba2121;">"</span><span style="color: #bb6622; font-weight: bold;">\t</span><span style="color: #ba2121;">"</span><span style="color: #666666;">.</span>join([spid,genesymbol,fulldesc,prot])<span style="color: #666666;">+</span><span style="color: #ba2121;">"</span><span style="color: #bb6622; font-weight: bold;">\n</span><span style="color: #ba2121;">"</span>)</pre>
+</div>
+<p>Here&#8217;s how use that script:</p>
+<pre>cat HUMAN.fasta | python uniprot-to-tab.py &gt; uniprot.tab</pre>
+<p>Now say you want to find all proteins with at least 8 consecutive glutamines. If you&#8217;re Unix-minded you can find the polyQ genes like so:</p>
+<pre>grep QQQQQQQQ uniprot.tab</pre>
+<p>Or if you&#8217;re SQL-minded you can read it into a table:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #008000; font-weight: bold;">drop</span> <span style="color: #008000; font-weight: bold;">table</span> if <span style="color: #008000; font-weight: bold;">exists</span> uniprot_human;
+<span style="color: #008000; font-weight: bold;">create</span> <span style="color: #008000; font-weight: bold;">table</span> uniprot_human (
+    upid <span style="color: #008000;">serial</span> <span style="color: #008000; font-weight: bold;">primary</span> <span style="color: #008000; font-weight: bold;">key</span>,
+    spid <span style="color: #008000;">varchar</span>,
+    genesymbol <span style="color: #008000;">varchar</span>,
+    fulldesc <span style="color: #008000;">varchar</span>,
+    prot <span style="color: #008000;">varchar</span>
+);
+<span style="color: #008000; font-weight: bold;">copy</span> uniprot_human (spid,genesymbol,fulldesc,prot) <span style="color: #008000; font-weight: bold;">from</span> <span style="color: #ba2121;">'c:/sci/019enrep/data/uniprot/uniprot.tab'</span> <span style="color: #008000; font-weight: bold;">with</span> <span style="color: #008000; font-weight: bold;">null</span> <span style="color: #008000; font-weight: bold;">as</span> <span style="color: #ba2121;">''</span>;</pre>
+</div>
+<p>And then find the gene symbols like so:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #008000; font-weight: bold;">select</span> <span style="color: #008000; font-weight: bold;">distinct</span> genesymbol <span style="color: #008000; font-weight: bold;">from</span> uniprot_human <span style="color: #008000; font-weight: bold;">where</span> prot <span style="color: #008000; font-weight: bold;">like</span> <span style="color: #ba2121;">'%QQQQQQQQ%'</span> <span style="color: #008000; font-weight: bold;">order</span> <span style="color: #008000; font-weight: bold;">by</span> <span style="color: #666666;">1</span>;</pre>
+</div>
+<p>Answer: there are <a href="/wp-content/uploads/2013/02/polyq_gene_symbols.txt">97 of them</a>.  The advantage of having it in a SQL database is, say you want to know what transcripts are involved rather than what proteins, you can join the uniprot table to UCSC&#8217;s kgXref table on <code>spid</code>.  kgXref can be found in the <a href="http://genome.ucsc.edu/cgi-bin/hgTables">UCSC table browser</a> as follows:</p>
+<p><a href="/wp-content/uploads/2013/02/ucsc-kgxref.jpg"><img class="alignnone size-full wp-image-1632" title="" src="/wp-content/uploads/2013/02/ucsc-kgxref.jpg"/></a></p>
+<p>Though this is all easy enough, it may not be a final answer depending on what your ultimate interest is.  kgXref will let you map from protein to RefSeq mRNA, but say you want to know the genomic coordinates of the DNA that codes for the polyQ repeat &#8211; then you&#8217;ve got a messy mapping process ahead of you [<a href="http://www.biostars.org/p/3696/">see this biostars discussion</a>].</p>
+<p>Aside #1: <strong>some things that didn&#8217;t work</strong>, at least not readily.  <a href="http://genome.ucsc.edu/cgi-bin/hgTables">UCSC table browser</a> also has a list of all the simple repeats at least 24b in length:</p>
+<p><img class="alignnone size-full wp-image-1633" title="" src="/wp-content/uploads/2013/02/ucsc-simple-repeats.jpg"/></p>
+<p>Which is a nice resource.  But in order to figure out which repeats are protein-coding, you need to join it to something like the RefSeq Genes table:</p>
+<p><img class="alignnone size-full wp-image-1634" title="" src="/wp-content/uploads/2013/02/ucsc-refseq-genes.jpg"/></p>
+<p>Which is quite non-relational: exon starts and ends are given in a comma-separated list within a field, and exons include 5&#8242;UTR and 3&#8242;UTR and non-coding transcripts, so you need to only grab the pieces of exons that are inside the coding sequence (cdsStart:cdsEnd).  And according to the annotation, the coding exons sometimes start mid-amino acid (in the below example, a glycine is supposedly coded-for by just two DNA bases):</p>
+<p><a href="http://genome.ucsc.edu/cgi-bin/hgTracks?hgHubConnect.destUrl=..%2Fcgi-bin%2FhgTracks&amp;clade=mammal&amp;org=Human&amp;db=hg18&amp;position=chr4%3A80010960-80010964&amp;hgt.positionInput=chr4%3A3076603-3076666&amp;hgt.suggestTrack=knownGene&amp;Submit=submit"><img class="alignnone size-large wp-image-1635" title="" src="/wp-content/uploads/2013/02/exon-starts-mid-amino-acid-1024x298.jpg"/></a></p>
+<p>Which means that you can&#8217;t just trivially use <a href="http://en.wikipedia.org/wiki/Modulo_operation">modular division</a> to figure out what exonic frame the repeat falls in.  The RefSeq Genes table has an exon frame field, but it appears those are given relative to the exon starts rather than in absolute terms.  It&#8217;s all fairly complicated and I could find no documentation on how to interpret these table fields, so I eventually gave up and went the proteome route as described above.</p>
+<p>Aside #2: the <strong>just Google it</strong> approach. Before I tried any of this, the first thing I did was Google a few search terms like &#8220;list of polyq genes&#8221; and &#8220;list of polyglutamine proteins&#8221;.  That didn&#8217;t turn anything up, which is why I embarked on figuring it out myself.  Then after I had already finished I was Googling something else and stumbled upon <a href="http://pxgrid.med.monash.edu.au/polyq/">Robertson&#8217;s polyQ database</a> [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3013692/">Robertson 2011</a>].  Supposedly that has the answers I was looking for anyway, along with a host of other annotations.  But actually I don&#8217;t see any way to just get a list of all the proteins.  The <a href="http://pxgrid.med.monash.edu.au/polyq/help.php">help page</a> says &#8220;All PolyQ-containing proteins will be displayed when the &#8216;All Proteins&#8217; box is clicked&#8221;, but in fact nothing at all is displayed when I click the All Proteins box.  So maybe it was worth going to all this trouble after all.</p>

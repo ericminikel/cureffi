@@ -1,0 +1,58 @@
+---
+layout: post
+title: "Jain 2010 - Machines that learn to segment images: a crucial technology for connectomics"
+author: ericminikel
+date: 2012-03-24 17:16:10
+---
+<p><strong>Curr Opin Neurobiol. 2010 Oct;20(5):653-66.</strong><br/>
+<strong><a href="http://hebb.mit.edu/people/seung/papers/JainSeungTuraga_CurrOpinion.pdf">Machines that learn to segment images: a crucial technology for connectomics.</a></strong><br/>
+<strong>Jain V, Seung HS, Turaga SC.</strong></p>
+<p>Abstract:</p>
+<blockquote><p>Connections between neurons can be found by checking whether synapses exist at points of contact, which in turn are determined by neural shapes. Finding these shapes is a special case of image segmentation, which is laborious for humans and would ideally be performed by computers. New metrics properly quantify the performance of a computer algorithm using its disagreement with &#8216;true&#8217; segmentations of example images. New machine learning methods search for segmentation algorithms that minimize such metrics. These advances have reduced computer errors dramatically. It should now be faster for a human to correct the remaining errors than to segment an image manually. Further reductions in human effort are expected, and crucial for finding connectomes more complex than that of Caenorhabditis elegans.</p></blockquote>
+<p>These authors explore the progress, and roads for future progress, in developing better algorithms for image segmentation.  They argue that manual segmentation by humans is still necessary for ground truthing (they call it &#8216;true&#8217; segmentation (their quotes)), but draw a distinction between what is machine learning and what is merely good algorithm design:</p>
+<blockquote><p>Use a computer to search for an algorithm that minimizes disagreement with the true segmentations, as measured by the new metrics. Such automated search is called machine learning from examples. It is distinct from the conventional approach, in which a human directly designs a good algorithm using intuition and understanding.</p></blockquote>
+<p>In <a title="Histology, high-throughput screening and prion therapeutics" href="/2012/03/24/histology-high-throughput-screening-and-prion-therapeutics/">an earlier post</a> I discussed an approach to high-throughput screening in which you simply calculate thousands of features of images and then let computers decide which ones differentiate healthy from diseased cells.  The features that win out might not be intuitive, and indeed humans might not even be able to put into natural language words exactly what quality of the image or cell each feature is characterizing.  Yet this approach to calculating thousands of features still assumes that segmentation can first be achieved, so that the features are obtained on masks of cells and cellular components.</p>
+<p>Jain et al&#8217;s described approach to segmentation is conceptually equivalent to the above approach to choosing distinguishing features given a segmentation.</p>
+<p>The article talks about serial electron microscopy (serial EM) to obtain 3D images of neurons (and uses the term &#8220;voxel&#8221; instead of pixel, which is new to me!). I&#8217;m not clear whether this is an option in high-throughput screening.  My impression is that high throughput screening platforms usually just take several flat images of different regions of a well.</p>
+<p>The authors describe two major approaches to image segmentation:</p>
+<ul>
+<li><strong>Boundary recognition</strong>.  Characterize each pixel (based on several neighbors) as to whether it likely defines a boundary or not.</li>
+<li><strong>Affinity graph labeling</strong>.  Label each edge between pixels with an analog score indicating how likely the two pixels it separates are to belong to the <em>same</em> or <em>different</em> features.  Then you traverse the graph with some sort of metric, for instance a threshold where two nodes are considered as connected if you can move from one to the other solely by moving along edges with a certain threshold score.</li>
+</ul>
+<p>The authors prefer the latter approach:</p>
+<blockquote><p>All these advantages of the afﬁnity graph can be summarized in a single bottom line: connectedness is based on the deﬁnition of adjacency, and this deﬁnition is more ﬂexible in an afﬁnity graph than in a boundary labeling.</p></blockquote>
+<p>They then describe ways to evaluate an algorithm&#8217;s success at segmentation, taking human input (say, someone drawing lines along the axes of neurites) as ground truth.  At a simple level, three types of errors in segmentation can then be quantified: deletions, splits and mergers.  But the authors discuss two more advanced ways to quantify error:</p>
+<ul>
+<li><strong>Warping error.</strong>  Warp the human-selected boundaries to better match the computer&#8217;s boundaries (within some geometric and topological constraints), and then count the pixels in disagreement.</li>
+<li><strong>Rand error </strong>&#8220;is the fraction of pixel pairs that are connected in one segmentation but not in the other. A split or a merger produces large Rand error, while a small shift in boundary location produces little Rand error.&#8221;</li>
+</ul>
+<p>With such metrics in hand, we can test thousands of algorithms and quantify their success in segmentation in order to choose the most successful ones.  But this also requires that we have a search space of algorithms to try out.  How to do this?  The authors describe the concept of a convolutional network:</p>
+<blockquote><p>A convolutional network (CN) is a convenient and powerful class of algorithms for end-to-end learning of image segmentation . A CN is organized in layers, each of which performs a set of linear convolutions and pixel-wise nonlinear transformations. A CN can implement gradient-based boundary detection by appropriate choice of the convolution ﬁlters. A CN can also perform approximate inference for Markov random ﬁeld models. Therefore machine learning based on CNs is likely to perform at least as well as these relatively simple handdesigned algorithms. Since CNs may employ hundreds of ﬁlters that involve tens of thousands of free parameters, machine learning may also ﬁnd a more complex algorithm that signiﬁcantly outperforms the ones designed by hand.</p></blockquote>
+<p>In order to harness human input more efficiently, the authors also propose &#8220;semiautomated segmentation&#8221; wherein humans start by creating a segmentation, machine learning finds an algorithm that performs well against this ground truth, and then humans correct any errors in the algorithm&#8217;s segmentation.  But this last step, of human error correction, seems to be the cutting edge which has not yet really been solved:</p>
+<blockquote><p>&#8230;special software is necessary for allowing humans to interact with the computer, and perform the splitting and merging operations. Such software is still in its infancy, so there are few quantitative results about human effort in the literature.</p></blockquote>
+<p>There are a number of potential approaches to make this step more efficient&#8211; for instance, crowdsourcing by implementing a web app where people can correct the computer; and having computers oversplit images into fragments of actual objects and then only asking humans to identify the fragments to be grouped.</p>
+<p>Great article.  This machine learning approach seems very much in need. In my first few hours of playing with CellProfiler to get the hang of it, I was already noticing the need for this, without having the vocabulary yet to say <em>what</em> exactly I was needing.</p>
+<p><a href="/wp-content/uploads/2012/03/cellprofiler_identifyprimaryobjects.png"><img class="alignnone size-medium wp-image-487" title="cellprofiler_identifyprimaryobjects" src="/wp-content/uploads/2012/03/cellprofiler_identifyprimaryobjects-300x150.png"/></a></p>
+<p>The IdentifyPrimaryObjects module in CellProfiler gives a huge number of choices for how to identify primary objects such as cells or nuclei, for instance:</p>
+<ul>
+<li>Minimum and maximum diameter of objects to be identified</li>
+<li>Thresholding methods</li>
+<ul>
+<li>Otsu</li>
+<li>MoG</li>
+<li>Background</li>
+<li>RobustBackground</li>
+<li>RidlerCalvard</li>
+<li>Kapur</li>
+</ul>
+<li>Way in which thresholding method will be applied:</li>
+<ul>
+<li>Global</li>
+<li>Adaptive</li>
+<li>Per Object</li>
+</ul>
+<li>Number of classes (2 or 3) for thresholding</li>
+<li>What to minimize- weighted variance or entropy</li>
+</ul>
+<p>And on and on.  Every combination of parameters I tried out did an absolutely horrific job of identifying astrocytes in the images I was looking at (chiefly that they identified lots of astrocytes in places where there were none).  Now, probably if I had any experience whatsoever with histology I&#8217;d have known how to pick a slightly better combination, so none of this is to dis CellProfiler which really does have an incredible amount of intelligence built into it!  But after trying about four different combinations I thought to myself, <em>I wish I could just have it try all of them and show me the image masks then I could tell it which one worked</em>.  (Or, in retrospect, better yet: instead of me looking at output from 100 algorithms and choosing the one that looks most like I think it should, why don&#8217;t I just tell the computer what it the mask should look like and let <em>it</em> figure out which algorithm comes closest to that).</p>
+<p>Well, that&#8217;s exactly what Jain et al&#8217;s article is all about.  So it seems to me that this sort of machine learning for image segmentation is very much in need.  Probably there are already some good efforts out there at implementing this&#8211; some of which might even be on offer as extensions to CellProfiler. I haven&#8217;t run across any yet but I&#8217;m just starting, and hopefully I will turn up such things in my continued literature search.  In any case, it sounds like this is very much an open problem and a valuable topic to work on.</p>

@@ -1,0 +1,156 @@
+---
+layout: post
+title: "23andMe's coverage of rare prion diseases"
+author: ericminikel
+date: 2013-03-06 18:10:39
+---
+<p>Sonia and I got back our <a href="https://www.23andme.com/">23andMe</a> results a few weeks ago.  For those who don&#8217;t know, 23andMe offers direct-to-consumer genetic testing.  For $99 you can spit into a tube, mail it to them and they&#8217;ll tell you your genotype at about 900,000 locations across your genome.  They don&#8217;t just give you the data, they help interpret it for you &#8211; information about your own health, about whether you carry a recessive disease that could affect your kids, your ancestry, and more.  In my next post I review our experience with it and tell you why it&#8217;s a preposterously good deal and good idea and everyone should do it.</p>
+<p>But first, this post is to discuss the technical matters of 23andMe&#8217;s coverage of the rare genetic prion diseases.  In browsing our raw data, we found that they have an admirably broad coverage of the polymorphisms and prion disease mutations in PRNP.  Here&#8217;s a list of the exonic SNPs they genotype:</p>
+<p><table style="width:100%; " class="easy-table easy-table-default " border="0">
+<thead>
+<tr><th>mutation or polymorphism</th>
+<th>disease association</th>
+<th>dbSNP id</th>
+<th>23andMe id (if different)</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>S97N</td>
+<td>suspected cause of disease [<a href="http://www.ncbi.nlm.nih.gov/pubmed/18425766">Zheng 2008</a>]</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/SNP/snp_ref.cgi?rs=rs56362942">rs56362942</a></td>
+<td>-</td>
+</tr>
+
+<tr><td>P102L</td>
+<td>GSS</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=74315401">rs74315401</a></td>
+<td>i5004359</td>
+</tr>
+
+<tr><td>P105L</td>
+<td>GSS</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/SNP/snp_ref.cgi?rs=rs11538758">rs11538758</a></td>
+<td>-</td>
+</tr>
+
+<tr><td>A117V</td>
+<td>GSS</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=74315402">rs74315402</a></td>
+<td>i5004358</td>
+</tr>
+
+<tr><td>G127V</td>
+<td><a title="Kuru and the G127V Polymorphism" href="/2012/02/07/kuru-and-the-g127v-polymorphism/">resistance to kuru</a></td>
+<td>not in dbSNP</td>
+<td>i5004345</td>
+</tr>
+
+<tr><td>129M/V</td>
+<td>it's complicated*</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/SNP/snp_ref.cgi?rs=rs1799990">rs1799990</a></td>
+<td>-</td>
+</tr>
+
+<tr><td>G131V</td>
+<td>GSS</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=74315410">rs74315410</a></td>
+<td>i5004351</td>
+</tr>
+
+<tr><td>A133V</td>
+<td>GSS</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/SNP/snp_ref.cgi?rs=rs74315415">rs74315415</a></td>
+<td>i5004347</td>
+</tr>
+
+<tr><td>N171S</td>
+<td>it's complicated**</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/SNP/snp_ref.cgi?rs=rs16990018">rs16990018</a></td>
+<td>-</td>
+</tr>
+
+<tr><td>D178N</td>
+<td>FFI or CJD</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=74315403">rs74315403</a></td>
+<td>i5004357</td>
+</tr>
+
+<tr><td>V180I</td>
+<td>CJD</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=74315408">rs74315408</a></td>
+<td>i5004353</td>
+</tr>
+
+<tr><td>T183A</td>
+<td>suspected cause of disease</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=74315411">rs74315411</a></td>
+<td>-</td>
+</tr>
+
+<tr><td>F198V</td>
+<td>suspected cause of disease</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/SNP/snp_ref.cgi?rs=rs55871421">rs55871421</a></td>
+<td>-</td>
+</tr>
+
+<tr><td>F198S</td>
+<td>GSS</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=74315405">rs74315405</a></td>
+<td>i5004356</td>
+</tr>
+
+<tr><td>E200K</td>
+<td>CJD</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/SNP/snp_ref.cgi?rs=rs28933385">rs28933385</a></td>
+<td>-</td>
+</tr>
+
+<tr><td>R208C</td>
+<td>CJD</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/SNP/snp_ref.cgi?rs=rs55826236">rs55826236</a></td>
+<td>-</td>
+</tr>
+
+<tr><td>R208H</td>
+<td>CJD</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=74315412">rs74315412</a></td>
+<td>i5004349</td>
+</tr>
+
+<tr><td>V210I</td>
+<td>CJD</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=74315407">rs74315407</a></td>
+<td>i5004354</td>
+</tr>
+
+<tr><td>G217R</td>
+<td>GSS [<a href="http://www.ncbi.nlm.nih.gov/pubmed/1363810">Hsiao 1992</a>]</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=74315406">rs74315406</a></td>
+<td>i5004355</td>
+</tr>
+
+<tr><td>E219K</td>
+<td>resistance to sporadic CJD [<a href="http://www.ncbi.nlm.nih.gov/pubmed/9629853">Shibuya 1998</a>]</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=1800014">rs1800014</a></td>
+<td>i3002436</td>
+</tr>
+
+<tr><td>M232R</td>
+<td>it's complicated***</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=74315409">rs74315409</a></td>
+<td>i5004352</td>
+</tr>
+</tbody></table></p>
+<p><em>*Codon 129 does not cause any prion diseases, but heterozygosity is associated with reduced risk for sporadic and variant CJD and later onset or longer disease course for some genetic prion diseases [reviewed in <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3226040/">Lukic &amp; Mead 2011</a>].  Codon 129 also largely determines the phenotype of the D178N mutation &#8211; FFI if in cis with 129M and CJD if in cis with 129V [<a href="http://www.ncbi.nlm.nih.gov/pubmed/1439789">Goldfarb 1992</a>] &#8211; though there is in fact a phenotypic spectrum between these two [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC1739400/">Zarranz 2005</a>].</em><br/>
+<em> **There is debate over whether N171S is a disease mutation or neutral, and it&#8217;s also been suggested to increase schizophrenia risk [<a href="http://www.ncbi.nlm.nih.gov/pubmed/11244488">Tsai 2001</a>, <a href="http://www.ncbi.nlm.nih.gov/pubmed/21071944">Appleby 2010</a>, <a href="http://www.ncbi.nlm.nih.gov/pubmed/20583301">Beck 2010</a>, <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3182929/">Streibel 2011</a>]</em><br/>
+<em> ***M232R has been suggested to increase sporadic CJD risk but it might be neutral [<a href="http://www.ncbi.nlm.nih.gov/pubmed/22108575">Beck 2012</a> (<a href="http://brain.oxfordjournals.org/content/early/2011/11/16/brain.awr294.full.pdf">ft</a>)].</em><br/>
+<em> N.B. The disease associations without citations above are reviewed in <a href="http://omim.org/entry/176640">PRNP&#8217;s OMIM entry</a>.</em></p>
+<p>Now that&#8217;s an awful lot of coverage for PRNP, especially considering how rare most of these mutations are.  It is super awesome that 23andMe decided to include all of these on their chip.  In the short run, though, don&#8217;t expect 23andMe to necessarily tell you whether you carry a genetic prion disease.  In our case, we know from Sanger sequencing conducted by the <a href="http://www.cjdsurveillance.com/">National Prion Disease Pathology Surveillance Center</a> at Case Western that Sonia carries the D178N mutation, i.e. her <a href="http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=74315403">rs74315403</a> genotype is AG.  Yet that SNP came up &#8216;no call&#8217; in her 23andMe data:</p>
+<p><img class="alignnone size-full wp-image-1738" title="" src="/wp-content/uploads/2013/03/sonia-d178n-23andme-no-call.jpg"/></p>
+<p>Is it a pure coincidence that this one most important SNP in all of her genome, <a href="www.prionalliance.org/our-story/">the SNP that has driven us to become scientists</a>, was one of the few that 23andMe could not call confidently?</p>
+<p>Probably not.  I did some Googling and asking around and learned that &#8216;no call&#8217; on SNP chips is especially common for very rare SNPs [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3063825/">Ritchie 2011</a>].  The issue is that those two dots of light on the SNP chip that represent the A allele and the G allele are not equally intense for all SNPs in the genome.  It varies according to how well the probes hybridize and how many <em>other</em> sites in the genome have some homology with the area in question.  If other parts of the genome look a lot like the neighborhood around <a href="http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=74315403">rs74315403</a>, they&#8217;ll hybridize to those probes too, and might favor one allele over the other, confounding the readout.  Therefore algorithms need to see several people of each genotype in order to learn how to turn those visual light intensities into a genotype call. For literally 1-in-a-million SNPs like the fatal familial insomnia mutation, it is eminently possible that 23andMe never saw anyone else with it before Sonia, and so their algorithm hasn&#8217;t yet learned whether her greater light intensity for the &#8216;A&#8217; allele probe actually means she has the mutation.</p>
+<div>
+<p>And after browsing more of the raw data, I see more reasons why SNP chip data need to be interpreted with care.  Sonia also came up &#8216;no call&#8217; for <a href="http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=74315402">rs74315402</a>, the A117V GSS mutation, which we know (again, from Sanger sequencing) that she does <em>not</em> have.  So (though this is probably obvious) you can&#8217;t just assume every &#8216;no call&#8217; means something important is going on here.  In fact, on further examination, I see why that SNP came up &#8216;no call&#8217;.  Sonia has a synonymous polymorphism (<a href="http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=rs8124214">rs8124214</a> A117A) right <em>next to</em> the A117V SNP, which would interfere with her DNA hybridizing to the A117V probe and complicate the readout.  This A117A SNP is not disease-causing at all, yet if we went around trying to read too much into &#8216;no calls&#8217; without any Sanger validation, we might have freaked out when we saw her results.</p>
+<p>All this just calls for a bit of caution, and I think 23andMe tries to send that message loud and clear as well.  False positives and false negatives do happen, and their web interface is accordingly littered with messages that you should talk to a health care professional about this and that.  I now see that those aren&#8217;t just obligatory <a href="http://en.wikipedia.org/wiki/Cover_your_ass">CYA</a> disclaimers.  If you&#8217;re wondering if you have a PRNP mutation, 23andMe might be able to tell you and might not, but before you change your life in response to it, it&#8217;s probably best to get it validated by the <a href="http://www.cjdsurveillance.com/">National Prion Disease Pathology Surveillance Center</a>.</p>
+<p>23andMe&#8217;s ability to call these rare SNPs will only improve with time as they add more people to their database.  And by the way, they not only add annotations over time as new genotype-phenotype associations are discovered (all of which is included in the up-front price you pay), they also change your raw data over time as they get better at converting those dots of light on the SNP chip into called genotypes.</p>
+</div>

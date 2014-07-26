@@ -1,0 +1,61 @@
+---
+layout: post
+title: "UAB day 3: models and tools"
+author: ericminikel
+date: 2012-12-13 06:32:40
+---
+<p>Today I am blogging from day 3 of the <a href="http://www.soph.uab.edu/ssg/nhgri_r25/secondshortcourse">UAB short course on sequencing</a>.</p>
+<p><strong>Speaker 1: <a href="http://www.soph.uab.edu/ssg/people/cui">Xiangqin Cui</a> &#8211; Experimental design</strong></p>
+<p>Additive model to correct for length and dinucleotide bias in RNA-seq: <a href="http://www.biomedcentral.com/1471-2105/12/290">Zheng 2011</a></p>
+<p>Poisson model for no biological replicates. For gene i, condition 1 follows Poisson (λ<sub>i1</sub>), condition 2 ~ Poisson (λ<sub>i2</sub>), use Wald test or LRT to compare if λ<sub>i1</sub> = λ<sub>i2</sub></p>
+<p>Due to overdispersion, Negative Binomial can be used instead (Robinson / Smith).</p>
+<p><strong>Speaker 2: David Crossman &#8211; Analysis of NGS data using Galaxy</strong></p>
+<p><a href="http://galaxyproject.org/">Galaxy</a> is a free GUI-based tool for analyzing next-generation sequence data for people who don&#8217;t know command line and don&#8217;t know how to code.</p>
+<p><strong>Speaker 3: Shili Lin &#8211; 3D regulation of the genome</strong></p>
+<p>Hypothesis: proteins may promote a gene by binding at a site which is distant in 1D genomic sequence but near to the gene in the 3D organization of the DNA.</p>
+<p>The imprinted lgf2/H19 locus is one well-characterized example [<a href="http://nar.oxfordjournals.org/content/39/14/5893.full">Court 2011</a>]</p>
+<p>Hi-C protocol by <a href="http://www.ncbi.nlm.nih.gov/pubmed/19815776">Lieberman-Aiden 2009</a></p>
+<ul>
+<li>Cross-link DNA with formaldehyde.  Pieces of DNA near each other in 3D will get cross linked.</li>
+<li>Cut with restriction enzymes</li>
+<li>Fill ends and mark with biotin</li>
+<li>Ligate strands to each other</li>
+<li>Purify and shear</li>
+<li>Sequence with paired-end to see which pieces of DNA got ligated to one another and therefore were near each other.</li>
+</ul>
+<div>ChIA-PET protocol due to Fullwood 2009</div>
+<div></div>
+<div>
+<ul>
+<li>Similar to Hi-C but adds an immunoprecipitation step</li>
+</ul>
+<div>Uses:</div>
+<div></div>
+<div>
+<ul>
+<li>Tumor/normal comparison &#8211; does chromatin structure change in cancer</li>
+<li>Global long-range regulation mechanisms</li>
+</ul>
+<div>Statistical approaches needed:</div>
+<div></div>
+<div>
+<ul>
+<li>IFCalculator</li>
+<li>HG  - hypergeometric &#8211; too many false positives</li>
+<li>Bayesian analysis (BASIC) to filter out random collisons</li>
+</ul>
+</div>
+</div>
+</div>
+<p><strong>Speaker 4: <a href="http://www.uab.edu/gbs/bsb/biochemistry-a-molecular-genetics/faculty/jonas-almeida">Jonas Almeida</a> &#8211; cloud computing and the semantic web</strong></p>
+<p>Resources for cloud computing</p>
+<ul>
+<li><a href="http://imagejs.org">imagejs.org</a> - cloud-based ImageJ tools</li>
+<li><a href="http://altjs.org">altjs.org</a> - for those who want to use browsers in order to MapReduce but don&#8217;t want to write JavaScript.</li>
+</ul>
+<p>Resources for the semantic web</p>
+<ul>
+<li><a href="http://www.linkeddata.org">linkeddata.org</a></li>
+<li>SPARQL: <a href="http://dbpedia.org/sparql">dbpedia.org/sparql</a>, <a href="http://linkedlifedata.com/sparql">linkedlifedata.com/sparql</a></li>
+</ul>
+<p>&nbsp;</p>

@@ -1,0 +1,170 @@
+---
+layout: post
+title: "Prion kinetic models and the relationship between inoculum titer and incubation time"
+author: ericminikel
+date: 2014-01-12 21:17:45
+---
+<p>In <a title="Why a simple exponential model of prion kinetics in vivo won’t work" href="/2013/12/18/why-a-simple-exponential-model-of-prion-kinetics-in-vivo-wont-work/">a post last month</a> I presented a simple exponential model of prion propagation <em>in vivo</em> and then tested whether it could explain the relationship between PrP<sup>C</sup> expression level and prion incubation time. The answer: it couldn&#8217;t, at least not without a little help. One way to force it to fit the data was to suppose that PrP<sup>C</sup> available for conversion is limited by some other factor (e.g. space in lipid rafts) and that overexpressing PrP<sup>C</sup> saturates this limited resource.</p>
+<p>In this post I&#8217;ll show that the relationship between PrP<sup>C</sup> expression and incubation time isn&#8217;t all that&#8217;s hard to explain in a simple exponential model.  It turns out to also be quite hard to reconcile this model with the relationship between incubation time and the inoculated dose of prions.</p>
+<p><strong>the model</strong></p>
+<p>Recall from last time that the basic model we&#8217;re talking about here is:</p>
+<p><img src="//s0.wp.com/latex.php?latex=T%28t%29+%3D+T_0+e%5E%7B%28k_%7Bconversion%7DS_0+-+k_%7Bdegradation%7D%29t%7D&#038;bg=ffffff&#038;fg=000&#038;s=0" alt="T(t) = T_0 e^{(k_{conversion}S_0 - k_{degradation})t}" title="T(t) = T_0 e^{(k_{conversion}S_0 - k_{degradation})t}" class="latex"/></p>
+<p>Where T(t) is the amount of PrP<sup>Sc</sup> or infectivity (which I&#8217;m still treating interchangeably for now), T<sub>0</sub> is the starting titer of prions, k<sub>conversion</sub> is a constant describing how quickly PrP<sup>Sc</sup> can convert PrP<sup>C</sup> S<sub>0</sub> is the PrP<sup>C</sup> expression level, k<sub>degradation</sub> is a constant describing the degradation of PrP<sup>Sc</sup>, and t is time.  In this post, S<sub>0</sub> or PrP<sup>C</sup> expression is not my primary concern, so I&#8217;ll simplify by defining a constant &phi;:</p>
+<p><img src="//s0.wp.com/latex.php?latex=%5Cvarphi+%3D+k_%7Bconversion%7DS_0+-+k_%7Bdegradation%7D&#038;bg=ffffff&#038;fg=000&#038;s=0" alt="&#92;varphi = k_{conversion}S_0 - k_{degradation}" title="&#92;varphi = k_{conversion}S_0 - k_{degradation}" class="latex"/></p>
+<p>So that:</p>
+<p><img src="//s0.wp.com/latex.php?latex=T%28t%29+%3D+T_0+e%5E%7B%5Cvarphi+t%7D&#038;bg=ffffff&#038;fg=000&#038;s=0" alt="T(t) = T_0 e^{&#92;varphi t}" title="T(t) = T_0 e^{&#92;varphi t}" class="latex"/></p>
+<p>A curious fact about prion kinetics is that the prion infectivity titer by the time of onset of symptoms seems to be about the same regardless of PrP<sup>C</sup> expression level and regardless of the titer of the original inoculum. It&#8217;s tough to say for sure because there&#8217;s so much experimental variability, but certainly if you look at the titers at time of onset in the mice across several different PrP<sup>C</sup> expression levels in a few different papers [<a href="http://www.ncbi.nlm.nih.gov/pubmed/8790598">Bueler 1994</a>, <a href="http://www.ncbi.nlm.nih.gov/pubmed/8635458">Fischer 1996</a>, <a href="http://www.ncbi.nlm.nih.gov/pubmed/21350487">Sandberg 2011</a>], it is difficult to make a case for the values being significantly different.  As for titer of inoculum, my assumption is that an animal inoculated with a low dose that gets sick after a long time and an animal inoculated with a high dose that gets sick after a short time have about the same amount of infectivity in their brains <em>at the time they each get sick</em>. I haven&#8217;t managed to find as good of citations for this assumption, so please comment if you know.</p>
+<p>In any case, for now I&#8217;m going to assume that the titer at time of onset is invariant, a quantity I&#8217;ll call T<sub>onset</sub>.  T<sub>onset</sub> appears to correspond to about 10<sup>9</sup> ID<sub>50</sub> units in the entire brain of a Sc237-infected hamsters according to [<a href="http://www.ncbi.nlm.nih.gov/pubmed/6801762">Prusiner 1982a</a>].  I think it&#8217;s about the same in RML-infected mice: <a href="http://www.ncbi.nlm.nih.gov/pubmed/8100741">Bueler 1993</a> finds titers of ~8.1-8.6 log10 ID<sub>50</sub>s per mL in a 10% dilution. That implies &gt;9 log10 ID<sub>50</sub>/mL in pure brain homogenate, and a mouse brain <a href="http://mste.illinois.edu/malcz/DATA/BIOLOGY/Animals.html">is about half a gram</a> and therefore its volume is probably something like half an mL. We&#8217;re in the right ballpark at least.</p>
+<p>So if we assume that T<sub>onset</sub> is a constant, we&#8217;ll say 10<sup>9</sup>, then the model above lets us solve for the relationship between the incubation time or t<sub>onset</sub> and the inoculum titer T<sub>0</sub>:</p>
+<p><img src="//s0.wp.com/latex.php?latex=T_%7Bonset%7D+%3D+T_0+e%5E%7B%5Cvarphi+t_%7Bonset%7D%7D&#038;bg=ffffff&#038;fg=000&#038;s=0" alt="T_{onset} = T_0 e^{&#92;varphi t_{onset}}" title="T_{onset} = T_0 e^{&#92;varphi t_{onset}}" class="latex"/><br/>
+<img src="//s0.wp.com/latex.php?latex=ln%28T_0%29+%3D+ln%28T_%7Bonset%7D%29+-+%5Cvarphi+t_%7Bonset%7D&#038;bg=ffffff&#038;fg=000&#038;s=0" alt="ln(T_0) = ln(T_{onset}) - &#92;varphi t_{onset}" title="ln(T_0) = ln(T_{onset}) - &#92;varphi t_{onset}" class="latex"/></p>
+<p>In fact, as I mentioned in the last post, titer is lost rapidly in the first few days of prion infection, then recovers over the following weeks, so the inoculum or T<sub>0</sub> is not quite the right value to start from. But let&#8217;s return to that later and just observe that the above model implies that:</p>
+<p><img src="//s0.wp.com/latex.php?latex=t_%7Bonset%7D+%5Cpropto+ln%28T_0%29&#038;bg=ffffff&#038;fg=000&#038;s=0" alt="t_{onset} &#92;propto ln(T_0)" title="t_{onset} &#92;propto ln(T_0)" class="latex"/></p>
+<p>Where &prop; means &#8220;is linearly proportional to&#8221;.  The model suggests that the incubation time is proportional to the log of the inoculated titer.</p>
+<p>That&#8217;s not what has been observed in reality.  30+ years ago, Prusiner sped up the study of prions by pioneering the use of incubation time bioassay (instead of endpoint titration) to determine prion titers [<a href="http://www.ncbi.nlm.nih.gov/pubmed/6808890">Prusiner 1982b</a>].  The raw data aren&#8217;t given in the paper, but I&#8217;ll simulate them by adding some random noise to the model he got out of the data:</p>
+<pre class="brush: r; title: ; notranslate" title="">
+logdose = runif(n=100,min=0,max=10) # simulate 100 different experiments with diff titers
+days = 10^( (logdose-26.66)/(-12.99) ) + 40 + rnorm(n=100,m=0,s=2) # apply Prusiner's model
+plot(logdose,days,xlab=&quot;log10(LD50 units)&quot;,ylab=&quot;days to illness&quot;,pch=19,
+     main=&quot;incubation time interval bioassay\nPrusiner 1982b - Sc237 in hamsters&quot;,
+     sub=&quot;simulated data&quot;)
+</pre>
+<p><a href="/wp-content/uploads/2014/01/prusiner-1982b-incubation-time-model-simulation.png"><img src="/wp-content/uploads/2014/01/prusiner-1982b-incubation-time-model-simulation.png"/></a></p>
+<p>The model he derived from regression on his data was essentially this:</p>
+<p><img src="//s0.wp.com/latex.php?latex=log%28titer%29+%3D+26.66+-+12.99%28log%28t_%7Bonset%7D%29+-+40%29&#038;bg=ffffff&#038;fg=000&#038;s=0" alt="log(titer) = 26.66 - 12.99(log(t_{onset}) - 40)" title="log(titer) = 26.66 - 12.99(log(t_{onset}) - 40)" class="latex"/></p>
+<p>Note that it implies two things.  First, you can never have an incubation time under 40 days, no matter how high the titer. Second, instead of the log-linear relationship above, it implies a log-log relationship:</p>
+<p><img src="//s0.wp.com/latex.php?latex=log%28t_%7Bonset%7D%29+%5Cpropto+-log%28T_0%29&#038;bg=ffffff&#038;fg=000&#038;s=0" alt="log(t_{onset}) &#92;propto -log(T_0)" title="log(t_{onset}) &#92;propto -log(T_0)" class="latex"/></p>
+<p>That paper was on the Sc237 strain in hamsters. I couldn&#8217;t found the equivalent model for RML in mice, so I took a look at the data in Table 1 of <a href="http://www.ncbi.nlm.nih.gov/pubmed/8100741">Bueler 1993</a>. The &#8220;disease&#8221; row of the &#8220;inoculum&#8221; column shows times to clinical disease for animals inoculated with dilutions from 10<sup>-1</sup> to 10<sup>-7</sup>, though not all the 10<sup>-7</sup> animals got sick, so they&#8217;re not useful for modeling. The text of the paper states that the 10<sup>-1</sup> dilution contained about 10<sup>7</sup> ID<sub>50</sub>s total (in 30&mu;L), implying the source had a titer of 10<sup>8</sup> (again, ID<sub>50</sub> per 30 &mu;L. Note this implies 10<sup>9</sup> ID<sub>50</sub> per 300&mu;L, so probably on the order of 10<sup>9</sup> ID<sub>50</sub> per brain).</p>
+<p>I&#8217;ll throw these data points into a quick plot:</p>
+<pre class="brush: r; title: ; notranslate" title="">
+# RML based on Bueler 1993 Table 1
+source_titer = (1e7)*10 
+onset_dpi = c(137,151,157,160,183,201) # Table 1 &quot;inoculum&quot; column, &quot;disease&quot; row
+dilutions = 10^-(1:6)
+titers = source_titer * dilutions
+plot(titers,onset_dpi,log='x',pch=19,cex.main=.8,
+     main='Inoculated titer vs. incubation time in RML-infected wt mice\nBueler 1993 Table 1')
+</pre>
+<p><a href="/wp-content/uploads/2014/01/bueler-1993-table-1-incubation-time-bioassay-data.png"><img src="/wp-content/uploads/2014/01/bueler-1993-table-1-incubation-time-bioassay-data.png"/></a></p>
+<p>Even with just 6 data points, the relationship is clearly there.  First I&#8217;ll try a log-linear model, one where:</p>
+<p><img src="//s0.wp.com/latex.php?latex=t_%7Bonset%7D+%5Cpropto+-log%28T_0%29&#038;bg=ffffff&#038;fg=000&#038;s=0" alt="t_{onset} &#92;propto -log(T_0)" title="t_{onset} &#92;propto -log(T_0)" class="latex"/></p>
+<pre class="brush: r; title: ; notranslate" title="">
+logtiter = log10(titers)
+m = lm(logtiter ~ onset_dpi)
+summary(m)
+#Coefficients:
+#            Estimate Std. Error t value Pr(&gt;|t|)    
+#(Intercept) 17.34296    1.73838   9.977 0.000567 ***
+#onset_dpi   -0.07791    0.01046  -7.449 0.001735 ** 
+#Multiple R-squared:  0.9328,    Adjusted R-squared:  0.9159 
+</pre>
+<p>The model has some explanatory power (adjusted R^2 = .9159) and the relationship is clearly significant. What if I try a log-log model?</p>
+<pre class="brush: r; title: ; notranslate" title="">
+m = lm(logtiter ~ log10(onset_dpi))
+summary(m)
+</pre>
+<p>It&#8217;s even better, with an adjusted R^2 of .9357.  This must have been what Prusiner first observed when developing the incubation time bioassay. What he found was that the R^2 was maximized when you took the log not of the incubation time itself, but of the incubation time minus a constant &#8211; in his case, 40 days.  Let&#8217;s find out what the best constant is to fit the Bueler RML data:</p>
+<pre class="brush: r; title: ; notranslate" title="">
+find_best_adjustment = function(onset_dpi, titers) {
+    # try every possible &quot;adjustment&quot; up to the lowest incubation time observed
+    days_to_test = 1:(min(onset_dpi)-1)
+    rsq_vals = numeric(length(days_to_test))
+    for (dpi_adjustment in days_to_test) { 
+        log_adjusted_dpi = log10(onset_dpi - dpi_adjustment)
+        m = lm(logtiter ~ log_adjusted_dpi)
+        rsq_vals[dpi_adjustment] = summary(m)$adj.r.squared
+    }
+    # figure out which model had the highest R^2
+    return ( which(rsq_vals == max(rsq_vals)) )
+}
+
+find_best_adjustment(onset_dpi, titers)
+# 100
+</pre>
+<p>The answer: 100 days. With this adjustment in place, we get an adjusted R^2 of .9492:</p>
+<pre class="brush: r; title: ; notranslate" title="">
+dpi_adjustment = 100
+log_adjusted_dpi = log10(onset_dpi - dpi_adjustment)
+m = lm(logtiter ~ log_adjusted_dpi)
+summary(m)
+#Coefficients:
+#                 Estimate Std. Error t value Pr(&gt;|t|)    
+#(Intercept)        25.670      2.185   11.75 0.000300 ***
+#log_adjusted_dpi  -11.834      1.218   -9.72 0.000627 ***
+#Multiple R-squared:  0.9594,    Adjusted R-squared:  0.9492 
+</pre>
+<p>The model can be used in either direction:to predict incubation time given a titer, or to estimate titer given an observed incubation time:</p>
+<p><img src="//s0.wp.com/latex.php?latex=estimated%5C_titer+%3D+10%5E%7B25.670+-+11.834%2Alog10%28onset%5C_dpi+-+100%29%7D&#038;bg=ffffff&#038;fg=000&#038;s=0" alt="estimated&#92;_titer = 10^{25.670 - 11.834*log10(onset&#92;_dpi - 100)}" title="estimated&#92;_titer = 10^{25.670 - 11.834*log10(onset&#92;_dpi - 100)}" class="latex"/><br/>
+<img src="//s0.wp.com/latex.php?latex=predicted%5C_onset+%3D+10%5E%7B%28log10%28titer%29+-+25.670%29+%2F+%28-11.834%29%7D+%2B+100&#038;bg=ffffff&#038;fg=000&#038;s=0" alt="predicted&#92;_onset = 10^{(log10(titer) - 25.670) / (-11.834)} + 100" title="predicted&#92;_onset = 10^{(log10(titer) - 25.670) / (-11.834)} + 100" class="latex"/></p>
+<p>Here&#8217;s how it fits the data:</p>
+<pre class="brush: r; title: ; notranslate" title="">
+predicted_onset = function(titer) {
+    return ( 10^((log10(titer) - 25.670) / (-11.834)) + 100 )
+}
+plot(titers,onset_dpi,log='x',pch=19,cex.main=.8,
+     main='Incubation time bioassay model for RML in mice\nBased on Bueler 1993 Table 1 data',
+     sub='model: predicted_onset = 10^((log10(titer) - 25.670) / (-11.834)) + 100')
+points(titers, predicted_onset(titers), type='l', col='violet')
+</pre>
+<p><a href="/wp-content/uploads/2014/01/bueler-1993-table-1-incubation-time-bioassay-data-with-model.png"><img src="/wp-content/uploads/2014/01/bueler-1993-table-1-incubation-time-bioassay-data-with-model.png"/></a></p>
+<p>It&#8217;s interesting that even with a pitiable amount of data (just 6 points) I can already see the same result reported in [<a href="http://www.ncbi.nlm.nih.gov/pubmed/6808890">Prusiner 1982b</a>]: that a log-log model, with some &#8220;adjustment&#8221; to the days-to-onset figure, fits better than a log-linear model.</p>
+<p>That&#8217;s bad news for our simple exponential model, which really wants the relationship to be log-linear. But we know that model was doomed to be way too simple, so I wanted to see if it was possible to rescue it by accounting for one thing I haven&#8217;t accounted for so far: the fact that the inoculated infectivity is very rapidly degraded.</p>
+<p>I discussed this at the beginning of <a href="/2013/12/18/why-a-simple-exponential-model-of-prion-kinetics-in-vivo-wont-work/" title="Why a simple exponential model of prion kinetics in vivo won’t work">the last kinetics post</a>, so see that for background. Basically, the data from <a href="http://www.ncbi.nlm.nih.gov/pubmed/8100741">Bueler 1993</a> imply that inoculated infectivity is degraded with a half-life of ~5h &#8211; much faster than <a href="/2013/04/08/half-life-of-prp-and-its-mrna/" title="Half life of PrP and its mRNA">half-lives reported</a> for PrP<sup>Sc</sup> later on in disease.  Why is that?  It could be that exogenous (extracellular) PrP<sup>Sc</sup> is degraded much more quickly than endogenous (membrane-bound) PrP<sup>Sc</sup>.  But another explanation that tempts me is the idea that PrP<sup>C</sup> is a limiting reactant in those first few days after inoculation.  This would appear to explain why sometimes there is barely any difference at all in incubation times for the few highest titers (for instance, in <a href="http://www.ncbi.nlm.nih.gov/pubmed/8635458">Fischer 1996</a> Table 2, the 10<sup>-1</sup> and 10<sup>-2</sup> dilutions both give 69-day incubation times). Once you&#8217;ve saturated the available PrP<sup>C</sup>, there&#8217;s nothing left to do.</p>
+<p>So I set out to see whether accounting for this might save the model and explain why a log-log relationship is observed empirically.  The <em>right</em> way to do this would be a complicated system of differential equations where inoculum is degraded rapidly while converting new endogenous PrP<sup>Sc</sup> which concurrently begins to convert other PrP<sup>C</sup> molecules.  After fiddling with that for a bit, I decided perhaps it was wiser to start with something a bit simpler. So I split my model into two phases: 1) a phase where exogenous PrP<sup>Sc</sup> is degraded at a rate described by constant &psi; while it also converts endogenous molecules, and 2) a phase where those nascent endogenous PrP<sup>Sc</sup> molecules now propagate at a rate described by constant &phi;, which I introduced earlier.  In this model, I define T<sub>min</sub> to be the minimum titer reached after, let&#8217;s say, 4 days, when the exogenous PrP<sup>Sc</sup> is basically gone but the endogenous PrP<sup>Sc</sup> hasn&#8217;t begun multiplying yet. We&#8217;ll return to phase 1 in a moment; first observe that what&#8217;s going to happen in Phase 2 is this:</p>
+<p><img src="//s0.wp.com/latex.php?latex=T_%7Bonset%7D+%3D+T_%7Bmin%7D+e%5E%7B%5Cvarphi+%28t_%7Bonset%7D+-+t_%7Bmin%7D%29%7D&#038;bg=ffffff&#038;fg=000&#038;s=0" alt="T_{onset} = T_{min} e^{&#92;varphi (t_{onset} - t_{min})}" title="T_{onset} = T_{min} e^{&#92;varphi (t_{onset} - t_{min})}" class="latex"/></p>
+<p>And so what our equation for Phase 1 needs to tell us is the value of T<sub>min</sub> &#8211; how much endogenous PrP has the inoculum managed to convert in its first 4 days before it&#8217;s gone forever?  What I&#8217;m probing is the idea of PrP<sup>C</sup> being limiting, so I&#8217;m going to make a slightly non-intuitive use of the <a href="http://en.wikipedia.org/wiki/Michaelis%E2%80%93Menten_kinetics">Michaelis-Menten equation</a>, which states:</p>
+<p><img src="//s0.wp.com/latex.php?latex=v+%3D+%5Cfrac%7Bv_%7Bmax%7D%5BS%5D%7D%7BK_m+%2B+%5BS%5D%7D&#038;bg=ffffff&#038;fg=000&#038;s=0" alt="v = &#92;frac{v_{max}[S]}{K_m + [S]}" title="v = &#92;frac{v_{max}[S]}{K_m + [S]}" class="latex"/></p>
+<p>Where v is the reaction velocity, v<sub>max</sub> is its maximum possible value in the presence of unlimited substrate, Km is a constant describing affinity for substrate and [S] is the concentration of substrate. This equation does a great job of describing some saturable systems, where a reaction requires both A and B (usually an enzyme and its substrate) and by increasing B without bound you can, only asymptotically, fully utilize A.  My non-intuitive use of this involves thinking of v as the number of PrP<sup>C</sup> molecules converted per unit time, v<sub>max</sub> being the sum of available PrP<sup>C</sup> at any given moment, [S] being the amount of PrP<sup>Sc</sup> i.e. inoculum titer, and Km being, again, a constant to do with affinity. I&#8217;ll define the number of <em>endogenous</em> PrP<sup>Sc</sup> molecules as N(t) and the number of <em>exogenous</em> inoculum PrP<sup>Sc</sup> molecules as X(t) (N like eNdogenous, X like eXogenous) and swap in all my favorite variables: v = dN/dt, v<sub>max</sub> = S0, and [S] = X(t), so:</p>
+<p><img src="//s0.wp.com/latex.php?latex=%5Cfrac%7BdN%7D%7Bdt%7D+%3D+%5Cfrac%7BS_0+X%28t%29%7D%7BK_m+%2B+X%28t%29%7D&#038;bg=ffffff&#038;fg=000&#038;s=0" alt="&#92;frac{dN}{dt} = &#92;frac{S_0 X(t)}{K_m + X(t)}" title="&#92;frac{dN}{dt} = &#92;frac{S_0 X(t)}{K_m + X(t)}" class="latex"/></p>
+<p>Note that the Michaelis-Menten equation normally describes <em>initial</em> velocity of a reaction, before you&#8217;ve had time to deplete the substrate; here, I&#8217;m treating it as describing <em>the</em> velocity for all time t. That&#8217;s because I&#8217;m assuming that PrP<sup>C</sup> is produced constantly in the cell, so its depletion due to conversion to endogenous PrP<sup>Sc</sup> is not an issue; and that exogenous PrP<sup>Sc</sup> is depleted far faster by degradation (modeled in X(t)) than by binding to PrP<sup>C</sup>.  Remember, that degradation is described by a new constant &psi; so:</p>
+<p><img src="//s0.wp.com/latex.php?latex=X%28t%29+%3D+X_0+e%5E%7B-%5Cpsi+t%7D&#038;bg=ffffff&#038;fg=000&#038;s=0" alt="X(t) = X_0 e^{-&#92;psi t}" title="X(t) = X_0 e^{-&#92;psi t}" class="latex"/></p>
+<p>Because dN/dt depends on X(t) but not on N(t) itself, we can simply plug X(t) in:</p>
+<p><img src="//s0.wp.com/latex.php?latex=%5Cfrac%7BdN%7D%7Bdt%7D+%3D+%5Cfrac%7BS_0+X_0+e%5E%7B-%5Cpsi+t%7D%7D%7BK_m+%2B+X_0+e%5E%7B-%5Cpsi+t%7D%7D&#038;bg=ffffff&#038;fg=000&#038;s=0" alt="&#92;frac{dN}{dt} = &#92;frac{S_0 X_0 e^{-&#92;psi t}}{K_m + X_0 e^{-&#92;psi t}}" title="&#92;frac{dN}{dt} = &#92;frac{S_0 X_0 e^{-&#92;psi t}}{K_m + X_0 e^{-&#92;psi t}}" class="latex"/></p>
+<p>Now what I want is an expression for N(t). I spent an hour or so trying to get it by <a href="http://en.wikipedia.org/wiki/Integration_by_parts">integration by parts</a>, which I&#8217;m certain can be done, but it somehow eluded me, so finally I gave in and used <a href="http://www.integral-calculator.com/">integral-calculator.com</a>, which gave this:  </p>
+<p><img src="//s0.wp.com/latex.php?latex=N%28t%29+%3D+-%5Cfrac%7BS_0%7D%7B%5Cpsi%7Dln%28X_0+e%5E%7B-%5Cpsi+t%7D+%2B+K_m%29&#038;bg=ffffff&#038;fg=000&#038;s=0" alt="N(t) = -&#92;frac{S_0}{&#92;psi}ln(X_0 e^{-&#92;psi t} + K_m)" title="N(t) = -&#92;frac{S_0}{&#92;psi}ln(X_0 e^{-&#92;psi t} + K_m)" class="latex"/></p>
+<p>In fact, what integral-calculator.com does NOT do for you is compute the constant, often denoted C, which you can have in front of any integrated expression due to the fact that it would drop out upon differentiation. So that equation really should be:</p>
+<p><img src="//s0.wp.com/latex.php?latex=N%28t%29+%3D+C+-+%5Cfrac%7BS_0%7D%7B%5Cpsi%7Dln%28X_0+e%5E%7B-%5Cpsi+t%7D+%2B+K_m%29&#038;bg=ffffff&#038;fg=000&#038;s=0" alt="N(t) = C - &#92;frac{S_0}{&#92;psi}ln(X_0 e^{-&#92;psi t} + K_m)" title="N(t) = C - &#92;frac{S_0}{&#92;psi}ln(X_0 e^{-&#92;psi t} + K_m)" class="latex"/></p>
+<p>In this case, we know that we start with zero endogenous PrP<sup>Sc</sup> molecules, so N(0) = 0, and plugging that in we can get that:</p>
+<p><img src="//s0.wp.com/latex.php?latex=C+%3D+%5Cfrac%7BS_0%7D%7B%5Cpsi%7Dln%28T_0+%2B+K_m%29&#038;bg=ffffff&#038;fg=000&#038;s=0" alt="C = &#92;frac{S_0}{&#92;psi}ln(T_0 + K_m)" title="C = &#92;frac{S_0}{&#92;psi}ln(T_0 + K_m)" class="latex"/></p>
+<p>Putting it together,</p>
+<p><img src="//s0.wp.com/latex.php?latex=N%28t%29+%3D+%5Cfrac%7BS_0%7D%7B%5Cpsi%7Dln%28T_0+%2B+K_m%29+-+%5Cfrac%7BS_0%7D%7B%5Cpsi%7Dln%28X_0+e%5E%7B-%5Cpsi+t%7D+%2B+K_m%29&#038;bg=ffffff&#038;fg=000&#038;s=0" alt="N(t) = &#92;frac{S_0}{&#92;psi}ln(T_0 + K_m) - &#92;frac{S_0}{&#92;psi}ln(X_0 e^{-&#92;psi t} + K_m)" title="N(t) = &#92;frac{S_0}{&#92;psi}ln(T_0 + K_m) - &#92;frac{S_0}{&#92;psi}ln(X_0 e^{-&#92;psi t} + K_m)" class="latex"/></p>
+<p>With a half-life of only 5 hours, the inoculum will be pretty much gone after a few days, but just to be safe, we can ask how many endogenous molecules it will manage to convert as t trends toward infinity.</p>
+<p><img src="//s0.wp.com/latex.php?latex=%5Clim_%7Bt+%5Cto+%5Cinfty%7DN%28t%29+%3D+%5Cfrac%7BS_0%7D%7B%5Cpsi%7Dln%28T_0+%2B+K_m%29+-+%5Cfrac%7BS_0%7D%7B%5Cpsi%7Dln%28K_m%29&#038;bg=ffffff&#038;fg=000&#038;s=0" alt="&#92;lim_{t &#92;to &#92;infty}N(t) = &#92;frac{S_0}{&#92;psi}ln(T_0 + K_m) - &#92;frac{S_0}{&#92;psi}ln(K_m)" title="&#92;lim_{t &#92;to &#92;infty}N(t) = &#92;frac{S_0}{&#92;psi}ln(T_0 + K_m) - &#92;frac{S_0}{&#92;psi}ln(K_m)" class="latex"/></p>
+<p>Or, rearranging a bit,</p>
+<p><img src="//s0.wp.com/latex.php?latex=%5Clim_%7Bt+%5Cto+%5Cinfty%7DN%28t%29+%3D+%5Cfrac%7BS_0%7D%7B%5Cpsi%7Dln%28%5Cfrac%7BT_0%7D%7BK_m%7D+%2B+1%29&#038;bg=ffffff&#038;fg=000&#038;s=0" alt="&#92;lim_{t &#92;to &#92;infty}N(t) = &#92;frac{S_0}{&#92;psi}ln(&#92;frac{T_0}{K_m} + 1)" title="&#92;lim_{t &#92;to &#92;infty}N(t) = &#92;frac{S_0}{&#92;psi}ln(&#92;frac{T_0}{K_m} + 1)" class="latex"/></p>
+<p>Now remember that the number of endogenous molecules produced by that inoculum before it dies off are the seed for all future prion propagation, the T<sub>min</sub> in the model for Phase 2:</p>
+<p><img src="//s0.wp.com/latex.php?latex=T_%7Bonset%7D+%3D+T_%7Bmin%7D+e%5E%7B%5Cvarphi+%28t_%7Bonset%7D+-+t_%7Bmin%7D%29%7D&#038;bg=ffffff&#038;fg=000&#038;s=0" alt="T_{onset} = T_{min} e^{&#92;varphi (t_{onset} - t_{min})}" title="T_{onset} = T_{min} e^{&#92;varphi (t_{onset} - t_{min})}" class="latex"/></p>
+<p>Observe that (assuming X(t) &asymp; 0 at t<sub>min</sub>):</p>
+<p><img src="//s0.wp.com/latex.php?latex=T_%7Bmin%7D+%3D+%5Clim_%7Bt+%5Cto+%5Cinfty%7DN%28t%29+%3D+%5Cfrac%7BS_0%7D%7B%5Cpsi%7Dln%28%5Cfrac%7BT_0%7D%7BK_m%7D+%2B+1%29&#038;bg=ffffff&#038;fg=000&#038;s=0" alt="T_{min} = &#92;lim_{t &#92;to &#92;infty}N(t) = &#92;frac{S_0}{&#92;psi}ln(&#92;frac{T_0}{K_m} + 1)" title="T_{min} = &#92;lim_{t &#92;to &#92;infty}N(t) = &#92;frac{S_0}{&#92;psi}ln(&#92;frac{T_0}{K_m} + 1)" class="latex"/></p>
+<p>We know from the Phase 2 equation that:</p>
+<p><img src="//s0.wp.com/latex.php?latex=t_%7Bonset%7D+%5Cpropto+-log%28T_%7Bmin%7D%29&#038;bg=ffffff&#038;fg=000&#038;s=0" alt="t_{onset} &#92;propto -log(T_{min})" title="t_{onset} &#92;propto -log(T_{min})" class="latex"/></p>
+<p>And now we can see from the expression for the limit of N(t) that:</p>
+<p><img src="//s0.wp.com/latex.php?latex=T_%7Bmin%7D+%5Cpropto+log%28T_0%29&#038;bg=ffffff&#038;fg=000&#038;s=0" alt="T_{min} &#92;propto log(T_0)" title="T_{min} &#92;propto log(T_0)" class="latex"/></p>
+<p>Plugging this into the equation for t<sub>onset</sub>, then, it would appear that:</p>
+<p><img src="//s0.wp.com/latex.php?latex=t_%7Bonset%7D+%5Cpropto+-log%28log%28T_0%29%29&#038;bg=ffffff&#038;fg=000&#038;s=0" alt="t_{onset} &#92;propto -log(log(T_0))" title="t_{onset} &#92;propto -log(log(T_0))" class="latex"/></p>
+<p>Which isn&#8217;t what we wanted at all!  We started with the problem that the exponential model suggests a log-linear relationship while empirical evidence gives a log-log relationship.  Modeling the saturation of PrP<sup>C</sup> in the first few days of infection didn&#8217;t fix that problem, in fact, it made it worse &#8211; now we have log(log())-linear relationship.</p>
+<p><strong>incubation time bioassay in wild-type versus overexpressing mice</strong></p>
+<p>So, this model isn&#8217;t looking so good, and I might be about done with it. But I promised in the last post that I would compare the incubation time bioassay curves between wild-type and overexpressing mice, and I want to follow up on that quickly.  If I slightly modify my above code to handle the data on Tga20/Tga20 mice (10x expression level) from <a href="http://www.ncbi.nlm.nih.gov/pubmed/8635458">Fischer 1996</a> Table 2, I get:</p>
+<pre class="brush: r; title: ; notranslate" title="">
+tga20_onset = c(69,69,87,111) # Fischer 1996 Table 2
+source_titer = (10^7)*10
+dilutions = 10^c(-1,-2,-4,-6)
+titers = dilutions*source_titer
+logtiter = log10(titers)
+m = lm(logtiter ~ tga20_onset)
+summary(m) # .9245
+
+find_best_adjustment(tga20_onset, titers)
+# 46
+
+m = lm(logtiter ~ log10(tga20_onset - 46))
+summary(m) # .9492
+</pre>
+<p>So once again, the log-log model works better than the log-linear model &#8211; this time with just 4 data points. And the optimal &#8220;adjustment&#8221; to make to the days-to-onset is 46 days, implying that no matter how high the titer, you just can&#8217;t get a quicker incubation than 46 days in RML-infected Tga20/Tga20 mice.  Note that, compared to wild-type mice, the incubation time at the 10<sup>-1</sup> dilution dropped by about half (137 vs. 69 days) and the theoretical minimum incubation time also dropped by about half (100 days vs. 46 days).  (Aside: it appears Fischer didn&#8217;t use any &#8220;adjustment&#8221; at all: &#8220;Titers were determined by the incubation time assay (Prusiner et al., 1982), using the relationship y = 14.37-1.1x, where y is log LD50 and x is incubation time (days) to terminal disease.&#8221;)</p>
+<p>In my last post I used the series of PrP<sup>C</sup> expression levels in <a href="http://www.ncbi.nlm.nih.gov/pubmed/8635458">Fischer 1996</a>, to twist my model into saying that the &#8220;effective&#8221; PrP<sup>C</sup> expression level in a 10x mouse is actually more like 1.3x.  If you plug that into this equation for Phase 1:</p>
+<p><img src="//s0.wp.com/latex.php?latex=%5Cfrac%7BdN%7D%7Bdt%7D+%3D+%5Cfrac%7BS_0+X%28t%29%7D%7BK_m+%2B+X%28t%29%7D&#038;bg=ffffff&#038;fg=000&#038;s=0" alt="&#92;frac{dN}{dt} = &#92;frac{S_0 X(t)}{K_m + X(t)}" title="&#92;frac{dN}{dt} = &#92;frac{S_0 X(t)}{K_m + X(t)}" class="latex"/></p>
+<p>You&#8217;ve now got S_0 increasing by a factor of 1.3x, so at every moment t, 1.3x as much endogenous PrP<sup>Sc</sup> is being produced, so you end up with T<sub>min</sub> being 1.3x greater.  Then, in Phase 2, your prion production is increased in two ways: T<sub>min</sub> is greater by 1.3x, and you also get &phi; being larger by some unknown amount (&phi; = k<sub>conversion</sub>S<sub>0</sub> &#8211; k<sub>degradation</sub>, so it depends on what the k values are).  In other words, my two-phase model predicts a yet even <em>larger</em> difference in incubation times between different PrP<sup>C</sup> expression levels than the simple model from last month did, and even the model from last month predicted too large a difference, leading to this idea of PrP<sup>C</sup> saturation and the 10x meaning really 1.3x. Long story short, my two-phase model is even more divergent from reality than a one-phase model.</p>
+<p><strong>conclusions</strong></p>
+<p>My two-phase model didn&#8217;t do a good job of explaining the log-log relationship between inoculated dose and incubation time. Nor did it explain the idea of a &#8220;theoretical minimum&#8221; incubation time of, say, 40 days for Sc237 as implied by [<a href="http://www.ncbi.nlm.nih.gov/pubmed/6808890">Prusiner 1982b</a>] or 100 days for RML as found above, since log(log()) grows very slowly but does, nevertheless, grow without bound.  It is interesting to speculate, then, on why there do appear to be hard limits on how fast an incubation time can be achieved at higher and higher titers. Though my particular model didn&#8217;t work out, I don&#8217;t rule out the possibility that the idea of saturation could play into it somehow. After all, we need to explain the fact that infectivity actually <em>drops</em> dramatically in the first few days of infection, then is very slow to recover. And there&#8217;s a testable hypothesis in here somewhere: if the &#8220;minimum&#8221; incubation time is a result of how much infectivity can survive those first few days, then multiple inoculations should be able to overcome this and give arbitrarily short incubation times.  In particular, the same <em>total</em> titer distributed over multiple inoculations should give a shorter incubation time than if that total was administered in a single large bolus.  It is clear that repeated exposure to a limiting dilution of prions increases the incidence of successful infection [e.g. <a href="http://www.ncbi.nlm.nih.gov/pubmed/9519841">Diringer 1998</a>, <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC1168769/">Jacquemot 2005</a>] but I am not aware if anyone has formally looked at the relationship between incubation time and how an identical dose is divided between time points.</p>
+<p>Others before me have considered simple models for prion kinetics and have rejected them in favor of more complex models based on the linear, fibrillar nature of amyloids, whether made of PrP or other proteins [<a href="http://www.ncbi.nlm.nih.gov/pubmed/10326247">Masel 1999</a>, <a href="http://www.ncbi.nlm.nih.gov/pubmed/14645042">Poschel 2003</a>, <a href="http://www.ncbi.nlm.nih.gov/pubmed/16810177">Tanaka 2006</a>, <a href="http://www.ncbi.nlm.nih.gov/pubmed/20007899">Knowles 2009</a>].  After all, scrapie fibrils look linear under an electron microscope: they&#8217;re clearly fibrils and so it stands to reason they&#8217;re infectious only at their two ends. That they must break in order to form new ends and achieve exponential growth is the principle behind <a href="/2013/10/28/the-evolution-of-cell-free-prion-conversion-assays/" title="The evolution of cell-free prion conversion assays">PMCA</a>.  My next task in the prion kinetics space will be to get more familiar with these models and understand whether they can explain all of the strange phenomena I&#8217;ve raised in this post and my last.</p>
+<p>P.S. all the above code is available in a single script <a href="https://gist.github.com/ericminikel/8393801">here</a>.</p>

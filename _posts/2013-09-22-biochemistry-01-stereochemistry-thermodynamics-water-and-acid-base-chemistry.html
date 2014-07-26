@@ -1,0 +1,110 @@
+---
+layout: post
+title: "Biochemistry 01: stereochemistry, thermodynamics, water and acid-base chemistry"
+author: ericminikel
+date: 2013-09-22 13:08:48
+---
+<p>These are my notes from lecture 1 of <a href="http://www.extension.harvard.edu/courses/introduction-biochemistry">Harvard Extension&#8217;s biochemistry class</a>.</p>
+<p>Life forms are 97% composed of C, H, N, O, P and S.  About <a href="http://pubs.rsc.org/en/content/articlehtml/2012/mt/c2mt90041f">20 or so</a> other &#8220;trace&#8221; elements are essential too, depending on who you ask and what species you&#8217;re asking about.  This class will be largely structured around four fundamental biomolecules: amino acids, nucleotides, lipids and carbohydrates.</p>
+<p><strong>stereochemistry</strong></p>
+<p>Single bonds can rotate freely.  Molecules with single bonds can have multiple <em>conformations</em> between which they rotate, though some may be more energetically favorable than others.</p>
+<p>Molecules with double bonds may, and molecules with one or more <a title="Understanding chirality with keys and umbrellas" href="/2013/09/12/understanding-chirality-with-keys-and-umbrellas/">chiral</a> atoms must, have <em>stereoisomers</em>.  Stereoisomers that are mirror images of one another are called enantiomers.  Those that are not mirror images are called diastereomers.  A molecule with n chiral atoms has 2<sup>n</sup>  stereoisomers.  Stereoisomers can have very different bioactive properties &#8211; for notable examples see <a href="http://en.wikipedia.org/wiki/Thalidomide">thalidomide</a>, <a href="http://en.wikipedia.org/wiki/Methamphetamine">methamphetamine</a>, and <a href="http://en.wikipedia.org/wiki/Ibuprofen">ibuprofen</a>.  A mixture of two enantiomers of each other is a <em>racemic </em>mixture.</p>
+<p>Two molecules that have the same molecular formula (i.e. number of each element) but different arrangements of these atoms are called <em>geometric isomers</em>.  e.g. <a href="http://en.wikipedia.org/wiki/Maleic_acid">maleic</a> vs. <a href="http://en.wikipedia.org/wiki/Fumaric_acid">fumaric</a> acid, or cis- vs. trans-fats.  Vision, in all animals, relies on the conversion of <a href="http://en.wikipedia.org/wiki/Retinal">retinal </a>from 11-cis-retinal to 11-trans-retinal by light.</p>
+<p><strong>thermodynamics</strong></p>
+<p>The universe must always conserve energy and move toward increased entropy. Chemical reactions must move towards lower energy states, releasing energy and causing an increase in disorder.  Thermodynamics can easily tell us whether a reaction is possible and will occur spontaneously; it is more difficult to tell how quickly the reaction will occur.</p>
+<p>Gibbs free energy, denoted G and measured in J/mol, is a measurement of a system&#8217;s usable energy content.  A reaction will occur spontaneously if ΔG &lt; 0.</p>
+<p>ΔG = G<sub>products</sub> &#8211; G<sub>reactants</sub></p>
+<p><table style="width:100%; " class="easy-table easy-table-default " border="0">
+<thead>
+<tr><th>scenario</th>
+<th>name</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>G &lt; 0</td>
+<td>exergonic</td>
+<td>releases energy</td>
+</tr>
+
+<tr><td>G = 0</td>
+<td>equilibrium</td>
+<td>nothing will happen</td>
+</tr>
+
+<tr><td>G &gt; 0</td>
+<td>endergonic</td>
+<td>requires energy</td>
+</tr>
+</tbody></table></p>
+<p>Enthalpy, denoted H and measured in J/mol, is total energy. Entropy is denoted S and measured in J/(K*mol) where K is Kelvins. Temperature in Kelveins is denoted T.</p>
+<p>ΔG = ΔH &#8211; TΔS</p>
+<p>Therefore we can classify reactions into four scenarios:</p>
+<p><table style="width:100%; " class="easy-table easy-table-default " border="0">
+<thead>
+<tr><th>H</th>
+<th>S</th>
+<th>will reaction occur spontaneously?</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>-</td>
+<td>+</td>
+<td>always</td>
+</tr>
+
+<tr><td>-</td>
+<td>-</td>
+<td>only at low temperature</td>
+</tr>
+
+<tr><td>+</td>
+<td>+</td>
+<td>only at high temperature</td>
+</tr>
+
+<tr><td>+</td>
+<td>-</td>
+<td>never</td>
+</tr>
+</tbody></table></p>
+<p>At equilibrium a reaction is proceeding at equal rates in both directions, such that the concentrations of reactants and products are not changing. It doesn&#8217;t mean the concentrations are equal. For a reaction A+B ↔ C+D, we define the equilibrium constant K<sub>eq</sub> =([C]<sub>eq</sub>[D]<sub>eq</sub>)/([A]<sub>eq</sub>[B]<sub>eq</sub>). K<sub>eq</sub> &gt; 1 means C and D are more abundant at equilibrium, K<sub>eq</sub> &lt; 1 means A and B are more abundant at equilibrium, and K == 1 means the two products are equal.</p>
+<p>We define ΔG<sup>0</sup>&#8216; (pronounced &#8220;delta G naught prime&#8221;) as the free energy change of a reaction under &#8220;standard conditions&#8221; which are defined as:</p>
+<ul>
+<li>All reactants and products are at an initial concentration of 1.0M</li>
+<li>Pressure of 1.0 atm</li>
+<li>Temperature is 25°C</li>
+</ul>
+<p>ΔG<sup>0</sup>&#8216; can be interpreted as meaning how far and in what direction a reaction must run in order to get all reactants and products to a concentration of 1.0 M under standard conditions. If K<sub>eq</sub> &gt; 1, then the reaction will proceed forward under standard conditions (K<sub>eq</sub> &lt; 1, backwards, and K<sub>eq</sub> == 1, no change).</p>
+<p>The change in free energy for a reaction at any conditions other than &#8220;standard&#8221; can be calculated as:</p>
+<p>ΔG<sub>actual</sub> = ΔG<sup>0</sup>&#8216; &#8211; RTln(([C][D])/([A][B])).</p>
+<p>This may be interpreted as a measure of distance from equilibrium.</p>
+<p>Reactions that are not spontaneous can be made to occur by either of the following means:</p>
+<ul>
+<li>Changing the concentrations of reactants or products.  For instance, DHAP ↔ GAP has a positive ΔG<sup>0</sup>&#8216;, but GAP is cleared so quickly by another enzyme that its concentration stays very low and the reaction proceeds forward. See <a href="http://en.wikipedia.org/wiki/Le_Chatelier's_principle">Le Chatelier&#8217;s Principle</a>.</li>
+<li>Coupling an endergonic reaction to an exergonic reaction, such that if A → B is unfavorable but C → D is favorable, you can get A + B → C + D to run. Most commonly this involves hydrolysis of ATP as the favorable reaction.</li>
+</ul>
+<p><strong>water</strong></p>
+<p>H<sub>2</sub>0 has a <a href="http://en.wikipedia.org/wiki/Tetrahedral_molecular_geometry">tetrahedral shape</a> with two H and two lone pairs of electrons as the four prongs. O is much more electronegative than H, making water quite polar. Each H can donate a hydrogen bond and each lone pair can accept one. In ice, every H<sub>2</sub>O molecule forms 4 hydrogen bonds; in water, ~3.4, and in steam, 0. Above 0°C, T is high enough to make the increase in entropy due to melting outweigh the decrease in enthalpy due to breaking the favorable hydrogen bonds, such that ΔH &#8211; TΔS &lt; 0.</p>
+<p>The types of bonds are, in descending order of strength,</p>
+<ul>
+<li>covalent</li>
+<li>ionic</li>
+<li>hydrogen</li>
+<li><a href="http://en.wikipedia.org/wiki/Van_der_Waals_force">Van der Waals</a></li>
+</ul>
+<p>Van der Waals is the attraction between neutral molecules that arises from permanent or induced dipoles. This includes London dispersion forces and dipole-dipole interactions.</p>
+<p>Non-covalent bonds, though weak individually, are strong in their numbers in, say, a protein.</p>
+<p>Polar molecules are either charged or are able to hydrogen bond.</p>
+<p>Surfactant molecules form <a href="http://en.wikipedia.org/wiki/Micelle">micelles</a> when mixed into water; apparently the reason this is favorable is that the mixing of lone hydrophobic molecules into water restricts the movement of the surrounding water molecules (&#8220;caged water&#8221;), making them less entropic; the segregation of the fatty molecules all into one place, though unentropic itself, is outweighed by the increase in the water&#8217;s disorder when it is unrestricted by the lipids.</p>
+<p><strong>acid-base chemistry</strong></p>
+<p>It has been determined empirically through conductivity experiments that in water, [H<sup>+</sup>][OH<sup>-</sup>] = 1e-14, always.  For water, K<sub>eq</sub> = [H<sup>+</sup>][OH<sup>-</sup>]/[H<sub>2</sub>O]. We rearrange this to say K<sub>eq</sub>[H<sub>2</sub>O] = [H<sup>+</sup>][OH<sup>-</sup>] and then we define the left half of the equation as K<sub>w</sub> such that K<sub>w</sub> = [H<sup>+</sup>][OH<sup>-</sup>] = 1e-14.</p>
+<p>&#8220;Strong&#8221; acids and bases are those which dissociate <em>completely</em> in water, such as HCl. &#8220;Weak&#8221; acids and bases will dissociate only up to some equilibrium level. For a weak acid we refer to K<sub>eq</sub> as K<sub>a</sub> such that K<sub>a</sub> = K<sub>eq</sub> = [H<sup>+</sup>][A<sup>-</sup>]/[HA]. p is shorthand for -log10(), so:</p>
+<ul>
+<li>pK<sub style="color: #000000; font-style: normal;">a</sub> = -log10(K<sub style="color: #000000; font-style: normal;">a</sub>)</li>
+<li>pK<sub style="color: #000000; font-style: normal;">a</sub> = -log10([H<sup style="color: #000000; font-style: normal;">+</sup>][A<sup style="color: #000000; font-style: normal;">-</sup>]/[HA])</li>
+<li>pK<sub>a</sub> = &#8211; log10([H<sup style="color: #000000; font-style: normal;">+</sup>]) + -log10([A<sup style="color: #000000; font-style: normal;">-</sup>]/[HA])</li>
+<li>pK<sub>a</sub> = pH &#8211; log10([A<sup style="color: #000000; font-style: normal;">-</sup>]/[HA])</li>
+<li>pH = pK<sub>a</sub> + log10([A-]/[HA]) , which is called the <a href="http://en.wikipedia.org/wiki/Henderson%E2%80%93Hasselbalch_equation">Henderson-Hasselbalch equation</a>.</li>
+</ul>
+<p>&nbsp;</p>

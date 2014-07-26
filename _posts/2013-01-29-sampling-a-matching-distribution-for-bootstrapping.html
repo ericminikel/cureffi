@@ -1,0 +1,208 @@
+---
+layout: post
+title: "Sampling a matching distribution for bootstrapping"
+author: ericminikel
+date: 2013-01-29 00:18:57
+---
+<p>Sometimes you just don&#8217;t trust statistical tests, and you want an &#8216;empirical&#8217; p-value to tell you whether your data differ from the null distribution.  In those cases it is common to use <a href="http://en.wikipedia.org/wiki/Bootstrapping_(statistics)">bootstrapping</a>.  This usually takes the following form:</p>
+<ol>
+<li>Randomly generate fake data</li>
+<li>Compare it to your actual data</li>
+<li>Repeat steps 1-2 1000 times.  If the real data is ____er than the fake data 998 times out of 1000, then it&#8217;s significantly ____ at the p = 2/1000 = .002 significance threshold.</li>
+</ol>
+<p>The _____ could be any property you&#8217;re interested in testing.  A good recent example is <a href="http://www.plosgenetics.org/article/info%3Adoi%2F10.1371%2Fjournal.pgen.1000888">Nicolae 2011</a>, who wanted to know whether SNPs that are <a href="http://en.wikipedia.org/wiki/Genome-wide_association_study">GWAS</a> hits are more likely to be <a title="genetic variants that affect gene expression (i.e. RNA) levels" href="http://en.wikipedia.org/wiki/Expression_quantitative_trait_loci">eQTLs</a> - in other words, whether trait-associated genetic variants are more likely to control gene expression.  More likely than <em>what</em>, you ask?  More likely than the average SNP that gets genotyped on the SNP chips used for genome-wide association studies.  To test his hypothesis, Nicolae generated 1000 random sets of SNPs from the master set of all SNPs included on two popular SNP chips used in GWAS.  In Nicolae&#8217;s case, the actual GWAS hits indeed contained more known eQTLs than almost any random set of SNPs did (though curiously, the empirical p value is never actually stated).</p>
+<p>What makes generating the random sets of SNPs tricky is that sometimes the control SNPs are statistically different from the test SNPs in a confounding way.  In Nicolae&#8217;s case, the problem is that the GWAS SNPs tend to have higher <a href="http://en.wikipedia.org/wiki/Minor_allele_frequency">minor allele frequency</a> (MAF) than random SNPs, because it is easier to detect trait association for more common SNPs.</p>
+<p>Here are histograms I created based on <a href="http://www.1000genomes.org/category/frequently-asked-questions/population">CEU</a> allele frequencies from <a href="ftp://ftp.ncbi.nlm.nih.gov/hapmap/genotypes/2009-01_phaseIII/plink_format/00README.txt">HapMap Phase 3</a> for <a href="http://www.genome.gov/gwastudies/">GWAS catalog</a> SNPs (as of Jan 16, 2013) vs. all SNPs included in the HapMap SNP chips:</p>
+<p><a href="/wp-content/uploads/2013/01/hist-gwas-maf-vs-all-snp-maf.jpg"><img class="alignnone size-full wp-image-1476" title="hist-gwas-maf-vs-all-snp-maf" src="/wp-content/uploads/2013/01/hist-gwas-maf-vs-all-snp-maf.jpg"/></a></p>
+<p>Pretty different distributions, huh?  That&#8217;s a problem for the analysis because if GWAS SNPs have higher MAF, and eQTLs also have higher MAF, then you&#8217;ll find enrichment of eQTLs in GWAS whether or not it&#8217;s the case that many trait-associated SNPs control traits by controlling gene expression.</p>
+<p>To handle this problem, Nicolae drew random sets of SNPs matching on MAF.  Specifically, he binned all of the SNPs by increments of 0.05, so there are the 0.00 &#8211; 0.05 MAF SNPs, the 0.05 &#8211; 0.10 MAF SNPs, etc.  Then he drew the same number from each bin in the random sets as were present in the true GWAS set.</p>
+<p>I discovered that this binning approach is delightfully easy to implement in PostgreSQL using subqueries to group things into bins and <code>row number() over (partition by...</code> to get just the number of SNPs you want in each bin. This code to create one permutation runs in just 6 seconds:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #008000; font-weight: bold;">select</span>   sub.snpid
+<span style="color: #008000; font-weight: bold;">from</span> (
+<span style="color: #008000; font-weight: bold;">select</span>   snpid, floor(p.ceu_freq<span style="color: #666666;">*20</span>)<span style="color: #666666;">/20</span> floorbin, row_number() over (partition <span style="color: #008000; font-weight: bold;">by</span> floor(p.ceu_freq<span style="color: #666666;">*20</span>)<span style="color: #666666;">/20</span> <span style="color: #008000; font-weight: bold;">order</span> <span style="color: #008000; font-weight: bold;">by</span> random()) rn
+<span style="color: #008000; font-weight: bold;">from</span>     platform_snps
+) sub, (
+<span style="color: #008000; font-weight: bold;">select</span>   floor(p.ceu_freq<span style="color: #666666;">*20</span>)<span style="color: #666666;">/20</span> floorbin, <span style="color: #008000; font-weight: bold;">count</span>(<span style="color: #666666;">*</span>) n
+<span style="color: #008000; font-weight: bold;">from</span>     platform_snps p, gwas_match gm
+<span style="color: #008000; font-weight: bold;">where</span>    p.snpid<span style="color: #666666;">=</span>gm.snpid
+<span style="color: #008000; font-weight: bold;">group</span> <span style="color: #008000; font-weight: bold;">by</span> <span style="color: #666666;">1</span>
+<span style="color: #008000; font-weight: bold;">order</span> <span style="color: #008000; font-weight: bold;">by</span> <span style="color: #666666;">1</span>
+) gfc <span style="color: #408080; font-style: italic;">-- gfc = "gwas floorbin counts"</span>
+<span style="color: #008000; font-weight: bold;">where</span>    sub.floorbin <span style="color: #666666;">=</span> gfc.floorbin <span style="color: #408080; font-style: italic;">-- match on floorbin</span>
+<span style="color: #008000; font-weight: bold;">and</span>      rn <span style="color: #666666;">&lt;=</span> gfc.n <span style="color: #408080; font-style: italic;">-- limit to number of GWAS hits in that floorbin</span>
+;</pre>
+</div>
+<p>Note that every time you run this query it will draw <em>with </em>replacement, so some SNPs will appear in more than one permutation.  And indeed, you have no choice but to draw with replacement, because there aren&#8217;t enough matching control SNPs to let you run 1000 iterations without replacement.  You can easily check that using this query:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #008000; font-weight: bold;">select</span>   control.floorbin, control.n::<span style="color: #008000;">numeric</span> <span style="color: #666666;">/</span> gfc.n::<span style="color: #008000;">numeric</span> max_sets_without_replacement
+<span style="color: #008000; font-weight: bold;">from</span> (
+<span style="color: #008000; font-weight: bold;">select</span>   floor(p.ceu_freq<span style="color: #666666;">*20</span>)<span style="color: #666666;">/20</span> floorbin, <span style="color: #008000; font-weight: bold;">count</span>(<span style="color: #666666;">*</span>) n
+<span style="color: #008000; font-weight: bold;">from</span>     platform_snps p
+<span style="color: #008000; font-weight: bold;">group</span> <span style="color: #008000; font-weight: bold;">by</span> <span style="color: #666666;">1</span>
+<span style="color: #008000; font-weight: bold;">order</span> <span style="color: #008000; font-weight: bold;">by</span> <span style="color: #666666;">1</span>
+) control, (
+<span style="color: #008000; font-weight: bold;">select</span>   floor(p.ceu_freq<span style="color: #666666;">*20</span>)<span style="color: #666666;">/20</span> floorbin, <span style="color: #008000; font-weight: bold;">count</span>(<span style="color: #666666;">*</span>) n
+<span style="color: #008000; font-weight: bold;">from</span>     platform_snps p, gwas_match gm
+<span style="color: #008000; font-weight: bold;">where</span>    p.snpid<span style="color: #666666;">=</span>gm.snpid
+<span style="color: #008000; font-weight: bold;">group</span> <span style="color: #008000; font-weight: bold;">by</span> <span style="color: #666666;">1</span>
+<span style="color: #008000; font-weight: bold;">order</span> <span style="color: #008000; font-weight: bold;">by</span> <span style="color: #666666;">1</span>
+) gfc <span style="color: #408080; font-style: italic;">-- gfc = "gwas floorbin counts"</span>
+<span style="color: #008000; font-weight: bold;">where</span>    control.floorbin <span style="color: #666666;">=</span> gfc.floorbin <span style="color: #408080; font-style: italic;">-- match on floorbin</span>
+<span style="color: #008000; font-weight: bold;">group</span> <span style="color: #008000; font-weight: bold;">by</span> <span style="color: #666666;">1</span>,<span style="color: #666666;">2</span>
+<span style="color: #008000; font-weight: bold;">order</span> <span style="color: #008000; font-weight: bold;">by</span> <span style="color: #666666;">1</span>,<span style="color: #666666;">2</span>
+;</pre>
+</div>
+<p>For the <a href="http://www.genome.gov/gwastudies/">GWAS catalog</a> (version downloaded January 16, 2013) vs. the platform SNPs from <a href="ftp://ftp.ncbi.nlm.nih.gov/hapmap/genotypes/2009-01_phaseIII/plink_format/00README.txt">HapMap Phase 3</a>, you could only run at most 136 permutations without replacement before you&#8217;d run out of unique SNPs in at least one bin.</p>
+<p>Anyway, this binning approach is quick and elegant but it&#8217;s a coarse tool.  If the underlying MAF distributions are quite different (which they indeed are), then their distribution even <em>within</em> each bin will be different enough that the overall MAF distribution for GWAS SNPs and random SNP sets may prove slightly (but significantly) different. You could get around that problem by going to smaller bin sizes, but when your bins get too small, your whole permutation procedure becomes a house of cards &#8211; there is too little variety in which SNPs are selected between the different permutations, and so what appears to be the result of 1000 permutations actually depends heavily on a few sets of SNPs that are represented over and over.</p>
+<p>One alternative to binning is to select a particular control SNP for each and every GWAS SNP.  In my case, I am interested in matching on <a href="http://en.wikipedia.org/wiki/Linkage_disequilibrium">LD</a> block size rather than minor allele frequency, but the principle is the same.  Instead of counting the number of SNPs with LD block size between 10kb and 20kb and demanding an equal number of control SNPs in that bin, I can demand that each individual GWAS SNP be matched by an individual control SNP whose LD block size is within ±2kb of it.</p>
+<p>I couldn&#8217;t think of a good way to do this directly in PostgreSQL.  Joining every GWAS SNP to every control SNP within ±2kb in block size takes 20 minutes and results in 630 million rows &#8211; that&#8217;s a lot of effort just to then take <em>one</em> random control SNP for each GWAS SNP.  To do this properly you don&#8217;t need a full join, you just need to <em>start</em> joining and then give up as soon as you find a single match.  PostgreSQL doesn&#8217;t provide a way to do that, so I fell back on R.  Here&#8217;s what I came up with:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">library(RPostgreSQL) <span style="color: #408080; font-style: italic;"># first load package RPostgreSQL</span>
+drv <span style="color: #666666;">=</span> dbDriver(<span style="color: #ba2121;">"PostgreSQL"</span>)
+con <span style="color: #666666;">=</span> dbConnect(drv, dbname<span style="color: #666666;">=</span><span style="color: #ba2121;">"enrep"</span>, user<span style="color: #666666;">=</span><span style="color: #ba2121;">"postgres"</span>, password<span style="color: #666666;">=</span><span style="color: #ba2121;">"postgres"</span>, port<span style="color: #666666;">=5433</span>)
+
+<span style="color: #408080; font-style: italic;"># get list of GWAS SNPs</span>
+readsql <span style="color: #666666;">=</span> <span style="color: #ba2121;">"select ld.snpid, ld.blocksize</span>
+<span style="color: #ba2121;">from ldblocks ld</span>
+<span style="color: #ba2121;">where exists (select null from gwas_match gm where gm.snpid = ld.snpid)</span>
+<span style="color: #ba2121;">and ld.blocksize &gt; 1</span>
+<span style="color: #ba2121;">order by 1</span>
+<span style="color: #ba2121;">;"</span>
+rs <span style="color: #666666;">=</span> dbSendQuery(con,readsql)
+gsnps <span style="color: #666666;">=</span> fetch(rs,n<span style="color: #666666;">=-1</span>)
+ngsnps <span style="color: #666666;">=</span> dim(gsnps)[<span style="color: #666666;">1</span>] <span style="color: #408080; font-style: italic;"># number of GWAS SNPs to match</span>
+
+<span style="color: #408080; font-style: italic;"># get list of available control SNPs</span>
+readsql <span style="color: #666666;">=</span> <span style="color: #ba2121;">"select ld.snpid, ld.blocksize</span>
+<span style="color: #ba2121;">from ldblocks ld</span>
+<span style="color: #ba2121;">where ld.blocksize &gt; 1</span>
+<span style="color: #ba2121;">order by 1</span>
+<span style="color: #ba2121;">;"</span>
+rs <span style="color: #666666;">=</span> dbSendQuery(con,readsql)
+csnps <span style="color: #666666;">=</span> fetch(rs,n<span style="color: #666666;">=-1</span>)
+ncsnps <span style="color: #666666;">=</span> dim(csnps)[<span style="color: #666666;">1</span>] <span style="color: #408080; font-style: italic;"># number of control SNPs available for matching</span>
+
+<span style="color: #408080; font-style: italic;"># set up a table to hold permutation results</span>
+writesql <span style="color: #666666;">=</span> <span style="color: #ba2121;">"drop table if exists permutations;</span>
+<span style="color: #ba2121;">create table permutations (</span>
+<span style="color: #ba2121;"> rowid serial primary key,</span>
+<span style="color: #ba2121;"> perm integer,</span>
+<span style="color: #ba2121;"> gsnpid integer,</span>
+<span style="color: #ba2121;"> csnpid integer</span>
+<span style="color: #ba2121;">);"</span>
+rs <span style="color: #666666;">=</span> dbSendQuery(con,writesql)
+
+set.seed(<span style="color: #666666;">.1234</span>) <span style="color: #408080; font-style: italic;"># set random seed so results are reproducible </span>
+
+nperm <span style="color: #666666;">=</span> <span style="color: #666666;">2</span> <span style="color: #408080; font-style: italic;"># for testing - in practice this would be 1000</span>
+
+<span style="color: #008000; font-weight: bold;">for</span> (perm in <span style="color: #666666;">1</span>:nperm) {
+    csnps_random <span style="color: #666666;">=</span> csnps[sample(ncsnps,ncsnps,replace<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">FALSE</span>),] <span style="color: #408080; font-style: italic;"># draw the control SNPs into a random order</span>
+    <span style="color: #008000; font-weight: bold;">for</span> (i in <span style="color: #666666;">1</span>:ngsnps) { <span style="color: #408080; font-style: italic;"># loop through GWAS SNPs to find a match for each</span>
+        <span style="color: #008000; font-weight: bold;">for</span> (j in <span style="color: #666666;">1</span>:ncsnps) { <span style="color: #408080; font-style: italic;"># for each GWAS SNP, loop through control SNPs looking for a match</span>
+            <span style="color: #008000; font-weight: bold;">if</span> (abs(csnps_random$blocksize[j] <span style="color: #666666;">-</span> gsnps$blocksize[i]) <span style="color: #666666;">&lt;</span> <span style="color: #666666;">2000</span>) { <span style="color: #408080; font-style: italic;"># match if blocksize is within 2kb</span>
+                <span style="color: #008000; font-weight: bold;">break</span>
+            }
+        }
+        <span style="color: #408080; font-style: italic;"># then use this SNP in this permutation</span>
+        writesql <span style="color: #666666;">=</span> paste(<span style="color: #ba2121;">"insert into permutations (perm,gsnpid,csnpid) values ("</span>,perm,<span style="color: #ba2121;">","</span>,gsnps$snpid[i],<span style="color: #ba2121;">","</span>,csnps_random$snpid[j],<span style="color: #ba2121;">");"</span>,sep<span style="color: #666666;">=</span><span style="color: #ba2121;">""</span>)
+        rs <span style="color: #666666;">=</span> dbSendQuery(con,writesql)
+        <span style="color: #408080; font-style: italic;"># and remove it so we don't use it again</span>
+        csnps_random <span style="color: #666666;">=</span> csnps_random[<span style="color: #666666;">-</span>j,]
+    }
+}
+
+dbDisconnect(con)
+dbUnloadDriver(drv)</pre>
+</div>
+<p>Between the nested loop and the ridiculous number of round-trips to the database, this takes about 5 minutes per permutation (compared to 6 seconds for the binning approach).  If I eliminate the repeated insert queries and just save the permutation results to a local vector in the R workspace (to later write to a text file that can be copied into PostgreSQL), then I can can cut that down to about 2.5 minutes per permutation.</p>
+<p>While this doesn&#8217;t quite rise to the level of incomputable (you could still generate 1000 permutations in a few days of CPU time), it would certainly change the way I do things.  With 6 seconds per permutation it has proven very convenient to run everything locally and to just re-create the permuted sets every time I change my mind about the permutation procedure or SNP inclusion criteria.  At 2.5 minutes per permutation I&#8217;d have to figure out how to parallelize this while keeping the results distinct yet reproducible (setting different seeds for each core?), and the high start-up cost to change anything will make the project less flexible.</p>
+<p>So I&#8217;m still pondering whether there is a way to do this sort of individual matching more efficiently.</p>
+<p>Another issue is what to do when your test and control datasets differ on more than one dimension.  The GWAS SNPs and control SNPs differ in MAF distribution, in LD block size distribution, in how likely they are to be protein-coding, and surely in several other ways as well.  It seems very difficult to make the permuted distributions match the test distribution on more than one dimension.  Instead, I&#8217;m planning to match on just one dimension (LD block size) and then try to control for the other things as variables in my model.  But if anyone has a better idea, by all means, leave a comment to let me know.</p>
+<p><strong>update 2013-01-29:</strong> True to form, @a wrote me with a genius algorithm suggestion for generating permutations more quickly:</p>
+<blockquote><p>maybe you want to start by sorting csnps by blocksize. Then for each gsnp, do a binary search to find the lower and upper bounds in the csnps array (at blocksize +/-2k) . Then choose randomly between those two bounds. Should be plenty fast after you finish the initial sort which you only do once.</p></blockquote>
+<p>Sorting the <code>csnps</code> table is trivially fast and can be done in the SQL query to grab the data in the first place.  Once it&#8217;s sorted, the binary search that @a refers to can be achieved in ~1 second using R&#8217;s <a href="http://stat.ethz.ch/R-manual/R-patched/library/base/html/findInterval.html"><code>findInterval</code></a> function and adding 0.5 to the ranges to make them include ties on both sides:</p>
+<pre>bottoms = findInterval(gsnps$blocksize-2000.5,csnps$blocksize)+1 
+tops = findInterval(gsnps$blocksize+2000.5,csnps$blocksize)</pre>
+<p>Now <code>bottoms</code> is a vector of length <code>ngsnps</code>, which for every gsnp gives you the lowest index into <code>csnps</code> where the blocksize is within -2kb.  <code>tops</code> gives you the highest index into <code>csnps</code> where the blocksize is within +2kb.</p>
+<p>Then, for each permutation all you have to do is generate a random index using <a href="http://stat.ethz.ch/R-manual/R-devel/library/stats/html/Uniform.html"><code>runif</code></a>.  Add 0.5 on each side of the index range so that <a href="http://stat.ethz.ch/R-manual/R-devel/library/base/html/Round.html"><code>round</code></a> gives equal probability to every index in the range:</p>
+<pre>randomindex = round(runif(n=1,min=bottoms[i]-0.5,max=tops[i]+0.5))</pre>
+<p>Those three lines of code are basically the entire concept.  Below is the new R code.  This generates 1000 permutations in just over 1 minute.  Amazing.  Thanks @a!</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">library(RPostgreSQL) <span style="color: #408080; font-style: italic;"># first load package RPostgreSQL</span>
+drv <span style="color: #666666;">=</span> dbDriver(<span style="color: #ba2121;">"PostgreSQL"</span>)
+con <span style="color: #666666;">=</span> dbConnect(drv, dbname<span style="color: #666666;">=</span><span style="color: #ba2121;">"enrep"</span>, user<span style="color: #666666;">=</span><span style="color: #ba2121;">"postgres"</span>, password<span style="color: #666666;">=</span><span style="color: #ba2121;">"postgres"</span>, port<span style="color: #666666;">=5433</span>)
+
+<span style="color: #408080; font-style: italic;"># get list of GWAS SNPs</span>
+readsql <span style="color: #666666;">=</span> <span style="color: #ba2121;">"select ld.snpid, ld.blocksize</span>
+<span style="color: #ba2121;">from ldblocks ld</span>
+<span style="color: #ba2121;">where exists (select null from gwas_match gm where gm.snpid = ld.snpid)</span>
+<span style="color: #ba2121;">and ld.blocksize &gt; 1</span>
+<span style="color: #ba2121;">order by 1</span>
+<span style="color: #ba2121;">;"</span>
+rs <span style="color: #666666;">=</span> dbSendQuery(con,readsql)
+gsnps <span style="color: #666666;">=</span> fetch(rs,n<span style="color: #666666;">=-1</span>)
+ngsnps <span style="color: #666666;">=</span> dim(gsnps)[<span style="color: #666666;">1</span>] <span style="color: #408080; font-style: italic;"># number of GWAS SNPs to match</span>
+
+<span style="color: #408080; font-style: italic;"># get list of available control SNPs, sorted by blocksize</span>
+readsql <span style="color: #666666;">=</span> <span style="color: #ba2121;">"select ld.snpid, ld.blocksize</span>
+<span style="color: #ba2121;">from ldblocks ld</span>
+<span style="color: #ba2121;">where ld.blocksize &gt; 1</span>
+<span style="color: #ba2121;">order by 2 asc -- order by blocksize</span>
+<span style="color: #ba2121;">;"</span>
+rs <span style="color: #666666;">=</span> dbSendQuery(con,readsql)
+csnps <span style="color: #666666;">=</span> fetch(rs,n<span style="color: #666666;">=-1</span>)
+ncsnps <span style="color: #666666;">=</span> dim(csnps)[<span style="color: #666666;">1</span>] <span style="color: #408080; font-style: italic;"># number of control SNPs available for matching</span>
+
+<span style="color: #408080; font-style: italic;"># for each gsnp, find lowest index in sorted csnps array that has blocksize within -2kb</span>
+<span style="color: #408080; font-style: italic;"># because all block sizes are integers, adding 0.5 to ranges makes ranges inclusive of all ties</span>
+bottoms <span style="color: #666666;">=</span> findInterval(gsnps$blocksize<span style="color: #666666;">-2000.5</span>,csnps$blocksize)<span style="color: #666666;">+1</span> 
+<span style="color: #408080; font-style: italic;"># for each gsnp, find highest index in sorted csnps array that has blocksize within +2kb</span>
+tops <span style="color: #666666;">=</span> findInterval(gsnps$blocksize<span style="color: #666666;">+2000.5</span>,csnps$blocksize)
+
+set.seed(<span style="color: #666666;">.1234</span>) <span style="color: #408080; font-style: italic;"># set random seed so results are reproducible </span>
+
+nperm <span style="color: #666666;">=</span> <span style="color: #666666;">1001</span> <span style="color: #408080; font-style: italic;"># for testing - in practice this would be 1000</span>
+totalrows <span style="color: #666666;">=</span> ngsnps<span style="color: #666666;">*</span>nperm <span style="color: #408080; font-style: italic;"># total rows in output table</span>
+
+<span style="color: #408080; font-style: italic;"># set up columns for final match table matching gwas snps to their permutation matches</span>
+permno <span style="color: #666666;">=</span> vector(mode<span style="color: #666666;">=</span><span style="color: #ba2121;">"integer"</span>,length<span style="color: #666666;">=</span>totalrows)
+gwassnpid <span style="color: #666666;">=</span> vector(mode<span style="color: #666666;">=</span><span style="color: #ba2121;">"integer"</span>,length<span style="color: #666666;">=</span>totalrows)
+permsnpid <span style="color: #666666;">=</span> vector(mode<span style="color: #666666;">=</span><span style="color: #ba2121;">"integer"</span>,length<span style="color: #666666;">=</span>totalrows)
+
+<span style="color: #408080; font-style: italic;"># first 'permutation' is just the GWAS SNPs themselves - this is convenient for my analysis</span>
+<span style="color: #008000; font-weight: bold;">for</span> (i in <span style="color: #666666;">1</span>:ngsnps) {
+    permno[i] <span style="color: #666666;">=</span> <span style="color: #666666;">1</span>
+    gwassnpid[i] <span style="color: #666666;">=</span> gsnps$snpid[i]
+    permsnpid[i] <span style="color: #666666;">=</span> gsnps$snpid[i]
+}
+
+<span style="color: #408080; font-style: italic;"># latter permutations are randomly drawn from the control SNPs</span>
+<span style="color: #008000; font-weight: bold;">for</span> (perm in <span style="color: #666666;">2</span>:nperm) { <span style="color: #408080; font-style: italic;"># start from permutation #2 since GWAS SNPs are perm #1</span>
+    <span style="color: #008000; font-weight: bold;">for</span> (i in <span style="color: #666666;">1</span>:ngsnps) { <span style="color: #408080; font-style: italic;"># go through every GWAS SNP index</span>
+        rowno <span style="color: #666666;">=</span> (perm<span style="color: #666666;">-1</span>)<span style="color: #666666;">*</span>ngsnps<span style="color: #666666;">+</span>i <span style="color: #408080; font-style: italic;"># calculate master row index for final table columns</span>
+        randomindex <span style="color: #666666;">=</span> round(runif(n<span style="color: #666666;">=1</span>,min<span style="color: #666666;">=</span>bottoms[i]<span style="color: #666666;">-0.5</span>,max<span style="color: #666666;">=</span>tops[i]<span style="color: #666666;">+0.5</span>)) <span style="color: #408080; font-style: italic;"># randomly choose an index within bounds</span>
+        permno[rowno] <span style="color: #666666;">=</span> perm <span style="color: #408080; font-style: italic;"># permutation number</span>
+        gwassnpid[rowno] <span style="color: #666666;">=</span> gsnps$snpid[i] <span style="color: #408080; font-style: italic;"># snpid of GWAS SNP being matched</span>
+        permsnpid[rowno] <span style="color: #666666;">=</span> csnps$snpid[randomindex] <span style="color: #408080; font-style: italic;"># snpid of permuted SNP</span>
+    }
+}
+
+<span style="color: #408080; font-style: italic;"># write results to disk</span>
+finaltable <span style="color: #666666;">=</span> data.frame(permno,gwassnpid,permsnpid)
+write.table(finaltable,<span style="color: #ba2121;">'c:/sci/019enrep/data/rperms-2013-01-29.txt'</span>,sep<span style="color: #666666;">=</span><span style="color: #ba2121;">'\t'</span>,append<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">FALSE</span>,col.names<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">FALSE</span>,row.names<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">FALSE</span>)
+
+<span style="color: #408080; font-style: italic;"># call PostgreSQL to read the results back from disk.</span>
+sql <span style="color: #666666;">=</span> <span style="color: #ba2121;">"drop table if exists rpermutations;</span>
+<span style="color: #ba2121;">create table rpermutations (</span>
+<span style="color: #ba2121;"> perm integer,</span>
+<span style="color: #ba2121;"> gwassnpid integer,</span>
+<span style="color: #ba2121;"> permsnpid integer</span>
+<span style="color: #ba2121;">);</span>
+<span style="color: #ba2121;">copy rpermutations from 'c:/sci/019enrep/data/rperms-2013-01-29.txt';"</span>
+rs <span style="color: #666666;">=</span> dbSendQuery(con,sql)
+
+dbDisconnect(con)
+dbUnloadDriver(drv)</pre>
+</div>

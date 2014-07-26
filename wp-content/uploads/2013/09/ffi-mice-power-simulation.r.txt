@@ -1,0 +1,125 @@
+# Eric Minikel
+# 2013-09-08
+# Simulation of power in BLI studies
+
+library(survival)
+options(stringsAsFactors=FALSE)
+
+# create wrapper function for simple log-rank test where no observations are censored
+# http://www.cureffi.org/2012/12/03/log-rank-test-power-depends-on-variance/
+simplesurvtest = function(vec1,vec2) { # vec1, vec2: lists of survival times of mice in control and treatment groups
+    days = c(vec1,vec2) # make a single vector with times for both mice
+    group = c(rep(0,length(vec1)),rep(1,length(vec2))) # make a matching vector indicating control/treatment status
+    status = rep(1,length(vec1)+length(vec2)) # "status" = 1 = "had an event" for all mice
+    mice = data.frame(days,status,group) # convert to data frame
+    return (survdiff(Surv(days,status==1)~group,data = mice)) # return log-rank test results
+}
+
+# rounds a value up to the next time it would be observed, e.g. if monitoring every 7 days, gliosis at day 50 is not noticed until day 56
+roundup = function(rawvalue, interval) {
+    return ( (rawvalue %/% interval + 1)*interval ) # %/% is integer division, which rounds down; +1 rounds up instead
+}
+
+# Wrapper to print a double space-delimited list of variable names and values (used in plotting to show conditions used in simulation)
+print_vars = function(namedvector) {
+    nam = names(namedvector)
+    val = namedvector
+    return (paste(paste(nam,val,sep=': '),collapse='  '))
+}
+
+# Wrap p values for various statistical tests in functions for ease of calling
+p_t = function(control_onset,treated_onset) {
+    t_test_result = t.test(control_onset,treated_onset,alternative="two.sided",paired=FALSE)
+    return (t_test_result$p.value)
+}
+
+p_lrt = function(control_onset,treated_onset) {
+    lrt_test_result = simplesurvtest(control_onset,treated_onset) # call wrapper function for simple survival test
+    lrt_p_value = 1 - pchisq(lrt_test_result$chisq, df=1) # obtain p value from chisq statistic by taking 1 - CDF(chi at 1 degree of freedom)
+    return (lrt_p_value)
+}
+
+p_ks = function(control_onset,treated_onset) {
+    ks_test_result = ks.test(control_onset, treated_onset)
+    return(ks_test_result$p.value)
+}
+
+# function to simulate and calculate power empirically
+empirical_power = function (n_iter=1000, alpha=.05, mean_onset_control, sd_onset_control, effect_size, n_per_group, obs_freq, statistical_test) {
+    empirical_power_result = 0.0
+    # choose a test
+    if (statistical_test == "t") {
+        p_func = p_t
+    } else if (statistical_test == "lrt") {
+        p_func = p_lrt
+    } else if (statistical_test == "ks") {
+        p_func = p_ks 
+    }
+    # conduct simulation
+    for (iter in 1:n_iter) {
+        this_iter_result = 0
+        control_onset = rnorm(n=n_per_group, m=mean_onset_control, s=sd_onset_control)
+        treated_onset = rnorm(n=n_per_group, m=mean_onset_control*(1+effect_size), s=sd_onset_control*(1+effect_size))
+        # detect cases where rounding makes data constant, which will otherwise throw errors in statistical test functions
+        if ( length(unique(roundup(control_onset,obs_freq))) == 1 & length(unique(roundup(treated_onset,obs_freq))) == 1 ) {
+            # if control == treated then the correct answer is NO difference
+            if (roundup(control_onset,obs_freq)[1] == roundup(treated_onset,obs_freq)[1]) {
+                this_iter_result = 0
+            } else { # if control <> treated then the correct answer is YES there is a difference
+                this_iter_result = 1
+            }
+        } else { # normal cases where data are not constant
+            this_iter_result = (1 * (p_func(roundup(control_onset,obs_freq),roundup(treated_onset,obs_freq)) < alpha))
+        }
+        empirical_power_result  = empirical_power_result + this_iter_result * 1/n_iter
+    }
+    # return power
+    return (empirical_power_result)
+}
+
+
+
+# optional: set seed for reproducibility
+set.seed(12345)
+
+# get power curves for study of FFI mice at MRI
+# fixed vars
+obs_freq = 7
+statistical_test = "t"
+alpha = .05
+mean_onset_control = 365
+n_per_group = 15
+# iterable vars
+effect_sizes = c(.1,.3,.44,.97)
+sd_onset_control_vals = seq(10,150,10)
+results = data.frame(sd_onset_control = numeric(), effect_size=numeric(),      
+           pwr=numeric())
+for (effect_size in effect_sizes) {
+    for (sd_onset_control in sd_onset_control_vals) {
+        pwr = empirical_power(n_iter=1000, alpha=alpha, 
+              mean_onset_control=mean_onset_control, 
+              sd_onset_control=sd_onset_control, effect_size=effect_size,
+              n_per_group=n_per_group, obs_freq=obs_freq, 
+              statistical_test=statistical_test)
+        results = rbind(results, c(sd_onset_control, effect_size, pwr))
+    }
+}
+colnames(results) = c("sd_onset_control","effect_size","pwr")
+results
+
+# use the cbind()[1,] trick to create a named vector of all the fixed simulation parameters
+conditions = cbind(alpha,mean_onset_control,n_per_group,obs_freq,statistical_test)[1,]
+
+# plot power curves
+plot(NA,NA,xlim=range(sd_onset_control_vals),ylim=c(0,1),
+    xlab='Standard deviation (days) of onset in control group',
+    ylab='Power',
+    main='Power curves for FFI mice',
+    sub=print_vars(conditions),
+    cex.sub = .8
+    )
+for (effect_size_val in effect_sizes) {
+    r.sub = subset(results, effect_size==effect_size_val)
+    points(r.sub$sd_onset_control, r.sub$pwr, type='l')
+}
+legend('bottomleft',legend=rev(c("10%","30%","44%","97%")),pch='-',title='Delay in onset')

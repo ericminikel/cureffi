@@ -1,0 +1,55 @@
+---
+layout: post
+title: "Scutellaria lateriflora"
+author: ericminikel
+date: 2012-10-23 22:08:45
+---
+<p><strong><a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3281244/">Eiden 2012</a> &#8220;A medicinal herb <em>Scutellaria lateriflora</em> inhibits PrP replication in vitro and delays the onset of prion disease in mice&#8221;</strong></p>
+<p>This report from earlier this year, out of the Groschup lab at Germany&#8217;s Friedrich-Loeffler-Institut, shows therapeutic effects in cell culture and in prion-infected mice using a medicinal herb, <em>Scutellaria lateriflora</em> (shown below), otherwise known as Skullcap.</p>
+<p><a href="/wp-content/uploads/2012/10/scutellaria-lateriflora.png"><img title="scutellaria-lateriflora" src="/wp-content/uploads/2012/10/scutellaria-lateriflora.png"/></a><br/>
+<small>(<a href="http://www.flickr.com/photos/jroldenettel/7525598404/">Photo thanks to Jerry Oldenettel, CC BY-NC-SA</a>)</small></p>
+<p>The study used two different cell culture models: ScN2a cells (mouse neuroblastoma cells exposed to RML prions) and &#8220;SMB&#8221; (scrapie mouse brain) cells infected with 22F prions. The authors don&#8217;t say anything more about the latter &#8212; are these actual brain slices from prion mice, or cell lines derived from prion mice?  The authors treated different groups of cells with a skullcap extract as well as with two isolated compounds found in skullcap &#8212;  <a href="http://en.wikipedia.org/wiki/Baicalein">baicalein</a> and <a href="http://en.wikipedia.org/wiki/Baicalin">baicalin</a>, the latter being just the former plus a <a href="http://en.wikipedia.org/wiki/Glucuronide">glucuronide</a>.  As in many other studies, PrP-res was used as a proxy for disease-causing prions.  The extract and both isolated compounds all showed antiprion action in vitro &#8212; baicalein much moreso than baicalin.  But the authors do not make any claim that baicalein is therefore the active ingredient; instead they proceed to in vivo studies using the whole tea extract.</p>
+<p>They did two in vivo experiments, one with intracerebrally infected mice, and one with intraperitoneally infected mice.  In both cases, RML prions were used and the mouse background was C57/B16.  The <em>Scutellaria lateriflora </em>tea was brewed at 30 g per liter, infused for half an hour in boiling water and replaced the mice&#8217;s drinking water.  The sample sizes were small (n = 6 in each control group and in each treatment group) but the results acheived statistical significance nonetheless:</p>
+<table cellpadding="10">
+<tbody>
+<tr>
+<td><strong>Infection type</strong></td>
+<td><strong>Control survival</strong></td>
+<td><strong>Tea-treated survival</strong></td>
+<td><strong>%change</strong></td>
+<td><strong>p</strong></td>
+</tr>
+<tr>
+<td>Intracerebral</td>
+<td>147 ± 3.1 days</td>
+<td>184 ± 26.7 days</td>
+<td>+25%</td>
+<td>&lt;.01</td>
+</tr>
+<tr>
+<td>Intraperitoneal</td>
+<td>191 ± 8.6 days</td>
+<td>206 ± 8.6 days</td>
+<td>+8%</td>
+<td>&lt;.05</td>
+</tr>
+</tbody>
+</table>
+<p>Baicalein has also been invested for Parkinson&#8217;s and Alzheimer&#8217;s and is known to cross the blood brain barrier.  Baicalin doesn&#8217;t cross the BBB, but appears to get enzymatically cleaved in the gut anyway, yielding baicalein.   The authors posit a direct interference of baicalein with PrP, inhibiting the conversion to disease isoform, and also possibly an antioxidant effect as a secondary mechanism of action.</p>
+<p>One question I&#8217;m left with is, how did they come up with the idea to use this traditional herb for prion disease?  The wiki on <em><a href="http://en.wikipedia.org/wiki/Scutellaria_lateriflora">Scutellaria lateriflora</a></em> currently states that it&#8217;s used as a sedative, but this sentence bears that ever-present disclaimer, <a href="http://store.xkcd.com/xkcd/#CitationNeededSticker">citation needed</a>.  Alvita&#8217;s <a href="http://www.amazon.com/Alvita-Scullcap-Tea-24-Bags/dp/B0009V1LRG/">skullcap tea product page on Amazon</a> promises that it &#8220;relaxes nervous tension, induces calm and counteracts sleeplessness&#8221;.  <em>Scutellaria lateriflora</em> is also a close relative of <a href="http://zh.wikipedia.org/wiki/%E9%BB%84%E8%8A%A9">黄芩</a> (huangqin), an herb used in Chinese medicine for respiratory infections and GI inflammation.  (Aside: huangqin aka <em>Scutellaria baicalensis</em> is native to Lake Baikal, presumably the namesake of baicalin).</p>
+<p>On first glance I was a bit troubled that the variance is so much higher in the treatment than control group for the intracerebrally infected mice.  But the statistical test used was <a href="http://en.wikipedia.org/wiki/Logrank_test">log-rank</a>, which does not assume equal variance in the two groups (as opposed to, say, a <a href="http://udel.edu/~mcdonald/statttest.html">t test</a>, which does assume equal variance).  I eyeballed the data from <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3281244/figure/F3/">Figure 3</a> and re-ran the test in R following <a href="http://www.stat.wisc.edu/~deepayan/SIBS2005/slides/survival.pdf">this tutorial</a>, finding p = .0029:</p>
+<pre>&gt; library(survival)
+&gt; control=c(144,144,144,146,146,154)
+&gt; treatment=c(146,158,176,206,206,206)&gt; days = c(control,treatment)
+&gt; group = c(rep(0,6),rep(1,6))
+&gt; status = rep(1,12)
+&gt; mice = data.frame(days,status,group)
+&gt; msurv &lt;- with(mice,Surv(days, status == 1))
+&gt; survdiff(Surv(days,status==1)~group,data = mice)
+Call:
+survdiff(formula = Surv(days, status == 1) ~ group, data = mice)</pre>
+<pre>N Observed Expected (O-E)^2/E (O-E)^2/V
+group=0 6 6 2.67 4.17 8.87
+group=1 6 6 9.33 1.19 8.87</pre>
+<pre>Chisq= 8.9 on 1 degrees of freedom, p= 0.0029</pre>
+<p>And of course the effect size (25%) is among the best I&#8217;ve seen in any mouse studies of prion therapeutics.  And for the intraperitoneally infected mice, the effect size is more modest (8%) but still pretty significant.  This study is exciting news, and I look forward to seeing if the result validates in other mouse models.</p>

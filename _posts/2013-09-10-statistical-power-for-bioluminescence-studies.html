@@ -1,0 +1,337 @@
+---
+layout: post
+title: "Statistical power for bioluminescence studies"
+author: ericminikel
+date: 2013-09-10 19:12:47
+---
+<p><strong>motivation</strong></p>
+<p>In my last post I discussed <a title="Study design for therapeutic trials in FFI and E200K mice" href="/2013/09/08/study-design-for-therapeutic-trials-in-ffi-and-e200k-mice/">one possible study design</a> for a therapeutic trial of <a title="anle138b: the new most promising experimental compound for treating prion diseases" href="/2013/04/26/anle138b-the-new-most-promising-experimental-compound-for-treating-prion-diseases/">anle138b</a> in <a href="http://www.prionalliance.org/2013/08/23/ffi-and-e200k-mice-arrive-in-u-s/">mouse models of fatal familial insomina and E200K Creutzfeldt-Jakob Disease</a>.  In the cost structure for such a study, it turned out that &gt; 80% of the costs in the initial cost estimate were directly proportional to the number of times that the mice had to to undergo bioluminescence imaging (BLI).  It occurred to me that because the age of onset in these mice is fairly variable, our study is in any case not powered to detect small changes in onset due to therapeutic treatment &#8211; for instance, my power curves showed we&#8217;d be unlikely to detect a 10% delay in onset.  Given that we can only detect large effect sizes anyway, I wondered whether our power would really be diminished much by only imaging the mice once every two or three weeks instead of every week.  The purpose of this post is to model how the frequency of observation affects statistical power in studies using BLI as a readout.</p>
+<p><strong>background</strong></p>
+<p><a href="/wp-content/uploads/2013/09/lampyris-noctiluca.png"><img class="alignnone size-full wp-image-2897" alt="lampyris-noctiluca" src="/wp-content/uploads/2013/09/lampyris-noctiluca.png"/></a></p>
+<p><em>Above: Lampyris noctiluca, one of the many species that use luciferase to create bioluminescence.  <a href="http://pt.wikipedia.org/wiki/Ficheiro:Lampyris_noctiluca.jpg">Wikimedia Commons image by Wofl</a>.</em></p>
+<p>Luciferase is an enzyme that breaks down the small molecule luciferin in order to release light.  Some wavelengths of that light pass right through bone, such that if a luciferase transgene is expressed in the mouse brain and mice are injected with luciferin, a fancy piece of equipment called the <a href="http://www.perkinelmer.com/Catalog/Product/ID/IVISSPE">IVIS Spectrum</a> can quantify the amount of light.</p>
+<p>Almost a decade ago, the development of mice with a GFAP-luc transgene made it possible to monitor upregulation of GFAP using BLI [<a href="http://www.ncbi.nlm.nih.gov/pubmed/15331155">Zhu 2004</a>].  GFAP is a gene expressed in glial cells and it is upregulated during neurological stress, so the amount of luciferase produced in these mice is an indication of how advanced a disease is in their brain.  This transgene has since become a tool for studying several neurological diseases [<a href="http://www.ncbi.nlm.nih.gov/pubmed/18258827/">Cordeau 2008</a> (<a href="http://stroke.ahajournals.org/content/39/3/935.long">ft</a>), <a href="http://www.ncbi.nlm.nih.gov/pubmed/19115383/">Keller 2009</a>, <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3038719/">Watts 2011</a>, <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3390876/">Stohr 2012</a>, <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3604736/">Jany 2013</a>].  BLI is an accurate proxy for prion replication in the brain [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2736416/">Tamguney 2009</a>] and more recently it was validated as a proxy for therapeutic efficacy in a study of cpd-B as a therapeutic against RML prions [<a href="http://www.ncbi.nlm.nih.gov/pubmed/23965382">Lu &amp; Giles 2013</a> (<a href="http://jpet.aspetjournals.org/content/early/2013/08/21/jpet.113.205799.long">ft</a>)].</p>
+<p>BLI involves imaging the mice in an <a href="http://www.perkinelmer.com/Catalog/Product/ID/IVISSPE">IVIS Spectrum</a> at regular intervals (say, weekly), a quick (&lt; 5 minute per mouse) process that involves injecting each mouse with 1.5 mg of luciferin (&#8220;50 ul of 30 mg/ml D-luciferin potassium salt solution&#8221;  [<a href="http://www.ncbi.nlm.nih.gov/pubmed/23965382">Lu &amp; Giles 2013</a> (<a href="http://jpet.aspetjournals.org/content/early/2013/08/21/jpet.113.205799.long">ft</a>)].  BLI eliminates the need for labor-intensive (read: expensive) behavioral phenotyping of mice.  <del>But it turns out that luciferin is expensive too.  It&#8217;s not for lack of competition &#8211; it&#8217;s available from several commercial suppliers - <a href="https://www.goldbio.com/D-Luciferin-Potassium-Salt-Proven-and-PublishedTM-P322-C6.php">Gold BioTech</a>, <a href="http://www.perkinelmer.com/Catalog/Product/ID/122796">PerkinElmer</a>, <a href="http://www.sigmaaldrich.com/catalog/product/sigma/l9504?lang=en&amp;region=US">Sigma</a>, and <a href="http://www.lifetechnologies.com/order/catalog/product/L2916">Life</a> at a minimum &#8211; but the best price works out to around $3 per dose.  Multiply that by tens of mice and tens of weeks of imaging, and it can easily become the largest single cost in a study.  Add to that the time that a technician or research assistant spends imaging the mice, which is likely to be the study&#8217;s largest labor cost, and it&#8217;s clear that reducing the number of imaging sessions could lead to potentially huge cost savings.</del>  <em><strong>update: </strong>we later found a better luciferin price &#8211; see our <a title="Revised budget for studies of anle138b in FFI and E200K mice" href="/2013/09/16/revised-budget-for-studies-of-anle138b-in-ffi-and-e200k-mice/">revised budget</a> &#8211; which makes this issue less important, though the labor involved is still a good reason not to image more often than you need to.</em></p>
+<p>In practice bioluminescence has been monitored either every 7 days [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2736416/">Tamguney 2009</a>, <a href="http://www.ncbi.nlm.nih.gov/pubmed/23965382">Lu 2013</a> (<a href="http://jpet.aspetjournals.org/content/early/2013/08/21/jpet.113.205799.long">ft</a>)] 14 days [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3038719/">Watts 2011</a>, <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3390876/">Stohr 2012</a> <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3390876/figure/fig01/">Fig 1</a>] or 21 days [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3390876/">Stohr 2012</a> <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3390876/figure/fig03/">Fig 3</a>].  The endpoint in these studies was originally defined as being when a single scan reveals luminescence greater than 2e6 photons [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2736416/">Tamguney 2009</a>] and more recently has been defined as the time when two consecutive scans both reveal luminescence greater than either 1e6 photons [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3390876/">Stohr 2012</a> supplement] or 7e5 photons [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3038719/">Watts 2011</a>].</p>
+<p><strong>model</strong></p>
+<p>In order to model the relationship between observation frequency and power, I assume that each mouse will have onset at a particular point in time but that the onset won&#8217;t be observed until the following BLI session, so that for instance if they are monitored every Friday, then onset on a Monday won&#8217;t be noticed until four days later, and thus onset on a Monday and on a Wednesday of the same week are indistinguishable.  The less frequent the imaging, the more timepoints become indistinguishable from one another.</p>
+<p><strong>code</strong></p>
+<p>First, some quick startup code:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">library(sqldf) <span style="color: #408080; font-style: italic;"># SQL's group by is more intuitive to me than R's aggregate!</span>
+library(survival) <span style="color: #408080; font-style: italic;"># for log-rank test</span>
+options(stringsAsFactors<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">FALSE</span>)</pre>
+</div>
+<p>And then a wrapper for the simplest case of the log-rank test (from <a href="/2012/12/03/log-rank-test-power-depends-on-variance/">this post</a>):</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">simplesurvtest <span style="color: #666666;">=</span> <span style="color: #008000; font-weight: bold;">function</span>(vec1,vec2) { <span style="color: #408080; font-style: italic;"># vec1, vec2: lists of survival times of mice in control and treatment groups</span>
+    days <span style="color: #666666;">=</span> c(vec1,vec2) <span style="color: #408080; font-style: italic;"># make a single vector with times for both mice</span>
+    group <span style="color: #666666;">=</span> c(rep(<span style="color: #666666;">0</span>,length(vec1)),rep(<span style="color: #666666;">1</span>,length(vec2))) <span style="color: #408080; font-style: italic;"># make a matching vector indicating control/treatment status</span>
+    status <span style="color: #666666;">=</span> rep(<span style="color: #666666;">1</span>,length(vec1)<span style="color: #666666;">+</span>length(vec2)) <span style="color: #408080; font-style: italic;"># "status" = 1 = "had an event" for all mice</span>
+    mice <span style="color: #666666;">=</span> data.frame(days,status,group) <span style="color: #408080; font-style: italic;"># convert to data frame</span>
+    <span style="color: #008000; font-weight: bold;">return</span> (survdiff(Surv(days,status<span style="color: #666666;">==1</span>)~group,data <span style="color: #666666;">=</span> mice)) <span style="color: #408080; font-style: italic;"># return log-rank test results</span>
+}</pre>
+</div>
+<p>And wrappers to return p values from the t, log rank and <a href="http://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test">Kolmogorov-Smirnov</a> tests:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">p_t <span style="color: #666666;">=</span> <span style="color: #008000; font-weight: bold;">function</span>(control_onset,treated_onset) {
+    t_test_result <span style="color: #666666;">=</span> t.test(control_onset,treated_onset,alternative<span style="color: #666666;">=</span><span style="color: #ba2121;">"two.sided"</span>,paired<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">FALSE</span>)
+    <span style="color: #008000; font-weight: bold;">return</span> (t_test_result$p.value)
+}
+
+p_lrt <span style="color: #666666;">=</span> <span style="color: #008000; font-weight: bold;">function</span>(control_onset,treated_onset) {
+    lrt_test_result <span style="color: #666666;">=</span> simplesurvtest(control_onset,treated_onset) <span style="color: #408080; font-style: italic;"># call wrapper function for simple survival test</span>
+    lrt_p_value <span style="color: #666666;">=</span> <span style="color: #666666;">1</span> <span style="color: #666666;">-</span> pchisq(lrt_test_result$chisq, df<span style="color: #666666;">=1</span>) <span style="color: #408080; font-style: italic;"># obtain p value from chisq statistic by taking 1 - CDF(chi at 1 degree of freedom)</span>
+    <span style="color: #008000; font-weight: bold;">return</span> (lrt_p_value)
+}
+
+p_ks <span style="color: #666666;">=</span> <span style="color: #008000; font-weight: bold;">function</span>(control_onset,treated_onset) {
+    ks_test_result <span style="color: #666666;">=</span> ks.test(control_onset, treated_onset)
+    <span style="color: #008000; font-weight: bold;">return</span>(ks_test_result$p.value)
+}</pre>
+</div>
+<p>And a function to handle rounding up the day of onset to the next day of BLI observation:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># rounds a value up to the next time it would be observed, e.g. if monitoring every 7 days, gliosis at day 50 is not noticed until day 56</span>
+roundup <span style="color: #666666;">=</span> <span style="color: #008000; font-weight: bold;">function</span>(rawvalue, interval) {
+    <span style="color: #008000; font-weight: bold;">return</span> ( (rawvalue <span style="color: #666666;">%/%</span> interval <span style="color: #666666;">+</span> <span style="color: #666666;">1</span>)<span style="color: #666666;">*</span>interval ) <span style="color: #408080; font-style: italic;"># %/% is integer division, which rounds down; +1 rounds up instead</span>
+}</pre>
+</div>
+<p>With that, I can write this function to run simulations and determine power empirically:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># function to run n_iter simulations to determine power empirically based on how many meet the alpha threshold of significance</span>
+empirical_power <span style="color: #666666;">=</span> <span style="color: #008000; font-weight: bold;">function</span> (n_iter<span style="color: #666666;">=1000</span>, alpha<span style="color: #666666;">=.05</span>, mean_onset_control, sd_onset_control, effect_size, n_per_group, obs_freq, statistical_test) {
+    empirical_power_result <span style="color: #666666;">=</span> <span style="color: #666666;">0.0</span>
+    <span style="color: #408080; font-style: italic;"># choose a statistical test</span>
+    <span style="color: #008000; font-weight: bold;">if</span> (statistical_test <span style="color: #666666;">==</span> <span style="color: #ba2121;">"t"</span>) {
+        p_func <span style="color: #666666;">=</span> p_t
+    } <span style="color: #008000; font-weight: bold;">else</span> <span style="color: #008000; font-weight: bold;">if</span> (statistical_test <span style="color: #666666;">==</span> <span style="color: #ba2121;">"lrt"</span>) {
+        p_func <span style="color: #666666;">=</span> p_lrt
+    } <span style="color: #008000; font-weight: bold;">else</span> <span style="color: #008000; font-weight: bold;">if</span> (statistical_test <span style="color: #666666;">==</span> <span style="color: #ba2121;">"ks"</span>) {
+        p_func <span style="color: #666666;">=</span> p_ks 
+    }
+    <span style="color: #408080; font-style: italic;"># conduct simulation</span>
+    <span style="color: #008000; font-weight: bold;">for</span> (iter in <span style="color: #666666;">1</span>:n_iter) {
+        this_iter_result <span style="color: #666666;">=</span> <span style="color: #666666;">0</span>
+        <span style="color: #408080; font-style: italic;"># control onset is normal(mean,sd)</span>
+        control_onset <span style="color: #666666;">=</span> rnorm(n<span style="color: #666666;">=</span>n_per_group, m<span style="color: #666666;">=</span>mean_onset_control, s<span style="color: #666666;">=</span>sd_onset_control)
+        <span style="color: #408080; font-style: italic;"># assume that treatment increases both the mean survival and the variance, so normal(mean*(1+effect_size),sd*(1+effect_size))</span>
+        treated_onset <span style="color: #666666;">=</span> rnorm(n<span style="color: #666666;">=</span>n_per_group, m<span style="color: #666666;">=</span>mean_onset_control<span style="color: #666666;">*</span>(<span style="color: #666666;">1+</span>effect_size), s<span style="color: #666666;">=</span>sd_onset_control<span style="color: #666666;">*</span>(<span style="color: #666666;">1+</span>effect_size))
+
+        <span style="color: #408080; font-style: italic;"># detect cases where roundup() makes data constant, and handle separately lest they throw errors in statistical test functions</span>
+        <span style="color: #008000; font-weight: bold;">if</span> ( length(unique(roundup(control_onset,obs_freq))) <span style="color: #666666;">==</span> <span style="color: #666666;">1</span> <span style="color: #666666;">&amp;</span> length(unique(roundup(treated_onset,obs_freq))) <span style="color: #666666;">==</span> <span style="color: #666666;">1</span> ) {
+            <span style="color: #408080; font-style: italic;"># if control == treated then the correct answer is NO difference</span>
+            <span style="color: #008000; font-weight: bold;">if</span> (roundup(control_onset,obs_freq)[<span style="color: #666666;">1</span>] <span style="color: #666666;">==</span> roundup(treated_onset,obs_freq)[<span style="color: #666666;">1</span>]) {
+                this_iter_result <span style="color: #666666;">=</span> <span style="color: #666666;">0</span>
+            } <span style="color: #008000; font-weight: bold;">else</span> { <span style="color: #408080; font-style: italic;"># if control &lt;&gt; treated then the correct answer is YES there is a difference</span>
+                this_iter_result <span style="color: #666666;">=</span> <span style="color: #666666;">1</span>
+            }
+        } <span style="color: #008000; font-weight: bold;">else</span> { <span style="color: #408080; font-style: italic;"># normal cases where data are not constant</span>
+            this_iter_result <span style="color: #666666;">=</span> (<span style="color: #666666;">1</span> <span style="color: #666666;">*</span> (p_func(roundup(control_onset,obs_freq),roundup(treated_onset,obs_freq)) <span style="color: #666666;">&lt;</span> alpha))
+        }
+        empirical_power_result  <span style="color: #666666;">=</span> empirical_power_result <span style="color: #666666;">+</span> this_iter_result <span style="color: #666666;">*</span> <span style="color: #666666;">1/</span>n_iter
+    }
+    <span style="color: #408080; font-style: italic;"># return power</span>
+    <span style="color: #008000; font-weight: bold;">return</span> (empirical_power_result)
+}</pre>
+</div>
+<p>Here&#8217;s one example call which asks the following question. If control onset is 365 ± 30 days and the effect of a drug is a 10% (so ~36 day) delay in onset, what is the power to detect significance using a log-rank test at the p &lt; .05 threshold with n = 15 mice per group, monitored via BLI every 1 day, simulated over 1000 trials?</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># example to illustrate use of the function</span>
+set.seed(<span style="color: #666666;">1111</span>)
+empirical_power(n_iter<span style="color: #666666;">=10000</span>, alpha<span style="color: #666666;">=.05</span>, mean_onset_control<span style="color: #666666;">=365</span>, sd_onset_control<span style="color: #666666;">=30</span>, effect_size<span style="color: #666666;">=.10</span>, n_per_group<span style="color: #666666;">=15</span>, obs_freq<span style="color: #666666;">=1</span>, statistical_test<span style="color: #666666;">=</span><span style="color: #ba2121;">"lrt"</span>)</pre>
+</div>
+<p>Result: 85% power.</p>
+<p>Note that the log-rank test is particularly slow, and 10,000 iterations takes almost 1 minute.</p>
+<p><strong>results with some specific examples</strong></p>
+<p>Next we can ask how that answer depends on how often we monitor the mice. Would checking them every 7 days, 14 days or 21 days give us less power than checking every day?</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># power with monitoring every 7, 14 or 21 days</span>
+set.seed(<span style="color: #666666;">12345</span>)
+empirical_power(n_iter<span style="color: #666666;">=10000</span>, alpha<span style="color: #666666;">=.05</span>, mean_onset_control<span style="color: #666666;">=365</span>, sd_onset_control<span style="color: #666666;">=30</span>, effect_size<span style="color: #666666;">=.10</span>, n_per_group<span style="color: #666666;">=15</span>, obs_freq<span style="color: #666666;">=7</span>, statistical_test<span style="color: #666666;">=</span><span style="color: #ba2121;">"lrt"</span>)
+empirical_power(n_iter<span style="color: #666666;">=10000</span>, alpha<span style="color: #666666;">=.05</span>, mean_onset_control<span style="color: #666666;">=365</span>, sd_onset_control<span style="color: #666666;">=30</span>, effect_size<span style="color: #666666;">=.10</span>, n_per_group<span style="color: #666666;">=15</span>, obs_freq<span style="color: #666666;">=14</span>, statistical_test<span style="color: #666666;">=</span><span style="color: #ba2121;">"lrt"</span>)
+empirical_power(n_iter<span style="color: #666666;">=10000</span>, alpha<span style="color: #666666;">=.05</span>, mean_onset_control<span style="color: #666666;">=365</span>, sd_onset_control<span style="color: #666666;">=30</span>, effect_size<span style="color: #666666;">=.10</span>, n_per_group<span style="color: #666666;">=15</span>, obs_freq<span style="color: #666666;">=21</span>, statistical_test<span style="color: #666666;">=</span><span style="color: #ba2121;">"lrt"</span>)</pre>
+</div>
+<p>Amazingly, <em>no</em>. The results for these three are 85.85%, 85.08%, and 84.63% &#8211; all well within a standard error of each other (try re-running with a different random seed and you&#8217;ll see variability from 84 to 86%).  So basically: <em>no</em> power is lost by checking the mice only every third week compared to checking them every single day.</p>
+<p>And even more astonishingly, this is true not just within this narrow range of 7 &#8211; 21 day intervals &#8211; you lose only a bit of power by going up to even 50 day intervals.  Here&#8217;s a demonstration of that.  I calculate power for every possible n-weekly interval, i.e. doing BLI every week, every other week, every third week &#8230; every 57th week.</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">set.seed(<span style="color: #666666;">12345</span>)
+obs_freqs <span style="color: #666666;">=</span> c(seq(<span style="color: #666666;">7</span>,<span style="color: #666666;">399</span>,<span style="color: #666666;">7</span>))
+pwrs <span style="color: #666666;">=</span> vector(mode<span style="color: #666666;">=</span><span style="color: #ba2121;">"numeric"</span>)
+<span style="color: #008000; font-weight: bold;">for</span> (obs_freq in obs_freqs) {
+    pwrs <span style="color: #666666;">=</span> c(pwrs, empirical_power(n_iter<span style="color: #666666;">=10000</span>, alpha<span style="color: #666666;">=.05</span>, mean_onset_control<span style="color: #666666;">=365</span>, sd_onset_control<span style="color: #666666;">=30</span>, effect_size<span style="color: #666666;">=.10</span>, n_per_group<span style="color: #666666;">=15</span>, obs_freq<span style="color: #666666;">=</span>obs_freq, statistical_test<span style="color: #666666;">=</span><span style="color: #ba2121;">"lrt"</span>))
+}
+conditions <span style="color: #666666;">=</span> cbind(alpha<span style="color: #666666;">=.05</span>, mean_onset_control<span style="color: #666666;">=365</span>, sd_onset_control<span style="color: #666666;">=30</span>, effect_size<span style="color: #666666;">=.10</span>, n_per_group<span style="color: #666666;">=15</span>, statistical_test<span style="color: #666666;">=</span><span style="color: #ba2121;">"lrt"</span>)[<span style="color: #666666;">1</span>,]
+plot(obs_freqs,pwrs,type<span style="color: #666666;">=</span><span style="color: #ba2121;">'l'</span>,lwd<span style="color: #666666;">=3</span>,col<span style="color: #666666;">=</span><span style="color: #ba2121;">'red'</span>,ylim<span style="color: #666666;">=</span>c(<span style="color: #666666;">0</span>,<span style="color: #666666;">1</span>),xlab<span style="color: #666666;">=</span><span style="color: #ba2121;">'BLI observation frequency'</span>,ylab<span style="color: #666666;">=</span><span style="color: #ba2121;">'power'</span>,main<span style="color: #666666;">=</span><span style="color: #ba2121;">'Power as a function of BLI observation frequency'</span>,sub<span style="color: #666666;">=</span>print_vars(conditions), cex.sub<span style="color: #666666;">=.6</span>)</pre>
+</div>
+<p><a href="/wp-content/uploads/2013/09/obs_freq.vs_.power_.example1b.png"><img class="alignnone size-full wp-image-2886" alt="obs_freq.vs.power.example1b" src="/wp-content/uploads/2013/09/obs_freq.vs_.power_.example1b.png"/></a></p>
+<p>Here&#8217;s a narrative interpretation of this plot.  You start with ~85% power if you monitor the mice every week, and as you space the intervals out more and more you lose just a bit of power, dropping to 80% if you only check at 50 day intervals.</p>
+<p>But it&#8217;s not monotonic.  There are spikes at 77, 98, 196 and 399 days.  These should be considered as artificial.  In the particular example I&#8217;ve set up, the control mice have onset around day 365 and the treated mice have onset around day 401.  If the observation frequency is a divisor of some number right in the sweet spot where most of the control mice have had onset and most treated mice have not, then you can still get a significant result even though you&#8217;re doing very few observations (77*5 = 385, 98*4 = 392, 196*2 = 392, 399*1 = 399).</p>
+<p>Those spikes, though artificial in a way, do reflect a true fact: if you are confident about the time of onset of control mice, you could design an experiment where you just keep the mice until that timepoint, then check them all histopathologically (no need to even bother with BLI) and do a Fisher&#8217;s exact test or similar to test whether more of the control mice than treated mice exhibit gliosis.  Monitoring BLI only once, at 400 days, is equivalent to doing that.  Here&#8217;s an example that illustrates this:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">set.seed(<span style="color: #666666;">12345</span>)
+n_per_group <span style="color: #666666;">=</span> <span style="color: #666666;">15</span>
+mean_onset_control <span style="color: #666666;">=</span> <span style="color: #666666;">365</span>
+sd_onset_control <span style="color: #666666;">=</span> <span style="color: #666666;">30</span>
+effect_size <span style="color: #666666;">=</span> <span style="color: #666666;">.10</span>
+control_onset <span style="color: #666666;">=</span> rnorm(n<span style="color: #666666;">=</span>n_per_group, m<span style="color: #666666;">=</span>mean_onset_control, s<span style="color: #666666;">=</span>sd_onset_control)
+treated_onset <span style="color: #666666;">=</span> rnorm(n<span style="color: #666666;">=</span>n_per_group, m<span style="color: #666666;">=</span>mean_onset_control<span style="color: #666666;">*</span>(<span style="color: #666666;">1+</span>effect_size), s<span style="color: #666666;">=</span>sd_onset_control<span style="color: #666666;">*</span>(<span style="color: #666666;">1+</span>effect_size))
+hist(rbind(control_onset,treated_onset),beside<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">TRUE</span>,col<span style="color: #666666;">=</span>c(<span style="color: #ba2121;">'red'</span>,<span style="color: #ba2121;">'green'</span>))
+control_onset
+treated_onset
+roundup(control_onset,<span style="color: #666666;">400</span>)
+roundup(treated_onset,<span style="color: #666666;">400</span>)
+t.test(control_onset,treated_onset) <span style="color: #408080; font-style: italic;"># result: 366 vs. 405 days, p = .001</span>
+fisher.test(rbind(table(roundup(control_onset,<span style="color: #666666;">400</span>)),table(roundup(treated_onset,<span style="color: #666666;">400</span>)))) <span style="color: #408080; font-style: italic;"># result: p = .014</span></pre>
+</div>
+<p>In this particular example, the t test you could do on the <em>exact</em> onset days, if you monitored BLI every day, would give you 39-day difference in onset (366 vs. 405 days) at p = .001. If you monitor only at day 400 and day 800, you discover that 14 of 15 control mice have onset by day 400 while only 8 of 15 treated mice have onset by day 400. A Fisher&#8217;s exact test on these values gives you p = .014.</p>
+<p>So, amazingly, even monitoring for gliosis just <em>once</em> really <em>can</em> give you a significant result, if you know enough to pick the right date to check.  But that&#8217;s a gamble &#8211; in practice, we don&#8217;t know exactly when onset will occur, and there are big troughs of zero power in between the spikes, so better not to risk it.  Also, part of the point of doing BLI is not just to know if there is a statistically significant difference in survival between treated and control mice, but also to quantify how large that difference is.   A Fisher&#8217;s exact test can&#8217;t tell you a percentage delay in onset.</p>
+<p>How, then, does observation frequency affect our ability to quantify the delay in onset?</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">set.seed(<span style="color: #666666;">12345</span>)
+n_per_group <span style="color: #666666;">=</span> <span style="color: #666666;">15</span>
+mean_onset_control <span style="color: #666666;">=</span> <span style="color: #666666;">365</span>
+sd_onset_control <span style="color: #666666;">=</span> <span style="color: #666666;">30</span>
+effect_size <span style="color: #666666;">=</span> <span style="color: #666666;">.10</span>
+obs_freqs <span style="color: #666666;">=</span> c(seq(<span style="color: #666666;">7</span>,<span style="color: #666666;">399</span>,<span style="color: #666666;">7</span>))
+results<span style="color: #666666;">=</span>data.frame(obs_freq<span style="color: #666666;">=</span>numeric(),iteration<span style="color: #666666;">=</span>integer(),onsetdiff<span style="color: #666666;">=</span>numeric())
+<span style="color: #008000; font-weight: bold;">for</span> (obs_freq in obs_freqs) {
+    <span style="color: #008000; font-weight: bold;">for</span> (i in <span style="color: #666666;">1</span>:<span style="color: #666666;">100</span>) {
+        control_onset <span style="color: #666666;">=</span> rnorm(n<span style="color: #666666;">=</span>n_per_group, m<span style="color: #666666;">=</span>mean_onset_control, s<span style="color: #666666;">=</span>sd_onset_control)
+        treated_onset <span style="color: #666666;">=</span> rnorm(n<span style="color: #666666;">=</span>n_per_group, m<span style="color: #666666;">=</span>mean_onset_control<span style="color: #666666;">*</span>(<span style="color: #666666;">1+</span>effect_size), s<span style="color: #666666;">=</span>sd_onset_control<span style="color: #666666;">*</span>(<span style="color: #666666;">1+</span>effect_size))
+        onsetdiff <span style="color: #666666;">=</span> mean(roundup(treated_onset,obs_freq)) <span style="color: #666666;">-</span> mean(roundup(control_onset,obs_freq))
+        results <span style="color: #666666;">=</span> rbind(results,c(obs_freq,i,onsetdiff))
+    }
+}
+colnames(results)<span style="color: #666666;">=</span>c(<span style="color: #ba2121;">"obs_freq"</span>,<span style="color: #ba2121;">"iteration"</span>,<span style="color: #ba2121;">"onsetdiff"</span>)
+plot(results$obs_freq<span style="color: #666666;">+</span>runif(n<span style="color: #666666;">=</span>dim(results)[<span style="color: #666666;">1</span>],min<span style="color: #666666;">=-3</span>,max<span style="color: #666666;">=3</span>),results$onsetdiff,pch<span style="color: #666666;">=16</span>,cex<span style="color: #666666;">=.6</span>,xlab<span style="color: #666666;">=</span><span style="color: #ba2121;">'observation interval'</span>,ylab<span style="color: #666666;">=</span><span style="color: #ba2121;">'Nominal difference in onset'</span>,
+     main<span style="color: #666666;">=</span><span style="color: #ba2121;">'Variability in estimated delay in onset vs. observation frequency'</span>,cex.main<span style="color: #666666;">=.8</span>,col<span style="color: #666666;">=</span><span style="color: #ba2121;">'#999999'</span>)
+abline(h<span style="color: #666666;">=36.5</span>,col<span style="color: #666666;">=</span><span style="color: #ba2121;">'#000000'</span>)
+abline(h<span style="color: #666666;">=0</span>,col<span style="color: #666666;">=</span><span style="color: #ba2121;">'red'</span>)</pre>
+</div>
+<p><a href="/wp-content/uploads/2013/09/obs_freq.vs_.est_.diff_.example2b.png"><img class="alignnone size-full wp-image-2868" alt="obs_freq.vs.est.diff.example2b" src="/wp-content/uploads/2013/09/obs_freq.vs_.est_.diff_.example2b.png"/></a></p>
+<p>In this simulated example, we know that the true delay in onset is 36.5 days (shown by the black horizontal bar).  The above code considers observation intervals of 7, 14, 21&#8230; 399 days and runs 100 simulations for each.  The dispersion of the estimated difference in onset around the true value looks pretty constant for observation intervals up to 50 or 70 and then begins to balloon.</p>
+<p>Notice also the shape of the dispersion.  It begins as a cloud at the far left, where you have frequent observations, but turns into discrete streaks starting around 70 days.  That&#8217;s because once the observation intervals are larger than the dispersion in the true data &#8211; the times of onset in the mice &#8211; your beautiful ratio-level data is essentially converted to categorical data.  For instance, as shown in the previous example, testing only once at 400 days is equivalent to asking &#8220;how many more treated than control mice had onset by 400 days?&#8221;, and there are only 16 possible answers to that: 0, 1, 2, 3, &#8230; 15.</p>
+<p>Another interesting point about this plot is just how few points lie below the x axis.  For instance, in the 0-100 day range, there are zero simulations in which a negative delay in onset is observed.  In other words, though in this case we may have limited (60-85%) power to detect a <em>statistically significant</em><em> </em>delay in onset in the treated group, we&#8217;re overwhelmingly likely to see a <em>nominal</em> delay in onset.</p>
+<p>Finally, one technical aside about this plot: to prevent dots from overlapping one another and obscuring each other&#8217;s density, I added uniformly distributed noise to each x value with <code>+runif(n=dim(results)[1],min=-3,max=3)</code>  &#8211; this is one of my favorite R tricks.</p>
+<p>Now, just because we can&#8217;t <em>see</em> an increase in dispersion over the 1-100 day range in the plot above doesn&#8217;t mean it&#8217;s not there.  So I plotted the standard deviation in the estimate of delay in onset from 100 simulations at each observation frequency:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># we can't see an increase in dispersion on the plot - now let's be more formal.  *does* variance increase with larger obs_freq?</span>
+sdvals <span style="color: #666666;">=</span> sqldf(<span style="color: #ba2121;">"select obs_freq, variance(onsetdiff) variance from results group by 1 order by 1;"</span>)
+m <span style="color: #666666;">=</span> lm(variance ~ obs_freq, data <span style="color: #666666;">=</span> subset(sdvals, obs_freq <span style="color: #666666;">&lt;</span> <span style="color: #666666;">100</span>))
+summary(m)
+conditions <span style="color: #666666;">=</span> cbind(alpha<span style="color: #666666;">=.05</span>, mean_onset_control<span style="color: #666666;">=365</span>, sd_onset_control<span style="color: #666666;">=30</span>, effect_size<span style="color: #666666;">=.10</span>, n_per_group<span style="color: #666666;">=15</span>)[<span style="color: #666666;">1</span>,]
+plot(sdvals$obs_freq, sqrt(sdvals$variance),type<span style="color: #666666;">=</span><span style="color: #ba2121;">'l'</span>, lwd<span style="color: #666666;">=3</span>, col<span style="color: #666666;">=</span><span style="color: #ba2121;">'orange'</span>, main<span style="color: #666666;">=</span><span style="color: #ba2121;">'Dispersion in estimate of delay in onset vs. observation frequency'</span>, xlab<span style="color: #666666;">=</span><span style="color: #ba2121;">'observation interval'</span>, ylab<span style="color: #666666;">=</span><span style="color: #ba2121;">'standard deviation in estimate'</span>, cex.main<span style="color: #666666;">=.8</span>, sub<span style="color: #666666;">=</span>print_vars(conditions), cex.sub<span style="color: #666666;">=.6</span>)</pre>
+</div>
+<p><a href="/wp-content/uploads/2013/09/obs_freq.vs_.dispersion.example3.png"><img class="alignnone size-full wp-image-2887" alt="obs_freq.vs.dispersion.example3" src="/wp-content/uploads/2013/09/obs_freq.vs_.dispersion.example3.png"/></a></p>
+<p>And the result is that yes, variance does increase a bit &#8211; there seems to be a positive slope, even in the 0-100 range on the x axis.  But it&#8217;s subtle.  And of note: the y-intercept is ~10.  This reflects the fact that with a 36.5 day delay in onset (signal) on a 30 day standard deviation in onset (nosie), there is already a 10 day standard deviation in the estimates of delay in onset that you might get experimentally, even if you tested the mice with BLI every single day.  Against this background level of variability, performing less frequent observations doesn&#8217;t really make the estimate that much worse.  The standard deviation rises from a baseline of 10 to only about 12 by the time you get to 50-day intervals.</p>
+<p>So yes, our ability to estimate the delay in onset is impaired a bit by observing the mice less frequently, but within a reasonable range (up to once every month or two) it&#8217;s really not that much worse than if you performed BLI every day.  Or phrased differently, the vast majority of experimental error is built into the experiment by the variability of the mouse model itself, and only &lt; 20% is due to the infrequency of observations, unless you observe even less frequently than about once in 50 days.</p>
+<p><strong>more general results</strong></p>
+<p>Everything above was just one example with very specific parameters.  How generalizable is it?  Can we draw any conclusions about when it is okay to save money by performing BLI less frequently versus when it really hurts you?</p>
+<p>To answer these questions I wanted to run my simulations over a wide space of possible scenarios, so I submitted <a href="/wp-content/uploads/2013/09/bioluminescence-power-sim-10000.r.txt">this R script</a> to run overnight, and got <a href="/wp-content/uploads/2013/09/biolum-power-sim-results-10000.txt">this output.</a>  Note &#8211; the script I ran has a lot of other random stuff in it since I was still figuring this all out, but I left it unedited so that it accurately reflects what created the output file.  The important part of the script is just this nested loop:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># Now vary the obs_freq and see how it matters.</span>
+set.seed(<span style="color: #666666;">12345</span>)
+
+<span style="color: #408080; font-style: italic;"># fixed vars</span>
+<span style="color: #408080; font-style: italic;">#statistical_test = "t"</span>
+alpha <span style="color: #666666;">=</span> <span style="color: #666666;">.05</span>
+mean_onset_control <span style="color: #666666;">=</span> <span style="color: #666666;">365</span>
+n_per_group <span style="color: #666666;">=</span> <span style="color: #666666;">15</span>
+n_iter <span style="color: #666666;">=</span> <span style="color: #666666;">10000</span>
+<span style="color: #408080; font-style: italic;"># iterable vars</span>
+obs_freqs <span style="color: #666666;">=</span> c(<span style="color: #666666;">1</span>,<span style="color: #666666;">7</span>,<span style="color: #666666;">14</span>,<span style="color: #666666;">21</span>,<span style="color: #666666;">30</span>,<span style="color: #666666;">60</span>,<span style="color: #666666;">90</span>)
+effect_sizes <span style="color: #666666;">=</span> c(<span style="color: #666666;">3.5/365</span>,<span style="color: #666666;">7/365</span>,<span style="color: #666666;">14/365</span>,<span style="color: #666666;">21/365</span>,<span style="color: #666666;">30/365</span>,<span style="color: #666666;">.1</span>,<span style="color: #666666;">.3</span>,<span style="color: #666666;">.5</span>,<span style="color: #666666;">.7</span>,<span style="color: #666666;">1.0</span>,<span style="color: #666666;">1.5</span>,<span style="color: #666666;">2.0</span>)
+sd_onset_control_vals <span style="color: #666666;">=</span> c(<span style="color: #666666;">1</span>,<span style="color: #666666;">3</span>,<span style="color: #666666;">7</span>,<span style="color: #666666;">14</span>,<span style="color: #666666;">21</span>,<span style="color: #666666;">30</span>,<span style="color: #666666;">60</span>,<span style="color: #666666;">90</span>,<span style="color: #666666;">150</span>)
+statistical_tests <span style="color: #666666;">=</span> c(<span style="color: #ba2121;">"t"</span>,<span style="color: #ba2121;">"lrt"</span>,<span style="color: #ba2121;">"ks"</span>)
+results <span style="color: #666666;">=</span> data.frame(sd_onset_control <span style="color: #666666;">=</span> numeric(), effect_size<span style="color: #666666;">=</span>numeric(), obs_freq<span style="color: #666666;">=</span>numeric(), statistical_test<span style="color: #666666;">=</span>character(), pwr<span style="color: #666666;">=</span>numeric())
+<span style="color: #008000; font-weight: bold;">for</span> (statistical_test in statistical_tests) {
+    <span style="color: #008000; font-weight: bold;">for</span> (obs_freq in obs_freqs) {
+        <span style="color: #008000; font-weight: bold;">for</span> (effect_size in effect_sizes) {
+            <span style="color: #008000; font-weight: bold;">for</span> (sd_onset_control in sd_onset_control_vals) {
+                pwr <span style="color: #666666;">=</span> empirical_power(n_iter<span style="color: #666666;">=</span>n_iter, alpha<span style="color: #666666;">=</span>alpha, mean_onset_control<span style="color: #666666;">=</span>mean_onset_control, sd_onset_control<span style="color: #666666;">=</span>sd_onset_control, effect_size<span style="color: #666666;">=</span>effect_size, n_per_group<span style="color: #666666;">=</span>n_per_group, obs_freq<span style="color: #666666;">=</span>obs_freq, statistical_test<span style="color: #666666;">=</span>statistical_test)
+                results <span style="color: #666666;">=</span> rbind(results, c(sd_onset_control, effect_size, obs_freq, statistical_test, pwr))
+            }
+        }
+    }
+}
+colnames(results) <span style="color: #666666;">=</span> c(<span style="color: #ba2121;">"sd_onset_control"</span>,<span style="color: #ba2121;">"effect_size"</span>,<span style="color: #ba2121;">"obs_freq"</span>,<span style="color: #ba2121;">"statistical_test"</span>,<span style="color: #ba2121;">"pwr"</span>)
+results
+
+write.table(results,<span style="color: #ba2121;">'biolum-power-sim-results-10000.txt'</span>,sep<span style="color: #666666;">=</span><span style="color: #ba2121;">'\t'</span>,row.names<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">FALSE</span>,col.names<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">TRUE</span>,quote<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">FALSE</span>)
+
+<span style="color: #408080; font-style: italic;"># bsub.py long 160:00 "R CMD BATCH bioluminescence-power-sim.r"</span>
+<span style="color: #408080; font-style: italic;"># For 10K iterations each this took ~ 6 hours</span></pre>
+</div>
+<p>I then set up to analyze the resulting data.  First off, I was curious to see how much of the variation in power over the conditions I had set up could be explained by a simple linear model of effect size, sd, observation frequency and which statistical test was used.</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">simres <span style="color: #666666;">=</span> read.table(<span style="color: #ba2121;">'biolum-power-sim-results-10000.txt'</span>,sep<span style="color: #666666;">=</span><span style="color: #ba2121;">'\t'</span>,header<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">TRUE</span>)
+
+m <span style="color: #666666;">=</span> lm(pwr ~ sd_onset_control <span style="color: #666666;">+</span> effect_size <span style="color: #666666;">+</span> obs_freq <span style="color: #666666;">+</span> statistical_test, data <span style="color: #666666;">=</span> simres)
+summary(m)
+<span style="color: #408080; font-style: italic;"># R^2 = .46</span>
+
+m <span style="color: #666666;">=</span> lm(pwr ~ sd_onset_control <span style="color: #666666;">*</span> effect_size <span style="color: #666666;">*</span> obs_freq <span style="color: #666666;">*</span> statistical_test, data <span style="color: #666666;">=</span> simres)
+summary(m)
+<span style="color: #408080; font-style: italic;"># R^2 = .53</span></pre>
+</div>
+<p>Only 46% can be explained in an additive linear model, and 53% with interaction terms.  Power is a funny nonlinear beast.  All the coefficients were significant and had their expected signs: higher SD and less frequent observations are bad for power, larger effect sizes are good for power.  Log-rank and t test are more powered than the KS test.</p>
+<pre>Call:
+lm(formula = pwr ~ sd_onset_control + effect_size + obs_freq + 
+    statistical_test, data = simres)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.61323 -0.27961  0.00747  0.29927  0.58923 
+
+Coefficients:
+                      Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)          0.5715293  0.0153931  37.129  &lt; 2e-16 ***
+sd_onset_control    -0.0025059  0.0001374 -18.238  &lt; 2e-16 ***
+effect_size          0.3993109  0.0102772  38.854  &lt; 2e-16 ***
+obs_freq            -0.0022484  0.0002184 -10.294  &lt; 2e-16 ***
+statistical_testlrt  0.0837661  0.0159002   5.268 1.51e-07 ***
+statistical_testt    0.0795741  0.0159002   5.005 6.03e-07 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+
+Residual standard error: 0.3091 on 2262 degrees of freedom
+Multiple R-squared: 0.4672,     Adjusted R-squared: 0.466 
+F-statistic: 396.7 on 5 and 2262 DF,  p-value: &lt; 2.2e-16</pre>
+<p>Next I wanted to ask how much power was <em>lost</em> by having observations less frequent than once per week, compared to the power for weekly observations.  I joined the data to itself in SQL and linearly modeled the relationship between the <em>difference</em> in power and the other variables:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># join to see how power is lost with less frequent observations</span>
+sql_query <span style="color: #666666;">=</span> <span style="color: #ba2121;">"</span>
+<span style="color: #ba2121;">select   s7.sd_onset_control, s7.effect_size, s7.statistical_test, so.obs_freq, s7.pwr pwr7, so.pwr pwro, s7.pwr - so.pwr pwrdiff</span>
+<span style="color: #ba2121;">from     simres s7, simres so</span>
+<span style="color: #ba2121;">where    s7.sd_onset_control = so.sd_onset_control</span>
+<span style="color: #ba2121;">and      s7.effect_size = so.effect_size</span>
+<span style="color: #ba2121;">and      s7.statistical_test = so.statistical_test</span>
+<span style="color: #ba2121;">and      s7.obs_freq = 7</span>
+<span style="color: #ba2121;">and      so.obs_freq &gt; 7</span>
+<span style="color: #ba2121;">;</span>
+<span style="color: #ba2121;">"</span>
+compare7 <span style="color: #666666;">=</span> sqldf(sql_query)
+
+m <span style="color: #666666;">=</span> lm(pwrdiff ~ obs_freq <span style="color: #666666;">+</span> sd_onset_control <span style="color: #666666;">+</span> effect_size, data <span style="color: #666666;">=</span> compare7)
+                   <span style="color: #408080; font-style: italic;"># Estimate Std. Error t value Pr(&gt;|t|)    </span>
+<span style="color: #408080; font-style: italic;"># (Intercept)       0.1190553  0.0121145   9.828   &lt;2e-16 ***</span>
+<span style="color: #408080; font-style: italic;"># obs_freq          0.0020599  0.0001959  10.516   &lt;2e-16 ***</span>
+<span style="color: #408080; font-style: italic;"># sd_onset_control -0.0013645  0.0001172 -11.647   &lt;2e-16 ***</span>
+<span style="color: #408080; font-style: italic;"># effect_size      -0.1090742  0.0087633 -12.447   &lt;2e-16 ***</span>
+<span style="color: #408080; font-style: italic;">#Multiple R-squared: 0.1989,     Adjusted R-squared: 0.1974 </span></pre>
+</div>
+<p>This simple model explained about 20% of variance in power lost.  But I was pretty sure the interaction between these variables would be much more interesting than any of the variables themselves.  First I browsed the list of cases where we went from almost 100% power to almost 0% power:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">compare7[compare7$pwrdiff <span style="color: #666666;">&gt;</span> <span style="color: #666666;">.90</span>,]</pre>
+</div>
+<p>And every entry on the list was a case with an SD of 1 &#8211; 7 days, a small effect size (≤ 36.5 days) and an observation frequency larger than the effect size.  No surprises here: if your observations are less frequent than the difference between the treated and control data points, you&#8217;ll have no power.  But this is only a <em>loss</em> of power when the SD is so small that you <em>would have</em> been able to see the difference if only you&#8217;d imaged more frequently.</p>
+<p>Based on this I hypothesized that what determines loss of power is the relationship between the SD, the observation frequency and the <em>absolute</em> effect size (in days, as opposed to relative effect size in % as I originally had it).</p>
+<p>I therefore created a column for absolute effect size, and converted the difference in power to a loss in power:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">compare7$effect_size_abs <span style="color: #666666;">=</span> compare7$effect_size <span style="color: #666666;">*</span> <span style="color: #666666;">365</span>
+compare7$pwrloss <span style="color: #666666;">=</span> <span style="color: #666666;">-</span>compare7$pwrdiff <span style="color: #408080; font-style: italic;"># set as a negative number so that the color scheme makes more sense in image()</span>
+compare7$pwrloss[compare7$pwrloss <span style="color: #666666;">&gt;</span> <span style="color: #666666;">0</span>] <span style="color: #666666;">=</span> <span style="color: #666666;">0</span> <span style="color: #408080; font-style: italic;"># consider only loss, not gain, of power</span></pre>
+</div>
+<p>And I sought to plot power loss (compared to 7 day observations as a benchmark) against absolute effect size and observation frequency, using color as a third dimension.  Here&#8217;s the plot for power loss with biweekly observations as opposed to weekly.</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># image() plot of power lost vs. SD vs. absolute effect size, given an observation frequency of 14 days as compared to 7 days benchmark</span>
+temp1 <span style="color: #666666;">=</span> compare7[compare7$obs_freq<span style="color: #666666;">==14</span> <span style="color: #666666;">&amp;</span> compare7$statistical_test<span style="color: #666666;">==</span><span style="color: #ba2121;">"lrt"</span>,c(<span style="color: #ba2121;">"effect_size_abs"</span>,<span style="color: #ba2121;">"sd_onset_control"</span>,<span style="color: #ba2121;">"pwrloss"</span>)]
+temp2 <span style="color: #666666;">=</span> acast(temp1, formula <span style="color: #666666;">=</span> effect_size_abs ~ sd_onset_control, value.var<span style="color: #666666;">=</span><span style="color: #ba2121;">"pwrloss"</span>)
+image(<span style="color: #666666;">1</span>:dim(temp2)[<span style="color: #666666;">1</span>],<span style="color: #666666;">1</span>:dim(temp2)[<span style="color: #666666;">2</span>],temp2,xaxt<span style="color: #666666;">=</span><span style="color: #ba2121;">'n'</span>,xlab<span style="color: #666666;">=</span><span style="color: #ba2121;">'Effect size (days)'</span>,yaxt<span style="color: #666666;">=</span><span style="color: #ba2121;">'n'</span>,ylab<span style="color: #666666;">=</span><span style="color: #ba2121;">'SD of onset in controls (days)'</span>,main<span style="color: #666666;">=</span><span style="color: #ba2121;">'Loss in power with 14-day observation frequency'</span>)
+<span style="color: #008000; font-weight: bold;">for</span> (i in <span style="color: #666666;">1</span>:dim(temp2)[<span style="color: #666666;">1</span>]) {
+  <span style="color: #008000; font-weight: bold;">for</span> (j in <span style="color: #666666;">1</span>:dim(temp2)[<span style="color: #666666;">2</span>]) {
+    text(i,j,labels<span style="color: #666666;">=</span>formatC(temp2[i,j],digits<span style="color: #666666;">=2</span>,format<span style="color: #666666;">=</span><span style="color: #ba2121;">"f"</span>),cex<span style="color: #666666;">=.5</span>)
+  }
+}
+axis(side<span style="color: #666666;">=1</span>,at<span style="color: #666666;">=</span>seq(<span style="color: #666666;">1</span>,dim(temp2)[<span style="color: #666666;">1</span>],<span style="color: #666666;">1</span>),labels<span style="color: #666666;">=</span>format(as.numeric(rownames(temp2)),digits<span style="color: #666666;">=1</span>),cex.axis<span style="color: #666666;">=.6</span>,las<span style="color: #666666;">=2</span>)
+axis(side<span style="color: #666666;">=2</span>,at<span style="color: #666666;">=</span>seq(<span style="color: #666666;">1</span>,dim(temp2)[<span style="color: #666666;">2</span>],<span style="color: #666666;">1</span>),labels<span style="color: #666666;">=</span>format(as.numeric(colnames(temp2)),digits<span style="color: #666666;">=1</span>),cex.axis<span style="color: #666666;">=.6</span>,las<span style="color: #666666;">=2</span>)</pre>
+</div>
+<p><a href="/wp-content/uploads/2013/09/lost.power_.14.7.png"><img class="alignnone size-full wp-image-2893" alt="lost.power.14.7" src="/wp-content/uploads/2013/09/lost.power_.14.7.png"/></a></p>
+<p>In most grid cells, no power at all is lost.  A substantial amount of power is lost only in the lower left corner &#8211; for instance, there is a 79% loss in power if the effect size is 7 days and the SD is 1 day (the red square).  Here&#8217;s what I interpret that lower left corner as representing:</p>
+<blockquote><p><strong><em>Power is lost only when the observation interval is larger than both the effect size and the SD.</em></strong></p></blockquote>
+<p>To rationalize this, consider the following.  In the upper left, the SD is larger than the effect size, and so you never had any power to start with; there is no power to lose.  In the lower right, the effect size is so large that you&#8217;re saturated with 100% power &#8211; you won&#8217;t miss this effect.  As you move towards the upper right, both the effect size and SD are large, so coarsely detecting the difference in distributions is good enough &#8211; precision down to the level of a week is not important.</p>
+<p>When I create the same plot for power lost at 21 days vs. 7 days, the effect is consistent with this interpretation:</p>
+<p><a href="/wp-content/uploads/2013/09/lost.power_.21.7.png"><img class="alignnone size-full wp-image-2894" alt="lost.power.21.7" src="/wp-content/uploads/2013/09/lost.power_.21.7.png"/></a></p>
+<p>And same with 30 days:</p>
+<p><a href="/wp-content/uploads/2013/09/lost.power_.30.7.png"><img class="alignnone size-full wp-image-2895" alt="lost.power.30.7" src="/wp-content/uploads/2013/09/lost.power_.30.7.png"/></a></p>
+<p>&nbsp;</p>
+<p>And 60:</p>
+<p><a href="/wp-content/uploads/2013/09/lost.power_.60.7.png"><img class="alignnone size-full wp-image-2896" alt="lost.power.60.7" src="/wp-content/uploads/2013/09/lost.power_.60.7.png"/></a></p>
+<p>&nbsp;</p>
+<p>(If/when I do this over again I&#8217;ll choose regular intervals for the effect sizes and SDs that I simulate so that the x and y axes are linear.)</p>
+<p><strong>discussion</strong></p>
+<p>All of the evidence presented here suggests that doing BLI imaging less frequently than once per week only leads to a loss of power in very specific circumstances.  The only time when more than 1 or 2% power is lost is when <em>both</em> the effect size (in days) <em>and</em> the standard deviation in onset are less than the observation frequency.  For instance, if you image only once per month, you only lose power in cases where the effect of a drug treatment is less than a one month delay <em>and</em> the standard deviation in the ages of onset of the mice is less than one month.</p>
+<p>One interpretation is that there isn&#8217;t much point in performing BLI at intervals any smaller than either the standard deviation in the mice, or the effect size (in days) that you estimate your study is powered to detect.</p>
+<p>As a real application, consider <a href="/2013/09/08/study-design-for-therapeutic-trials-in-ffi-and-e200k-mice/">this possible study design for anle138b</a>.  We don&#8217;t know for certain the standard deviation in age of onset of gliosis in the FFI mice, though I argued it might well be more than 30 days.  We also don&#8217;t know the effect size we expect, though if anle138b&#8217;s therapeutic effectts against RML are any guide (and I wish they were!), it could easily be 30%, which would be 4 months&#8217; delay in onset.</p>
+<p>If we assume the standard deviation of onset in FFI mice is at least 30 days, then the conclusion from this post is that imaging weekly would provide essentially no marginal statistical power for our study compared to imaging monthly.  And, as argued in one example above, imaging only once a month would also not have much impact on our ability to estimate the number of days of delay in onset.</p>
+<p>Less frequent imaging, then, is a really good deal.  In the <a href="https://docs.google.com/spreadsheet/ccc?key=0AhObyChB_2VXdHJaZ09leFpwUHQ0dG95SkllcHFjenc&amp;usp=sharing">cost structure we outlined</a>, imaging monthly as opposed to weekly would cut the direct costs by more than half, from $20,000 to $9,000.  All that for basically no loss in power.</p>
+<p><strong>outstanding issues</strong></p>
+<p>Here are a few other considerations this analysis does not address:</p>
+<ul>
+<li>Basing the measured &#8220;onset&#8221; on the first single BLI measurement above threshold vs. requiring two consecutive measurements to be above a threshold.  Intuitively, it seems that imaging every 30 days and requiring 1 measurement above threshold should be equivalent to imaging every 14 days and requiring 2 measurements above threshold.  But I&#8217;m not certain that&#8217;s correct, and I haven&#8217;t modeled it here.</li>
+<li>Many of the published BLI studies see a jagged pattern of BLI photons over time [e.g. red line in <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3038719/figure/fig02/">Watts 2011 Fig 2</a>].  In some cases [e.g. orange line in <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3390876/figure/fig01/">Stohr 2012 Fig 1</a>] the difference between times is far larger than the variance within any one time.  Does anyone know what causes this week-to-week variation?</li>
+<li>I haven&#8217;t explicitly modeled the measurement error in the BLI process itself, i.e. the noise in the number of photons measured.</li>
+<li>It&#8217;s possible that in the FFI mice, for instance, the gliosis is more gradual/subtle and there will not be a single obvious inflection point.  If so, it might prove more appropriate to compare the slopes of the BLI curves using an <a href="http://udel.edu/~mcdonald/statancova.html">ANCOVA</a> or something like that.  I haven&#8217;t modeled how the power of such a test would be affected by less frequent observations.</li>
+</ul>
+<p>I welcome any suggestions or critiques &#8211; including suggestions of how to incorporate the above ideas.</p>

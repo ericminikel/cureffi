@@ -1,0 +1,193 @@
+CellProfiler Pipeline: http://www.cellprofiler.org
+Version:1
+SVNRevision:11710
+
+LoadImages:[module_num:1|svn_version:\'11587\'|variable_revision_number:11|show_window:True|notes:\x5B\x5D]
+    File type to be loaded:individual images
+    File selection method:Text-Exact match
+    Number of images in each group?:3
+    Type the text that the excluded images have in common:Do not use
+    Analyze all subfolders within the selected folder?:None
+    Input image file location:Default Input Folder\x7C.
+    Check image sets for missing or duplicate files?:
+    Group images by metadata?:No
+    Exclude certain files?:No
+    Specify metadata fields to group by:
+    Select subfolders to analyze:
+    Image count:1
+    Text that these images have in common (case-sensitive):16604_16602TA_KO10x01
+    Position of this image in each group:16604_16602TA_KO10x01
+    Extract metadata from where?:None
+    Regular expression that finds metadata in the file name:None
+    Type the regular expression that finds metadata in the subfolder path:None
+    Channel count:1
+    Group the movie frames?:No
+    Grouping method:Interleaved
+    Number of channels per group:2
+    Load the input as images or objects?:Images
+    Name this loaded image:Original_Image
+    Name this loaded object:Nuclei
+    Retain outlines of loaded objects?:No
+    Name the outline image:NucleiOutlines
+    Channel number:1
+    Rescale intensities?:Yes
+
+ImageMath:[module_num:2|svn_version:\'10718\'|variable_revision_number:3|show_window:True|notes:\x5B\x5D]
+    Operation:Invert
+    Raise the power of the result by:1.0
+    Multiply the result by:1.0
+    Add to result:0
+    Set values less than 0 equal to 0?:No
+    Set values greater than 1 equal to 1?:No
+    Ignore the image masks?:No
+    Name the output image:Inverted4Area
+    Image or measurement?:Image
+    Select the first image:Original_Image
+    Multiply the first image by:1.0
+    Measurement:
+    Image or measurement?:Image
+    Select the second image:
+    Multiply the second image by:1
+    Measurement:
+
+CorrectIlluminationCalculate:[module_num:3|svn_version:\'10458\'|variable_revision_number:2|show_window:True|notes:\x5B\x5D]
+    Select the input image:Original_Image
+    Name the output image:IllumFunc
+    Select how the illumination function is calculated:Regular
+    Dilate objects in the final averaged image?:No
+    Dilation radius:0
+    Block size:60
+    Rescale the illumination function?:Yes
+    Calculate function for each image individually, or based on all images?:Each
+    Smoothing method:Median Filter
+    Method to calculate smoothing filter size:Object size
+    Approximate object size:10
+    Smoothing filter size:10
+    Retain the averaged image for use later in the pipeline (for example, in SaveImages)?:Yes
+    Name the averaged image:Do not save
+    Retain the dilated image for use later in the pipeline (for example, in SaveImages)?:Yes
+    Name the dilated image:Do not save
+    Automatically calculate spline parameters?:Yes
+    Background mode:auto
+    Number of spline points:5
+    Background threshold:2
+    Image resampling factor:2
+    Maximum number of iterations:40
+    Residual value for convergence:0.001
+
+CorrectIlluminationApply:[module_num:4|svn_version:\'10300\'|variable_revision_number:3|show_window:True|notes:\x5B\x5D]
+    Select the input image:Original_Image
+    Name the output image:Corrected_Original
+    Select the illumination function:IllumFunc
+    Select how the illumination function is applied:Divide
+
+ImageMath:[module_num:5|svn_version:\'10718\'|variable_revision_number:3|show_window:True|notes:\x5B\x5D]
+    Operation:Invert
+    Raise the power of the result by:1.0
+    Multiply the result by:1.0
+    Add to result:0
+    Set values less than 0 equal to 0?:No
+    Set values greater than 1 equal to 1?:No
+    Ignore the image masks?:No
+    Name the output image:InvertedGray
+    Image or measurement?:Image
+    Select the first image:Corrected_Original
+    Multiply the first image by:1.0
+    Measurement:
+    Image or measurement?:Image
+    Select the second image:
+    Multiply the second image by:1
+    Measurement:
+
+MeasureImageAreaOccupied:[module_num:6|svn_version:\'10563\'|variable_revision_number:3|show_window:True|notes:\x5B\x5D]
+    Hidden:1
+    Measure the area occupied in a binary image, or in objects?:Binary Image
+    Select objects to measure:None
+    Retain a binary image of the object regions?:No
+    Name the output binary image:Stain
+    Select a binary image to measure:None
+
+IdentifyPrimaryObjects:[module_num:7|svn_version:\'10826\'|variable_revision_number:8|show_window:True|notes:\x5B\x5D]
+    Select the input image:InvertedGray
+    Name the primary objects to be identified:Nuclei
+    Typical diameter of objects, in pixel units (Min,Max):4,35
+    Discard objects outside the diameter range?:Yes
+    Try to merge too small objects with nearby larger objects?:Yes
+    Discard objects touching the border of the image?:No
+    Select the thresholding method:Otsu Global
+    Threshold correction factor:1
+    Lower and upper bounds on threshold:0,1
+    Approximate fraction of image covered by objects?:0.01
+    Method to distinguish clumped objects:Intensity
+    Method to draw dividing lines between clumped objects:Intensity
+    Size of smoothing filter:10
+    Suppress local maxima that are closer than this minimum allowed distance:5
+    Speed up by using lower-resolution image to find local maxima?:Yes
+    Name the outline image:NucOutlines
+    Fill holes in identified objects?:Yes
+    Automatically calculate size of smoothing filter?:Yes
+    Automatically calculate minimum allowed distance between local maxima?:Yes
+    Manual threshold:0.0
+    Select binary image:Otsu Global
+    Retain outlines of the identified objects?:Yes
+    Automatically calculate the threshold using the Otsu method?:Yes
+    Enter Laplacian of Gaussian threshold:.5
+    Two-class or three-class thresholding?:Two classes
+    Minimize the weighted variance or the entropy?:Weighted variance
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Automatically calculate the size of objects for the Laplacian of Gaussian filter?:Yes
+    Enter LoG filter diameter:5
+    Handling of objects if excessive number of objects identified:Continue
+    Maximum number of objects:500
+    Select the measurement to threshold with:None
+
+GrayToColor:[module_num:8|svn_version:\'10341\'|variable_revision_number:2|show_window:True|notes:\x5B\x5D]
+    Select a color scheme:CMYK
+    Select the input image to be colored red:Original_Image
+    Select the input image to be colored green:Original_Image
+    Select the input image to be colored blue:Original_Image
+    Name the output image:ColorImage
+    Relative weight for the red image:1
+    Relative weight for the green image:1
+    Relative weight for the blue image:1
+    Select the input image to be colored cyan:None
+    Select the input image to be colored magenta:None
+    Select the input image to be colored yellow:None
+    Select the input image that determines brightness:None
+    Relative weight for the cyan image:1
+    Relative weight for the magenta image:1
+    Relative weight for the yellow image:1
+    Relative weight for the brightness image:1
+    Select the input image to add to the stacked image:None
+
+OverlayOutlines:[module_num:9|svn_version:\'10672\'|variable_revision_number:2|show_window:True|notes:\x5B\x5D]
+    Display outlines on a blank image?:No
+    Select image on which to display outlines:ColorImage
+    Name the output image:OverlaidOriginal
+    Select outline display mode:Color
+    Select method to determine brightness of outlines:Max possible
+    Width of outlines:1
+    Select outlines to display:NucOutlines
+    Select outline color:Green
+
+DisplayDataOnImage:[module_num:10|svn_version:\'10412\'|variable_revision_number:2|show_window:True|notes:\x5B\x5D]
+    Display object or image measurements?:Object
+    Select the input objects:None
+    Measurement to display:None
+    Select the image on which to display the measurements:None
+    Text color:red
+    Name the output image that has the measurements displayed:DisplayImage
+    Font size (points):10
+    Number of decimals:2
+    Image elements to save:Image
+
+DisplayDataOnImage:[module_num:11|svn_version:\'10412\'|variable_revision_number:2|show_window:True|notes:\x5B\x5D]
+    Display object or image measurements?:Object
+    Select the input objects:None
+    Measurement to display:None
+    Select the image on which to display the measurements:None
+    Text color:red
+    Name the output image that has the measurements displayed:DisplayImage
+    Font size (points):10
+    Number of decimals:2
+    Image elements to save:Image

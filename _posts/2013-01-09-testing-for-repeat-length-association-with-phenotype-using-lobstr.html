@@ -1,0 +1,154 @@
+---
+layout: post
+title: "Testing for repeat length association with phenotype using lobSTR"
+author: ericminikel
+date: 2013-01-09 00:12:46
+---
+<p>In <a title="Calling repeat length polymorphisms with lobSTR" href="/2013/01/08/calling-repeat-length-polymorphisms-with-lobstr/">yesterday&#8217;s post</a> I got acquainted with <a href="http://jura.wi.mit.edu/erlich/lobSTR/">lobSTR</a>, an innovative new tool for calling repeat length polymorphisms from next-generation sequence data. lobSTR is designed primarily to call repeats that are shorter than the read length and therefore can be completely spanned by a read, with enough flanking sequence on each side to uniquely align the read to the reference genome.  However the v2.0 release of lobSTR makes two big improvements: first, it takes into account reads that only <em>partially</em> span a repeat tract, and second, it can run on paired-end reads and use a read&#8217;s mate&#8217;s alignment to gain confidence in its mapping. Features like these may ultimately help lobSTR to be able to call repeat expansions that are <em>longer</em> than the length of a sequencing read.  But as of right now, it looks like lobSTR still struggles with those longer repeats.  In <a title="Calling repeat length polymorphisms with lobSTR" href="/2013/01/08/calling-repeat-length-polymorphisms-with-lobstr/">yesterday&#8217;s post</a> I tested lobSTR on my Huntington&#8217;s Disease exomes (which all have expanded CAG repeats of 123-165bp, whereas my reads are only 100bp) and it was unable to call the repeat expansion in any of them.</p>
+<p>But I&#8217;m still very interested in what lobSTR can do for my HD research by calling repeat expansions elsewhere in the genome. As documented in <a title="Background on heritability in Huntington’s Disease age of onset" href="/2012/11/28/background-on-heritability-in-huntingtons-disease-age-of-onset/">this backgrounder on HD age of onset</a>, residual age of onset in HD (after controlling for HTT CAG repeat length) is believed to be at least 40% heritable, yet after a decade of research, the HD research community has not confidently identified any specific genetic variations associated with residual age of onset.</p>
+<p>You can file this problem under the broader heading of &#8216;missing heritability&#8217;.  For many diseases we think (based on family associations) that a phenotype is highly heritable, yet all the common SNPs identified through GWAS put together explain very little of the heritability.  Over the last few years, people have been looking for rare SNPs (through exome sequencing or whole genome sequencing), structural variations and copy number variations (through whole genome sequencing or <a href="http://en.wikipedia.org/wiki/Array-comparative_genomic_hybridization">array-CGH</a>), epigenetic modifications (through <a href="http://en.wikipedia.org/wiki/Bisulfite_sequencing">bisulfite-seq</a>, <a href="http://en.wikipedia.org/wiki/Methylated_DNA_immunoprecipitation">MeDIP</a>-seq, <a href="http://en.wikipedia.org/wiki/ChIP-sequencing">ChIP-seq</a>, etc.), and <a href="http://en.wikipedia.org/wiki/Gene%E2%80%93environment_interaction">gene-environment interactions</a> to explain the missing heritability.  But disappointingly, most of the heritability continues to be unexplained.</p>
+<p>Because <a title="How to identify a disease-associated repeat expansion" href="/2012/12/27/how-to-identify-a-disease-associated-repeat-expansion/">repeat length polymorphisms are so difficult to genotype</a>, they are probably the least-explored type of variation that might be contributing to missing heritability.  Yet given the known disease associations with repeat expansions, it&#8217;s totally plausible that these could be driving heritability of some phenotypes.  In particular, HD residual age of onset could plausibly be associated with repeat expansions in <em>other</em> genes (other than HTT) if some of the disease phenotype is mediated by polyQ polar zippers or if RNA toxicity makes any contribution (see <a title="Huntington’s disease reading list" href="/2012/12/10/huntingtons-disease-reading-list/">HD reading list</a>).  I&#8217;m excited about lobSTR because it offers the possibility of testing for such associations on a genome-wide or exome-wide level using sequence data.</p>
+<p>I have 50 phenotypically extreme HD exomes (people with very early or very late residual age of onset) and my goal this morning was to call repeat length polymorphisms in these individuals and test for association of these repeat lengths with residual age of onset.</p>
+<p>Here&#8217;s what I did.</p>
+<p><strong>step 1: call repeat lengths with lobSTR</strong></p>
+<p>As documented <a title="Calling repeat length polymorphisms with lobSTR" href="/2013/01/08/calling-repeat-length-polymorphisms-with-lobstr/">yesterday</a>, I ran lobSTR on all of my exomes:</p>
+<pre>lobSTR --p1 /data/HD/dataset/human_hd_extreme_exome/fastq_unzipped/{sid}_1.fq --p2 /data/HD/dataset/human_hd_extreme_exome/fastq_unzipped/{sid}_2.fq -q --index-prefix /data/HD/dataset/lobSTR-index/index_trf_hg19_extend1000/lobSTR_ --out {sid} --max-diff-ref 500
+python ~/bin/lobstr_v2.0.2_1.linux64/scripts/lobSTR_alignment_checks.py -f {sid}.aligned.tab --plot
+allelotype --command classify --bam {sid}.aligned.bam --haploid chrX,chrY --noise_model ~/bin/lobstr_v2.0.2_1.linux64/models/illumina2 --out {sid} --strinfo ~/bin/lobstr_v2.0.2_1.linux64/data/strinfo.hg19.tab</pre>
+<p><strong>step 2: QC with lobSTR</strong></p>
+<p>lobSTR also comes with some handy Python scripts for QC and descriptive statistics.  I used these to spot check the results from a few exomes, such as:</p>
+<pre>python ~/bin/lobstr_v2.0.2_1.linux64/scripts/lobSTR_alignment_checks.py -f 1820.aligned.tab</pre>
+<pre>1820.aligned.tab Number of aligned reads 107786
+1820.aligned.tab Number of stitched reads 30128
+1820.aligned.tab Number of single end reads 38829
+1820.aligned.tab Number of supporting end reads 38829
+1820.aligned.tab Percent partial aligned reads 0.488072
+1820.aligned.tab Percent reverse strand reads 0.490146
+1820.aligned.tab Mean insert size 174.789
+1820.aligned.tab Percentage of non-unit allele reads 0.0163735</pre>
+<p>Those all look pretty good. The non-unit alleles are supposed to be 1-5%, and the reverse strand reads should be about 50%. And the mean insert size of 175 is within ballpark of the figure of 199 that I had calculated for the whole exomes.</p>
+<pre>python ~/bin/lobstr_v2.0.2_1.linux64/scripts/lobSTR_allelotype_checks.py -f 1820.genotypes.tab</pre>
+<pre>1820.genotypes.tab Number STR covered at least once (includes partially spanning) 28355
+1820.genotypes.tab Number STR loci coverage &gt;= 1 18790
+1820.genotypes.tab Number STR loci coverage &gt;= 5 827
+1820.genotypes.tab Number STR loci coverage &gt;= 10 320
+1820.genotypes.tab Mean STR coverage (only non-partial reads counted) 1.58265
+1820.genotypes.tab Mean percent agreeing reads 0.994757
+1820.genotypes.tab STR period vs. fraction in each category
+1820.genotypes.tab Period 0/0 0/1 1/1 1/2
+1820.genotypes.tab Period:2 0.193853427896 0.36170212766 0.115839243499 0.328605200946
+1820.genotypes.tab Period:3 0.713567839196 0.13567839196 0.0954773869347 0.0552763819095
+1820.genotypes.tab Period:4 0.669902912621 0.145631067961 0.145631067961 0.0388349514563
+1820.genotypes.tab Period:5 0.770491803279 0.114754098361 0.0655737704918 0.0491803278689
+1820.genotypes.tab Period:6 0.926829268293 0.0243902439024 0.0243902439024 0.0243902439024</pre>
+<p>The thing that jumped out at me here is that the mean coverage is only 1.58.  That&#8217;s because this is exome sequence data but lobSTR is calling repeats genome-wide.  So that 1.58 is the average of high coverage in the exons and very sparse coverage of non-exonic sites.  I&#8217;ll filter for coverage later, so I decided not to worry about this at this stage.  (Alternately, I could have run lobSTR with a custom index for just the exonic repeats &#8211; see the <a href="http://jura.wi.mit.edu/erlich/lobSTR/usage.html">lobSTR usage page</a> under &#8216;Building a custom index&#8217;).</p>
+<p><strong>step 3: combine lobSTR output</strong></p>
+<p>I needed to do a regression using data from all 50 exomes, so I had to combine the lobSTR output from each exome at some point.  I decided it was easiest at the bash command line:</p>
+<pre>for sid in {1820..1869} # sid is sample id
+do
+    grep -v '^#' ${sid}.genotypes.tab | awk -v sid=$sid '{print sid "\t" $0}' &gt;&gt; all.genotypes.tab
+done</pre>
+<p>I&#8217;m using <code>grep</code> to remove the header lines, <code>awk</code> to add the sample id as the first column, and concatenating all the results together with <code>&gt;&gt;</code>.  By the way, because this code concatenates, if you run it more than once just remember to <code>rm all.genotypes.tab</code> in between.</p>
+<p><strong>step 4: read combined lobSTR output into R</strong></p>
+<p>I wrote a few lines of R code to read in the combined lobSTR output, combine it with phenotype information (HD residual age of onset) and sort it by genomic site.  In the process I learned the handy R commands <a href="http://stat.ethz.ch/R-manual/R-patched/library/base/html/merge.html"><code>merge</code></a> and <a href="http://stat.ethz.ch/R-manual/R-patched/library/base/html/order.html"><code>order</code></a> which provide much of the functionality of SQL <a href="http://www.postgresql.org/docs/9.1/static/tutorial-join.html"><code>join</code></a> and <a href="http://www.postgresql.org/docs/9.1/static/sql-select.html#SQL-GROUPBY"><code>group by</code></a> operations respectively:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># column names for lobSTR genotypes.tab output. remove the first 'sid' column if you are not adding a sample id to the data.</span>
+colnames<span style="color: #666666;">=</span>c(<span style="color: #ba2121;">'sid'</span>,<span style="color: #ba2121;">'chrom'</span>,<span style="color: #ba2121;">'left'</span>,<span style="color: #ba2121;">'right'</span>,<span style="color: #ba2121;">'unit'</span>,<span style="color: #ba2121;">'period'</span>,<span style="color: #ba2121;">'refcn'</span>,<span style="color: #ba2121;">'mlatype'</span>,<span style="color: #ba2121;">'cov'</span>,<span style="color: #ba2121;">'agree'</span>,<span style="color: #ba2121;">'conflict'</span>,<span style="color: #ba2121;">'alist'</span>,<span style="color: #ba2121;">'score'</span>,<span style="color: #ba2121;">'a1score'</span>,<span style="color: #ba2121;">'a2score'</span>,<span style="color: #ba2121;">'pcov'</span>,<span style="color: #ba2121;">'lbound'</span>,<span style="color: #ba2121;">'alistp'</span>,<span style="color: #ba2121;">'nstitched'</span>)
+<span style="color: #408080; font-style: italic;"># read lobSTR genotypes into a data frame named lob</span>
+<span style="color: #408080; font-style: italic;"># need to use as.is=TRUE so that characters don't turn into factors. need as characters so you can split on delimiters later.</span>
+lob <span style="color: #666666;">=</span> data.frame(read.table(<span style="color: #ba2121;">'all.genotypes.tab'</span>,header<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">FALSE</span>,skip<span style="color: #666666;">=2</span>,col.names<span style="color: #666666;">=</span>colnames,as.is<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">TRUE</span>)) <span style="color: #408080; font-style: italic;"># create a dataframe of lobSTR output</span>
+lobq <span style="color: #666666;">=</span> lob[lob$unit<span style="color: #666666;">%in%</span>c(<span style="color: #ba2121;">'AGC'</span>,<span style="color: #ba2121;">'AAC'</span>),] <span style="color: #408080; font-style: italic;"># I consider only CAG and CAA repeats (named "q" for glutamine, though these repeats won't all code for glutamine depending on frame and strand.</span>
+lobq$a1 <span style="color: #666666;">=</span> as.numeric(lapply(strsplit(lobq$mlatype,<span style="color: #ba2121;">","</span>),<span style="color: #ba2121;">"["</span>,<span style="color: #666666;">1</span>)) <span style="color: #408080; font-style: italic;"># parse first allele value</span>
+lobq$a2 <span style="color: #666666;">=</span> as.numeric(lapply(strsplit(lobq$mlatype,<span style="color: #ba2121;">","</span>),<span style="color: #ba2121;">"["</span>,<span style="color: #666666;">2</span>)) <span style="color: #408080; font-style: italic;"># parse second allele value</span>
+lobq$maxal <span style="color: #666666;">=</span> pmax(lobq$a1,lobq$a2,lobq$lbound,na.rm<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">TRUE</span>) <span style="color: #408080; font-style: italic;"># get longest allele from first, second, and lower bound based on partially spanning reads</span>
+lobq$tcov <span style="color: #666666;">=</span> as.numeric(lobq$cov)<span style="color: #666666;">+</span>as.numeric(lobq$pcov) <span style="color: #408080; font-style: italic;"># calculate total coverage including spanning and partial reads</span>
+phen <span style="color: #666666;">=</span> data.frame(read.table(<span style="color: #ba2121;">'phen.txt'</span>,header<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">FALSE</span>,col.names<span style="color: #666666;">=</span>c(<span style="color: #ba2121;">'sid'</span>,<span style="color: #ba2121;">'res'</span>),as.is<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">TRUE</span>,sep<span style="color: #666666;">=</span><span style="color: #ba2121;">";"</span>)) <span style="color: #408080; font-style: italic;"># read in a table of phenotype info</span>
+phen$res <span style="color: #666666;">=</span> as.numeric(phen$res) <span style="color: #408080; font-style: italic;"># convert residual age of onset to numeric</span>
+vs <span style="color: #666666;">=</span> merge(lobq,phen,by<span style="color: #666666;">=</span><span style="color: #ba2121;">"sid"</span>) <span style="color: #408080; font-style: italic;"># equivalent of SQL "create table vs as select * from lobq inner join phen on lobq.sid = phen.sid;"</span>
+o <span style="color: #666666;">=</span> vs[with(vs, order(chrom,left,right)), ] <span style="color: #408080; font-style: italic;"># equivalent of SQL "create table o as select * from vs order by chrom, left, right;"</span></pre>
+</div>
+<p><strong>step 5: a few descriptive statistics in R</strong></p>
+<p>Once I&#8217;ve got a new dataset read into R, I always try to start with some descriptive statistics.  First I checked the rate of heterozygous and homozygous calls and how many sites were not called (<code>NA</code>):</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># number of allelotype calls containing NA</span>
+sum(is.na(lobq$a1) <span style="color: #666666;">|</span> is.na(lobq$a2),na.rm<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">TRUE</span>)
+<span style="color: #408080; font-style: italic;"># number of heterozygous allelotype calls</span>
+sum(lobq$a1 <span style="color: #666666;">!=</span> lobq$a2,na.rm<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">TRUE</span>)
+<span style="color: #408080; font-style: italic;"># number of homozygous reference calls</span>
+sum(lobq$a1<span style="color: #666666;">==0</span> <span style="color: #666666;">&amp;</span> lobq$a2<span style="color: #666666;">==0</span>,na.rm<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">TRUE</span>)
+<span style="color: #408080; font-style: italic;"># number of homozygous non-reference calls</span>
+sum(lobq$a1<span style="color: #666666;">!=0</span> <span style="color: #666666;">&amp;</span> lobq$a1<span style="color: #666666;">==</span>lobq$a2,na.rm<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">TRUE</span>)
+<span style="color: #408080; font-style: italic;"># this should equal the sum of those:</span>
+dim(lobq)[<span style="color: #666666;">1</span>]</pre>
+</div>
+<p>And the results looked right and matched what <code>lobSTR_allelotype_checks.py</code> gave above.  I also checked how many sample-site combinations had coverage greater than 1 read:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">sum(lobq$cov <span style="color: #666666;">&gt;</span> <span style="color: #666666;">1</span>)</pre>
+</div>
+<p>The answer was only about 20%, which isn&#8217;t too surprising considering that I used lobSTR to call repeat lengths genome-wide even though my data is exome.</p>
+<p>Finally, while browsing my data I noticed a preponderance of negative allelotypes, meaning that lobSTR had called an allele length <em>shorter</em> than reference.  I wondered if this was objectively true or if I was just seeing things so I checked:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># number of allelotypes with the longest allele longer than reference</span>
+sum(o$maxal <span style="color: #666666;">&gt;</span> <span style="color: #666666;">0</span>)
+<span style="color: #408080; font-style: italic;"># number of allelotypes with the longest allele shorter than reference</span>
+sum(o$maxal <span style="color: #666666;">&lt;</span> <span style="color: #666666;">0</span>)</pre>
+</div>
+<p>And sure enough, there were more contracted alleles than expanded alleles (13826 vs. 9051).  But once I applied a filter for allelotypes with coverage &gt; 1 read, that trend went away and I had more expanded than contracted alleles, which makes sense considering that I&#8217;m testing against the longer allele (<code>o$maxal</code>):</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># number of allelotypes with the longest allele longer than reference and coverage &gt; 1</span>
+sum(o$maxal <span style="color: #666666;">&gt;</span> <span style="color: #666666;">0</span> <span style="color: #666666;">&amp;</span> o$cov <span style="color: #666666;">&gt;</span> <span style="color: #666666;">1</span>)
+<span style="color: #408080; font-style: italic;"># number of allelotypes with the longest allele shorter than reference</span>
+sum(o$maxal <span style="color: #666666;">&lt;</span> <span style="color: #666666;">0</span> <span style="color: #666666;">&amp;</span> o$cov <span style="color: #666666;">&gt;</span> <span style="color: #666666;">1</span>)</pre>
+</div>
+<p>And here I got 3071 expanded vs. 1261 contracted.  (And by the way &#8211; if like me you&#8217;re not totally fluent in R, remember that <a href="http://stat.ethz.ch/R-manual/R-patched/library/base/html/Logic.html"><code>&amp;</code> and <code>&amp;&amp;</code> are very different</a>.)</p>
+<p><strong>step 6: test for association in R</strong></p>
+<p>I wrote this script to crawl through the table and create two models for every site: a linear regression of max allele length vs. residual age of onset, and a Fisher&#8217;s exact test for the number of expanded alleles at each site in extreme early vs. extreme late patients:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># set up variables for loops and regression</span>
+mincov <span style="color: #666666;">=</span> <span style="color: #666666;">2</span> <span style="color: #408080; font-style: italic;"># minimum read coverage of a repeat region to include in model</span>
+minsamplecount <span style="color: #666666;">=</span> <span style="color: #666666;">40</span> <span style="color: #408080; font-style: italic;"># minimum number of samples to create a model for the site. 40/50 = require 80% genotyping rate.</span>
+maxrow <span style="color: #666666;">=</span> dim(o)[<span style="color: #666666;">1</span>] <span style="color: #408080; font-style: italic;"># highest row number in o</span>
+sitefirstrow <span style="color: #666666;">=</span> <span style="color: #666666;">1</span> <span style="color: #408080; font-style: italic;"># first row number referring to a particular genomic site. used in outer loop.</span>
+rowno <span style="color: #666666;">=</span> <span style="color: #666666;">1</span> <span style="color: #408080; font-style: italic;"># row number currently being processed, used in inner loop</span>
+results <span style="color: #666666;">=</span> matrix(nrow <span style="color: #666666;">=</span> dim(unique(o[<span style="color: #666666;">2</span>:<span style="color: #666666;">4</span>]))[<span style="color: #666666;">1</span>], ncol <span style="color: #666666;">=</span> <span style="color: #666666;">6</span>) <span style="color: #408080; font-style: italic;"># one row for every unique chrom/left/right combination; 6 cols listed on next line</span>
+colnames(results) <span style="color: #666666;">=</span> c(<span style="color: #ba2121;">"chrom"</span>,<span style="color: #ba2121;">"left"</span>,<span style="color: #ba2121;">"right"</span>,<span style="color: #ba2121;">"count"</span>,<span style="color: #ba2121;">"linearp"</span>,<span style="color: #ba2121;">"fisherp"</span>) <span style="color: #408080; font-style: italic;"># name the result matrix columns</span>
+resultrow <span style="color: #666666;">=</span> <span style="color: #666666;">1</span> <span style="color: #408080; font-style: italic;"># counter for inserting results into the result matrix</span>
+<span style="color: #408080; font-style: italic;"># outer loop: iterate over repeat sites</span>
+<span style="color: #008000; font-weight: bold;">while</span> (sitefirstrow <span style="color: #666666;">&lt;</span> maxrow) { <span style="color: #408080; font-style: italic;"># until we hit the end of the table...</span>
+    chrom <span style="color: #666666;">=</span> o$chrom[sitefirstrow] <span style="color: #408080; font-style: italic;"># grab the chrom/left/right unique identifier for a site</span>
+    left <span style="color: #666666;">=</span> o$left[sitefirstrow]
+    right <span style="color: #666666;">=</span> o$right[sitefirstrow]
+    rowno <span style="color: #666666;">=</span> sitefirstrow <span style="color: #408080; font-style: italic;"># start with the first sample for this site</span>
+    maxals <span style="color: #666666;">=</span> c() <span style="color: #408080; font-style: italic;"># vector to hold largest allele for each sample</span>
+    resaos <span style="color: #666666;">=</span> c() <span style="color: #408080; font-style: italic;"># vector to hold residual age of onset for each sample</span>
+    <span style="color: #408080; font-style: italic;"># inner loop: iterate over samples at a given repeat site</span>
+    <span style="color: #008000; font-weight: bold;">while</span>(o$chrom[rowno] <span style="color: #666666;">==</span> chrom <span style="color: #666666;">&amp;&amp;</span> o$left[rowno] <span style="color: #666666;">==</span> left <span style="color: #666666;">&amp;&amp;</span> o$right[rowno] <span style="color: #666666;">==</span> right <span style="color: #666666;">&amp;&amp;</span> rowno <span style="color: #666666;">&lt;=</span> maxrow) { <span style="color: #408080; font-style: italic;"># as long as we're on the same site, iterate over samples</span>
+        <span style="color: #008000; font-weight: bold;">if</span>(o$tcov[rowno] <span style="color: #666666;">&gt;=</span> mincov) { <span style="color: #408080; font-style: italic;"># skip sample if that site had insufficient coverage in that sample</span>
+            maxals <span style="color: #666666;">=</span> c(maxals,o$maxal[rowno]) <span style="color: #408080; font-style: italic;"># append the sample's max allele length at that site</span>
+            resaos <span style="color: #666666;">=</span> c(resaos,o$res[rowno]) <span style="color: #408080; font-style: italic;"># append the sample's phenotype</span>
+        }
+        rowno <span style="color: #666666;">=</span> rowno <span style="color: #666666;">+</span> <span style="color: #666666;">1</span> <span style="color: #408080; font-style: italic;"># advance to the next sample</span>
+    }
+    samplecount <span style="color: #666666;">=</span> length(maxals) <span style="color: #408080; font-style: italic;"># how many samples are included for this site</span>
+    <span style="color: #008000; font-weight: bold;">if</span> (samplecount <span style="color: #666666;">&gt;=</span> minsamplecount <span style="color: #666666;">&amp;</span> length(unique(maxals)) <span style="color: #666666;">&gt;</span> <span style="color: #666666;">1</span>) { <span style="color: #408080; font-style: italic;"># don't bother doing regression if &lt; 3 datapoints or monomorphic</span>
+        <span style="color: #408080; font-style: italic;"># linear model of residual age of onset vs. maximum allele repeat length</span>
+        model <span style="color: #666666;">=</span> lm(resaos ~ maxals) 
+        linearp <span style="color: #666666;">=</span> summary(model)$coef[<span style="color: #ba2121;">"maxals"</span>,<span style="color: #ba2121;">"Pr(&gt;|t|)"</span>] <span style="color: #408080; font-style: italic;"># can also get coefficient: #coeff = summary(model)$coef["maxals","Estimate"]</span>
+        <span style="color: #408080; font-style: italic;"># fisher model of number of expanded alleles vs. dichotomous phenotype</span>
+        earlyexp <span style="color: #666666;">=</span> sum(resaos <span style="color: #666666;">&lt;</span> <span style="color: #666666;">0</span> <span style="color: #666666;">&amp;</span> maxals <span style="color: #666666;">&gt;</span> <span style="color: #666666;">0</span>) <span style="color: #408080; font-style: italic;"># early onset patients with expanded alleles</span>
+        earlynon <span style="color: #666666;">=</span> sum(resaos <span style="color: #666666;">&lt;</span> <span style="color: #666666;">0</span> <span style="color: #666666;">&amp;</span> maxals <span style="color: #666666;">&lt;=</span> <span style="color: #666666;">0</span>) <span style="color: #408080; font-style: italic;"># early onset patients with non-expanded alleles</span>
+        lateexp <span style="color: #666666;">=</span> sum(resaos <span style="color: #666666;">&gt;</span> <span style="color: #666666;">0</span> <span style="color: #666666;">&amp;</span> maxals <span style="color: #666666;">&gt;</span> <span style="color: #666666;">0</span>) <span style="color: #408080; font-style: italic;"># late onset patients with expanded alleles</span>
+        latenon <span style="color: #666666;">=</span> sum(resaos <span style="color: #666666;">&gt;</span> <span style="color: #666666;">0</span> <span style="color: #666666;">&amp;</span> maxals <span style="color: #666666;">&lt;=</span> <span style="color: #666666;">0</span>) <span style="color: #408080; font-style: italic;"># late onset patients with non-expanded alleles</span>
+        ctable <span style="color: #666666;">=</span> matrix(c(earlyexp,earlynon,lateexp,latenon),nrow<span style="color: #666666;">=2</span>) <span style="color: #408080; font-style: italic;"># contingency table for fisher's exact test</span>
+        fisherp <span style="color: #666666;">=</span> fisher.test(ctable,alternative<span style="color: #666666;">=</span><span style="color: #ba2121;">"two.sided"</span>)$p.value <span style="color: #408080; font-style: italic;"># extract p value from fisher's exact test</span>
+        results[resultrow,] <span style="color: #666666;">=</span> c(chrom,left,right,samplecount,linearp,fisherp) <span style="color: #408080; font-style: italic;"># write out result row</span>
+        resultrow <span style="color: #666666;">=</span> resultrow <span style="color: #666666;">+</span> <span style="color: #666666;">1</span> <span style="color: #408080; font-style: italic;"># advance to next result row</span>
+    }
+    sitefirstrow <span style="color: #666666;">=</span> rowno <span style="color: #408080; font-style: italic;"># advance to the next genomic site</span>
+}
+results <span style="color: #666666;">=</span> data.frame(results,stringsAsFactors<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">FALSE</span>) <span style="color: #408080; font-style: italic;"># convert to data frame</span>
+results <span style="color: #666666;">=</span> results[!is.na(results$chrom),] <span style="color: #408080; font-style: italic;"># get rid of all the extra rows full of NA</span></pre>
+</div>
+<p>In the end, I got a table with results for 131 sites.  To review: those 131 sites represent all the places where (1) an AGC or AAC repeat is present, and at least 40 of my exomes had (2) coverage of at least 2 spanning that site, and (3) an allelotype called by lobSTR.  Since these sites each represent a separate statistical test, in order to be significant after multiple testing correction I will need to see a p value of .05/131 = .0004 or lower.</p>
+<p><strong>discussion</strong></p>
+<p>It is good to know that lobSTR can call an appreciable number of repeat length polymorphisms reliably across samples.  I am sure it could do even better, especially with longer repeats, if we had longer read lengths.  I know <a href="http://www.illumina.com/systems/hiseq_comparison.ilmn">some Illumina HiSeq machines</a> can do paired-end 150bp, and apparently <a href="http://www.invitrogen.com/site/us/en/home/Products-and-Services/Applications/Sequencing/Semiconductor-Sequencing/proton/specifications.html">Ion Torrent will be able to do single-end 200bp</a>.</p>

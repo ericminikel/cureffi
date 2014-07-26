@@ -1,0 +1,282 @@
+---
+layout: post
+title: "The difference between odds ratio and risk ratio"
+author: ericminikel
+date: 2014-05-15 15:22:48
+---
+<p>The other day I was emailing with a statistical genetics colleague about a rare SNP associated with a phenotype. I stated that the minor allele frequency (MAF) was .07% in cases and .01% in controls, for a risk ratio of 7. After clicking send, I felt a twinge of regret. Is that actually what risk ratio means? And is risk ratio the right metric to use here? So I did some Googling to get my facts straight. Here&#8217;s what I learned.</p>
+<p>I&#8217;ll start with a non-genetics example for simplicity, and then move on to a genetic example. Suppose you&#8217;re testing for an association of an exposure (say, smoking) with a phenotype (say, cancer), and you have a contingency table as follows:</p>
+<table>
+<tr>
+<td>
+</td>
+<td>
+cancer
+</td>
+<td>
+no cancer
+</td>
+</tr>
+<tr>
+<td>
+smoker
+</td>
+<td>
+a
+</td>
+<td>
+b
+</td>
+</tr>
+<tr>
+<td>
+non-smoker
+</td>
+<td>
+c
+</td>
+<td>
+d
+</td>
+</tr>
+</table>
+<p>First, recall that the <a href="http://en.wikipedia.org/wiki/Odds">odds</a> of an event are defined as P(event)/P(not event). So for an event with p = .25, the odds are .25/.75 = 1/3. To make things more confusing, colloquially, no one refers to odds of one third, instead this would be phrased &#8220;three to one against.&#8221; An event with p = .75 would have odds .75/.25 = 3, and this would be phrased &#8220;three to one for.&#8221;</p>
+<p>We can define the following terms:</p>
+<p>The <strong>odds ratio</strong> (OR) is the ratio of the odds of cancer in smokers to the odds of cancer in non-smokers.</p>
+<p>OR = (a/b)/(c/d) = (ad)/(bc)</p>
+<p>The <strong>risk ratio</strong> (RR), also called the relative risk, is the ratio of the probability of cancer in smokers to the probability of cancer in non-smokers. </p>
+<p>RR = (a/(a+b))/(c/(c+d)) = (a(c+d))/(c(a+b))</p>
+<p>Given that you know a, b, c, and d, you can compute either of these metrics. Yet odds ratio is strongly preferred as the &#8220;right&#8221; metric to report in almost all scenarios. That seems to be because the quantity that it measures is more fundamental to the biology of what you&#8217;re studying, and less likely to change depending on <em>how</em> you&#8217;re studying it. Here are some examples to illustrate that.</p>
+<p>Suppose we go out and ascertain 1000 cancer patients and 1000 healthy controls, and then ask them whether they smoke. Suppose the data look like this:</p>
+<table>
+<tr>
+<td>
+</td>
+<td>
+cancer
+</td>
+<td>
+no cancer
+</td>
+</tr>
+<tr>
+<td>
+smoker
+</td>
+<td>
+700
+</td>
+<td>
+200
+</td>
+</tr>
+<tr>
+<td>
+non-smoker
+</td>
+<td>
+300
+</td>
+<td>
+800
+</td>
+</tr>
+</table>
+<p>OR = (700/200)/(300/800) &asymp; 9.33<br/>
+RR = (700/900)/(300/1100) &asymp; 2.85 </p>
+<p>On the other hand, suppose that cancer patients were hard to come by, so we decided we had to make do basing our study results on just 100 of them &#8211; but controls are easy, so we still got 1000 controls. Suppose the percentage of the cancer patients that smoked was the same, though. Then our data would look like:</p>
+<table>
+<tr>
+<td>
+</td>
+<td>
+cancer
+</td>
+<td>
+no cancer
+</td>
+</tr>
+<tr>
+<td>
+smoker
+</td>
+<td>
+70
+</td>
+<td>
+200
+</td>
+</tr>
+<tr>
+<td>
+non-smoker
+</td>
+<td>
+30
+</td>
+<td>
+800
+</td>
+</tr>
+</table>
+<p>OR = (70/200)/(30/800) &asymp; 9.33<br/>
+RR = (70/270)/(30/830) &asymp; 7.17</p>
+<p>With this sort of skewed ascertainment, the OR remains the same, but the RR is wildly different.</p>
+<p>Alternately, suppose that we did our study the opposite way: we ascertained 900 smokers and 900 non-smokers, then asked whether they had cancer. For example&#8217;s sake, here are some data that give the same answers as the first example above, to within a rounding error:</p>
+<table>
+<tr>
+<td>
+</td>
+<td>
+cancer
+</td>
+<td>
+no cancer
+</td>
+</tr>
+<tr>
+<td>
+smoker
+</td>
+<td>
+700
+</td>
+<td>
+200
+</td>
+</tr>
+<tr>
+<td>
+non-smoker
+</td>
+<td>
+245
+</td>
+<td>
+655
+</td>
+</tr>
+</table>
+<p>OR = (700/200)/(245/655) &asymp; 9.35<br/>
+RR = (700/900)/(245/900) &asymp; 2.86</p>
+<p>In this case, it doesn&#8217;t matter if we over-ascertain smokers or non-smokers. Suppose we could only recruit 90 smokers but we got 900 non-smokers:</p>
+<table>
+<tr>
+<td>
+</td>
+<td>
+cancer
+</td>
+<td>
+no cancer
+</td>
+</tr>
+<tr>
+<td>
+smoker
+</td>
+<td>
+70
+</td>
+<td>
+20
+</td>
+</tr>
+<tr>
+<td>
+non-smoker
+</td>
+<td>
+245
+</td>
+<td>
+655
+</td>
+</tr>
+</table>
+<p>OR = (70/20)/(245/655) &asymp; 9.35<br/>
+RR = (70/90)/(245/900) &asymp; 2.86</p>
+<p>We get the exact same answer. So in cases where you ascertain on a behavior (or genotype) and then check for a disease phenotype, the RR is a valid measurement &#8211; we&#8217;ve measured the real probability of getting a disease given that you have a risk factor, rather than cherry-picking people who have the disease. For this reason, the use of RR is mostly confined to longitudinal studies, where a group of individuals is followed for many years to see whether they develop a disease.</p>
+<p>In the above examples, I have always considered the &#8220;exposure&#8221; as a binary: smoker/non-smoker, 0/1. In genetics, the &#8220;exposure&#8221; is usually a bi-allelic genotype, where the alt allele count in one individual can have three values: 0/1/2. So how do we compute OR in genetics? Intuitively, you can imagine two ways of doing it. You could dichotomize the genotype into a binary exposure variable: &#8220;has an alt allele&#8221;/&#8221;doesn&#8217;t have an alt allele&#8221;. That would correspond to a dominant model. Or you could count the alleles themselves instead of the people carrying the alleles. That would correspond to an additive (allelic) model. The allelic model is more commonly used. The contingency table should look like this:</p>
+<table>
+<tr>
+<td>
+</td>
+<td>
+affected
+</td>
+<td>
+unaffected
+</td>
+</tr>
+<tr>
+<td>
+minor allele count
+</td>
+<td>
+a
+</td>
+<td>
+b
+</td>
+</tr>
+<tr>
+<td>
+major allele count
+</td>
+<td>
+c
+</td>
+<td>
+d
+</td>
+</tr>
+</table>
+<p>OR = (a/b)/(c/d) = (minor allele count in cases / minor allele count in controls) / (major allele count in cases / major allele count in controls)</p>
+<p>Just to check that this is indeed how OR is calculated in practice in statistical genetics, I looked up the C++ source code for Shaun Purcell&#8217;s <a href="http://pngu.mgh.harvard.edu/~purcell/plink/">PLINK</a>, the program that has produced more published odd ratios than all others combined. In <code>assoc.cpp</code>, one can find the lines:</p>
+<pre class="brush: cpp; title: ; notranslate" title="">
+              // with v. large sample N, better to use: ad/bc = a/b * d/c
+	      odds[l] = ( (double)A1 / (double)A2 ) * 
+		( (double)U2 / (double)U1 ) ;
+</pre>
+<p>Here, A1 is the minor allele count in affecteds, A2 the major allele count in affecteds, and U1 and U2 the respective counts in unaffecteds. So Purcell&#8217;s formula actually corresponds to (a/b)*(d/c), a rearrangement less likely to cause overflow compared to (ad)/(bc), as per the comment.</p>
+<p>Now let&#8217;s return to my email from earlier. When I divided the minor allele frequency (MAF) in cases by that in controls, I was taking (a/(a+c))/(b/(b+d)). That&#8217;s not actually a proper formula for the risk ratio <em>or</em> odds ratio. In fact, given only the minor allele frequencies in cases and controls and no counts, we can&#8217;t actually compute the OR or RR. Yet in this case I actually gave a very close approximation of the odds ratio because for very rare alleles, a &laquo; c and b &laquo;d, so (a/(a+c))/(b/(b+d)) &asymp; (a/c)/(b/d) = (ad)/(bc).</p>
+<p>Suppose that the counts for my SNP of interest were as follows:</p>
+<table>
+<tr>
+<td>
+</td>
+<td>
+affected
+</td>
+<td>
+unaffected
+</td>
+</tr>
+<tr>
+<td>
+minor allele count
+</td>
+<td>
+70
+</td>
+<td>
+100
+</td>
+</tr>
+<tr>
+<td>
+major allele count
+</td>
+<td>
+100,000
+</td>
+<td>
+1,000,000
+</td>
+</tr>
+</table>
+<p>OR = (a/b)/(c/d) = 7.00<br/>
+MAF(cases)/MAF(controls) = (a/(a+c))/(b/(b+d)) = 6.996<br/>
+RR = (a/(a+b))/(c/(c+d)) = 4.53</p>
+<p>So for very rare alleles, the ratio of minor allele frequencies is pretty close to the odds ratio, while it&#8217;s not necessarily a good approximation of the risk ratio, which anyway isn&#8217;t a figure you want. For genetics and genomics, unless you ascertained people on genotype at a young age, the figure you&#8217;re interested in is the odds ratio.</p>

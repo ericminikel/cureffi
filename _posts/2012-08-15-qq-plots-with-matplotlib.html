@@ -1,0 +1,92 @@
+---
+layout: post
+title: "QQ plots with matplotlib"
+author: ericminikel
+date: 2012-08-15 16:33:48
+---
+<p>After learning about QQ plots in <a href="/2012/08/06/genome-wide-association-studies/">last week&#8217;s post on genome-wide association studies</a>, I got pretty excited about what a powerful tool these are.  If you are making a huge number of statistical tests as is common in GWAS, QQ plots let you visualize (1) systematic biases (such as population stratification) and (2) whether the results of any of your tests might <em>actually</em> be significant.  <a href="/wp-content/uploads/2012/08/mccarthy-2008-genome-wide-association-studies.pdf">McCarthy 2008</a> and the paper he cites regarding QQ plots, <a href="http://w.nslij-genetics.org/ld/clayton05.pdf">Clayton 2005</a> both plot test statistics such as χ<sup>2</sup> or Cochran-Armitage. But there&#8217;s no reason you can&#8217;t make a QQ plot directly with p values.  Under the null hypothesis that none of the genotypes you&#8217;re looking at are actually associated with the phenotype you&#8217;re looking at, 5% of your tests should be significant at the .05 threshold, 1% at the .01 threshold, and so on.  Why, that&#8217;s exactly what a p value means: &#8220;how likely was this result to have arisen under the null hypothesis?&#8221;  Depending on the kind of data you&#8217;re working with, you might do an exact test where you directly compute a p value rather than a test statistic which you compare to a distribution.  (For choosing a statistical test, the best reference I&#8217;ve found is <a href="http://udel.edu/~mcdonald/statintro.html">John McDonald&#8217;s Handbook of Biological Statistics</a>&#8211; particularly the<a href="http://udel.edu/~mcdonald/statbigchart.html"> choosing a statistical test</a> page).</p>
+<p>Today I wrote this Python script to generate a QQ plot using several of my favorite tools (all of which are open source).  <a href="http://www.initd.org/psycopg/">Psycopg</a> interfaces Python to <a href="http://www.postgresql.org/">PostgreSQL</a>, <a href="http://initd.org/psycopg/docs/usage.html">is dead easy to learn</a> and I literally downloaded and installed it in less time than I&#8217;ve now spent writing this sentence.  <a href="http://numpy.scipy.org/">Numpy</a> seems to be a favorite of scientists everywhere, and <a href="http://matplotlib.sourceforge.net/">matplotlib</a> <a href="/2012/07/01/visualizing-staining-variation-using-matplotlib/">is my new favorite visualization tool</a>.  What&#8217;s more, in case you were bored with the plain black text of code previously posted on this site, CureFFI.org now uses <a href="http://pygments.org/">Pygments</a> for syntax highlighting.</p>
+<p>Here&#8217;s the code:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #008000; font-weight: bold;">import</span> <span style="color: #0000ff; font-weight: bold;">sys</span>
+<span style="color: #008000; font-weight: bold;">import</span> <span style="color: #0000ff; font-weight: bold;">math</span>
+<span style="color: #008000; font-weight: bold;">import</span> <span style="color: #0000ff; font-weight: bold;">psycopg2</span> <span style="color: #408080; font-style: italic;"># http://www.initd.org/psycopg/</span>
+<span style="color: #008000; font-weight: bold;">import</span> <span style="color: #0000ff; font-weight: bold;">numpy</span> <span style="color: #008000; font-weight: bold;">as</span> <span style="color: #0000ff; font-weight: bold;">np</span> <span style="color: #408080; font-style: italic;"># http://numpy.scipy.org/</span>
+<span style="color: #008000; font-weight: bold;">import</span> <span style="color: #0000ff; font-weight: bold;">matplotlib.pyplot</span> <span style="color: #008000; font-weight: bold;">as</span> <span style="color: #0000ff; font-weight: bold;">plt</span> <span style="color: #408080; font-style: italic;"># http://matplotlib.sourceforge.net/</span>
+
+<span style="color: #008000; font-weight: bold;">def</span> <span style="color: #0000ff;">generateqq</span>():
+    <span style="color: #408080; font-style: italic;"># get your already-calculated p values from PostgreSQL using psycopg</span>
+    conn <span style="color: #666666;">=</span> psycopg2<span style="color: #666666;">.</span>connect(database<span style="color: #666666;">=</span><span style="color: #ba2121;">"mydb"</span>, user<span style="color: #666666;">=</span><span style="color: #ba2121;">"postgres"</span>, password<span style="color: #666666;">=</span><span style="color: #ba2121;">"password"</span>)
+    conn<span style="color: #666666;">.</span>autocommit <span style="color: #666666;">=</span> <span style="color: #008000;">True</span>
+    cur <span style="color: #666666;">=</span> conn<span style="color: #666666;">.</span>cursor()
+    <span style="color: #408080; font-style: italic;"># retrive n, the total number of statistical tests made</span>
+    cur<span style="color: #666666;">.</span>execute(<span style="color: #ba2121;">"select count(*) n from test_p;"</span>) 
+    n <span style="color: #666666;">=</span> cur<span style="color: #666666;">.</span>fetchone()[<span style="color: #666666;">0</span>]
+    <span style="color: #008000; font-weight: bold;">print</span> <span style="color: #ba2121;">"n: "</span>, n
+    <span style="color: #408080; font-style: italic;"># retrive pmin, the most significant (i.e. min) p value (for defining the axes)</span>
+    cur<span style="color: #666666;">.</span>execute(<span style="color: #ba2121;">"select min(p_value) from test_p;"</span>)
+    pmin <span style="color: #666666;">=</span> cur<span style="color: #666666;">.</span>fetchone()[<span style="color: #666666;">0</span>]
+    <span style="color: #008000; font-weight: bold;">print</span> <span style="color: #ba2121;">"pmin: "</span>, pmin
+    axisMax <span style="color: #666666;">=</span> math<span style="color: #666666;">.</span>ceil(<span style="color: #666666;">-</span>math<span style="color: #666666;">.</span>log10(pmin))
+    <span style="color: #008000; font-weight: bold;">print</span> <span style="color: #ba2121;">"axisMax: "</span>, axisMax
+    <span style="color: #408080; font-style: italic;"># calculate increment by which sorted p vals should increase under the null</span>
+    increment <span style="color: #666666;">=</span> <span style="color: #666666;">1.0/</span>np<span style="color: #666666;">.</span>float64(n) 
+    <span style="color: #008000; font-weight: bold;">print</span> <span style="color: #ba2121;">"increment: "</span>, increment
+    <span style="color: #408080; font-style: italic;"># starting value for series of 'expected' p values under null</span>
+    current_expected <span style="color: #666666;">=</span> np<span style="color: #666666;">.</span>float64(<span style="color: #666666;">1.0</span>)
+    <span style="color: #408080; font-style: italic;"># lists for 'expected' and 'observed' p values</span>
+    expected <span style="color: #666666;">=</span> []
+    observed <span style="color: #666666;">=</span> []
+    counter <span style="color: #666666;">=</span> <span style="color: #666666;">0</span>
+    <span style="color: #408080; font-style: italic;"># retrive list of p values in descending order (least significant first)</span>
+    cur<span style="color: #666666;">.</span>execute(<span style="color: #ba2121;">"select p_value from test_p order by p_value desc;"</span>)
+    <span style="color: #008000; font-weight: bold;">for</span> record <span style="color: #aa22ff; font-weight: bold;">in</span> cur:
+        expected<span style="color: #666666;">.</span>append(<span style="color: #666666;">-</span>math<span style="color: #666666;">.</span>log10(current_expected))
+        observed<span style="color: #666666;">.</span>append(<span style="color: #666666;">-</span>math<span style="color: #666666;">.</span>log10(record[<span style="color: #666666;">0</span>]))
+        current_expected <span style="color: #666666;">-=</span> increment
+        counter <span style="color: #666666;">+=</span> <span style="color: #666666;">1</span>
+        <span style="color: #008000; font-weight: bold;">if</span> (counter<span style="color: #666666;">%100000</span> <span style="color: #666666;">==</span> <span style="color: #666666;">0</span>):
+            <span style="color: #008000; font-weight: bold;">print</span> <span style="color: #ba2121;">"processed "</span> <span style="color: #666666;">+</span> <span style="color: #008000;">str</span>(counter) <span style="color: #666666;">+</span> <span style="color: #ba2121;">" rows"</span> <span style="color: #408080; font-style: italic;"># so you don't get bored</span>
+    <span style="color: #408080; font-style: italic;"># now plot these two arrays against each other using matplotlib</span>
+    fig <span style="color: #666666;">=</span> plt<span style="color: #666666;">.</span>figure()
+    plt<span style="color: #666666;">.</span>xlim([<span style="color: #666666;">0</span>,axisMax]) 
+    plt<span style="color: #666666;">.</span>xlabel(<span style="color: #ba2121;">"Expected"</span>)
+    plt<span style="color: #666666;">.</span>ylim([<span style="color: #666666;">0</span>,axisMax])
+    plt<span style="color: #666666;">.</span>ylabel(<span style="color: #ba2121;">"Observed"</span>)
+    plt<span style="color: #666666;">.</span>title(<span style="color: #ba2121;">"QQ Plot: Observed vs. Expected distribution of p values (-log10)"</span>)
+    <span style="color: #408080; font-style: italic;"># the observed vs. expected data</span>
+    dataAx <span style="color: #666666;">=</span> fig<span style="color: #666666;">.</span>add_subplot(<span style="color: #666666;">1</span>,<span style="color: #666666;">1</span>,<span style="color: #666666;">1</span>)
+    dataAx<span style="color: #666666;">.</span>plot(expected,observed,<span style="color: #ba2121;">'r.'</span>) <span style="color: #408080; font-style: italic;"># red dots</span>
+    <span style="color: #408080; font-style: italic;"># a diagonal line for comparison</span>
+    lineAx <span style="color: #666666;">=</span> fig<span style="color: #666666;">.</span>add_subplot(<span style="color: #666666;">1</span>,<span style="color: #666666;">1</span>,<span style="color: #666666;">1</span>)
+    lineAx<span style="color: #666666;">.</span>plot([<span style="color: #666666;">0</span>,axisMax],[<span style="color: #666666;">0</span>,axisMax],<span style="color: #ba2121;">'b-'</span>) <span style="color: #408080; font-style: italic;"># blue line</span>
+    plt<span style="color: #666666;">.</span>show()
+    <span style="color: #408080; font-style: italic;"># don't forget to close the database connection</span>
+    cur<span style="color: #666666;">.</span>close()
+    conn<span style="color: #666666;">.</span>close()
+
+<span style="color: #008000; font-weight: bold;">if</span> __name__ <span style="color: #666666;">==</span> <span style="color: #ba2121;">'__main__'</span>:
+    generateqq()</pre>
+</div>
+<p>I tested it using made-up p values with this script.  Here I add 200,000 random p values (simulating genes that aren&#8217;t significant) and 3 really small p values (simulating genes that <em>are</em> significant).</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #008000; font-weight: bold;">import</span> <span style="color: #0000ff; font-weight: bold;">sys</span>
+<span style="color: #008000; font-weight: bold;">import</span> <span style="color: #0000ff; font-weight: bold;">math</span>
+<span style="color: #008000; font-weight: bold;">import</span> <span style="color: #0000ff; font-weight: bold;">random</span>
+<span style="color: #008000; font-weight: bold;">import</span> <span style="color: #0000ff; font-weight: bold;">psycopg2</span> <span style="color: #408080; font-style: italic;"># http://www.initd.org/psycopg/</span>
+
+conn <span style="color: #666666;">=</span> psycopg2<span style="color: #666666;">.</span>connect(database<span style="color: #666666;">=</span><span style="color: #ba2121;">"mydb"</span>, user<span style="color: #666666;">=</span><span style="color: #ba2121;">"postgres"</span>, password<span style="color: #666666;">=</span><span style="color: #ba2121;">"password"</span>)
+conn<span style="color: #666666;">.</span>autocommit <span style="color: #666666;">=</span> <span style="color: #008000;">True</span>
+cur <span style="color: #666666;">=</span> conn<span style="color: #666666;">.</span>cursor()
+<span style="color: #008000; font-weight: bold;">for</span> i <span style="color: #aa22ff; font-weight: bold;">in</span> <span style="color: #008000;">xrange</span>(<span style="color: #666666;">200000</span>):
+    cur<span style="color: #666666;">.</span>execute(<span style="color: #ba2121;">"insert into test_p(p_value) values (</span><span style="color: #bb6688; font-weight: bold;">%s</span><span style="color: #ba2121;">)"</span>,(random<span style="color: #666666;">.</span>random(),))
+cur<span style="color: #666666;">.</span>execute(<span style="color: #ba2121;">"insert into test_p(p_value) values (</span><span style="color: #bb6688; font-weight: bold;">%s</span><span style="color: #ba2121;">)"</span>,(<span style="color: #666666;">10e-12</span>,))
+cur<span style="color: #666666;">.</span>execute(<span style="color: #ba2121;">"insert into test_p(p_value) values (</span><span style="color: #bb6688; font-weight: bold;">%s</span><span style="color: #ba2121;">)"</span>,(<span style="color: #666666;">10e-13</span>,))
+cur<span style="color: #666666;">.</span>execute(<span style="color: #ba2121;">"insert into test_p(p_value) values (</span><span style="color: #bb6688; font-weight: bold;">%s</span><span style="color: #ba2121;">)"</span>,(<span style="color: #666666;">10e-14</span>,))
+cur<span style="color: #666666;">.</span>close()
+conn<span style="color: #666666;">.</span>close()</pre>
+</div>
+<p>Here&#8217;s what the output looks like:</p>
+<p><a href="/wp-content/uploads/2012/08/qqplot-example.png"><img class="alignnone  wp-image-700" title="qqplot-example" src="/wp-content/uploads/2012/08/qqplot-example.png"/></a></p>
+<p>What you&#8217;re looking at here in this simulation is pretty much what would happen in the GWAS of your dreams.  The p values cling tightly to expectation (red dots along the blue line) for almost the entire domain, indicating that your data are good and unbiased, but just those last few p values are far above the line, indicating that you&#8217;ve found a few variants which are strongly correlated with phenotype.  Hooray! Now let&#8217;s go translate these findings into therapeutic development.</p>
+<p>Alas, these are made-up p values for this example.  In reality you might see at least somewhat elevated p values across the domain, which could indicate a couple of things.  Maybe you processed your cases in a different facility, at a different time, or under a different protocol than your controls, introducing systematic technical error.  Or maybe your cases are related to each other (whether in a family or just in a broad ethnic group), so that some variants common to that family (or ethnic group) are enriched in cases and not in controls, even though those variants are not causally associated with the phenotype.  But there are ways to address those issues, some of which are touched on in <a href="/2012/08/06/genome-wide-association-studies/">my recent GWAS post</a>.</p>

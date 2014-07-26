@@ -1,0 +1,208 @@
+---
+layout: post
+title: "An mRNA-seq pipeline using Gsnap, samtools, Cufflinks and BEDtools"
+author: ericminikel
+date: 2013-11-18 17:00:33
+---
+<p><strong>introduction</strong></p>
+<p>I&#8217;m no expert on RNA-seq. I&#8217;ve analyzed RNA-seq data for just a few projects in my year at the Center for Human Genetic Research and at this point I have a pipeline that I think is worth documenting for my future reference and in case it&#8217;s useful to others. I don&#8217;t assert that this is the best way to do things &#8211; in fact, I&#8217;m pretty sure it&#8217;s not. But maybe it can be a starting point.</p>
+<p>My tools of choice for this pipeline are <a href="http://research-pub.gene.com/gmap/">Gsnap</a>,  <a href="http://samtools.sourceforge.net/samtools.shtml">samtools</a>, <a href="http://cufflinks.cbcb.umd.edu/">Cufflinks</a>, and <a href="http://bedtools.readthedocs.org/en/latest/">BEDtools</a>.</p>
+<p><strong>philosophy</strong></p>
+<p>Between RNA-seq and exome sequencing projects, I&#8217;ve tried a few different approaches to parallelizing my sequencing efforts. No approach is perfect. With really small datasets, I&#8217;ve done a lot of things manually, while with larger ones I&#8217;ve sometimes tried to go towards full automation, having a single Python script that submits all the jobs for different steps of the pipeline, waits for them to finish, error checks them and then moves on to the next step. One job to rule them all.</p>
+<p>The full automation sounded genius at first, and if you&#8217;re a software engineer devoted to spending months to make that pipeline address every imaginable scenario, then it probably is genius. But, not having time to make my pipeline absolutely perfect, I found that some fatal problem or another would always arise but the job-to-rule-them-all would have already moved on and wasted thousands of CPU hours on subsequent steps before I noticed.</p>
+<p>So my approach right now &#8211; and I&#8217;m doing an RNA-seq pilot project with 192 samples, to give you an idea &#8211; is to go back to doing a lot of stuff &#8220;manually&#8221;, which is to say, submitting a batch of jobs, waiting for them to finish, playing with the output a bit to make sure it looks reasonable, and then moving on to the next step. But I&#8217;ve developed some ways of using simple command line tools to make this manual effort less annoying than it could be.</p>
+<p><strong>step 1. metadata prep</strong></p>
+<p>Maybe it&#8217;s just my bad luck, but in the past year, the projects I&#8217;ve been assigned to have never had a metadata file. All of the metadata is just embedded in the file names of the FASTQs. So my first step is to get a file listing the full paths of all FASTQs along with metadata parsed from the filenames.</p>
+<p>Here&#8217;s an example of what that can look like:</p>
+<p>First, find the FASTQs:</p>
+<pre>find /path/where/fastqs/are/ -type "f" -name "*.fastq.gz" | sort &gt; /working/directory/fastq.list</pre>
+<p>And then if you&#8217;re doing paired-end reads, line up the pairs:</p>
+<pre>cat fastq.list | sort | awk 'NR%2 == 1 {print $0}' &gt; fastq1.list # odd lines
+cat fastq.list | sort | awk 'NR%2 == 0 {print $0}' &gt; fastq2.list # even lines
+paste fastq1.list fastq2.list &gt; fastq.2col # merge to 2-column list of fastq pairs</pre>
+<p>And then start parsing out the metadata. So for instance, my full path to FASTQs looks like this: <code>/data/HD/dataset/mouse_ki_allele_series_rnaseq/20130501-W22995.FASTQs/847_Liver_Q92_HET_F_L5.LB27_1.clipped.fastq.gz</code>, so I want to split on periods and forward slashes (<code>-F"[./]"</code>) and print out the original line (<code>$0</code>) as well as item <code>$8</code> which is <code>847_Liver_Q92_HET_F_L5.LB27</code> which contains the metadata of interest and is also what I&#8217;ll name the BAMs later. Like so:</p>
+<pre>cat fastq.2col | awk -F"[./]" '{print $0" "$8}' &gt; fastq.3col</pre>
+<p>Next I re-split on period, slash and underscore (<code>-F"[./_]"</code>) and separate out all the metadata of interest: id (847), tissue (Liver), huntingtin polyQ length (92), genotype (HET), sex (F), sequencing lane (L5), library (LB27).</p>
+<pre>cat fastq.3col | awk -F"[./_]" '{print $0" "$12" "$13" "$14" "$15" "$16" "$17" "$18}' &gt; fastq.10col</pre>
+<p>And at some point I realized I also need the base filename (as opposed to full path) of the FASTQs, for copying them into temporary directories. So I added yet two more columns:</p>
+<pre>cat fastq.12col | awk -F'[/ ]' '{print "$0" "$7" "$14}' &gt; fastq.12col</pre>
+<p>Now I&#8217;ve got a 12-column file, <code>fastq.12col</code> with the columns: FASTQ1PATH, FASTQ2PATH, NAME, ID, TISSUE, QLEN, GENOTYPE, SEX, LANE, LIB, FASTQ1NAME, FASTQ2NAME. I&#8217;ll refer back to this file throughout the rest of the pipeline. By the way, the code above represents a best case where the metadata are at least formatted identically in all FASTQ filenames. Sometimes you can&#8217;t even count on that, so double check the fastq.12col file and make sure the same information ended up in the same column for every file.</p>
+<p>By the way, another nice trick you can do at this stage is to create a dummy file with a tiny subset of the data from one of your samples, that will run very quickly and you can use to test out each step in your pipeline before going all-in and submitting hundreds of jobs. For instance,</p>
+<pre>gunzip -c anysample.1.fastq.gz | head -10000 | gzip &gt; test.1.gz
+gunzip -c anysample.2.fastq.gz | head -10000 | gzip &gt; test.2.gz</pre>
+<p>And then put the path and metadata for this &#8220;test&#8221; sample as the first line of your metadata file, and every time you&#8217;re about to run another pipeline step, first do it with <code>head -1 fastq.12col</code> and if and only if that finishes successfully, then run all the samples. This will save you a lot of failed jobs when you have some silly typo in your code.</p>
+<p><strong>step 2. reference prep</strong></p>
+<p>Make sure you have the right reference genome (for alignment) and transcript feature file (for calling expression levels) and that they match. For my current project I am using the latest Ensembl mouse genome, currently GRCm38.73 [<a href="ftp://ftp.ensembl.org/pub/release-73/fasta/mus_musculus/dna/Mus_musculus.GRCm38.73.dna.toplevel.fa.gz">reference genome as FASTA</a>, <a href="ftp://ftp.ensembl.org/pub/release-73/gtf/mus_musculus/Mus_musculus.GRCm38.73.gtf.gz">transcripts as GTF</a>]. In my case, I wanted to slightly modify the reference genome by adding in the human HTT knock-in construct present in the mice I&#8217;m studying, so I concatenated the FASTA file for the knock-in construct to the reference genome, and indexed it for Gsnap, samtools and (while I&#8217;m at it for good measure), BWA:</p>
+<pre>cat Mus_musculus.GRCm38.73.dna.toplevel.fa hdh_q_ki_construct.fa &gt; GRCm38.73.plus.ki.fa
+samtools faidx GRCm38.73.plus.ki.fa
+bwa index GRCm38.73.plus.ki.fa
+gmap_build -d grcm3873ki -k 15 -s none GRCm38.73.plus.ki.fa</pre>
+<p>The samtools and BWA indexes will go in whatever directory you run this, but <code>gmap_build</code> is a little weird &#8211; it squirrels away the index in a subdirectory wherever it is installed. By using the <code>-d grcm3873ki</code> option I&#8217;ve named my new reference genome <code>grcm3873ki</code>, and that name is all I&#8217;ll need to refer to in order to use this index later.</p>
+<p><strong>step 3. FastQC</strong></p>
+<p>It&#8217;s debatable how relevant a lot of the quality checks in <a href="http://www.bioinformatics.babraham.ac.uk/projects/fastqc/">FastQC</a> really are to RNA-seq data, but I usually run it anyway for good measure, just in case something pops out at me. Here&#8217;s where I&#8217;ll use the metadata file for the first time:</p>
+<pre>cat fastq.12col | awk '{print "fastqc "$1" -f fastq --nogroup -o /output/directory/"}' &gt; fastqc.bash
+cat fastq.12col | awk '{print "fastqc "$2" -f fastq --nogroup -o /output/directory/"}' &gt;&gt; fastqc.bash
+# visually inspect the fastqc.bash file to make sure it's what you want. then:
+cat fastqc.bash |  awk '{print "bsub -q medium -W 12:00 \""$0"\""}' | bash</pre>
+<p>The idea here is to first put all the commands you plan to run into a <code>.bash</code> file so you have a chance to just inspect it with <code>less</code> or something and make sure it turned out the way you thought, and <em>then</em> go back and actually wrap each line of the bash script in a <code>bsub</code> statement. With FastQC, the command is trivial enough that this may seem like extra work for no reason, but with some of the later steps in this pipeline I often find that I have escaped my quotation marks wrong or something and I&#8217;m glad I double checked.</p>
+<p>Once my FastQC jobs finish, I usually visually inspect one or two the HTML-formatted summaries and then aggregate all the data together to do summary statistics. I previously posted some code to aggregate FastQC data from multiple samples <a title="FastQC for large numbers of samples" href="/2012/08/27/fastqc-for-large-numbers-of-samples/">here</a>, and that code works quite well, but I&#8217;ve lately been working a bit less in PostgreSQL so this time I slightly modified that script to just write the tables out to a couple of text files:</p>
+<p><script src="https://gist.github.com/7490302.js"></script><noscript><pre><code class="language-python python">import os
+import sys
+
+working_dir = '/data/HD/analysis/038ea/analysis/1/fastqc/'
+
+fastqc_summary = open(working_dir+'fastqc_summary.txt',mode='wb')
+fastqc_details = open(working_dir+'fastqc_details.txt',mode='wb')
+
+for root, dirs, files in os.walk(working_dir): # walk a directory containing FastQC output for multiple samples
+    for name in files:
+        if (name == &quot;fastqc_data.txt&quot;):
+            fileid = fileid = root.split(&quot;/&quot;)[-1][:-7] # use string slicing here if you only want part of the filename as the id
+            with open(os.path.join(root,name),&quot;r&quot;) as f: # automatically close the file when done
+                for line in f.readlines():
+                    line = line.strip() # trim endline
+                    if (line[:2] == &quot;&gt;&gt;&quot; and line[:12] != &quot;&gt;&gt;END_MODULE&quot;): # for each module grab summary data
+                        module = line[2:-5] # grab module name
+                        status = line[-4:] # and overall status pass/warn/fail
+                        fastqc_summary.write(fileid+&quot;\t&quot;+module+&quot;\t&quot;+status+&quot;\n&quot;)
+                        #sql = &quot;insert into fastqc_summary(fileid,module,status) values(%s,%s,%s);&quot;
+                        #data = (fileid,module,status)
+                        #c.execute(sql,data)
+                    elif (line[:2] != &quot;&gt;&gt;&quot; and line[:2] != &quot;##&quot;): # grab details under each module
+                        cols = line.split(&quot;\t&quot;)
+                        col1 = cols[0]
+                        ocols = &quot;|&quot;.join(cols[1:])
+                        fastqc_details.write(fileid+&quot;\t&quot;+module+&quot;\t&quot;+col1+&quot;\t&quot;+ocols+&quot;\n&quot;)
+                        #sql = &quot;insert into fastqc_details(fileid,module,col1,ocols) values(%s,%s,%s,%s);&quot;
+                        #data = (fileid,module,col1,ocols)
+                        #c.execute(sql,data)
+
+fastqc_summary.close()
+fastqc_details.close()
+</code></pre></noscript></p>
+<p>And then you can read them into R or any SQL database and play with them using some of the queries in <a title="FastQC for large numbers of samples" href="/2012/08/27/fastqc-for-large-numbers-of-samples/">the original post</a>.</p>
+<p><strong>step 4. alignment</strong></p>
+<p>In this step I&#8217;m going to submit one job to align each of my 192 samples with <a href="http://research-pub.gene.com/gmap/">Gsnap</a>. Many of my gzipped FASTQs are large enough (&gt; 8GB) that I&#8217;ve found that I get a huge performance boost by copying them over to a temporary directory on the compute node where the job is running, doing the alignment there, and then copying them back to my working directory.</p>
+<p>Here&#8217;s the code. On my cluster, each of these jobs takes 2-4 days.</p>
+<pre>workdir=/my/working/dir
+cat fastq.12col | awk -v workdir=$workdir '{print "bsub -q big -m general \"workdir=/my/working/dir; tmpdir=\\\$(mktemp -d); trap '\''rm -rfv \$tmpdir'\'' EXIT; cp "$1" \\\$tmpdir; cp "$2" \\\$tmpdir; gsnap --gunzip --format\=sam --read-group-id="$4" --read-group-library="$10" --read-group-platform=illumina -N 1 -m 10 -d grcm3873ki \\\$tmpdir/"$11" \\\$tmpdir/"$12" | samtools view -Sbh - &gt; \\\$tmpdir/"$3".bam; cp \\\$tmpdir/"$3".bam "workdir";\""}' &gt; submitalignmentjobs.bash</pre>
+<p>It makes me shudder just to look at.  As a guide, <code>$(mktemp -d)</code> gets a temporary directory (local on the compute node), <code>trap 'rm -rfv $tmpdir' EXIT</code> makes sure the temporary directory is deleted when the job finishes, <code>$1</code> is FASTQ1PATH, <code>$2</code> is FASTQ2PATH, <code>$4</code> is ID, <code>$10</code> is LIB, <code>$11</code> is FASTQ1NAME, <code>$12</code> is FASTQ2NAME, and <code>$3</code> is NAME, the sample name I&#8217;m using as the BAM name. What makes this so unreadable is the multiple layers of escaping of quotes. Hence why I write it first to <code>submitalignmentjobs.bash</code>, then look at that to make sure it looks right, maybe submit the test sample with <code>head -1 submitalignmentjobs.bash | bash</code> to make sure it runs, and only then do I go and submit all 192 jobs.</p>
+<p>The ugliness and the potential for mixups when doing so much escaping is one of the reasons I say that this pipeline surely is not the best way of getting this job done. The alternative I&#8217;ve seen that is more readable is to write the command for each job to a <code>.lsf</code> file and then submit those lsf files with <code>bsub</code>. This avoids all the escaping but has the tradeoff of creating a lot of clutterfiles you have to clean up. Plus there&#8217;s the question of how are you generating those LSF files and doesn&#8217;t that process usually involve a lot of escaping too.</p>
+<p>Now, once my alignments have finished, I want to check that the BAMs all turned out valid. Curiously, I have found that sometimes a job will appear to finish and will create a valid BAM which samtools can read without errors, yet which appears to be truncated based on its size. I still haven&#8217;t gotten to the bottom of why this occurs, but to screen for these cases I wrote a quick bash + R script:</p>
+<p><script src="https://gist.github.com/7490946.js"></script><noscript><pre><code class="language-shell shell">cd /my/working/dir/
+du -sb *.bam &gt; bam.filesize  # two-column list of BAMs and their size in bytes
+cat fastq.12col | awk '{print &quot;du -sb &quot;$1}' | bash &gt; fastq.filesize  # two-column list of FASTQs and their size in bytes
+# switch to R
+R
+fastq = read.table('fastq.filesize',header=FALSE)
+bam = read.table('bam.filesize',header=FALSE)
+bam$name = substr(bam$V2,1,21) # parse a unique ID for the BAMs from the path
+fastq$name = substr(fastq$V2,71,91) # same for FASTQs
+bam$bamsize=bam$V1 
+fastq$fastqsize=fastq$V1
+merged = merge(fastq,bam,&quot;name&quot;)[,c(&quot;name&quot;,&quot;bamsize&quot;,&quot;fastqsize&quot;)]
+dim(merged) # 192 3
+
+# plot bam vs. fastq size without names
+png('bam.vs.fastq.size.png',width=500,height=500)
+plot(merged$bamsize,merged$fastqsize,pch=19)
+dev.off()
+
+# and with names to identify any outliers
+png('bam.vs.fastq.size.with.labels.png',width=500,height=500)
+plot(merged$bamsize,merged$fastqsize,pch=19)
+text(merged$bamsize,merged$fastqsize,labels=merged$name,pos=4,cex=.8)
+dev.off()
+
+# write out results for later
+write.table(merged,&quot;merged.size.txt&quot;,sep=&quot;\t&quot;,col.names=TRUE,row.names=FALSE)
+
+# browse a list of potentially bad BAMs
+badbams = merged$name[merged$fastqsize/merged$bamsize &gt; .41] # .41 is arbitrary cutoff from visual inspection of plots
+badbams
+
+q()
+n
+</code></pre></noscript></p>
+<p>Here&#8217;s an example of the first plot it generates:</p>
+<p><a href="/wp-content/uploads/2013/11/bam.vs_.fastq_.size_.png"><img class="alignnone size-full wp-image-3277" alt="bam.vs.fastq.size" src="/wp-content/uploads/2013/11/bam.vs_.fastq_.size_.png"/></a></p>
+<p>Each point is one sample, and I&#8217;m plotting each sample&#8217;s BAM size against the size of one of its two gzipped FASTQ files. Basically, I find that one FASTQ is usually about 36-41% the size of the resulting BAM (I&#8217;m using paired end reads and comparing to only one FASTQ, so this implies that the two FASTQs are ~80% the size of the BAM, thus that the alignment information adds about 1/.8-1 = 25% to the compressed size of the data). You see a very tight correlation between BAM size and FASTQ size (streak in the middle). Then on the left you see one smaple where the BAM is much smaller than it could be &#8211; this makes me suspect that job failed in some mysterious way, so I flag it as a &#8220;badbam&#8221; and re-run it later. There are also usually a few BAMs that are larger than they should be (dots towards the right). I haven&#8217;t figured out why that occurs.</p>
+<p>Note that when I first aligned the 192 samples I just submitted them as 192 jobs. My priority in my institution&#8217;s LSF queue isn&#8217;t high enough for there to be any advantage for me in parallelizing that process even further. But now that I have (in the example above) just <em>one</em> sample that needs to be re-aligned, I can benefit from splitting it up to run in an hour or so instead of a few days.</p>
+<p>This I do &#8220;manually&#8221; since it&#8217;s one sample, pasting the paths into these commands:</p>
+<pre>bsub.py medium 08:00 "gunzip -c /data/HD/dataset/mouse_ki_allele_series_rnaseq/20130424-H22819.FASTQs/514_Liver_Q111_HET_M_L8.LB9_1.clipped.fastq.gz | split -d -a 3 -l 1000000 - tmp1.list"
+bsub.py medium 08:00 "gunzip -c /data/HD/dataset/mouse_ki_allele_series_rnaseq/20130424-H22819.FASTQs/514_Liver_Q111_HET_M_L8.LB9_2.clipped.fastq.gz | split -d -a 3 -l 1000000 - tmp2.list"
+ls # check how many files this created. in this case, split files are numbered 000 through 177
+for i in {000..177}
+do
+    bsub.py short 00:50 "gsnap --format=sam --read-group-id=514 --read-group-library=LB9 --read-group-platform=illumina -N 1 -m 10 -d grcm3873ki tmp1.list$i tmp2.list$i | samtools view -Sbh - &gt; tmp.list$i.bam"
+done
+bsub.py medium 23:00 "samtools merge 514_Liver_Q111_HET_M_L8.LB9.bam `ls tmp.list*.bam | tr '\n' ' '`"</pre>
+<p>Basically I <code>gunzip -c</code> the FASTQs, i.e. decompress while keeping the original, and pipe that to <code>split</code> the data into <em>n</em> one million line files (<code>-l 1000000</code>) with 3 digit identifiers (<code>-a 3</code>) and the prefix <code>tmp1.list</code> for the first end of the pair and <code>tmp2.list</code> for the second end of the pair. Then I check how many files this created, loop through them all and submit a separate Gsnap job for each. Then I <code><a href="http://samtools.sourceforge.net/samtools.shtml">samtools</a> merge</code> the bams back together. <code>tr</code> to eliminate newlines in the <code>ls</code> output is from <a href="http://stackoverflow.com/a/1252010">this awesome StackOverflow answer</a>.</p>
+<p>Or alternately if you had more than one sample fail, you can <code>grep -f</code> the badbam list against the fastq.12col file to re-run only those jobs.</p>
+<p>Once I&#8217;m confident that all the BAMs have aligned properly, I sort and index. You can <code>cat fastq.12col | awk '{print $3".bam"}'</code> to get the list of BAMs, or to save trouble you can just iterate over the list of BAMs as I do here. Again, I copy everything to a temporary directory and then back again.</p>
+<pre>mkdir srtd
+for bamfile in *.bam
+do
+  bsub -q medium -W 20:00 -m general "workdir=/my/working/dir; tmpdir=\$(mktemp -d); trap 'rm -rfv \$tmpdir' EXIT;  cp $workdir/$bamfile \$tmpdir; samtools sort \$tmpdir/$bamfile \$tmpdir/$bamfile.srtd; samtools index \$tmpdir/$bamfile.srtd.bam; mv \$tmpdir/$bamfile.srtd.bam $workdir/srtd; mv \$tmpdir/$bamfile.srtd.bam.bai $workdir/srtd; rm \$tmpdir/$bamfile"
+done</pre>
+<p>This gives me sorted, indexed BAMs in a folder <code>srtd/</code> with names that end in <code>.bam.srtd.bam</code>.</p>
+<p><strong>step 5. expression levels</strong></p>
+<p>Once I&#8217;ve got sorted indexed BAMs I usually want to get some sort of gene expression levels. There&#8217;s a healthy debate to be had about the right measure of gene expression to use depending on what your research question is. See my post on <a title="Counts vs. FPKMs in RNA-seq" href="/2013/09/12/counts-vs-fpkms-in-rna-seq/">counts vs. FPKMs</a>, and in particular <a href="https://twitter.com/blahah404">Richard Smith</a>&#8216;s <a href="/2013/09/12/counts-vs-fpkms-in-rna-seq/#comment-483">comment</a>. For many purposes, <em>transcripts per million</em> (TPM) may be the best metric [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2820677/">Li 2010</a>]. TPM can be calculated using <a href="http://deweylab.biostat.wisc.edu/rsem/">RSEM</a>. I&#8217;m currently learning how to use RSEM and if I get a good pipeline up and running with that tool I&#8217;ll add that as a new post in the future. In the meantime, this post will cover how to run Cufflinks and get FPKM values for each transcript in your GTF file.</p>
+<p>Here&#8217;s how I did it:</p>
+<pre>mkdir cufflinks
+mkdir cufflinks/1
+cat fastq.12col | awk '{print "cufflinks -o cufflinks/1/"$3" -G /data/HD/public/GRCm38.73/Mus_musculus.GRCm38.73.gtf gsnap/1/srtd/"$3".bam.srtd.bam"}' &gt; cufflinks.bash
+less cufflinks.bash # examine bash script
+cat cufflinks.bash | awk '{print "bsub.py medium 23:00 \""$0"\""}' | bash</pre>
+<p>When I first started learning RNA-seq it surprised me that Cufflinks runs separately on each sample. It seemed that this process was missing the gene expression analogue of <em>joint calling</em> of genetic variants, as for instance in <a title="Exome sequencing pipeline using GATK" href="/2012/09/19/exome-sequencing-pipeline-using-gatk/">exome sequencing</a>. I now realize that if you&#8217;re doing differential gene expression you often run Cuffdiff after Cufflinks, and Cuffdiff sort of serves this role of comparing all the samples to each other.</p>
+<p>Incidentally, if you want to go rogue and analyze gene expression levels on your own, without Cuffdiff (and I make no statement as to how advisable this is), here&#8217;s a quick bit of bash to combine all the Cufflinks output files into one relational file with a SAMPLEID column.</p>
+<pre>mkdir ../combined
+# prep header rows
+cat 847_Liver_Q92_HET_F_L5/isoforms.fpkm_tracking | head -1 | awk '{print "SAMPLENAME\t"$0}' &gt; ../combined/all.isoforms.fpkm_tracking
+cat 847_Liver_Q92_HET_F_L5/genes.fpkm_tracking    | head -1 | awk '{print "SAMPLENAME\t"$0}' &gt; ../combined/all.genes.fpkm_tracking
+# combine files
+for subdir in *
+do
+    # combine isoforms data into one file, adding a column for sample name
+    cat $subdir/isoforms.fpkm_tracking | tail -n +2 | awk -v subdir=$subdir '{print subdir"\t"$0}' &gt;&gt; ../combined/all.isoforms.fpkm_tracking
+    # combine gene symbol data into one file, adding a column for sample name
+    cat $subdir/genes.fpkm_tracking | tail -n +2 | awk -v subdir=$subdir '{print subdir"\t"$0}' &gt;&gt; ../combined/all.genes.fpkm_tracking
+done</pre>
+<p>Which took under a half hour. Once I have gene expression levels (be they FPKMs or otherwise) I next move into some version of my <a title="Gene expression analysis QC pipeline in R" href="/2013/08/23/gene-expression-analysis-qc-pipeline-in-r/">gene expression QC pipeline</a>, which I won&#8217;t repeat here.</p>
+<p><strong>step 6. coverage plotting</strong></p>
+<p>In my particular project, we have a couple of different research questions, some of which revolve around gene expression (hence Cufflinks or some other tool, above) and others of which will require some custom scripting to look at coverage around particular splice sites and polyadenylation sites. Therefore among other things I want to calculate read depth for a region of interest, which I do here using <a href="http://bedtools.readthedocs.org/en/latest/">BEDtools</a>.</p>
+<p>First I need to create a BED file listing the genomic regions I&#8217;m interested in. In this case, I want mouse huntingtin (called Hdh or Htt depending on who you ask) as well as the knock-in construct that I added to my reference genome.</p>
+<pre>cat &gt; htt.bed
+5	34761743	34912534
+Hdh_Q_ki_construct	0	799
+^D</pre>
+<p>And then I use <code>BEDtools <a href="http://bedtools.readthedocs.org/en/latest/content/tools/coverage.html">coverageBed</a></code>:</p>
+<pre>bamfile=gsnap/1/srtd/test.bam.srtd.bam # first try on my small "test" file
+coverageBed -abam $bamfile -b htt.bed -split -d &gt; $bamfile.htt.cov 
+# assuming the above test worked ok, then:
+for bamfile in *.bam
+do
+    bsub -m general -q medium -W 02:00 "cd /my/working/dir/; coverageBed -abam $bamfile -b htt.bed -split -d &gt; $bamfile.htt.cov"
+done</pre>
+<p>Each job takes &lt; 1 hour (I set the wall limit to 2h just to be safe.) Note the use of two options here. <code>-d</code> gets base pair depth at every single base of the features of interest. <code>-split</code> is essential for RNA-seq: when a read is split over two exons, <code>-split</code> prevents it from contributing to coverage calculations for the spanned intron.</p>
+<p>The <code>coverageBed -d</code> output gives me five columns, which I&#8217;ll refer to as (in order): contig, start, stop, relindex, and depth. Each row just describes the depth at one particular base located at contig:(start+relindex), so all the information here can be expressed in just 3 columns (contig, start+relindex, depth). Moreover, I&#8217;ve just created 192 coverage files for 192 samples, all in exactly the same format, so I can just combine these into a matrix and save a lot of space. Here&#8217;s how:</p>
+<pre>mkdir ../combined
+mkdir ../1col
+# create a file to hold just the contig and base columns
+cat &gt; ../combined/locations.txt 
+contig base
+^D
+cat test.bam.srtd.bam.htt.cov | awk '{print $1" "$2+$4}' &gt;&gt; ../combined/locations.txt
+# now create a 1-column version of all the coverage files
+for covfile in *
+do
+  echo $covfile | awk -F"." '{print $1}' &gt; ../1col/$covfile.1col # add a header row with the sample name (and some extraneous stuff)
+  cat $covfile | awk '{print $5}' &gt;&gt; ../1col/$covfile.1col # add just the depth column ($5)
+done
+# paste them all together
+paste ../combined/locations.txt ../1col/* &gt; ../combined/allsamples.cov # paste all the samples together into a matrix
+# remove clutterfiles
+rm ../1col/*</pre>
+<p>You can then pull <code>allsamples.cov</code> into R and plot depth vs. base pair position for any sample (or combination of samples).</p>
+<p><strong>conclusion</strong></p>
+<p>I&#8217;m not including any downstream analysis here because I wanted to keep this general. This was just a quick overview of how I&#8217;ve been aligning reads and getting coverage and expression levels. I hope it&#8217;s useful and I welcome any feedback.</p>

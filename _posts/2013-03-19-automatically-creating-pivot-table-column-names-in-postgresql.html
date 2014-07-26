@@ -1,0 +1,74 @@
+---
+layout: post
+title: "Automatically creating pivot table column names in PostgreSQL"
+author: ericminikel
+date: 2013-03-19 21:28:10
+---
+<p>Often in bioinformatics I receive a dataset that is entirely non-relational.  For instance, every row is a gene, every column is a biological sample, and the cell values are the expression levels of each gene measured by microarray.  To join such datasets to others (e.g. metadata on the samples and on the genes), I need to relationalize the table.  In the above example, that would mean building a new table with three columns (gene, sample, expression_level).  Trouble is, then later if I want to do any fancy matrix math on the data I need to de-relationalize it, getting back to the rows=genes, columns=samples layout.  This is called a pivot table and can be achieved in PostgreSQL using the <a href="http://www.postgresql.org/docs/9.2/static/tablefunc.html"><code>crosstab()</code></a> function, but there&#8217;s a catch: you need to type out all of the column names.</p>
+<p>To avoid spending my life typing out column names, I wrote a function in Postgres procedural language (<a href="http://www.postgresql.org/docs/9.2/static/plpgsql.html">PL/pgSQL</a>) that will generate a <code>crosstab</code> query automatically.  You can&#8217;t <em>execute </em>the generated <code>crosstab</code> query automatically because PL/pgSQL functions that return tables (<code>setof record</code> functions) cannot have the number and type of columns determined on the fly.  Instead this function returns the <em>query </em>in a varchar, and then you can execute the query to get the pivot table you want.  That&#8217;s an extra round-trip to the database if you&#8217;re working programmatically, or an extra copy-and-paste if you&#8217;re working in the query editor.  But it&#8217;s better than typing out column names.</p>
+<p>Here&#8217;s the code.  I run PostgreSQL 9.2 but I believe this should work at least as far back as 8.4.</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;">-- PL/pgSQL code to create pivot tables with automatic column names</span>
+<span style="color: #408080; font-style: italic;">-- Eric Minikel, CureFFI.org - 2013-03-19</span>
+
+<span style="color: #408080; font-style: italic;">-- prerequisite: install the tablefunc module</span>
+<span style="color: #008000; font-weight: bold;">create</span> extension tablefunc;
+
+<span style="color: #408080; font-style: italic;">-- tablename: name of source table you want to pivot</span>
+<span style="color: #408080; font-style: italic;">-- rowc: the name of the column in source table you want to be the rows</span>
+<span style="color: #408080; font-style: italic;">-- colc: the name of the column in source table you want to be the columns</span>
+<span style="color: #408080; font-style: italic;">-- cellc: an aggregate expression determining how the cell values will be created</span>
+<span style="color: #408080; font-style: italic;">-- celldatatype: desired data type for the cells</span>
+<span style="color: #008000; font-weight: bold;">create</span> <span style="color: #008000; font-weight: bold;">or</span> <span style="color: #008000; font-weight: bold;">replace</span> <span style="color: #008000; font-weight: bold;">function</span> pivotcode (tablename <span style="color: #008000;">varchar</span>, rowc <span style="color: #008000;">varchar</span>, colc <span style="color: #008000;">varchar</span>, cellc <span style="color: #008000;">varchar</span>, celldatatype <span style="color: #008000;">varchar</span>) <span style="color: #008000; font-weight: bold;">returns</span> <span style="color: #008000;">varchar</span> <span style="color: #008000; font-weight: bold;">language</span> plpgsql <span style="color: #008000; font-weight: bold;">as</span> <span style="border: 1px solid #FF0000;">$$</span>
+<span style="color: #008000; font-weight: bold;">declare</span>
+    dynsql1 <span style="color: #008000;">varchar</span>;
+    dynsql2 <span style="color: #008000;">varchar</span>;
+    columnlist <span style="color: #008000;">varchar</span>;
+<span style="color: #008000; font-weight: bold;">begin</span>
+    <span style="color: #408080; font-style: italic;">-- 1. retrieve list of column names.</span>
+    dynsql1 <span style="color: #666666;">=</span> <span style="color: #ba2121;">'select string_agg(distinct ''_''||'</span><span style="color: #666666;">||</span>colc<span style="color: #666666;">||</span><span style="color: #ba2121;">'||'' '</span><span style="color: #666666;">||</span>celldatatype<span style="color: #666666;">||</span><span style="color: #ba2121;">''','','' order by ''_''||'</span><span style="color: #666666;">||</span>colc<span style="color: #666666;">||</span><span style="color: #ba2121;">'||'' '</span><span style="color: #666666;">||</span>celldatatype<span style="color: #666666;">||</span><span style="color: #ba2121;">''') from '</span><span style="color: #666666;">||</span>tablename<span style="color: #666666;">||</span><span style="color: #ba2121;">';'</span>;
+    <span style="color: #008000; font-weight: bold;">execute</span> dynsql1 <span style="color: #008000; font-weight: bold;">into</span> columnlist;
+    <span style="color: #408080; font-style: italic;">-- 2. set up the crosstab query</span>
+    dynsql2 <span style="color: #666666;">=</span> <span style="color: #ba2121;">'select * from crosstab (</span>
+<span style="color: #ba2121;"> ''select '</span><span style="color: #666666;">||</span>rowc<span style="color: #666666;">||</span><span style="color: #ba2121;">','</span><span style="color: #666666;">||</span>colc<span style="color: #666666;">||</span><span style="color: #ba2121;">','</span><span style="color: #666666;">||</span>cellc<span style="color: #666666;">||</span><span style="color: #ba2121;">' from '</span><span style="color: #666666;">||</span>tablename<span style="color: #666666;">||</span><span style="color: #ba2121;">' group by 1,2 order by 1,2'',</span>
+<span style="color: #ba2121;"> ''select distinct '</span><span style="color: #666666;">||</span>colc<span style="color: #666666;">||</span><span style="color: #ba2121;">' from '</span><span style="color: #666666;">||</span>tablename<span style="color: #666666;">||</span><span style="color: #ba2121;">' order by 1''</span>
+<span style="color: #ba2121;"> )</span>
+<span style="color: #ba2121;"> as newtable (</span>
+<span style="color: #ba2121;"> '</span><span style="color: #666666;">||</span>rowc<span style="color: #666666;">||</span><span style="color: #ba2121;">' varchar,'</span><span style="color: #666666;">||</span>columnlist<span style="color: #666666;">||</span><span style="color: #ba2121;">'</span>
+<span style="color: #ba2121;"> );'</span>;
+    <span style="color: #008000; font-weight: bold;">return</span> dynsql2;
+<span style="color: #008000; font-weight: bold;">end</span>
+<span style="border: 1px solid #FF0000;">$$</span>
+
+<span style="color: #408080; font-style: italic;">-- toy example to show how it works</span>
+<span style="color: #008000; font-weight: bold;">create</span> <span style="color: #008000; font-weight: bold;">table</span> table_to_pivot (
+   rowname <span style="color: #008000;">varchar</span>,
+   colname <span style="color: #008000;">varchar</span>,
+   cellval <span style="color: #008000;">numeric</span>
+);
+<span style="color: #008000; font-weight: bold;">insert</span> <span style="color: #008000; font-weight: bold;">into</span> table_to_pivot <span style="color: #008000; font-weight: bold;">values</span> (<span style="color: #ba2121;">'row1'</span>,<span style="color: #ba2121;">'col1'</span>,<span style="color: #666666;">11</span>);
+<span style="color: #008000; font-weight: bold;">insert</span> <span style="color: #008000; font-weight: bold;">into</span> table_to_pivot <span style="color: #008000; font-weight: bold;">values</span> (<span style="color: #ba2121;">'row1'</span>,<span style="color: #ba2121;">'col2'</span>,<span style="color: #666666;">12</span>);
+<span style="color: #008000; font-weight: bold;">insert</span> <span style="color: #008000; font-weight: bold;">into</span> table_to_pivot <span style="color: #008000; font-weight: bold;">values</span> (<span style="color: #ba2121;">'row1'</span>,<span style="color: #ba2121;">'col3'</span>,<span style="color: #666666;">13</span>);
+<span style="color: #008000; font-weight: bold;">insert</span> <span style="color: #008000; font-weight: bold;">into</span> table_to_pivot <span style="color: #008000; font-weight: bold;">values</span> (<span style="color: #ba2121;">'row2'</span>,<span style="color: #ba2121;">'col1'</span>,<span style="color: #666666;">21</span>);
+<span style="color: #008000; font-weight: bold;">insert</span> <span style="color: #008000; font-weight: bold;">into</span> table_to_pivot <span style="color: #008000; font-weight: bold;">values</span> (<span style="color: #ba2121;">'row2'</span>,<span style="color: #ba2121;">'col2'</span>,<span style="color: #666666;">22</span>);
+<span style="color: #008000; font-weight: bold;">insert</span> <span style="color: #008000; font-weight: bold;">into</span> table_to_pivot <span style="color: #008000; font-weight: bold;">values</span> (<span style="color: #ba2121;">'row2'</span>,<span style="color: #ba2121;">'col3'</span>,<span style="color: #666666;">23</span>);
+<span style="color: #008000; font-weight: bold;">insert</span> <span style="color: #008000; font-weight: bold;">into</span> table_to_pivot <span style="color: #008000; font-weight: bold;">values</span> (<span style="color: #ba2121;">'row3'</span>,<span style="color: #ba2121;">'col1'</span>,<span style="color: #666666;">31</span>);
+<span style="color: #008000; font-weight: bold;">insert</span> <span style="color: #008000; font-weight: bold;">into</span> table_to_pivot <span style="color: #008000; font-weight: bold;">values</span> (<span style="color: #ba2121;">'row3'</span>,<span style="color: #ba2121;">'col2'</span>,<span style="color: #666666;">32</span>);
+<span style="color: #008000; font-weight: bold;">insert</span> <span style="color: #008000; font-weight: bold;">into</span> table_to_pivot <span style="color: #008000; font-weight: bold;">values</span> (<span style="color: #ba2121;">'row3'</span>,<span style="color: #ba2121;">'col3'</span>,<span style="color: #666666;">33</span>);
+<span style="color: #008000; font-weight: bold;">select</span> pivotcode(<span style="color: #ba2121;">'table_to_pivot'</span>,<span style="color: #ba2121;">'rowname'</span>,<span style="color: #ba2121;">'colname'</span>,<span style="color: #ba2121;">'max(cellval)'</span>,<span style="color: #ba2121;">'integer'</span>);</pre>
+</div>
+<p>Executing that last select statement will return the following:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #008000; font-weight: bold;">select</span> <span style="color: #666666;">*</span> <span style="color: #008000; font-weight: bold;">from</span> crosstab (
+    <span style="color: #ba2121;">'select rowname,colname,max(cellval) from table_to_pivot group by 1,2 order by 1,2'</span>,
+    <span style="color: #ba2121;">'select distinct colname from table_to_pivot order by 1'</span>
+    )
+    <span style="color: #008000; font-weight: bold;">as</span> newtable (
+    rowname <span style="color: #008000;">varchar</span>,_col1 <span style="color: #008000;">integer</span>,_col2 <span style="color: #008000;">integer</span>,_col3 <span style="color: #008000;">integer</span>
+    );</pre>
+</div>
+<p>And executing that query will in turn give you:</p>
+<p><img class="alignnone size-full wp-image-1847" title="" src="/wp-content/uploads/2013/03/pivotsql-toy-example-result-1.jpg"/></p>
+<p>The underscore in front of the column names is so that it will still work if the columns start with numbers.</p>
+<p>When I tried this on some of my real datasets, it worked great when the columns were, say, chromosomes &#8211; anything that numbers in the tens.  When I tried to do it on a set with hundreds of patient samples as the columns, my <code>columnlist</code> parameter came back empty.   I&#8217;m not sure why that is: <a href="http://stackoverflow.com/questions/4848964/postgresql-difference-between-text-and-varchar-character-varying"><code>varchar</code> is the same as <code>text</code></a>, and <a href="http://stackoverflow.com/questions/10395975/maximum-size-of-text-datatype-in-postgresql"><code>text</code>&#8216;s maximum size is 1 GB</a>, and <a href="http://www.postgresql.org/docs/9.1/static/functions-aggregate.html">no particular limit is specified for <code>string_agg</code> itself</a>.  But even if I could fix that, one could easily bump up against the <a href="http://stackoverflow.com/questions/12606842/what-is-the-maximum-number-of-columns-in-a-postgresql-select-query">maximum number of columns in Postgres</a>, which is apparently 250-1600 depending on column types.</p>
+<p>There are some other solutions to this problem on the web as well &#8211; <a href="http://stackoverflow.com/questions/12879672/dynamically-generate-columns-for-crosstab-in-postgresql">see this one using <code>crosstab_hash</code></a>, or since I&#8217;m often doing the downstream analysis in R anyway, I could use <a href="http://www.statmethods.net/management/reshape.html"><code>melt</code> and <code>cast</code></a> on the R side.  But there have been a few times I thought it would be useful to <code>crosstab</code> directly in SQL.  Hopefully you&#8217;ll find this useful as well.</p>

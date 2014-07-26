@@ -1,0 +1,73 @@
+---
+layout: post
+title: "Visualizing staining variation using matplotlib"
+author: ericminikel
+date: 2012-07-01 21:54:14
+---
+<p>Problem statement: I&#8217;ve got a stack of H&amp;E-stained mouse brain section images I want to run through the same image segmentation pipeline, but the images are all a bit differently colored.  Observe:</p>
+<p><a href="/wp-content/uploads/2012/07/variation_in_color_across_he_images.jpg"><img class="alignnone size-full wp-image-623" title="variation_in_color_across_he_images" src="/wp-content/uploads/2012/07/variation_in_color_across_he_images.jpg"/></a></p>
+<p>The biologists tell me that a lot of the reason for this lies in how the slides are stained.  I guess hematoxylin <a href="http://stainsfile.info/StainsFile/dyes/75290.htm">literally</a> <a href="https://www.google.com/search?hl=en&amp;tbm=shop&amp;q=hematoxylin">but not figuratively</a> grows on trees, so common practice is to create a single stain bath and then dip the slides into it one after another, which means the later slides might pick up less stain than the first ones.  Some of the problem may also have to do with different exposure on the camera.  In any event, it&#8217;s a common problem with H&amp;E staining that slides don&#8217;t all turn out looking quite the same.  So if you&#8217;re working on a segmentation pipeline <a href="/2012/06/11/the-magic-of-blur-and-contrast/">like I am</a>, that depends on rescaling the contrast of an image using particular thresholds you calculate or observe, then these variations in color are a big problem.</p>
+<p>It&#8217;s clear that before these images go into a pipeline I need to do something to make them look more alike.  A friend suggested <a href="http://help.adobe.com/en_US/photoshop/cs/using/WSfd1234e1c4b69f30ea53e41001031ab64-765aa.html">Photoshop&#8217;s Match Color command</a>, which seems like the right idea, but I don&#8217;t own a Photoshop license, and I also don&#8217;t feel totally comfortable with the fact that Adobe doesn&#8217;t actually explain exactly what the command does (the math is all hiding behind the noun phrase &#8220;advanced algorithms&#8221;).  Plus, I figure this new challenge can be an opportunity to teach myself something with broader usefulness rather than just learning how to use a piece of Adobe&#8217;s software.</p>
+<p>So before figuring out what transformations I might apply to these images, I set out to visualize the problem.  You know what turns out to be awesome?  <a href="http://matplotlib.sourceforge.net/">matplotlib</a>.  It&#8217;s Python&#8217;s package for doing graphs and charts and all manner of data visualizations, and it&#8217;s an amazing tool which promises to finally free me from the clutches of Microsoft Excel.  So I set out to learn matplotlib in order to be able to graph the color spaces of these different images and visualize exactly how they differ.</p>
+<p>I started with <a href="http://matplotlib.sourceforge.net/examples/pylab_examples/scatter_hist.html">this scatterplot example</a> from the matplotlib gallery, then learned <a href="http://stackoverflow.com/questions/6503241/small-scatter-plot-markers-in-matplotlib-are-always-black">how to control marker size and color</a>, then <a href="http://stackoverflow.com/questions/6063876/matplotlib-colorbar-for-scatter">how to use color as a third dimension</a> in a 2D scatterplot.  Pretty soon I was able to create images like this:</p>
+<p><a href="/wp-content/uploads/2012/07/histo_20x-10-HE.jpg"><img class="alignnone size-full wp-image-626" title="histo_20x 10 HE" src="/wp-content/uploads/2012/07/histo_20x-10-HE.jpg"/></a></p>
+<p>What you&#8217;re looking at here is a scatterplot of all pixels in one of these H&amp;E images (the 4th one in the top row above), with the red value (0 &#8211; 255) on the x axis and the blue value (0 -255) on the y axis, and color proportional to how many pixels in the image are of a given color.  Notice how little of the potential color space is actually used by the image.  It&#8217;s pretty low contrast.  The points shown in red on the scatterplot are red-blue values with very few pixels of that color, yellow is intermediate, and blue are the values with a lot of pixels.  Notice that even within the limited color space this image occupies, a huge fraction of the pixels are right around (200,200).  I think of this as a histogram where the coloring of the points is the histo, but you could also just call it a colored scatterplot.  You could do this with red v. green or blue v. green too, or a true <a href="http://stackoverflow.com/questions/8891994/matplotlib-3d-scatter-plot-with-color-gradient">3D scatterplot with color as the fourth dimension</a>  though I haven&#8217;t tried that yet.</p>
+<p>Arguably, the red-yellow-blue color map here is even a bit misleading.  It shows you the full extent of color space occupied by the image, but because the red color for the very low values is dark, it makes those points on the scatterplot look important, when actually there are very few pixels of that color.  matplotlib offers <a href="http://www.scipy.org/Cookbook/Matplotlib/Show_colormaps">plenty of other color map</a>s which illuminate the data in different ways; compare the above image to one with this one where the low end of the color map is just white.</p>
+<p><a href="/wp-content/uploads/2012/07/histo_20x-10-HE_ylorrd.jpg"><img class="alignnone size-full wp-image-627" title="histo_20x 10 HE_ylorrd" src="/wp-content/uploads/2012/07/histo_20x-10-HE_ylorrd.jpg"/></a></p>
+<p>This latter plot makes it more clear just how concentrated the pixels are around that (200,200) area and just how lacking in contrast this image really is.</p>
+<p>Here&#8217;s a script that walks a directory and creates histograms just like this for every TIFF in the directory:</p>
+<pre>import numpy as np
+import matplotlib
+import matplotlib.pyplot as plt
+from common import *
+from matplotlib.ticker import NullFormatter
+import os
+
+def histo(root,name):
+    filepath = os.path.join(root,name)
+    img = getImageAsArray(filepath)
+    x = img[:,:,RED].flatten()
+    y = img[:,:,BLUE].flatten()
+    n = np.zeros((256,256),dtype=float64)  # number of all pixels of given color
+    for r in xrange(img.shape[0]):
+        for c in xrange(img.shape[1]):
+            n[img[r][RED]][img[r][BLUE]] += 1.0
+    nullfmt   = NullFormatter()         # no labels
+
+    # definitions for the axes
+    left, bottom, width, height = 0.05, 0.05, 0.9, 0.9
+    rect_scatter = [left, bottom, width, height]
+
+    # start with a rectangular Figure
+    fig = plt.figure(1, figsize=(8,8))
+    axScatter = plt.axes(rect_scatter)
+    # define color array and color map
+    c1 = np.zeros(x.shape[0])
+    for idx in xrange(c1.shape[0]):
+        c1[idx] = n[x[idx]][y[idx]]
+    cmap1 = matplotlib.cm.get_cmap('YlOrRd')
+
+    axScatter.scatter(x, y, s=1, lw=0, vmin=0, vmax=c1.max(), c=c1, cmap=cmap1)
+
+    axScatter.set_xlim( (0, 255) )
+    axScatter.set_ylim( (0, 255) )
+
+    plt.savefig(os.path.join(root,"histo_"+name))
+
+if __name__ == "__main__":
+    imgDir = "c:/cureffi/is/imgs/use/"
+    for root, dirs, files in os.walk(imgDir):
+        for name in files:
+            if (name)[-4:] == '.tif':
+                print("Processing file: "+os.path.join(root,name))
+                histo(root,name)</pre>
+<p>Looking at all of these histo images together, it&#8217;s easy to see some of how the color space is different between images:</p>
+<p><a href="/wp-content/uploads/2012/07/variation_with_histos_rdylbu.jpg"><img class="alignnone size-full wp-image-628" title="variation_with_histos_rdylbu" src="/wp-content/uploads/2012/07/variation_with_histos_rdylbu.jpg"/></a></p>
+<p>The above screenshot gives you an overview, but the most illuminating thing is to put these all in a folder, gallery or slideshow and click through them with your forward arrow to see what changes between images.</p>
+<ul>
+<li><strong>Difference in contrast</strong>.  20x 10 HE.tif, the first example above, has a lot less contrast than the others.  (Plotting with the yellow-orange-red colorspace, though, shows that none of them have as much contrast as the red histos above would make you think).</li>
+<li><strong>Bimodality</strong>.  In 20x 10 HE.tif, there is really only one central tendency, right around (200,200).  In some of the others, particularly 40x-1 5 HE.tif, you can actually see two separate streaks of yellow in the plot.</li>
+<li><strong>Difference in mean</strong>.  The darkest yellow or blue streak in each histogram presumably corresponds to the primarily eosin-stained &#8216;background&#8217; between nuclei in each image.  As you click through you can see it move up and down the y=x diagonal axis (i.e. lighter or darker background) and also hop to the left or right of that diagonal (i.e. bluer or redder background).</li>
+</ul>
+<p>To be really thorough, I should also do the same sort of plots as above, with the green channel in the mix too and see if I notice anything else.  Another next step may be to do this with human-drawn ground truths and see how the distribution of the nuclear pixels&#8217; colors varies between images.  It&#8217;s a bit trickier to show two datasets (nuclear and non-nuclear pixels) together&#8211; you either need to <a href="http://stackoverflow.com/questions/4270301/matplotlib-multiple-datasets-on-the-same-scatter-plot">put them on the same plot</a> which I haven&#8217;t gotten to work yet, or overlay them with transparency.  But since matplotlib&#8217;s color maps are for just the RGB channels and not the alpha channel, you actually have to <a href="http://stackoverflow.com/questions/10127284/overlay-imshow-plots-in-matplotlib">create your own alpha transparency map</a>.</p>
+<p>But at least, for today, I&#8217;ve got a bit more concrete idea of how the colors are different and what would be needed to correct for this.  Plus, I&#8217;ve made a first foray into what looks to be a pretty sweet tool for visualization.</p>

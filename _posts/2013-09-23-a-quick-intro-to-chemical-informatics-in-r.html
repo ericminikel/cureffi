@@ -1,0 +1,197 @@
+---
+layout: post
+title: "A quick intro to chemical informatics in R"
+author: ericminikel
+date: 2013-09-23 20:58:01
+---
+<p>Today my colleague <a href="http://www.linkedin.com/pub/emily-ricq/1/b01/26b">Emily Ricq</a> introduced me to the amazing world of <a href="http://en.wikipedia.org/wiki/Cheminformatics">chemical informatics</a>, a whole field I didn&#8217;t know existed.  We were discussing the various <a title="Comparison of high-throughput screening approaches used for anti-prion small molecule discovery" href="/2013/07/30/comparison-of-high-throughput-screening-approaches-used-for-anti-prion-small-molecule-discovery/">high throughput screens</a> that have been done to discover anti-prion compounds, and what sorts of interesting meta-analysis could be done on them.  As one example, she pointed me to a paper [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2686115/">Singh 2009</a>] which compared the properties of molecules found in four different chemical libraries.</p>
+<p>The authors did several types of analysis, one of which I&#8217;ll talk briefly about here.  First they generated a bunch of different features or &#8220;descriptors&#8221; for each molecule.  A descriptor can be any property of the molecule, from trivial stuff like molecular weight and charge to slightly more esoteric properties like <a href="http://www.organic-chemistry.org/prog/peo/cLogP.html">clogP</a> to yet fancier stuff I don&#8217;t begin to understand.  Then they did a principal components analysis on the molecules and then scatterplotted the molecules in each library versus the set of FDA-approved drugs [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2686115/figure/F5/">Fig 5</a>].  I was surprised by how little the two clouds of points overlapped: most of the molecules in these libraries occupy a chemical space quite distant from the approved drugs.  That&#8217;s bad news for anyone hoping to find therapeutic hits in those libraries and then develop them into a drug.</p>
+<p>This seemed like a simple analysis I could wrap my head around, so to get my feet wet in this world of chemical informatics I decided it would be interesting to see whether a few of my favorite antiprion compounds fall within the space of approved drugs or not.  This post walks through the analysis I did.</p>
+<p><strong>getting started</strong></p>
+<p>Rajarshi Guha (also a co-author on the Singh 2009 paper) has written a couple of awesome chemical informatics packages for R entitled <a href="http://cran.r-project.org/web/packages/rcdk/rcdk.pdf">rcdk</a> and <a href="http://cran.r-project.org/web/packages/rpubchem/rpubchem.pdf">rpubchem</a> [<a href="http://www.jstatsoft.org/v18/i05/paper">Guha 2007</a>].  I used rcdk and it was shockingly easy to get set up with.  The functionality is implemented in Java and this is an R interface to it, so you also need <a href="http://cran.r-project.org/web/packages/rJava/rJava.pdf">rJava</a>.  I already had that, so I just loaded the rcdk package which takes several minutes &#8211; it&#8217;s huge.</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">install.packages(<span style="color: #ba2121;">"rcdk"</span>) <span style="color: #408080; font-style: italic;"># huge, takes a few mins to download</span>
+library(rcdk) <span style="color: #408080; font-style: italic;"># docs at http://cran.r-project.org/web/packages/rcdk/rcdk.pdf, paper at http://www.jstatsoft.org/v18/i05/paper</span></pre>
+</div>
+<p>Next I sought to manually create a Java object for a molecule from its <a href="http://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system">SMILES</a>.  SMILES is a systematic, unambiguous plain-text representation of molecular structure.  I found <a title="anle138b: the new most promising experimental compound for treating prion diseases" href="/2013/04/26/anle138b-the-new-most-promising-experimental-compound-for-treating-prion-diseases/">anle138b</a>&#8216;s SMILES in <a href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=44608289">its PubChem entry</a>.  For many molecules you can also find them on Wikipedia.</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># parse.smiles accepts a vector of SMILES strings and returns a list of type AtomContainer,</span>
+<span style="color: #408080; font-style: italic;"># containing items of type IAtomContainer</span>
+<span style="color: #408080; font-style: italic;"># if you have just one molecule of interest, just grab the first item with [[1]]</span>
+anle138b <span style="color: #666666;">=</span> parse.smiles(<span style="color: #ba2121;">"C1OC2=C(O1)C=C(C=C2)C3=CC(=NN3)C4=CC(=CC=C4)Br"</span>)[[<span style="color: #666666;">1</span>]]</pre>
+</div>
+<p>The next thing I wanted to do is plot it. The <code>draw.molecule.2d</code> function draws it in a separate Java window:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># draws it in a separate Java window</span>
+view.molecule.2d(anle138b)</pre>
+</div>
+<p>That function is especially nice because if you pass it multiple molecules it can plot them all in a grid for comparison.  But for just one molecule I thought it would be nicer to plot directly in R, so adapting a bit of code from the rcdk docs I wrote this function:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">rcdkplot <span style="color: #666666;">=</span> <span style="color: #008000; font-weight: bold;">function</span>(molecule,width<span style="color: #666666;">=500</span>,height<span style="color: #666666;">=500</span>) {
+    par(mar<span style="color: #666666;">=</span>c(<span style="color: #666666;">0</span>,<span style="color: #666666;">0</span>,<span style="color: #666666;">0</span>,<span style="color: #666666;">0</span>)) <span style="color: #408080; font-style: italic;"># set margins to zero since this isn't a real plot</span>
+    temp1 <span style="color: #666666;">=</span> view.image.2d(molecule,width,height) <span style="color: #408080; font-style: italic;"># get Java representation into an image matrix. set number of pixels you want horiz and vertical</span>
+    plot(<span style="color: #008000; font-weight: bold;">NA</span>,<span style="color: #008000; font-weight: bold;">NA</span>,xlim<span style="color: #666666;">=</span>c(<span style="color: #666666;">1</span>,<span style="color: #666666;">10</span>),ylim<span style="color: #666666;">=</span>c(<span style="color: #666666;">1</span>,<span style="color: #666666;">10</span>),xaxt<span style="color: #666666;">=</span><span style="color: #ba2121;">'n'</span>,yaxt<span style="color: #666666;">=</span><span style="color: #ba2121;">'n'</span>,xlab<span style="color: #666666;">=</span><span style="color: #ba2121;">''</span>,ylab<span style="color: #666666;">=</span><span style="color: #ba2121;">''</span>) <span style="color: #408080; font-style: italic;"># create an empty plot</span>
+    rasterImage(temp1,<span style="color: #666666;">1</span>,<span style="color: #666666;">1</span>,<span style="color: #666666;">10</span>,<span style="color: #666666;">10</span>) <span style="color: #408080; font-style: italic;"># boundaries of raster: xmin, ymin, xmax, ymax. here i set them equal to plot boundaries</span>
+}</pre>
+</div>
+<p>And when I call it on anle138b, sure enough, that&#8217;s the molecule I know:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">rcdkplot(anle138b)</pre>
+</div>
+<p><a href="/wp-content/uploads/2013/09/anle138b-rcdkplot.png"><img class="alignnone size-full wp-image-3040" alt="anle138b-rcdkplot" src="/wp-content/uploads/2013/09/anle138b-rcdkplot.png"/></a></p>
+<p>Cool. Now when I went to do the same for one of my other favorite antiprion compounds, <a title="Curcumin as prion therapeutic" href="/2012/11/24/curcumin-as-prion-therapeutic/">curcumin</a>, I realized how lame it is that R has no way to read literal strings ignoring escape sequences. Python has this with <code>r""</code> for instance <code>mystring=r"string with a backslash (\) in it"</code>, but R has no equivalent. Thus there&#8217;s no way to make this work:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">curcumin <span style="color: #666666;">=</span> parse.smiles(<span style="color: #ba2121;">"O=C(\C=C\c1ccc(O)c(OC)c1)CC(=O)\C=C\c2cc(OC)c(O)cc2"</span>)[[<span style="color: #666666;">1</span>]] <span style="color: #408080; font-style: italic;"># won't work</span></pre>
+</div>
+<p>..without going in and manually changing all the single backslashes to double backslashes:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">curcumin <span style="color: #666666;">=</span> parse.smiles(<span style="color: #ba2121;">"O=C(\\C=C\\c1ccc(O)c(OC)c1)CC(=O)\\C=C\\c2cc(OC)c(O)cc2"</span>)[[<span style="color: #666666;">1</span>]] <span style="color: #408080; font-style: italic;"># will work, but it's a pain to manually edit</span></pre>
+</div>
+<p>Which is a pain to do. In practice this probably only comes up when you&#8217;re just trying to do a simple demo of something, like I was; if you actually had a real analysis to do you would probably be reading your dataset from disk, in which case <code>read.table</code> with <code>allowEscapes=FALSE</code> would do the trick.</p>
+<p>The next thing I learned about rcdk is how to get these descriptors of molecules.  rcdk comes with access to a whole list of descriptors which you can get like so:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">descriptors <span style="color: #666666;">=</span> get.desc.names(type<span style="color: #666666;">=</span><span style="color: #ba2121;">"all"</span>)</pre>
+</div>
+<p>This gave me a vector of character strings, the names of fifty descriptors you can calculate on your molecule. I figured a good one to try out would be the number of strikes a molecule has against it as a drug according to the <a href="http://en.wikipedia.org/wiki/Lipinski's_rule_of_five">Rule of Five</a>:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># get one descriptor, for instance Rule of Five descriptors http://en.wikipedia.org/wiki/Lipinski's_rule_of_five</span>
+eval.desc(anle138b,<span style="color: #ba2121;">"org.openscience.cdk.qsar.descriptors.molecular.RuleOfFiveDescriptor"</span>)</pre>
+</div>
+<p>Hooray &#8211; anle138b has zero failures, i.e. it complies with all of the tenets of the Rule of Five.  You can also get some properties of a molecule using rcdk&#8217;s base functions, like <code>get.total.charge</code>, <code>get.volume</code>, <code>get.exact.mass</code>, etc.</p>
+<p>Now, to do something more interesting I needed a database of chemicals.  I quickly discovered <a href="http://zinc.docking.org/">ZINC</a>, UCSF&#8217;s public database of all things chemical biology: molecules, their properties, which compound libraries they&#8217;re found in.  It&#8217;s fantastically easy to browse or download data in a variety of formats.  Coming from the world of bioinformatics, I was amazed at how utterly the cheminformatics people are pwning us at the open data game.</p>
+<p>For starters I looked up <a href="http://zinc.docking.org/catalogs/msusdrugs">MSDI&#8217;s US Drug Collection</a>, the set of 1,280 FDA-approved drugs that was used in <a title="Tacrolimus, astemizole and a new screening approach for drugs that reduce PrP" href="/2013/04/04/tacrolimus-astemizole-and-a-new-screening-approach-for-drugs-that-reduce-prp/">one recent anti-prion screen</a> [<a href="http://www.ncbi.nlm.nih.gov/pubmed/23576755">Karapetyan &amp; Sferrazza 2013</a>].  ZINC is so awesome that can actually generate for you a shell script you can use to download the data for this library (see links at bottom of <a href="http://zinc.docking.org/catalogs/msusdrugs">this page</a>).  I downloaded the US Drug Collection in SDF (structure-data file) format:</p>
+<pre>wget http://zinc.docking.org/db/byvendor/msusdrugs/usual.sdf.csh
+csh usual.sdf.csh
+gunzip *.gz</pre>
+<p>Then read them into R:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">msdi_usdrugs <span style="color: #666666;">=</span> load.molecules(c(<span style="color: #ba2121;">"msusdrugs_p0.0.sdf"</span>,<span style="color: #ba2121;">"msusdrugs_p1.0.sdf"</span>))
+length(msdi_usdrugs)
+<span style="color: #408080; font-style: italic;"># [1] 2319</span></pre>
+</div>
+<p>Now, one thing that&#8217;s confusing &#8211; I still haven&#8217;t figured out why the SDF files contain 2319 compounds even though the library is only supposed to be 1280. And there is no metadata with common names (e.g. drug names), etc. which might be nice to have.  (If you know the deal, please leave me a comment!)</p>
+<p>Anyway, setting that issue aside for a moment, I set out to have rcdk calculate descriptors on these 2319 molecules for me.  (Although, by the way, the most important properties can be downloaded directly from ZINC &#8211; see the &#8220;Properties&#8221; link on each chemical library&#8217;s page, for instance, <a href="http://zinc.docking.org/db/byvendor/msusdrugs/msusdrugs_prop.xls">this link</a>).</p>
+<p>The rcdk paper [<a href="http://www.jstatsoft.org/v18/i05/paper">Guha 2007</a>] has code for looping through a chemical library and calculating descriptors on each molecule. But when I tried to use it, I discovered that R would hang on the first molecule.  By trial and error I figured out that of the 50 descriptors in rcdk, number 28, entitled <code>"org.openscience.cdk.qsar.descriptors.molecular.IPMolecularLearningDescriptor"</code> was making it hang.  So I eliminated that one:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">descriptors <span style="color: #666666;">=</span> get.desc.names(type<span style="color: #666666;">=</span><span style="color: #ba2121;">"all"</span>)
+<span style="color: #408080; font-style: italic;"># eliminate #28, "org.openscience.cdk.qsar.descriptors.molecular.IPMolecularLearningDescriptor"</span>
+<span style="color: #408080; font-style: italic;"># because it is so compute-intensive it makes R hang</span>
+descriptors <span style="color: #666666;">=</span> descriptors[<span style="color: #666666;">-28</span>]</pre>
+</div>
+<p>And with that I could calculate all the other descriptors. But it took over 10 seconds per molecule. I didn&#8217;t want to wait all day, and plus most of the descriptors are highly correlated with each other anyway and I&#8217;m not doing any fancy analysis here, just getting my feet wet. So I wrote a quick loop to identify which descriptors were taking so long:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">times <span style="color: #666666;">=</span> numeric(length(descriptors))
+<span style="color: #008000; font-weight: bold;">for</span> (j in <span style="color: #666666;">1</span>:length(descriptors)) {
+   start_time <span style="color: #666666;">=</span> Sys.time()
+   eval.desc(msdi_usdrugs[[<span style="color: #666666;">1</span>]], descriptors[j]) <span style="color: #408080; font-style: italic;"># calculate descriptor j</span>
+   times[j] <span style="color: #666666;">=</span> as.numeric(Sys.time() <span style="color: #666666;">-</span> start_time) <span style="color: #408080; font-style: italic;"># figure out how long that just took. i'm assuming all will be in seconds.</span>
+}
+sum(times <span style="color: #666666;">&gt;</span> <span style="color: #666666;">.05</span>) <span style="color: #408080; font-style: italic;"># only 14 of the 49 take &gt; .05 second</span>
+descriptors_to_use <span style="color: #666666;">=</span> descriptors[<span style="color: #666666;">-</span>which(times <span style="color: #666666;">&gt;</span> <span style="color: #666666;">.05</span>)] <span style="color: #408080; font-style: italic;"># eliminate the descriptors that take &gt; .1 second to calculate</span></pre>
+</div>
+<p>And found that only 14 of the 49 remaining descriptors took more than .05 seconds each, so I removed those (last line above). With that, I was able to do all the other descriptors for all 2319 compounds in just 33 minutes, again using code modified from Guha&#8217;s rcdk paper:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># remove all the repeated parts from the descriptor names - code from the rcdk paper</span>
+desc_names <span style="color: #666666;">=</span> gsub(<span style="color: #ba2121;">"org.openscience.cdk.qsar.descriptors.molecular."</span>,<span style="color: #ba2121;">""</span>, descriptors_to_use)
+desc_names <span style="color: #666666;">=</span> gsub(<span style="color: #ba2121;">"Descriptor"</span>,<span style="color: #ba2121;">""</span>, desc_names)
+
+desc.list <span style="color: #666666;">=</span> list() <span style="color: #408080; font-style: italic;"># initialize a list</span>
+col_names <span style="color: #666666;">=</span> c() <span style="color: #408080; font-style: italic;"># initialize column names</span>
+start_time <span style="color: #666666;">=</span> Sys.time() <span style="color: #408080; font-style: italic;"># start time</span>
+<span style="color: #008000; font-weight: bold;">for</span> (i in <span style="color: #666666;">1</span>:length(msdi_usdrugs)) {  <span style="color: #408080; font-style: italic;"># loop through molecules</span>
+    tmp <span style="color: #666666;">=</span> c() <span style="color: #408080; font-style: italic;"># a running list of all sub-descriptors for this molecule</span>
+    <span style="color: #008000; font-weight: bold;">for</span> (j in <span style="color: #666666;">1</span>:length(descriptors_to_use)) {  <span style="color: #408080; font-style: italic;"># loop through descriptors</span>
+        values <span style="color: #666666;">=</span> eval.desc(msdi_usdrugs[[i]], descriptors_to_use[j]) <span style="color: #408080; font-style: italic;"># calculate descriptor - each one returns a vector</span>
+        tmp <span style="color: #666666;">=</span> c(tmp, values) <span style="color: #408080; font-style: italic;"># add the vector to the running list</span>
+        <span style="color: #008000; font-weight: bold;">if</span> (i <span style="color: #666666;">==</span> <span style="color: #666666;">1</span>) <span style="color: #408080; font-style: italic;"># only on the first iteration, come up with column names</span>
+            col_names <span style="color: #666666;">=</span> c(col_names, paste(desc_names[j], names(values), sep<span style="color: #666666;">=</span><span style="color: #ba2121;">'.'</span>))
+        }
+    desc.list[[i]] <span style="color: #666666;">=</span> tmp <span style="color: #408080; font-style: italic;"># add the sub-descriptor values to the master list</span>
+}
+desc.data <span style="color: #666666;">=</span> as.data.frame(do.call(<span style="color: #ba2121;">"rbind"</span>, desc.list)) <span style="color: #408080; font-style: italic;"># convert to data frame</span>
+names(desc.data) <span style="color: #666666;">=</span> col_names <span style="color: #408080; font-style: italic;"># assign column names</span>
+
+execution_time <span style="color: #666666;">=</span> Sys.time() <span style="color: #666666;">-</span> start_time <span style="color: #408080; font-style: italic;"># see how long that took</span></pre>
+</div>
+<p>To make things interesting, I also wanted to compare at least a few antiprion compounds from the literature, so I chose <a title="anle138b: the new most promising experimental compound for treating prion diseases" href="/2013/04/26/anle138b-the-new-most-promising-experimental-compound-for-treating-prion-diseases/">anle138b</a>, <a title="cpd-B as a prion therapeutic" href="/2012/09/25/cpd-b-as-a-prion-therapeutic/">cpd-B</a> and <a title="2-aminothiazoles: exciting progress and lessons for the field" href="/2013/06/01/2-aminothiazoles-exciting-progress-and-lessons-for-the-field/">IND24</a>, the three most potent compounds <a title="Prion Therapeutic Review" href="/prion-therapeutic-review/"><em>in vivo</em></a>:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">antiprion_cpds <span style="color: #666666;">=</span> parse.smiles(c(
+    <span style="color: #ba2121;">"CC1=CC=CC(NC2=NC(C(C=C3)=CC=C3C4=CC=CC=C4)=CS2)=N1"</span>, <span style="color: #408080; font-style: italic;"># IND24, a 2-aminothiazole</span>
+    <span style="color: #ba2121;">"C1(C2=CC=C(N/N=C\\C3=CC=NC=C3)C=C2)=CN=CO1"</span>, <span style="color: #408080; font-style: italic;"># cpd-B. note double backslash to escape</span>
+    <span style="color: #ba2121;">"C1OC2=C(O1)C=C(C=C2)C3=CC(=NN3)C4=CC(=CC=C4)Br"</span> <span style="color: #408080; font-style: italic;"># anle138b</span>
+))</pre>
+</div>
+<p>And I re-ran the above loop with these three compounds instead of the MSDI US Drug Collection, and concatenated the results to the bottom of the original data frame:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">desc.list <span style="color: #666666;">=</span> list() <span style="color: #408080; font-style: italic;"># initialize a list</span>
+col_names <span style="color: #666666;">=</span> c() <span style="color: #408080; font-style: italic;"># initialize column names</span>
+start_time <span style="color: #666666;">=</span> Sys.time() <span style="color: #408080; font-style: italic;"># start time</span>
+<span style="color: #008000; font-weight: bold;">for</span> (i in <span style="color: #666666;">1</span>:length(antiprion_cpds)) {  <span style="color: #408080; font-style: italic;"># loop through molecules</span>
+    tmp <span style="color: #666666;">=</span> c() <span style="color: #408080; font-style: italic;"># a running list of all sub-descriptors for this molecule</span>
+    <span style="color: #008000; font-weight: bold;">for</span> (j in <span style="color: #666666;">1</span>:length(descriptors_to_use)) {  <span style="color: #408080; font-style: italic;"># loop through descriptors</span>
+        values <span style="color: #666666;">=</span> eval.desc(antiprion_cpds[[i]], descriptors_to_use[j]) <span style="color: #408080; font-style: italic;"># calculate descriptor - each one returns a vector</span>
+        tmp <span style="color: #666666;">=</span> c(tmp, values) <span style="color: #408080; font-style: italic;"># add the vector to the running list</span>
+        <span style="color: #008000; font-weight: bold;">if</span> (i <span style="color: #666666;">==</span> <span style="color: #666666;">1</span>) <span style="color: #408080; font-style: italic;"># only on the first iteration, come up with column names</span>
+            col_names <span style="color: #666666;">=</span> c(col_names, paste(desc_names[j], names(values), sep<span style="color: #666666;">=</span><span style="color: #ba2121;">'.'</span>))
+        }
+    desc.list[[i]] <span style="color: #666666;">=</span> tmp <span style="color: #408080; font-style: italic;"># add the sub-descriptor values to the master list</span>
+}
+desc.data2 <span style="color: #666666;">=</span> as.data.frame(do.call(<span style="color: #ba2121;">"rbind"</span>, desc.list)) <span style="color: #408080; font-style: italic;"># convert to data frame</span>
+names(desc.data2) <span style="color: #666666;">=</span> col_names <span style="color: #408080; font-style: italic;"># assign column names</span>
+desc.data.all <span style="color: #666666;">=</span> rbind(desc.data,desc.data2)</pre>
+</div>
+<p>With the data in hand for the FDA-approved drugs plus antiprion compounds, I wanted to do a principal components analysis, which I usually do &#8220;manually&#8221; following <a href="http://statmath.wu.ac.at/~hornik/QFS1/principal_component-vignette.pdf">this tutorial</a>.  The matrix contains NaN values, which <a href="http://stats.stackexchange.com/questions/35561/replacement-of-na-values-for-pca-analysis">there is really no good way to handle</a>.  Most of the NaN were concentrated in a few rows (i.e. a few molecules) so I thought about just removing those with <code>desc.mat.no.na = desc.mat[-which(rowSums(is.na(desc.mat)) &gt; 0),]</code> but I didn&#8217;t want to remove what might have been precisely the most interesting molecules for all I knew.  So I just converted NaN to zero.</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">desc.mat <span style="color: #666666;">=</span> matrix(unlist(desc.data.all), ncol<span style="color: #666666;">=134</span>, byrow<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">TRUE</span>) <span style="color: #408080; font-style: italic;"># convert to matrix. thanks to http://stackoverflow.com/questions/13224553/how-to-convert-a-list-to-a-matrix-more-efficiently-in-r</span>
+desc.mat.no.na <span style="color: #666666;">=</span> desc.mat
+desc.mat.no.na[is.na(desc.mat)] <span style="color: #666666;">=</span> <span style="color: #666666;">0</span>
+covmatrix <span style="color: #666666;">=</span> cov(desc.mat.no.na) <span style="color: #408080; font-style: italic;"># calculate covariance matrix</span>
+eig <span style="color: #666666;">=</span> eigen(covmatrix) 
+pc <span style="color: #666666;">=</span> desc.mat.no.na <span style="color: #666666;">%*%</span> eig$vectors <span style="color: #408080; font-style: italic;"># multiply matrices to get principal components# eig = eigen(covmatrix)</span>
+dim(pc) <span style="color: #408080; font-style: italic;"># 2322  134</span></pre>
+</div>
+<p>Next I plotted the proportion of variance explained by the first 50 PCs:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">plot(<span style="color: #666666;">1</span>:<span style="color: #666666;">50</span>,(eig$values<span style="color: #666666;">/</span>sum(eig$values))[<span style="color: #666666;">1</span>:<span style="color: #666666;">50</span>],pch<span style="color: #666666;">=19</span>, ylim<span style="color: #666666;">=</span>c(<span style="color: #666666;">0</span>,<span style="color: #666666;">1</span>), xlab<span style="color: #666666;">=</span><span style="color: #ba2121;">'PC#'</span>, ylab<span style="color: #666666;">=</span><span style="color: #ba2121;">'Variance explained'</span>, main<span style="color: #666666;">=</span><span style="color: #ba2121;">'Variance explained by PCs'</span>)</pre>
+</div>
+<p><a href="/wp-content/uploads/2013/09/pc.variance.explained.usdrugs.png"><img class="alignnone size-full wp-image-3043" alt="pc.variance.explained.usdrugs" src="/wp-content/uploads/2013/09/pc.variance.explained.usdrugs.png"/></a></p>
+<p>Whoa! PC1 explains about 60% of variance. That one looks important. Now, a great many of the descriptors I had generated were simply <em>quantities</em> of things found in the molecule &#8211; for instance, there are 20 columns that just represent the number of each of the 20 canonical amino acids found in the molecule. And there are columns for weight and number of hydrogen bond acceptors, etc. Therefore I had a strong hunch that PC1 might simply be representing the <em>size</em> of the molecule.  So I browsed the list of column names and found that column 27, <code>"AtomCount.nAtom"</code> is simply the number of atoms in the molecule. And sure enough, PC1 is very strongly correlated with this, rho = -.83.</p>
+<pre>&gt; cor.test(pc[,1],desc.mat.no.na[,27])
+
+        Pearson's product-moment correlation
+
+data:  pc[, 1] and desc.mat.no.na[, 27] 
+t = -72.6193, df = 2320, p-value &lt; 2.2e-16
+alternative hypothesis: true correlation is not equal to 0 
+95 percent confidence interval:
+ -0.8453742 -0.8204896 
+sample estimates:
+       cor 
+-0.8333537</pre>
+<p>And PC1 is similarly correlated with column 130, the molecular weight (rho = -.66).</p>
+<p>OK, so PC1 has to do with size of the molecule.  And note the correlation is negative, so higher PC1 is lower molecular weight.  Here&#8217;s a plot of PC1 vs. PC2:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">var.exp <span style="color: #666666;">=</span> (eig$values<span style="color: #666666;">/</span>sum(eig$values))
+plot(pc[,<span style="color: #666666;">1</span>],pc[,<span style="color: #666666;">2</span>],pch<span style="color: #666666;">=16</span>,xlab<span style="color: #666666;">=</span>paste(<span style="color: #ba2121;">"PC1 ("</span>,formatC(var.exp[<span style="color: #666666;">1</span>]<span style="color: #666666;">*100</span>,digits<span style="color: #666666;">=1</span>,format<span style="color: #666666;">=</span><span style="color: #ba2121;">"f"</span>),<span style="color: #ba2121;">"%)"</span>,sep<span style="color: #666666;">=</span><span style="color: #ba2121;">""</span>),ylab<span style="color: #666666;">=</span>paste(<span style="color: #ba2121;">"PC2 ("</span>,formatC(var.exp[<span style="color: #666666;">2</span>]<span style="color: #666666;">*100</span>,digits<span style="color: #666666;">=1</span>,format<span style="color: #666666;">=</span><span style="color: #ba2121;">"f"</span>),<span style="color: #ba2121;">"%)"</span>,sep<span style="color: #666666;">=</span><span style="color: #ba2121;">""</span>),main<span style="color: #666666;">=</span><span style="color: #ba2121;">"PC1 vs. PC2 of US Drug Collection"</span>)</pre>
+</div>
+<p><a href="/wp-content/uploads/2013/09/usdrugs.pc1_.pc2_.plot_.png"><img class="alignnone size-full wp-image-3046" alt="usdrugs.pc1.pc2.plot" src="/wp-content/uploads/2013/09/usdrugs.pc1_.pc2_.plot_.png"/></a></p>
+<p>The smaller molecules are on the right, larger on the left. Curiously, PC2 really only has two very extreme outliers, and everything else falls in a narrow line. What on earth is PC2 capturing?  I remembered hearing somewhere that after size, hydrophobicity is the next biggest explainer of variance in molecular properties.  Sure enough, I discovered that PC2 is somewhat correlated (rho = -.11, p = 8e-8) with column 1, <code>"ALOGP.ALogP"</code>, a measure of hydrophobicity (see <a href="http://en.wikipedia.org/wiki/Partition_coefficient">partition coefficient</a>) and with column 4, <code>"APol.apol"</code>, a measure of polarity (rho = -.17, p &lt; 2e-16).   So PC2 might be measuring something to do with hydrophobicity. But I&#8217;d hesitate to assign much significance to this yet &#8211; hydrophobicity might be correlated with size, for instance, and since PCs are orthogonal to each other, PC2 would have to at best represent the component of hydrophobicity that isn&#8217;t explained by size.  In any case, these are PCs of a bunch of metrics most of which I don&#8217;t understand very well.</p>
+<p>Now for the interesting part.  I read in <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2686115/">Singh 2009</a> that chemical libraries are full of compounds that look nothing at all like a drug &#8211; to the point that even in the first few principal components they fail to overlap with the drugs.  Is that true of these 3 antiprion compounds?</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">plot(pc[,<span style="color: #666666;">1</span>],pc[,<span style="color: #666666;">2</span>],pch<span style="color: #666666;">=16</span>,xlab<span style="color: #666666;">=</span>paste(<span style="color: #ba2121;">"PC1 ("</span>,formatC(var.exp[<span style="color: #666666;">1</span>]<span style="color: #666666;">*100</span>,digits<span style="color: #666666;">=1</span>,format<span style="color: #666666;">=</span><span style="color: #ba2121;">"f"</span>),<span style="color: #ba2121;">"%)"</span>,sep<span style="color: #666666;">=</span><span style="color: #ba2121;">""</span>),ylab<span style="color: #666666;">=</span>paste(<span style="color: #ba2121;">"PC2 ("</span>,formatC(var.exp[<span style="color: #666666;">2</span>]<span style="color: #666666;">*100</span>,digits<span style="color: #666666;">=1</span>,format<span style="color: #666666;">=</span><span style="color: #ba2121;">"f"</span>),<span style="color: #ba2121;">"%)"</span>,sep<span style="color: #666666;">=</span><span style="color: #ba2121;">""</span>),main<span style="color: #666666;">=</span><span style="color: #ba2121;">"PC1 vs. PC2 of US Drug Collection"</span>)
+legend(<span style="color: #ba2121;">"bottomright"</span>,c(<span style="color: #ba2121;">"FDA-approved drugs"</span>,<span style="color: #ba2121;">"antiprion compounds"</span>),col<span style="color: #666666;">=</span>c(<span style="color: #ba2121;">"black"</span>,<span style="color: #ba2121;">"orange"</span>),pch<span style="color: #666666;">=16</span>,cex<span style="color: #666666;">=.8</span>)
+points(pc[<span style="color: #666666;">2320</span>:<span style="color: #666666;">2322</span>,<span style="color: #666666;">1</span>],pc[<span style="color: #666666;">2320</span>:<span style="color: #666666;">2322</span>,<span style="color: #666666;">2</span>],col<span style="color: #666666;">=</span><span style="color: #ba2121;">'orange'</span>,pch<span style="color: #666666;">=16</span>)</pre>
+</div>
+<p><a href="/wp-content/uploads/2013/09/usdrugs.pc1_.pc2_.antiprion.png"><img class="alignnone size-full wp-image-3047" alt="usdrugs.pc1.pc2.antiprion" src="/wp-content/uploads/2013/09/usdrugs.pc1_.pc2_.antiprion.png"/></a></p>
+<p>No &#8211; in fact, in the first 2 PCs they cluster quite cleanly with the FDA-approved drugs. They&#8217;re towards the right, meaning they&#8217;re on the small size for a drug, which makes sense given that (unlike many drugs) they need to be able to cross the blood-brain barrier. And on whatever dimension PC2 is measuring, they&#8217;re also squarely in the mode.</p>
+<p>Same on PC2 and PC3:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">plot(pc[,<span style="color: #666666;">2</span>],pc[,<span style="color: #666666;">3</span>],pch<span style="color: #666666;">=16</span>,xlab<span style="color: #666666;">=</span>paste(<span style="color: #ba2121;">"PC2 ("</span>,formatC(var.exp[<span style="color: #666666;">2</span>]<span style="color: #666666;">*100</span>,digits<span style="color: #666666;">=1</span>,format<span style="color: #666666;">=</span><span style="color: #ba2121;">"f"</span>),<span style="color: #ba2121;">"%)"</span>,sep<span style="color: #666666;">=</span><span style="color: #ba2121;">""</span>),ylab<span style="color: #666666;">=</span>paste(<span style="color: #ba2121;">"PC3 ("</span>,formatC(var.exp[<span style="color: #666666;">3</span>]<span style="color: #666666;">*100</span>,digits<span style="color: #666666;">=1</span>,format<span style="color: #666666;">=</span><span style="color: #ba2121;">"f"</span>),<span style="color: #ba2121;">"%)"</span>,sep<span style="color: #666666;">=</span><span style="color: #ba2121;">""</span>),main<span style="color: #666666;">=</span><span style="color: #ba2121;">"PC2 vs. PC3 of US Drug Collection"</span>)
+legend(<span style="color: #ba2121;">"bottomright"</span>,c(<span style="color: #ba2121;">"FDA-approved drugs"</span>,<span style="color: #ba2121;">"antiprion compounds"</span>),col<span style="color: #666666;">=</span>c(<span style="color: #ba2121;">"black"</span>,<span style="color: #ba2121;">"orange"</span>),pch<span style="color: #666666;">=16</span>,cex<span style="color: #666666;">=.8</span>)
+points(pc[<span style="color: #666666;">2320</span>:<span style="color: #666666;">2322</span>,<span style="color: #666666;">2</span>],pc[<span style="color: #666666;">2320</span>:<span style="color: #666666;">2322</span>,<span style="color: #666666;">3</span>],col<span style="color: #666666;">=</span><span style="color: #ba2121;">'orange'</span>,pch<span style="color: #666666;">=16</span>)</pre>
+</div>
+<p><a href="/wp-content/uploads/2013/09/usdrugs.pc2_.pc3_.antiprion.png"><img class="alignnone size-full wp-image-3048" alt="usdrugs.pc2.pc3.antiprion" src="/wp-content/uploads/2013/09/usdrugs.pc2_.pc3_.antiprion.png"/></a></p>
+<p>Again, they cluster squarely with most of the drugs.</p>
+<p>None of this analysis is too meaningful because these PCs depend on what descriptors were included in the first place, and I didn&#8217;t understand enough of them to make meaningful choices.  For instance, perhaps by throwing out all the descriptors that took a long time to calculate I eliminated a lot of the really interesting metrics.  Or perhaps I should have pruned the glut of boring descriptors related to a molecule&#8217;s size, and then PC1 wouldn&#8217;t be quite so dominant at 60.6% of variance.</p>
+<p>Once I iron out some kinks like which descriptors to use (and ideally figure out some better way of handling NaN values), what I&#8217;d like to do eventually is get the full list of antiprion compounds in SMILES form and see how they cluster in the principal component space.  According to Emily Ricq, sometimes you can see discrete clusters in PC space for different <em>mechanisms</em>.  On reflection that&#8217;s exactly what I&#8217;d expect for anti-prion compounds.  The small planar aromatic molecules like anle138b, cpd-B and IND24, <a title="Quinacrine" href="/2012/10/23/quinacrine/">quinacrine</a>, <a title="Chlorpromazine: another prion therapeutic of yesteryear" href="/2012/12/17/chlorpromazine-another-prion-therapeutic-of-yesteryea/">chlorpromazine</a>, etc. which interfere with prion conversion but don&#8217;t necessarily bind PrP monomers all fall into one pretty tight cluster, and the long anionic polymers like heterpolyanion-23, dextran sulfate, <a title="The rise and fall of pentosan polysulfate in prion disease" href="/2012/12/13/the-rise-and-fall-of-pentosan-polysulfate-in-prion-disease/">pentosan polysulfate</a>, antisense oligonucleotides, etc. which do bind PrP should all fall into another distinct cluster.  It would be interesting to see if there are any other clusters as well.  Where would <a title="Curcumin as prion therapeutic" href="/2012/11/24/curcumin-as-prion-therapeutic/">curcumin</a> and <a title="Polyene antifungal drugs for prion disease" href="/2013/03/17/polyene-antifungal-drugs-for-prion-disease/">amphotericin b</a> fall?</p>
+<p>So far I&#8217;m quite impressed with the cheminformatics world.  I learned tools, found relevant data and wrote this whole post in just several hours, something I would consider unthinkable for a newcomer to bioinformatics.  I&#8217;m hopeful that with some more tinkering I&#8217;ll be able to start learning some interesting stuff about anti-prion molecules.</p>

@@ -1,0 +1,175 @@
+---
+layout: post
+title: "UAB day 4: analytical approaches"
+author: ericminikel
+date: 2012-12-14 01:43:57
+---
+<p>Today I am blogging from day 4 of the <a href="http://www.soph.uab.edu/ssg/nhgri_r25/secondshortcourse">UAB short course on sequencing</a>.</p>
+<p><strong>Speaker 1: <a href="http://www.bcm.edu/genetics/?pmid=10939">Suzanne Leal</a> &#8211; Methods to detect rare variant association</strong></p>
+<p>The missing heritability</p>
+<ul>
+<li>For the vast majority of complex traits, &lt; 10% of the genetic variance is explained by common variants so far</li>
+<li>This motivates a search for causal rare variants to explain the &#8220;missing heritability&#8221;</li>
+<li>Other places that the &#8220;missing heritability&#8221; could lie: multi-gene interaction terms, gene-environment interaction terms, structural variation.</li>
+<li>But there is strong evidence that rare variants play a role.</li>
+<li>Rare variant associations are difficult to uncover in GWAS.  tagSNPs included on chips are usually in low LD with rare variants. Analysis of haplotypes can help to increase power, but still underpowered.</li>
+<li>Sequencing is a more powerful approach</li>
+</ul>
+<div>Individual variant tests</div>
+<div></div>
+<div>
+<ul>
+<li>Same methods used for common variants can be used for rare variants</li>
+<li>Single marker tests: Chi-square, Cochran-Armitage trend test</li>
+<li>Multiple marker tests: Hotelling&#8217;s T<sup>2</sup>, logistic regression, minimal p-value</li>
+<li>However, individual variant tests require huge sample sizes to have power for rare variants.</li>
+<li>MAF 1%, OR 2.0, disease prevalence 1% requires 6,000 cases and 6,000 controls for 80% power.</li>
+<li>MAF 1%, OR 1.5, disease prevalence 1% requires 20,000 cases and 20,000 controls for 80% power.</li>
+<li>For analysis of rare with MAF &lt; 0.5% it is usually not possible to ascertain large enough sample sizes to detect associations</li>
+<li>This has motivated gene score methods for aggregating variants across a functional unit, usually a gene.</li>
+</ul>
+<div>Aggregate tests</div>
+</div>
+<div></div>
+<div>
+<ul>
+<li>Variously called aggregate tests, burden tests, or collapsing methods.</li>
+<li>Misclassification is a huge issue.  Causal variants may be excluded, neutral variants may be included.  Methods must be robust to misclassification.</li>
+<li>Frequency cutoffs are usually used to determine which variants to include in the analysis.</li>
+</ul>
+<div>A few tests for rare variant association</div>
+<div></div>
+</div>
+<ul>
+<li>Combined multivariate and collapsing (CMC) [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2842185/">Li &amp; Leal 2008</a>] Collapsing scheme can be used in a regression framework. All these methods were originally developed _not_ in a regression framework but have been adapted so that you can use covariates in your analysis</li>
+<li>Gene-or-region-based analysis of variants of intermediate and low frequency (GRANVIL) - Numerator is number of rare variants for an individual; denominator is number of genotyped rare variant sites.  Incomplete genotyping becomes a source of bias.  Suppose there are 5 rare variant sites; individual A was only genotyped at 2 sites and had a rare variant at 1.  This person&#8217;s score is 1/2, which is quite high and misleading &#8211; because these are very rare variants, it&#8217;s likely they would have been homozygous reference at the other 3 ungenotyped sites and their true score should be 1/5.</li>
+<li>Weighted Sum Statistic WSS [<a href="http://www.plosgenetics.org/article/info%3Adoi%2F10.1371%2Fjournal.pgen.1000384">Madsen &amp; Browning 2009</a>].  Variants are inversely weighted by frequency in controls.  For all of these tests it is advisable to use empirical p-values; for this test it is absolutely essential.</li>
+<li>C-alpha</li>
+<li>Sequence Kernel Association Test (SKAT)</li>
+</ul>
+<p>Imputation of rare variant data</p>
+<ul>
+<li>Can be imputed from sequence data e.g. 1000G into GWAS studies</li>
+<li>Imputation of rare variants is not very good, but there have been some successful examples.  Auer 2012 AJHG</li>
+<li>Imputation programs: Mach, Minimac, Impute2</li>
+</ul>
+<p>Comparison of methods</p>
+<ul>
+<li>Each paper creates simulation data that makes their method look best</li>
+<li>Differences in power between different approaches are usually modest, and which model is best depends on underlying nature of variation in data</li>
+<li>Predictably, bidirectional tests (C-Alpha, SKAT, SKAT-O) are more powerful when variant effects are bidirectional; unidirectional tests are more powerful when variant effects are unidirectional.</li>
+<li>All tests work in a regression framework except C-Alpha, but SKAT works in a regression framework and can be equivalent to C-Alpha.</li>
+<li>Allelic structure in populations is a huge confounder and cannot be adequately controlled-for using principal components.  Ability to control this confounding may be a factor in choice of test.</li>
+</ul>
+<div>NHLBI exome sequencing project</div>
+<div></div>
+<div>
+<ul>
+<li>Sequenced ~6700 exomes, about 2/3 European Americans and 1/3 African Americans</li>
+<li>Included individuals from HeartGO, LungGO and WHISP.</li>
+<li>Selected individuals from extremes of quantitative phenotypes (LDL, blood pressure), from disease endpoints (stroke, chronic obstructive pulmonary disease, early heart attack) and people with deeper phenotyping &#8211; selected from 220,000 individuals</li>
+<li>One concern was that the extreme phenotype individuals were so far in the extremes you would start to get Mendelian-like traits.  But that appears not to have happened.</li>
+<li>90x depth on Illumina HiSeq and Genome Analyzers at Broad and University of Washington.</li>
+<li>Multi-sample variant calling</li>
+</ul>
+<div>Extensive data quality control needed before any analysis</div>
+</div>
+<div></div>
+<div>
+<ul>
+<li>Variant site removal with support vector machine.  Using ~20 criteria, find sites to remove.  They intentionally added duplicate samples.  Found that concordance between duplicates was not great; removed those variants that</li>
+<li>Variant call removal &#8211; depth &lt; 10x or &gt; 500x.  High read depth can indicate the presence of a CNV.  Removing the high depth sites improves the Ti/Tv ratio and the concordance between duplicates.  Removing low read depth also helped improve concordance, even removing everything &lt; 20x, but the 20x cutoff was deemed too great a sacrifice because it would have removed far more genotypes than the 10x cutoff.</li>
+<li>Sex check.  For 13 individuals, sex didn&#8217;t match &#8211; 6 were errors and the rest were Turner or Kleinfelter syndrome.</li>
+<li>Duplicates and related samples check.  Removed individuals related at third degree or greater.</li>
+<li>Population stratification with principal components.  Some individuals who self-identified as African American or European American clustered with the opposite group.  Not clear how many were sample switches and how many were just self-identification not necessarily being identical to genetic identity.  They removed these individuals.</li>
+</ul>
+<div>Distribution of allele frequencies</div>
+</div>
+<div></div>
+<div>
+<ul>
+<li>Majority of called variants were singletons</li>
+<li>On average each individual had ~100 variants that were singletons in this study and also unseen in other public data sources</li>
+</ul>
+<p>Analysis</p>
+<ul>
+<li>Analysis packages developed in R will soon be made public</li>
+<li>All p values derived empirically</li>
+<li>Primary analysis using Combined Multivariate and Collapsing (CMC)</li>
+<li>Minor allele frequency filtering using MAFs computed from entire ESP dataset (6700 individuals) as opposed to only individuals with the given phenotype in a particular analysis.  No functional filtering; she recommends against strict functional filtering, as you can get vastly different results with different tools, but you can do <em>weighting</em> based on PolyPhen score or similar.</li>
+<li>African Americans and European Americans analyzed separately and results combined through a meta-analysis.</li>
+<li>Used Bonferroni correction for 20,000 genes.  Tests are pretty much independent from each other, so Bonferroni correction is appropriate</li>
+<li>Analysis reproduced over 100 associations previously reported in GWAS</li>
+<li>Also reported a few novel associations</li>
+<li>One new association was rare variants in APOC3 associated with triglyceride levels.    Total of about 25 individuals with rare variants out of ~3700 sequenced who were also phenotyped for triglycerides, p ~ 1e-6.  However located in same region as APOA1 and several related genes.  Coded each gene individually and re-ran CMC.  Association appears to be driven by APOC3 and not by nearby genes</li>
+<li>Validation using exome chip on ~3400 individuals through Women&#8217;s Health Initiative &#8211; got even stronger p values than from original exome sequencing study</li>
+<li>Model uses a binary indicator for whether the individual has at least one rare variant in the gene</li>
+<li>APOC3 and ABCA1 also found to be associated with HDLs.  Variants in ABCA1 reduce HDLs (which is bad); there exist two Mendelian diseases in this gene: AR-Tangiers and AD-Familial HDL deficiency.  48 rare variant sites in African Americans in this gene, with p = 1e-4, and 54 rare variant sites in European Americans but no association, p = .15.  Rare variants in APOC3 increase HDLs.  These associations failed validation with exome chip individually (perhaps because not enough of the variants driving association were included on the chip) but did give p values on order of 1e-6 once imputation was used, so suggestive of a true association.</li>
+</ul>
+<div>3883 exomes and phenotypes are available through dbGaP but you need to apply to get access to data, a painful process.</div>
+<div></div>
+<div>Calculating power to design sequencing studies &#8211; SimPOWER or RARE.</div>
+<div></div>
+<div><strong>Speaker 2: <a href="http://genetics.unc.edu/faculty/yun-li">Yun Li</a> &#8211; Imputation methods in 1000 Genomes Phase 1</strong></div>
+</div>
+<div></div>
+<div> Yun Li is author of <a href="http://www.sph.umich.edu/csg/abecasis/MACH/index.html">MaCH genotype imputation software</a>.</div>
+<div></div>
+<div>Missing heritability &#8211; possibly due to gene-gene interactions [<a href="http://www.pnas.org/content/109/4/1193.long">Zuk 2012</a>] or phenotypic robustness [<a href="http://www.plosgenetics.org/article/info%3Adoi%2F10.1371%2Fjournal.pgen.1003041">Queitsch 2012</a>].</div>
+<div></div>
+<div>Imputation in next-generation sequencing data</div>
+<div></div>
+<div>
+<ul>
+<li><a href="http://genome.sph.umich.edu/wiki/Thunder">Thunder</a> &#8211; similar to MaCH</li>
+<li>Trio-Caller &#8211; extension of Thunder to trio data</li>
+<li>AbCD &#8211; for design of sequencing studies</li>
+</ul>
+<p>Hidden markov model underlying MaCH</p>
+<p>Rule of thumb: you need at least 10-20 copies of minor allele in your data in order to be able to impute haplotypes for it.  Rarer variants cannot be imputed.</p>
+<p>Broad uses GATK + <a href="http://faculty.washington.edu/browning/beagle/beagle.html">Beagle</a> pipeline for haplotyping</p>
+<p>See <a href="http://compgen.unc.edu/wp/wp-content/uploads/2012/09/liu_snps.pdf">Li 2012</a> for a review.</p>
+<p><a href="http://www.unc.edu/~yunmli/AbCD.html">AbCD</a>: Arbitrary Coverage Design &#8211; a tool for designing studies &#8211; evaluate tradeoff between sequencing depth and number of samples sequenced.</p>
+<p>MaCH-Admix &#8211; an extension of MaCH to address admixed populations</p>
+<p>Computational cost of MaCH is O(N<sup>2</sup>) where N = number of haplotypes in your sample</p>
+<p><strong>Speaker 3: <a href="http://www.broadinstitute.org/gatk/gatkdocs/org_broadinstitute_sting_gatk_walkers_compression_reducereads_ReduceReads.html">Degui Zhi</a> &#8211; de novo assembly</strong></p>
+<p>If you&#8217;re working on an organism that does not yet have a reference, you have to do de novo assembly, that&#8217;s how we get a reference genome.  If your organism has a reference, then why do assembly?  (1) Organism may have sequence not present in the reference, and (2) regions in reference may be divergent.</p>
+<p>New frontiers in assembly:</p>
+<ul>
+<li>Variant-aware mapping / assembly</li>
+<li>Local re-assembly</li>
+<li>Haplotype assemby</li>
+<li>Metagenomics sequencing &#8211; you get a sample from soil, water or air with multiple different species of microorganisms in it, all of which have no reference sequence &#8211; all you have is fragmented reads with all the organisms mixed together.</li>
+<li>Transcriptome assembly</li>
+<li>NGS data compression like <a href="http://www.broadinstitute.org/gatk/gatkdocs/org_broadinstitute_sting_gatk_walkers_compression_reducereads_ReduceReads.html">ReduceReads</a>.</li>
+</ul>
+<p>Overlap graph</p>
+<ul>
+<li>Create a graph with each read as a node and each overlap as an edge</li>
+<li>Repeat regions will have edges to many nodes</li>
+<li>Finding minimal path through all nodes is the <a href="http://en.wikipedia.org/wiki/Hamiltonian_path_problem">Hamiltonian path problem</a></li>
+<li>A simplification is a &#8216;repeat graph&#8217; where unitigs with same sequence are collapsed. Now you just need to find a path visiting every <em>edge</em> once.  This is an <a href="http://en.wikipedia.org/wiki/Eulerian_path">Eulerian path</a> problem (finding the Eulerian path in a de Bruijn graph), which is more tractable.  See <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC55524/">Pevzner 2001</a>.</li>
+<li>To identify all repeats you actually need to break up the reads into <em>even smaller</em> pieces of the genome.  Advantages: (1) efficient representation of sequence by k-mers instead of reads, (2) explicit representation of repeats, and (3) search for overlaps is simplified because they are on the same edge.</li>
+</ul>
+<div>Recent developments</div>
+<div></div>
+<div>
+<ul>
+<li>Variant aware assemblers &#8211; Cortex [<a href="http://211.144.68.84:9998/91keshi/Public/File/48/44-2/pdf/ng.1028.pdf">Iqbal 2012</a>], Fermi [<a href="http://bioinformatics.oxfordjournals.org/content/28/14/1838.short">Li 2012</a>].</li>
+<li>Can even handle significant indels, structural variation</li>
+<li>Cannot take advantage of paired-end information</li>
+<li>Doesn&#8217;t handle sequencing errors that well</li>
+<li>Computational complexity explodes with large numbers of individuals</li>
+</ul>
+<div>Reference-guided assembly</div>
+</div>
+<div></div>
+<div>
+<ul>
+<li>A mixed alternative to pure mapping-to-reference or pure de novo assembly.  Use reference as a guide but use assembly for local corrections and haplotype discovery.</li>
+<li>Haplotype assembly is difficult because variants are often too far apart for reads to span, and sequencing errors create false variants.  Hence a probabilistic approach is needed.  Also to integrate haplotype information from reads <em>and </em>from population.</li>
+<li>In 1000G data, about 5-6% of reads span more than one variant site (called &#8216;jumping reads&#8217;).  33-70% (YRI or CEU respectively) of polymorphic sites are covered by &#8216;jumping reads&#8217;.  [<a href="http://bioinformatics.oxfordjournals.org/content/28/7/938.short">Zhi 2012</a>]</li>
+</ul>
+</div>
+<p>&nbsp;</p>
+</div>

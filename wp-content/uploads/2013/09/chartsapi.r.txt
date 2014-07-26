@@ -1,0 +1,116 @@
+# Eric Minikel
+# CureFFI.org
+# 2013-09-19
+# R script to make Google Charts API timepoint-delay plots from in vivo survival data
+
+options(stringsAsFactors=FALSE)
+library(sqldf)
+
+# http://www.cureffi.org/2013/05/02/r-equivalent-of-sql-coalesce/
+# accepts a list of vectors of identical length and returns one vector with the first non-NA value
+coalesce = function(...) {
+    # convert input arguments into a list of vectors
+    input_list = list(...)
+    # check that all input vectors are of same length
+    vectorlength = length(input_list[[1]])
+    for (j in 1:length(input_list)) {
+        if(length(input_list[[j]]) != vectorlength) {
+            stop(paste("Not all vectors are of same length. First vector length: ",vectorlength,". Vector #",j,"'s length: ",length(input_list[[j]]),sep=""))
+        }
+    }
+    # create a result vector to fill with first non-NA values
+    result = rep(NA,vectorlength)
+    # fill with first non-NA value
+    for (i in 1:length(result)) {
+        for (j in 1:length(input_list)) {
+            if(!is.na(input_list[[j]][i])) {
+                result[i] = input_list[[j]][i]
+                break
+            }
+        }
+    }
+    return(result)
+}
+
+
+
+# read the entire table
+rawdata = read.table('c:/sci/003prigen/blog/thera2/experiments.txt',header=TRUE,quote='',comment.char='',sep='\t')
+
+# now R code to generate JavaScript
+data = subset(rawdata, endpoint == 'survival' & first_author != 'Berry')
+data$timepoint = 0
+data$timepoint = data$treatment_started_dpi / data$control_endpoint_dpi
+peripheral = data$infection_route %in% c('i.p.','s.c.','i.m.','p.o.','gavage')
+data$timepoint[peripheral]  = data$timepoint[peripheral]*2  - 1 # I know, it's crude - assuming neuroinvasion halfway between peripheral inoculation and death
+# remove all NA observations as javascript cannot tolerate these
+data = data[!is.na(data$timepoint) & !is.na(data$delay),]
+
+js_header = '
+<!-- noformat on -->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawVisualization);
+'
+js_start = "
+function drawVisualization() {
+    // Create and populate the data table.
+    var data = new google.visualization.DataTable();
+    data.addColumn('number', 'timepoint');
+    data.addColumn('number', 'delay');
+    data.addColumn({type:'string',role:'tooltip'});
+"
+js_end = "
+    // Draw a plot with all data points
+    var chart_all = new google.visualization.ScatterChart(
+        document.getElementById('tdplot_all'));
+  var options = {title: 'Therapeutics tested in vivo',
+                      width: 600, height: 400,
+                 colors: ['orange'],
+                 vAxis: {title: 'delay', vieWindowMode: 'maximized',  titleTextStyle: {color: 'green'}},
+                 hAxis: {title: 'timepoint', viewWindow: {min: -1.8, max: 1.0}, ticks: [-1.5,-1,-.5,0,.5,1], titleTextStyle: {color: 'green'}},
+                 legend: {position: 'none'}
+                };
+    chart_all.draw(data, options);
+    // Draw a plot zoomed in on the i.c. experiments
+    var chart_ic = new google.visualization.ScatterChart(
+        document.getElementById('tdplot_ic'));
+  var options = {title: 'Therapeutics tested in vivo',
+                      width: 600, height: 400,
+                 colors: ['orange'],
+                 vAxis: {title: 'delay', vieWindow: {min: -0.5, max: 2.0},  titleTextStyle: {color: 'green'}},
+                 hAxis: {title: 'timepoint', viewWindow: {min: -0.5, max: 1.0}, ticks: [-.5,0,.5,1], titleTextStyle: {color: 'green'}},
+                 legend: {position: 'none'}
+                };
+    chart_ic.draw(data, options);
+}
+"
+js_bottom = '
+</script>
+<!-- noformat off -->
+<div id="tdplot_all"></div>
+<div id="tdplot_ic"></div>
+'
+
+
+
+data$animal_strain[data$animal_strain == '-'] = ''
+data$animal_model_name[data$animal_model_name == ''] = NA
+data$animalmodeltext = paste(coalesce(data$animal_model_name,rep("WT",dim(data)[1])),data$animal_strain,data$animal_species,sep=' ')
+data$strainmodeltext = paste(data$prion_strain,"in",data$animalmodeltext)
+
+# FYI: much harder to add links in tooltips, plus then you have a hover tunnel problem
+#http://stackoverflow.com/questions/16283615/add-a-link-inside-jquery-tooltip-function
+#http://stackoverflow.com/questions/1811529/jquery-tooltip-with-links-on-it
+data$tooltip = paste(data$study,'\\n',
+                     data$treatment,' from ',data$treatment_started_dpi,' dpi\\n',
+                     data$strainmodeltext,'\\n',
+                     sep='')
+data$addrowcode = paste("data.addRow([",data$timepoint,",",data$delay,",'",data$tooltip,"']);",sep="")
+js_adddata = paste(data$addrowcode, collapse="\n")
+
+js_all = paste(js_header,js_start,js_adddata,js_end,js_bottom,sep="\n")
+
+write.table(js_all,'googlechart_all.js',row.names=FALSE,col.names=FALSE,quote=FALSE)
+

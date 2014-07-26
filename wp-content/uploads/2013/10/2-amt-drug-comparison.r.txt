@@ -1,0 +1,51 @@
+# Eric Minikel
+# CureFFI.org
+# 2013-10-17
+# Timepoint-delay plot of efficacy of top anti-prion small molecules: anle138b, cpd-b and 2-aminothiazoles
+
+# read the entire table
+# this data can be downloaded from http://www.cureffi.org/prion-therapeutic-review/
+rawdata = read.table('c:/sci/003prigen/blog/thera2/experiments.txt',header=TRUE,quote='',comment.char='',sep='\t')
+
+# i.c. survival only examples
+data = subset(rawdata, infection_route == 'i.c.' & endpoint == 'survival')
+# create timepoints
+data$timepoint = 0
+data$timepoint = data$treatment_started_dpi / data$control_endpoint_dpi
+# create symbols
+data$pch = 19 # dots for WT mice
+data$pch[data$animal_model_name!=''] = 3 # crosses for Tg mice
+# create colors
+data$k = 'gray'
+data$k[data$treatment %in% c("IND24","IND81")] = 'red'
+data$k[data$treatment == "anle138b"] = 'darkorange3'
+data$k[data$treatment == "cpd-B"] = 'darkblue'
+
+png('c:/sci/003prigen/blog/2amt.anle138b.cpd-b.tdplot.png',width=600,height=400)
+main = 'Comparison of in vivo performance of most effective antiprion compounds'
+plot(data$timepoint,data$delay,pch=data$pch,col=data$k,xaxt='n',yaxt='n',xlab=expression(bold('timepoint')),ylab=expression(bold('delay')),main=main,xlim=c(0,1),ylim=c(0,2)) # xlim=c(-.2,1),ylim=c(-.5,2),
+subs = subset(data, treatment %in% c("IND24","IND81","anle138b","cpd-B"))
+# text(subs$timepoint,subs$delay,labels=paste(subs$treatment,"against",subs$prion_strain),cex=.7,pos=4, col=subs$k)
+abline(h=0)
+axis(side=1,at=c(0,1),labels=c('i.c. infection','terminal illness'),padj=1)
+axis(side=1,at=seq(-.2,1,.2),labels=format(seq(-.2,1,.2),nsmall=2),padj=-.5)
+axis(side=2,at=c(-.5,0,.5,1,1.5),labels=c('-50%','0%','50%','100%','150%'))
+
+# plot individual drugs RML WT mouse experiments
+temp1 = subset(data, treatment=='IND24' & prion_strain == 'RML' & animal_model_name == '')
+points(temp1$timepoint, temp1$delay, pch=19, lwd=3, type='b', col=temp1$k)
+text(temp1[2,"timepoint"],temp1[2,"delay"],pos=4,col=temp1$k,labels=temp1$treatment)
+temp1 = subset(data, treatment=='cpd-B' & prion_strain == 'RML' & animal_model_name == '' & year > 2007)
+points(temp1$timepoint, temp1$delay, pch=19, lwd=3, type='b', col=temp1$k)
+text(temp1[3,"timepoint"],temp1[3,"delay"],pos=4,col=temp1$k,labels=temp1$treatment)
+temp1 = subset(data, treatment=='anle138b' & prion_strain == 'RML' & animal_model_name == '')
+points(temp1$timepoint, temp1$delay, pch=19, lwd=3, type='b', col=temp1$k)
+text(temp1[3,"timepoint"],temp1[3,"delay"],pos=4,col=temp1$k,labels=temp1$treatment)
+
+legend('topright',c('2-aminothiazoles','anle138b','cpd-B','other','Tg animals','WT animals'),lwd=c(3,3,3,3,NA,NA),pch=c(NA,NA,NA,NA,3,19),col=c('red','darkorange3','darkblue','gray','black','black'))
+dev.off()
+
+
+# FYI - this code is useful for deciding what color to use.
+# plot(floor((1:657)/10)*10, (1:657) %% 10, col=colors(), pch=19, cex=3)
+# text(floor((1:657)/10)*10, (1:657) %% 10, labels=colors(), pos=2, srt=90, cex=.5)

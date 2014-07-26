@@ -1,0 +1,42 @@
+column	type	description
+study	character	"short name for study in the format ""Firstauthor YYYY"""
+year	integer	year study was published
+pubmed_link	character	
+first_author	character	surname of first author(s)
+last_author	character	surname of last author
+animal_species		
+animal_strain		
+animal_model_name		
+animal_model_citation		
+prnp_genotype	character	"""wt"" means wild-type of own species.  Where transgenes from other species are used, this is specified.  Any mutations are also included here."
+prp_expression_level	numeric 	"Animal model's expression level of PrP, where 1x = wild-type level.  This field isn't yet being used in a consistent way.  Some authors state what they believe to be the expression level, though usually without any data or a relevant citation to back it up, and they often disagree with each other.  The original papers that introduced these Tg models usually don't state this figure clearly either.  I welcome any suggestions on how to clean this up."
+prion_strain	character	
+avg_age_at_inoculation_days	integer	"Where a range is given I take the midpoint (e.g. ""4-6 weeks"" -> 5 weeks -> 35 days).  When the author simply states ""at weaning"" I assume 3 weeks = 21 days, both for mice and hamsters.  See ex. http://jaxmice.jax.org/manual/breeding_strategies_manual.pdf http://www.hamsterhideout.com/breeding.html http://exoticpets.about.com/od/hamsters/p/hamsterdata.htm"
+inoculum_titer		
+inoculum_volume		
+infection_route	factor	"i.c. = intracerebral, i.p. = intraperitoneal, p.o. = per oral, s.c. = subcutaneous, i.m. = intramuscular"
+treatment_route	factor	"i.c. = intracerebral (includes continuous infusions), i.p. = intraperitoneal, p.o. = per oral, s.c. = subcutaneous, i.m. = intramuscular, i.v. = intravenous, including tail vein."
+vehicle		
+control_compound	character	"This *should* always be the same as 'vehicle' in small molecule studies, but isn't always, so worth including.  Also for antibody studies the control group usually receives an isotype control antibody, for gene therapy,  an empty vector, etc."
+compound		
+dose_description	character	dose as described in study.   this free form text column is the only place to find out where increasing doses were used -  only peak dose is recorded elsewhere.
+dose_number_deprecated		
+peak_dose_mgkgday	numeric	"Doses given not-every-day are converted to daily equivalent here, e.g. if 10 mg/kg 3 days per week, 10*3/7 = 4.29 is entered here.  Where a dose in mg is stated and the weight of animals not provided, I assume mice weigh 20g each per http://www.informatics.jax.org/mgihome/other/mouse_facts1.shtml"
+equiv_peak_dose_mg_70kg_human		"Calculated as follows based on peak_dose_mgkgday: =IF(AND(G203=""mice"",X203>0),X203*(3/37)*70,IF(AND(G203=""hamsters"",X203>0),X203*(5/37)*70,"""")).   Based on BSA conversions from Reagan-Shaw 2008 Table 1: http://www.fasebj.org/content/22/3/659/T1.expansion.html"
+treatment_started_dpi		
+treatment_stopped_dpi	numeric	"The time dpi when treatment was stopped.  When treatments were pursued until sacrifice, this is left blank.  When treatments were pursued until a symptomatic endpoint was reached, then the average time to endpoint in treated animals is used.  When the author fails to state how long the treatment was continued (McKenzie 1994 is currently the only example) it is assumed that it was continued until death, and therefore this field left blank, but this will be noted in the comments."
+endpoint	factor	"survival = time to death or 'terminal illness', time of sacrifice, etc.  onset = time to onset of some behavioral sign.  this is defined differently by each study"
+treatment_endpoint_dpi	numeric	"Time dpi at which treated animals reached the measured endpoint or were censored (if censored, value of treatment_attack_rate column will be < 1).  This value is usually the mean, but sometimes median if that's all the author provided and there is no original data from which to calculate the mean."
+treatment_sd	numeric	
+treatment_sem	numeric	Deprecated.
+treatment_n		
+treatment_attack_rate	numeric	Fraction of treated animals that reached the endpoint.
+treatment_censored_dpi	integer	Time dpi at which animals that still hadn't reached endpoint became censored.
+control_endpoint_dpi	numeric	"Time dpi at which control animals reached the measured endpoint.  This is usually mean, but sometimes median if that's all the author provided and there is no original data from which to calculate the mean."
+control_sd		
+control_n		
+control_attack_rate	numeric	Fraction of control animals that reached the endpoint.
+delay	numeric	"treatment_days_to_endpoint/control_days_to_endpoint - 1. you could calculate this yourself, but some authors just directly give a percent delay, without stating times for treated or control groups.  those are included in this field as well."
+reported_p	numeric	"p value for treated group vs. control group time to endpoint, as reported by author, regardless of statistical test used.  1 when author simply states 'not significant', blank when author does not provide a p value"
+eyeballed	integer	"1 = one or more items of data in this row was eyeballed from a figure or estimated from discussion in text, because the author never provided a number. 0 = all numbers are as provided by author.  one borderline exception to this is that where authors give a range (e.g. ""n=10 to 12 mice per group""), i take the midpoint (in this case, 11) and still leave 0 in this field."
+comments	character	

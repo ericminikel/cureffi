@@ -1,0 +1,406 @@
+---
+layout: post
+title: "Gene expression analysis QC pipeline in R"
+author: ericminikel
+date: 2013-08-23 19:06:59
+---
+<p><strong>introduction</strong></p>
+<p>Over my first year working in bioinformatics, I&#8217;ve developed checklist of things that I look at in every gene expression dataset I get my hands on, whether microarray, RNA-seq or proteomics.  What is the distribution of genes&#8217; expression levels?  Do gene expression profiles correlate well between samples?  Or with other datasets?  How variable is the expression of housekeeping genes?  How well do principal components capture the data?  And so on.</p>
+<p>These are steps which come after you&#8217;ve processed raw data and already have called expression levels for probes, transcripts, genes or proteins.  Hence this pipeline does not include any steps involving FASTQs or BAMs for RNA-seq, nor any steps involving normalization (e.g. with <a href="http://www.bioconductor.org/packages/release/bioc/manuals/plier/man/plier.pdf">plier</a>) for microarray.  For those things, the best microarray tutorial I&#8217;ve found is <a href="http://www3.nd.edu/~mpfrende/Ecological%20Genomics/Papers/Microarray%20Workshop/Bioinformatics%20Analysis%20of%20Microarray%20Data.pdf">this</a>, and I&#8217;m still looking for a simple, clean RNA-seq pipeline, though <a href="http://en.wikibooks.org/wiki/Next_Generation_Sequencing_(NGS)/RNA">this wikibook</a> is certainly a compendium.</p>
+<p>I&#8217;m sharing these QC steps in the hopes they&#8217;ll be useful to others, as well as so that people can comment on what I&#8217;ve missed.  This also includes some of my favorite R tricks, and a not-insignificant motivation for blogging about them is so that I can always find them when I need them.</p>
+<p><strong>example dataset</strong></p>
+<p>None of the datasets I&#8217;ve run this on at work are public yet, so I hunted around for a suitable public dataset to use as an example.  Project <a href="http://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS4145">GDS4145</a> from <a href="http://www.ncbi.nlm.nih.gov/geo/">NCBI GEO</a> seemed to have many of the features I was looking for.  It&#8217;s a microarray dataset on human blood with 25 patients over 5 timepoints = 125 samples, with a mix of sexes, one bad sample, and a confusing relationship between gene symbols and probes.  <a href="ftp://ftp.ncbi.nlm.nih.gov/geo/datasets/GDS4nnn/GDS4145/soft/GDS4145.soft.gz">Expression levels plus metadata</a> and <a href="ftp://ftp.ncbi.nlm.nih.gov/geo/platforms/GPLnnn/GPL96/annot/GPL96.annot.gz">Affymetrix annotations</a> were all available to download in one place.</p>
+<p>Raw microarray data comes in CEL format, with optical levels for many probes which need to be combined into transcripts or genes and normalized by some complicated mechanism.  For Affymetrix arrays you can use plier, see <a href="http://www3.nd.edu/~mpfrende/Ecological%20Genomics/Papers/Microarray%20Workshop/Bioinformatics%20Analysis%20of%20Microarray%20Data.pdf">this tutorial</a>. But this dataset is in <a href="http://www.ncbi.nlm.nih.gov/geo/info/soft2.html#SOFTformat">SOFT format</a>, which is supposedly already normalized and ready to go &#8211; more on this later.</p>
+<p>It&#8217;s weirdly difficult to extract metadata from SOFT files, so I did this manually for this dataset and put it <a href="/wp-content/uploads/2013/08/metadata.txt">here</a>.</p>
+<p><strong>getting started</strong></p>
+<p>To download and unzip this example dataset on Unix, do this:</p>
+<pre>wget ftp://ftp.ncbi.nlm.nih.gov/geo/datasets/GDS4nnn/GDS4146/soft/GDS4146.soft.gz
+wget ftp://ftp.ncbi.nlm.nih.gov/geo/platforms/GPLnnn/GPL97/annot/GPL97.annot.gz
+wget /wp-content/uploads/2013/08/metadata.txt
+gunzip *.gz</pre>
+<p>Next I fire up <a href="http://www.r-project.org/">R</a> and load my favorite packages: <a href="http://cran.r-project.org/web/packages/stringr/stringr.pdf">stringr</a> for string parsing, <a href="http://cran.r-project.org/web/packages/gap/vignettes/gap.pdf">gap</a> for QQ plots, and <a href="http://cran.r-project.org/web/packages/sqldf/sqldf.pdf">sqldf</a> for joining and aggregating tables.  SQL is so much better than R for database operations, but interfacing between R and a live SQL database is somewhat laborious &#8211; sqldf gives you the best of both worlds by letting you treat R data frames as SQL tables directly in R.  If you&#8217;re going to use it, you should follow SQL naming conventions with underscores in your table names and variable names instead of periods which are more commonly used in R &#8211; for instance, <code>my_data</code> instead of <code>my.data</code>.  I also set a working directory and tell R not to turn strings into factors in tables I read in.</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">setwd(<span style="color: #ba2121;">'c:/sci/026rplcl/data/microarray/practice2/'</span>)
+
+<span style="color: #408080; font-style: italic;"># only if you don't have these packages already:</span>
+<span style="color: #408080; font-style: italic;"># install.packages("stringr")</span>
+<span style="color: #408080; font-style: italic;"># install.packages("gap")</span>
+<span style="color: #408080; font-style: italic;"># install.packages("sqldf")</span>
+<span style="color: #408080; font-style: italic;"># install.packages("reshape")</span>
+library(stringr) <span style="color: #408080; font-style: italic;"># makes string splitting, indexing, regexes easier - R's base functions are quite bad at this</span>
+library(gap) <span style="color: #408080; font-style: italic;"># best library I've found for qq plots</span>
+library(sqldf) <span style="color: #408080; font-style: italic;"># for me, JOIN &amp; GROUP BY are easier to use than R's match/merge and aggregate</span>
+library(reshape) <span style="color: #408080; font-style: italic;"># for converting between matrices and relational models</span>
+options(stringsAsFactors<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">FALSE</span>) <span style="color: #408080; font-style: italic;"># so that strings stay as strings in all read.table calls</span></pre>
+</div>
+<p><strong>read in data</strong></p>
+<p>First I read in the annotation data describing each microarray probe.  If you&#8217;ve ever seen an R error message like <code>Error in scan... line 198 did not have 21 elements</code>, chances are 90% that it was due to characters that R incorrectly interpreted as quoting or commenting characters.  For instance, maybe the first column said &#8220;patient #21&#8243; and R thought the # started a comment, thus leaving that line with only one column.  <code>quote</code>, <code>comment.char</code> and <code>skip</code> (to remove extraneous header lines) are your friends here. Setting <code>comment.char = ''</code> will turn off the interpretation of any characters as comments.</p>
+<p>Once you&#8217;ve got it read in, check the column names and table dimensions are what you expected, and create any additional columns you wanted.  I find that microarray annotations, for instance, contain cytoband location but not just the chromosome by itself as one column &#8211; that can be useful, and <a href="http://thebiobucket.blogspot.com/2011/11/simple-but-propable-useful-regex.html"><code>str_extract</code></a> is good for grabbing these things.</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">annot <span style="color: #666666;">=</span> read.table(<span style="color: #ba2121;">'GPL97.annot'</span>,quote<span style="color: #666666;">=</span><span style="color: #ba2121;">''</span>,comment.char<span style="color: #666666;">=</span><span style="color: #ba2121;">'!'</span>,skip<span style="color: #666666;">=27</span>,sep<span style="color: #666666;">=</span><span style="color: #ba2121;">'\t'</span>,header<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">TRUE</span>)
+colnames(annot) <span style="color: #408080; font-style: italic;"># check that the header read correctly</span>
+dim(annot) <span style="color: #408080; font-style: italic;"># check right number of rows and columns</span>
+annot$Chromosome <span style="color: #666666;">=</span> str_extract(annot$Chromosome.location,<span style="color: #ba2121;">".*?[p|q]"</span>) <span style="color: #408080; font-style: italic;"># Chromosome by itself is often not included in annotations, but should be.</span>
+annot$Chromosome <span style="color: #666666;">=</span> gsub(<span style="color: #ba2121;">"[p|q]"</span>,<span style="color: #ba2121;">""</span>,annot$Chromosome)</pre>
+</div>
+<p>Next I do similarly for the expression levels themselves:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">ma_raw <span style="color: #666666;">=</span> read.table(<span style="color: #ba2121;">'GDS4146.soft'</span>,skip<span style="color: #666666;">=188</span>,comment.char<span style="color: #666666;">=</span><span style="color: #ba2121;">'!'</span>,header<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">TRUE</span>,sep<span style="color: #666666;">=</span><span style="color: #ba2121;">'\t'</span>)
+colnames(ma_raw)
+<span style="color: #408080; font-style: italic;"># peek at the data</span>
+ma_raw[<span style="color: #666666;">1</span>:<span style="color: #666666;">5</span>,<span style="color: #666666;">1</span>:<span style="color: #666666;">5</span>]</pre>
+</div>
+<p>Note that although <code>head()</code> can give you a peek at the top of a data frame, for really wide tables, just looking at the upper left corner with <code>ma_raw[1:5,1:5]</code> can be more useful. Sometimes you also may want to check with <code>tail()</code> that there aren&#8217;t any extra blank lines at the bottom.</p>
+<p><strong>parsing metadata</strong></p>
+<p>In SOFT files, the metadata is included in structured comments at the top of the file.  But sometimes I&#8217;ve received a dataset where the <em>only</em> metadata is in either the file names (e.g. names of mRNA-seq FASTQs) or column names in a table.  That&#8217;s kind of annoying, especially since R is not as good at string parsing as, say, Python.  But I&#8217;ve learned that sapply and strsplit can work wonders.</p>
+<p>Suppose you had the sex of each sample in the column names, like GSM601942.M indicating that sample id GSM601942 is male, here&#8217;s what I would do:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># example of how to parse sex out of column names like GSM601942.M, if they were formatted that way</span>
+example_names <span style="color: #666666;">=</span> c(<span style="color: #ba2121;">"probe_id"</span>,<span style="color: #ba2121;">"A10.patient01.M"</span>,<span style="color: #ba2121;">"C05.patient47.F"</span>,<span style="color: #ba2121;">"D07.patient11.F"</span>)
+example_matrix <span style="color: #666666;">=</span> matrix(nrow<span style="color: #666666;">=1</span>,ncol<span style="color: #666666;">=4</span>)
+colnames(example_matrix) <span style="color: #666666;">=</span> example_names
+example_sex<span style="color: #666666;">=</span>as.character(sapply(strsplit(colnames(example_matrix)[<span style="color: #666666;">2</span>:<span style="color: #666666;">4</span>],split<span style="color: #666666;">=</span><span style="color: #ba2121;">"\\."</span>),<span style="color: #ba2121;">"[["</span>,<span style="color: #666666;">3</span>))</pre>
+</div>
+<p>For this particular dataset, I just manually took the metadata out of the SOFT header and put it into a separate tab-delimited file.  But it happens to be the case that the researchers assigned sample id numbers sequentially such that patient ID number and treatment timepoint can actually be parsed out of them using regular division and modular division respectively.  This isn't the path of least resistance, but for the sake of demonstration, here's how to grab those:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># extract metadata from header</span>
+expt_id <span style="color: #666666;">=</span> as.integer(sapply(strsplit(colnames(ma_raw)[<span style="color: #666666;">3</span>:<span style="color: #666666;">127</span>],split<span style="color: #666666;">=</span><span style="color: #ba2121;">"M"</span>),<span style="color: #ba2121;">"[["</span>,<span style="color: #666666;">2</span>))
+timepoint_raw <span style="color: #666666;">=</span> (expt_id <span style="color: #666666;">+</span> <span style="color: #666666;">3</span>)<span style="color: #666666;">%%5</span>
+patient_id_raw <span style="color: #666666;">=</span> floor( (expt_id <span style="color: #666666;">+</span> <span style="color: #666666;">3</span>) <span style="color: #666666;">/</span> <span style="color: #666666;">5</span>) <span style="color: #666666;">-</span> <span style="color: #666666;">120375</span> <span style="color: #666666;">+</span> <span style="color: #666666;">1</span>
+<span style="color: #408080; font-style: italic;"># in this case, sex isn't in the header - I extracted it manually from the SOFT file into a separate file.</span>
+metadata <span style="color: #666666;">=</span> read.table(<span style="color: #ba2121;">'metadata.txt'</span>,header<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">TRUE</span>,sep<span style="color: #666666;">=</span><span style="color: #ba2121;">'\t'</span>)</pre>
+</div>
+<p>Note the use of indexing with <code>[3:127]</code> to apply <code>strsplit</code> to only the correctly formatted columns - you'll get an error otherwise.</p>
+<p><strong>casting, subsetting and rearranging data</strong></p>
+<p>For many analyses, data are more useful as a matrix than as a data frame, though that means you have to save any metadata columns separately for later.</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># convert the whole raw data frame into a matrix</span>
+probes <span style="color: #666666;">=</span> ma_raw[,<span style="color: #666666;">1</span>:<span style="color: #666666;">2</span>] <span style="color: #408080; font-style: italic;"># save the probe info to a separate data frame</span>
+ma_mat <span style="color: #666666;">=</span> as.matrix(ma_raw[<span style="color: #666666;">3</span>:<span style="color: #666666;">127</span>]) <span style="color: #408080; font-style: italic;"># convert the values part of the data frame to a matrix</span>
+rownames(ma_mat) <span style="color: #666666;">=</span> probes[,<span style="color: #666666;">1</span>] <span style="color: #408080; font-style: italic;"># assign the probe ids as row names</span>
+<span style="color: #408080; font-style: italic;"># peek at the data</span>
+ma_mat[<span style="color: #666666;">1</span>:<span style="color: #666666;">5</span>,<span style="color: #666666;">1</span>:<span style="color: #666666;">5</span>]</pre>
+</div>
+<p>For this demonstration, I don't really care about <em>all</em> of the data in this dataset, since I'm just walking through a QC pipeline, so for simplicity I'm going to take just the columns from each patient for timepoint 3, which is "before month12 IFN-beta injection_chipB".</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># for this demonstration, I'm just going to use a subset of the columns</span>
+ma_mat <span style="color: #666666;">=</span> as.matrix(ma_raw[,which(timepoint_raw<span style="color: #666666;">==3</span>)<span style="color: #666666;">+2</span>]) <span style="color: #408080; font-style: italic;"># use all 25 patients but only at timepoint #3</span>
+dim(ma_mat) <span style="color: #408080; font-style: italic;"># check that it worked</span></pre>
+</div>
+<p>Note the use of <code>which</code> - this requires that the values in <code>timepoint_raw</code> be in the same order as the columns of the matrix, which they are here since that's where they came from in the previous step.  What if you have metadata that's not in the right order because it came from a different source?  Here I use <a href="http://stat.ethz.ch/R-manual/R-devel/library/base/html/match.html"><code>match</code></a> to bring in data from my separate metadata table, which is ordered differently:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># match metadata and rename columns</span>
+sex <span style="color: #666666;">=</span> metadata$sex[match(colnames(ma_mat),metadata$sample_id)]
+patient_id <span style="color: #666666;">=</span> metadata$patient_id[match(colnames(ma_mat),metadata$sample_id)]
+colnames(ma_mat) <span style="color: #666666;">=</span> paste(<span style="color: #ba2121;">"P"</span>,formatC(patient_id,width<span style="color: #666666;">=2</span>,flag<span style="color: #666666;">=</span><span style="color: #ba2121;">"0"</span>),sep<span style="color: #666666;">=</span><span style="color: #ba2121;">''</span>)
+rownames(ma_mat) <span style="color: #666666;">=</span> ma_raw$ID_REF</pre>
+</div>
+<p>Note also the use of <code><a href="http://stat.ethz.ch/R-manual/R-devel/library/base/html/formatc.html">formatC</a></code> to set patient 1's ID as "P01" instead of just "P1".</p>
+<p>And as always, it's good to have another look and make sure the data looks like you intended.</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># peek at the data again</span>
+ma_mat[<span style="color: #666666;">1</span>:<span style="color: #666666;">5</span>,<span style="color: #666666;">1</span>:<span style="color: #666666;">5</span>]</pre>
+</div>
+<p>Here's what it looks like at this point:</p>
+<pre>&gt; ma_mat[1:5,1:5]
+                P01     P03     P04     P05     P06
+200000_s_at  5886.3  5386.9  5152.1  5315.3  5938.0
+200001_at   21506.6 18864.7 16292.3 17876.9 20035.0
+200002_at   34114.5 26847.1 24622.5 28143.5 29720.9
+200003_s_at 52855.5 44453.4 39757.1 44196.7 45305.0
+200004_at   18559.7 19287.8 17669.2 19329.0 19362.6</pre>
+<p><strong>look at the distribution of expression levels</strong></p>
+<p>Now that I've got my data matrix ready to go, I want to see how the expression levels are distributed.  I tend to wrap any plots in png() and dev.off() calls to save images so that if I make any changes I can then go back and run the script in one click and save updated versions of all plots, without needing to run it line by line and click "Save as...".</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># create a histogram of the probe levels</span>
+png(<span style="color: #ba2121;">'probe.level.histogram.png'</span>)
+hist(ma_mat,breaks<span style="color: #666666;">=100</span>,col<span style="color: #666666;">=</span><span style="color: #ba2121;">'yellow'</span>,main<span style="color: #666666;">=</span><span style="color: #ba2121;">'Histogram of probe expression levels'</span>,xlab<span style="color: #666666;">=</span><span style="color: #ba2121;">'Expression level'</span>)
+dev.off()
+
+<span style="color: #408080; font-style: italic;"># create a histogram of probe levels of highly expressed probe targets</span>
+png(<span style="color: #ba2121;">'probe.level.histogram.10000plus.png'</span>)
+hist(ma_mat[ma_mat <span style="color: #666666;">&gt;</span> <span style="color: #666666;">10000</span>],breaks<span style="color: #666666;">=100</span>,col<span style="color: #666666;">=</span><span style="color: #ba2121;">'yellow'</span>,main<span style="color: #666666;">=</span><span style="color: #ba2121;">'Histogram of probe expression levels &gt; 10,000'</span>,xlab<span style="color: #666666;">=</span><span style="color: #ba2121;">'Expression level'</span>)
+dev.off()</pre>
+</div>
+<p>For microarray and RNA-seq, my results usually look something vaguely like an exponential distribution - lots of very low expression levels and a few huge expression levels.</p>
+<p><a href="/wp-content/uploads/2013/08/probe.level_.histogram.png"><img class="alignnone size-full wp-image-2760" alt="probe.level.histogram" src="/wp-content/uploads/2013/08/probe.level_.histogram.png"/></a></p>
+<p>A property of <a href="http://en.wikipedia.org/wiki/Exponential_distribution">exponential distributions</a> is that they are <a href="http://en.wikipedia.org/wiki/Memorylessness">memoryless</a> which means they look the same no matter how much of the left edge you lop off.  This isn't quite true of this dataset, but there's certainly still a steep, exponential-ish looking curve even if we only look at probes with values &gt; 10,000:</p>
+<p><a href="/wp-content/uploads/2013/08/probe.level_.histogram.10000plus.png"><img class="alignnone size-full wp-image-2761" alt="probe.level.histogram.10000plus" src="/wp-content/uploads/2013/08/probe.level_.histogram.10000plus.png"/></a></p>
+<p>&nbsp;</p>
+<p>Expression datasets aren't always exponential-ish in nature.  I've seen proteomics data that followed something a bit more like a normal distribution, albeit with lots of skew and kurtosis.  I am told this may be because protein levels in proteomics are quantified relative to the amount of that same protein in a reference sample, and thus the levels indicate departure from reference and not absolute amount of protein - if true, this would mean you can compare Protein A's level in sample 1 to sample 2, but you can't compare Protein A to Protein B, period.  In any event, it's important to understand the nature of your data - how they were created and what they are <em>supposed </em>to mean.</p>
+<p>In this particular dataset, the SOFT file contains the line:</p>
+<pre>!dataset_channel_count = 1</pre>
+<p>And according to <a href="http://www.ncbi.nlm.nih.gov/geo/info/soft2.html#SOFTformat">SOFT format</a>, the expression levels for single-channel data like this should therefore be interpreted as "normalized (scaled) signal count data".  I take this to mean that the data in this file are, theoretically, absolute measurements of mRNA abundance, i.e. <a href="http://en.wikipedia.org/wiki/Level_of_measurement#Ratio_scale">ratio-level data</a>, such that comparisons both between probes and between samples are meaningful.  mRNA-seq FPKMs can also be interpreted more or less as absolute, ratio-level measurements.  mRNA-seq counts are more or less ratio-level in comparing Protein A from sample 1 to sample 2, assuming library size is similar, but not for comparing Protein A to Protein B, since transcript length is not accounted for.  I've also seen microarray and proteomics data in log2 space, and amazingly, I've had datasets given to me with no statement at all of what the numbers are supposed to represent.  Getting a handle on your data's <a href="http://en.wikipedia.org/wiki/Level_of_measurement">level of measurement</a> and intended comparability between samples and between probes is really important and, sometimes, surprisingly difficult.</p>
+<p><strong>all by all correlation between samples</strong></p>
+<p>One way to start to get a handle on what's comparable and what's not, while also checking for failed samples and duplicates, is to create an all-by-all matrix of how well each sample's gene expression profile correlates with that of each other sample.</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># create an all-by-all correlation matrix</span>
+cormat <span style="color: #666666;">=</span> matrix(nrow<span style="color: #666666;">=25</span>,ncol<span style="color: #666666;">=25</span>)
+<span style="color: #008000; font-weight: bold;">for</span> (i in <span style="color: #666666;">1</span>:<span style="color: #666666;">25</span>) {
+  <span style="color: #008000; font-weight: bold;">for</span> (j in <span style="color: #666666;">1</span>:<span style="color: #666666;">25</span>) {
+    cormat[i,j] <span style="color: #666666;">=</span> cor.test(ma_mat[,i],ma_mat[,j])$estimate
+  }
+}
+colnames(cormat) <span style="color: #666666;">=</span> colnames(ma_mat)
+rownames(cormat) <span style="color: #666666;">=</span> colnames(ma_mat)
+
+<span style="color: #408080; font-style: italic;"># what are the highest and lowest correlation (highest is always 1 since you compare each sample to itself in the above loop)</span>
+range(cormat)
+
+<span style="color: #408080; font-style: italic;"># use image() to make a DIY heat map - this is more flexible than heatmap(cormat) because it uses a reasonable coordinate system</span>
+png(<span style="color: #ba2121;">'allxall.correlation.matrix.png'</span>)
+image(<span style="color: #666666;">1</span>:<span style="color: #666666;">25</span>,<span style="color: #666666;">1</span>:<span style="color: #666666;">25</span>,cormat,xaxt<span style="color: #666666;">=</span><span style="color: #ba2121;">'n'</span>,xlab<span style="color: #666666;">=</span><span style="color: #ba2121;">''</span>,yaxt<span style="color: #666666;">=</span><span style="color: #ba2121;">'n'</span>,ylab<span style="color: #666666;">=</span><span style="color: #ba2121;">''</span>,main<span style="color: #666666;">=</span><span style="color: #ba2121;">'Protein expression profile correlation between samples'</span>,cex.main<span style="color: #666666;">=.8</span>)
+<span style="color: #008000; font-weight: bold;">for</span> (i in <span style="color: #666666;">1</span>:<span style="color: #666666;">25</span>) {
+  <span style="color: #008000; font-weight: bold;">for</span> (j in <span style="color: #666666;">1</span>:<span style="color: #666666;">25</span>) {
+    text(i,j,labels<span style="color: #666666;">=</span>format(cormat[i,j],digits<span style="color: #666666;">=2</span>),cex<span style="color: #666666;">=.5</span>)
+  }
+}
+axis(side<span style="color: #666666;">=1</span>,at<span style="color: #666666;">=</span>seq(<span style="color: #666666;">1</span>,<span style="color: #666666;">25</span>,<span style="color: #666666;">1</span>),labels<span style="color: #666666;">=</span>colnames(ma_mat),cex.axis<span style="color: #666666;">=.6</span>,las<span style="color: #666666;">=2</span>)
+axis(side<span style="color: #666666;">=2</span>,at<span style="color: #666666;">=</span>seq(<span style="color: #666666;">1</span>,<span style="color: #666666;">25</span>,<span style="color: #666666;">1</span>),labels<span style="color: #666666;">=</span>colnames(ma_mat),cex.axis<span style="color: #666666;">=.6</span>,las<span style="color: #666666;">=2</span>)
+dev.off()</pre>
+</div>
+<p>Note that <a href="http://stat.ethz.ch/R-manual/R-patched/library/stats/html/heatmap.html"><code>heatmap()</code></a> can generate such a plot in one line of code, but it uses a funny coordinate system that makes it impossible to superimpose your own labels on the plot. I use <a href="http://stat.ethz.ch/R-manual/R-devel/library/graphics/html/image.html"><code>image()</code></a> for DIY heat maps.</p>
+<p><a href="/wp-content/uploads/2013/08/allxall.correlation.matrix.png"><img class="alignnone size-full wp-image-2762" alt="allxall.correlation.matrix" src="/wp-content/uploads/2013/08/allxall.correlation.matrix.png"/></a></p>
+<p>Obviously, each sample has a Pearson's correlation of 1 with itself - hence the 0 down the diagonal.  They also, with one bright red exception which I'll address shortly, correlate highly with one another - around .97 between any two samples, as you can see in this histogram of the individual correlations:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># histogram of correlations between samples</span>
+png(<span style="color: #ba2121;">'allxall.correlation.histogram.png'</span>)
+hist(cormat,breaks<span style="color: #666666;">=100</span>,main<span style="color: #666666;">=</span><span style="color: #ba2121;">"Histogram of Pearson's correlation between different samples"</span>,col<span style="color: #666666;">=</span><span style="color: #ba2121;">'yellow'</span>)
+dev.off()</pre>
+</div>
+<p><a href="/wp-content/uploads/2013/08/allxall.correlation.histogram.png"><img class="alignnone size-full wp-image-2763" alt="allxall.correlation.histogram" src="/wp-content/uploads/2013/08/allxall.correlation.histogram.png"/></a></p>
+<p>This high correlation between samples is to be expected.  Though gene expression varies between individuals and between experimental conditions - that's the point of doing gene expression analysis - there are still certain basic truths in this world: all our cells need beta actin (<a href="http://en.wikipedia.org/wiki/Beta-actin">ACTB</a>) and ribosomal proteins like <a href="http://en.wikipedia.org/wiki/RPS11">RPS11</a> - these should be universally high, while others will be universally low. You can check which genes are most highly expressed:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># check which genes are most highly expressed</span>
+unique(annot$Gene.symbol[rowMeans(ma_mat) <span style="color: #666666;">&gt;</span> <span style="color: #666666;">50000</span>])</pre>
+</div>
+<p>Almost all of these top hitters are ribosomal:</p>
+<pre>&gt; unique(annot$Gene.symbol[rowMeans(ma_mat) &gt; 50000])
+ [1] "RPL34"                "RPL19"                "RPS11"                "RPS24"                "RPL30"                "RPS10"                "RPS3A"               
+ [8] "DCAF6///ND4"          "DCAF6///HNRNPM///ND4" "ACTB"                 "RPL7A"                "RPS16"                "RPL10A"               ""</pre>
+<p>I've seen microarray datasets with correlation between samples averaging around .97 or .98 or as low as .85 - it appears to depend on which probes are included, though I haven't totally wrapped my mind around it yet - and I also get about .85 in mRNA-seq FPKM datasets as well.  I should note here that all the datasets I've worked with have been human samples - I can't comment on the expected correlation in, say, mouse datasets where all the mice are expected to be virtually genetically identical except for sex and any genotype being tested (e.g. knockout versus wild-type).</p>
+<p>If levels of each gene are quantified relative to a reference, then you can't compare Gene A to Gene B and so any correlation in the correlation matrix will be very weak, really only reflecting the reference's deviation from the samples' mean, as all samples will appear high for proteins where the reference happened to be abnormally low.  If that's the case, you'll get a matrix of deep red, where correlations between samples are low or nonexistent.  It's hard to tell such a situation apart from a situation where the data are just incredibly lousy and noisy, and I'm not sure how to QC data where there isn't even an expectation of comparability between genes.   I don't fully understand those sorts of datasets, so I won't say too much - but at least creating this sort of correlation matrix can be a first step towards figuring out what's going on.</p>
+<p>Besides giving you a sense of the character of the data, this correlation matrix can also identify outliers.  In the matrix, it's quite clear that P25 is an outlier which correlates poorly with all other samples - it accounts for the somewhat lower, ~.85 correlations in the histogram as well.  It's a judgment call as to when a sample is bad enough that you need to remove it, but if you wanted to, here's one way to do it:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># figure out which one is a problem</span>
+problem_sample <span style="color: #666666;">=</span> rownames(cormat)[rowMeans(cormat) <span style="color: #666666;">==</span> min(rowMeans(cormat))]
+problem_sample
+<span style="color: #408080; font-style: italic;"># how to remove the problem sample if you want to</span>
+ma_mat_cleaned <span style="color: #666666;">=</span> ma_mat[, <span style="color: #666666;">-</span>which(colnames(ma_mat) <span style="color: #666666;">==</span> problem_sample)]
+dim(ma_mat_cleaned)
+<span style="color: #408080; font-style: italic;"># and if you do, don't for get to update sex, patient_id etc. all your metadata vectors to match</span>
+<span style="color: #408080; font-style: italic;"># but I'll leave it in for now.</span></pre>
+</div>
+<p>But for the purposes of this exercise I'll leave it in.  Just note that if you start removing columns from your matrix you have to remove items from your metadata as well so that the vector elements still line up.</p>
+<p>In theory, this correlation matrix should also be able to highlight duplicate samples - two samples that correlate exceptionally well with each other.  That's good for checking the reproducibility between intentional duplicates, or noticing cases where there exist unintentional duplicates due to sample mixups.  In microarray data where the correlation is .98 even between <em>different</em> samples, noticing a duplicate might be harder - not sure because I haven't seen one.</p>
+<p><strong>grouping by gene symbol??</strong></p>
+<p>Then comes the difficult question of whether you can in some way group your data by gene.  As noted above, SOFT files are in theory already normalized and combined across different probes for the same gene, yet you'll find that there is a many-to-one or many-to-many relationship between probes and genes or transcripts:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># explore relationship between probes, genes and transcripts</span>
+length(unique(annot$ID)) <span style="color: #408080; font-style: italic;"># probes</span>
+length(unique(annot$Gene.symbol)) <span style="color: #408080; font-style: italic;"># gene symbols </span>
+length(unique(annot$GenBank.Accession)) <span style="color: #408080; font-style: italic;"># GenBank Accession numbers, ~= RefSeq transcripts</span></pre>
+</div>
+<p>In this case there are 22,645 probes for 17,880 transcripts of 10,274 genes.  The safest thing to do is just analyze probe-level data.  But what if you need to combine with another data source, and the only key to join on is gene symbol?  This demands some way of grouping the microarray data by gene symbol.  Are the multiple probes per gene considered to be measuring the same thing (so you could average them) or distinct transcripts (so you could add them)?  This answer is often not easy to come by, and I actually could not figure out the answer for this example dataset.  If you don't know, the safer thing to do is to only join your other dataset to genes that map one-to-one with a single probe.</p>
+<p>For the sake of example, I'm going to assume that grouping by gene symbol and taking the average of probes is okay:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># try grouping by gene, averaging</span>
+ma_gene_raw <span style="color: #666666;">=</span> aggregate(ma_mat ~ annot$Gene.symbol, FUN<span style="color: #666666;">=</span><span style="color: #ba2121;">'mean'</span>)
+ma_gene <span style="color: #666666;">=</span> as.matrix(ma_gene_raw[,<span style="color: #666666;">2</span>:<span style="color: #666666;">26</span>]) <span style="color: #408080; font-style: italic;"># shave off the extra column added by aggregate</span>
+rownames(ma_gene) <span style="color: #666666;">=</span> ma_gene_raw[,<span style="color: #666666;">1</span>] <span style="color: #408080; font-style: italic;"># set that extra column as the row names</span>
+colnames(ma_gene) <span style="color: #666666;">=</span> colnames(ma_mat)
+dim(ma_gene) <span style="color: #408080; font-style: italic;"># 10274 25 - we have 10,274 genes and 25 samples</span></pre>
+</div>
+<p><strong>look at some housekeeping genes</strong></p>
+<p>Now that I have the data grouped by gene, I'll plot a housekeeping gene to see how consistent its expression level is.  Let's try <a href="http://en.wikipedia.org/wiki/Glyceraldehyde_3-phosphate_dehydrogenase">GAPDH</a>:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># plot the levels of the housekeeping gene GAPDH</span>
+png(<span style="color: #ba2121;">'barplot.gapdh.absolute.level.png'</span>)
+barplot(ma_gene[<span style="color: #ba2121;">"GAPDH"</span>,],col<span style="color: #666666;">=</span><span style="color: #ba2121;">'yellow'</span>,main<span style="color: #666666;">=</span><span style="color: #ba2121;">'Absolute levels of GAPDH'</span>,cex.names<span style="color: #666666;">=.5</span>,las<span style="color: #666666;">=2</span>)
+dev.off()
+range(ma_gene[<span style="color: #ba2121;">"GAPDH"</span>,])
+<span style="color: #408080; font-style: italic;"># figure out which one is so high</span>
+which(ma_gene[<span style="color: #ba2121;">"GAPDH"</span>,] <span style="color: #666666;">&gt;</span> <span style="color: #666666;">40000</span>)</pre>
+</div>
+<p><a href="/wp-content/uploads/2013/08/barplot.gapdh_.absolute.level_1.png"><img class="alignnone size-full wp-image-2770" alt="barplot.gapdh.absolute.level" src="/wp-content/uploads/2013/08/barplot.gapdh_.absolute.level_1.png"/></a></p>
+<p>The levels vary by a factor of ~2 from highest to lowest - that's not awesome for a gene that is supposed to be so constant that it's used as a loading control on Western blots, though of course it does have real biological variation [<a href="http://www.ncbi.nlm.nih.gov/pubmed/15769908">Barber 2005</a>].  Also, it turns out that one really high bar is P22, <em>not</em> P25, the outlier sample from the correlation matrix.  How worried should we be about the variation in GAPDH?  Well, luckily it turns out that if you consider GAPDH's rank relative to other genes, rather than its absolute level, at least that is more stable:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># transform whole matrix to rank space</span>
+ma.rank <span style="color: #666666;">=</span> ma_gene
+<span style="color: #008000; font-weight: bold;">for</span> (i in <span style="color: #666666;">1</span>:<span style="color: #666666;">25</span>) {
+  ma.rank[,i] <span style="color: #666666;">=</span> rank(<span style="color: #666666;">-</span>ma_gene[,i],na.last<span style="color: #666666;">=</span><span style="color: #ba2121;">'keep'</span>)
+}
+
+png(<span style="color: #ba2121;">'barplot.gapdh.rank.png'</span>)
+barplot(dim(ma.rank)[<span style="color: #666666;">1</span>] <span style="color: #666666;">-</span> ma.rank[<span style="color: #ba2121;">'GAPDH'</span>,], ylim <span style="color: #666666;">=</span> c(<span style="color: #666666;">1</span>,dim(ma.rank)[<span style="color: #666666;">1</span>]), yaxt<span style="color: #666666;">=</span><span style="color: #ba2121;">'n'</span>, col<span style="color: #666666;">=</span><span style="color: #ba2121;">'yellow'</span>, cex.names<span style="color: #666666;">=.6</span>,las<span style="color: #666666;">=2</span>, main <span style="color: #666666;">=</span> <span style="color: #ba2121;">"GAPDH rank relative to other genes"</span>)
+axis(side<span style="color: #666666;">=2</span>, at <span style="color: #666666;">=</span> c(<span style="color: #666666;">1</span>,<span style="color: #666666;">5000</span>,dim(ma.rank)[<span style="color: #666666;">1</span>]), labels<span style="color: #666666;">=</span>c(<span style="color: #ba2121;">"lowest"</span>,<span style="color: #ba2121;">"5000"</span>,<span style="color: #ba2121;">"1 (highest)"</span>) )
+dev.off()</pre>
+</div>
+<p>Note that R's rank function considers the lowest value to be #1 and the highest to be #N, which is unconventional.  I added a minus sign inside the call to rank to get the highest value to be #1, and then inverted the y axis so that 1 is at top.</p>
+<p><a href="/wp-content/uploads/2013/08/barplot.gapdh_.rank_.png"><img class="alignnone size-full wp-image-2772" alt="barplot.gapdh.rank" src="/wp-content/uploads/2013/08/barplot.gapdh_.rank_.png"/></a></p>
+<p>Sure enough, GAPDH is very close to being the highest ranked gene in every sample.  That's because, due to the exponential distribution, there just aren't many other genes whose expression is even in league with GAPDH.</p>
+<p>By contrast, a non-housekeeping gene might be more variable in both absolute level and rank.  I often use <a href="http://en.wikipedia.org/wiki/PRNP">PRNP</a> for this, but weirdly it's not in this dataset, so I used its downstream paralog, <a href="http://en.wikipedia.org/wiki/PRND">PRND</a> (doppel):</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># compare to PRND, which is not a housekeeping gene</span>
+png(<span style="color: #ba2121;">'barplot.prnd.absolute.level.png'</span>)
+barplot(ma_gene[<span style="color: #ba2121;">"PRND"</span>,],col<span style="color: #666666;">=</span><span style="color: #ba2121;">'yellow'</span>,main<span style="color: #666666;">=</span><span style="color: #ba2121;">'Absolute levels of PRND'</span>,cex.names<span style="color: #666666;">=.5</span>,las<span style="color: #666666;">=2</span>)
+dev.off()
+range(ma_gene[<span style="color: #ba2121;">"PRND"</span>,])
+<span style="color: #408080; font-style: italic;"># 20.2 722.4</span>
+
+png(<span style="color: #ba2121;">'barplot.prnd.rank.png'</span>)
+barplot(dim(ma.rank)[<span style="color: #666666;">1</span>] <span style="color: #666666;">-</span> ma.rank[<span style="color: #ba2121;">'PRND'</span>,], ylim <span style="color: #666666;">=</span> c(<span style="color: #666666;">1</span>,dim(ma.rank)[<span style="color: #666666;">1</span>]), yaxt<span style="color: #666666;">=</span><span style="color: #ba2121;">'n'</span>, col<span style="color: #666666;">=</span><span style="color: #ba2121;">'yellow'</span>, cex.names<span style="color: #666666;">=.6</span>,las<span style="color: #666666;">=2</span>, main <span style="color: #666666;">=</span> <span style="color: #ba2121;">"PRND rank relative to other genes"</span>)
+axis(side<span style="color: #666666;">=2</span>, at <span style="color: #666666;">=</span> c(<span style="color: #666666;">1</span>,<span style="color: #666666;">5000</span>,dim(ma.rank)[<span style="color: #666666;">1</span>]), labels<span style="color: #666666;">=</span>c(<span style="color: #ba2121;">"lowest"</span>,<span style="color: #ba2121;">"5000"</span>,<span style="color: #ba2121;">"1 (highest)"</span>) )
+dev.off()</pre>
+</div>
+<p>PRND's expression level varies 36-fold, from 20 to 722.</p>
+<p><a href="/wp-content/uploads/2013/08/barplot.prnd_.absolute.level_2.png"><img class="alignnone size-full wp-image-2777" alt="barplot.prnd.absolute.level" src="/wp-content/uploads/2013/08/barplot.prnd_.absolute.level_2.png"/></a></p>
+<p>And even in terms of rank, it's quite variable, going from the upper half of the distribution to the very bottom.</p>
+<p><img class="alignnone size-large wp-image-2778" style="color: #333333; font-style: normal;" alt="barplot.prnd.rank" src="/wp-content/uploads/2013/08/barplot.prnd_.rank_1.png"/></p>
+<p><strong>test for sex differences</strong></p>
+<p>Another basic truth is that many genes are expressed at different levels in females and males.  If you can't see this in your data, that could be a worrisome sign either about the data quality or just that you've messed something up along the way - for instance, incorrect matching of metadata to columns in your expression matrix.  If you're planning to test some other variable - say, time series, treated vs. untreated, knockout vs. wild-type, etc. for differential gene expression, your positive control should be that you do see some genes differentially expressed according to sex.</p>
+<p>To do this, I'll loop through the matrix and t test each and every probe for male/female differences, and I'll use <a href="http://cran.r-project.org/web/packages/gap/vignettes/gap.pdf"><code>gap</code></a>'s <a href="http://www.inside-r.org/packages/cran/gap/docs/qqunif"><code>qqunif</code></a> to plot the resulting p values.</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># test each and every probe for sex differences</span>
+sex.p.vals <span style="color: #666666;">=</span> vector(mode<span style="color: #666666;">=</span><span style="color: #ba2121;">"numeric"</span>,length<span style="color: #666666;">=</span>dim(ma_mat)[<span style="color: #666666;">1</span>])
+<span style="color: #008000; font-weight: bold;">for</span> (i in <span style="color: #666666;">1</span>:dim(ma_mat)[<span style="color: #666666;">1</span>]) {
+  sex.p.vals[i] <span style="color: #666666;">=</span> t.test(ma_mat[i,] ~ sex)$p.value
+} <span style="color: #408080; font-style: italic;"># this loop takes ~ 1 minute</span>
+
+png(<span style="color: #ba2121;">'sex.probe.qqplot.png'</span>)
+qqunif(sex.p.vals,pch<span style="color: #666666;">=19</span>,main<span style="color: #666666;">=</span><span style="color: #ba2121;">'QQ plot of microarray probes associated with sex'</span>,cex.main<span style="color: #666666;">=.8</span>)
+abline(h<span style="color: #666666;">=-</span>log10(<span style="color: #666666;">.05/</span>dim(ma_mat)[<span style="color: #666666;">1</span>]),col<span style="color: #666666;">=</span><span style="color: #ba2121;">'darkgreen'</span>)
+text(<span style="color: #666666;">0</span>,<span style="color: #666666;">-</span>log10(<span style="color: #666666;">.05/</span>dim(ma_mat)[<span style="color: #666666;">1</span>])<span style="color: #666666;">+.25</span>,labels<span style="color: #666666;">=</span><span style="color: #ba2121;">'Bonferroni-corrected .05 significance threshold'</span>,col<span style="color: #666666;">=</span><span style="color: #ba2121;">'darkgreen'</span>,pos<span style="color: #666666;">=4</span>,cex<span style="color: #666666;">=.6</span>)
+dev.off()</pre>
+</div>
+<p><a href="/wp-content/uploads/2013/08/sex.probe_.qqplot1.png"><img class="alignnone size-full wp-image-2780" alt="sex.probe.qqplot" src="/wp-content/uploads/2013/08/sex.probe_.qqplot1.png"/></a></p>
+<p>Sure enough, there is quite a departure from the null at the top of the distribution, with several probes crossing the <a href="http://en.wikipedia.org/wiki/Bonferroni_correction">Bonferroni</a> significant line.  The lowest corrected p value is 8e-10.</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># get lowest Bonferroni-corrected p value</span>
+min(sex.p.vals <span style="color: #666666;">*</span> dim(ma_mat)[<span style="color: #666666;">1</span>])
+<span style="color: #408080; font-style: italic;"># get lowest FDR-corrected p value</span>
+fdr.corrected <span style="color: #666666;">=</span> p.adjust(sex.p.vals, method<span style="color: #666666;">=</span><span style="color: #ba2121;">"hochberg"</span>)
+min(fdr.corrected)</pre>
+</div>
+<p>Supposedly, <a href="http://stat.ethz.ch/R-manual/R-devel/library/stats/html/p.adjust.html"><code>p.adjust</code></a> with <code>method="hochberg"</code> does an FDR correction which is more lenient than Bonferroni, but every time I've used it it gives exactly the same value as the Bonferroni correction.</p>
+<p>You might also want to check that most or all of the differentially sex-expressed genes are on the X and Y chromosomes:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># which genes are sex-associated? which chromosome are they on?</span>
+unique(annot[annot$ID <span style="color: #666666;">%in%</span> rownames(ma_mat)[sex.p.vals <span style="color: #666666;">&lt;</span> <span style="color: #666666;">.05/</span>dim(ma_mat)[<span style="color: #666666;">1</span>]], c(<span style="color: #ba2121;">"Chromosome"</span>,<span style="color: #ba2121;">"Gene.symbol"</span>)])</pre>
+</div>
+<p>Sure enough, in this case it's XIST and TSIX on the X, and TXLNG2P on the Y.  In some datasets I've also seen <a href="/wp-content/uploads/2013/08/sex.associated.genes_.txt">a much longer list of sex-associated genes</a>.</p>
+<p><strong>principal components analysis</strong></p>
+<p>Next I like to get a handle on what, if anything, the principal components of the data appear to capture.  For instance, if the data are combined from two different microarray technologies or two different mRNA-seq library preps, you might get a strong batch effect which clearly separates the samples as PC1.  Or sometimes I see PC2 or PC3 separating the samples by sex.  Whatever it is, you're better off knowing.</p>
+<p>I calculate principal components "manually" as introduced in <a href="http://statmath.wu.ac.at/~hornik/QFS1/principal_component-vignette.pdf">this tutorial</a>.  My laptop crashes if I give it the full 22645x25 matrix. The right thing to do is run this on a high-powered computing cluster, but for the sake of this demo, I'll just select a random subset of the probes and run PCA on that.  Note that PCA can't handle NA values, so if your dataset has any, you'll need to convert them to 0, or the row mean, or <em>some</em> numeric value for the purposes of PCA - hopefully a numeric value that reflects the true meaning of NA in the case of your dataset - see <a href="http://stats.stackexchange.com/questions/35561/replacement-of-na-values-for-pca-analysis">this StackExchange discussion</a>.  The fewer NA values you have, the less it matters what you convert them to.</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># select random subset of 10% of the probes to run PCA</span>
+set.seed(<span style="color: #666666;">2222</span>)
+random.subset <span style="color: #666666;">=</span> ma_mat[runif(n<span style="color: #666666;">=</span>dim(ma_mat)[<span style="color: #666666;">1</span>],min<span style="color: #666666;">=0</span>,max<span style="color: #666666;">=1</span>) <span style="color: #666666;">&gt;</span> <span style="color: #666666;">.9</span>,]
+<span style="color: #408080; font-style: italic;"># now calculate principal components</span>
+tmat <span style="color: #666666;">=</span> t(random.subset) <span style="color: #408080; font-style: italic;"># transpose</span>
+sum(is.na(tmat)) <span style="color: #408080; font-style: italic;"># 0</span>
+tmat[is.na(tmat)] <span style="color: #666666;">=</span> <span style="color: #666666;">0</span> <span style="color: #408080; font-style: italic;"># convert NA to 0 for PCA</span>
+covmatrix <span style="color: #666666;">=</span> cov(tmat) <span style="color: #408080; font-style: italic;"># calculate covariance matrix</span>
+eig <span style="color: #666666;">=</span> eigen(covmatrix) <span style="color: #408080; font-style: italic;"># this takes about 1 minute </span>
+pc <span style="color: #666666;">=</span> tmat <span style="color: #666666;">%*%</span> eig$vectors <span style="color: #408080; font-style: italic;"># multiply matrices to get principal components# eig = eigen(covmatrix)</span></pre>
+</div>
+<p>Now let's plot just the first two PCs against each other and see what we see:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># plot PC1 vs. PC2</span>
+png(<span style="color: #ba2121;">'pc1.vs.pc2.png'</span>)
+plot(pc[<span style="color: #666666;">1</span>:<span style="color: #666666;">25</span>,<span style="color: #666666;">1</span>],pc[<span style="color: #666666;">1</span>:<span style="color: #666666;">25</span>,<span style="color: #666666;">2</span>],pch<span style="color: #666666;">=19</span>,main<span style="color: #666666;">=</span><span style="color: #ba2121;">'PC1 vs. PC2'</span>,cex.main<span style="color: #666666;">=.8</span>,xlab<span style="color: #666666;">=</span><span style="color: #ba2121;">'PC1'</span>,ylab<span style="color: #666666;">=</span><span style="color: #ba2121;">'PC2'</span>)
+points(pc[sex<span style="color: #666666;">==</span><span style="color: #ba2121;">'M'</span>,<span style="color: #666666;">1</span>],pc[sex<span style="color: #666666;">==</span><span style="color: #ba2121;">'M'</span>,<span style="color: #666666;">2</span>],pch<span style="color: #666666;">=19</span>,col<span style="color: #666666;">=</span><span style="color: #ba2121;">'blue'</span>)
+points(pc[sex<span style="color: #666666;">==</span><span style="color: #ba2121;">'F'</span>,<span style="color: #666666;">1</span>],pc[sex<span style="color: #666666;">==</span><span style="color: #ba2121;">'F'</span>,<span style="color: #666666;">2</span>],pch<span style="color: #666666;">=19</span>,col<span style="color: #666666;">=</span><span style="color: #ba2121;">'red'</span>)
+text(pc[<span style="color: #666666;">1</span>:<span style="color: #666666;">25</span>,<span style="color: #666666;">1</span>],pc[<span style="color: #666666;">1</span>:<span style="color: #666666;">25</span>,<span style="color: #666666;">2</span>],labels<span style="color: #666666;">=</span>colnames(ma_mat),pos<span style="color: #666666;">=1</span>)
+dev.off()</pre>
+</div>
+<p><a href="/wp-content/uploads/2013/08/pc1.vs_.pc2_1.png"><img class="alignnone size-full wp-image-2782" alt="pc1.vs.pc2" src="/wp-content/uploads/2013/08/pc1.vs_.pc2_1.png"/></a></p>
+<p>Whoa!  PC1 exists almost solely to distinguish P25 - that one weird outlier sample that showed up in red on the correlation matrix - from everyone else.  This is another good sign that something must have gone wrong with that sample and we might want to throw it out.  In fact, not only does PC1 pretty much just separate that guy from everyone else, it does so with a vengeance, explaining 70% of overall variance in the dataset, which we can see by plotting variance explained.</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># plot the variance explained by each PC</span>
+png(<span style="color: #ba2121;">'pc.variance.explained.png'</span>)
+plot(<span style="color: #666666;">1</span>:<span style="color: #666666;">50</span>,(eig$values<span style="color: #666666;">/</span>sum(eig$values))[<span style="color: #666666;">1</span>:<span style="color: #666666;">50</span>],pch<span style="color: #666666;">=19</span>, xlab<span style="color: #666666;">=</span><span style="color: #ba2121;">'PC#'</span>, ylab<span style="color: #666666;">=</span><span style="color: #ba2121;">'Varaince explained'</span>, main<span style="color: #666666;">=</span><span style="color: #ba2121;">'Variance explained by PCs'</span>) 
+dev.off()</pre>
+</div>
+<p><a href="/wp-content/uploads/2013/08/pc.variance.explained.png"><img class="alignnone size-full wp-image-2783" alt="pc.variance.explained" src="/wp-content/uploads/2013/08/pc.variance.explained.png"/></a></p>
+<p>PC1 explains 69% of variance, PC2 explains 12%, and after that it really trails off dramatically - you can explain almost the whole dataset with just 3 or 4 PCs.  Another way to see this is in the cumulative variance explained:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># alternate way is to look at cumulative variance explained</span>
+png(<span style="color: #ba2121;">'pc.cumulative.variance.explained.png'</span>)
+plot(<span style="color: #666666;">1</span>:<span style="color: #666666;">50</span>,cumsum(eig$values<span style="color: #666666;">/</span>sum(eig$values))[<span style="color: #666666;">1</span>:<span style="color: #666666;">50</span>], pch<span style="color: #666666;">=16</span>, type<span style="color: #666666;">=</span><span style="color: #ba2121;">'b'</span>, ylim<span style="color: #666666;">=</span>c(<span style="color: #666666;">0</span>,<span style="color: #666666;">1</span>), xlab<span style="color: #666666;">=</span><span style="color: #ba2121;">'PC#'</span>, ylab<span style="color: #666666;">=</span><span style="color: #ba2121;">'Cumulative varaince explained'</span>, main<span style="color: #666666;">=</span><span style="color: #ba2121;">'Cumulative variance explained by PCs'</span>) <span style="color: #408080; font-style: italic;"># running total of variance explained</span>
+dev.off()</pre>
+</div>
+<p><a href="/wp-content/uploads/2013/08/pc.cumulative.variance.explained.png"><img class="alignnone size-full wp-image-2784" alt="pc.cumulative.variance.explained" src="/wp-content/uploads/2013/08/pc.cumulative.variance.explained.png"/></a></p>
+<p>In other words, you get close to 100% pretty fast.  Is that good or bad?  It reflects the low <a href="http://en.wikipedia.org/wiki/Entropy_(information_theory)">information entropy</a> of this dataset: P25 is really different from all the other samples, but once you explain that away, the rest of them are really very similar to each other - hence the inter-sample correlation of ~.97 we saw earlier.  In that sense there's not a ton of information here.  But this just reflects the fact that the dataset accurately captures the genuinely huge stratification in expression levels between different genes, as seen in the exponential distribution plotted earlier.</p>
+<p>The alternative is a high information entropy dataset which can't easily be compressed into a few principal components.  This may be what you'll see if you have, say, proteomics data quantified relative to a reference sample.  But I don't know how to QC such a dataset (unless you have external validation - protein levels quantified by a different method as a ground truth) because it ends up looking a lot like random noise.  To show what random noise looks like, I'll invent a data matrix of just normally distributed random numbers, and plot the variance explained by PCs.</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">nrow <span style="color: #666666;">=</span> dim(random.subset)[<span style="color: #666666;">1</span>]
+ncol <span style="color: #666666;">=</span> dim(random.subset)[<span style="color: #666666;">2</span>]
+random.numbers <span style="color: #666666;">=</span> matrix(rnorm(n<span style="color: #666666;">=</span>nrow<span style="color: #666666;">*</span>ncol,m<span style="color: #666666;">=0</span>,sd<span style="color: #666666;">=1</span>),nrow<span style="color: #666666;">=</span>nrow,ncol<span style="color: #666666;">=</span>ncol)
+random.numbers[<span style="color: #666666;">1</span>:<span style="color: #666666;">5</span>,<span style="color: #666666;">1</span>:<span style="color: #666666;">5</span>]
+
+rtmat <span style="color: #666666;">=</span> t(random.numbers) <span style="color: #408080; font-style: italic;"># transpose</span>
+rcovmatrix <span style="color: #666666;">=</span> cov(rtmat) <span style="color: #408080; font-style: italic;"># calculate covariance matrix</span>
+reig <span style="color: #666666;">=</span> eigen(rcovmatrix) <span style="color: #408080; font-style: italic;"># this takes about 1 minute </span>
+rpc <span style="color: #666666;">=</span> rtmat <span style="color: #666666;">%*%</span> reig$vectors <span style="color: #408080; font-style: italic;"># multiply matrices to get principal components# eig = eigen(covmatrix)</span>
+png(<span style="color: #ba2121;">'pc.variance.explained.in.random.numbers.png'</span>)
+plot(<span style="color: #666666;">1</span>:<span style="color: #666666;">50</span>,(reig$values<span style="color: #666666;">/</span>sum(reig$values))[<span style="color: #666666;">1</span>:<span style="color: #666666;">50</span>],pch<span style="color: #666666;">=19</span>, ylim<span style="color: #666666;">=</span>c(<span style="color: #666666;">0</span>,<span style="color: #666666;">.50</span>), xlab<span style="color: #666666;">=</span><span style="color: #ba2121;">'PC#'</span>, ylab<span style="color: #666666;">=</span><span style="color: #ba2121;">'Varaince explained'</span>, main<span style="color: #666666;">=</span><span style="color: #ba2121;">'Variance explained by PCs'</span>) 
+dev.off()</pre>
+</div>
+<p><a href="/wp-content/uploads/2013/08/pc.variance.explained.in_.random.numbers.png"><img class="alignnone size-full wp-image-2785" alt="pc.variance.explained.in.random.numbers" src="/wp-content/uploads/2013/08/pc.variance.explained.in_.random.numbers.png"/></a></p>
+<p>I put the y axis at the same scale as the real data above, just to emphasize the difference here: PC1 only explains ~5% of variance, and it takes all 24 PCs to explain 100%.  This, by the way, is the reason why I've plotted the x axis from 1 to 50 in each of these plots even though we only have 25 samples and so by definition the variance can be explained in 24 PCs.  I find it useful to see that sharp dropoff from 24 to 25 reminding us that even the last PC is explaining a good bit of the variance.   All this is to say, datasets full of random noise don't compress easily, and so while having lots of information content in your data may sound like a good thing, it's awfully hard to tell that apart from a dataset with no <em>useful</em> information at all.</p>
+<p>One final thing to do with PCs is check if any of them correlate with sex or with a variable of interest.  You can see from the PC1 vs. PC2 plot above that neither of those PCs is correlated with sex, but we can also t test the first few just to see:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># do any PCs correlate with sex?</span>
+t.test(pc[<span style="color: #666666;">1</span>:<span style="color: #666666;">25</span>,<span style="color: #666666;">1</span>] ~ sex) 
+t.test(pc[<span style="color: #666666;">1</span>:<span style="color: #666666;">25</span>,<span style="color: #666666;">2</span>] ~ sex) 
+t.test(pc[<span style="color: #666666;">1</span>:<span style="color: #666666;">25</span>,<span style="color: #666666;">3</span>] ~ sex) 
+t.test(pc[<span style="color: #666666;">1</span>:<span style="color: #666666;">25</span>,<span style="color: #666666;">4</span>] ~ sex)
+t.test(pc[<span style="color: #666666;">1</span>:<span style="color: #666666;">25</span>,<span style="color: #666666;">5</span>] ~ sex)</pre>
+</div>
+<p>In this case, the answer is no.  I think it's debatable how many you should bother testing.  If you tested all 24 PCs and one of them was correlated with sex at p = .04, that wouldn't really be very surprising.  If a variable isn't correlated with the first few PCs or else with a later PC but with a very strong p value, I usually consider any correlation to be just a coincidence.</p>
+<p><strong>combine with other datasets</strong></p>
+<p>It's ideal if you have some other data on the same samples that you can use to ground truth them and see if the new data at least correlates somewhat with the other data. Failing that, sometimes it is interesting to at least compare your data to some other gene expression data, even if from different cells and on a different technology.  For lack of anything else, I decided to compare these microarray data to the <a title="Tissue-specific gene expression data based on Human BodyMap 2.0" href="/2013/07/11/tissue-specific-gene-expression-data-based-on-human-bodymap-2-0/">Human BodyMap 2.0 mRNA-seq FPKMs</a> that I posted <a href="https://docs.google.com/file/d/0BxObyChB_2VXUTRyczRITEVHTG8/edit?usp=sharing">here</a>.  (Google Drive doesn't let me link directly to a file so I couldn't figure out a way to <code>wget</code> this - just download manually I guess).</p>
+<p>Since the microarray data were prepared from human blood, I combine them with the blood FPKMs from Human BodyMap.  Here I use <a href="http://cran.r-project.org/web/packages/sqldf/sqldf.pdf">sqldf</a> (see also sqldf's <a href="https://code.google.com/p/sqldf/">Google Code site</a>) to group across microarray samples to get average levels for each gene, and to join to the Human BodyMap data.</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;"># combine with mRNA-seq data from blood from Human BodyMap 2.0</span>
+hbm_df <span style="color: #666666;">=</span> read.table(<span style="color: #ba2121;">'gene.matrix.csv'</span>,sep<span style="color: #666666;">=</span><span style="color: #ba2121;">','</span>,header<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">TRUE</span>,stringsAsFactors<span style="color: #666666;">=</span><span style="color: #008000; font-weight: bold;">FALSE</span>) <span style="color: #408080; font-style: italic;"># load table</span>
+hbm_matrix <span style="color: #666666;">=</span> as.matrix(hbm_df[,<span style="color: #666666;">2</span>:<span style="color: #666666;">17</span>]) <span style="color: #408080; font-style: italic;"># cast the FPKM columns to a matrix</span>
+rownames(hbm_matrix) <span style="color: #666666;">=</span> hbm_df[,<span style="color: #666666;">1</span>] <span style="color: #408080; font-style: italic;"># assign gene symbols as row names</span>
+hbm_rel <span style="color: #666666;">=</span> melt(hbm_matrix) <span style="color: #408080; font-style: italic;"># cast the HumanBodyMap 2.0 matrix into a 3-column relational model</span>
+colnames(hbm_rel) <span style="color: #666666;">=</span> c(<span style="color: #ba2121;">'gene_id'</span>,<span style="color: #ba2121;">'tissue'</span>,<span style="color: #ba2121;">'fpkm'</span>) <span style="color: #408080; font-style: italic;"># set column names</span>
+
+ma_gene_rel <span style="color: #666666;">=</span> melt(ma_gene) <span style="color: #408080; font-style: italic;"># cast the microarray matrix into a 3-column relational model</span>
+colnames(ma_gene_rel) <span style="color: #666666;">=</span> c(<span style="color: #ba2121;">'gene_id'</span>,<span style="color: #ba2121;">'sample'</span>,<span style="color: #ba2121;">'level'</span>) <span style="color: #408080; font-style: italic;"># set column names</span>
+
+sql_query <span style="color: #666666;">=</span> <span style="color: #ba2121;">"</span>
+<span style="color: #ba2121;">select   ma.gene_id, ma.level, mrna.fpkm</span>
+<span style="color: #ba2121;">from     (select gene_id, avg(level) level from ma_gene_rel group by gene_id) ma, </span>
+<span style="color: #ba2121;">         hbm_rel mrna</span>
+<span style="color: #ba2121;">where    ma.gene_id = mrna.gene_id</span>
+<span style="color: #ba2121;">and      mrna.tissue == 'blood'</span>
+<span style="color: #ba2121;">;</span>
+<span style="color: #ba2121;">"</span>
+ma_mrna_compare <span style="color: #666666;">=</span> sqldf(sql_query)
+
+png(<span style="color: #ba2121;">'microarray.vs.humanbodymap.png'</span>)
+plot(ma_mrna_compare$fpkm, ma_mrna_compare$level, pch<span style="color: #666666;">=19</span>, 
+     xlab<span style="color: #666666;">=</span><span style="color: #ba2121;">'Human BodyMap 2.0 Blood FPKMs'</span>, 
+     ylab<span style="color: #666666;">=</span><span style="color: #ba2121;">'Average level in microarray across 25 samples'</span>,
+     main<span style="color: #666666;">=</span><span style="color: #ba2121;">'Aggregate gene expression level, microarray vs. Human BodyMap 2.0 blood mRNA-seq'</span>,
+     cex.main <span style="color: #666666;">=</span> <span style="color: #666666;">.8</span>)
+dev.off()</pre>
+</div>
+<p><a href="/wp-content/uploads/2013/08/microarray.vs_.humanbodymap.png"><img class="alignnone size-full wp-image-2786" alt="microarray.vs.humanbodymap" src="/wp-content/uploads/2013/08/microarray.vs_.humanbodymap.png"/></a></p>
+<p>Comfortingly, despite some weird outliers, there is a visible correlation between each gene's average expression level in the microarray data and its level in the Human BodyMap 2.0 mRNA-seq data. It's not super clean or linear - surely some combination of microarray vs. RNA-seq differences plus the fact that these are different individuals, different RNA prep protocols, and so on.  But at least, again, some of these "basic truths" - some genes are highly expressed and others not - appear to be preserved.  In fact, overall there is a reasonably strong correlation between a gene's average level in the microarray data and its FPKMs in the mRNA-seq data:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">cor.test(ma_mrna_compare$fpkm, ma_mrna_compare$level, method<span style="color: #666666;">=</span><span style="color: #ba2121;">'pearson'</span>) <span style="color: #408080; font-style: italic;"># .58</span>
+cor.test(ma_mrna_compare$fpkm, ma_mrna_compare$level, method<span style="color: #666666;">=</span><span style="color: #ba2121;">'spearman'</span>) <span style="color: #408080; font-style: italic;"># .65</span></pre>
+</div>
+<p>And not suprisingly, the <em>rank </em>of the genes, measured by <a href="http://udel.edu/~mcdonald/statspearman.html">Spearman's correlation</a>, is better preserved (rho = .65) than the absolute level of the genes, measured by <a href="http://udel.edu/~mcdonald/statregression.html">Pearson's correlation</a> (rho = .58).</p>
+<p><strong>full script</strong></p>
+<p>Here is the full R script for this example: <strong><a href="/wp-content/uploads/2013/08/gene-expression-qc.r.txt">gene-expression-qc.r</a></strong></p>
+<p><strong>discussion</strong></p>
+<p>I built this example around <a href="http://www.ncbi.nlm.nih.gov/sites/GDSbrowser?acc=GDS4145">this example microarray dataset</a> just to have an example that readers could follow along with if desired.  I run these analyses, with minor variations, on pretty much every dataset that I get.  There are obviously more specific things you can do depending on the type of data (in fact, I don't know microarray especially well and may have committed some grave misunderstandings in this analysis - if so, please let me know).</p>
+<p>But these are at least some sanity checks to see if the data look reasonable.  If I see uninformative principal components, no sex-associated genes, weird or inconsistent expression patterns that are too variable for housekeeping genes or don't mesh with what I know from other datasets, then I start to worry that something has gone gravely wrong upstream and needs to be addressed before any research questions can be answered with the data.</p>
+<p>Leave a comment to let me know if it's useful, and tell me what else you do with your data to check if it's reasonable.</p>

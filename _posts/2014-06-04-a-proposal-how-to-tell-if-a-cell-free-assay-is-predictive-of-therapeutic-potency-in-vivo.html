@@ -1,0 +1,100 @@
+---
+layout: post
+title: "A proposal: how to tell if a cell-free assay is predictive of therapeutic potency in vivo"
+author: ericminikel
+date: 2014-06-04 11:58:36
+---
+<p>In our speech at Prion2014, Sonia and I discussed a few of the possible routes toward prion therapeutics. The success to date with finding small molecule inhibitors of RML prions &#8211; cpd-b, anle138b, IND24 &#8211; argues that it might be feasible to find a small molecule effective against one or more human prion strains, if only we had the right assay to discover them.</p>
+<p>What would such an assay look like? We could get there by solving either of two longstanding, very difficult problems in the prion field: creating cell lines stably infected with human prions, or creating a cell-free prion conversion reaction that maintains the authentic conformational properties of the input strain while being highly reproducible and scalable.</p>
+<p>PMCA propagates infectivity, and in some cases seems to propagate strain properties faithfully, but many labs find it extraordinarily hard to set up, and with a Western blot as readout, it&#8217;s painfully low-throughput. QuIC is eminently scalable but the majority of the recombinant PrP substrate seems to be formed into a generic amyloid that doesn&#8217;t reflect well the properties of the input strain, though it has been suggested there might be a small amount of &#8220;real&#8221; prion formation too (see the <a href="/2014/06/04/prion2014-posters/" title="Prion2014 Posters">Sano &#038; Atarashi Prion2014 poster</a>). To be sure, many cell-free assays have been proposed or employed for drug screening [<a href="http://www.ncbi.nlm.nih.gov/pubmed/14622959">Maxson 2003</a>, <a href="http://www.ncbi.nlm.nih.gov/pubmed/15450815">Boshuizen 2004</a>, <a href="http://www.ncbi.nlm.nih.gov/pubmed/15766724">Breydo 2005</a>, <a href="http://www.ncbi.nlm.nih.gov/pubmed/15919931">Bertsch 2005</a>] but whether any of these capture the true strain-dependent inhibitory properties of small molecules is not yet known.</p>
+<p>My goal in this post is to propose an answer to the following question: if we ever <em>do</em> find a cell-free assay that is &#8220;authentic&#8221; enough to be predictive of which drugs will work against human prions <em>in vivo</em>, how will we know we&#8217;ve found it?</p>
+<p>I submit that one answer is as follows. An assay that maintains prion conformational properties well enough to be <em>predictive</em> of efficacy <em>in vivo</em> will exhibit strain-specific inhibitory properties which correlate with those we&#8217;ve already seen in previous <em>in vivo</em> experiments. </p>
+<p>Here is a list of experimental results showing strain specificity <em>in vivo</em> of a few antiprion molecules tested to date beginning at 0 or 1 days post-infection (dpi). And if you heard <a href="/2014/05/27/prion2014-day-1-keynotes/" title="Prion2014 Day 1: Keynotes">Dr. Prusiner&#8217;s speech at Prion2014</a>, then you know there are many more <em>in vivo</em> results on the way, some of which I&#8217;m thinking of as I write this but cannot repeat publicly. In an effort to make this table as crisp as possible I am omitting many experimental details such as the PrP genotype, expression level and compound dose; see references for further details.</p>
+<table>
+<tr>
+<td><strong>Compound</strong></td>
+<td><strong>Prion strain</strong></td>
+<td><strong>Extension of survival</strong></td>
+<td><strong>Citation</strong></td>
+</tr>
+<tr>
+<td>cpd-b</td>
+<td>RML</td>
+<td>125%</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/pubmed/17881452">Kawasaki 2007</a></td>
+</tr>
+<tr>
+<td>cpd-b</td>
+<td>22L</td>
+<td>31%</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/pubmed/17881452">Kawasaki 2007</a></td>
+</tr>
+<tr>
+<td>cpd-b</td>
+<td>Fukuoka-1</td>
+<td>40%</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/pubmed/17881452">Kawasaki 2007</a></td>
+</tr>
+<tr>
+<td>cpd-b</td>
+<td>263K</td>
+<td>10%</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/pubmed/17881452">Kawasaki 2007</a></td>
+</tr>
+<tr>
+<td>cpd-b</td>
+<td>MM1 sCJD</td>
+<td>ns</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/pubmed/23965382">Lu &#038; Giles 2013</a></td>
+</tr>
+<tr>
+<td>IND24</td>
+<td>RML</td>
+<td>120%</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/pubmed/24128760">Berry 2013</a></td>
+</tr>
+<tr>
+<td>IND24</td>
+<td>ME7</td>
+<td>70%</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/pubmed/24128760">Berry 2013</a></td>
+</tr>
+<tr>
+<td>IND24</td>
+<td>CWD</td>
+<td>120%</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/pubmed/24128760">Berry 2013</a></td>
+</tr>
+<tr>
+<td>IND24</td>
+<td>MM1 sCJD</td>
+<td>ns</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/pubmed/24128760">Berry 2013</a></td>
+</tr>
+<tr>
+<td>IND24</td>
+<td>VV2 sCJD</td>
+<td>ns</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/pubmed/24128760">Berry 2013</a></td>
+</tr>
+<tr>
+<td>anle138b</td>
+<td>RML</td>
+<td>97%</td>
+<td><a href="http://www.ncbi.nlm.nih.gov/pubmed/23604588">Wagner 2013</a></td>
+</tr>
+<tr>
+<td>anle138b</td>
+<td>MoPrP A116V</td>
+<td>ns</td>
+<td>J. Mastrianni, <a href="https://experiment.com/u/WQef7Q">preliminary results</a></td>
+</tr>
+</table>
+<p><em>ns = not significant</em></p>
+<p>In other words, if an assay has a signal that <em>is</em> inhibited by IND24 when RML, ME7 or CWD is the seed, but is <em>not</em> inhibited by IND24 when MM1 sCJD or VV2 sCJD is the seed, then it&#8217;s accurately capturing what we see <em>in vivo</em> with that compound, and a similar argument goes for the other compounds. </p>
+<p>This list deserves many caveats. Since the above experiments were done in different mouse models with different PrP genotypes and expression levels, I wouldn&#8217;t make too much of the quantitative differences between experiments, but there is clearly a qualitative difference here: some compounds didn&#8217;t work <em>at all</em> against some strains. Also I don&#8217;t make too much yet of the A116V results yet since this is still preliminary and we don&#8217;t know if the compound may be affecting disease in some way and just not extending survival; I put it there more as an example.</p>
+<p>Additionally, it would be nice, but not essential, for the assay to <em>not</em> show inhibition by quinacrine. Quinacrine appears to be broadly ineffective against prions <em>in vivo</em>: it has been found not to extend survival in mice infected with mouse-passaged CJD [<a href="http://www.ncbi.nlm.nih.gov/pubmed/12325081">Collins 2002</a>], 263K [<a href="http://www.ncbi.nlm.nih.gov/pubmed/15113880">Doh-Ura 2004</a>], and RML [<a href="http://www.ncbi.nlm.nih.gov/pubmed/12325081">Ghaemmaghami &#038; Ahn 2009</a>], with the exception of a very marginal effect against RML in MDR knockout mice treated briefly [<a href="http://www.ncbi.nlm.nih.gov/pubmed/19956709">Ghaemmaghami &#038; Ahn 2009</a>]. Perhaps prions are able to evolve around quinacrine&#8217;s inhibition so quickly that it doesn&#8217;t even extend survival at all. Still, quinacrine <em>does</em> inhibit RML accumulation in ScN2a cells, and yet in spite of this, ScN2a cells were useful enough to give us IND24, which <em>does</em> work <em>in vivo</em>. So I wouldn&#8217;t throw an assay out the window just because quinacrine &#8220;worked&#8221; in it.</p>
+<p>Similarly, it might be nice if pentosan polysulfate did inhibit 263K, RML, and Fukuoka-1 prions in the assay, since it extends survival in mice infected with any of these three prion strains [<a href="http://www.ncbi.nlm.nih.gov/pubmed/15113880">Doh-Ura 2004</a>]. But heparan sulfate, another sulfated glycan, has been shown to stimulate prion formation <em>in vitro</em> [<a href="http://www.ncbi.nlm.nih.gov/pubmed/11157745">Wong 2001</a>, <a href="http://www.ncbi.nlm.nih.gov/pubmed/15917229">Deleault 2005</a>] even though similar compounds seem to delay prion disease <em>in vivo</em> [<a href="http://www.ncbi.nlm.nih.gov/pubmed/12917481">Adjou 2003</a>]. So, similarly, if PPS enhanced prion propagation in an assay, I wouldn&#8217;t throw the assay out the window.</p>
+<p>To me, the fact that cpd-b, anle138b, and IND24 all appear to be strain-specific <em>in vivo</em> argues that they are <em>probably</em> binding to PrP<sup>Sc</sup>. I consider it possible, but rather unparsimonious, to suppose they are hitting co-factors, chaperones or folds of PrP<sup>C</sup> whose necessity for prion formation is strain-dependent. If they&#8217;re indeed binding to PrP<sup>Sc</sup> then their effects <em>could</em> theoretically be seen <em>in vitro</em>. It&#8217;s no guarantee: maybe <em>in vitro</em> conditions allow drug resistance to evolve even more rapidly than <em>in vivo</em>, such that none of these compounds works against any strain. But trying to replicate the <em>in vivo</em> strain dependency <em>in vitro</em> is at least a starting point, a validation to aim for. Put it this way: if I had an assay that gave results similar to those above, I would think it worth using that assay to make a prediction or two &#8211; e.g. &#8220;I predict anle138b will work against CWD prions <em>in vivo</em>&#8221; or &#8220;I predict cpd-b will not work against SSBP/1 natural sheep scrapie <em>in vivo</em>&#8221; and then testing these. If subsequent <em>in vivo</em> tests bear out the predictive capacity of the assay, then I&#8217;d think the assay worth using it to try screening for compounds that inhibit human prion strains.</p>
+<p>I propose that the table above provides, therefore, a target to aim for in developing assays. As I discussed at the end of my last post, QuIC appears, for the most part, to not maintain authentic conformational properties of prions. But could it be modified to do so? Lipids proved necessary to obtain synthetic prions of high titer in PMCA [<a href="http://www.ncbi.nlm.nih.gov/pubmed/17535913">Deleault 2007</a>, <a href="http://www.ncbi.nlm.nih.gov/pubmed/20110469/">Wang 2010</a>] &#8211; could we try adding lipids to QuIC as well? Bank vole PrP appears to have a conformational flexibility that makes it a &#8220;universal acceptor&#8221; for prions <em>in vivo</em> [<a href="http://www.ncbi.nlm.nih.gov/pubmed/24699458">Watts 2014</a>] and in PMCA [<a href="http://www.ncbi.nlm.nih.gov/pubmed/22114554">Cosseddu 2011</a>] &#8211; could this mean it can adopt &#8220;real&#8221; prion conformations in QuIC too? Polythiophenes detect strain-specific conformational properties in brain sections [<a href="http://www.ncbi.nlm.nih.gov/pubmed/18026110">Sigurdson 2007</a>] &#8211; could they detect the presence of &#8220;real&#8221; prions in QuIC as a substitute for the generic fluorescence of thioflavin T? I would like to try varying all of these different parameters, along with the concentrations of salt, SDS, guanidine and so on &#8211; to see if there is any set of QuIC reaction conditions under which the <em>in vivo</em> results in the above table are recapitulated. And if I found such a set of conditions, then I&#8217;d re-run the experiment 20 times to make sure it wasn&#8217;t just a lucky accident that one time!</p>
+<p>Is this outrageous? Or a reasonable thing to try? What other assays could we try, or what other conditions could we vary, to try to mimic the above table? I welcome your comments.</p>

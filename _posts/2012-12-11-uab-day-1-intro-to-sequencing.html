@@ -1,0 +1,237 @@
+---
+layout: post
+title: "UAB day 1: intro to sequencing"
+author: ericminikel
+date: 2012-12-11 12:32:22
+---
+<p>This week I&#8217;ll be blogging from the <a href="http://www.soph.uab.edu/ssg/nhgri_r25/secondshortcourse">UAB Second Short Course on Next-Generation Sequencing</a>.  These are just my notes from the course, so they may be a bit scattered at times.</p>
+<p><strong>Speaker 1: <a href="http://www.hudsonalpha.org/greg-barsh-md-phd">Greg Barsh</a><br/>
+</strong></p>
+<p>HapMap 2005</p>
+<ul>
+<li>~1M SNPs genotyped on 30 YRI trios, 30 CEU trios, 45 CHB, 44 JPT.</li>
+<li>haplotype blocks: correlated SNPs exist due to recombination or lack thereof. average length of haplotype block: YRI: 7.3kb, CEU: 16.3kb, CHB: 13.2kb</li>
+<li>One important conclusion of project: haplotype structure is surprisingly simple. ex. 120 possible combinations of SNPs but only 7 are seen.  small (5-15kb) genomic regions show diversity mainly due to mutation, not recombination</li>
+</ul>
+<p>Exome sequencing study of 10 Kabuki syndrome patients</p>
+<ul>
+<li>Only 1 gene had novel mutations in all 10 patients. It was MUC16, but likely a false positive due to enormous size: 14,507 AAs.</li>
+</ul>
+<p><a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3322360/">Conrad 2011</a> &#8220;variation in genome-wide mutation rates within and between human families&#8221;</p>
+<ul>
+<li>study to determine rate of de novo mutation in the general population</li>
+<li>at first glance, a few thousand de novo mutations per individual, but mostly sequencing errors</li>
+<li>on validation, only 35 &#8211; 49 de novos per person, and only 0 &#8211; 1 are in protein coding regions</li>
+</ul>
+<p><strong>Speaker 2: <a href="http://www.hudsonalpha.org/shawn-levy-phd">Shawn Levy</a></strong></p>
+<p>List of direct to consumer genontyping options</p>
+<ul>
+<li>23andMe</li>
+<li>dna tribes</li>
+<li>navigenics</li>
+<li>identigene</li>
+<li>homedna</li>
+</ul>
+<p>Sanger sequencing</p>
+<ul>
+<li>Uses (non-reversible) terminators to create all possible strands with length &lt; N complementary to template strand of length N. then you separate them by length by electrophoresis and look at the <a href="http://en.wikipedia.org/wiki/Fluorophore">fluorophores</a> (originally radiation) to see what the final base was in the strand of that length. The use of fluorescence made automation and large-scale sequencing possible.</li>
+<li>Sanger sequencing still relevant today due to:<br/>
+- Very long read lengths (700-1000nt)<br/>
+- Very low error rate<br/>
+- Very high per-base quality<br/>
+But:<br/>
+- not very parallel (only ~96 reactions (i.e. reads) per instrument) as opposed to NGS (millions or billions of reads at same time)\</li>
+</ul>
+<p>Next-generation sequencing technologies</p>
+<p>Intro</p>
+<ul>
+<li>current costs at Hudson Alpha<br/>
+&lt; 10 genomes: $6700/genome,<br/>
+&gt; 500 genomes, $3100/genome</li>
+<li>current times<br/>
+- 2-3 weeks per genome/instrument (Illumina)<br/>
+- Complete genomics had a 90 genomes in 90 days deal for a while<br/>
+- Whole genome now down to about 72 hours as of last few weeks</li>
+<li>fluorescent chain termination sequencing (automated Sanger) dominated market until 2005</li>
+<li>then NGS arrived, starting with Roche 454</li>
+</ul>
+<p><a href="http://www.454.com/">Roche 454</a>: <a href="http://en.wikipedia.org/wiki/Pyrosequencing">Pyrosequencing</a></p>
+<ul>
+<li>The first NGS technology introduced</li>
+<li>Sequencing by synthesis; uses the <a href="http://en.wikipedia.org/wiki/Pyrophosphate">pyrophosphate</a> removed by <a href="http://en.wikipedia.org/wiki/DNA_polymerase">DNA polymerase</a> in a secondary reaction to detect incorporation on a base by base basis</li>
+<li>Every time a base is incorporated (whether at bench or in your cells), a pyrophosphate is removed</li>
+<li>Roche uses pico plates &#8211; ~1M wells per plate</li>
+<li>100-micrometer-sized beads with multiple copies of same dna sequence attached to them, each bead into one well</li>
+<li>DNA is built from tip back towards where the DNA is attached to the bead</li>
+<li>Fill all wells with one base of dna (e.g. only A) at a time (natural base, no fluorescence)</li>
+<li>You take the pyrophosphate and generate light signal in a reporter reaction</li>
+<li>You add only one base type (ACGT) at a time so if there is a flash of light it means that base incorporated.</li>
+<li>Then rinse and repeat</li>
+<li>This sequencing method has trouble with homopolymeric runs, e.g. AAAAAAA.  On the first flood of A you get 10x the light, rather than getting 1x ten separate times.  The difference between 1 and 2 As is easy to detect, A vs. AA. But 9 As vs. 10 As is only an 11% difference in intensity and more difficult to detect. The current chemistry is good up to <em>about</em> 10 or 12, but it&#8217;s sequence context dependent&#8211; you may get different results depending on neighboring sequence</li>
+<li>Roche 454 currently ~650 base max read length [sic], (454.com now claims <a href="http://454.com/seewhatspossible/">1000b on the GS FLX+</a>)</li>
+<li>1M reads per run</li>
+<li>650 bases per read</li>
+<li>650M bases per run</li>
+<li>8-12 hours per run</li>
+<li>$10,000 per run (reagents only)</li>
+<li>good for de novo assembly of genomes</li>
+<li>$10K/650Mb is expensive compared to other NGS technologies but a bargain compared to Sanger sequencing</li>
+</ul>
+<p>Illumina HiSeq <a href="http://www.illumina.com/systems/hiseq_2000_1000.ilmn">2000</a>/<a href="http://www.illumina.com/systems/hiseq_2500_1500.ilmn">2500</a></p>
+<ul>
+<li>largest installed base worldwide for high-throughput instruments</li>
+<li>2000 been out a few years, 2500 came out this month</li>
+<li>HiSeq2000: ~600Gb/run, in 2 flowcells at 300Gb/flowcell, 8 lanes per flowcell at 200M reads/lane.  $10,000/600Gb run (reagents only)</li>
+<li>HiSeq2500: only 180Gb/run, 2 lanes/flowcell, 150Mreads/lane</li>
+<li>HiSeq2500 was created for greater speed. a machine that collects less data faster</li>
+<li>Illumina uses reversible terminator chemistry (described in <a href="http://www.nature.com/nature/journal/v456/n7218/full/nature07517.html">Bentley 2008</a> in Nature)</li>
+<li>all four fluorolabeled nucleotides in 1 reaction</li>
+<li>then deblock and remove fluorescence</li>
+<li>chemistry is about 20 minutes per base</li>
+<li>imaging takes most of the cycle time</li>
+<li>whereas 454 can do a 650nt read length in 8-12 hours; HiSeq does 100nt reads in 6 days</li>
+<li>HiSeq doesn&#8217;t have Roche&#8217;s problem with homopolymeric runs</li>
+<li>location of clusters on flowcell is random (not in picotiter wells like with 454)</li>
+<li>originally used NASA&#8217;s star-finding algorithms to find where the clusters are</li>
+<li>150 maximum read length</li>
+<li>1 run ~ 12 days</li>
+<li>good for re-sequencing, ChIPseq, RNA-seq</li>
+<li>cost: $20,000 per run</li>
+</ul>
+<p><a href="http://www.iontorrent.com/technology/">Ion Torrent</a> &#8220;Personal Genome Machine&#8221; (PGM) and Proton</p>
+<ul>
+<li>Ion Torrent was founded by the guy who invented 454 before it was sold to Roche</li>
+<li>Ion Torrent now owned by Life Technologies</li>
+<li>PGM lower output, Proton higher output</li>
+<li>both benchtop</li>
+<li>uses wells much smaller than 454.  454 uses ~100um wells, Ion Torrent uses 1.3um down to 0.3um wells</li>
+<li>density 160M &#8211; 1B wells per chip</li>
+<li>output in the tens or hundreds of Gb per 2-hour run</li>
+<li>Proton II early 2013, Proton III late 2013</li>
+<li>same technology as 454 but instead of pyrophosphate it watches the H+ ion that comes off</li>
+<li>at a level of abstraction, it is a really sensitive pH meter.</li>
+<li>electronics built into bottom of well</li>
+<li>no secondary reaction</li>
+<li>same issue with homopolymer runs as Roche</li>
+<li>200nt reads in 24 hours</li>
+<li>Ion Chef is the to-be-released tool to go from sample to beads ready to load into this machine, automatically</li>
+</ul>
+<p>Other technologies</p>
+<ul>
+<li>Life Technologies <a href="http://en.wikipedia.org/wiki/ABI_Solid_Sequencing">SOLiD</a>:  sequencing by <em>ligation</em>, as opposed to <em>synthesis</em> which others use.<br/>
+- fluorescently labeled bases<br/>
+- 2-base encoding<br/>
+- less popular now</li>
+<li><a href="http://www.nanoporetech.com/">oxford nanopore</a>: not commercially available yet, first datasets expected in 2013. <a href="http://www.pnas.org/content/107/37/16060.full">Derrington 2010</a> MspA protein nanopore; IBM leading development of synthetic nanopore</li>
+<li><a href="http://en.wikipedia.org/wiki/Single_molecule_real_time_sequencing">Single molecule</a> technologies: <a href="http://www.pacificbiosciences.com/">Pacific BioSciences</a>- no amplification, very small quantities of DNA</li>
+</ul>
+<div>
+<p>how to get only one sequence per bead?</p>
+</div>
+<ul>
+<li>concentration of DNA and of beads. add oil to emulsify.</li>
+<li>water droplets act as microreactors.</li>
+<li>on average each water droplet will contain one dna fragment, one bead, and a certain number of reactants. some beads will have nothing, some will have multiple dna (polyclonal). majority will be 1:1, single molecule of dna on bead. some wells have no dna, blank; other wells are uninterpretable because polyclonal.</li>
+<li>usually 50 &#8211; 80% of wells have active beads.</li>
+<li>sequencing devices have software to mask out those wells</li>
+</ul>
+<p>Library prep</p>
+<ul>
+<li>ways to shatter genomic DNA:<br/>
+- sonication (covaris)<br/>
+- nebulization (use nitrogen or other gases through a small orifice under pressure)<br/>
+- enzymatic treatment (DNAases , etc.)</li>
+<li>ideal fragment size is just a little bit longer than total read length, e.g. &gt; 200bp if doing 100bp paired end</li>
+<li>for emulsion PCR you want 300-400bp fragments</li>
+<li>for illumina can go up to 1000bp</li>
+<li>but larger fragments give fewer reads because bridge PCR is better at amplifying small fragments</li>
+<li>illumina is the only one that does paired-end reads &#8211; no one else has capability to read from both ends of same fragment</li>
+<li>steps in library prep<br/>
+1. shatter<br/>
+2. repair ends to make sure <a href="http://en.wikipedia.org/wiki/Sticky_and_blunt_ends">blunt, not sticky, ends</a><br/>
+3. add A<br/>
+4. <a href="http://en.wikipedia.org/wiki/DNA_ligase">ligate</a> known adapter sequences at each 5&#8242; end</li>
+<li>illumina forked adapter: complementary section, then it forks, not complementary</li>
+<li>bridge PCR: each &#8220;circle&#8221; on a flowcell represents several hundred to low thousands of identical DNA molecules</li>
+<li>See <a href="http://www.nature.com/nature/journal/v456/n7218/full/nature07517.html">Bentley 2008</a> and <a href="http://www.nature.com/nbt/journal/v26/n10/full/nbt1486.html">Shendure 2008</a> for more details on all this chemistry.</li>
+</ul>
+<p>Misc</p>
+<ul>
+<li>in Illumina can get ~1M clusters / mm^2; much more than that and you get almost no output because things overlap</li>
+<li>reduction in sequence quality as position in read increases.  due to imperfect chemistry: sometimes a terminator doesn&#8217;t get removed, fluorophore doesn&#8217;t get cleaved off etc.</li>
+<li>why is 30x coverage often recommended?  if 30x <em>average</em> coverage, then given the distribution of coverage almost everything will be covered at least 4x or 8x, making it possible to call variants.  (high GC content or low information content sequence will never be highly covered with uniquely aligned reads so you&#8217;ll still only get ~91% of genome covered at &gt; 1x)</li>
+</ul>
+<p>Alignment</p>
+<ul>
+<li>Two categories of alignment algorithms.<br/>
+Hashing: ELAND (proprietary by Illumina), <a href="http://soap.genomics.org.cn/">SOAP</a> (deprecated in favor of SOAP2??), <a href="http://maq.sourceforge.net/">Maq</a><br/>
+Burrows-Wheeler Transform:<a href="http://soap.genomics.org.cn/">SOAP2</a>, <a href="http://bio-bwa.sourceforge.net/bwa.shtml">BWA</a>, <a href="http://bowtie-bio.sourceforge.net/index.shtml">Bowtie</a></li>
+<li>Hashing is more memory intensive, BWT is simpler. the BWT aligners are considered faster</li>
+<li>tophat is just bowtie for rnaseq</li>
+<li>quick qc metric: look at ratio of reads mapping to x/y chrom, order by ratio.  should be a sharp wall at transition from male to female. if you get a gentle slope that means you&#8217;ve got contamination</li>
+<li>most sequences in genome are 20-70% GC</li>
+<li>70% of normalized coverage at ~70% GC content.  i think he means that reads with 70% GC content will be 30% underrepresented compared to their actual frequency in genome</li>
+<li>~90% coverage at 1x+ is good for whole genome (GC content and repetitive sequences make it impossible to do 100% at 1x)</li>
+</ul>
+<p><strong>Speaker 3: <a href="http://www.hudsonalpha.org/devin-absher-phd">Devin Absher</a> - CNVs and Structural Variations</strong></p>
+<p>CNVs represent more interindividual genetic variation than SNVs</p>
+<ul>
+<li>SNPs = 0.08% of genome</li>
+<li>CNVs = 0.12% of genome (and rising) (just in # of base pairs absorbed)</li>
+</ul>
+<p>Types of events:</p>
+<ul>
+<li>translocations</li>
+<li>inversions</li>
+<li>loss of heterozygosity &#8211; ex. maternal chromosome gets copied to paternal chromosome, usu. by repair mechanisms</li>
+<li>deletions</li>
+<li>amplifications (aka duplications).  including small, common polymorphisms of low copy repeats / segmental duplications , occurring in hot spots within genome</li>
+</ul>
+<p>Two approaches:</p>
+<p>1. read depth quantification</p>
+<ul>
+<li>assumes everything is equally alignable</li>
+<li>but this is not true of repeat regions which get lower alignment</li>
+<li>pcr duplicates</li>
+<li>gc bias</li>
+<li>ways to overcome these issues:</li>
+<li>A. <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2752127/">Yoon 2009</a>: look at 100bp windows and count depth in that window. rolling window. correct for GC content. use a &#8220;segmentation&#8221; algorithm (like an <a href="http://en.wikipedia.org/wiki/Hidden_Markov_model">HMM</a>) to look for change points in read depth</li>
+<li>B. create a sort of &#8220;reference genome&#8221; for read depth.  get average read depth for 100s of samples to average out the real copy number events and get just hte expectation of the influence of GC content, repeat regions.  now take log2 ratio of your sample to the reference sample. you still get a lot of noise in very high repeat regions because even in the reference, there was close to 0 depth.</li>
+<li>depth really matters. with 120x you can see CNVs very clearly, with 10x the noise is much greater than signal for short deletions (for 1 Mb deletion you&#8217;ll still see it)</li>
+</ul>
+<p>2. aberrant paired reads</p>
+<ul>
+<li>if both map to same strand, i.e. head-to-tail, indicates an inversion</li>
+<li>if insert size is out of normal range, indicates a deletion</li>
+<li>how to do this: either standard paired end(100-500bp) or mate-pair (circularized) 3-5kb fragments, which are more difficult and costly to make</li>
+</ul>
+<p>Both of these are still an art form. high false negative and false positive rates.</p>
+<p>software pacakges</p>
+<p>aberrant read pair approach:</p>
+<ul>
+<li><a href="http://sv.gersteinlab.org/pemer/">PEMer</a> (<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2688268/">Korbel 2009</a>): looks for clusters of outliers where distance or orientation are anomalous</li>
+<li><a href="https://trac.nbic.nl/pindel/">Pindel</a> (<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2781750/">Ye 2009</a>)</li>
+<li><a href="http://breakdancer.sourceforge.net/">BreakDancer</a> (<a href="http://www.ncbi.nlm.nih.gov/pubmed/19668202">Chen 2009</a>): built with Maq in mind as being the aligner</li>
+<li><a href="http://svdetect.sourceforge.net/Site/Home.html">SVDetect</a> (<a href="http://bioinformatics.oxfordjournals.org/content/26/15/1895.full">Zeitouni 2010</a>). better with SOLiD data.</li>
+<li>VariationHunter &#8211; Hormozdiari 2010. tries to not only find anomalous pairs but also look up a db of transposons to see what is likely to be inserted there.  has db of known retroviruses in human genome</li>
+<li>HYDRA: anomalous pairs + transposon detection Quinlan 2010</li>
+<li>BreakSeq: breakpoint detection with overlapping reads</li>
+<li>Genome Strip population-based analysis &#8211; tries to integrate read depth AND aberrant read. Handsaker 2011.</li>
+<li>GASVPro &#8211; also integrates read deptha nd read pair analaysis, different statistical model than Genome Strip. Sindi 2012</li>
+</ul>
+<p>&#8220;old fashioned way&#8221;: analyst just integrates results of all of them. <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3077050/">Mills 2011</a> used 12 different CNV detection algorithms on <a href="http://www.1000genomes.org/data">1000G data</a>. built a set of high confidence copy number events.  this is that gold standard thing from GATK</p>
+<p>how to get better alignment around segmental duplications</p>
+<p>search through unalignable reads to find anomalies</p>
+<p>use different aligners<br/>
+- first pass with a fast aligner (BWA, Bowtie)<br/>
+- then re-align unaligned reads using Novoalign, Mr(s)Fast<br/>
+<a href="http://mrfast.sourceforge.net/">Mr</a>(<a href="http://mrsfast.sourceforge.net/Home">s</a>) <a href="http://mrfast.sourceforge.net/">Fast</a>: chops the read into smaller pieces and tries to align each of them</p>
+<p>hundreds of de novo CNVs per generation. orders of magnitude more than de novo SNVs.<br/>
+also older people have accumulated many more somatic CNVs over their lifetime than young people</p>
+<p>all of this is concentrated around segmental duplications.</p>
+<p>all of these methods are terrible at detecting variations that are <em>within</em> the actual distribution of insert sizes in your fragments<br/>
+very hard to call 100-300 bp inserts/deletions<br/>
+big events of 1kb or more are pretty easy to spot</p>
+<p>mechanisms by which sgemental duplications arise<br/>
+- nonhomologous recombination</p>
+<p>there are also software e.g. <a href="http://www.ebi.ac.uk/~zerbino/velvet/">Velvet</a> to do de novo assembly to detect CNVs, as alternative to alignment</p>

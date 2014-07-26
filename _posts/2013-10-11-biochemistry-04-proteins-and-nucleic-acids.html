@@ -1,0 +1,84 @@
+---
+layout: post
+title: "Biochemistry 04: proteins and nucleic acids"
+author: ericminikel
+date: 2013-10-11 12:44:43
+---
+<p>These are notes from lecture 4 of <a href="http://www.extension.harvard.edu/courses/introduction-biochemistry">Harvard Extension’s biochemistry class</a>.</p>
+<p><strong>protein separation and purification</strong></p>
+<p>Purification of proteins often begins with an initial &#8220;crude&#8221; purification.  This uses salts to &#8220;salt out&#8221; / precipitate proteins with similar qualities, leaving undesired ones in the supernatant.  (I think precipitation of PrPSc by NaPTA [<a href="http://www.ncbi.nlm.nih.gov/pubmed/9771749/">Safar 1998</a>] is an example of this).  This step is then followed with a more specific purification based on the protein&#8217;s properties.  There are several such purification procedures, most of which are some form of <a href="http://en.wikipedia.org/wiki/Column_chromatography"><strong>column chromatography</strong></a>.  This involves a glass column with a reservoir where you put the homogenate / lysate.  It drips onto a solid but porous matrix called the &#8220;stationary phase&#8221;.  This basic concept can be adapted to separate molecules on a few different properties:</p>
+<ul>
+<li><strong>size exclusion chromatography</strong> also called &#8220;<strong>gel exclusion</strong>&#8221; chromatography.  Porous beads (like golf balls) within a column catch small molecules, while large molecules (too big to get stuck in the pores) move faster and elute first.</li>
+<li><a href="http://en.wikipedia.org/wiki/Ion_exchange_chromatography"><strong>ion exchange chromatography</strong></a>.  Solid matrix is either positively or negatively charged.  For instance, positively charged proteins will stick to a negatively charged matrix, making them get stuck.  Once you&#8217;ve eluted away the neutral and negative proteins that you don&#8217;t want, you can then add salt or change pH to change the net charge of the originally positive proteins in order to get them out.</li>
+<li><a href="http://en.wikipedia.org/wiki/Affinity_chromatography"><strong>affinity chromatography</strong></a>.  The column contains a covalently attached ligand specific to the protein of interest.</li>
+</ul>
+<p>Once these processes are done, how to test the purity of the protein?  We define &#8220;specific activity&#8221; to be the number of enzyme units per milligram of <em>total</em> protein, maximized when a single protein is absolutely purified.</p>
+<p>Sometimes purifying a protein takes several different steps.  At each step you lose volume, total protein and to a lesser extent total activity.  But because you lose less of your protein of interest (total activity) than other proteins (total protein) your <em>specific activity</em> rises dramatically.</p>
+<p>Once a protein is purified, how do we characterize it?</p>
+<ul>
+<li><strong>SDS-PAGE</strong>.  Sodium dodecyl sulfate disrupts non-covalent bonds denatures the protein and coats it with a negative charge, plus beta mercaptoethanol reduces disulfide bonds.  Now all proteins are negatively charged, and will run towards a positive electrode.  Thus this does not separate based on charge, but on molecular weight. You can then transfer the protein to <strong>nitrocellulose</strong> and label it with a specific antibody, then detect the antibody.  This is a <strong>Western blot.</strong></li>
+<li><strong>2-D Gel Electrophoresis.  </strong>The first step is a gel run with no SDS across a pH gradient, so proteins migrate based on their isoelectric point (pI) which depends on their R groups.  In the second step, add SDS to convert all proteins to a negative charge and then run them on a current gradient perpendicular to the original pH gradient.</li>
+<li><strong>Polypeptide hydrolysis</strong> uses acid, base or enzymes to break peptide bonds in a protein.  Free amino acids are then labeled with fluorescence, and subjected to some sort of chromatography, esp. <a href="http://en.wikipedia.org/wiki/High-performance_liquid_chromatography">HPLC</a>, so that the intensity of fluorescence tells you relative abundance of each amino acid.  This can&#8217;t tell you the sequence of the amino acids.</li>
+<li><strong>Protein sequencing.</strong>  If you have two peptide chains linked by a disulfide bond, first reduce that bond to separate the chains, then use chemical or enzymatic methods to break each chain into different length fragments.  Typical enzymes used for this include trypsin, chymotrypsin, elastase, thermolysin, pepsin and endopeptidase V8, each of which is usually extracted from the tissues of different meat animals and is specific to a different amino acid where it cleaves.  Sequence each fragment and then perform the &#8220;turnpike problem&#8221; to reassemble the full protein sequence. But how to sequence each fragment?  A technique called <a href="http://en.wikipedia.org/wiki/Edman_degradation"><strong>Edman degradation</strong></a>. Tag the protein with &#8220;Edman&#8217;s reagent&#8221; <a href="http://en.wikipedia.org/wiki/Phenyl_isothiocyanate">phenylisothiocyanate</a> which tags only the amino acid at the N terminus.  Then use anhydrous acid to release the N-most amino acid, use chromatography to identify that amino acid, then repeat.</li>
+<li><strong>Mass spec proteomics.</strong>  See review [<a href="http://www.ncbi.nlm.nih.gov/pubmed/15340378">Steen &amp; Mann 2004</a> (<a href="http://mcb5068.wustl.edu/MCB/Lecturers/Bose/Articles/Peptide%20Sequencing%20Review.pdf">ft</a>)].  Basically, separate and digest proteins, then separate peptides based on HPLC or ion exchange, then ionize the sample with electrospray ionization or MALDI and spray the peptide ions into the mass spec machine.  Look up the mass/charge ratio of each hit in UniProt.</li>
+</ul>
+<p><strong>nucleic acids</strong></p>
+<p>Why talk about DNA and RNA in a biochemistry class?  Because DNA mutations cause protein changes, of course.</p>
+<p>A nucleo<em>side</em> is just the pentose and the N base.  A nucleo<em>tide</em> also has the phosphate backbone.  The purines adenine and guanine are double rings; pyrimidines cytosine, thymine and uracil are single rings.  The phosphate backbone can be mono-, di- or tri-phosphate.</p>
+<p><table style="width:100%; " class="easy-table easy-table-default " border="0">
+<thead>
+<tr><th>base (base-H) </th>
+<th>nucleoside (base-ribose) </th>
+<th>nucleotide (base-ribose phosphate)</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Adenine (Ade, A)</td>
+<td>Adenosine (Ado)</td>
+<td>Adenylic acid / adenosine monophosphate (AMP)</td>
+</tr>
+
+<tr><td>Cytosine (Cyt, C)</td>
+<td>Cytidine (Cyd)</td>
+<td>Cytidylic acid / cytidine monophosphate (CMP)</td>
+</tr>
+
+<tr><td>Guanine (Gua, G)</td>
+<td>Guanosine (Guo)</td>
+<td>Guanylic acid / guanosine monophosphate (GMP)</td>
+</tr>
+
+<tr><td>Uracil (Ura, U)</td>
+<td>Uridine (Urd)</td>
+<td>Uridylic acid / uridine monophosphate (UMP)</td>
+</tr>
+
+<tr><td>Thymine (Thy, T)</td>
+<td>Deoxythymidine (dThd / dT)</td>
+<td>Deoxythymidylic acid / deoxythymidine monophosphate (dTMP)</td>
+</tr>
+</tbody></table></p>
+<p>By adding additional phosphates you get other familiar names e.g. AMP → ADP → ATP.</p>
+<p>Nucleotides are linked through 3&#8242;C of one sugar to the 5&#8242;C of another sugar through a phosphodiester bond.  One end of an oliognucleotide has a free 5&#8242; phosphate group, the other has a free 3&#8242; hydroxyl (OH).  By convention, nucleotide sequences are always read 5&#8242; to 3&#8242;, with &#8220;p&#8221; representing the phosphate at the 5&#8242; end (e.g. pACGT) or between two nucleotides (e.g. CpG).</p>
+<p>Friedrich Miescher isolated and characterized DNA in 1868.  He called it &#8220;nuclein&#8221; and knew that it was acidic and contained phosphorous.  Then in 1943 Oswald Avery discovered that if you transferred this substance between bacterial nuclei it would transfer the <em>traits</em> of the original bacterium with it.  In 1950 Erwin Chargaff realized that nucleotides occurred in different ratios, so that the quantity of C and G were tightly linked and of A and T were tightly linked.  In the next few years, Maurice Wilkins and Rosalind Franklin discovered that DNA had a characteristic X-ray diffraction pattern implying it is helical, but wanted to wait to be sure before publishing.  Wilkins then shared the data with James Watson and Francis Crick, who proposed the 3-dimensional structure we now know, and the three of them won the Nobel prize in 1962.</p>
+<p>Watson and Crick had three pieces of information.  1) Bases had different tautomers &#8211; enol and keto &#8211; and the keto form was necessary for function (see <a href="http://en.wikipedia.org/wiki/Keto%E2%80%93enol_tautomerism">keto-enol tautomerism</a>).  2) DNA is helical with aromatic bases stacking to form rings (see <a href="http://www.dnalc.org/view/15014-Franklin-s-X-ray-diffraction-explanation-of-X-ray-pattern-.html">explanation</a>)  3) The <a href="http://en.wikipedia.org/wiki/Chargaff's_rules">Chargaff rule</a>: [A] == [T] and [C] == [G].</p>
+<p>If you know just [A] you can derive the others.  e.g. [A] = 32% implies [T] = 32% implies [C] == [G] == 18%.</p>
+<p>The twisting of DNA creates two grooves of unequal width &#8211; major and minor grooves &#8211; due to the angle of the glycosidic bond.  In a cross section you can see the major groove and minor groove in a plane together.</p>
+<p>Bases are stacked on top of each other with the planes of their rings parallel.  Bases are attracted through Van der Waals forces.  The stacking interactions are stronger in GC pairs.  Different stacked dimers have different stacking energies with GC (CpG or GpC) dimers being more stable than others.</p>
+<p>Different higher order structures of DNA.  B-form is the normal, physiological, right-handed helix.  A-form is right-handed but wider.  Z form is left-handed.</p>
+<p>DNA&#8217;s melting temperature is a good indicator of its stability.  Aromatic bases absorb more UV light when unstacked, so absorption rises on a sigmoidal curve as you heat DNA.</p>
+<p>RNA, being single stranded, has a ton of conformational freedom and can form A-form helices (see above), hairpin loops, internal loops, bulges.</p>
+<p>DNA replication is semiconservative, meaning that each daughter molecule contains one strand of the parent molecule.  The point where DNA is unwound is the replication fork.  Helicase is a ring-shaped enzyme that pulls DNA through the ring and burns ATP for the energy to unwind it.  Each ATP molecule is enough to pull apart 5 nucleotides.  As the DNA opens up, single strand binding (SSB) proteins coat the single strands to keep them from re-annealing.</p>
+<p>DNA polymerase can&#8217;t initiate synthesis, it can only extend a pre-existing chain in the 5&#8242; to 3&#8242; direction.  The 3&#8242; OH group on the existing chain attacks the first of the three phosphates on the 5&#8242; phosphate group of the free dNTP to form a new phosphodiester bond.  That&#8217;s why you can&#8217;t go 3&#8242; to 5&#8242;.  An RNA primer provides the initial free 3&#8242; OH group so that polymerase can extend the existing chain.</p>
+<p>Past the replication fork, the <i>leading strand</i> is the one that exposes a 3&#8242; of the parent molecule.  This allows the new strand to be synthesized 5&#8242; to 3&#8242; into the replication fork, which is the &#8220;correct&#8221; way.  The opposite <i>lagging strand</i> loops out, synthesizing Okazaki fragments opposite the leading strand over and over.  These get stitched together later.</p>
+<p><object width="480" height="380" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"><param name="flashvars" value="config=http://www.dnatube.com/nuevo/econfig.php?key=539af17c883eb9283dd1"/><param name="allowscriptaccess" value="always"/><param name="wmode" value="transparent"/><param name="allowfullscreen" value="true"/><param name="src" value="http://www.dnatube.com/nuevo/player.swf"/><embed width="480" height="380" type="application/x-shockwave-flash" src="http://www.dnatube.com/nuevo/player.swf" flashvars="config=http://www.dnatube.com/nuevo/econfig.php?key=539af17c883eb9283dd1" allowscriptaccess="always" wmode="transparent" allowfullscreen="true"/></object></p>
+<p>Types of RNA: rRNA, tRNA, siRNA, miRNA, lincRNA, snRNA, snoRNA.</p>
+<p>Transcription factors bind to promoter regions, recruit RNA polymerase, position DNA at the RNA polymerase active site, and recruit helicase to unwind the DNA. RNA polymerase produces RNA from, and complementary to, the <i>non-coding</i> strand, thus being identical in sequence to the <i>coding </i>strand, save the U-for-T swap.  Helicases wind and unwind the DNA at either end; in between there is a strip of 10 &#8211; 17 bases that are fully unwound and the RNA polymerase moves in lockstep with the helicases.</p>
+<p>mRNA is processed in several ways: a 5&#8242; cap protects the end from exonuclease.  A ~200-base long 3&#8242; polyA tail also protects from endonucleases and is thought to provide a &#8220;handle&#8221; for transport.  Introns are spliced and exons joined.</p>
+<p>Each tRNA molecule gets &#8220;charged&#8221; with one amino acid.  tRNAs are depicted as having three large hairpin loops, with the <i>anticodon</i> on the middle one and the amino acid attached to the 3&#8242;.  The binding in the third base of the anticodon is weak, thus this is the <i>wobble base</i>.  U in this position can base pair with A or G; G in this position can base pair with U or C.  Inosine (I) is very flexible and can pair with U, C or A.  Thanks to this flexibility you don&#8217;t need all 61 possible tRNAs.</p>
+<p>Translation involves 3 steps: 1) initiation at AUG; 2) elongation 5&#8242; to 3&#8242; / N terminal to C terminal; 3) termination when the ribosome encounters a stop codon.</p>
+<p>Ribosomes have two active sites: the P site and A site.  The P site is where a tRNA is bound to the mRNA at its anticodon and the growing polypeptide chain at its 3&#8242; end.  The A site is adjacent and contains a new tRNA charged with just one amino acid.  The peptide chain needs to be passed from the P site to the A site.</p>
+<p>Termination proteins or <i>release factors</i> RF-1 and RF-2 recognize a stop codon in the A site and make the ribosome release the pepitdyl group to water, freeing the polypeptide chain.</p>
+<p>Post-translational modifications can include GPI anchoring, phosphorylation and glycosylation.  One role of glycosylation is to protect the protein from degradation.</p>
+<p><strong>aside: </strong><strong>RNA editing</strong></p>
+<p>Most common: A to I deamination.  C to U is rarer.  U to C, G to A and A to G have also been observed but are presently considered quite novel.</p>

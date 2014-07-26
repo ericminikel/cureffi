@@ -1,0 +1,385 @@
+---
+layout: post
+title: "How (and why) to create population covariates using 1000 Genomes data"
+author: ericminikel
+date: 2012-10-15 19:38:47
+---
+<p>This post aims to give step-by-step instructions on how to model and control for population stratification in a genetic association study by combining 1000 Genomes data with your own data.</p>
+<p>In my case, I&#8217;ve got exome data from 50 patients and I have aligned it to the human genome and called variants using my <a href="/2012/09/19/exome-sequencing-pipeline-using-gatk/">GATK pipeline</a>.  Now I want to test for the association of genetic variation with a phenotype.  To model the effect of individual variants, I can use PLINK (see <a href="http://pngu.mgh.harvard.edu/~purcell/plink/tutorial.shtml">tutorial</a>; post forthcoming), and for a &#8220;gene score&#8221; model aggregating the effect of multiple rare variants by gene I can use my R implementation of <a href="/2012/09/25/implementation-of-rvt1-in-r-and-sql/">RVT1 and RVT2</a>.  But in order to get meaningful results from either of these types of models, I will need to control for the effects of <em>population stratification</em>.</p>
+<p>Before I get into any code, let me see if I actually understand the concepts here well enough to explain them.</p>
+<p>We human beings are all related to each other &#8212; we all share common ancestors if you go back far enough.  If some of the sample individuals in your dataset are more closely related to each other than to the others, this will bias the outcomes of all your models.  In an imaginary world where it were possible to randomize an organism&#8217;s genotype and then read out a resulting phenotype, it would be pretty easy, given enough iterations, to pin down the variant(s) that cause the given phenotype.  But we don&#8217;t inherit genetic information randomly.  For each chromosome, each of us gets one copy from our father and one copy from our mother.  There is some amount of <a href="http://en.wikipedia.org/wiki/Chromosomal_crossover">crossover</a>, but for two loci A and B that are close to one another, odds are that if I have my mother&#8217;s mother&#8217;s variant at A and my sibling has my mother&#8217;s mother&#8217;s variant at A, we probably both have our mother&#8217;s mother&#8217;s variant at B too.  These two variants are on the same haplotype and my sibling and I both got that haplotype from my mother who got it from her mother.</p>
+<p>By comparing at how many loci me and another person share 2, 1, or 0 of our alleles, you can figure out whether we are closely related.  Identical twins should share both alleles at 100% of loci. Siblings should share 2 alleles at 25% of loci, 1 allele at 50% of loci and 0 alleles at 25% of loci.  Parent and child should share 1 allele at 100% of loci.  Half siblings should share 1 allele at 50% of loci and 0 alleles at the other 50%.  This phenomenon is called identity-by-descent (IBD).  The &#8220;identity&#8221; in this term refers not to who people are but to the exact match of one person&#8217;s allele to another&#8217;s, as in the sentence &#8220;these two sequences exhibit 100% identity&#8221;, not the sentence &#8220;insert a credit card to verify your identity.&#8221;  Two people&#8217;s identity-by-descent, then, is the amount of genetic information they share <em>because they got it from the same ancestor</em>.</p>
+<p>But notice that this breaks down pretty quickly.  Above I said that parent and child should share 1 allele at 100% of loci.  In reality the parent and child might well share 2 alleles at many loci just by chance, because one parent <em>happened</em> to have the same variant as the other parent.  So we can&#8217;t measure IBD directly.  Instead we have to first measure something simpler and easier to quantify: identity-by-state (IBS), which simply means &#8220;at how many loci do these two people share 2, 1, or 0 alleles&#8221;, without making any claim as to<em> why</em> they they share those alleles.  Note that IBS and IBD are not opposites or opposed in any way.  IBS just means &#8220;how much genetic information is the same&#8221; and IBD means &#8220;how much genetic information is the same <em>because of recent shared ancestry</em>&#8220;.</p>
+<p>A moment ago I mentioned that one parent might &#8220;happen&#8221; to have the same variant as another parent.  But what does &#8220;happened&#8221; really mean here?  In many cases it means that the two parents <em>also</em> got the variant from the same ancestor (though it could also be by separate chance mutations).  So the more recent the parents&#8217; common ancestor, the more loci at which they will share variants.  This will be relatively few loci for an interracial couple, relatively more loci for parents of the same ethnicity, and a whole lot of loci if the parents are part of the same extended clan, which is to say, third or fourth cousins or something.  Because we all have common ancestors you might be tempted to think of everyone&#8217;s relation to everyone else in terms of IBD, but at some point that ceases to make sense because of two genetic forces at work.  (1) <a href="http://en.wikipedia.org/wiki/Chromosomal_crossover">Crossover</a> will gradually mash up haplotypes so that, even if two people with many of the same ancestors share a lot of variants, they don&#8217;t share them in the same contiguous tract on one haplotype.  As more and more generations pass, allowing more opportunities for crossover, and absent other confounding forces, two loci are said to move towards zero <a href="http://en.wikipedia.org/wiki/Linkage_disequilibrium">linkage disequilibrium</a>.  (2) <a href="http://en.wikipedia.org/wiki/Mutation">Mutations</a> will gradually make it so that even tracts of haplotype you still have intact from your great great great grandmother no longer exhibit perfect identity to the haplotype she had, or that her other descendents have today.  And if there&#8217;s no &#8220;identity,&#8221; there cannot be said to be &#8220;identity-by-descent&#8221;.</p>
+<p>We can measure IBS pretty easily, though there&#8217;s a little bit of a wrench even here.  When you call variants with <a href="/2012/09/19/exome-sequencing-pipeline-using-gatk/">GATK</a>, <a href="/2012/09/07/an-alternative-exome-sequencing-pipeline-using-bowtie2-and-samtools/">samtools</a>, etc. you will get a genotype for <em>every</em> sample at any locus where <em>any</em> sample differs from the reference genome you&#8217;re using.  So for two samples that are quite similar, you may not even know just <em>how</em> similar if you didn&#8217;t even call genotypes at all the potential variant loci where they were the same.  I am still trying to figure out whether / how much of an issue this is.  In any event, as long as you called variants on a number of samples together, it seems you&#8217;re probably fine.</p>
+<p>So once you know the number of IBS-0, IBS-1 and IBS-2 loci between two individuals, how do you compute IBD?  It&#8217;s not simple.   PLINK [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC1950838/">Purcell 2007</a>] uses a maximum likelihood estimator described in [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC1462494/pdf/12663552.pdf">Milligan 2003</a>].  After reading this I am still not sure I fully understand the approach, but let me talk through at least one important concept here.  You can imagine that estimating IBD will depend upon allele frequency.  Given that two people share an allele, that allele&#8217;s frequency in the population determines the relative likelihood that these two people share it by chance versus by ancestry.  So the computation of IBD may be understood as computing the amount of genetic information that is shared in excess of the amount expected to be shared by chance.  Allele frequency is a tricky thing, though, because it varies according to what you consider to be the reference population.  Consider a biallelic SNP with alleles A and a.  In ethnic group #1, allele frequencies are A: .99, a: .01 and in ethnic group #2, allele frequencies are A: .01, a: .99.  If I analyze a sample that is half ethnic group #1 and half ethnic group #2, then my overall allele frequency is 50/50.  I then compute IBD and find that two individuals from ethnic group #1 share the AA genotype (thus IBS-2).  Imagine other loci with the same dispersion of allele frequencies: B vs. b, C vs. c, etc.  I will tend to incorrectly find that two individuals from the same ethnic group have more IBS-1 and IBS-2 than would be expected by chance, when in fact their amount of IBS-1 and IBS-2 is perfectly likely given the allele frequencies in that population.  For this reason, PLINK <a href="http://pngu.mgh.harvard.edu/~purcell/plink/ibdibs.shtml#genome">recommends</a> only calculating IBD &#8220;in a homogeneous sample.&#8221;   They never say what &#8220;homogeneous&#8221; means. How homogeneous?  Is all Italians good enough or do they have to be all Tuscans?  My interpretation of PLINK&#8217;s advice is that you should calculate IBD on <em>relatively</em> homogeneous subsets of your data, subsetting to the extent practical given your sample size.  That, in turn, requires knowing what subsets of your sample individuals are ethnically similar.</p>
+<p>Modeling the population substructure or ethnic grouping of your sample individuals can be done by computing the IBS distance between each pair of individuals and then plotting (to get a sense visually) or clustering (to actually generate covariates you can use in a model).  Conceptually, if you have 100,000 loci, what you&#8217;re really doing is plotting the individuals as points in a 100,000-dimensional space where each individual&#8217;s distance from another along each axis is either 0, 1, or 2 (i.e. IBS-0 is a distance of 2, IBS-1 is a distance of 1, IBS-2 is a distance of 0).  Then you are computing the distance between each pair of points using the <a href="http://en.wikipedia.org/wiki/Pythagorean_theorem">Pythagorean theorem</a>: distance = square root of the sum of squared distance along each axis.  Those distances will only plot properly in a 100,000-dimensional space, but, with higher dimensions being difficult to visualize and all, we can use <a href="http://en.wikipedia.org/wiki/Multidimensional_scaling">multi-dimensional scalin</a>g to plot an approximation of the distances in 2D (i.e. we can iteratively try to find a positioning of the points in two dimensions that minimizes conflict between their true distance and their distance as plotted).</p>
+<p>If you just do this sort of multi-dimensional scaling on your own samples (and I&#8217;ll talk through how to do it in a minute), you will get a plot that looks something like this:</p>
+<p><a href="/wp-content/uploads/2012/10/ex1-ibd.png"><img class="alignnone size-medium wp-image-861" title="ex1-ibd" src="/wp-content/uploads/2012/10/ex1-ibd-300x300.png"/></a></p>
+<p>Which, when you think about it, is not really that helpful.  Because this is multi-dimensional scaling, the axes are not meaningful and we have no sense of scale.  Is that person down in the bottom left corner from a different village than the others or from a different continent than the others?  Can these people all be treated as one group in your analysis or is there significant substructure here that we should be controlling for?  There are also no labels.  Which group corresponds to which ethnicity or population?  If you were actually to find a variant associated with phenotype in your study, the first question everyone will ask is whether it might be caused by population substructure, i.e. whether your cases were enriched (vs. controls) for some population in which that variant has a higher frequency than other populations.  And you can actually browse allele frequencies in (very coarsely grouped) populations using the 1000 Genomes browser &#8212; for instance, for <a href="http://snpedia.com/index.php/Rs4665058">rs4665058</a>, a SNP associated with heart attack risk, you can see some allele frequencies <a href="http://browser.1000genomes.org/Homo_sapiens/Variation/Population?db=core;r=2:160189709-160190709;v=rs4665058;vdb=variation;vf=4536655">here</a> &#8211; <em>if</em> you know the populations your samples come from.</p>
+<p>In order to get some figurative &#8220;signposts&#8221; on this plot, we need a curated public database of human genetic variation.  Enter 1000 Genomes.  As of today they seem to be up to almost <a href="ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/working/20111108_samples_pedigree/20111108_1000genomes_samples.xls">3,000 individuals</a> from <a href="http://www.1000genomes.org/faq/which-populations-are-part-your-study">26 populations</a> (though it looks like not all the more recent data are public yet since it comes in discrete releases rather than as a trickle of new samples sequenced).  By combining your data with 1000 Genomes and plotting them together, you can tell what population each of your samples is genetically nearest to, and how meaningful the differences are between them.</p>
+<p>Let&#8217;s get started.</p>
+<p><strong>step 1. download 1000 Genomes data and subset the variants you want</strong></p>
+<p>Looking at the <a href="http://www.1000genomes.org/data">data release page</a>, you&#8217;ll see that variant calls (i.e. VCFs), alignments (i.e. BAMs) and raw reads (i.e. FASTQs) are all available.  For our purposes, you only need variants.  Because 1000 Genomes is such a huge amount of data to work with, I also made the decision to use the <a href="ftp://ftp-trace.ncbi.nih.gov/1000genomes/ftp/release/20100804/">August 2010</a> release which has just 629 people in it.  It represents most of the populations included in subsequent releases, and there are at least a couple of populations each for Africans, Asians, Europeans and Latin Americans.</p>
+<p>(<em>Aside</em>: the newer <a href="ftp://ftp-trace.ncbi.nih.gov/1000genomes/ftp/release/20110521/">May 2011</a> release has 1092 people, including 2 new populations not in the August 2010 release (Iberian Spanish IBS and Colombians in Medellin CLM) but I ultimately decided it was not worth the trouble for now.  My step 2 (below) wouldn&#8217;t work with that vcf file because it&#8217;s large enough that, in <code>--plink</code> mode, vcftools throws an error <code>Could not open temporary file. Most likely this is because the system is not allowing me to open enough temporary files. Try using ulimit -n to increase the number of allowed open files.</code> even though ulimit was set to unlimited, and in <code>--plink-tped</code> mode, vcftools ran forever, producing an arbitrarily large TPED file as it went (it got up to 300GB before I killed it, from a 5 GB VCF file).)</p>
+<p>1000 Genomes is whole genome data, and I&#8217;m just working with exome.  Moreover, given the large number of samples, they&#8217;ll have called variants at a lot of exonic sites where I did not observe a variant.  So 1000 Genomes has a lot more variants (i.e. rows in the VCF file) than I need in order to compare 1000 Genomes with my data.  I tried a few different ways of getting just the data I needed, and let me tell you what didn&#8217;t work so you don&#8217;t make the same mistake.  First I wrote a script to walk through my own VCF file and use tabix <a href="http://www.1000genomes.org/faq/how-do-i-get-slice-your-vcf-files">as described here</a> to query from NCBI only the variants present in my samples.  This worked well for a while, at a rate of about 0.3 variants per second, until the server started rejecting my requests and the rest of my jobs failed.  So instead I just downloaded the whole VCF file from NCBI:</p>
+<pre>wget ftp://ftp-trace.ncbi.nih.gov/1000genomes/ftp/release/20100804/ALL.2of4intersection.20100804.genotypes.vcf.gz</pre>
+<p>Which worked just fine and took about 3 hours.  Then I modified my script to query the local file rather than the copy on NCBI&#8217;s server and I create a hundred-odd jobs to subset out the desired variants.  This, too, failed, I suppose because I had too many processes trying to access the same file at once.  So finally I gave up on parallelizing it and just ran one job overnight to subset all the variants from my VCF file out of the 1000 Genomes file.  Here&#8217;s the Python script, though if I had known from the outset I&#8217;d be doing it in serial, it probably could be done more easily with <a href="http://vcftools.sourceforge.net/options.html">vcftools</a>:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #008000; font-weight: bold;">import</span> <span style="color: #0000ff; font-weight: bold;">sys</span>
+<span style="color: #008000; font-weight: bold;">import</span> <span style="color: #0000ff; font-weight: bold;">os</span>
+<span style="color: #008000; font-weight: bold;">from</span> <span style="color: #0000ff; font-weight: bold;">time</span> <span style="color: #008000; font-weight: bold;">import</span> time
+
+<span style="color: #408080; font-style: italic;"># location on the web:</span>
+<span style="color: #408080; font-style: italic;"># ftp://ftp-trace.ncbi.nih.gov/1000genomes/ftp/release/20100804/ALL.2of4intersection.20100804.genotypes.vcf.gz</span>
+
+<span style="color: #008000; font-weight: bold;">if</span>(<span style="color: #008000;">len</span>(sys<span style="color: #666666;">.</span>argv) <span style="color: #666666;">&lt;&gt;</span> <span style="color: #666666;">2</span>):
+    <span style="color: #008000; font-weight: bold;">print</span> <span style="color: #ba2121;">"usage: python get-1000g.py vcffilename.vcf"</span> <span style="color: #408080; font-style: italic;"># vcffilename.vcf is your VCF file listing the sites you care about</span>
+infilepath <span style="color: #666666;">=</span> sys<span style="color: #666666;">.</span>argv[<span style="color: #666666;">1</span>]
+infileprefix <span style="color: #666666;">=</span> infilepath<span style="color: #666666;">.</span>split(<span style="color: #ba2121;">"."</span>)[<span style="color: #666666;">0</span>]
+
+infile <span style="color: #666666;">=</span> <span style="color: #008000;">open</span>(infilepath,<span style="color: #ba2121;">"r"</span>)
+outfilepath <span style="color: #666666;">=</span> <span style="color: #ba2121;">"1000g_"</span> <span style="color: #666666;">+</span> infileprefix <span style="color: #666666;">+</span> <span style="color: #ba2121;">".vcf"</span>
+kgvcfpath <span style="color: #666666;">=</span> <span style="color: #ba2121;">"~/1000g/ALL.2of4intersection.20100804.genotypes.vcf.gz"</span> <span style="color: #408080; font-style: italic;"># 1000g vcf file</span>
+
+clcall <span style="color: #666666;">=</span> <span style="color: #ba2121;">"tabix -H "</span> <span style="color: #666666;">+</span> kgvcfpath <span style="color: #666666;">+</span> <span style="color: #ba2121;">" &gt; "</span> <span style="color: #666666;">+</span> outfilepath <span style="color: #408080; font-style: italic;"># -H gets just the header</span>
+os<span style="color: #666666;">.</span>system(clcall) 
+
+counter <span style="color: #666666;">=</span> <span style="color: #666666;">0</span>
+starttime <span style="color: #666666;">=</span> time()
+<span style="color: #008000; font-weight: bold;">for</span> line <span style="color: #aa22ff; font-weight: bold;">in</span> infile<span style="color: #666666;">.</span>readlines():
+    <span style="color: #008000; font-weight: bold;">if</span>(line[<span style="color: #666666;">0</span>]<span style="color: #666666;">==</span><span style="color: #ba2121;">"#"</span>):
+        <span style="color: #008000; font-weight: bold;">continue</span>
+    col <span style="color: #666666;">=</span> line<span style="color: #666666;">.</span>split(<span style="color: #ba2121;">"</span><span style="color: #bb6622; font-weight: bold;">\t</span><span style="color: #ba2121;">"</span>)
+    chromosome <span style="color: #666666;">=</span> col[<span style="color: #666666;">0</span>][<span style="color: #666666;">3</span>:] <span style="color: #408080; font-style: italic;"># strip "chr" from front</span>
+    position <span style="color: #666666;">=</span> col[<span style="color: #666666;">1</span>]
+    clcall <span style="color: #666666;">=</span> <span style="color: #ba2121;">"tabix "</span> <span style="color: #666666;">+</span> kgvcfpath <span style="color: #666666;">+</span> <span style="color: #ba2121;">" "</span> <span style="color: #666666;">+</span> chromosome <span style="color: #666666;">+</span> <span style="color: #ba2121;">":"</span> <span style="color: #666666;">+</span> position <span style="color: #666666;">+</span> <span style="color: #ba2121;">"-"</span> <span style="color: #666666;">+</span> position <span style="color: #666666;">+</span> <span style="color: #ba2121;">" &gt;&gt; "</span> <span style="color: #666666;">+</span> outfilepath <span style="color: #408080; font-style: italic;"># &gt;&gt; appends rather than overwriting</span>
+    os<span style="color: #666666;">.</span>system(clcall)
+    counter <span style="color: #666666;">+=</span> <span style="color: #666666;">1</span>
+    <span style="color: #008000; font-weight: bold;">if</span>(counter<span style="color: #666666;">%100==0</span>):
+        rate <span style="color: #666666;">=</span> counter <span style="color: #666666;">/</span> (time() <span style="color: #666666;">-</span> starttime)
+        <span style="color: #008000; font-weight: bold;">print</span> <span style="color: #ba2121;">"processed "</span> <span style="color: #666666;">+</span> <span style="color: #008000;">str</span>(counter) <span style="color: #666666;">+</span> <span style="color: #ba2121;">" lines at an average rate of "</span> <span style="color: #666666;">+</span> <span style="color: #008000;">str</span>(rate) <span style="color: #666666;">+</span> <span style="color: #ba2121;">" lines per second"</span></pre>
+</div>
+<p>This took about 4 hours to get 180,000 variants out of the 629 genomes in the August 2010 release of 1000 genomes, a rate of about 15 variants per second.</p>
+<p>(By the way, I also tried converting the 1000 Genomes VCF to PLINK format first and then subsetting it; this was much, much slower.)</p>
+<p><strong>step 2. convert 1000 Genomes and your data to PLINK format and combine them</strong></p>
+<p>At this point you&#8217;ve got two files, we&#8217;ll call them <code>1000g_myvariants.vcf</code>, which has columns for the 629 1000 Genomes people and rows for each variant observed in both 1000 Genomes and in your sample, and <code>myvariants.vcf</code> which has columns for your samples and rows for each variant you called.  At some point you will need to merge these so you&#8217;ve got one file with both sets of individuals and only the intersection of the two sets of variants called.  <em>Don&#8217;t</em> do this with <a href="http://vcftools.sourceforge.net/perl_module.html#vcf-merge">vcf-merge</a>.  For me, at least, this set all of my samples&#8217; genotypes to <code>./.</code>, which I suspect is because 1000 Genomes variants are phased while mine were not.  Instead, convert each VCF file to PLINK format first and then manipulate them.</p>
+<p>To convert:</p>
+<pre>vcftools --gzvcf 1000g/1000g_myvariants.vcf.gz --plink --out 1000g # 70 seconds
+vcftools --vcf myvariants.vcf --plink --out myvariants # 12 seconds</pre>
+<p>At this point, you may find that you still cannot combine the two files because 1000 Genomes, which uses <a href="http://www.1000genomes.org/faq/which-reference-assembly-do-you-use">GRCh37</a>, lists the chromosomes as 1, 2, etc. while if you used <a href="http://hgdownload.cse.ucsc.edu/goldenPath/hg19/bigZips/">hg19</a>, you have them listed as chr1, chr2, etc.  If so, you can simply strip the first three characters from each line of your .MAP file using sed:</p>
+<pre>sed 's/^...//' myvariants.map &gt; myvariants.fixed.map
+rm myvariants.map
+mv myvariants.fixed.map myvariants.map</pre>
+<p>Now, you already subsetted the 1000 Genomes data to include only your variants, but you didn&#8217;t yet subset your data to include only the variants found in 1000 Genomes.  To do that, we&#8217;ll need to create a list of variants to include (PLINK refers to this as &#8216;snplist&#8217; in the <a href="http://pngu.mgh.harvard.edu/~purcell/plink/dataman.shtml">data management documentation</a>, so I will too, even though it does include indels as well).  On the way we&#8217;ll also fix some other problems.  First, for variants with no dbSNP id, i.e. no rs_______ number, vcftools fills in their name as their base number on the chromosome, but without the chromosome number.  So if there are unnamed variants at the same address on different chromosomes, PLINK interprets them as duplicates.  Since I have plenty of variants, I handle this by using only the variants with a dbSNP id.  This line of code pulls all the lines containing &#8216;rs&#8217;, cuts out the second column (the SNP column, i.e. the variant name) and puts it into a new file:</p>
+<pre>grep rs 1000g_myvariants.map | cut -d $'\t' -f 2 &gt; rs.snplist.raw</pre>
+<p>Or better still:</p>
+<pre>grep -o 'rs[0-9]*' 1000g_myvariants.map &gt; rs.snplist.raw</pre>
+<p>If you try to run PLINK on this snplist, you&#8217;ll find you still have some problems.  There are duplicate marker names, and I never figured out why this is, but again, assuming I have enough variants that I&#8217;ll be fine anyway, I just got rid of them by sorting and removing duplicates:</p>
+<pre>sort rs.snplist.raw | uniq &gt; rs.snplist.dedup</pre>
+<p>Even this still didn&#8217;t work: when I tried to extract these SNPs and combine the 1000g files with my variants, PLINK gave me the following error:</p>
+<pre>Found 107 SNPs that do not match in terms of allele codes
+Might include strand flips, although flipped A/T and C/G SNPs will be undetected)
+Writing problem SNPs to [ all.missnp ]</pre>
+<p>So then I went back and removed those problem SNPs too:</p>
+<pre>plink --file myvariants --extract rs.snplist.dedup --exclude all.missnp --recode --out myvariants.subset
+plink --file 1000g_myvariants --extract rs.snplist.dedup --exclude all.missnp --recode --out 1000g_myvariants.subset</pre>
+<p>And finally PLINK ran without error and created the output files.  I then combined those using <code>--merge</code>:</p>
+<pre>plink --file 1000g_myvariants.subset --merge myvariants.subset.ped myvariants.subset.map --recode --out all</pre>
+<p><strong>step 3. calculate pairwise IBS and IBD</strong></p>
+<p>Recall that IBD depends upon allele frequency.  You&#8217;re supposed to compute it only on a relatively homogeneous sample, and we can come back later and make sure we do that.  For now let&#8217;s operate on the assumption that your sample is homogeneous, and if that turns out not to be true we can fix it later.  First, calculate allele frequencies for just your samples (not 1000 Genomes):</p>
+<pre>plink --file myvariants.subset --freq --out myvariants</pre>
+<p>This creates a file <code>myvariants.frq</code> which you will need in a moment.</p>
+<p>Now we want to calculate the IBS and IBD between every pair of samples.  If you have 50 samples and are using the 629 1000 Genomes people from August 2010, you&#8217;ve got 679 samples, thus 679 choose 2 = 230,181 pairs.  That&#8217;s a lot of pairs so let&#8217;s parallelize by taking blocks of 100 samples to compare to each other, thus 10,000 comparisons per job.  Create text files with the first two columns of your all.ped file, 100 lines per text file:</p>
+<pre>cut -d ' ' -f 1,2 all.ped | split -d -a 3 -l 100 - tmp.list</pre>
+<p>Then create jobs using this bash script, barely modified from <a href="http://pngu.mgh.harvard.edu/~purcell/plink/strat.shtml#cluster">that suggested on the PLINK website</a>:</p>
+<pre># jobs will be under 1 minute each, can submit to short queue
+let i=0 a=6 # a is number of files created by the above step, minus 1
+let j=0
+while [ $i -le $a ]
+do
+    while [ $j -le $a ]
+    do
+        bsub -q short -o /dev/null -e /dev/null plink --file all --read-freq var06.frq\
+            --all \
+            --genome \
+            --genome-lists tmp.list`printf "%03i\n" $i` \
+                           tmp.list`printf "%03i\n" $j` \
+            --out data.sub.$i.$j
+            let j=$j+1
+    done
+    let i=$i+1
+    let j=$i
+done</pre>
+<p>These jobs will run in about 1 minute each.  If, like me, you forgot to specify the short queue on the first try and your jobs are pending and pending, you can change them all to the short queue with this line:</p>
+<pre>bjobs | cut -d ' ' -f 1 | grep -v JOBID | awk '{ print "bmod -q short " $0 }' | bash</pre>
+<p>Anyway, once the jobs are done, recombine the files into a single <code>.genome</code> file as such:</p>
+<pre>head -1 data.sub.0.0.genome &gt; header
+cat data.sub.*.genome | grep -v FID1 | cat header - &gt; all.genome</pre>
+<p>And spot check that you did this right by counting lines:</p>
+<pre>wc -l all.ped
+wc -l all.genome</pre>
+<p>If the first answer is n, the second one should be (n choose 2) + 1, so n(n+1)/2 + 1.  (The +1 is for the header.)</p>
+<p><strong>step 4. create an MDS plot to visualize the data</strong></p>
+<p>Now that you have your <code>.genome</code> file, you can very quickly create a multi-dimensional scaling plot in 2 dimensions using PLINK:</p>
+<pre>plink --file all --read-genome all.genome --cluster --mds-plot 2 --out all_mds_2</pre>
+<p>And then plot it in R with this bit of code:</p>
+<pre>setwd("/your/path/here/1000g")
+m &lt;- as.matrix(read.table("all_mds_2.mds"))
+plot(m[,4],m[,5])</pre>
+<p>Your plot might look something like this (this example plot was created using only the 1000g people and not my samples):</p>
+<p><a href="/wp-content/uploads/2012/10/ex2-for-blog.png"><img class="alignnone size-medium wp-image-863" title="ex2-for-blog" src="/wp-content/uploads/2012/10/ex2-for-blog-300x300.png"/></a></p>
+<p>Which starts to give us more of a sense of the population groupings.  What would be even more awesome is to have coloring so we know which group of points is which population.  This is a little bit of a pain, since the population identifiers in 1000g are only specified in a non-database-compatible <a href="ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/working/20111108_samples_pedigree/20111108_1000genomes_samples.xls">Excel file</a>.  Open the Excel file, strip off the explanatory stuff at the top so you have just the table, rename the &#8216;Type&#8217; column to get rid of the line breaks in it, then read both that and your MDS plot file into PostgreSQL with this SQL code:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #008000; font-weight: bold;">drop</span> <span style="color: #008000; font-weight: bold;">table</span> if <span style="color: #008000; font-weight: bold;">exists</span> kg_metadata;
+<span style="color: #008000; font-weight: bold;">create</span> <span style="color: #008000; font-weight: bold;">table</span> kg_metadata(
+    population <span style="color: #008000;">varchar</span>,
+    sra_individual_sample_accession_number <span style="color: #008000;">varchar</span>,
+    coriell_sample_id <span style="color: #008000;">varchar</span>,
+    family <span style="color: #008000;">varchar</span>,
+    gender <span style="color: #008000;">varchar</span>,
+    relationship_ <span style="color: #008000;">varchar</span>,
+    type__unrel_duo_trio_ <span style="color: #008000;">varchar</span>,
+    whole_genome_center_for_full_project <span style="color: #008000;">varchar</span>,
+    exome_center_for_full_project <span style="color: #008000;">varchar</span>,
+    pilot_1_center <span style="color: #008000;">varchar</span>,
+    pilot_2_cener <span style="color: #008000;">varchar</span>,
+    pilot_3_center <span style="color: #008000;">varchar</span>,
+    has_omni_genotypes <span style="color: #008000;">varchar</span>,
+    has_axiom_genotypes <span style="color: #008000;">varchar</span>,
+    has_more_than_3x_aligned_coverage_at_omni_sites <span style="color: #008000;">varchar</span>,
+    has_more_than_70__of_exome_targets_covered_to_20x_or_more_ <span style="color: #008000;">varchar</span>);
+<span style="color: #008000; font-weight: bold;">copy</span> kg_metadata <span style="color: #008000; font-weight: bold;">from</span> <span style="color: #ba2121;">'/your/path/1000g/20111108_1000genomes_samples.csv'</span> <span style="color: #008000; font-weight: bold;">with</span> csv header;
+
+<span style="color: #008000; font-weight: bold;">drop</span> <span style="color: #008000; font-weight: bold;">table</span> if <span style="color: #008000; font-weight: bold;">exists</span> all_mds_2;
+<span style="color: #008000; font-weight: bold;">create</span> <span style="color: #008000; font-weight: bold;">table</span> all_mds_2(
+    fid <span style="color: #008000;">varchar</span>,
+    iid <span style="color: #008000;">varchar</span>,
+    sol <span style="color: #008000;">varchar</span>,
+    c1 <span style="color: #008000;">varchar</span>,
+    c2 <span style="color: #008000;">varchar</span>);
+<span style="color: #008000; font-weight: bold;">copy</span> all_mds_2 <span style="color: #008000; font-weight: bold;">from</span> <span style="color: #ba2121;">'/your/path/1000g/all_mds_2.mds.csv'</span> <span style="color: #008000; font-weight: bold;">with</span> csv header;</pre>
+</div>
+<p>(Note: PLINK outputs fixed width, not delimited files, so you&#8217;ll need to convert first before reading in.)</p>
+<p>Then go back to R and create a database connection, get the MDS plot data along with the population identifiers, and plot them.  Here&#8217;s an example plotting only the 1000g people and not my own samples:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">library(RPostgreSQL) <span style="color: #408080; font-style: italic;"># first load package RPostgresql</span>
+drv <span style="color: #666666;">&lt;-</span> dbDriver(<span style="color: #ba2121;">"PostgreSQL"</span>)
+readcon <span style="color: #666666;">&lt;-</span> dbConnect(drv, dbname<span style="color: #666666;">=</span><span style="color: #ba2121;">"mydb"</span>, user<span style="color: #666666;">=</span><span style="color: #ba2121;">"postgres"</span>, password<span style="color: #666666;">=</span><span style="color: #ba2121;">"password"</span>)
+readsql <span style="color: #666666;">&lt;-</span> <span style="color: #ba2121;">"select k.population, mds.c1, mds.c2 from kg_metadata k, kg_only_mds mds where k.coriell_sample_id = mds.fid order by mds.fid;"</span>
+rs <span style="color: #666666;">&lt;-</span> dbSendQuery(readcon,readsql)
+tbl <span style="color: #666666;">&lt;-</span> fetch(rs,n<span style="color: #666666;">=-1</span>)
+k <span style="color: #666666;">=</span> rainbow(n<span style="color: #666666;">=</span>length(unique(tbl$population)),s<span style="color: #666666;">=1</span>,v<span style="color: #666666;">=.7</span>,alpha<span style="color: #666666;">=1</span>) <span style="color: #408080; font-style: italic;"># create a color map for the unique populations</span>
+l <span style="color: #666666;">=</span> unique(tbl$population) <span style="color: #408080; font-style: italic;"># get the names of the populations for the legend</span>
+plot(tbl$c1,tbl$c2,col<span style="color: #666666;">=</span>k[factor(tbl$population)]) <span style="color: #408080; font-style: italic;"># create the plot</span>
+legend(<span style="color: #ba2121;">"topright"</span>,l,col<span style="color: #666666;">=</span>k[factor(unique(tbl$population))],cex<span style="color: #666666;">=1.0</span>,bty<span style="color: #666666;">=</span><span style="color: #ba2121;">"n"</span>,pch<span style="color: #666666;">=19</span>) <span style="color: #408080; font-style: italic;"># add the legend</span>
+dbDisconnect(readcon)
+dbUnloadDriver(drv)</pre>
+</div>
+<p>This should give you a plot something like this:</p>
+<p><a href="/wp-content/uploads/2012/10/ex3-with-labels-for-blog.png"><img class="alignnone size-full wp-image-865" title="ex3-with-labels-for-blog" src="/wp-content/uploads/2012/10/ex3-with-labels-for-blog.png"/></a></p>
+<p>The readability of this plot is somewhat less than ideal because there are too many colors, the points overlap each other and also because I also don&#8217;t fully understand R or how to create color maps in it.  I added some labels to supplement the legend.  All the clusters have a lot of overlap, but within the African cluster, you have the Yoruba on the far right, then the Luhya, then the Americans of African descent stretching towards the middle of the plot.  The Europeans have the Tuscans on the right, then the European-Americans, then the Brits and Finns on the left.  In the Asian cluster you can see the Beijing Chinese a bit more on the right, the southern Chinese towards the bottom of the cluster, and the Tokyo Japanese a bit further left.</p>
+<p>If you wanted to zoom in on one part, you can re-plot specifying the x and y limits:</p>
+<pre>plot(tbl$c1,tbl$c2,col=k[factor(tbl$population)],pch=20,xlim=c(-.08,-.05),ylim=c(-.08,-.06)) # zoom in on the Asian cluster</pre>
+<p>Or, to do it right, you can regenerate the plot from PLINK with just those groups included (which would give you a different answer, since there are now a different set of distance constraints that the multi-dimensional scaling algorithm has to optimize against).</p>
+<p>To plot the 1000g people along with your own samples (of unknown population, hence labeled &#8216;XXX&#8217;), just tweak the SQL query:</p>
+<pre>select coalesce(k.population,'XXX') as population, mds.c1, mds.c2 from kg_metadata k right outer join all_mds mds on k.coriell_sample_id = mds.fid order by mds.fid;</pre>
+<p>Hopefully this will be informative and will give you an idea of just how different of populations your samples come from and whether / to what extent you need to control for their population substructure.</p>
+<p><strong>update 2012-10-25: </strong>the method described here can introduce some bias by enriching rare variation in your sample relative to 1000G.  see <a href="/2012/10/25/population-substructure-part-ii/">Population Substructure, Part II</a> for how to handle this.</p>
+<p><strong>step 5 &#8211; clustering, or maybe not</strong></p>
+<p>One way to control for population substructure in PLINK is to cluster your samples.  This is covered in a nice amount of detail in the <a href="http://pngu.mgh.harvard.edu/~purcell/plink/tutorial.shtml">PLINK tutorial</a>.  I&#8217;ll talk through how to do this first, then I&#8217;ll discuss why I don&#8217;t think this is the best way to control for substructure.  The basic structure of the command line call for creating clusters looks like this:</p>
+<pre>plink --file all --read-genome all.genome --cluster --ppc .01 --out cv1</pre>
+<p>Where <code>--ppc .01</code> means &#8220;put any two individuals in the same cluster unless you can reject at the .01 threshold the null hypothesis that they are from the same population.&#8221;  So if you specify a higher threshold, say, .1, you&#8217;ll get <em>more</em> clusters, and if you specify a lower threshold, say, .001, you&#8217;ll get fewer clusters.  With 1000 genomes, though, even at ppc = .0001, you&#8217;ll still get a lot of clusters.  There are different ways to constrain the clustering solution <a href="http://pngu.mgh.harvard.edu/~purcell/plink/strat.shtml#cluster">as described in PLINK documentation</a> as well: <code>--K 10</code> means &#8220;give me exactly 10 clusters&#8221;, <code>--cc</code> means &#8220;make sure every cluster has at least one case and one control&#8221; (this makes your clusters more informative in your model; you need to add phenotype to your PED file, which we haven&#8217;t done yet here), <code>--mc 20</code> means &#8220;give me clusters of up to 20 people.&#8221;</p>
+<p>Supposing you&#8217;ve got a clustering solution you think is workable, you can then put that solution into your association analysis in PLINK.  Your association analysis will not include the 1000 Genomes people, so just clip off the part of the clustering solution you need (hopefully your samples are named such that they all fall at the beginning or end of the list).  I give the cluster file a descriptive name so I can remember what parameters I used to create it, for instance:</p>
+<pre>tail -50 cv1.cluster2 &gt; MC50.cluster2</pre>
+<p>A possible command line call to do association analysis within these clusters would be:</p>
+<pre>plink --tfile variants --no-parents --1 --maf .05 --geno .10 --within MC50.cluster2 --mh --adjust --out analysis2</pre>
+<p>Note: to use the <code>--within</code> option correctly, you <em>must</em> specify either <code>--mh</code> or <code>--mh2</code> as the analysis type.  Conceptually this is because PLINK uses the <a href="http://udel.edu/~mcdonald/statcmh.html">Cochran-Mantel-Haenszel test</a> for stratified analysis, which is basically a χ<sup>2</sup> test repeated for each cluster.  If you do not specify <code>--mh</code>, then PLINK will still load your clusters and will even tell you it&#8217;s doing so with a message like <code>Reading clusters from [ MC50.cluster2 ] 50 of 50 individuals assigned to 2 cluster(s)</code>, yet <em> it will not actually use the clusters in its analysis</em>.  You can tell that this is the case by comparing the results to the results you got with the same command without the clusters.  They&#8217;ll be identical.  Now, if you have a small enough a small number of samples that you&#8217;d like to use <a href="http://udel.edu/~mcdonald/statfishers.html">Fisher&#8217;s exact test</a> instead of χ<sup>2</sup>, I discovered that PLINK will allow you to specify both parameters, i.e. <code>--mh --fisher</code>, and will produce a file like <code>analysis2.cmh.fisher.adjusted</code> which appears to be the results of a CMH test but with Fisher instead of χ<sup>2</sup>, though this option is not called out the stratified analysis documentation so I am not 100% sure I trust it.</p>
+<p>Now, when you ran this PLINK analysis <em>without</em> clustering, you probably saw a message like this:</p>
+<pre>Genomic inflation factor (based on median chi-squared) is 1.33049
+Mean chi-squared statistic is 1.16691</pre>
+<p>Genomic inflation means that the total amount of statistical significance coming out of your model is more than it should be &#8212; variants are systematically showing up as more associated with phenotype than would be expected by chance.  If you <a href="/2012/08/15/qq-plots-with-matplotlib/">QQ plot</a> the p values from such an analysis, you&#8217;ll find many dots above the diagonal line.  What you want is everything on or about the line, except for the 1 (or 2 or 3) variants that are actually causal, which (if they exist) will be high above the line.  After you control for population substructure by using the clusters you created above, the hope is that you&#8217;ll see this:</p>
+<pre>Genomic inflation factor (based on median chi-squared) is 1
+Mean chi-squared statistic is 1</pre>
+<p>Which would mean that your clusters successfully captured all of the population substructure present in your samples.  More realistically you&#8217;ll see numbers that are closer to 1 but not quite 1.</p>
+<p>So that&#8217;s how to use PLINK to do association analysis within clusters.  Again, there&#8217;s much more detail in the PLINK doc section on <a href="http://pngu.mgh.harvard.edu/~purcell/plink/anal.shtml#strat">stratified analysis</a>.  But I&#8217;m not a big fan of this sort of analysis, mostly because the clustering seems so arbitrary, or at least, I don&#8217;t know enough about it to wield it effectively.  The <code>--ppc</code>, <code>--K</code>, and <code>--mc</code> options all require you to specify some number, and you&#8217;ll get very different results depending on what you pick, which makes me nervous.  And I haven&#8217;t found a good way to constrain the clustering to be analytically meaningful for my samples.  If you run clustering on just your small set of samples, you have no benchmark&#8211; are these people different enough to deserve 2 clusters, or 10?  And yet if you combine with 1000 Genomes and then cluster, the clusters won&#8217;t necessarily break up <em>your</em> samples in any way that&#8217;s actually helpful for reducing genomic inflation.  Your samples might all be in one cluster, or all in one except for one outlier.  I also find that the clusters don&#8217;t always correspond well to what I see on my MDS plot.  Perhaps that is to be expected since MDS is, after all, an imperfect representation of distances that cannot be properly plotted in 2 dimensions.  Still, when I plot my data with 1000 Genomes and see clearly that some people fall into population A and others into population B, and then the clustering does not divide them on these lines, it makes me skeptical &#8212; at least, skeptical of whether I know enough to use clusters effectively.</p>
+<p>So instead of using discrete clusters, I prefer to control for population substructure using continuous-valued covariates as described in steps 7-8.</p>
+<p><strong>step 6. IBD analysis to detect related samples</strong></p>
+<p>Before you get into using covariates in our analysis, you should use IBD calculations to check the relatedness of people in your sample.  At the end of step 3, you created a file <code>all.genome</code> which contains IBD figures for all your samples (and all of 1000 Genomes).  Let&#8217;s read that into SQL (PLINK outputs it as fixed width, so you&#8217;ll need to convert to CSV first):</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #008000; font-weight: bold;">drop</span> <span style="color: #008000; font-weight: bold;">table</span> if <span style="color: #008000; font-weight: bold;">exists</span> genome;
+<span style="color: #008000; font-weight: bold;">create</span> <span style="color: #008000; font-weight: bold;">table</span> genome(
+    fid1 <span style="color: #008000;">varchar</span>,
+    iid1 <span style="color: #008000;">varchar</span>,
+    fid2 <span style="color: #008000;">varchar</span>,
+    iid2 <span style="color: #008000;">varchar</span>,
+    rt <span style="color: #008000;">varchar</span>,
+    ez <span style="color: #008000;">varchar</span>,
+    z0 <span style="color: #008000;">numeric</span>,
+    z1 <span style="color: #008000;">numeric</span>,
+    z2 <span style="color: #008000;">numeric</span>,
+    pi_hat <span style="color: #008000;">numeric</span>,
+    phe <span style="color: #008000;">integer</span>,
+    dst <span style="color: #008000;">numeric</span>,
+    ppc <span style="color: #008000;">numeric</span>,
+    ratio <span style="color: #008000;">numeric</span>);
+<span style="color: #008000; font-weight: bold;">copy</span> genome <span style="color: #008000; font-weight: bold;">from</span> <span style="color: #ba2121;">'/your/path/here/all.genome.csv'</span> <span style="color: #008000; font-weight: bold;">with</span> csv header;</pre>
+</div>
+<p>Recall that each row represents one pair of individuals.  The z0, z1, and z2 fields tell you at what fraction of loci that pair of individuals are estimated to share 0, 1 or 2 alleles by descent.  Here are some patterns to look for:</p>
+<table cellpadding="10">
+<tbody>
+<tr>
+<td><strong>Relationship</strong></td>
+<td><strong>z0</strong></td>
+<td><strong>z1</strong></td>
+<td><strong>z2</strong></td>
+</tr>
+<tr>
+<td>Duplicated sample or identical twins</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>Parent/child</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>Siblings</td>
+<td>0.25</td>
+<td>0.5</td>
+<td>0.25</td>
+</tr>
+<tr>
+<td>Half-siblings</td>
+<td>0.5</td>
+<td>0.5</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>Grandparent/grandchild</td>
+<td>0.5</td>
+<td>0.5</td>
+<td>0.0</td>
+</tr>
+<tr>
+<td>First cousins</td>
+<td>0.75</td>
+<td>0.25</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+<p>And so on (<a href="http://genome-lab.ucdavis.edu/Links/ECL%20290%20Winter%202007/week%209/K_coefficients.pdf">more comprehensive table from UC-Davis</a>).  Of course it will be fuzzier in this both due to sequencing errors and due to biological noise (hemizygous deletions, de novo mutations, etc.)  But if you see a 0 / 0.02 / 0.98 spread, you can be pretty sure it&#8217;s a twins-or-duplicate-sample scenario.  Most researchers seem to remove one of the two from their study when this happens.  As for the other relationships, what you do depends on what you expected going in.  If you had pedigree information, take this as validation of it&#8211; were the samples labeled correctly?  Any <a href="http://en.wikipedia.org/wiki/Non-paternity_event">non-paternities</a>?  If you had no pedigree information, now you can construct some of it.  If you find relationships you didn&#8217;t know were there, your effective sample size and variance are now smaller than you thought, because two of your individuals are correlated with one another (see <a href="http://genome.cshlp.org/content/8/12/1273.long">Risch &amp; Teng 1998</a>).  If you have multipled affected pairs of siblings, this lends itself to a whole different sib-pair study design which can help you to narrow in on the causal locus (see <a href="http://www.biomedcentral.com/1471-2350/9/64">Kerber 2008</a>).</p>
+<p>It&#8217;s likely, though, especially if you created your genome file by combining your data with 1000 Genomes as I&#8217;ve done above, that you get inflated results, where it looks like a <em>lot</em> of people are related to each other, with lots of pairs having z1 and z2 figures in the .2 or .3 range.  1000 Genomes has known related samples in it (all denoted in the <a href="ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/working/20111108_samples_pedigree/20111108_1000genomes_samples.xls">spreadsheet</a>), so you can use those to spot check whether your values seem to call relationships correctly.  If not, it&#8217;s because you have too much population heterogeneity in the dataset.  You&#8217;ll still be glad you created <code>all.genome</code> as you needed it for the MDS plot which you in turn need for steps 7-8, but in order to be sure you&#8217;ve calculated IBD correctly, you will want to go back and re-run IBD (i.e. PLINK <code>--genome</code>, the beginning of step 3) multiple times for different relatively homogeneous groups within your sample, using each one&#8217;s own allele frequency.  To create the homogenous groups, you could use clusters that you got from step 5.  (As I said, I am skeptical about some of the clusters that PLINK generates, but I haven&#8217;t come up with a better way to do this).</p>
+<p><strong>update 2012-10-25: </strong>see <a href="/2012/10/25/population-substructure-part-ii/">Population Substructure, Part II</a> for detailed instructions on how to select homogeneous subsets to detect familial relationships.</p>
+<p><strong> step 7. plink analysis using covariates</strong></p>
+<p>What you did by creating a 2-dimensional MDS plot  in step 4 was to find values on two dimensions which best capture the genetic variation.  That&#8217;s kind of like <a href="http://en.wikipedia.org/wiki/Principal_component_analysis">principal component analysis</a>.  Now, for purists, these two methods are not necessarily the same, unless you do MDS with Euclidean distance &#8212; see <a href="http://stats.stackexchange.com/questions/14002/whats-the-difference-between-principal-components-analysis-and-multidimensional">relevant StackExchange discussion</a>.  The PLINK paper claims that PLINK offers an option to use Euclidean distance: &#8220;There is an option to use a Euclidean IBS distance metric in place of the standard metric of proportional sharing; classical MDS based on a Euclidean distance metric is numerically identical to principal-components analysis, which forms the basis of other methods&#8221; [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC1950838/">Purcell 2007</a>], but it appears that this is no longer actually supported in PLINK &#8212; the <a href="http://pngu.mgh.harvard.edu/~purcell/plink/strat.shtml#mds">MDS documentation</a> simply states that &#8220;standard classical (metric) multidimensional scaling is used&#8221;.  So if you&#8217;re a purist (or your reviewers are), you can do <a href="http://stat.ethz.ch/R-manual/R-patched/library/stats/html/princomp.html">a true PCA in R</a>.</p>
+<p>But assuming for the time being that you&#8217;re not a purist, you can use c1 and c2, your MDS plot dimensions, as covariates in any model you want to do.  If you think there&#8217;s room in your model for three covariates, you can re-run it with <code>--mds-plot 3</code>.</p>
+<p>In this step, we&#8217;ll use the covariates in PLINK.  Now, much as you need to use <code>--mh</code> if you want to use clusters, <a href="http://pngu.mgh.harvard.edu/~purcell/plink/data.shtml#covar">only some types of PLINK analysis allow the use of covariates</a>.  Remember that PLINK&#8217;s default test for significance is χ<sup>2</sup> and that this, as well as other options such as Fisher&#8217;s exact, test only categorical variables: are the two genotypes more unevenly distributed across the two phenotypes than would be expected by chance?  There&#8217;s no room in such an analysis for continuous variables such as  your c1 and c2.  Instead you&#8217;ll need to do either logistic or linear regression.</p>
+<p>First, get your covariates into a separate text file that you can tell PLINK to read.  If you have your MDS plot values in SQL, copy them out as such:  (I used a regex to get only the numeric iids, i.e. to include my samples and exclude the 1000 Genomes samples).</p>
+<pre>copy (
+select fid, iid, c1, c2 from all_mds_2 where iid ~ '^[0-9].*' order by fid, iid
+) to '/your/path/here/mds2_covar.txt';</pre>
+<p>If you have a dichotomous phenotype, logistic is conceptually what makes more sense.  From a statistical point of view, that is.  From a biological point of view, not so much: logistic regression can&#8217;t handle linear separation, which means genotypes that segregate <em>categorically</em> by phenotype, which are probably the most likely causative genotypes, throw warnings and come out as insignificant&#8211; see detailed discussion in <a href="/2012/09/25/implementation-of-rvt1-in-r-and-sql/#comment-103">comments to the RVT1 post</a>.  If after reading that you still want to do a logistic regression, this will do the trick:</p>
+<pre>plink --tfile variants --no-parents --1 --maf .05 --geno .10 --covar mds2_covar.txt --logistic --adjust --out analysis3</pre>
+<p>If you&#8217;d rather do a linear regression, you&#8217;ll need to trick PLINK into thinking you have a quantitative phenotype.  If you just use the <code>--linear</code> option with your regular dichotomous phenotype, PLINK will take matters into its own hands do a logistic instead of linear regression without throwing an error (other than naming the output file with a <code>.logistic</code> extension).  To create a phenotype PLINK will recognize as quantitative, just use any value except 1 for the cases:</p>
+<pre>copy (
+ select sample_id, sample_id, phen_code::numeric * 0.5 from samples s order by sample_id
+ ) to '/your/path/here/quantpheno.phe';</pre>
+<p>Then read that in as the phenotype and do a linear regression:</p>
+<pre>plink --tfile variants --no-parents --pheno quantpheno.phe --maf .05 --geno .10 --covar mds2_covar.txt --linear --adjust --out analysis4</pre>
+<p><strong>step 8. gene score analysis using covariates</strong></p>
+<p>The same covariates you used for variant-level analysis in PLINK can also be used for gene score analysis, say <a href="/2012/09/25/implementation-of-rvt1-in-r-and-sql/">RVT1/RVT2</a>.  In principle this is trivial: you just need to get those covariates into the same table as your input data for the RVT models and then include them as variables in your linear regression: <code>model &lt;- lm(tbl$phen_code ~ rini + c1 +c2)</code> .  For completeness I&#8217;ll include here the SQL and R code I used (slight modifications from the code in the <a href="/2012/09/25/implementation-of-rvt1-in-r-and-sql/">RVT1/RVT2</a> post in order to include covariates):</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;">-- create table of underlying data for RVT1 and RVT2 models</span>
+<span style="color: #008000; font-weight: bold;">drop</span> <span style="color: #008000; font-weight: bold;">table</span> if <span style="color: #008000; font-weight: bold;">exists</span> var06.rvt_data;
+<span style="color: #008000; font-weight: bold;">create</span> <span style="color: #008000; font-weight: bold;">table</span> var06.rvt_data <span style="color: #008000; font-weight: bold;">as</span>
+<span style="color: #008000; font-weight: bold;">select</span>   rvgm.gene_name,
+         sv.sid,
+         s.phen_code,
+         <span style="color: #008000; font-weight: bold;">sum</span>(<span style="color: #008000; font-weight: bold;">case</span> <span style="color: #008000; font-weight: bold;">when</span> ((sv.variant_allele_count <span style="color: #666666;">&gt;</span> <span style="color: #666666;">0</span> <span style="color: #008000; font-weight: bold;">and</span> rvgm.vaf <span style="color: #666666;">&lt;</span> .<span style="color: #666666;">125</span>) <span style="color: #008000; font-weight: bold;">or</span> (sv.variant_allele_count <span style="color: #666666;">&lt;</span> <span style="color: #666666;">2</span> <span style="color: #008000; font-weight: bold;">and</span> rvgm.vaf <span style="color: #666666;">&gt;</span> .<span style="color: #666666;">875</span>)) <span style="color: #008000; font-weight: bold;">and</span> use_flag <span style="color: #008000; font-weight: bold;">then</span> <span style="color: #666666;">1</span> <span style="color: #008000; font-weight: bold;">else</span> <span style="color: #666666;">0</span> <span style="color: #008000; font-weight: bold;">end</span>)::<span style="color: #008000;">numeric</span> ri, <span style="color: #408080; font-style: italic;">-- number of rare variant loci where this sample has a rare variant</span>
+         <span style="color: #008000; font-weight: bold;">sum</span>(<span style="color: #008000; font-weight: bold;">case</span> <span style="color: #008000; font-weight: bold;">when</span> use_flag <span style="color: #008000; font-weight: bold;">then</span> sv.alleles_genotyped <span style="color: #008000; font-weight: bold;">else</span> <span style="color: #666666;">0</span> <span style="color: #008000; font-weight: bold;">end</span>)::<span style="color: #008000;">numeric</span><span style="color: #666666;">/2</span>.<span style="color: #666666;">0</span> ni, <span style="color: #408080; font-style: italic;">-- number of rare variant loci genotyped for this sample</span>
+         (mds.c1::<span style="color: #008000;">numeric</span> <span style="color: #666666;">-</span> norm.c1_av)<span style="color: #666666;">/</span>norm.c1_stddev c1,
+         (mds.c2::<span style="color: #008000;">numeric</span> <span style="color: #666666;">-</span> norm.c2_av)<span style="color: #666666;">/</span>norm.c2_stddev c2
+<span style="color: #008000; font-weight: bold;">from</span>     variants v, sample_variants sv, samples s, all_mds_2 mds,
+         (<span style="color: #008000; font-weight: bold;">select</span>   e.vid, e.gene_name, coalesce(a.n1000g2012feb_all,<span style="color: #666666;">0</span>.<span style="color: #666666;">0</span>) vaf
+         <span style="color: #008000; font-weight: bold;">from</span>     annovar_genome_summary a, effects e
+         <span style="color: #008000; font-weight: bold;">where</span>    e.vid <span style="color: #666666;">=</span> a.vid
+         <span style="color: #008000; font-weight: bold;">and</span>      (a.n1000g2012feb_all <span style="color: #666666;">&lt;</span> .<span style="color: #666666;">125</span> <span style="color: #008000; font-weight: bold;">or</span> a.n1000g2012feb_all <span style="color: #008000; font-weight: bold;">is</span> <span style="color: #008000; font-weight: bold;">null</span> <span style="color: #008000; font-weight: bold;">or</span> a.n1000g2012feb_all <span style="color: #666666;">&gt;</span> .<span style="color: #666666;">875</span>) <span style="color: #408080; font-style: italic;">-- specify your MAF threshold in this line. I used 12.5%.</span>
+         <span style="color: #008000; font-weight: bold;">and</span>      e.effect_impact <span style="color: #008000; font-weight: bold;">in</span> (<span style="color: #ba2121;">'MODERATE'</span>,<span style="color: #ba2121;">'HIGH'</span>) <span style="color: #408080; font-style: italic;">-- sepcify your inclusion criteria here</span>
+         <span style="color: #008000; font-weight: bold;">group</span> <span style="color: #008000; font-weight: bold;">by</span> e.vid, e.gene_name, coalesce(a.n1000g2012feb_all,<span style="color: #666666;">0</span>.<span style="color: #666666;">0</span>)
+         <span style="color: #008000; font-weight: bold;">order</span> <span style="color: #008000; font-weight: bold;">by</span> e.vid, e.gene_name) rvgm, <span style="color: #408080; font-style: italic;">-- [rare variant]-[gene] match</span>
+         (<span style="color: #008000; font-weight: bold;">select</span>   <span style="color: #008000; font-weight: bold;">avg</span>(c1::<span style="color: #008000;">numeric</span>) c1_av, <span style="color: #008000; font-weight: bold;">avg</span>(c2::<span style="color: #008000;">numeric</span>) c2_av, stddev(c1::<span style="color: #008000;">numeric</span>) c1_stddev, stddev(c2::<span style="color: #008000;">numeric</span>) c2_stddev
+         <span style="color: #008000; font-weight: bold;">from</span>      all_mds_2
+         <span style="color: #008000; font-weight: bold;">where</span>     iid <span style="color: #008000; font-weight: bold;">like</span> <span style="color: #ba2121;">'18%'</span>) norm
+<span style="color: #008000; font-weight: bold;">where</span>    v.vid <span style="color: #666666;">=</span> sv.vid
+<span style="color: #008000; font-weight: bold;">and</span>      sv.sid <span style="color: #666666;">=</span> s.sample_id
+<span style="color: #008000; font-weight: bold;">and</span>      v.vid <span style="color: #666666;">=</span> rvgm.vid
+<span style="color: #008000; font-weight: bold;">and</span>      mds.iid <span style="color: #008000; font-weight: bold;">like</span> <span style="color: #ba2121;">'18%'</span>
+<span style="color: #008000; font-weight: bold;">and</span>      s.sample_id <span style="color: #666666;">=</span> mds.iid::<span style="color: #008000;">integer</span>
+<span style="color: #008000; font-weight: bold;">group</span> <span style="color: #008000; font-weight: bold;">by</span> rvgm.gene_name, sv.sid, s.phen_code, mds.c1, mds.c2, norm.c1_av, norm.c2_av, norm.c1_stddev, norm.c2_stddev
+<span style="color: #008000; font-weight: bold;">order</span> <span style="color: #008000; font-weight: bold;">by</span> rvgm.gene_name, sv.sid
+;</pre>
+</div>
+<p>And:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">library(RPostgreSQL) <span style="color: #408080; font-style: italic;"># first load package RPostgresql</span>
+drv <span style="color: #666666;">&lt;-</span> dbDriver(<span style="color: #ba2121;">"PostgreSQL"</span>)
+readcon <span style="color: #666666;">&lt;-</span> dbConnect(drv, dbname<span style="color: #666666;">=</span><span style="color: #ba2121;">"mydb"</span>, user<span style="color: #666666;">=</span><span style="color: #ba2121;">"postgres"</span>, password<span style="color: #666666;">=</span><span style="color: #ba2121;">"password"</span>)
+writecon <span style="color: #666666;">&lt;-</span> dbConnect(drv, dbname<span style="color: #666666;">=</span><span style="color: #ba2121;">"mydb"</span>, user<span style="color: #666666;">=</span><span style="color: #ba2121;">"postgres"</span>, password<span style="color: #666666;">=</span><span style="color: #ba2121;">"password"</span>)
+nsamples <span style="color: #666666;">&lt;-</span> <span style="color: #666666;">50</span>
+readsql <span style="color: #666666;">&lt;-</span> <span style="color: #ba2121;">"</span>
+<span style="color: #ba2121;">select gene_name, sid, phen_code, ri, ni, c1, c2</span>
+<span style="color: #ba2121;">from rvt_data</span>
+<span style="color: #ba2121;">order by gene_name, sid</span>
+<span style="color: #ba2121;">;"</span>
+rs <span style="color: #666666;">&lt;-</span> dbSendQuery(readcon,readsql)
+writesql <span style="color: #666666;">&lt;-</span> <span style="color: #ba2121;">"</span>
+<span style="color: #ba2121;">drop table if exists rvt1_results;</span>
+<span style="color: #ba2121;">create table rvt1_results (</span>
+<span style="color: #ba2121;"> gene_name varchar,</span>
+<span style="color: #ba2121;"> lambda numeric,</span>
+<span style="color: #ba2121;"> p_value numeric</span>
+<span style="color: #ba2121;">);</span>
+<span style="color: #ba2121;">drop table if exists rvt2_results;</span>
+<span style="color: #ba2121;">create table rvt2_results (</span>
+<span style="color: #ba2121;"> gene_name varchar,</span>
+<span style="color: #ba2121;"> lambda numeric,</span>
+<span style="color: #ba2121;"> p_value numeric</span>
+<span style="color: #ba2121;">);</span>
+<span style="color: #ba2121;">"</span>
+tmp <span style="color: #666666;">&lt;-</span> dbSendQuery(writecon,writesql)
+<span style="color: #008000; font-weight: bold;">while</span> (!dbHasCompleted(rs)) {  <span style="color: #408080; font-style: italic;"># for each gene</span>
+    tbl <span style="color: #666666;">&lt;-</span> fetch(rs,n<span style="color: #666666;">=</span>nsamples) <span style="color: #408080; font-style: italic;"># get the data for the fifty samples</span>
+    nonzero <span style="color: #666666;">&lt;-</span> (tbl$ni <span style="color: #666666;">!=</span> <span style="color: #666666;">0</span>) <span style="color: #408080; font-style: italic;"># find the rows where ni is nonzero, i.e. the sample had at least one locus genotyped</span>
+    tbl <span style="color: #666666;">&lt;-</span> tbl[nonzero,] <span style="color: #408080; font-style: italic;"># restrict the analysis to rows where ni is nonzero</span>
+    <span style="color: #008000; font-weight: bold;">if</span>(nrow(tbl) <span style="color: #666666;">&lt;</span> <span style="color: #666666;">.9*</span>nsamples) next <span style="color: #408080; font-style: italic;"># only analyze genes where at least 90% of samples can be included</span>
+    gene_name <span style="color: #666666;">&lt;-</span> tbl$gene_name[<span style="color: #666666;">1</span>]
+    <span style="color: #408080; font-style: italic;"># RVT1</span>
+    rini <span style="color: #666666;">&lt;-</span> tbl$ri<span style="color: #666666;">/</span>tbl$ni <span style="color: #408080; font-style: italic;"># ri/ni</span>
+    <span style="color: #008000; font-weight: bold;">if</span> (length(unique(rini)) <span style="color: #666666;">!=</span> <span style="color: #666666;">1</span>) { <span style="color: #408080; font-style: italic;"># skip monomorphic cases</span>
+    model <span style="color: #666666;">&lt;-</span> lm(tbl$phen_code ~ rini <span style="color: #666666;">+</span> tbl$c1 <span style="color: #666666;">+</span> tbl$c2)  <span style="color: #408080; font-style: italic;"># you can add your xi vector of covariates to this model here</span>
+    coeff <span style="color: #666666;">&lt;-</span> summary(model)$coef[<span style="color: #ba2121;">"rini"</span>,<span style="color: #ba2121;">"Estimate"</span>]
+    p_value <span style="color: #666666;">&lt;-</span> summary(model)$coef[<span style="color: #ba2121;">"rini"</span>,<span style="color: #ba2121;">"Pr(&gt;|t|)"</span>]
+    writesql <span style="color: #666666;">&lt;-</span> paste(<span style="color: #ba2121;">"insert into rvt1_results (gene_name,lambda,p_value) values('"</span>,gene_name,<span style="color: #ba2121;">"',"</span>,coeff,<span style="color: #ba2121;">","</span>,p_value,<span style="color: #ba2121;">");"</span>,sep<span style="color: #666666;">=</span><span style="color: #ba2121;">""</span>)
+    tmp <span style="color: #666666;">&lt;-</span> dbSendQuery(writecon,writesql)
+    }
+    <span style="color: #408080; font-style: italic;"># RVT2</span>
+    Iri <span style="color: #666666;">&lt;-</span> <span style="color: #666666;">1*</span>(tbl$ri <span style="color: #666666;">&gt;</span> <span style="color: #666666;">0</span>) <span style="color: #408080; font-style: italic;"># indicator variable for whether any rare variants are present. multiplying by 1 converts boolean t/f to integer 1/0</span>
+    <span style="color: #008000; font-weight: bold;">if</span> (length(unique(Iri)) <span style="color: #666666;">!=</span> <span style="color: #666666;">1</span>) { <span style="color: #408080; font-style: italic;"># skip monomorphic cases</span>
+    model <span style="color: #666666;">&lt;-</span> lm(tbl$phen_code ~ Iri <span style="color: #666666;">+</span> tbl$c1 <span style="color: #666666;">+</span> tbl$c2)
+    coeff <span style="color: #666666;">&lt;-</span> summary(model)$coef[<span style="color: #ba2121;">"Iri"</span>,<span style="color: #ba2121;">"Estimate"</span>]
+    p_value <span style="color: #666666;">&lt;-</span> summary(model)$coef[<span style="color: #ba2121;">"Iri"</span>,<span style="color: #ba2121;">"Pr(&gt;|t|)"</span>]
+    writesql <span style="color: #666666;">&lt;-</span> paste(<span style="color: #ba2121;">"insert into rvt2_results (gene_name,lambda,p_value) values('"</span>,gene_name,<span style="color: #ba2121;">"',"</span>,coeff,<span style="color: #ba2121;">","</span>,p_value,<span style="color: #ba2121;">");"</span>,sep<span style="color: #666666;">=</span><span style="color: #ba2121;">""</span>)
+    tmp <span style="color: #666666;">&lt;-</span> dbSendQuery(writecon,writesql)
+    }
+}
+dbDisconnect(readcon)
+dbDisconnect(writecon)
+dbUnloadDriver(drv)</pre>
+</div>
+<p><strong>reflections</strong></p>
+<p>Congratulations!  If your genomic inflation factor from PLINK is closer to 1 and your QQ plot looks more straight and diagonal, then you have successfully controlled for much of the population stratification present in your sample.  Odds are that your reward for this is that the promising leads you thought you saw are no longer statistically significant.  Hey, at least you realized that before you tried to publish it.</p>

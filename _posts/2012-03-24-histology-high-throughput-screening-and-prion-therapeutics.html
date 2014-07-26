@@ -1,0 +1,19 @@
+---
+layout: post
+title: "Histology, high-throughput screening and prion therapeutics"
+author: ericminikel
+date: 2012-03-24 15:05:57
+---
+<p>In the next series of posts I&#8217;ll be examining several articles related to histology, high-throughput screening, high-content image analysis and neurodifferentiation of induced pluripotent stem cells.  The goals of this series are to:</p>
+<ul>
+<li>illuminate the state of the art that can potentially be applied to a high-throughput screen for prion therapeutics</li>
+<li>identify existing tools and methodologies that can be applied to such a screen</li>
+<li>identify areas where further work is needed</li>
+</ul>
+<p>To give some context, the overall vision for such a screen is as follows:</p>
+<ol>
+<li>Induce neurodifferentiation in D178N 129M stem cells and wild-type stem cells.</li>
+<li>Identify compounds or other interventions that induce prion formation in the D178N 129M cells.  Achieve this by using high-content image analysis to find the compounds that make the D178N 129M cells &#8220;look different&#8221; than the wild type cells.  At the end of this step, one hopes to have identified ways to reliably induce a disease state in the D178N 129M cells and be able to distinguish disease state cells from healthy cells.</li>
+<li>Screen a drug library against D178N 129M vs. wild type cells that have vs. have not been treated with the disease-inducing factor from step 2.  Use high-content image analysis to identify compounds that cause the D178N 129M cells treated with the disease-inducing factor to &#8220;look like&#8221; healthy cells.</li>
+</ol>
+<p>This vision demands a lot of really excellent histology and image analysis.  Software will be needed to distinguish different types of neural cells, mask the cells of interest as well as their nuclei, and calculate thousands of different &#8220;features&#8221; (i.e. numerical measures of image characteristics) both across entire slides and within masked regions.  The aim of several of the upcoming posts will be to clarify how much of this can be readily achieved using existing open source software packages such as CellProfiler, and how much will require custom software development.</p>

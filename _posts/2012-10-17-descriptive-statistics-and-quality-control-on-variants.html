@@ -1,0 +1,118 @@
+---
+layout: post
+title: "Descriptive statistics and quality control on variants"
+author: ericminikel
+date: 2012-10-17 15:17:49
+---
+<p>I have previously described <a href="/2012/08/27/fastqc-for-large-numbers-of-samples/">how to aggregate data from FastQC</a> to check the quality of raw reads from next-generation sequencing, and my <a href="/2012/09/19/exome-sequencing-pipeline-using-gatk/">GATK exome sequencing pipeline</a> covers how to use <a href="http://code.google.com/p/bedtools/">bedtools</a> to calculate coverage after alignment.  After you&#8217;ve completed the pipeline and called variants, you still need to see if the variants you&#8217;ve called look reasonable.  This post will introduce the descriptive statistics generally used to assess the quality of variants called from exome data.</p>
+<p><a href="/2012/08/17/exome-sequencing-identifies-disease-modifiers-in-cystic-fibrosis/">Emond&#8217;s cystic fibrosis exome paper</a> specifically calls out the following metrics for that study&#8217;s exome variants in the <a href="/wp-content/uploads/2012/08/emond-2012-exome-sequencing-of-extreme-phenotypes-supplement.pdf">supplement</a>:</p>
+<p><a href="/wp-content/uploads/2012/10/emond-supp-table-1.png"><img class="alignnone size-full wp-image-892" title="emond-supp-table-1" src="/wp-content/uploads/2012/10/emond-supp-table-1.png"/></a></p>
+<p>What are all of these metrics?  I had to look most of them up.  Here are some definitions (as best I understand):</p>
+<ul>
+<li><strong>Ti/Tv </strong>(sometimes called Ts/Tv): the ratio of transitions vs. transversions in SNPs.  Transitions are mutations within the same type of nucleotide: pyrimidine-pyrimidine mutations (C &lt;-&gt; T) and purine-purine mutations (A &lt;-&gt; G).  Transversions are mutations from a pyrimidine to a purine or vice versa.  Transitions occur at a higher rate because C, particularly when it is adjacent to a G i.e. <a href="http://en.wikipedia.org/wiki/CpG_site">CpG</a>, can easily get <a href="http://en.wikipedia.org/wiki/DNA_methylation">methylated</a>; once methylated, if <a href="http://en.wikipedia.org/wiki/Deamination">deaminated</a> it turns into U (equivalent to T), causing G-&gt;A on the other hand.  (For instance, <a href="http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?rs=74315403">rs74315403</a>, the SNP that causes fatal familial insomnia, is in fact a G -&gt; A mutation on the protein coding strand, GAC (aspartate) -&gt; AAC (asparagine), presumably originally caused by a methylation + deamination of the C on the non-coding strand).  Note that there are twice as many possible transversions as transitions, which leads to a huge amount of confusion and disagreement as to whether Ti/Tv is supposed to be 0.5 or 1.0 in the absence of a biological bias towards transitions, i.e. whether it is a ratio of <em>rates</em> of mutations or a ratio of mutations, i.e. whether you need to multiply count(transitions)/count(transversions) by 2 (<a href="http://www.biostars.org/post/show/4751/titv-ratio-confirms-snp-discovery-is-this-a-general-rule/">example of disagreement and discussion on biostars</a>).   After some research, I am going to side with the one web reference I&#8217;ve found who gives his source: <a href="http://www.broadinstitute.org/gsa/wiki/images/a/ac/Ngs_tutorial_depristo_1210.pdf">Mark DePristo</a> states that Ti/Tv should be 0.5 for false positives i.e. under randomness / absent biological forces, implying that it is <em>not</em> adjusted but rather simply the ratio of the number of transitions to the number of transversions.  He cites <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC379137/">Ebersberger 2002</a>, who compares humans and chimpanzees and gives the raw count of Ti and Tv in <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC379137/table/TB1/">Table 1</a>, which works out to a Ti/Tv of 2.4 using raw counts.   <a href="http://www.broadinstitute.org/gsa/wiki/images/a/ac/Ngs_tutorial_depristo_1210.pdf">DePristo</a> states that the Ti/Tv ratio should be about 2.1 for whole genome sequencing and 2.8 for whole exome, and that if it is lower, that means your data includes false positives caused by random sequencing errors, and you can calculate your error rate based on how much the false positives have dragged the overall mean down towards their mean of 0.5.  (Aside: presumably the greater transition content of the exome is ultimately because the exome is under stronger selective pressure against missense mutations, whereas many transitions are tolerated as silent mutations because <a href="http://en.wikipedia.org/wiki/Genetic_code#RNA_codon_table">transitions in the third base of a codon rarely change the amino acid</a>.  There is also a possible connection with <a href="http://en.wikipedia.org/wiki/CpG_island">CpG islands</a> that I don&#8217;t fully understand yet.)</li>
+<li><strong>missingness</strong> simply means at what fraction of sample-site combinations you were unable to call a genotype.  Often the inverse is stated instead: 2% missingness means a <strong>genotyping rate</strong> or <strong>call rate </strong>of 98%.</li>
+<li><strong>ns/ss</strong> is, I *think*, the ratio of non-synonymous substitutions (per site) to synonymous substitutions (per site).  If so, Wikipedia calls it the dN/dS ratio (see page on <a href="http://en.wikipedia.org/wiki/Ka/Ks_ratio">Ka/Ks ratio</a>).  I can&#8217;t find a good reference for what this value &#8220;should&#8221; be.  Since synonymous substitutions are better tolerated by evolution, I&#8217;d expect the ratio to be below 1 (and indeed, Emond&#8217;s is 0.8), and that random errors would skew it upward.</li>
+<li><strong>het/hom</strong> is the ratio of heterozygous to homozygous variant genotypes across all sample-site combinations.  I can&#8217;t find a good web reference for what this &#8220;should&#8221; be, probably because it depends: populations with recent admixture will skew towards heterozygosity, populations with inbreeding will skew towards homozygosity.</li>
+<li><strong>singletons</strong> are variants found in only one of your samples.  Emond apparently had an average of ~300+ singletons per sample.  I would expect this number to be higher if you have fewer samples (Emond had 91, I have 50) because, in the limit where you have one sample, every variant is a singleton.   <a href="http://www.biomedcentral.com/1471-2105/10/247">Knudsen 2009</a> uses the definition of singleton I&#8217;ve used here and points out that random errors in sequencing will very likely end up to be singletons, so an elevated number of singletons could indicate that errors are present.  Frustratingly, I haven&#8217;t been able to find a good reference for what&#8217;s a &#8220;normal&#8221; number of singletons as a function of the number of samples, probably because it would depend on how genetically diverse your samples were, and how much of the genome you sequenced (whole genome vs. exome, and if exome, how many Mb your capture kit targeted).  <strong>see 2012-10-22 update below re: &#8220;correct&#8221; number of singletons.  </strong>(FYI: the term singleton has other uses in bioinformatics as well, such as a read whose mate didn&#8217;t align in paired-end sequencing &#8212; for instance see <a href="http://seqanswers.com/forums/showthread.php?t=18342">SeqAnswers</a>).</li>
+<li>The final three figures are all different measures of depth.  <strong>Depth</strong>, or <strong>coverage</strong>, is the number of reads overlapping a given base after alignment.  There is code in the <a href="/2012/09/19/exome-sequencing-pipeline-using-gatk/">GATK exome pipeline</a> to get average coverage of target and fraction of target covered at 8x or greater.</li>
+</ul>
+<p>It&#8217;s probably good to compute all of these figures on your variants before proceeding to downstream analysis and modeling.  If you notice that any numbers are far from what you&#8217;d expect, you probably have some errors upstream that are going to mess with your analysis. The <a href="http://atgu.mgh.harvard.edu/plinkseq/stats.shtml">PLINK/SEQ stats module</a> can compute most of these measures for you, and a few others as well, in under a minute with a single command line:</p>
+<pre>pseq variants.vcf v-stats</pre>
+<p>If you want to separate out your cases and controls as Emond did, you&#8217;re probably best off just using a mask, as follows:</p>
+<pre>pseq variants.vcf v-stats --mask indiv=case1,case2,case3...
+pseq variants.vcf v-stats --mask indiv=control1,control2,control3...</pre>
+<p>PLINK/SEQ does not compute ns/ss or het/hom.  Luckily these are pretty trivial.  If you have your variants in a SQL database according to the table schemata from my <a href="/2012/09/19/exome-sequencing-pipeline-using-gatk/">GATK exome pipeline</a>, here&#8217;s a query for het/hom:</p>
+<pre>select   sum(case when variant_allele_count = 1 then 1 else 0 end)::numeric/sum(case when variant_allele_count = 2 then 1 else 0 end)::numeric as het_hom_ratio
+from     sample_variants
+where    alleles_genotyped = 2
+;</pre>
+<p>ns/ss is a slightly more of a pain &#8212; it&#8217;s not just the ratio of nonsynonymous variants to synonymous variants, it&#8217;s the ratio-of-the-ratios: nonsynonymous variants/sites to synonymous variants/sites. This query will take at least 3 minutes to run:</p>
+<pre>select   ( sum(case when e.effect = 'NON_SYNONYMOUS_CODING' then variant_allele_count else 0 end)::numeric/
+           sum(case when e.effect = 'NON_SYNONYMOUS_CODING' then 1.0 else 0 end)::numeric ) /
+         ( sum(case when e.effect = 'SYNONYMOUS_CODING' then variant_allele_count else 0 end)::numeric/
+           sum(case when e.effect = 'SYNONYMOUS_CODING' then 1.0 else 0 end)::numeric ) as ns_ss_ratio
+from     var06.sample_variants sv, (select vid, effect from var06.effects where effect in ('SYNONYMOUS_CODING','NON_SYNONYMOUS_CODING') group by vid, effect) e
+where    sv.vid = e.vid
+;</pre>
+<p>You&#8217;ll notice the subquery allows multiple rows per variant, which I consider to be correct &#8212; if a variant can have either a synonymous or nonsynonymous effect depending on the transcript, it should count towards both categories.</p>
+<p>One other thing you might be interested in is how many of your <em>variant </em>sites were sequenced at what depth (as opposed to how many of all sites).  There are a few different ways to approach this:</p>
+<pre>-- number of variants where _all_ samples had depth of at least 8
+select count(*) nvar
+from (select vid, min(dp) mindp, count(dp) ndp from var06.sample_variants sv group by vid) sub
+where sub.mindp &gt;= 8
+and ndp = 50 -- your number of samples
+;
+
+-- number of variants where average depth was at least 8
+select count(*) nvar
+from (select vid, avg(coalesce(dp::numeric,0.0)) avgdp from var06.sample_variants sv group by vid) sub
+where sub.avgdp &gt;= 8
+;
+
+-- fraction of sample-site combinations with depth at least 8
+select sum(case when dp &gt;= 8 then 1.0 else 0.0 end)/count(*)::numeric fraction
+from var06.sample_variants sv
+;</pre>
+<p><strong>update 2012-10-17</strong>: as an alternative or supplement to PLINK/SEQ, <a href="http://vcftools.sourceforge.net/options.html#stats">vcftools stats modules</a> can also compute most of these metrics, plus per-individual heterozygosity measurements (presumably to detect admixed or inbred individuals), Hardy-Weinberg Equilibrium by site, and a few others.</p>
+<p><strong>update 2012-10-22:</strong> Though I still can&#8217;t speak to how many singletons your samples &#8220;should&#8221; have, I did some calculations to see how it depends upon the number of samples.  I have 50 samples, so I calculated the number of singletons in different-sized subsets of them to find a curve.  Here&#8217;s how I did it:</p>
+<p>First, I used a few lines of Python code to generate command line calls for PLINK/SEQ for 5 samples, 10 samples, etc.:</p>
+<pre>for j in range(5,50,5):
+    l = list(range(0,j))
+    print "pseq variants.final.vcf v-stats --mask indiv="+','.join(map(str,l))</pre>
+<p>This generates calls like this:</p>
+<pre># 5 samples
+pseq variants.final.vcf v-stats --mask indiv=0,1,2,3,4
+# 10 samples
+pseq variants.final.vcf v-stats --mask indiv=0,1,2,3,4,5,6,7,8,9</pre>
+<p>etc.  I then ran PLINK/SEQ 50/5 = 10 times, and recorded the number of singletons each time.  I then put my results into R:</p>
+<pre>samples = c(5,10,15,20,25,30,35,40,45,50)
+singletons = c(32563,43226,46598,48469,51513,53588,55512,56691,57393,58557)</pre>
+<p>And tried a few different models.  The model with the most explanatory power (R<sup>2</sup> of almost 99%) was singletons proportional to log number of samples:</p>
+<pre>&gt; model &lt;- lm(singletons ~ log(samples))
+&gt; summary(model)
+
+Call:
+lm(formula = singletons ~ log(samples))
+
+Residuals:
+     Min       1Q   Median       3Q      Max
+-1391.70  -496.50    52.08   295.42  1719.44 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)   16419.8     1292.6   12.70 1.39e-06 ***
+log(samples)  10895.0      404.4   26.94 3.88e-09 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+
+Residual standard error: 889.3 on 8 degrees of freedom
+Multiple R-squared: 0.9891,     Adjusted R-squared: 0.9877
+F-statistic: 725.8 on 1 and 8 DF,  p-value: 3.879e-09</pre>
+<p>I have 50 samples, and on the face of it, my number of singletons (58,557) had seemed rather elevated to me: almost 1200 singletons per person, compared to ~300 in Emond&#8217;s paper.  Armed with this new model, I checked whether my results were really that different.  Plugging in the slope and intercept from above, I can predict that if I had 91 samples (as <a href="/2012/08/17/exome-sequencing-identifies-disease-modifiers-in-cystic-fibrosis/">Emond 2012</a> did), then I&#8217;d have (16419+10895*log(91))/91 = 720 singletons per sample.  To adjust this a bit further, Emond states in online methods that three different exome capture kits were used, targeting 26, 32 and 34 Mb. She doesn&#8217;t state the relative proportions, so I just chose to assume that her singleton counts correspond to the middle value of 32 Mb.  By contrast I am working with a little over 48 Mb, so I&#8217;d expect 1.5x as many singletons.  720/1.5 = 480.  So the most appropriate comparison to Emond&#8217;s 300-odd singletons is a number around 480.  While this is a bit elevated, it&#8217;s not nearly as bad as 1200.  It might be partly that I have some spurious variant calls, and/or partly the result of a more diverse population<strong>.</strong></p>
+<p><strong>update 2012-11-12:</strong> I discovered that PLINK/SEQ and snpEff compute the ts/tv ratio differently from each other. I suspect some of the difference is in whether variant, or sample-variant, is the unit of analysis.  But neither product&#8217;s documentation explains exactly what it is doing.  So I wrote my own SQL query for ts/tv to be sure that I know exactly what I&#8217;m getting:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #008000; font-weight: bold;">create</span> <span style="color: #008000; font-weight: bold;">function</span> nttype(nt <span style="color: #008000;">varchar</span>) <span style="color: #008000; font-weight: bold;">returns</span> <span style="color: #008000;">char</span>(<span style="color: #666666;">1</span>)
+<span style="color: #008000; font-weight: bold;">as</span> <span style="border: 1px solid #FF0000;">$$</span>
+<span style="color: #008000; font-weight: bold;">select</span> <span style="color: #008000; font-weight: bold;">case</span> <span style="color: #008000; font-weight: bold;">when</span> <span style="border: 1px solid #FF0000;">$</span><span style="color: #666666;">1</span> <span style="color: #008000; font-weight: bold;">in</span> (<span style="color: #ba2121;">'C'</span>,<span style="color: #ba2121;">'T'</span>) <span style="color: #008000; font-weight: bold;">then</span> <span style="color: #ba2121;">'Y'</span> <span style="color: #008000; font-weight: bold;">when</span> <span style="border: 1px solid #FF0000;">$</span><span style="color: #666666;">1</span> <span style="color: #008000; font-weight: bold;">in</span> (<span style="color: #ba2121;">'A'</span>,<span style="color: #ba2121;">'G'</span>) <span style="color: #008000; font-weight: bold;">then</span> <span style="color: #ba2121;">'R'</span> <span style="color: #008000; font-weight: bold;">else</span> <span style="color: #008000; font-weight: bold;">null</span> <span style="color: #008000; font-weight: bold;">end</span>
+<span style="border: 1px solid #FF0000;">$$</span> <span style="color: #008000; font-weight: bold;">language</span> <span style="color: #008000; font-weight: bold;">sql</span>
+
+<span style="color: #408080; font-style: italic;">-- ts/tv ratio</span>
+<span style="color: #008000; font-weight: bold;">select</span>   <span style="color: #008000; font-weight: bold;">sum</span>(<span style="color: #008000; font-weight: bold;">case</span> <span style="color: #008000; font-weight: bold;">when</span> nttype(v.<span style="color: #008000; font-weight: bold;">ref</span>) <span style="color: #666666;">=</span> nttype(v.alt) <span style="color: #008000; font-weight: bold;">then</span> <span style="color: #666666;">1</span>.<span style="color: #666666;">0</span> <span style="color: #008000; font-weight: bold;">else</span> <span style="color: #666666;">0</span>.<span style="color: #666666;">0</span> <span style="color: #008000; font-weight: bold;">end</span>)<span style="color: #666666;">/</span><span style="color: #008000; font-weight: bold;">sum</span>(<span style="color: #008000; font-weight: bold;">case</span> <span style="color: #008000; font-weight: bold;">when</span> nttype(v.<span style="color: #008000; font-weight: bold;">ref</span>) <span style="color: #666666;">&lt;&gt;</span> nttype(v.alt) <span style="color: #008000; font-weight: bold;">then</span> <span style="color: #666666;">1</span>.<span style="color: #666666;">0</span> <span style="color: #008000; font-weight: bold;">else</span> <span style="color: #666666;">0</span>.<span style="color: #666666;">0</span> <span style="color: #008000; font-weight: bold;">end</span>) <span style="color: #008000; font-weight: bold;">as</span> tstv
+<span style="color: #008000; font-weight: bold;">from</span>     sample_variants sv, variants v
+<span style="color: #008000; font-weight: bold;">where</span>    v.vid <span style="color: #666666;">=</span> sv.vid
+<span style="color: #008000; font-weight: bold;">and</span>      alleles_genotyped <span style="color: #666666;">=</span> <span style="color: #666666;">2</span>
+<span style="color: #408080; font-style: italic;">-- and v.filter = 'PASS'</span>
+;<span style="border: 1px solid #FF0000;"></span></pre>
+</div>
+<p>And once you&#8217;ve got this, it&#8217;s also easy to check for only coding regions if you want:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #008000; font-weight: bold;">select</span>   <span style="color: #008000; font-weight: bold;">sum</span>(<span style="color: #008000; font-weight: bold;">case</span> <span style="color: #008000; font-weight: bold;">when</span> nttype(v.<span style="color: #008000; font-weight: bold;">ref</span>) <span style="color: #666666;">=</span> nttype(v.alt) <span style="color: #008000; font-weight: bold;">then</span> <span style="color: #666666;">1</span>.<span style="color: #666666;">0</span> <span style="color: #008000; font-weight: bold;">else</span> <span style="color: #666666;">0</span>.<span style="color: #666666;">0</span> <span style="color: #008000; font-weight: bold;">end</span>)<span style="color: #666666;">/</span><span style="color: #008000; font-weight: bold;">sum</span>(<span style="color: #008000; font-weight: bold;">case</span> <span style="color: #008000; font-weight: bold;">when</span> nttype(v.<span style="color: #008000; font-weight: bold;">ref</span>) <span style="color: #666666;">&lt;&gt;</span> nttype(v.alt) <span style="color: #008000; font-weight: bold;">then</span> <span style="color: #666666;">1</span>.<span style="color: #666666;">0</span> <span style="color: #008000; font-weight: bold;">else</span> <span style="color: #666666;">0</span>.<span style="color: #666666;">0</span> <span style="color: #008000; font-weight: bold;">end</span>) <span style="color: #008000; font-weight: bold;">as</span> tstv
+<span style="color: #008000; font-weight: bold;">from</span>     sample_variants sv, variants v, (<span style="color: #008000; font-weight: bold;">select</span> vid, <span style="color: #008000; font-weight: bold;">min</span>(coding) coding <span style="color: #008000; font-weight: bold;">from</span> effects <span style="color: #008000; font-weight: bold;">where</span> coding <span style="color: #666666;">&lt;&gt;</span> <span style="color: #ba2121;">''</span> <span style="color: #008000; font-weight: bold;">group</span> <span style="color: #008000; font-weight: bold;">by</span> vid) e <span style="color: #408080; font-style: italic;">-- if coding in any transcripts, consider it coding but count only once per vid</span>
+<span style="color: #008000; font-weight: bold;">where</span>    v.vid <span style="color: #666666;">=</span> sv.vid
+<span style="color: #008000; font-weight: bold;">and</span>      v.vid <span style="color: #666666;">=</span> e.vid
+<span style="color: #008000; font-weight: bold;">and</span>      alleles_genotyped <span style="color: #666666;">=</span> <span style="color: #666666;">2</span>
+<span style="color: #008000; font-weight: bold;">and</span>      e.coding <span style="color: #666666;">=</span> <span style="color: #ba2121;">'CODING'</span>
+<span style="color: #008000; font-weight: bold;">and</span>   v.filter <span style="color: #666666;">=</span> <span style="color: #ba2121;">'PASS'</span>
+;</pre>
+</div>
+<p>&nbsp;</p>

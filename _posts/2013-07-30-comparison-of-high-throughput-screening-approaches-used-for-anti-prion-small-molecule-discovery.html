@@ -1,0 +1,125 @@
+---
+layout: post
+title: "Comparison of high-throughput screening approaches used for anti-prion small molecule discovery"
+author: ericminikel
+date: 2013-07-30 10:45:33
+---
+<p>This post will review high-throughput screening methods that have been utilized to discover anti-prion small molecules.  First, here&#8217;s an at a glance overview of published studies I&#8217;ll cover in this post.</p>
+<div style="overflow-x: scroll;"><table style="width:100%; " class="easy-table easy-table-default " border="0">
+<thead>
+<tr><th>study</th>
+<th>format</th>
+<th>target</th>
+<th>compound library</th>
+<th>number of compounds</th>
+<th>prion strain</th>
+<th>positive control</th>
+<th>incubation time</th>
+</tr>
+</thead>
+<tbody>
+<tr><td><a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC228499/">Kocisko 2003</a></td>
+<td>ELISA</td>
+<td>PrP-res</td>
+<td><a href="http://www.msdiscovery.com/spectrum.html">Spectrum Collection</a></td>
+<td>2,000</td>
+<td>RML &amp; 22L</td>
+<td><a title="Curcumin as prion therapeutic" href="/2012/11/24/curcumin-as-prion-therapeutic/">curcumin</a></td>
+<td>5 days</td>
+</tr>
+
+<tr><td><a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC1143673/">Bertsch 2005</a></td>
+<td>SIFT</td>
+<td>PrP<sup>C</sup> / PrP<sup>Sc</sup> binding</td>
+<td><a href="http://www.chembridge.com/screening_libraries/diversity_libraries/diverset/">DIVERSet</a> 1</td>
+<td>10,000</td>
+<td>sCJD</td>
+<td>DOSPA</td>
+<td>N/A</td>
+</tr>
+
+<tr><td><a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2838138/">Ghaemmaghami 2010</a></td>
+<td>ELISA</td>
+<td>PrP-res</td>
+<td>UCSF <a href="https://us.chemdiv.com/index.php/discovery-tools-chemistry/screening-libraries">ChemDiv</a></td>
+<td>10,135</td>
+<td>RML</td>
+<td><a title="Quinacrine" href="/2012/10/23/quinacrine/">quinacrine</a></td>
+<td>6 days</td>
+</tr>
+
+<tr><td><a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3149362/">Poncet-Montange 2011</a></td>
+<td>ELISA</td>
+<td>PrP-res</td>
+<td><a href="http://www.msdiscovery.com/spectrum.html">Spectrum Collection</a></td>
+<td>2,160</td>
+<td>RML</td>
+<td><a title="Quinacrine" href="/2012/10/23/quinacrine/">quinacrine</a></td>
+<td>5 days</td>
+</tr>
+
+<tr><td><a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3186986/">Leidel 2011</a></td>
+<td>ELISA</td>
+<td>PrP-res</td>
+<td><a href="http://www.chembridge.com/screening_libraries/diversity_libraries/diverset/">DIVERSet</a> 1</td>
+<td>10,000</td>
+<td>RML</td>
+<td>suramin</td>
+<td>5 days</td>
+</tr>
+
+<tr><td><a href="http://www.ncbi.nlm.nih.gov/pubmed/23576755">Karapetyan &amp; Sferrazza 2013</a></td>
+<td>FRET</td>
+<td>PrP<sup>C</sup></td>
+<td><a href="http://www.msdiscovery.com/usdrugs.html">US Drug Collection</a></td>
+<td>1,280</td>
+<td>N/A</td>
+<td>tunicamycin</td>
+<td>1 day</td>
+</tr>
+
+<tr><td><a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3661926/">Wagner 2013</a>*</td>
+<td>SIFT</td>
+<td>PrPC / PrPSc binding</td>
+<td><a href="http://www.chembridge.com/screening_libraries/diversity_libraries/diverset/">DIVERSet</a> 2</td>
+<td>10,000</td>
+<td>sCJD</td>
+<td>DOSPA</td>
+<td>N/A</td>
+</tr>
+
+<tr><td><a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3661926/">Wagner 2013</a>*</td>
+<td>ELISA</td>
+<td>PrP-res</td>
+<td><a href="http://www.chembridge.com/screening_libraries/diversity_libraries/diverset/">DIVERSet</a> 2</td>
+<td>10,000</td>
+<td>RML</td>
+<td>suramin</td>
+<td>5 days</td>
+</tr>
+</tbody></table></div>
+<p><em>*<strong>Updated 2013-08-21</strong>.  <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3661926/">Wagner 2013</a> screened 10,000 DIVERSet 2 compounds using both the SIFT and PrP-res ELISA assays from <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC1143673/">Bertsch 2005</a> and <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3186986/">Leidel 2011</a> respectively, and analyzed these in combination with the original DIVERSet 1 results from those studies.</em></p>
+<p>And in the next three sections I&#8217;ll discuss the details of the three assay approaches used.</p>
+<p><strong>ELISA or “dot blot” assay for inhibitors of PrP-res formation</strong></p>
+<p>At its most basic, the idea here is to use PK digestion and and anti-PrP antibody to detect the existence of PK-resistant PrP<sup>Sc</sup>.  Variations on this concept has been used in low-throughput formats for a long time [<a href="http://www.ncbi.nlm.nih.gov/pubmed/1693623/">Taraboulos 1990</a> (<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2116143/pdf/jc11062117.pdf">ft</a>), <a href="http://www.ncbi.nlm.nih.gov/pubmed/10725446">Rudyk 2000</a> (<a href="http://vir.sgmjournals.org/content/81/4/1155.long">ft</a>), <a href="http://www.ncbi.nlm.nih.gov/pubmed/11513851">Winkhofer 2001</a> (<a href="http://www.sciencedirect.com/science/article/pii/S0014579301026928">ft</a>)] and the was eventually adapted for high-throughput screening [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC228499/">Kocisko 2003</a>].  In the high-throughput version, 96-well plates are filled with scrapie-infected mouse neuroblastoma (ScN2a) cells &#8211; about 20,000 cells per well &#8211; and incubated with various compounds for 5 or 6 days.  Cells are then lysed, lysate is digested with proteinase K, and the lysate is transferred to a membrane that the proteins will stick to.  Primary antibodies against PrP are introduced, then unbound antibodies are washed from the membrane, and fluorescently labeled secondary antibodies are bound to the original antibody.  You get a fluorescent signal where PK-resistant PrP was present, and no signal where it was absent, which presumably occurs when a drug worked.  Negative controls are simply untreated cells; positive controls require a compound known to interfere with PrP-res formation &#8211; people have used curcumin [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC228499/">Kocisko 2003</a>], suramin [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3186986/">Leidel 2011</a>] or quinacrine [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2838138/">Ghaemmaghami 2010</a>, <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3149362/">Poncet-Montange 2011</a>].</p>
+<p><strong>SIFT assay for compounds that interfere with PrPC / PrPSc binding</strong></p>
+<p>SIFT stands for Scanning for Intensely Fluorescent Targets, but if you Google this you won’t find much.  This is the name the authors used for their screening approach in one study [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC1143673/">Bertsch 2005</a>] and the concepts are more widely used even if the nomenclature is not.  The goal of Bertsch’s SIFT assay is to detect compounds that interfere with PrPC binding to PrPSc.  These two proteins are mixed in a very dilute solution, with PrPC labeled in green and PrPSc labeled in red.  A laser is shone on the solution, and if red and green always wander through the laser’s beam a the same moment, that implies the two are bound &#8211; which is the default.  If red often wanders through alone and green often wanders through alone, that means they’re unbound, and the test compound must therefore have inhibited their binding.</p>
+<p>In practice, the PrPSc used was obtained from postmortem brain homogenate from sCJD patients, and the PrPC was recombinant mouse PrP 23-231.  Bertsch never explains the motive for mixing mouse PrPC with human PrPSc &#8211; an odd choice, to my mind, given that the affinity between these two must be less than that of same-species PrPC and PRPSc.  The recombinant mouse PrPC was labeled with Alexa 488 and human PrPSc was exposed to the L42 antibody which was in turn labeled with Alexa 476.  (Interestingly, this implies that Alexa 488 binds to PrPC).  DOSPA [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC112015/">Doh-Ura 2000</a>] was used as a control, since this assay requires a compound that directly interferes with PrPC/PrPSc binding &#8211; compounds that act indirectly won’t do.</p>
+<p><strong>FRET assay for compounds that deplete PrPC</strong></p>
+<p>FRET shares with SIFT the conceptual similarity that two things are labeled in different colors and the assay detects whether the two things are in proximity to each other or not.  In FRET, two different antibodies are labeled with different excitatory wavelengths &#8211; say, red and blue.  A red laser excites the red antibody and &#8211; if and only if the two antibodies are in close enough proximity for resonance to operate &#8211; a blue wavelength will be emitted by the other antibody.  FRET assays are often used to check whether two things have come into (or left) proximity with one another as a result of a compound treatment.  In that sense, it’s conceptually similar to SIFT (above).</p>
+<p><a title="Tacrolimus, astemizole and a new screening approach for drugs that reduce PrP" href="/2013/04/04/tacrolimus-astemizole-and-a-new-screening-approach-for-drugs-that-reduce-prp/">This particular assay</a> at Scripps Florida [<a href="http://www.ncbi.nlm.nih.gov/pubmed/23576755">Karapetyan &amp; Sferrazza 2013</a>], though, used antibodies against two different epitopes on PrP.  If PrP is present, the two antibodies will bind to the same PrP molecule, acquiring enough proximity to resonate.  If PrP is absent, the antibodies will just float around aimlessly and not necessarily be close to one another.  In this way, the FRET assay is used to quantify PrP and thus to screen for compounds that deplete PrP<sup>C</sup>.</p>
+<p>In practice, the assay was applied to whole cells, not lysed or pelleted, meaning that it only detected PrP<sup>C</sup> on the cell surface and in the culture medium (such as shed PrP).  The authors cited the fact that using PIPLC to cleave PrP’s GPI anchor, releasing PrP from the cell surface, can cure ScN2a cells of prion infection [<a href="http://www.ncbi.nlm.nih.gov/pubmed/11470893">Enari 2001</a>], as evidence that cell surface localization is crucial for prion infectivity.  In fact, the relationship of PrP shedding &#8211; the closest in vivo analogue to PIPLC treatment &#8211; to prion disease <a title="Proteolytic shedding of prion protein" href="/2013/06/29/proteolytic-shedding-of-prion-protein/">is more complicated</a>.  However, since the culture medium was not washed away in the Scripps study, the assay would <i>not</i> actually have detected compounds that increased PrP shedding anyway.  The assay also would not have detected compounds that reduced intracellular PrP.  Intracellular PrP could well matter in prion disease &#8211; for instance, cytosolic PrP has been implicated in proteasome dysfunction [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC125653/">Yedidia 2001</a>, <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC64965/">Ma &amp; Lindquist 2001</a>, <a href="http://www.ncbi.nlm.nih.gov/pubmed/17466621">Kristiansen 2007</a> (<a href="http://neuro.bcm.edu/debiasi/Prionsproteasome2007.pdf">ft</a>)], and so it would be nice to detect compounds that reduce intracellular PrP as well.  However it doesn’t seem too likely that there are many compounds out there which could reduce intracellular PrP without affecting cell surface PrP, so this is probably not a major problem with the assay.</p>
+<p>Of note, the two antibodies used for FRET in this assay were SAF32, which targets the octarepeat region, and D18, which targets amino acids 133-157 (alpha helix 1).  These epitopes flank the central region of PrP, and therefore both <a title="Proteolysis of prion protein in the central region: alpha and beta cleavage" href="/2013/06/26/proteolysis-of-prion-protein-in-the-central-region-alpha-and-beta-cleavage/">alpha and beta cleavage</a> would have abolished the proximity of the two antibodies, and thus compounds that promote either of these events would have turned up as assay hits.</p>
+<p><strong>which mechanisms of action does each assay approach afford us the opportunity to discover?</strong></p>
+<p>Consider the life cycle of PrP in an infected cell as diagrammed below.</p>
+<p><a href="/wp-content/uploads/2013/07/life-cycle-of-prp-large.png"><img alt="" src="https://docs.google.com/drawings/d/1ESYy03U4tJ2vFErzIKJ-Jra8QXQm5S57v1Lbzs7yETo/pub?w=479&amp;h=319" width="479" height="318"/></a></p>
+<p>Therapeutically relevant events in PrP’s life cycle could include <a title="Regulation of prion protein transcription" href="/2013/05/15/regulation-of-prion-protein-transcription/">transcription</a>, translation, passage through the <a title="Cell Biology 04: The Secretory Pathway" href="/2013/02/24/cell-biology-04-the-secretory-pathway/">secretory pathway</a> including <a title="Prion protein N-linked glycosylation: review and assessment of therapeutic potential" href="/2013/05/05/prion-protein-n-linked-glycosylation-review-and-assessment-of-therapeutic-potential/">glycosylation</a>, <a title="Proteolysis of prion protein in the central region: alpha and beta cleavage" href="/2013/06/26/proteolysis-of-prion-protein-in-the-central-region-alpha-and-beta-cleavage/">enzymatic cleavage</a>, <a title="Proteolytic shedding of prion protein" href="/2013/06/29/proteolytic-shedding-of-prion-protein/">shedding</a>, degradation via <a title="Prion protein degradation in lysosomes and the effect of autophagy-activating drugs" href="/2013/07/11/prion-protein-degradation-in-lysosomes-and-the-effect-of-autophagy-activating-drugs/">lysosomes</a> and <a title="The role of the proteasome in PrP degradation and prion disease" href="/2013/07/25/the-role-of-the-proteasome-in-prp-degradation-and-prion-disease/">proteasomes</a>, binding to PrP<sup>Sc</sup>, conversion to PrP<sup>Sc</sup>, oligomerization, conformational change including acquisition of protease resistance, and aggregation.</p>
+<p>Of these events, SIFT is exclusively designed to detect compounds that interfere with the binding event.  The Scripps FRET assay can only detect events in PrP<sup>C</sup>’s life and nothing from the PrP<sup>Sc</sup> binding onward. Advocates of the PrP-res ELISA assay will point out that it can detect compounds with a wide variety of mechanisms of action.  Indeed, one such study has suggested a scarcity of compounds that directly bind to PrP [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3149362/">Poncet-Montange 2011</a>], and only a handful of hits affected PrP<sup>C</sup> levels, which may be taken to caution against devising assays that are too specific in their focus.</p>
+<p>Of course, the PrP-res assay is not universal either.  Since scrapie infection isn’t toxic to N2a cells, there’s no way to identify compounds that lower the neurotoxicity of PrPSc without reducing its quantity.  And like any assay, it’s by necessity a highly simplified in vitro model.  There are are plenty of things that could be relevant <em>in vivo</em> &#8211; say, the still-mysterious role of glial proliferation in prion disease &#8211; that won’t come through.</p>
+<p><strong>what to do about strain specificity?</strong></p>
+<p>Perhaps a bigger problem is that so many of the compounds that fare very well as PrP-res inhibitors &#8211; <a title="Quinacrine" href="/2012/10/23/quinacrine/">quinacrine</a>, <a title="cpd-B as a prion therapeutic" href="/2012/09/25/cpd-b-as-a-prion-therapeutic/">cpd-B</a>, <a title="Curcumin as prion therapeutic" href="/2012/11/24/curcumin-as-prion-therapeutic/">curcumin</a>, <a title="2-aminothiazoles: exciting progress and lessons for the field" href="/2013/06/01/2-aminothiazoles-exciting-progress-and-lessons-for-the-field/">2-aminothiazoles</a> &#8211; prove to be highly strain-specific in their efficacy.  The major advantage of an assay directed at <a title="The case for depleting PrP as a therapeutic strategy against prion diseases" href="/2013/04/08/the-case-for-depleting-prp-as-a-therapeutic-strategy-against-prion-diseases/">depleting PrP<sup>C</sup></a>, such as FRET, is that even if it’s harder to find hits, at least you know that the hits you do find are pretty likely to act universally across strains of prions.  That&#8217;s hugely important &#8211; both because human prions come in several different varieties and because human prions still can&#8217;t be propagated in cell culture, forcing our reliance on rodent cell models for screening.</p>
+<p>There are also several ways to accommodate a search for strain insensitive drugs within the PrP-res paradigm.  One approach is to do primary screening in cells infected with one prion strain and then counterscreen with a different prion strain &#8211; say, RML and then 22L [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC228499/">Kocisko 2003</a>].  If only we had human cell models of prion propagation, one or both of the strains tested could be human strains.  A different approach is to screen for inhibitors of the new drug-resistant strains that come out of chronic treatments with the same compound &#8211; Kurt Giles <a title="2-aminothiazoles: exciting progress and lessons for the field" href="/2013/06/01/2-aminothiazoles-exciting-progress-and-lessons-for-the-field/">has suggested this</a> with regards to drug-resistant prions created by IND24 treatment.</p>
+<p>Another concern with assays directed at PrP-res is how well the quantification of PrP-res tracks with total PrP<sup>Sc</sup>.  In RML, the strain almost always used in these assays, most PrP<sup>Sc</sup> is protease resistant [<em>citation needed</em>].  But in sCJD, only 10% of PrP<sup>Sc</sup> is protease resistant [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC552933/">Safar 2005</a>].  In fatal familial insomnia there is very little PrP-res [<a href="http://www.ncbi.nlm.nih.gov/pubmed/1346338" target="_blank">Medori 1992</a> (<a href="http://www.nejm.org/doi/full/10.1056/NEJM199202133260704#t=article" target="_blank">ft</a>), <a href="http://www.ncbi.nlm.nih.gov/pubmed/7654073/" target="_blank">Brown 1995</a>, <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2775465/">Jackson 2009</a>], and in <a title="VPSPr: another strain of sporadic prion disease" href="/2012/10/06/vpspr-another-strain-of-sporadic-prion-disease/">VPSPr</a> there is zero [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3032610/">Zou 2010</a>].  It is an open question how well inhibition of PrP-res formation in this assay predicts inhibition of total PrP<sup>Sc</sup> accumulation.</p>
+<p>Assaying for protease-sensitive PrP<sup>Sc</sup> would be more of a pain than PrP-res, involving quantifications of antibody binding both before and after denaturation.  That’s harder to make high-throughput.  One alternative would be assaying for <i>total</i> PrP in infected cell lines, which would be no extra hassle, indeed, slightly easier than assaying for PrP-res.  I would like to see a breakdown of what fraction of total PrP in ScN2a cells is PrP<sup>C</sup>, sPrP<sup>Sc</sup> and rPrP<sup>Sc</sup> (aka PrP-res) &#8211; this has been measured (though not presented as such) for many strains in vivo [<a href="http://www.ncbi.nlm.nih.gov/pubmed/9771749">Safar 1998</a>] but I can’t find a reference for these quantities in RML-infected N2a cells, which are the model used in high-throughput assays.  Presumably, assaying for total PrP would somewhat decrease power to detect specific inhibitors of rPrP<sup>Sc</sup> formation, while gaining (any) power to detect inhibitors of sPrP<sup>Sc</sup> and (importantly) enriching hits for compounds that affect both sPrP<sup>Sc</sup> and rPrP<sup>Sc</sup>.  It would also maintain approximately the existing power to detect compounds that reduce PrP<sup>C</sup> altogether.</p>
+<p><strong>why aren’t PrP<sup>Sc</sup>-promoting compounds reported?</strong></p>
+<p>None of the above studies reported on any compounds that <em>increased</em> PrP-res formation.  Perhaps that’s because no one is going to waste their time validating such undesired compounds in counterscreens or animal models, and no one wants to report unvalidated results.  Still, it would be quite valuable to know the identity of any such compounds.  They might give us hints to some underlying biology.  And for approved drugs, they might merit recognition as potential environmental risk factors for sCJD or potential drugs for genetic mutation carriers to avoid.  Some of the same drugs have come up more than once as PrP-res inhibitors (e.g. astemizole [<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC228499/">Kocisko 2003</a>, <a href="http://www.ncbi.nlm.nih.gov/pubmed/23576755">Karapetyan &amp; Sferrazza 2013</a>]) so if the same is true of compounds that increase PrP-res, then the studies would provide some validation of one another even if no one validated the results individually.</p>

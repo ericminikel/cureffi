@@ -1,0 +1,125 @@
+---
+layout: post
+title: "Implementation of RVT1 and RVT2 in R and SQL"
+author: ericminikel
+date: 2012-09-25 21:26:40
+---
+<p><strong>introduction.</strong>  RVT1 is a model for finding genes in which more than one rare variant can contribute to a phenotype.  I introduced RVT1 in more detail in <a href="/2012/08/17/exome-sequencing-identifies-disease-modifiers-in-cystic-fibrosis/">this post</a>, but here is a quick summary.  The idea is that you have called variants on a bunch of case/control samples and you want to test the hypothesis that a number of your cases have <em>different </em>rare variants in the same gene, leading to the same loss of function and same phenotype.  This is useful when your sample size is too small to detect the impact of these rare variants individually.  Indeed, the ability to look at the impact of multiple variants too rare to be included on SNP arrays is considered to be one of the major benefits of exome sequencing. Formally, <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2962811/">Morris and Zeggini 2010</a> define RVT1 as follows:</p>
+<blockquote>
+<p id="__p7">Consider a sample of unrelated individuals, phenotyped for a normally distributed trait, and typed for rare variants in a gene or small genomic region. Let <em>n<sub>i</sub></em> denote the number of rare variants for which the<em>i</em>th individual has been successfully genotyped, and let <em>r<sub>i</sub></em> denote the number of these variants at which they carry at least one copy of the minor allele. We can model the phenotype, <em>y<sub>i</sub></em>, of the <em>i</em>th individual in a linear regression framework, given by <em>y<sub>i</sub></em> = E[<em>y<sub>i</sub></em>]+ɛ<sub><em>i</em></sub>, where ɛ<sub><em>i</em></sub>,σ<sub><em>E</em></sub>), and</p>
+<div id="__p8">
+<div id="m1">
+<div><img title="equation image" src="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2962811/bin/gepi0034-0188-m1.jpg" alt="equation image" width="127" height="29"/></div>
+</div>
+</div>
+<p id="__p9">In this expression, <em>x<sub>i</sub></em> denotes a vector of covariate measurements for the <em>i</em>th individual, with corresponding regression coefficients β. The parameter λ is the expected increase in the phenotype for an individual carrying a full complement of minor alleles at rare variants compared to an individual carrying none.</p>
+</blockquote>
+<p><strong>update 2012-10-08: </strong>below code now includes RVT2 as well.  See <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2962811/">Morris and Zeggini 2010</a> for explanation of that model.</p>
+<p><del>Note that when they say “linear regression,” it’s linear if you have a quantitative phenotype and logistic if you have a dichotomous phenotype</del>.  <strong>update 2012-10-08: </strong>it may also make more sense to do linear regression even with a dichotomous phenotype, and this code has been updated to do that.  see <a href="/2012/09/25/implementation-of-rvt1-in-r-and-sql/#comment-103">comment</a>.  <strong>end update </strong>There&#8217;s already an R implementation of RVT1 in <a href="http://cran.r-project.org/web/packages/AssotesteR/AssotesteR.pdf">AssotesteR</a>, described <a href="http://www.inside-r.org/packages/cran/AssotesteR/docs/RVT1">here</a> and source code available <a href="https://github.com/gastonstat/AssotesteR/blob/bcb55ede11e5e9ccd62e6d5bdcd09d1c5839d9a8/R/RVT1.R">here</a>.  But it&#8217;s somewhat limited because it only correlates genotype with phenotype; there is no room to add in x<sub>i</sub>, that vector of covariates, such as principal components of population substructure.  And for my purposes, most of the battle was just applying the right filters and getting the data into the right format and into R, then getting it out of R again into a format I can play with.  At that point I felt like it made more sense to just do my own implementation end-to-end.</p>
+<p><strong>assumptions.</strong>  This post assumes you&#8217;ve already called variants and read them into SQL tables as I specified in <a href="/2012/09/19/exome-sequencing-pipeline-using-gatk/">this GATK pipeline</a>&#8211; and that you&#8217;ve also gotten annotations as to the (population, not sample) allele frequency of your variants&#8211; you can use <a href="/2012/09/07/an-alternative-exome-sequencing-pipeline-using-bowtie2-and-samtools/">annovar as described here</a>.  You&#8217;ll also need <a href="http://www.r-project.org/">R</a>, <a href="http://code.google.com/p/rpostgresql/">RPostgreSQL</a>, and <a href="http://www.postgresql.org/">PostgreSQL</a>.</p>
+<p><strong>the code.</strong>   Here is an R script with a SQL script embedded in it.  The SQL code aggregates the rare variants by gene, R fits the logistic regression model for each gene, and then puts the results into a new SQL table so you can play with them later.</p>
+<p>First, create a table of source data in SQL:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;">-- create table of underlying data for RVT1 and RVT2 models</span>
+<span style="color: #008000; font-weight: bold;">drop</span> <span style="color: #008000; font-weight: bold;">table</span> if <span style="color: #008000; font-weight: bold;">exists</span> rvt_data;
+<span style="color: #008000; font-weight: bold;">create</span> <span style="color: #008000; font-weight: bold;">table</span> rvt_data <span style="color: #008000; font-weight: bold;">as</span>
+<span style="color: #008000; font-weight: bold;">select</span>   rvgm.gene_name,
+         sv.sid,
+         s.phen_code,
+         <span style="color: #008000; font-weight: bold;">sum</span>(<span style="color: #008000; font-weight: bold;">case</span> <span style="color: #008000; font-weight: bold;">when</span> ((sv.variant_allele_count <span style="color: #666666;">&gt;</span> <span style="color: #666666;">0</span> <span style="color: #008000; font-weight: bold;">and</span> rvgm.vaf <span style="color: #666666;">&lt;</span> .<span style="color: #666666;">125</span>) <span style="color: #008000; font-weight: bold;">or</span> (sv.variant_allele_count <span style="color: #666666;">&lt;</span> <span style="color: #666666;">2</span> <span style="color: #008000; font-weight: bold;">and</span> rvgm.vaf <span style="color: #666666;">&gt;</span> .<span style="color: #666666;">875</span>)) <span style="color: #008000; font-weight: bold;">and</span> use_flag <span style="color: #008000; font-weight: bold;">then</span> <span style="color: #666666;">1</span> <span style="color: #008000; font-weight: bold;">else</span> <span style="color: #666666;">0</span> <span style="color: #008000; font-weight: bold;">end</span>)::<span style="color: #008000;">numeric</span> ri, <span style="color: #408080; font-style: italic;">-- number of rare variant loci where this sample has a rare variant</span>
+         <span style="color: #008000; font-weight: bold;">sum</span>(<span style="color: #008000; font-weight: bold;">case</span> <span style="color: #008000; font-weight: bold;">when</span> use_flag <span style="color: #008000; font-weight: bold;">then</span> sv.alleles_genotyped <span style="color: #008000; font-weight: bold;">else</span> <span style="color: #666666;">0</span> <span style="color: #008000; font-weight: bold;">end</span>)::<span style="color: #008000;">numeric</span><span style="color: #666666;">/2</span>.<span style="color: #666666;">0</span> ni <span style="color: #408080; font-style: italic;">-- number of rare variant loci genotyped for this sample</span>
+<span style="color: #008000; font-weight: bold;">from</span>     variants v, sample_variants sv, samples s,
+         (<span style="color: #008000; font-weight: bold;">select</span>   e.vid, e.gene_name, coalesce(a.n1000g2012feb_all,<span style="color: #666666;">0</span>.<span style="color: #666666;">0</span>) vaf
+         <span style="color: #008000; font-weight: bold;">from</span>     annovar_genome_summary a, effects e
+         <span style="color: #008000; font-weight: bold;">where</span>    e.vid <span style="color: #666666;">=</span> a.vid
+         <span style="color: #008000; font-weight: bold;">and</span>      (a.n1000g2012feb_all <span style="color: #666666;">&lt;</span> .<span style="color: #666666;">125</span> <span style="color: #008000; font-weight: bold;">or</span> a.n1000g2012feb_all <span style="color: #008000; font-weight: bold;">is</span> <span style="color: #008000; font-weight: bold;">null</span> <span style="color: #008000; font-weight: bold;">or</span> a.n1000g2012feb_all <span style="color: #666666;">&gt;</span> .<span style="color: #666666;">875</span>) <span style="color: #408080; font-style: italic;">-- specify your MAF threshold in this line. I used 12.5%.</span>
+         <span style="color: #008000; font-weight: bold;">and</span>      e.effect_impact <span style="color: #008000; font-weight: bold;">in</span> (<span style="color: #ba2121;">'MODERATE'</span>,<span style="color: #ba2121;">'HIGH'</span>) <span style="color: #408080; font-style: italic;">-- sepcify your inclusion criteria here</span>
+         <span style="color: #008000; font-weight: bold;">group</span> <span style="color: #008000; font-weight: bold;">by</span> e.vid, e.gene_name, coalesce(a.n1000g2012feb_all,<span style="color: #666666;">0</span>.<span style="color: #666666;">0</span>)
+         <span style="color: #008000; font-weight: bold;">order</span> <span style="color: #008000; font-weight: bold;">by</span> e.vid, e.gene_name) rvgm <span style="color: #408080; font-style: italic;">-- [rare variant]-[gene] match</span>
+<span style="color: #008000; font-weight: bold;">where</span>    v.vid <span style="color: #666666;">=</span> sv.vid
+<span style="color: #008000; font-weight: bold;">and</span>      sv.sid <span style="color: #666666;">=</span> s.sample_id
+<span style="color: #008000; font-weight: bold;">and</span>      v.vid <span style="color: #666666;">=</span> rvgm.vid
+<span style="color: #008000; font-weight: bold;">group</span> <span style="color: #008000; font-weight: bold;">by</span> rvgm.gene_name, sv.sid, s.phen_code
+<span style="color: #008000; font-weight: bold;">order</span> <span style="color: #008000; font-weight: bold;">by</span> rvgm.gene_name, sv.sid
+;</pre>
+</div>
+<p>Then pull the contents of that table into R, run the analysis and put the RVT1 and RVT2 results each into a new table:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;">library(RPostgreSQL) <span style="color: #408080; font-style: italic;"># first load package RPostgresql</span>
+drv <span style="color: #666666;">&lt;-</span> dbDriver(<span style="color: #ba2121;">"PostgreSQL"</span>)
+readcon <span style="color: #666666;">&lt;-</span> dbConnect(drv, dbname<span style="color: #666666;">=</span><span style="color: #ba2121;">"mydb"</span>, user<span style="color: #666666;">=</span><span style="color: #ba2121;">"postgres"</span>, password<span style="color: #666666;">=</span><span style="color: #ba2121;">"password"</span>)
+writecon <span style="color: #666666;">&lt;-</span> dbConnect(drv, dbname<span style="color: #666666;">=</span><span style="color: #ba2121;">"mydb"</span>, user<span style="color: #666666;">=</span><span style="color: #ba2121;">"postgres"</span>, password<span style="color: #666666;">=</span><span style="color: #ba2121;">"password"</span>)
+nsamples <span style="color: #666666;">&lt;-</span> <span style="color: #666666;">50</span>
+readsql <span style="color: #666666;">&lt;-</span> <span style="color: #ba2121;">"</span>
+<span style="color: #ba2121;">select gene_name, sid, phen_code, ri, ni</span>
+<span style="color: #ba2121;">from rvt_data</span>
+<span style="color: #ba2121;">order by gene_name, sid</span>
+<span style="color: #ba2121;">;"</span>
+rs <span style="color: #666666;">&lt;-</span> dbSendQuery(readcon,readsql)
+writesql <span style="color: #666666;">&lt;-</span> <span style="color: #ba2121;">"</span>
+<span style="color: #ba2121;">drop table if exists rvt1_results;</span>
+<span style="color: #ba2121;">create table rvt1_results (</span>
+<span style="color: #ba2121;"> gene_name varchar,</span>
+<span style="color: #ba2121;"> lambda numeric,</span>
+<span style="color: #ba2121;"> p_value numeric</span>
+<span style="color: #ba2121;">);</span>
+<span style="color: #ba2121;">drop table if exists rvt2_results;</span>
+<span style="color: #ba2121;">create table rvt2_results (</span>
+<span style="color: #ba2121;"> gene_name varchar,</span>
+<span style="color: #ba2121;"> lambda numeric,</span>
+<span style="color: #ba2121;"> p_value numeric</span>
+<span style="color: #ba2121;">);</span>
+<span style="color: #ba2121;">"</span>
+tmp <span style="color: #666666;">&lt;-</span> dbSendQuery(writecon,writesql)
+<span style="color: #008000; font-weight: bold;">while</span> (!dbHasCompleted(rs)) {  <span style="color: #408080; font-style: italic;"># for each gene</span>
+    tbl <span style="color: #666666;">&lt;-</span> fetch(rs,n<span style="color: #666666;">=</span>nsamples) <span style="color: #408080; font-style: italic;"># get the data for the fifty samples</span>
+    nonzero <span style="color: #666666;">&lt;-</span> (tbl$ni <span style="color: #666666;">!=</span> <span style="color: #666666;">0</span>) <span style="color: #408080; font-style: italic;"># find the rows where ni is nonzero, i.e. the sample had at least one locus genotyped</span>
+    tbl <span style="color: #666666;">&lt;-</span> tbl[nonzero,] <span style="color: #408080; font-style: italic;"># restrict the analysis to rows where ni is nonzero</span>
+    <span style="color: #008000; font-weight: bold;">if</span>(nrow(tbl) <span style="color: #666666;">&lt;</span> <span style="color: #666666;">.9*</span>nsamples) next <span style="color: #408080; font-style: italic;"># only analyze genes where at least 90% of samples can be included</span>
+    gene_name <span style="color: #666666;">&lt;-</span> tbl$gene_name[<span style="color: #666666;">1</span>]
+    <span style="color: #408080; font-style: italic;"># RVT1</span>
+    rini <span style="color: #666666;">&lt;-</span> tbl$ri<span style="color: #666666;">/</span>tbl$ni <span style="color: #408080; font-style: italic;"># ri/ni</span>
+    <span style="color: #008000; font-weight: bold;">if</span> (length(unique(rini)) <span style="color: #666666;">!=</span> <span style="color: #666666;">1</span>) { <span style="color: #408080; font-style: italic;"># skip monomorphic cases</span>
+    model <span style="color: #666666;">&lt;-</span> lm(tbl$phen_code ~ rini)  <span style="color: #408080; font-style: italic;"># you can add your xi vector of covariates to this model here</span>
+    coeff <span style="color: #666666;">&lt;-</span> summary(model)$coef[<span style="color: #ba2121;">"rini"</span>,<span style="color: #ba2121;">"Estimate"</span>]
+    p_value <span style="color: #666666;">&lt;-</span> summary(model)$coef[<span style="color: #ba2121;">"rini"</span>,<span style="color: #ba2121;">"Pr(&gt;|t|)"</span>]
+    writesql <span style="color: #666666;">&lt;-</span> paste(<span style="color: #ba2121;">"insert into rvt1_results (gene_name,lambda,p_value) values('"</span>,gene_name,<span style="color: #ba2121;">"',"</span>,coeff,<span style="color: #ba2121;">","</span>,p_value,<span style="color: #ba2121;">");"</span>,sep<span style="color: #666666;">=</span><span style="color: #ba2121;">""</span>)
+    tmp <span style="color: #666666;">&lt;-</span> dbSendQuery(writecon,writesql)
+    }
+    <span style="color: #408080; font-style: italic;"># RVT2</span>
+    Iri <span style="color: #666666;">&lt;-</span> <span style="color: #666666;">1*</span>(tbl$ri <span style="color: #666666;">&gt;</span> <span style="color: #666666;">0</span>) <span style="color: #408080; font-style: italic;"># indicator variable for whether any rare variants are present. multiplying by 1 converts boolean t/f to integer 1/0</span>
+    <span style="color: #008000; font-weight: bold;">if</span> (length(unique(Iri)) <span style="color: #666666;">!=</span> <span style="color: #666666;">1</span>) { <span style="color: #408080; font-style: italic;"># skip monomorphic cases</span>
+    model <span style="color: #666666;">&lt;-</span> lm(tbl$phen_code ~ Iri)
+    coeff <span style="color: #666666;">&lt;-</span> summary(model)$coef[<span style="color: #ba2121;">"Iri"</span>,<span style="color: #ba2121;">"Estimate"</span>]
+    p_value <span style="color: #666666;">&lt;-</span> summary(model)$coef[<span style="color: #ba2121;">"Iri"</span>,<span style="color: #ba2121;">"Pr(&gt;|t|)"</span>]
+    writesql <span style="color: #666666;">&lt;-</span> paste(<span style="color: #ba2121;">"insert into rvt2_results (gene_name,lambda,p_value) values('"</span>,gene_name,<span style="color: #ba2121;">"',"</span>,coeff,<span style="color: #ba2121;">","</span>,p_value,<span style="color: #ba2121;">");"</span>,sep<span style="color: #666666;">=</span><span style="color: #ba2121;">""</span>)
+    tmp <span style="color: #666666;">&lt;-</span> dbSendQuery(writecon,writesql)
+    }
+}
+dbDisconnect(readcon)
+dbDisconnect(writecon)
+dbUnloadDriver(drv)</pre>
+</div>
+<p>In writing this I found useful <a href="http://nlp.stanford.edu/~manning/courses/ling289/logistic.pdf">Christopher Manning&#8217;s tutorial</a> on logistic regression in R and <a href="http://stackoverflow.com/questions/4780152/extract-coefficients-from-glm-in-r">this stackoverflow discussion</a> of how to extract coefficients from an R model.  I also learned that in R it appears there really is no better way to put variables into a SQL statement than by concatenation <a href="https://groups.google.com/d/topic/rpostgresql-dev/MwqAcYseDg0/discussion">[1]</a><a href="http://stackoverflow.com/questions/2186015/bind-variables-in-r-dbi">[2]</a><a href="http://stackoverflow.com/questions/2182337/how-to-use-a-variable-name-in-a-mysql-statement">[3]</a>.  And I discovered that my new least favorite thing about R is that, when results for a variable are undefined, that variable&#8217;s coefficient is simply eliminated from the result matrix, thus making indexing impossible.  It&#8217;s mentioned in <a href="http://stackoverflow.com/questions/6882709/how-do-i-deal-with-nas-in-residuals-in-a-regression-in-r">this stackoverflow discussion</a>, though the answer marked correct there did not work for me&#8211;<del> instead, I just figured out I could use the if/else clause with <code>is.na</code> as shown in the code above.</del>  <strong>update 2012-10-08:</strong> I now check for monomorphic variants with <code>if (length(unique(rini)) != 1)</code>.  It&#8217;s also possible to run the model first and then exclude results with &#8220;NA&#8221; coefficients with this line of code: <code>if(is.na(coef(model)["rini"]))</code>.  <strong>end update </strong>Finally,if you run this and encounter some error you will need to dump all the remaining database results before you can close or reuse the connection.  That can be achieved with <code>dbClearResult(rs)</code>.</p>
+<p>A note about how this code is structured.  In a large dataset it&#8217;s likely at least one sample will have zero rare variant loci genotyped for at least one gene that has such loci.  So if you divide r<sub>i</sub>/n<sub>i</sub> in your SQL code you&#8217;ll get a division by zero error.  And if you use a <code>where</code> clause to exclude those rows, then you won&#8217;t have exactly <code>nsamples</code> rows per gene in the table you read into R, which would make it more complicated to iterate through the results.  So to avoid that problem I only calcuate r<sub>i</sub> and n<sub>i</sub> in SQL, and then do the zero-checking and division in R.</p>
+<p><strong>next steps.</strong>  After you&#8217;ve gotten your p values using this script, you can run <a href="/2012/08/15/qq-plots-with-matplotlib/">this matplotlib script</a>to QQ plot them.  And once you&#8217;ve created variables to capture any population substructure you wish to control for, you can add those into your glm model easily, ex. <code>tbl$phenotype ~ rini + covariates</code>.</p>
+<p><strong>update 2012-09-25: </strong>the code above has been updated to include variants where the reference genome actually has the minor allele.  (Which happens often: in my dataset, about 10% of the variants have a 1000 genomes frequency &gt; 50%, implying the reference has a frequency &lt; 50%).  To correctly handle those cases, I increment r<sub>i</sub> for samples where the &#8220;vaf&#8221; (variant allele frequency) is &lt; .125 and the sample has at least one variant allele, OR the vaf &gt; .875 and the sample has at least one reference allele.</p>
+<p><strong>update 2012-09-27: </strong>fixed bug.  <code>sum(sv.alleles_genotyped)::numeric</code> changed to <code>sum(sv.alleles_genotyped)::numeric/2.0</code></p>
+<p><strong>update 2012-10-08: </strong> I overhauled all the above code to make the following changes: (1) changed from logistic to linear model (<a href="/2012/09/25/implementation-of-rvt1-in-r-and-sql/#comment-103">see discussion below</a>), (2) stored model&#8217;s input data in a separate table so you can query it later, (3) allowed it to run on the subset of samples with at least one successfully genotyped locus, down to a genotyping rate threshold (currently set to .9)  and (4) added the RVT2 model.  Also here is a SQL query that provides table showing the RVT1 results along with some summary data about each gene which makes this more intuitive to browse rather than just looking at p values alone:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #008000; font-weight: bold;">select</span>   r.gene_name,
+         r.lambda,
+         r.p_value,
+         least(r.p_value<span style="color: #666666;">*</span>tests.n,<span style="color: #666666;">1</span>) bonf,  <span style="color: #408080; font-style: italic;">-- p value after correction for multiple testing</span>
+         <span style="color: #008000; font-weight: bold;">sum</span>(<span style="color: #008000; font-weight: bold;">case</span> <span style="color: #008000; font-weight: bold;">when</span> d.phen_code <span style="color: #666666;">=</span> <span style="color: #666666;">1</span> <span style="color: #008000; font-weight: bold;">then</span> d.ri <span style="color: #008000; font-weight: bold;">else</span> <span style="color: #666666;">0</span> <span style="color: #008000; font-weight: bold;">end</span>) case_rv,     <span style="color: #408080; font-style: italic;">-- total number of rare variants in cases</span>
+         <span style="color: #008000; font-weight: bold;">sum</span>(<span style="color: #008000; font-weight: bold;">case</span> <span style="color: #008000; font-weight: bold;">when</span> d.phen_code <span style="color: #666666;">=</span> <span style="color: #666666;">0</span> <span style="color: #008000; font-weight: bold;">then</span> d.ri <span style="color: #008000; font-weight: bold;">else</span> <span style="color: #666666;">0</span> <span style="color: #008000; font-weight: bold;">end</span>) control_rv,  <span style="color: #408080; font-style: italic;">-- total number of rare variants in controls</span>
+         <span style="color: #008000; font-weight: bold;">max</span>(d.ni) n_loci  <span style="color: #408080; font-style: italic;">-- number of rare variant loci genotyped</span>
+<span style="color: #008000; font-weight: bold;">from</span>     rvt_data d, rvt1_results r, (<span style="color: #008000; font-weight: bold;">select</span> <span style="color: #008000; font-weight: bold;">count</span>(<span style="color: #666666;">*</span>)::<span style="color: #008000;">numeric</span> n <span style="color: #008000; font-weight: bold;">from</span> rvt1_results) tests
+<span style="color: #008000; font-weight: bold;">where</span>    d.gene_name <span style="color: #666666;">=</span> r.gene_name
+<span style="color: #008000; font-weight: bold;">group</span> <span style="color: #008000; font-weight: bold;">by</span> r.gene_name,
+         r.lambda,
+         r.p_value,
+         tests.n
+<span style="color: #008000; font-weight: bold;">order</span> <span style="color: #008000; font-weight: bold;">by</span> r.p_value <span style="color: #008000; font-weight: bold;">asc</span>
+;</pre>
+</div>

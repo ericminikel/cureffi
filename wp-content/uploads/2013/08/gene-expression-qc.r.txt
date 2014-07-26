@@ -1,0 +1,265 @@
+# Eric Minikel
+# CureFFI.org
+# 2013-08-23
+# Gene expression analysis QC pipeline demo script
+
+# On Unix systems, use these commands to get the data.
+# wget ftp://ftp.ncbi.nlm.nih.gov/geo/datasets/GDS4nnn/GDS4146/soft/GDS4146.soft.gz
+# wget ftp://ftp.ncbi.nlm.nih.gov/geo/platforms/GPLnnn/GPL97/annot/GPL97.annot.gz
+# wget http://www.cureffi.org/wp-content/uploads/2013/08/metadata.txt
+# also manually download the Human BodyMap 2.0 FPKMs: https://docs.google.com/file/d/0BxObyChB_2VXUTRyczRITEVHTG8/edit?usp=sharing
+# gunzip *.gz
+
+# set working directory - this should be the only thing you need to change to get this code to work for you
+setwd('c:/sci/026rplcl/data/microarray/practice2/')
+
+# only if you don't have these packages already:
+# install.packages("stringr")
+# install.packages("gap")
+# install.packages("sqldf")
+# install.packages("reshape")
+library(stringr) # makes string splitting, indexing, regexes easier - R's base functions are quite bad at this
+library(gap) # best library I've found for qq plots
+library(sqldf) # for me, JOIN & GROUP BY are easier to use than R's match/merge and aggregate
+library(reshape) # for converting between matrices and relational models
+options(stringsAsFactors=FALSE) # so that strings stay as strings in all read.table calls
+
+annot = read.table('GPL97.annot',quote='',comment.char='!',skip=27,sep='\t',header=TRUE)
+colnames(annot) # check that the header read correctly
+dim(annot) # check right number of rows and columns
+annot$Chromosome = str_extract(annot$Chromosome.location,".*?[p|q]") # Chromosome by itself is often not included in annotations, but should be.
+annot$Chromosome = gsub("[p|q]","",annot$Chromosome)
+
+ma_raw = read.table('GDS4146.soft',skip=188,comment.char='!',header=TRUE,sep='\t')
+colnames(ma_raw)
+# peek at the data
+ma_raw[1:5,1:5]
+
+# example of how to parse sex out of column names like GSM601942.M, if they were formatted that way
+example_names = c("probe_id","A10.patient01.M","C05.patient47.F","D07.patient11.F")
+example_matrix = matrix(nrow=1,ncol=4)
+colnames(example_matrix) = example_names
+example_sex=as.character(sapply(strsplit(colnames(example_matrix)[2:4],split="\\."),"[[",3))
+
+# extract metadata from header
+expt_id = as.integer(sapply(strsplit(colnames(ma_raw)[3:127],split="M"),"[[",2))
+timepoint_raw = (expt_id + 3)%%5
+patient_id_raw = floor( (expt_id + 3) / 5) - 120375 + 1
+# in this case, sex isn't in the header - I extracted it manually from the SOFT file into a separate file.
+metadata = read.table('metadata.txt',header=TRUE,sep='\t')
+
+# convert the whole raw data frame into a matrix
+probes = ma_raw[,1:2] # save the probe info to a separate data frame
+ma_mat = as.matrix(ma_raw[3:127]) # convert the values part of the data frame to a matrix
+rownames(ma_mat) = probes[,1] # assign the probe ids as row names
+# peek at the data
+ma_mat[1:5,1:5]
+
+# for this demonstration, I'm just going to use a subset of the columns
+ma_mat = as.matrix(ma_raw[,which(timepoint_raw==3)+2]) # use all 25 patients but only at timepoint #3
+dim(ma_mat) # check that it worked
+
+# match metadata and rename columns
+sex = metadata$sex[match(colnames(ma_mat),metadata$sample_id)]
+patient_id = metadata$patient_id[match(colnames(ma_mat),metadata$sample_id)]
+colnames(ma_mat) = paste("P",formatC(patient_id,width=2,flag="0"),sep='')
+rownames(ma_mat) = ma_raw$ID_REF
+
+# peek at the data again
+ma_mat[1:5,1:5]
+
+# create a histogram of the probe levels
+png('probe.level.histogram.png')
+hist(ma_mat,breaks=100,col='yellow',main='Histogram of probe expression levels',xlab='Expression level')
+dev.off()
+
+# create a histogram of probe levels of highly expressed probe targets
+png('probe.level.histogram.10000plus.png')
+hist(ma_mat[ma_mat > 10000],breaks=100,col='yellow',main='Histogram of probe expression levels > 10,000',xlab='Expression level')
+dev.off()
+
+# create an all-by-all correlation matrix
+cormat = matrix(nrow=25,ncol=25)
+for (i in 1:25) {
+  for (j in 1:25) {
+    cormat[i,j] = cor.test(ma_mat[,i],ma_mat[,j])$estimate
+  }
+}
+colnames(cormat) = colnames(ma_mat)
+rownames(cormat) = colnames(ma_mat)
+
+# what are the highest and lowest correlation (highest is always 1 since you compare each sample to itself in the above loop)
+range(cormat)
+
+# use image() to make a DIY heat map - this is more flexible than heatmap(cormat) because it uses a reasonable coordinate system
+png('allxall.correlation.matrix.png')
+image(1:25,1:25,cormat,xaxt='n',xlab='',yaxt='n',ylab='',main='Protein expression profile correlation between samples',cex.main=.8)
+for (i in 1:25) {
+  for (j in 1:25) {
+    text(i,j,labels=format(cormat[i,j],digits=2),cex=.5)
+  }
+}
+axis(side=1,at=seq(1,25,1),labels=colnames(ma_mat),cex.axis=.6,las=2)
+axis(side=2,at=seq(1,25,1),labels=colnames(ma_mat),cex.axis=.6,las=2)
+dev.off()
+
+# histogram of correlations between samples
+png('allxall.correlation.histogram.png')
+hist(cormat,breaks=100,main="Histogram of Pearson's correlation between different samples",col='yellow')
+dev.off()
+
+# check which genes are most highly expressed
+unique(annot$Gene.symbol[rowMeans(ma_mat) > 50000])
+
+# figure out which one is a problem
+problem_sample = rownames(cormat)[rowMeans(cormat) == min(rowMeans(cormat))]
+problem_sample
+# how to remove the problem sample if you want to
+ma_mat_cleaned = ma_mat[, -which(colnames(ma_mat) == problem_sample)]
+dim(ma_mat_cleaned)
+# and if you do, don't for get to update sex, patient_id etc. all your metadata vectors to match
+# but I'll leave it in for now.
+
+# explore relationship between probes, genes and transcripts
+length(unique(annot$ID)) # probes
+length(unique(annot$Gene.symbol)) # gene symbols 
+length(unique(annot$GenBank.Accession)) # GenBank Accession numbers, ~= RefSeq transcripts
+
+# try grouping by gene, averaging
+ma_gene_raw = aggregate(ma_mat ~ annot$Gene.symbol, FUN='mean')
+ma_gene = as.matrix(ma_gene_raw[,2:26]) # shave off the extra column added by aggregate
+rownames(ma_gene) = ma_gene_raw[,1] # set that extra column as the row names
+colnames(ma_gene) = colnames(ma_mat)
+dim(ma_gene) # 10274 25 - we have 10,274 genes and 25 samples
+
+# plot the levels of the housekeeping gene GAPDH
+png('barplot.gapdh.absolute.level.png')
+barplot(ma_gene["GAPDH",],col='yellow',main='Absolute levels of GAPDH',cex.names=.5,las=2)
+dev.off()
+range(ma_gene["GAPDH",])
+# figure out which one is so high
+which(ma_gene["GAPDH",] > 40000)
+
+# transform whole matrix to rank space
+ma.rank = ma_gene
+for (i in 1:25) {
+  ma.rank[,i] = rank(-ma_gene[,i],na.last='keep')
+}
+
+png('barplot.gapdh.rank.png')
+barplot(dim(ma.rank)[1] - ma.rank['GAPDH',], ylim = c(1,dim(ma.rank)[1]), yaxt='n', col='yellow', cex.names=.6,las=2, main = "GAPDH rank relative to other genes")
+axis(side=2, at = c(1,5000,dim(ma.rank)[1]), labels=c("lowest","5000","1 (highest)") )
+dev.off()
+
+# compare to PRND, which is not a housekeeping gene
+png('barplot.prnd.absolute.level.png')
+barplot(ma_gene["PRND",],col='yellow',main='Absolute levels of PRND',cex.names=.5,las=2)
+dev.off()
+range(ma_gene["PRND",])
+# 20.2 722.4
+
+png('barplot.prnd.rank.png')
+barplot(dim(ma.rank)[1] - ma.rank['PRND',], ylim = c(1,dim(ma.rank)[1]), yaxt='n', col='yellow', cex.names=.6,las=2, main = "PRND rank relative to other genes")
+axis(side=2, at = c(1,5000,dim(ma.rank)[1]), labels=c("lowest","5000","1 (highest)") )
+dev.off()
+
+# test each and every probe for sex differences
+sex.p.vals = vector(mode="numeric",length=dim(ma_mat)[1])
+for (i in 1:dim(ma_mat)[1]) {
+  sex.p.vals[i] = t.test(ma_mat[i,] ~ sex)$p.value
+} # this loop takes ~ 1 minute
+
+png('sex.probe.qqplot.png')
+qqunif(sex.p.vals,pch=19,main='QQ plot of microarray probes associated with sex',cex.main=.8)
+abline(h=-log10(.05/dim(ma_mat)[1]),col='darkgreen')
+text(0,-log10(.05/dim(ma_mat)[1])+.25,labels='Bonferroni-corrected .05 significance threshold',col='darkgreen',pos=4,cex=.6)
+dev.off()
+
+# get lowest Bonferroni-corrected p value
+min(sex.p.vals * dim(ma_mat)[1])
+# get lowest FDR-corrected p value
+fdr.corrected = p.adjust(sex.p.vals, method="hochberg")
+min(fdr.corrected)
+
+# which genes are sex-associated? which chromosome are they on?
+unique(annot[annot$ID %in% rownames(ma_mat)[sex.p.vals < .05/dim(ma_mat)[1]], c("Chromosome","Gene.symbol")])
+
+# select random subset of 10% of the probes to run PCA
+set.seed(2222)
+random.subset = ma_mat[runif(n=dim(ma_mat)[1],min=0,max=1) > .9,]
+# now calculate principal components
+tmat = t(random.subset) # transpose
+sum(is.na(tmat)) # 0
+tmat[is.na(tmat)] = 0 # convert NA to 0 for PCA
+covmatrix = cov(tmat) # calculate covariance matrix
+eig = eigen(covmatrix) # this takes about 1 minute 
+pc = tmat %*% eig$vectors # multiply matrices to get principal components# eig = eigen(covmatrix)
+
+# plot PC1 vs. PC2
+png('pc1.vs.pc2.png')
+plot(pc[1:25,1],pc[1:25,2],pch=19,main='PC1 vs. PC2',cex.main=.8,xlab='PC1',ylab='PC2')
+points(pc[sex=='M',1],pc[sex=='M',2],pch=19,col='blue')
+points(pc[sex=='F',1],pc[sex=='F',2],pch=19,col='red')
+text(pc[1:25,1],pc[1:25,2],labels=colnames(ma_mat),pos=1)
+dev.off()
+
+# plot the variance explained by each PC
+png('pc.variance.explained.png')
+plot(1:50,(eig$values/sum(eig$values))[1:50],pch=19, xlab='PC#', ylab='Varaince explained', main='Variance explained by PCs') 
+dev.off()
+
+# alternate way is to look at cumulative variance explained
+png('pc.cumulative.variance.explained.png')
+plot(1:50,cumsum(eig$values/sum(eig$values))[1:50], pch=16, type='b', ylim=c(0,1), xlab='PC#', ylab='Cumulative varaince explained', main='Cumulative variance explained by PCs') # running total of variance explained
+dev.off()
+
+nrow = dim(random.subset)[1]
+ncol = dim(random.subset)[2]
+random.numbers = matrix(rnorm(n=nrow*ncol,m=0,sd=1),nrow=nrow,ncol=ncol)
+random.numbers[1:5,1:5]
+
+rtmat = t(random.numbers) # transpose
+rcovmatrix = cov(rtmat) # calculate covariance matrix
+reig = eigen(rcovmatrix) # this takes about 1 minute 
+rpc = rtmat %*% reig$vectors # multiply matrices to get principal components# eig = eigen(covmatrix)
+png('pc.variance.explained.in.random.numbers.png')
+plot(1:50,(reig$values/sum(reig$values))[1:50],pch=19, ylim=c(0,.70), xlab='PC#', ylab='Varaince explained', main='Variance explained by PCs') 
+dev.off()
+
+# do any PCs correlate with sex?
+t.test(pc[1:25,1] ~ sex) 
+t.test(pc[1:25,2] ~ sex) 
+t.test(pc[1:25,3] ~ sex) 
+t.test(pc[1:25,4] ~ sex)
+t.test(pc[1:25,5] ~ sex)
+
+# combine with mRNA-seq data from blood from Human BodyMap 2.0
+hbm_df = read.table('gene.matrix.csv',sep=',',header=TRUE,stringsAsFactors=FALSE) # load table
+hbm_matrix = as.matrix(hbm_df[,2:17]) # cast the FPKM columns to a matrix
+rownames(hbm_matrix) = hbm_df[,1] # assign gene symbols as row names
+hbm_rel = melt(hbm_matrix) # cast the HumanBodyMap 2.0 matrix into a 3-column relational model
+colnames(hbm_rel) = c('gene_id','tissue','fpkm') # set column names
+
+ma_gene_rel = melt(ma_gene) # cast the microarray matrix into a 3-column relational model
+colnames(ma_gene_rel) = c('gene_id','sample','level') # set column names
+
+sql_query = "
+select   ma.gene_id, ma.level, mrna.fpkm
+from     (select gene_id, avg(level) level from ma_gene_rel group by gene_id) ma, 
+         hbm_rel mrna
+where    ma.gene_id = mrna.gene_id
+and      mrna.tissue == 'blood'
+;
+"
+ma_mrna_compare = sqldf(sql_query)
+
+png('microarray.vs.humanbodymap.png')
+plot(ma_mrna_compare$fpkm, ma_mrna_compare$level, pch=19, 
+     xlab='Human BodyMap 2.0 Blood FPKMs', 
+     ylab='Average level in microarray across 25 samples',
+     main='Aggregate gene expression level, microarray vs. Human BodyMap 2.0 blood mRNA-seq',
+     cex.main = .8)
+dev.off()
+
+cor.test(ma_mrna_compare$fpkm, ma_mrna_compare$level, method='pearson') # .58
+cor.test(ma_mrna_compare$fpkm, ma_mrna_compare$level, method='spearman') # .65

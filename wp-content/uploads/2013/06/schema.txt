@@ -1,0 +1,39 @@
+column	type	description
+study	character	"short name for study in the format ""Firstauthor YYYY"""
+year	integer	year study was published
+pubmed_link	character	
+first_author	character	surname of first author(s)
+last_author	character	surname of last author
+animal_species		
+animal_strain		
+animal_model_name		
+animal_model_citation		
+prnp_genotype		
+prp_expression_level		
+prion_strain		
+avg_age_at_inoculation_days		
+inoculum_titer		
+inoculum_volume		
+infection_or_integration_route		
+treatment_route		
+vehicle		
+control_compound		
+compound		
+dose_description	character	dose as described in study.   this free form text column is the only place to find out where increasing doses were used -  only peak dose is recorded elsewhere.
+dose_number_deprecated		
+peak_dose_mgkgday		
+equiv_peak_dose_mg_70kg_human		
+treatment_started_dpi		
+treatment_stopped_dpi		
+endpoint	factor	"survival = time to death or 'terminal illness', time of sacrifice, etc.  onset = time to onset of some behavioral sign.  this is defined differently by each study"
+treatment_days_to_endpoint		
+treatment_sd		
+treatment_sem		
+treatment_n		
+control_days_to_endpoint		
+control_sd		
+control_n		
+delay	numeric	"treatment_days_to_endpoint/control_days_to_endpoint - 1. you could calculate this yourself, but some authors just directly give a percent delay, without stating times for treated or control groups.  those are included in this field as well."
+reported_p	numeric	"p value for treated group vs. control group time to endpoint, as reported by author, regardless of statistical test used.  1 when author simply states 'not significant', blank when author does not provide a p value"
+eyeballed	integer	"1 = one or more items of data in this row was eyeballed from a figure or estimated from discussion in text, because the author never provided a number. 0 = all numbers are as provided by author.  one borderline exception to this is that where authors give a range (e.g. ""n=10 to 12 mice per group""), i take the midpoint (in this case, 11) and still leave 0 in this field."
+comments	character	

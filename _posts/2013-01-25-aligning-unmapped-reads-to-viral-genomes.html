@@ -1,0 +1,153 @@
+---
+layout: post
+title: "Aligning unmapped reads to viral genomes"
+author: ericminikel
+date: 2013-01-25 23:25:53
+---
+<p>Today I wanted to take unmapped reads from human exome sequencing and try to see if any of the reads came from viruses (whether due to sample contamination or the person having been infected with the virus).  Because exome capture kits don&#8217;t target any viral sequence, you might be skeptical that I&#8217;d find anything, but in fact exome data can contain all kinds of things that weren&#8217;t captured on purpose &#8211; such as mitochrondrial DNA [<a href="http://www.ncbi.nlm.nih.gov/pubmed/22669646">Picardi &amp; Pesole 2012</a>] &#8211; provided their copy number is high enough.  Every cell contains just one diploid human genome but can contain tens or hundreds of mitochondria, and who knows how many viruses it might contain if infected.</p>
+<p><strong>step 1. get the viral genomes</strong></p>
+<p>I went to <a href="http://www.ncbi.nlm.nih.gov/genome/browse/">NCBI&#8217;s repository of reference genomes</a> but it was hard to search for what I wanted.  Exome sequencing uses DNA, so I was only interested in either <a href="http://en.wikipedia.org/wiki/DNA_virus">DNA viruses</a> or <a href="http://en.wikipedia.org/wiki/Retrovirus">retroviruses</a>.  And I only wanted viruses that might infect humans, so I wasn&#8217;t interested in the plentitude of available reference genomes for viruses that only infect bananas, chickpeas, etc.</p>
+<p>Finally I hit upon <a href="ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/viruses.txt">this text file</a> listing the reference genomes.  After a bit of experimenting, here&#8217;s some bash magic that pulled out the viruses I wanted:</p>
+<pre>egrep 'DNA|Retro' viruses.txt | grep human &gt; viruslist.txt</pre>
+<p>98 in total, including a few strains of the &#8216;classics&#8217;: <a href="http://en.wikipedia.org/wiki/Herpes_simplex_virus">herpes</a>, <a href="http://en.wikipedia.org/wiki/Human_papillomavirus">HPV</a>, <a href="http://en.wikipedia.org/wiki/HIV">HIV</a> as well as several things I had never heard of.  The third column of each row is an accession number from NCBI&#8217;s <code>bioproject</code> database.  It took some guesswork to figure out how to use this number to get the genome.  Let&#8217;s take Adeno-associated virus 2 as an example; its  <code>bioproject </code>accession number is 14060.</p>
+<p>Constructing a URL like this will give you a page about Adeno-associated virus 2:</p>
+<pre>http://www.ncbi.nlm.nih.gov/bioproject/14060</pre>
+<p>However that page won&#8217;t contain the FASTA reference genome nor a link to it.  It will however contain a link to another page with a URL like this:</p>
+<pre>http://www.ncbi.nlm.nih.gov/sites/nuccore?term=14060[BioProject]</pre>
+<p>Which after a couple seconds will redirect to another URL using a different unique id:</p>
+<pre>http://www.ncbi.nlm.nih.gov/nuccore/110645916</pre>
+<p>These unique ids are from the <code>nuccore</code> database, which can be used to retrieve FASTA files via <a href="http://www.ncbi.nlm.nih.gov/books/NBK25499/#chapter4.EFetch">eFetch</a>:</p>
+<pre>http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&amp;id=110645916&amp;rettype=fasta</pre>
+<p>Which works perfectly in a browser &#8211; Chrome prompts me for a location to save the file and the file has what I want &#8211; but fails with <code>wget</code>:</p>
+<pre>wget http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&amp;id=110645916&amp;rettype=fasta &gt; 14060.txt
+[1] 13591
+[2] 13592
+[2]+ Done id=110645916
+[em476@eris1n2 virus]$ --2013-01-25 12:51:15-- http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore
+Resolving eutils.ncbi.nlm.nih.gov... 165.112.7.20, 2607:f220:41e:4290::110
+Connecting to eutils.ncbi.nlm.nih.gov|165.112.7.20|:80... connected.
+HTTP request sent, awaiting response... 400 Bad Request
+2013-01-25 12:51:15 ERROR 400: Bad Request.</pre>
+<p>A colleague pointed out to me that Python&#8217;s <code>urllib</code> behaves more like a browser than <code>wget</code>, so I gave it a try (output truncated):</p>
+<pre>&gt;&gt;&gt; import urllib2
+&gt;&gt;&gt; conn = urllib2.urlopen("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&amp;id=110645916&amp;rettype=fasta")
+&gt;&gt;&gt; result = conn.read()
+&gt;&gt;&gt; conn.close()
+&gt;&gt;&gt; result
+'&gt;gi|110645916|ref|NC_001401.2| Adeno-associated virus - 2, complete genome\nTTGGCCACTCCCTCTCTGCGCGCTCGCTCGCTCACTGAGGCCGGGCGACCAAAGGTCGCCCGACGCCCGG\n</pre>
+<p>Sure enough, it works.  It also works to get the redirect URL, retrieving the nuccore id based on the bioproject id:</p>
+<pre>&gt;&gt;&gt; conn = urllib2.urlopen("http://www.ncbi.nlm.nih.gov/sites/nuccore?term=14060[BioProject]")
+&gt;&gt;&gt; conn
+&lt;addinfourl at 43180400 whose fp = &lt;socket._fileobject object at 0x7ff6b78d8ed0&gt;&gt;
+&gt;&gt;&gt; dir(conn)
+['__doc__', '__init__', '__iter__', '__module__', '__repr__', 'close', 'code', 'fileno', 'fp', 'getcode', 'geturl', 'headers', 'info', 'msg', 'next', 'read', 'readline', 'readlines', 'url']
+&gt;&gt;&gt; conn.url
+'http://www.ncbi.nlm.nih.gov/nuccore/110645916'
+&gt;&gt;&gt; conn.close()</pre>
+<p>So I wrote this python script:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;">#!/usr/bin/env python</span>
+<span style="color: #008000; font-weight: bold;">import</span> <span style="color: #0000ff; font-weight: bold;">sys</span>
+<span style="color: #008000; font-weight: bold;">import</span> <span style="color: #0000ff; font-weight: bold;">urllib2</span>
+
+<span style="color: #408080; font-style: italic;"># input file should contain one column with a list of NCBI bioproject IDs</span>
+<span style="color: #408080; font-style: italic;"># if no input file is supplied, uses stdin</span>
+<span style="color: #008000; font-weight: bold;">if</span> <span style="color: #008000;">len</span>(sys<span style="color: #666666;">.</span>argv) <span style="color: #666666;">&lt;</span> <span style="color: #666666;">2</span>:
+    <span style="color: #008000; font-weight: bold;">print</span> <span style="color: #ba2121;">"Usage: python get-fasta-by-bioproject.py [inputfile=stdin]"</span>
+    <span style="color: #008000;">exit</span>
+
+<span style="color: #408080; font-style: italic;"># open input file or stdin</span>
+<span style="color: #008000; font-weight: bold;">if</span> <span style="color: #008000;">len</span>(sys<span style="color: #666666;">.</span>argv) <span style="color: #666666;">==</span> <span style="color: #666666;">2</span>:
+    inpath <span style="color: #666666;">=</span> sys<span style="color: #666666;">.</span>argv[<span style="color: #666666;">1</span>]
+    i <span style="color: #666666;">=</span> <span style="color: #008000;">open</span>(inpath,<span style="color: #ba2121;">"rb"</span>)
+<span style="color: #008000; font-weight: bold;">else</span>:
+    i <span style="color: #666666;">=</span> sys<span style="color: #666666;">.</span>stdin
+
+<span style="color: #008000; font-weight: bold;">for</span> line <span style="color: #aa22ff; font-weight: bold;">in</span> i<span style="color: #666666;">.</span>readlines():
+    <span style="color: #008000; font-weight: bold;">try</span>:
+        bioprojectId <span style="color: #666666;">=</span> line<span style="color: #666666;">.</span>strip() <span style="color: #408080; font-style: italic;"># remove newline</span>
+        bioprojectUrl <span style="color: #666666;">=</span> <span style="color: #ba2121;">"http://www.ncbi.nlm.nih.gov/sites/nuccore?term="</span><span style="color: #666666;">+</span>bioprojectId<span style="color: #666666;">+</span><span style="color: #ba2121;">"[BioProject]"</span> <span style="color: #408080; font-style: italic;"># create URL to get redirected</span>
+        conn <span style="color: #666666;">=</span> urllib2<span style="color: #666666;">.</span>urlopen(bioprojectUrl) <span style="color: #408080; font-style: italic;"># open URL</span>
+        nuccoreId <span style="color: #666666;">=</span> conn<span style="color: #666666;">.</span>url<span style="color: #666666;">.</span>split(<span style="color: #ba2121;">"/"</span>)[<span style="color: #666666;">-1</span>] <span style="color: #408080; font-style: italic;"># retrieve nuccore ID from redirected URL</span>
+        conn<span style="color: #666666;">.</span>close() <span style="color: #408080; font-style: italic;"># close URL</span>
+        nuccoreUrl <span style="color: #666666;">=</span> <span style="color: #ba2121;">"http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&amp;id="</span><span style="color: #666666;">+</span>nuccoreId<span style="color: #666666;">+</span><span style="color: #ba2121;">"&amp;rettype=fasta"</span> <span style="color: #408080; font-style: italic;"># create URL for FASTA file</span>
+        conn <span style="color: #666666;">=</span> urllib2<span style="color: #666666;">.</span>urlopen(nuccoreUrl) <span style="color: #408080; font-style: italic;"># open URL</span>
+        fasta <span style="color: #666666;">=</span> conn<span style="color: #666666;">.</span>read() <span style="color: #408080; font-style: italic;"># get FASTA text</span>
+        conn<span style="color: #666666;">.</span>close() <span style="color: #408080; font-style: italic;"># close URL</span>
+        outpath <span style="color: #666666;">=</span> nuccoreId <span style="color: #666666;">+</span> <span style="color: #ba2121;">".fa"</span> <span style="color: #408080; font-style: italic;"># create file path to write FASTA </span>
+        <span style="color: #008000; font-weight: bold;">with</span> <span style="color: #008000;">open</span>(outpath,<span style="color: #ba2121;">"wb"</span>) <span style="color: #008000; font-weight: bold;">as</span> o: <span style="color: #408080; font-style: italic;"># auto-close file after done</span>
+            o<span style="color: #666666;">.</span>write(fasta) <span style="color: #408080; font-style: italic;"># write FASTA text to file</span>
+    <span style="color: #008000; font-weight: bold;">except</span> urllib2<span style="color: #666666;">.</span>HTTPError:
+        <span style="color: #008000; font-weight: bold;">print</span> <span style="color: #ba2121;">"Unable to retrieve genome for bioproject "</span> <span style="color: #666666;">+</span> bioprojectId
+
+i<span style="color: #666666;">.</span>close() <span style="color: #408080; font-style: italic;"># close input file</span></pre>
+</div>
+<p>And with that written, you just need this one-liner:</p>
+<pre>cut -f3 viruslist.txt | get-fasta-by-bioproject.py</pre>
+<p>So putting that together with the earlier steps, three lines total:</p>
+<pre>wget ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/viruses.txt
+egrep 'DNA|Retro' viruses.txt | grep human &gt; viruslist.txt
+cut -f3 viruslist.txt | get-fasta-by-bioproject.py</pre>
+<p>Or if you want to be really bold, combine it all into one line:</p>
+<pre>wget -qO- ftp://ftp.ncbi.nlm.nih.gov/genomes/GENOME_REPORTS/viruses.txt | egrep 'DNA|Retro' | grep human | cut -f3 | get-fasta-by-bioproject.py</pre>
+<p>And with that I was able to retrieve 95 of the 98 viral reference genomes &#8211; I got errors for 32033, 41109, and 49137.  On further inspection all three of these say &#8220;No data&#8221; in the final column of the virus list file, indicating a genome is not available.  Two were (presumably obscure?) strains of HPV, and one was HIV-1 (the most common strain of HIV), but there were two HIV-1 rows in the original virus list and the other one <em>did</em> have a genome associated with it, so it looks like I&#8217;ve got HIV-1 covered.</p>
+<p><strong> step 2. combine and index viral genomes with <a href="http://bio-bwa.sourceforge.net/bwa.shtml">bwa</a></strong></p>
+<p>Viral genomes are so small this takes about 4 seconds total:</p>
+<pre>mkdir ref
+cat *.fa &gt; ref/viruses.fa
+cd ref
+bwa index viruses.fa</pre>
+<p>Amazing, really, that they can do so much damage with so little information content.</p>
+<p><strong>step 3. pull out unmapped reads from original BAMs</strong></p>
+<p>I had previously aligned these exomes to human reference genome GRCh37 (using <a title="Exome sequencing pipeline using GATK" href="/2012/09/19/exome-sequencing-pipeline-using-gatk/">this pileline</a>), so I only want to try aligning the unmapped reads to the viruses. <code><a href="http://samtools.sourceforge.net/samtools.shtml">samtools</a> view</code> can pull out unmapped reads by forcing (<code>-f</code>) the unmapped (<code>0x04</code>) flag:</p>
+<pre>samtools view -f 0x04 -h -b projectname.sampleid.clean.dedup.recal.bam -o projectname.sampleid.unmapped.bam</pre>
+<p>My original BAMs had about 15-27M pairs of reads, of which ~10% were unmapped, so this command gave about 3-6M single-end unmapped reads as the output.   I recommend sending each file as its own job using a simple loop:</p>
+<pre>for i in {1820..1869}
+do
+    bsub.py short 0:30 "samtools view -f 0x04 -h -b hdex2.${i}.clean.dedup.recal.bam -o hdex2.${i}.unmapped.bam"
+done</pre>
+<p>The 30 minute time limit is just to be safe; most files finish in under 10 minutes.  <a name="bsub"></a>bsub.py is just a very short script I wrote as a proxy for <code>bsub</code> so I wouldn&#8217;t have to type in <code>cd</code> and the current path every time I wanted to submit a job to run in my current directory.  Here it is:</p>
+<div class="highlight" style="background: #f8f8f8;">
+<pre style="line-height: 125%;"><span style="color: #408080; font-style: italic;">#!/usr/bin/env python</span>
+<span style="color: #008000; font-weight: bold;">import</span> <span style="color: #0000ff; font-weight: bold;">os</span>
+<span style="color: #008000; font-weight: bold;">import</span> <span style="color: #0000ff; font-weight: bold;">sys</span>
+
+cwd <span style="color: #666666;">=</span> os<span style="color: #666666;">.</span>getcwd() <span style="color: #408080; font-style: italic;"># get current directory</span>
+queue <span style="color: #666666;">=</span> sys<span style="color: #666666;">.</span>argv[<span style="color: #666666;">1</span>] <span style="color: #408080; font-style: italic;"># get LSF queue name</span>
+timelimit <span style="color: #666666;">=</span> sys<span style="color: #666666;">.</span>argv[<span style="color: #666666;">2</span>] <span style="color: #408080; font-style: italic;"># get time limit</span>
+cmd <span style="color: #666666;">=</span> sys<span style="color: #666666;">.</span>argv[<span style="color: #666666;">3</span>] <span style="color: #408080; font-style: italic;"># get command</span>
+
+<span style="color: #408080; font-style: italic;"># create bsub command and echo to user</span>
+bsubcmd <span style="color: #666666;">=</span> <span style="color: #ba2121;">"bsub -q "</span><span style="color: #666666;">+</span>queue<span style="color: #666666;">+</span><span style="color: #ba2121;">" -W "</span><span style="color: #666666;">+</span>timelimit<span style="color: #666666;">+</span><span style="color: #ba2121;">" </span><span style="color: #bb6622; font-weight: bold;">\"</span><span style="color: #ba2121;">cd "</span><span style="color: #666666;">+</span>cwd<span style="color: #666666;">+</span><span style="color: #ba2121;">"; "</span><span style="color: #666666;">+</span>cmd<span style="color: #666666;">+</span><span style="color: #ba2121;">"</span><span style="color: #bb6622; font-weight: bold;">\"</span><span style="color: #ba2121;">"</span>
+<span style="color: #008000; font-weight: bold;">print</span> bsubcmd
+
+<span style="color: #408080; font-style: italic;"># submit the job</span>
+os<span style="color: #666666;">.</span>system(bsubcmd)</pre>
+</div>
+<p><strong>step 4. realign unmapped reads to viral genomes</strong></p>
+<p>At this point I have BAMs of unmapped reads.  Sometimes one read will map and its mate won&#8217;t, so my reads are no longer all necessarily paired-end.  While I could try doing paired-end alignment on the pairs and single-end on the orphans, for simplicity I am just going to treat all the reads as single-end now.  BWA can actually align directly from BAM files, so no need to <a href="http://picard.sourceforge.net/javadoc/net/sf/picard/sam/SamToFastq.html">decompose to FASTQs using Picard</a>.</p>
+<p>An incredibly neat trick is to use <a href="http://superuser.com/questions/7448/can-the-output-of-one-command-be-piped-to-two-other-commands"><code>tee</code></a> to pipe BWA&#8217;s output directly to two different samtools processes to create separate mapped and unmapped files:</p>
+<pre>for i in {1820..1869}
+do
+    bsub.py short 00:20 "bwa aln -b ref/viruses.fa hdex2.${i}.unmapped.bam &gt; ${i}.virus.sai; bwa samse ref/viruses.fa ${i}.virus.sai hdex2.${i}.unmapped.bam | tee &gt;(samtools view - -Sb -f 0x04 -o ${i}.virus.unmapped.bam) | samtools view - -Sb -F 0x04 -o ${i}.virus.mapped.bam;"
+done</pre>
+<p>When I did this, I found that although the <code>tee</code> command with parentheses works fine directly on the command line, it didn&#8217;t work when part of a <code>bsub</code> command: my LSF system felt there was some syntax error with the parentheses.  If that happens to you too, then do this step the old boring way, writing out a BAM to disk and then reading it back into memory:</p>
+<pre>for i in {1820..1869}
+do
+    bsub.py short 00:20 "bwa aln -b ref/viruses.fa hdex2.${i}.unmapped.bam &gt; ${i}.virus.sai; bwa samse ref/viruses.fa ${i}.virus.sai hdex2.${i}.unmapped.bam | samtools view - -Sb -o ${i}.virus.all.bam; samtools view ${i}.virus.all.bam -b -F 0x04 -o ${i}.virus.mapped.bam; samtools view ${i}.virus.all.bam -b -f 0x04 -o ${i}.virus.unmapped.bam;"
+done</pre>
+<p>At this point you&#8217;re working with small files so things should be quick &#8211; most of my jobs finished in a couple of minutes total.  To be safe, I set the runtime limit at 20 minutes.</p>
+<p>Afterwards you can check what fraction of your reads that didn&#8217;t map to the human genome did map to a viral genome.  It will probably be a very small fraction.  These commands will give you the read count for each:</p>
+<pre>samtools view -c 1820.virus.unmapped.bam
+samtools view -c 1820.virus.mapped.bam</pre>
+<p><strong>step 5. see which viral genomes had reads aligned</strong></p>
+<p>Simplest way:</p>
+<pre>samtools view 1820.virus.mapped.bam | cut -f3 | sort | uniq -c</pre>
+<p>Will run in &lt; 1 minute and will give you a count of reads for each virus. You can easily tell that some viruses are either trace amounts or probably wrong alignments ( &lt; 150 reads per virus per sample) and others are definitely really in the sample (several thousand or tens of thousands of reads for one virus in one sample).</p>
+<p>To do it for all your files and compile into one handy table:</p>
+<pre>for i in {1820..1869}
+do
+    samtools view ${i}.virus.mapped.bam | cut -f3 | sort | uniq -c | awk -v i=$i '{print i"\t"$1"\t"$2}' &gt;&gt; virus.read.counts
+done</pre>
+<p><strong>step 6: interpretation</strong></p>
+<p>You can compute coverage as (total number of reads) * (read length) / (virus genome size), which is probably a good proxy for viral copy number.</p>
