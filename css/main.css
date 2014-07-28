@@ -413,7 +413,7 @@ table {
 }
 
 /* first row of tables is bold */
-tr:first-child {
+table:first-child {
   font-weight: bold;
 }
 
@@ -424,4 +424,12 @@ table td {
     border-bottom: 1px solid #eeeeee;
     text-align: middle;
     vertical-align: middle;
+}
+
+
+/* pre-scrolling. EVM 2014-07-28 */
+/* ----------------------------------------------------------*/
+
+pre {
+  overflow: scroll;
 }
