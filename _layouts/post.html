@@ -18,27 +18,19 @@ layout: default
   
   <!-- Output author details if some exist. -->
   {% if author %}
-      <hr />
-      <table>
-        <tr>
-            <td rowspan=3>
-            {% if author.image100 %}<img src="{{ author.image100 }}" />{% endif %}
-            </td>
-            <td>
-            <strong>{% if author.name %}About {{ author.name }}{% endif %}</strong>
-            </td>
-        </tr>
-        <tr>
-          <td>{% if author.bio %}{{ author.bio }}{% endif %}</td>
-        </tr>
-        <tr>
-            <td>
-            {% if author.google_plus %}
+      <div style="display: block;">
+            {% if author.image100 %}<div style="float: left; clear: left; padding-right: 15px;"><img src="{{ author.image100 }}" /></div>{% endif %}
+            <div style="clear: none;">
+            <p><strong>{% if author.name %}About {{ author.name }}{% endif %}</strong></p>
+            <p>{% if author.bio %}{{ author.bio }}{% endif %}</p>
+            <p>{% if author.google_plus %}
             <!-- Link to the authors Google page. -->
             <link rel="author" href="{{ author.google_plus }}?rel=author" />
             <div class="g-follow" data-annotation="bubble" data-height="15" data-href="{{ author.google_plus }}" data-rel="author"></div>
+            </p>
             {% endif %}
-            </td>
-      </table>
+            </div> 
+        </div> 
+        <div style="clear: both;" />
   {% endif %}
 </div>
