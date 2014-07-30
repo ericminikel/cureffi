@@ -12,4 +12,33 @@ layout: default
   {{ content }}
   </article>
 
+  <!-- Author details - used code from http://blog.sorryapp.com/blogging-with-jekyll/2014/02/06/adding-authors-to-your-jekyll-site.html -->
+  <!-- Look the author details up from the site config. -->
+  {% assign author = site.data.authors[page.author] %}
+  
+  <!-- Output author details if some exist. -->
+  {% if author %}
+      <hr />
+      <table>
+        <tr>
+            <td rowspan=3>
+            {% if author.image100 %}<img src="{{ author.image100 }}" />{% endif %}
+            </td>
+            <td>
+            <strong>{% if author.name %}About {{ author.name }}{% endif %}</strong>
+            </td>
+        </tr>
+        <tr>
+          <td>{% if author.bio %}{{ author.bio }}{% endif %}</td>
+        </tr>
+        <tr>
+            <td>
+            {% if author.google_plus %}
+            <!-- Link to the authors Google page. -->
+            <link rel="author" href="{{ author.google_plus }}?rel=author" />
+            <div class="g-follow" data-annotation="bubble" data-height="15" data-href="{{ author.google_plus }}" data-rel="author"></div>
+            {% endif %}
+            </td>
+      </table>
+  {% endif %}
 </div>
