@@ -18,7 +18,7 @@ layout: default
   
   <!-- Output author details if some exist. -->
   {% if author %}
-      <div style="display: block;">
+      <div class="author-info">
             {% if author.image100 %}<div style="float: left; clear: left; padding-right: 15px;"><img src="{{ author.image100 }}" /></div>{% endif %}
             <div style="clear: none;">
             <p><strong>{% if author.name %}About {{ author.name }}{% endif %}</strong></p>

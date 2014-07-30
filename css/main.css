@@ -433,3 +433,11 @@ table td {
 pre {
   overflow: scroll;
 }
+
+/* author info block EVM 2014-07-30 */
+.author-info {
+  display: block;
+  background-color: #EEEEEE;
+  padding: 10px;
+  margin: 50px;
+}
