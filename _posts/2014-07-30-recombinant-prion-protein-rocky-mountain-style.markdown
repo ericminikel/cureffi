@@ -4,7 +4,7 @@ title:  "Recombinant prion protein, Rocky Mountain-style"
 date:   2014-07-30, 12:00:00
 author: ericminikel
 categories: 
-thumb120: /media/2014/07/rprp-thumbnail.png
+thumb120: http://www.cureffi.org/media/2014/07/rprp-thumbnail.png
 summary200: A detailed pictorial walkthrough of how the Caughey lab prepares recombinant PrP for RT-QuIC.
 ---
 
