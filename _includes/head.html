@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="robots" content="noindex"> <!-- tell Google not to index, until cutover to CureFFI.org -->
     <meta name="description" content="{{ site.description }}">
-    <link rel="canonical" href="{{ page.url }}">
+    <link rel="canonical" href="{% if page.url == '/' %}http://www.cureffi.org/archives/{% else %}{{ page.url }}{% endif %}">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/main.css">
