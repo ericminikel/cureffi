@@ -2,9 +2,9 @@
 title: CureFFI.org
 twitter_username: cureffi
 github_username: ericminikel
-description: "Eric Vallabh Minikel's blog"
-baseurl: "http://www.cureffi.com"
-url: "http://www.cureffi.com"
+description: "Not if, when."
+baseurl: "http://www.cureffi.org"
+url: "http://www.cureffi.org"
 
 # Build settings
 markdown: kramdown
