@@ -1,6 +1,8 @@
 ---
 layout: page
 title: Archives
+permalink: /archives/
+header: true
 ---
 
 <ul>
