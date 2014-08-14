@@ -441,3 +441,16 @@ pre {
   padding: 10px;
   margin: 50px;
 }
+
+/* buttons. EVM 2014-08-14 */
+
+.btn {
+  background-color: #e65f00;
+  color: #ffffff;
+  font-weight: bold;
+  display: inline-block;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 5px;
+}
