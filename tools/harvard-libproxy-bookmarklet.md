@@ -4,7 +4,7 @@ title: Harvard libraries proxy server bookmarklet
 permalink: /tools/harvard-libproxy-bookmarklet/
 ---
 
-The easiest way to access full-text articles through Harvard libraries is via the proxy server. This means that you navigate to the publisher's website and then add `.ezp-prod1.hul.harvard.edu` after the domain name. Harvard will prompt you for your HUID and PIN. For instance:
+The easiest way to access full-text articles through Harvard libraries is via the proxy server. This means that you navigate to the publisher's website and then add **.ezp-prod1.hul.harvard.edu** after the domain name. Harvard will prompt you for your HUID and PIN. For instance:
 
 [http://www.nature.com/nature/journal/v356/n6370/abs/356577a0.html](http://www.nature.com/nature/journal/v356/n6370/abs/356577a0.html)
 
