@@ -4,6 +4,4 @@ title: Contact
 permalink: /contact/
 ---
 
-Note that I cannot reply to requests for help with the diagnosis or treatment of any disease.
-
-<iframe src="https://docs.google.com/forms/d/1UK5Af5a0YV8Ajzb4oJaFlUBjWMcCMT_f2F2pNRaqOXw/viewform?embedded=true#start=embed" width="760" height="900" scrolling="no" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+<iframe height="557" allowTransparency="true" frameborder="0" scrolling="no" style="width:100%;border:none"  src="https://cureffi.wufoo.com/embed/z14dhheo1dips8x/"><a href="https://cureffi.wufoo.com/forms/z14dhheo1dips8x/">Fill out my Wufoo form!</a></iframe><div id="wuf-adv" style="font-family:inherit;font-size: small;color:#a7a7a7;text-align:center;display:block;">Online contact and registration forms from <a href="http://www.wufoo.com">Wufoo</a>.</div>
