@@ -4,9 +4,11 @@ title: "Notes from the CJD2014 conference"
 author: ericminikel
 location: Washington, D.C.
 date: 2014-07-14 23:07:12
+thumb120: http://www.cureffi.org/media/2014/08/joel-watts-cjd2014-thumb120.png
+summary200: Notes from the CJD Foundation's 2014 conference at the Washington Court Hotel in Washington, D.C. on July 11-14, 2014.
 ---
 
-These are notes from the CJD2014 hosted by CJD Foundation at the Washington Court Hotel in Washington, D.C. on July 11-14, 2014.
+These are notes from the CJD2014 conference hosted by CJD Foundation at the Washington Court Hotel in Washington, D.C. on July 11-14, 2014.
 
 *As of August 7, 2014, CJD Foundation has posted [videos](http://www.cjdfoundation.org/2014-cjd-foundation-family-conference-video-presentations) of most of the presentations. As of August 19, 2014, I have embedded these videos below and updated the text to include some details that are mentioned in the videos. If you have any concerns about content of this blog post, please [contact me](/contact)*
 
