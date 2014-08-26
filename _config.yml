@@ -7,5 +7,5 @@ baseurl: "http://www.cureffi.org"
 url: "http://www.cureffi.org"
 
 # Build settings
-markdown: kramdown
+markdown: redcarpet
 permalink: pretty
