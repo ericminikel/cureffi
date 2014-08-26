@@ -130,53 +130,7 @@ git push # push to remote repo
 
 If we go back to GitHub, now we see our changes.
 
-But "hello world" is a pretty lousy README message, so let's open README.md in a text editor and put in some more useful text and save it.
-
-Quiz: If I now type `git status` what will I see?
-
-Answer: The README file has "untracked changes" that are only in the working directory. We haven't yet added our changes to the staging area. Before we do so, it might be useful to *see* what has changed. Maybe if the new README message is even worse than the first one, we don't want to bother staging it. We can have a look at the changes using `git diff`.
-
-```bash
-git diff README.md # view differences between old and new file. what steps is this the difference between?
-```
-
-We'll see that we've deleted one line and added one other line. Great! Let's roll with it:
-
-```bash
-git add README.md
-git commit -m "old readme was not very helpful" # add to local repo
-git push # push to remote repo
-```
-
-Now we can do the same with our Python code
-# edit the python code
-git add nth_fibonacci.py 
-git commit -m "using fancy approximation" 
-git push
-# go to github.com and browse to old version. see? no need for "nth_fibonacci_old.py"
-# go to github.com and add a file, wrapper.py
-git status # is there a difference?
-git pull
-# have a collaborator comment on the changed python code; we decide to revert the change
-git log # look at the list of commits
-# use git revert <sha1 hash of commit of interest>
-git status # note that the change is automatically committed
-git push
-# go to GitHub and browse history. old fancy code is still there, and wrapper has not been removed.
-```
-
-Here is the original code:
-
-```python
-def nth_fibonacci(n): 
-    n = int(n)
-    fibs = [1,1] # initialize with first two elements
-    while len(fibs) < n:
-        fibs.append(fibs[-2]+fibs[-1])
-    return fibs[n-1]
-```
-
-And the "fancy" code:
+Now suppose we're browsing the web and we stumble upon [Binet's formula](http://en.wikipedia.org/wiki/Fibonacci_number#Closed-form_expression), and read about [how to implement it](http://stackoverflow.com/a/1525544/3806692). We get excited to use that. Let's open a text editor and change our Python code to this:
 
 ```python
 from math import floor, sqrt
@@ -186,14 +140,64 @@ def nth_fibonacci(n):
     return int(floor((phi**n)/sqrt(5)+.5))
 ```
 
-The "fancy" method above is described [here](http://stackoverflow.com/a/1525544/3806692). It is only as exact as your floating-point arithmetic. In python it gives the same answer as the original method up through n = 70, but for n = 71 it gives 308061521170130 instead of 308061521170129.
+Quiz: In what "zone" do my changes exist?
 
-And here is the wrapper file:
+Answer: So far they are only in the working directory; git is not "tracking" them. We can find this out using `git status`. In fact, maybe we want to see what all has changed - to make sure the code is good - before we stage it. We can compare the old and new versions with `git diff` and see a line-by-line breakdown of what has changed. If we're happy with the changes, we can roll with it:
+
+```bash
+git add nth_fibonacci.py 
+git commit -m "using fancy approximation" 
+git push
+```
+
+Notice that I didn't copy my old code into a file named "nth_fibonacci_old.py", and I didn't leave the old method commented out in the function. I don't need to - if I go to the file on GitHub and click on History, I can see that line-by-line comparison of the old and new versions, and if I click on "Browse code" for the old version, I see it exactly how it was before I made the change. Pretty neat!
+
+The rest of the world can see it too. My colleague Sahar is a stickler about floating point arithmetic. She finds my code browsing on the web, and is concerned that Binet's formula is only as exact as the floating point arithmetic in Python. She comments on the commit where I changed to the "fancy method":
+
+> @ericminikel this method is only as exact as your floating-point arithmetic. In python it gives the same answer as the original method up through n = 70, but for n = 71 it gives 308061521170130 instead of 308061521170129.
+
+Oh no! Is it true? I want to test out my code and see if Sahar is right. I realize it is kind of silly that I can't actually run my code from the command line to see what answer it gives. To fix this problem, I create a new file "wrapper.py" in my remote repo on GitHub.com and write this code in it:
 
 ```python
 import sys
 from nth_fibonacci import nth_fibonacci
 print nth_fibonacci(sys.argv[1]) # call the function on the first command line arg
 ```
+
+Quiz: Where does wrapper.py exist currently?
+
+Answer: It is only in the remote repository, I don't have any copy of it locally. `git status` doesn't know about it either, because it only compares my working directory, staging area and local repo. If I want this work locally, I'll need to `pull` it down from the cloud:
+
+```bash
+git pull
+```
+
+Now I have the code locally. Note that when you `pull` it pulls to the local repo, which in turn updates your working directory. If you have untracked files, git will leave them alone, but other than that, git owns your directory, and will write and overwrite things at will.
+
+Now I try out my code, and sure enough, I get the answer Sahar said I would:
+
+```bash
+python wrapper.py 71
+# 308061521170130
+```
+
+Now I want to go back to the old way of calculating Fibonacci numbers. There are a few ways of doing this - `git reset`, which I won't go into today, rolls the whole repository back to how it looked at a particular commit. That's useful in many cases, but right now I don't want to do that because I have this new "wrapper.py" code which was added *after* I changed my Fibonacci code, and I don't want to lose it. Instead, the right tool for the job is `git revert`. I can figure out which commit I want to revert by having a look at my log:
+
+```bash
+git log # look at the list of commits
+```
+
+I find the 32-byte SHA1 hash of the commit of interest, and type `git revert <hash>`. This creates a new commit which undoes the old commit. Note that here you're operating in the local repo, so reverts are automatically committed. If you type `git status` you'll see there are no changes - the reversion is already in the local repo. This means it also overwrites whatever I had in that file on disk - remember, git owns this directory.
+
+If we do a little test, we'll see that Sahar was right! The old Fibonacci code gives a different answer than above.
+
+```bash
+python wrapper.py 71
+# 308061521170129
+``` 
+
+Based on this, we do want to `push` our changes out to the world. 
+
+That's all for today, but we have barely scratched the surface. There are loads more cool things you can do with git. 
 
 Here is the repo we created in today's tutorial: [https://github.com/ericminikel/fibonacci](https://github.com/ericminikel/fibonacci).
