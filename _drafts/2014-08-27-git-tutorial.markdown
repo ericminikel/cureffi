@@ -52,32 +52,103 @@ We'll go through examples of all this today.
 
 Here's an example we'll walk through in the tutorial. To follow along and do this yourself, you'll want to go to [GitHub.com](https://github.com/) and register yourself an account. You can have unlimited free public repositories; their business model is based on charging for private repositories. If you have a .edu email address, though, you can [sign up for an education discount](https://education.github.com/discount_requests/new) which gives you five free private repos. You'll also need to [install and configure git](https://help.github.com/articles/set-up-git).
 
-Here is the code for today's example:
+First, we'll create a directory for our project, and initialize a local git repository with `git init`:
 
 ```bash
 mkdir fibonacci # create a folder for our project
 cd fibonacci
 # add some code in nth_fibonacci.py
 git init . # start a git repo locally
+```
+
+Now we have a *local* git repo, though we still haven't connected to anything on the web. Let's add some Python code to calculate the n^th Fibonacci number:
+
+```python
+def nth_fibonacci(n): 
+    n = int(n)
+    fibs = [1,1] # initialize with first two elements
+    while len(fibs) < n:
+        fibs.append(fibs[-2]+fibs[-1])
+    return fibs[n-1]
+```
+
+And now let's `add` that code to our staging area and `commit` it to our local repository.
+
+```bash
 git add nth_fibonacci.py # add the new python code to be tracked by git
 git commit -m "calculate nth fibonacci number" # commit the changes to the local repo
-# go to github.com and start a new public repo
+```
+
+Now that we have some work, we've got something to lose! Let's not just keep everything locally - let's go to github.com and start a new public repo which will hold our work for all the world to see.
+
+![git new repo](/media/2014/08/git-new-repo.png)
+
+For this example, we *won't* initialize the repository with a README. If you do that, then you have some work that's only local (your Fibonacci code) and some work that's only remote (your README) and you'll have to reconcile the two versions of the repository. We'll get to that in a minute, but I want to cover some more basics first.
+
+Once your repository is created, follow the instructions on screen to connect your existing local repository to it. Specifically, use these two lines:
+
+```bash
 git remote add origin git@github.com:ericminikel/fibonacci.git # the github remote is now named "origin"
 git push -u origin master # set the "origin" remote to be upstream of the local "master" branch
-# add a README.md with just "hello world"
+```
+
+The first line tells git (which is a program running locally on your machine) to consider ericminikel's fibonacci repo on GitHub.com as a remote copy of your local repository. You'll refer to this remote copy as "origin". The second line sets a default: your local "master" copy corresponds to the remote "origin" copy. The `-u` stands for upstream: it means that "origin" is upstream of "master". One needs to know a lot more about git to understand why any of this matters, but don't worry about it for now - remember we just copied this code from what GitHub told us to do, so we're not actually doing anything fancy or scary.
+
+Now let's have a look at our remote repository. Look - it's now in sync with our local! The Fibonacci code that we created locally is there - along with a message reminding us that we really should add a README.
+
+![git remote in sync](/media/2014/08/git-remote-in-sync.png)
+
+So let's go ahead and add a README:
+
+```bash
+echo "This is just an example git repo for a tutorial on git." > README.md
+```
+
+Quiz: based on what you know about the four "zones" of your git universe above, where is this README file? 
+
+Answer: We can type `git status` to learn more. It turns out that it is simply in our working directory - git considers it an "untracked" file. If we `git add` it and then `git status` again, we find that now it's being "tracked" as a "new file":
+
+```bash
 git status # where is the README currently?
 git add README.md # add to staging area
 git status # now where is the README?
+```
+
+If we're happy with our changes, then we can commit them to our local repo.
+
+```bash
 git commit -m "added a readme" # commit to the local repo
-# go to GitHub - is the readme there yet?
+```
+
+Quiz: now if we go back to the remote repo on GitHub.com, what will we see? 
+
+Answer: the new README is not there yet - we've only committed it to the *local* repo. If we want it to be on the web, we'll need to `push` it there:
+
+```bash
 git push # push to remote repo
-# go back to GitHub - how about now?
-# open a text editor and edit the README
-git status # now where are our changes to the README?
-git add README.md # add to staging area
+```
+
+If we go back to GitHub, now we see our changes.
+
+But "hello world" is a pretty lousy README message, so let's open README.md in a text editor and put in some more useful text and save it.
+
+Quiz: If I now type `git status` what will I see?
+
+Answer: The README file has "untracked changes" that are only in the working directory. We haven't yet added our changes to the staging area. Before we do so, it might be useful to *see* what has changed. Maybe if the new README message is even worse than the first one, we don't want to bother staging it. We can have a look at the changes using `git diff`.
+
+```bash
 git diff README.md # view differences between old and new file. what steps is this the difference between?
+```
+
+We'll see that we've deleted one line and added one other line. Great! Let's roll with it:
+
+```bash
+git add README.md
 git commit -m "old readme was not very helpful" # add to local repo
 git push # push to remote repo
+```
+
+Now we can do the same with our Python code
 # edit the python code
 git add nth_fibonacci.py 
 git commit -m "using fancy approximation" 
