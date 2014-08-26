@@ -8,4 +8,6 @@ url: "http://www.cureffi.org"
 
 # Build settings
 markdown: redcarpet
+redcarpet:
+  extensions: ["no_intra_emphasis", "fenced_code_blocks", "autolink", "strikethrough", "superscript", "tables"]
 permalink: pretty
