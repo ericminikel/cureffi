@@ -4,6 +4,7 @@ title:  "A retrospective view of muscle disease in PrP-overexpressing mice"
 date:   2014-08-26 12:00:00
 categories: 
 location: Boston, MA
+summary200: Twenty years ago it was reported that over-exrpession of wild-type prion protein caused a muscle disease in transgenic mice, but the cause was never entirely clear. Was this a prion disease?
 ---
 
 Only recently, I got around to giving one of the prion classics, [[Westaway 1994]], a thorough read. Despite being now 20 years old, the paper contained a number of surprises for me that I wasn't able to sort out until I tracked down two of the authors and plied them with questions at Prion2014.
