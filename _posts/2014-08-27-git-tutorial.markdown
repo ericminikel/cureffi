@@ -4,6 +4,8 @@ title:  "Git tutorial"
 date:   2014-08-27 12:00:00
 categories: 
 location: Boston, MA
+thumb120: http://www.cureffi.org/media/2014/08/git-thumbnail.png
+summary200: An introduction to git and GitHub for people who have never used a version control system. Covers git add, commit, status, diff, push, pull and revert.
 ---
 
 This post is my presentation for a half-hour tutorial on git and GitHub delivered to my department, the [Analytical and Translational Genetics Unit](https://www.atgu.mgh.harvard.edu/) at MGH, on August 27, 2014 as part of our summer tutorial series. An important disclaimer: I myself am far from being a git expert! I volunteered to give this tutorial because I figured it would be a chance to shore up my own basics. If you see any mistakes, please leave a comment below.
