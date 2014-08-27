@@ -2,6 +2,7 @@
 layout: post
 title:  "Git tutorial"
 date:   2014-08-27 12:00:00
+author: ericminikel
 categories: 
 location: Boston, MA
 thumb120: http://www.cureffi.org/media/2014/08/git-thumbnail.png
