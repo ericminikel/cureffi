@@ -27,8 +27,11 @@ layout: default
             <!-- Link to the authors Google page. -->
             <link rel="author" href="{{ author.google_plus }}?rel=author" />
             <div class="g-follow" data-annotation="bubble" data-height="15" data-href="{{ author.google_plus }}" data-rel="author"></div>
-            </p>
             {% endif %}
+            {%if author.twitter %}
+            <a href="https://twitter.com/{{ author.twitter }}" class="twitter-follow-button" data-show-count="false">Follow @{{ author.twitter }}</a>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            {% endif %}</p>
             </div> 
         </div> 
         <div style="clear: both;" />
