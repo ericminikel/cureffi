@@ -4,7 +4,10 @@ title: "Structural mutants of PrP"
 author: ericminikel
 date: 2014-04-29 09:32:10
 location: Boston, MA
+summary200: A comprehensive catalog of insertion and deletion mutants of the prion protein created both by experiments of nature and experiments of scientists.
 ---
+
+*Post last updated September 1, 2014*
 
 Over 30 different structurally mutated versions of PrP have been observed naturally or experimentally. Understanding the behavior of these mutant PrPs can help to teach us what parts of PrP are required for prion replication and for neurotoxicity. The mutants which were studied in mice and in N2a cells up to 2008 were reviewed elegantly in [Aguzzi 2008](http://www.ncbi.nlm.nih.gov/pubmed/18558863). This post is intended to provide an encyclopedic reference to all these mutants, including those observed in humans and other species. Please comment if anything is incorrect or missing. My aim will be to keep this post up to date with all the mutants reported in the literature as time goes on and provide a detailed description of each.
 
@@ -25,6 +28,12 @@ _[Code that created this graphic](https://github.com/ericminikel/prp-misc/blob/m
 ![](/wp-content/uploads/2014/04/Y145X.png)
 
 This truncating mutation has been observed in one patient with cerebral amyloid angiopathy [[Kitamoto 1993](http://www.ncbi.nlm.nih.gov/pubmed/8097911), [Ghetti 1996](http://www.ncbi.nlm.nih.gov/pubmed/8570627/)]. It has never been transmitted to mice, but the PrP amyloid plaques in this disease do include the wild-type allele&#8217;s protein product, as evidenced by the immunoreactivity of plaques to antisera against PrP220-231, a region not present in the Y145X allele [[Ghetti 1996](http://www.ncbi.nlm.nih.gov/pubmed/8570627/)]. To me this seems to be evidence of intermolecular transmissibility at a minimum, even if interorganismal transmissibility has not been observed. Attempts to model this mutation in the mouse have been unsuccessful (see 144# below).
+
+**HuPrP Q160X**
+
+![](/media/2014/09/Q160X.png)
+
+This truncating mutation has been reported a few times [[Finckh 2000a], [Finckh 2000b]] but was described in the greatest detail by [[Jayadev 2011]] in a proband and her mother. One of the two had chronic diarrhea, but unlike in the Y163X pedigree (see below) this occurred only after onset of dementia. The PrP plaques did not react with C-terminal antibodies, suggesting no involvement of the wild-type allele. Transmissibility was not tested.
 
 **HuPrP Y163X**
 
@@ -54,15 +63,21 @@ This naturally occurring nonsense mutation, homologous to G29X in HuPrP numberin
 
 ![](/wp-content/uploads/2014/04/2-OPRD.png)
 
-A single octapeptide repeat deletion (1-OPRD) is a neutral variant found in Mediterranean populations [[Palmer 1993](http://www.ncbi.nlm.nih.gov/pubmed/8100163)], with about a ~1% allele frequency. 2-OPRD alleles have apparently been reported in patients with prion disease, though I&#8217;ve only seen this mentioned in figures [e.g. [Beck 2010](http://www.ncbi.nlm.nih.gov/pubmed/20583301)] and was unable to find the original citation in a Google Scholar search.
+A single octapeptide repeat deletion (1-OPRD) is a neutral variant found in Mediterranean populations [[Palmer 1993](http://www.ncbi.nlm.nih.gov/pubmed/8100163)], with about a ~1% allele frequency. 2-OPRD alleles have been reported in two patients with prion disease [[Beck 2001], [Capellari 2002]]. Transmissibility was not tested.
 
 **HuPrP OPRI mutants / MoPrP PG14**
 
 ![](/wp-content/uploads/2014/04/OPRI.png)
 
-There is a vast literature on octapeptide repeat insertions (OPRIs) in humans, which I&#8217;m not terribly familiar with and deserves a separate post at some point. OPRIs of varying lengths have been reported. 1-, 2- and 3-OPRI have only been in single case reports and may not be pathogenic, 4-OPRI has been seen more often but may be incompletely penetrant [[Kaski 2011](http://www.ncbi.nlm.nih.gov/pubmed/21616973)] while &ge; 5-OPRI can be somewhat more confidently characterized as Mendelian disease alleles [[Mead 2007](http://www.ncbi.nlm.nih.gov/pubmed/17709704), [Mead 2006](http://www.ncbi.nlm.nih.gov/pubmed/16923955/)]. The OPRI mutations have a fairly early age of onset (e.g. 35 for 6-OPRI), a long disease course (several years), and are transmissible to HuPrP mice [[Mead 2006](http://www.ncbi.nlm.nih.gov/pubmed/16923955/)].
+There is a vast literature on octapeptide repeat insertions (OPRIs) in humans, which I&#8217;m not terribly familiar with and deserves a separate post at some point. OPRIs of varying lengths have been reported. 1-, 2- and 3-OPRI have only been in single case reports and may not be pathogenic, 4-OPRI has been seen more often but may be incompletely penetrant [[Kaski 2011](http://www.ncbi.nlm.nih.gov/pubmed/21616973)] while &ge; 5-OPRI can be somewhat more confidently characterized as Mendelian disease alleles [[Mead 2007](http://www.ncbi.nlm.nih.gov/pubmed/17709704), [Mead 2006](http://www.ncbi.nlm.nih.gov/pubmed/16923955/), [Kumar 2011]]. The OPRI mutations have a fairly early age of onset (e.g. 35 for 6-OPRI), a long disease course (several years), and are transmissible to HuPrP mice [[Mead 2006](http://www.ncbi.nlm.nih.gov/pubmed/16923955/)].
 
-The longest known such mutation is 9-OPRI, also known as PG14 (9 inserted repeats plus 4 endogenous repeats plus 1 nonarepeat = 14, and the repeats are rich in proline and glycine, hence PG14). A mouse model of the PG14 mutation [[Chiesa 1998](http://www.ncbi.nlm.nih.gov/pubmed/9883727)] developed spontaneous neurological illness characterized by cerebellar granule cell loss, even with only about 1x expression of the mutant protein. The disease was fastest on a _Prnp_ knockout background but was still present on a wild-type background. The PrP in the brains of these mice exhibited some properties of PrP<sup>Sc</sup> including detergent insolubility and some (limited) degree of protease resistance, but the disease could not be transmitted to wild-type mice [[Chiesa 2003](http://www.ncbi.nlm.nih.gov/pubmed/12805461)].
+Prior to the report of 12-OPRI [[Kumar 2011]], the largest known mutation was 9-OPRI, known as PG14 (9 inserted repeats plus 4 endogenous repeats plus 1 nonarepeat = 14, and the repeats are rich in proline and glycine, hence PG14). A mouse model of this PG14 mutation [[Chiesa 1998](http://www.ncbi.nlm.nih.gov/pubmed/9883727)] developed spontaneous neurological illness characterized by cerebellar granule cell loss, even with only about 1x expression of the mutant protein. The disease was fastest on a _Prnp_ knockout background but was still present on a wild-type background. The PrP in the brains of these mice exhibited some properties of PrP<sup>Sc</sup> including detergent insolubility and some (limited) degree of protease resistance, but the disease could not be transmitted to wild-type mice [[Chiesa 2003](http://www.ncbi.nlm.nih.gov/pubmed/12805461)].
+
+**HuPrP 8-amino acid insertion (insLGGLGGYV)**
+
+![](/media/2014/09/insLGGLGGYV.png)
+
+This in-frame 24 base pair duplication event was reported, apparently *de novo*, in a single patient with GSS [[Hinnell 2011]]. The authors simply refer to it as "a novel prion protein gene mutation" or as "365-388 dup"; here I've named it after the eight amino acids which were inserted after codon 129. The patient had an early onset (34 years old) of an atypical dementia, but seemed to have been healthy prior to onset. Transmissibility was not tested.
 
 **MoPrP &Delta;Nterm / &Delta;A / &Delta;32-80**
 
@@ -108,7 +123,7 @@ The Harris lab also now uses the &Delta;23-134 construct and has shown that, lik
 
 Looking at the phenotypes of the A &#8211; F mice, Aguzzi observed that it was only the deletions (E and F) that extended into the &#8220;Central Domain&#8221; (CD) of the protein that caused spontaneous disease. The &Delta;CD mice were therefore created to test the hypothesis that only the central domain had to be deleted in order to cause spontaneous cerebellar disease. Sure enough, the &Delta;CD mice got a disease like that of &Delta;E and &Delta;F mice, but with an even earlier onset and a requirement of more wild-type PrP to rescue it [[Baumann 2007](http://www.ncbi.nlm.nih.gov/pubmed/17245436)]. 
 
-**MoPrP &Delta;pHC / &Delta;121-134**
+**MoPrP &Delta;pHC / &Delta;114-121**
 
 ![](/wp-content/uploads/2014/04/PrPdelpHC.png)
 
@@ -223,3 +238,21 @@ Ma Jiyan and Susan Lindquist deleted both the signal peptide (which directs PrP 
 ![](/wp-content/uploads/2014/04/delGPI.png)
 
 A few different lines of mice have been created which express full-length PrP which lacks the GPI anchor and is thus secreted. The earliest reports had to be revised a few times [[Chesebro 2005](http://www.ncbi.nlm.nih.gov/pubmed/15933194/), [Trifilo 2008](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2566293/), [Chesebro 2010](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2832701/)]. Secreted PrP appears to be preferentially degraded, making it hard to achieve an expression level comparable to wild-type PrP. At low expression levels, it is non-pathogenic, but when PrP &Delta;GPI is expressed in mice at &gt; 1x levels, it spontaneously produces a lethal prion infection transmissible to wild-type mice [[Stohr 2011](http://www.ncbi.nlm.nih.gov/pubmed/22160704)]. The mice can also be infected with prions. Co-expression with wild-type PrP hastens the spontaneous disease, but co-expression with &Delta;23-88 does not.
+
+
+
+
+
+[Hinnell 2011]: http://www.ncbi.nlm.nih.gov/pubmed/21282596 "Hinnell C, Coulthart MB, Jansen GH, Cashman NR, Lauzon J, Clark A, Costello F, White C, Midha R, Wiebe S, Furtado S. Gerstmann-Straussler-Scheinker disease due  to a novel prion protein gene mutation. Neurology. 2011 Feb 1;76(5):485-7. doi: 10.1212/WNL.0b013e31820a0ab2. PubMed PMID: 21282596."
+
+[Kumar 2011]: http://www.ncbi.nlm.nih.gov/pubmed/21911696 "Kumar N, Boeve BF, Boot BP, Orr CF, Duffy J, Woodruff BK, Nair AK, Ellison J,  Kuntz K, Kantarci K, Jack CR Jr, Westmoreland BF, Fields JA, Baker M, Rademakers  R, Parisi JE, Dickson DW. Clinical characterization of a kindred with a novel 12-octapeptide repeat insertion in the prion protein gene. Arch Neurol. 2011 Sep;68(9):1165-70. doi: 10.1001/archneurol.2011.187. PubMed PMID: 21911696; PubMed Central PMCID: PMC3326586."
+
+[Jayadev 2011]: http://www.ncbi.nlm.nih.gov/pubmed/21416485 "Jayadev S, Nochlin D, Poorkaj P, Steinbart EJ, Mastrianni JA, Montine TJ, Ghetti B, Schellenberg GD, Bird TD, Leverenz JB. Familial prion disease with Alzheimer disease-like tau pathology and clinical phenotype. Ann Neurol. 2011 Apr;69(4):712-20. doi: 10.1002/ana.22264. Epub 2011 Mar 17. PubMed PMID: 21416485; PubMed Central PMCID: PMC3114566."
+
+[Finckh 2000a]: http://www.ncbi.nlm.nih.gov/pubmed/10631141 "Finckh U, Müller-Thomsen T, Mann U, Eggers C, Marksteiner J, Meins W, Binetti  G, Alberici A, Hock C, Nitsch RM, Gal A. High prevalence of pathogenic mutations  in patients with early-onset dementia detected by sequence analyses of four different genes. Am J Hum Genet. 2000 Jan;66(1):110-7. PubMed PMID: 10631141; PubMed Central PMCID: PMC1288316."
+
+[Finckh 2000b]: http://www.ncbi.nlm.nih.gov/pubmed/11193137 "Finckh U, Müller-Thomsen T, Mann U, Eggers C, Marksteiner J, Meins W, Binetti  G, Alberici A, Sonderegger P, Hock C, Nitsch RM, Gal A. High frequency of mutations in four different disease genes in early-onset dementia. Ann N Y Acad Sci. 2000;920:100-6. PubMed PMID: 11193137."
+
+[Beck 2001]: http://www.ncbi.nlm.nih.gov/pubmed/ "Neurology. 2001 Jul 24;57(2):354-6.  Two-octapeptide repeat deletion of prion protein associated with rapidly progressive dementia.  Beck JA, Mead S, Campbell TA, Dickinson A, Wientjens DP, Croes EA, Van Duijn CM, Collinge J. PMID: 11468331"
+
+[Capellari 2002]: http://www.ncbi.nlm.nih.gov/pubmed/12451210 "Capellari S, Parchi P, Wolff BD, Campbell J, Atkinson R, Posey DM, Petersen RB, Gambetti P. Creutzfeldt-Jakob disease associated with a deletion of two repeats in the prion protein gene. Neurology. 2002 Nov 26;59(10):1628-30. PubMed  PMID: 12451210."
