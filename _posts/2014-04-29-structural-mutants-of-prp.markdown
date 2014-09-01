@@ -4,6 +4,7 @@ title: "Structural mutants of PrP"
 author: ericminikel
 date: 2014-04-29 09:32:10
 location: Boston, MA
+thumb120: http://www.cureffi.org/media/2014/09/structural-mutant-thumbnail.png
 summary200: A comprehensive catalog of insertion and deletion mutants of the prion protein created both by experiments of nature and experiments of scientists.
 ---
 
