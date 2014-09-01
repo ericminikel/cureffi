@@ -33,7 +33,7 @@ George Carlson explained that the team had spent lots of time looking for neurol
 
 This paper is, then, evidence of yet *another* way that PrP can be pathogenic. In mice, deletions of the central region cause cerebellar generation [[Shmerling 1998], [Li 2007]], alpha helix deletions cause neuronal storage disease [[Muramoto 1997]], expression under a foreign promoter causes runting and often embryonic lethality [[Tremblay 1998]], and apparently overexpression can cause inclusion body myopathy too [[Westaway 1994]] - all distinct phenotypes and all apparently unrelated to prion disease.
 
-*Update added August 31, 2014:*
+*Update added September 1, 2014:*
 
 After posting the original version of this post, I emailed with Carlson and Westaway about one question which the original paper did not decisively resolve: why some transgenic lines, but not others, get the myopathy.
 
