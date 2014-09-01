@@ -3,6 +3,7 @@ layout: post
 title: "Structural mutants of PrP"
 author: ericminikel
 date: 2014-04-29 09:32:10
+location: Boston, MA
 ---
 
 Over 30 different structurally mutated versions of PrP have been observed naturally or experimentally. Understanding the behavior of these mutant PrPs can help to teach us what parts of PrP are required for prion replication and for neurotoxicity. The mutants which were studied in mice and in N2a cells up to 2008 were reviewed elegantly in [Aguzzi 2008](http://www.ncbi.nlm.nih.gov/pubmed/18558863). This post is intended to provide an encyclopedic reference to all these mutants, including those observed in humans and other species. Please comment if anything is incorrect or missing. My aim will be to keep this post up to date with all the mutants reported in the literature as time goes on and provide a detailed description of each.
