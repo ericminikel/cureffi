@@ -47,7 +47,7 @@ In proteins, [dihedral angles](http://en.wikipedia.org/wiki/Dihedral_angle) are 
 + &Phi; (Phi) is the angle along the N-C&alpha; bond.
 + &omega; (omega) is the angle along the C-N bond.
 
-&omega; is 0 for a *cis* peptide bond, and 180 for a *trans* peptide bond. The other two vary between -180&deg; and +180&deg;.
+&omega; is 0&deg; for a *cis* peptide bond, and +180&deg; for a *trans* peptide bond. The other two vary between -180&deg; and +180&deg;.
 
 [Kendrew 1958]: http://www.ncbi.nlm.nih.gov/pubmed/13517261 "KENDREW JC, BODO G, DINTZIS HM, PARRISH RG, WYCKOFF H, PHILLIPS DC. A three-dimensional model of the myoglobin molecule obtained by x-ray analysis. Nature. 1958 Mar 8;181(4610):662-6. PubMed PMID: 13517261."
 
