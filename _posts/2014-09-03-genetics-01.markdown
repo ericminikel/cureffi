@@ -1,0 +1,87 @@
+---
+layout: post
+title:  "Genetics 01: 'What we learned from Mendel'"
+date:   2014-09-03 12:00:00
+author: ericminikel
+tag: genetics-201
+location: Boston, MA
+---
+
+*These are my notes from lecture 01 of Harvard's Genetics 201 course, delivered by Fred Winston on September 3, 2014.*
+
+### Class business
+
+Fred Winston's office hours are 4:00p - 5:00p Mondays at NRB 239F.
+
+### Review of basic terms
+
+| English | 中文 |
+| ------- | ---- |
+| dominant | 显性 |
+| recessive | 隐性 |
+| homozygote | 纯合子 |
+| heterozygote | 杂合子 |
+| alleles | 等位 |
+| genotype | 基因型 |
+| phenotype | 表型 |
+| epistatic | 上位 |
+
+Mutant analysis, linkage & complementation are considered "classical methods". Note that many have no modern analogue and are still in use.
+
+High-throughput sequencing is considered a "modern method".
+
+### Historical perspective
+
+Before Mendel, people thought that inheritance was simply a ["blending of essences"](http://en.wikipedia.org/wiki/Blending_inheritance). Darwin believed in something he called ["gemmules"](http://en.wikipedia.org/wiki/Gemmule_(pangenesis)). The first of Mendel's two seminal works on genetics was ["Experiments in Plant Hybridization"](http://www.mendelweb.org/Mendel.html) (*Versuche über Pflanzen-Hybriden*). It took him 8 years of experimentation and was published in 1866 in a low-impact journal. Mendel used the pea as a model organism because they were easily available, had a number of phenotypes (shape, color, height etc. - he studied 7 traits), and are capable of self-fertilization while people can also cross-fertilize them.
+
+Mendel had a number of insights:
+
+1. Pure-breeding of plants. He found that self-crosses give rise to offspring similar to the parents.
+2. Counting and computing ratios. He got information by calculating what proportion of offspring had a given trait.
+3. Focusing on one trait at a time.
+
+One of Mendel's early experiments revolved around seed color, where we define Y = yellow and y = green. He first pure-bred a Y strain and a y strain. When he crossed these two, the F1s were all Y. When he self-fertilized the F1s he obtained 6022 Y and 2001 y &mdash; a 3:1 ratio. We define as **dominant** the trait expressed in a hybrid, such as Y in Mendel's F1s, and we define as **recessive** the trait not expressed in the hybrid, such as y.
+
+Mendel cleverly observed that the traits *remain intact*. Contrary to the "blending of essences" theory, the green trait reappeared, unblended, in the F2s.
+
+For 7 of the traits that Mendel studied in peas, the F1s showed only one of the two traits, and in every case, the other trait reappeared in the F2s. Reciprocal crosses (i.e. swapping which of the parental generation was male or female) gave the same results.
+
+Another trait Mendel studied was the texture of peas, where we define S to mean smooth and s to mean wrinkled. In a cross of pure-bred parental lines S and s, he obtained 100% S F1s, and 5474 S and 1850 s F2s, again a 3:1 ratio. When he self-fertilized the F2s, he found that 193 of them gave rise to *only* S offspring, while 372 of them gave rise to S and s offspring in an approximately 3:1 ratio. Of the s F2s, all gave tise to only s offspring.
+
+Based on this, Mendel hypothesized that:
+
+1. Traits are particulate elements
+2. Each trait is associated with a pair of genes
+3. Gametes contain only one of the two genes
+
+He therefore reasoned that the P generation individuals had genotypes SS and ss, the F1s had Ss, and the F2s had SS:Ss:ss genotypes at a 1:2:1 ratio. SS and Ss expressed the same phenotype but had underlying different genotypes, and the SS "bred true" while Ss did not. We can therefore functionally define **homozygotes** as individuals which breed true, and **heterozygotes** as those which don't. We'll also modify Mendel's language to call alternative forms of a gene **alleles**. A **genotype** as an individual's set of alleles, and the **phenotype** is the genotype's manifestation.
+
+Next Mendel set up a cross of purebred Sy and sY P plants. The F1s all had an SY phenotype. The F2 individuals were, phenotypically, 315 SY, 101 Sy, 108 sY and 32 sy, for a ratio of 9:3:3:1. Mendel found that all such [dihybrid crosses](http://en.wikipedia.org/wiki/Dihybrid_cross) he performed gave this same ratio. He reasoned that the genotypes of the P plants had been SSyy and ssYY, and the F1s were all SsYy. One can predict the F2 genotypes from a large [Punnett Square](http://en.wikipedia.org/wiki/Punnett_square). In the below example, the first row and first column represent the haploid genotypes of the pollen and ova (the gametes).
+
+|      | SY | Sy | sY | sy |
+| ---- | ---- | ---- | ---- | ---- |
+| **SY** | SSYY | SSYy | SsYY | SsYy |
+| **Sy** | SSYy | SSyy | SsYy | Ssyy |
+| **sY** | SsYY | SsYy | ssYY | ssYy |
+| **sy** | SsYy | Ssyy | ssYy | ssyy |
+
+If you count these you find that 9 of the combinations contain &ge; 1 S and &ge; 1 Y, thus have an SY phenotype, and similarly you can derive the 3 Sy, 3 sY, and 1 sy combinations.
+
+Mendel arrived at two laws:
+
+1. The two alleles **segregate** from each other such that half of the gametes carry one allele and half carry the other.
+2. The segregation of one gene pair is independent of another.
+
+Of the 7 traits Mendel looked at, all were on different chromosomes, so he was lucky enough not to have to deal with linkage. The variants he studied have since been sequenced and turn out to include transposon insertions, frameshift and missense variants [[Ellis 2011], [full text here](http://ac.els-cdn.com/S1360138511001324/1-s2.0-S1360138511001324-main.pdf?_tid=05daed9e-3375-11e4-b49e-00000aab0f27&acdnat=1409754023_0f2b16e77f56f03828e5434f045a0b09)].
+
+Mendel also studied "4 o'clock plants". He crossed aa white flowers with AA red flowers and found that all F1s were pink, while F2s were red, pink or white in a 1:2:1 ratio. He had discovered codominance.
+
+Let's also consider labrador retriever coat color, which is determined by two genes. We'll say purebred chocolate labs have a bbEE genotype, and yellow labs have a BBee genotype. All F1s have a BbEe genotpe, which confers a black coat color (distinct from chocolate and yellow). 9/16 of F2s are B_E_ resulting in a black coat, 3/16 are bbE_ (chocolate), 3/16 are B_ee (yellow) and 1/16 are bbee (also yellow). Here we get a 9:3:4 ratio because any ee dog will be yellow regardless of its B genotype. ee is therefore **epistatic** to bb. Epistasis is defined as when two different phenotypes are conferred by different genes, e and b, if the expressed phenotype is that conferred by e, then e is epistatic to b. Different fields differ slightly in how they define epistasis; a good reference is [[Roth 2009], [full text here](http://jbiol.com/content/8/4/35)].
+
+[Ellis 2011]: http://www.ncbi.nlm.nih.gov/pubmed/21775188 "Ellis TH, Hofer JM, Timmerman-Vaughan GM, Coyne CJ, Hellens RP. Mendel, 150 years on. Trends Plant Sci. 2011 Nov;16(11):590-6. doi: 10.1016/j.tplants.2011.06.006. Epub 2011 Jul 19. Review. PubMed PMID: 21775188."
+
+[Roth 2009]: http://www.ncbi.nlm.nih.gov/pubmed/19486505/ "Roth FP, Lipshitz HD, Andrews BJ. Q&A: epistasis. J Biol. 2009;8(4):35. doi: 10.1186/jbiol144. Epub 2009 May 22. PubMed PMID: 19486505; PubMed Central PMCID:  PMC2688915."
+
+
+
+
