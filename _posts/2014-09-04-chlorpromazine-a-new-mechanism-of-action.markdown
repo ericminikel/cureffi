@@ -5,7 +5,7 @@ date:   2014-09-04 12:00:00
 author: ericminikel
 location: Boston, MA
 thumb120: http://www.cureffi.org/media/2014/09/chlorpromazine-thumbnail.png
-summary120: A recent study shows that chlorpromazine, a known antiprion compound, binds the cellular prion protein. Will its new mechanism of action give it new life as a therapeutic lead compound?
+summary200: "A recent study shows that chlorpromazine, a known antiprion compound, binds the cellular prion protein. Will its new mechanism of action give it new life as a therapeutic lead compound?"
 ---
 
 ![chlorpromazine](/wp-content/uploads/2012/12/chlorpromazine.png "chlorpromazine")
