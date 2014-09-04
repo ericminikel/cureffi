@@ -1,0 +1,74 @@
+---
+layout: post
+title:  "Biolit 01: the plague"
+date:   2014-09-04 12:00:00
+author: ericminikel
+tag: bbs-230
+location: Boston, MA
+---
+
+*These are my notes for week 01 of Harvard's BBS 230 "Analysis of the biological literature" course (September 4, 2014). This includes my own reading and analysis of the papers, as well as my notes from discussion section and lecture.*
+
+### Orth 2000: Disruption of Signaling by *Yersinia* Effector YopJ, a Ubiquitin-Like Protein Protease
+
+The first paper for this week is [[Orth 2000]]. It discusses host-pathogen interactions, specifically how *Yersinia pestis* (the bacterial pathogen that causes the plague) prevents host innate immune response, more specifically how YopJ does this.
+
+An important distinction:
+
++ Innate immunity is an almost-immediate inflammatory response in which cells release cytokines to signal macrophages, etc. to arrive. It is generic and recognizes on the order of ~200 antigens that are well-conserved across a number of pathogens, such as LPS and dsRNA. Pathogens therefore try to avoid it. Bacteria have evolved a variety of secretion systems to inject proteins into host cells, one of which is the [type III secretion system](http://en.wikipedia.org/wiki/Type_three_secretion_system) used by *Yersinia pestis*.
++ Adaptive immunity is slower and requires selection of immune cells expressing antibodies against specific epitopes found in a specific pathogens.
+
+In the type III secretion system, proteins are ejected out as if from a syringe. YopJ is still unfolded as it is ejected, and then folds once it is in the host cell cytosol. This mechanism keeps it from being functional inside the bacteria, where it might otherwise do damage to bacterial pathways.
+
+At the time that [[Orth 2000]] was written, YopJ was known to disrupt MAPK and NF&kappa;B signaling, but it was not known how it did this. These pathways involve kinase cascades whereby phosphorylation is an activating mark. Orth had also shown one year earlier that YopJ binds MAPK and inhibits signaling, but the mechanism was unknown.
+
+In Figure 1, the authors failed to find any homologues of YopJ via BLAST, but through secondary structure analysis tools they decided that adenovirus protease (AVP) was similar. They therefore hypothesize that YopJ is a cysteine protease.
+
+Because it would be difficult to demonstrate the biochemical activity of this protease (you don't know the identity of its substrate or cofactors), they go for the second-best approach which is showing they can abolish protease activity through mutations in the catalytic triad (three residues). They focused on H109A and C172A mutations (they ignore E128, the third member of the catalytic triad). As a control, they mutated one poorly conserved glutamate (E186A). The YopJ protein was transiently expressed in the transfected cells, probably under a CMV promoter or something. In Figure 2A, the H109A YopJ is less highly expressed than the C172A and WT YopJs (bottom lanes), and there is no loading control.  Problems with Figure 2A are:
+
++ No dose-response. Presumably inhibition of MAPK and NF&kappa;B is correlated with amount of YopJ protein, but they don't show this. The WT and E186A YopJs have achieved total inhibition of MBP phosphorylation, so there is no need to do higher expression levels, but lower expression would be informative.
++ The above matters because they only present one data point for each mutation, and each data point has different YopJ expression levels. H109A is less expressed than WT YopJ. One might attribute the higher levels of MBP detected in the H109A compared to WT YopJ to lower expression rather than to the H109A mutation.
++ Even if we accept that the H109A and C172A mutations abolish YopJ activity, this doesn't prove this is a cysteine protease. It is to be expected that mutating conserved residues will abolish activity more than non-conserved residues.
+
+The EMSA blot at the bottom of Figure 2B shows nuclear extracts from the different transfections, exposed to radiolabeled NF&kappa;B consensus sequence oligonucleotides. What you see is the radiation signal from the DNA. They claim that the top shift is caused by NF&kappa;B and the bottom one is "nonspecific", but there is little evidence for this. It is plausible that a different protein is causing the gel shift. In the final lane, co-incubation of HeLa lysates with non-radiolabeled DNA abolished most of the "nonspecific" shift as well as the "NF&kappa;B gel shift", which calls into question whether different proteins are responsible for the two bands. A better control would have been to co-incubate with an oligonucleotide labeled with a mutated NF&kappa;B binding site that abolishes NF&kappa;B binding. If NF&kappa;B is really responsible for the NF&kappa;B shift, then the mutation of the binding site should abolish the NF&kappa;B shift but should leave the non-specific shift untouched. Another good control would be to use an NF&kappa;B antibody that blocks its DNA binding and show that this abolishes the NF&kappa;B shift. Also, aside from the EMSA approach, they could also look at whether downstream targets of NF&kappa;B are upregulated.
+
+Figure 3 seeks to show the functional consequences *in vivo*, which avoids the expression level effects that confounds Fig 2. However, Fig 3B is counfounded by the lower translocation efficiency of the C172A mutant compared to wild-type YopJ. Also, suspiciously, the H109A and E186A mutants are not shown.
+
+Figure 4 shows cells transfected with a HA-tagged SUMO and with wild-type or C172A YopJ. The purpose is to show that YopJ interferes with sumoylation. The wild-type YopJ indeed reduces the amount of sumoylated protein detected (top band, middle), but suspiciously, that lane also has much less unbound HA-SUMO (band labeled "HA-SUMO-1"). One explanation would be that the transfection in that lane simply was not very efficient at achieving HA-SUMO expression. Furthermore, they don't look at any *one* sumoylated protein (that top band is *all* sumoylated proteins in the cell). Also there is no evidence for direct interaction between YopJ and SUMO.
+
+Breaking down the abstract:
+
+> These YopJ family members were shown to act as cysteine proteases.
+
+Not shown.
+
+> The catalytic triad of the protease was required for inhibition
+
+Two of the three triad residues were studied in some experiments, and only one in others, and evidence for one was very questionable.
+
+> The substrates for YopJ were shown to be highly conserved ubiquitin-like molecules
+
+The substrates were not identified.
+
+What this paper *does* show: mutating the H109 and C172 residues of YopJ *may* abolish YopJ's activity, though it is hard to say because the data are confounded by expression level and translocation efficiency.
+
+Diagnosis: the data are of low quality and wildly over-interpreted. They started with an interesting hypothesis, but instead of following the most direct route (YopJ is known to inhibit MAPK and must bind something so let's look at inhibition and binding) they went for much more abstract and indirect ways of testing their hypothesis. Their later paper (see below) shows that some of their original data were correct (the C172A mutation does indeed abolish activity as shown in Fig 2 and 3) but that the interpretation was wrong.
+
+### Mukherjee 2006: *Yersinia* YopJ Acetylates and Inhibits Kinase Activation by Blocking Phosphorylation
+
+The second paper for this week is [[Mukherjee 2006]]. Orth, the first author of the previous paper, is now a PI and is out to correct the previous paper's mistakes.
+
+Figure 1A-C use an *in vitro* system with lysates. Some advantages of this system are that you can control the amount of different ingredients more precisely (though the YopJ is still added via transfection of the original cells), time scales are shorter, and conditions are more reproducible between experiments because you can freeze one large batch of lysate into aliquots you thaw for different experiments. The readout in their system is the addition of a recombinant protein and the detection of its phosphorylation. Figure 1D uses a different system: YopJ and rMKK6 are expressed in bacteria, where the rest of the components of the mammalian cell system. rMKK6 levels are consistent across bands (middle row), yet phosphorylation is not observed when wild-type YopJ is expressed (middle two lanes). This is the best evidence yet that YopJ directly acts on MAPPK6, and moreover, does not require a eukaryotic co-factor. An even better experiment would have involved adding purified recombinant YopJ and MAPPK6 to lysates, to avoid any expression level confounding, but the experiment in Fig 1D is pretty close. (They might also have tried mixing YopJ and MAPPK6 without lysate, but that wouldn't have worked because Acetyl-CoA turns out to have been required).
+
+In Figure 2, they first see a shift in mass of the whole MAPPK6 protein (top), then go back and trypsinize it to figure out where the modification occurred. This experiment may have been a motivation for the development of the *in vitro* assay, because this mass spec requires a large amount of MAPPK6. The acetylation event revealed here would indeed block the phosphorylation, so now they have a specific mechanism that makes sense. 
+
+Figure 3A is a reconstitution experiment. This is another *in vitro* assay with *only* the raw ingredients: two proteins and an acetyl donor - no cell lysate. They find that only when wild-type YopJ, MAPKK6 and Acetyl-CoA are all present does MAPPK6 get acetylated. This experiment boils the system down to something so simple that it's very clear that YopJ transfers acetyl groups from Acetyl-CoA to MAPKK6. Figure 3B is a slightly strange way of showing that YopJ binds MAPKK6 and then lets it go - exactly what enzymes are supposed to do to their substrates. Figure 3C shows no difference between wild-type and C172A YopJ, which demonstrates that the C172A mutant can still bind its substrate, it just can't catalyze the acetyl group transfer. Figure 3D takes the reconstituted elements of Figure 3A and adds them to lysate to show that the acetylation event from 3A indeed blocks phosphorylation of the substrate.
+
+Conclusion: YopJ is an acetyltransferase that adds acetyl groups to MAPKK6, preventing phosphorylation of MAPKK6. It presumably does the same to other MAPK kinases, and this must be how YopJ prevents the phosphorylation and activation of their substrate, MAPK.
+
+The conclusions of the paper are well-supported by the data. This paper is definitive about the mechanism of YopJ.
+
+
+[Orth 2000]: http://www.ncbi.nlm.nih.gov/pubmed/11090361 "Orth K, Xu Z, Mudgett MB, Bao ZQ, Palmer LE, Bliska JB, Mangel WF, Staskawicz  B, Dixon JE. Disruption of signaling by Yersinia effector YopJ, a ubiquitin-like  protein protease. Science. 2000 Nov 24;290(5496):1594-7. PubMed PMID: 11090361."
+
+[Mukherjee 2006]: http://www.ncbi.nlm.nih.gov/pubmed/16728640 "Mukherjee S, Keitany G, Li Y, Wang Y, Ball HL, Goldsmith EJ, Orth K. Yersinia  YopJ acetylates and inhibits kinase activation by blocking phosphorylation. Science. 2006 May 26;312(5777):1211-4. PubMed PMID: 16728640."
