@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Chlorpromazine: a new mechanism of action"
-date:   2014-09-04 12:00:00
+date:   2014-09-03 12:00:00
 author: ericminikel
 location: Boston, MA
 thumb120: http://www.cureffi.org/media/2014/09/chlorpromazine-thumbnail.png
