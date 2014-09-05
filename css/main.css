@@ -417,7 +417,7 @@ table:first-child {
   font-weight: bold;
 }
 
-table td {
+table td, th {
     padding: 10px;
     line-height: 20px;
     border-top: 1px solid #eeeeee;
