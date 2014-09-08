@@ -97,9 +97,9 @@ Because of the P:N:T ratio being 1:1:2, it is a rule that NPDs are 1/4 of the to
 
 Number of tetrads with a DCO = 4N
 Number of tetrads with a SCO = T - 2N
-Total number of recombination events = 2(4N) + (TT-2N) = 6N + T
+Total number of recombinants = 2(4N) + (TT-2N) = 6N + T
 
-Note that he calls this last quantity "total number of recombiants", which I find slightly confusing. The number of recombinant individuals is smaller than the number of recombination *events*, which is what this really refers to.
+Note that he calls this last quantity "total number of recombiants," which I found slightly confusing. I asked Fred after class and he explained that this can be thought of as the number of recombination *events* (where a single counts as 1 and a double counts as 2), and if you multiply it by 4, you get the number of spores that harbor a recombinant chromosome.
 
 The recombination frequency in centiMorgans, then, is 100 &times; &half;(6N+T)/(P+N+T).
 
