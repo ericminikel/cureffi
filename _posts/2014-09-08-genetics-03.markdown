@@ -95,9 +95,9 @@ For linked markers, NPD outcomes can *only* be obtained in DCOs. In fact, for al
 
 Because of the P:N:T ratio being 1:1:2, it is a rule that NPDs are 1/4 of the total number of DCOs for linked markers. Therefore we can compute the following quantities:
 
-Number of tetrads with a DCO = 4N
-Number of tetrads with a SCO = T - 2N
-Total number of recombinants = 2(4N) + (TT-2N) = 6N + T
++ Number of tetrads with a DCO = 4N
++ Number of tetrads with a SCO = T - 2N
++ Total number of recombinants = 2(4N) + (TT-2N) = 6N + T
 
 Note that he calls this last quantity "total number of recombiants," which I found slightly confusing. I asked Fred after class and he explained that this can be thought of as the number of recombination *events* (where a single counts as 1 and a double counts as 2), and if you multiply it by 4, you get the number of spores that harbor a recombinant chromosome.
 
