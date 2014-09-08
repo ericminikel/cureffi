@@ -80,7 +80,7 @@ H := Enthalpy = U + PV
 
 Where U, P and V are internal energy, pressure and volume.
 
-In physiological conditions, changes in pressure and volume are almost always negligible, so H and U are closely coupled.
+In physiological conditions, changes in pressure and volume are almost always negligible, so H and U are closely coupled. In other words, in most biological systems, the enthalpy is equal to the internal energy.
 
 People have developed molecular dynamics simulations of the fundamental atomic forces that determine a protein's enthalpy (dihedral angles, Van der Waals interactions, electrostatic interactions, etc) and attempt to minimize the energy to determine a protein's fold. But there are so many degrees of freedom that computational expense prohibits running the simulation long enough to find the lowest energy state. Still there are attempts, such as Folding@Home, Foldit, and [D.E. Shaw](http://en.wikipedia.org/wiki/David_E._Shaw)'s [Anton](http://en.wikipedia.org/wiki/Anton_(computer)). Anton holds the record for the longest molecular dynamics simulation - it ran for some untold amount of time, calculating the energy a protein would have at every femtosecond or something, in order to simulate 1 millisecond of the protein's movement. Obviously, the time that Anton took to simulate that millisecond was more than a millisecond.
 
