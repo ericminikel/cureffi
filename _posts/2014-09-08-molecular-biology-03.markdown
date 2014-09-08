@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Molecular Biology 03: 'DNA structure and topology'"
+title:  "Molecular Biology 03: 'Chemical kinetics and enzymes'"
 date:   2014-09-08 12:01:00
 author: ericminikel
 tag: bcmp-200
