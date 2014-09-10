@@ -122,7 +122,7 @@ V<sub>0</sub> = K<sub>1</sub>K<sub>2</sub>\[E\]\[S\] / (K<sub>-1</sub> + K<sub>2
 
 We then do further substitution and rearrangement, and we define the Michaelis constant (K<sub>m</sub>) as:
 
-K<sub>m</sub> = (K<sub>-1</sub> + K<sub>2</sub>)/K<sub>1</sub>
+K<sub>m</sub> := (K<sub>-1</sub> + K<sub>2</sub>)/K<sub>1</sub>
 
 And thus we get the Michaelis-Menten equation:
 
