@@ -26,7 +26,7 @@ Suppose we isolate two mutants, *trp1* and *trp2* in the tryptophan biosynthetic
 | *trp1*/*trp1* *TRP2*/*TRP2* | Trp- | no complementation |
 | *TRP1*/*trp1* *trp2*/*TRP2* | Trp+ | complementation |
 
-The last two rows demonstrate that *TRP1* and *TRP2* are separate genes.
+The first two rows are crosses to wild-type which are called "dominance/recessiveness tests". In this case, the dominance/recessiveness tests show that both mutants are recessive. The last two rows are crosses of mutants which are called "complementation tests". In this case, the results of the complementation test demonstrate that *TRP1* and *TRP2* are separate complementation groups, and therefore *probably* (with below-listed exceptions) separate genes.
 
 ### But sometimes reality is more complex.
 
@@ -67,7 +67,7 @@ Tetrad analysis is used in yeast for:
 4. Strain construction
 5. Whole-genome sequencing
 
-Suppose we follow a *cis1* mutation through meiosis. We begin with an a *CIS1* haploid cell and an &alpha; *cis1* haploid cell. We obtain *CIS1*/*cis1* diploids, which can then go through sporulation (meiosis) which includes DNA replication in the premeiotic S phase. Following the replication, the cell has four "strands" - four chromatids, or four homologous copies, each of double-stranded DNA. This is called the "4-strand stage". Recombination occurs at this stage (between non-sister chromatids, otherwise it wouldn't generate any diversity), and pairs connected at a centromere are called sister chromatids. Then Meiosis I occurs, and sisters segregate together. In Meiosis II, sisters segregate apart, yielding four haploid products.
+Suppose we follow a *cis1* mutation through meiosis. We begin with an a *CIS1* haploid cell and an &alpha; *cis1* haploid cell. We obtain *CIS1*/*cis1* diploids, which can then go through sporulation (meiosis) which includes DNA replication in the premeiotic S phase. Following the replication, the cell has four "strands" - four chromatids, or four homologous copies, each of double-stranded DNA. This is called the "4-strand stage". This is metaphase, but it is special - metaphase during yeast meiosis involves *all four* homologous copies of each chromosome lining up together, whereas during mitosis, only two sisters need to align. Recombination occurs at this stage of meiosis (between non-sister chromatids, otherwise it wouldn't generate any diversity), and pairs connected at a centromere are called sister chromatids. Then Meiosis I occurs, and sisters segregate together. In Meiosis II, sisters segregate apart, yielding four haploid products.
 
 ![yeast meiosis diagram](/media/2014/09/yeast-meiosis.png)
 
@@ -77,7 +77,7 @@ To determine if a trait is Mendelian, do a cross and look for a 2:2 ratio. If yo
 
 The process for determining whether a trait is monogenic and Mendelian is nearly the same in peas, or mice, or any other model organism. Obtain pure-bred lines, cross with wild-type, self the F1s, and if you obtain a 3:1 ratio in the F2s, then you have a Mendelian trait.
 
-Now consider a cross of unlinked markers A and B. Cross a AB &times; &alpha; ab. In the absence of recombination, you will get two types of tetrads: AB AB ab ab tetrads and Ab Ab aB aB tetrads. The former is called **parental ditype** (PD) and the latter is called **non-parental ditype** (NPD). If A and B are unlinked, PD and NPD will occur in a 1:1 ratio. If A and B are linked, PD &gt; NPD.
+Now consider a cross of unlinked markers A and B. Cross a AB &times; &alpha; ab. In the absence of recombination, you will get two types of tetrads: AB AB ab ab tetrads and Ab Ab aB aB tetrads. The former is called **parental ditype** (PD) and the latter is called **non-parental ditype** (NPD). If A and B are unlinked, PD and NPD will occur in a 1:1 ratio. (In reality, recombination *does* occur, so the unlinked markers will also have recombinants ("tetratype", see below, and their frequency is related to the distance of A and B from the centromere), but after removing these, the *remaining* offspring will be PD:NPD in a 1:1 ratio. Whereas if A and B are linked, PD &gt; NPD.
 
 If we additionally consider recombination, we could get a third outcome, neither PD nor NPD, called **tetratype** (TT): an AB Ab aB ab tetrad. The three outcomes are sometimes abbreviated P, N, and T. Suppose we cross AB &times; ab and analyze 100 tetrads, and get 90 PD, 0 NPD, and 10 TT. Linkage is measured as the number of recombinants divided by the total progeny. Because there are four progeny per tetrad, here we have 400 spores, and 2 of the 4 in each TT tetrad are recombinants. Therefore we have 20 recombinants out of 400 = 5% recombination or 5% linkage. This is called 5 centiMorgans (cM). 1 cM is defined as 1% recombination.
 
@@ -85,7 +85,7 @@ In terms of tetrads, &half;T/(T+N+P) &times; 100 = number of cM. Yeast, however,
 
 ![4 types of double crossovers](/media/2014/09/dcos-4-types.png)
 
-For linked markers, NPD outcomes can *only* be obtained in DCOs. In fact, for all possible DCOs (above), P:N:T = 1:1:2. For linked markers, types of tetrads can be produced by different numbers of crossover events as follows:
+For linked markers, NPD outcomes can *only* be obtained in DCOs. In fact, for all possible DCOs (the four equally likely outcomes diagrammed above), P:N:T = 1:1:2. For linked markers, types of tetrads can be produced by different numbers of crossover events as follows:
 
 | tetrad | number of crossovers |
 | ------ | -------------------- |
@@ -93,19 +93,23 @@ For linked markers, NPD outcomes can *only* be obtained in DCOs. In fact, for al
 | NPD | 2 only |
 | TT | 1 or 2 |
 
-Because of the P:N:T ratio being 1:1:2, it is a rule that NPDs are 1/4 of the total number of DCOs for linked markers. Therefore we can compute the following quantities:
+For clarity, it is worth repeating that the above table applies only to *linked* markers. For unlinked markers, all three outcomes (PD, NPD and TT) are possible.
+
+Getting back to linked markers, remember that single crossovers give rise to 100% T outcomes. DCOs, as stated above, give rise to P:N:T in a 1:1:2 ratio. Therefore it is a rule that NPDs are 1/4 of the total number of DCOs for linked markers. Because NPDs arise *only* as a result of double crossover for linked genes, it is useful to express the formula in terms of NPDs. Therefore we can state the following quantities:
 
 + Number of tetrads with a DCO = 4N
 + Number of tetrads with a SCO = T - 2N
-+ Total number of recombinants = 2(4N) + (TT-2N) = 6N + T
++ Total number of recombinants = 2(4N) + (T-2N) = 6N + T
 
-Note that he calls this last quantity "total number of recombiants," which I found slightly confusing. I asked Fred after class and he explained that this can be thought of as the number of recombination *events* (where a single counts as 1 and a double counts as 2), and if you multiply it by 4, you get the number of spores that harbor a recombinant chromosome.
+The number of tetrads with a SCO is T - 2N because there are a total of T tetratypes, but 2N of those are from DCOs, while the rest must be from SCOs, which give rise exclusively to T. Note that Fred calls the last quantity (6N +T) the "total number of recombiants," which I found slightly confusing. I asked Fred after class and he explained that this can be thought of as the number of recombination *events* (where a single counts as 1 and a double counts as 2), and if you multiply it by 4, you get the number of spores that harbor a recombinant chromosome.
 
 The recombination frequency in centiMorgans, then, is 100 &times; &half;(6N+T)/(P+N+T).
 
 This formula is valid for distances up to about 35 cM.
 
 In yeast, 1 cM is about 2.5 kb.
+
+After you do a cross, first check whether PD == NPD. If yes, then the markers are unlinked, and you don't need to do anything else. If PD > NPD, then the markers are linked, and you can compute a recombination frequency as 100 &times; &half;(6N+T)/(P+N+T). If PD < NPD, you're probably #DoingItWrong.
 
 [Hawley 2006]: http://www.ncbi.nlm.nih.gov/pubmed/16988106 "Hawley RS, Gilliland WD. Sometimes the result is not the answer: the truths and the lies that come from using the complementation test. Genetics. 2006 Sep;174(1):5-15. Review. PubMed PMID: 16988106; PubMed Central PMCID: PMC1569807."
 
