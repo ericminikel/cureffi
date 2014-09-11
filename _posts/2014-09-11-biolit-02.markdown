@@ -7,7 +7,7 @@ tag: bbs-230
 location: Boston, MA
 ---
 
-*These are my notes for week 02 of Harvard's BBS 230 "Analysis of the biological literature" course (September 9-11, 2014). This includes my own reading and analysis of the papers, as well as my notes from discussion section and lecture.*
+*These are my notes for week 02 of Harvard's BBS 230 "Analysis of the biological literature" course (September 9-11, 2014). This includes my own reading and analysis of the papers, as well as my notes from discussion section.*
 
 ### [Bankaitis 1986]: Isolation of yeast mutants defective in protein targeting to the vacuole
 
@@ -34,30 +34,14 @@ The authors sought to create a screen which would allow them to select for mutan
 
 + Figure 1A shows the construct used to express pCYI433 (explained above).
 + The authors expressed pCYI433 initially in the yeast strain SEY2101 (see table below). In Figure 1B, they characterize the behavior of this fusion protein in this yeast strain. The difference between the lanes with and without tunicamycin (a glycosylation inhibitor) shows that the fusion protein gets glycosylated (as expected, since CPY is glycosylated), and the difference between the *PEP4+* and *&Delta;pep4* genotypes shows that (unlike wild-type CPY) the pCYI433 prodomain is *not* being cleaved in the vacuole. Together, the facts that they can detect pCYI433, that it seems to undergo some normal processing (glycosylation) but is not cleaved (thus we don't need to worry about whether its invertase activity changes upon cleavage) all validate that this protein is sufficiently well-behaved that we can study it.
-+ Next they wished to confirm their expectaton that pCYI433 would be targeted to the vacuole. To do this, they measure enzymatic activity of whole cell lysate versus vacuole fractions isolated via centrifugation. 
++ Next they wished to confirm their expectaton that pCYI433 would be targeted to the vacuole. To do this, they measure enzymatic activity of whole cell lysate versus vacuole fractions isolated via centrifugation. In Table 1, they show that &alpha;-mannosidase (a control known to go entirely to the vacuole) and that the fusion protein are both found in the same fraction - i.e. 41-43% of each is found in the vacuole fraction. This number is <100% because some is in the ER/Golgi on its way to the vacuole, and some is lost in the lysis prep, etc. So this 41% recovery figure may actually reflect 100% trafficking to the vacuole, and even if it didn't, it might still be a high enough percentage to give a growth phenotype on sucrose. This is considered evidence that the fusion protein localizes to the vacuole, and not to one of the places those other proteins go (&alpha;-glucosidase is cytosolic, and NADPH-cytochrome c reductase is found in the ER). It would be nice to have >1 replicate here, though, and to know that you get *consistently* 41%. Note that the enzymes are being quantified by *enzymatic activity*. It would have been nice to have wild-type CPY as a comparison, but because it is a protease, measuring its activity would have been harder than measuring the activity of these other enzymes.
++ In the text on p. 9077 (left column), they state that they used their screen to isolate 100 mutants which fell into 8 [complementation groups](/2014/09/08/genetics-03/). In principle, it is possible that mutations in the construct (say, mutating the CPY portion of pCYI433 so that it is no longer targeted to the vacuole) could also cause the sucrose survival phenotype. However, the authors say they sequenced the mutants and that the construct was the same in all of them. Moreover, if there are 8 complementation groups, then at most 1 of those could represent mutations in the construct.
++ They also did some further characterization, for instance of the percentage of whole cell invertase activity that was localized at the cell surface. 
++ Next the authors wanted to characterize how wild-type CPY would behave in these strains. They therefore re-introduced CPY into yeast strains SEY2108 and SEY2109. For instance, in some mutants it is found in a "p2" partially glycosylated, immature 69 kDa form, implying it is retained in some part of the secretory pathway and never gets cleaved by PEP4. Data is not shown for most of these characterizations.
++ In Figure 2, they perform a pulse-chase to observe the kinetics of CPY maturation in four mutant strains. This is a critical experiment for deciphering the mechanism by which different mutants disrupt protein targeting to the vacuole. The results, however, are difficult to interpret. For example, in the first row, the amount of mCPY increases between 15 min and 30 min, yet no pCPY is seen at 15 min. So where does the *more* of mCPY come from at 30 min? The authors also claim that the trafficking to the vacuole has a half-life of 6 minutes, implying ~3/4 of mCPY should already be observed by the 15 min mark, which does not seem to be the case. The authors would have done well to include a 6 minute timepoint in their pulse-chase. There is no loading control, so the answer to some of these questions may simply be that there was more protein in the 30 min sample. Perhaps they left the 15 minute sample on the bench while continuing to collect samples for the pulse-chase, and some of the protein got degraded. Importantly, though, the blot still does show that the pCPY is *present* and just doesn't mature (presumably because it doesn't get to the vacuole). If not for this pulse-chase experiment, one might wonder whether some of the mutants destabilized pCPY rather than affecting its trafficking. In fact, the authors assert that some mutants *do* affect stability, though no one in my discussion section seemed to agree that the blot actually supports this conclusion.
++ Figure 3 provides further characterization of wild-type CPY in a subset of strains, simply fractioning the cells and showing that CPY is indeed located either at the periplasm or secreted into the media, rather than localizing in the vacuole. This confirms that the mutants are defective in targeting.
 
-+ *PRC1* is the gene for PCY, *SUC2* is the gene for invertase. The authors created a protein which fuses invertase to 433 amino acids from the N terminus of the prodomain of CPY (proCPY). The use of only part of the prodomain means that the fusion protein does not get processed in the vacuole.
-+ CPY normally comes in different forms. In its p1 form found in the ER and Golgi, it is partially glycosylated (a total of 67 kDa of glycan chains). p2 is found in the Golgi and has 69 kDa of glycan chains. When CPY arrives in the vacuole, an 8000 kDa prodomain is cleaved by PEP4, yielding mCPY (mature CPY). 
-+ These yeast are deficient in endogenous *SUC2*. In order for yeast to live, invertase must be expressed and must locate in the periplasm. So if CPY-invertase fusion protein is correctly trafficked to the vacuole, then there is no invertase in the periplasm and the yeast die. Only mutants that are defective in vacuole trafficking can live.
-+ They see no difference in something between *PEP4+* and *&Delta;pep4* genotypes 
-+ Develops a fusion protein assay to be able to identify mutants with defects in trafficking to the vacuole
-+ CPY is known to go to the vacuole
-+ Invertase normally goes to periplasm; by fusing it to CPY it goes to vacuole
-+ Mutants defective in vacuole targeting fall into 8 complementation groups. This suggests that the pathway can be disrupted at many different steps.
-+ Figure 1B shows that (A) when tunicamycin is used to inhibit glycosylation, the fusion protein is lighter, as expected, (2) the fusion protein is stable whether within (*PEP4+*) or without (*&Delta;pep4*) the vacuole, which makes it possible to study it. The fuzziness of the bands might reflect some amount of proteolysis.
-+ Zymogen means an inactive proenzyme. Wild-type yeast have a partially glycosylated zymogen
-+ Their mutants expressing pCYI433 but lacking endogenous *SUC2* can survive on glucose no matter what, but can survive on sucrose if and only if they have a defect in targeting pCYI433 to the vacuole, allowing invertase to reach the periplasm.
-+ They used this construct to identify mutant strains. Then they wanted to see if these strains also had defects in trafficking of wild-type CPY, so they removed the pCYI433 construct ("cured" the strains of it) and then made them *PRC1+* (i.e. they re-introduced wild-type CPY) and studied the localization and processing (glycosylation, proteolysis) of CPY.
-+ To be sure that the mutants differed in mutations in other genes, they (A) sequenced them and showed that the pCYI433 construct was the same in all, and (B) did complementation group and showed 8 complementation groups, so at most 1 of those could be a mutation in the construct.
-+ They create vacuole fractions (Table 1) and show that &alpha;-mannosidase (a control known to go entirely to the vacuole) and that the fusion protein are both found in the same fraction - i.e. 41-43% of each is found in the vacuole fraction. This is <100% because some is in the ER/Golgi on its way to the vacuole, and some is lost in the lysis prep, etc. So this 41% recovery figure may actually reflect 100% trafficking to the vacuole, and even if it didn't, it might be a high enough percentage to give a growth phenotype on sucrose. This is considered evidence that the fusion protein localizes to the vacuole, and not to one of the places those other proteins go (&alpha;-glucosidase is cytosolic, and NADPH-cytochrome c reductase is found in the ER). It would be nice to have >1 replicate here, though, and to know that you get *consistently* 41%. Note that the enzymes are being quantified by *enzymatic activity*. It would have been nice to have wild-type CPY as a comparison, but because it is a protease, measuring its activity would have been harder than measuring the activity of these other enzymes.
-+ In Figure 2, they are asking how the mutants they have isolated affect the time-course trafficking of CPY. It is a mystery why in the first row the amount of mCPY increases between 15' and 30', yet no pCPY is seen at 15'. So where does the *more* of mCPY come from at 30'? Also they claim that the trafficking to the vacuole has a half-life of 6 minutes, implying ~3/4 of it should already be there by 15'. The authors would have done well to include a 6 minute timepoint in their pulse-chase. There is no loading control; it may just be there was more protein in the 30' sample. (Perhaps they left the 15 minute sample on the bench while continuing the pulse-chase).
-+ Importantly, though, the blot does show that the pCPY is *present* and just doesn't mature (because it doesn't get to the vacuole). If not for this pulse-chase experiment, one might wonder whether some of the mutants destabilized pCPY rather than affecting its trafficking. In fact, the authors assert that some mutants *do* affect stability, but no one in discussion section seems to think that the blot actually supports this conclusion.
-+ A time course experiment is still really useful for deciphering the mechanism.
-+ This was a competitive field at the time, so the authors may have been aware that their pulse-chase experiment was less than perfect but felt it was worth going ahead and submitting anyway. 
-+ It seems clear that the authors did successfully isolate mutants defective in vacuole targeting. The paper's other shortcomings can be forgiven.
-
-
-Even in 1986, it was possible to use PCR to see if a gene is in the correct locus - I think you use a primer in the gene and a primer nearby but outside the gene, and you get the right size product only if it is in the right locus.
+#### Some details
 
 The strains listed in the Methods are as follows:
 
@@ -69,9 +53,10 @@ The strains listed in the Methods are as follows:
 | SEY2109 | *MATa* *ura3-52* *leu2-3,-112* *suc2-&Delta;9* *&Delta;prc1::LEU2+* | Same as SEY2108 but a instead of &alpha;. They re-introduced CPY into this strain for Figures 2-3. |
 | SEY2101.1 | *MATa* *ura3-52* *leu2-3,-112* *suc2-&Delta;9* *ade2-1* *&Delta;pep4::LEU2+* | For Figure 1, to show that the fusion protein behaves the same whether or not PEP4, the CPY peptidase, is present, i.e. PEP4 does not cleave the fusion protein. |
 
-Need to know why they used the media they did.
+Even in 1986, it was possible to use PCR to see if a gene is in the correct locus - I think you use a primer in the gene and a primer nearby but outside the gene, and you get the right size product only if it is in the right locus.
 
-Methods
+Methods:
+
 + Lithium acetate permeabilizes the cell wall to allow transformation.
 + The media needs to lack other carbon sources besides sucrose. For pulse-chase it needs to lack other sources of sulfur.
 + Why [bromocresol purple](http://en.wikipedia.org/wiki/Bromocresol_purple)?
@@ -82,42 +67,39 @@ Methods
 
 At the time, it was known that cell surface receptors were sorted for recycling or degradation via the endocytic pathway, but for most proteins no one knew what determined the fate of a given receptor. Degradation of EGFR, however, was known to require a kinase, a cytosolic tail of EGFR, and a ubiquitin ligase. Absent any of these things, it recycled continuously and caused cancer. This was a hint that ubiquitin was important for its degradation.
 
-This paper shows that three proteins &mdash; Vps23, Vps28 and Vps37 &mdash; formed a complex called ESCRT-I (pronounced "escort").
+This paper shows that three proteins &mdash; Vps23, Vps28 and Vps37 &mdash; formed a complex called ESCRT-I (pronounced "escort") which is responsible for ensuring that ubiquitinated proteins end up bound to vesicle membranes in multivesicular bodies (MVBs). These proteins therefore do *not* get degraded in the lysosome, whereas if they were un-ubiquitinated they would end up in the lumen and therefore be degraded.
 
-#### Figures
+This paper is by the same PI, [Scott Emr](http://emr.wicmb.cornell.edu/), as the first one.
 
-In Figure 1A, they fuse Vps23 (a known protein) to protA (an immunoprecipitable tag) in order to pull it down. They then find that Vps28 and Vps37 co-IP with it. In Figure 1B, they perform "gel filtration analysis" - basically chromatography - and each lane on the gel represents one fraction of eluent coming off the machine. Elution from a column is sort of a random walk, which is why any given molecule will elute over a few minutes and not all at once - hence the complex is seen in multiple fractions (multiple lanes).
+#### Terms
 
-In Figure 2, they've fused Vps23 to GFP so that they can look at its localization. They use Snf7 as an endosome marker. In Figure 2B, there is a lot of green, so under the null hypothesis that Vps23 localizes nowhere in particular (say it's cytosolic), of course the authors would have been able to find *two* cells in which red Snf7 localized in a subset of places where green Vps23 was found. Even the two cherry-picked examples here do not imply Vps23 is exclusively endosomal. Therefore this figure is fairly weak evidence for the subcellular localization of Vps23.
++ **Multi-vesicular bodies** or MVBs are one possible stage in the secretory pathway. As parts of the Golgi bud off to form early endosomes and then late endosomes, the membrane of these can invaginate to form membrane-bound vesicles inside the endosomes. An endosome containing such other vesicles is an MVB. MVBs eventually fuse to the lysosome (vacuole in yeast) at which point proteins in the lumen of the MVB will be degraded, while proteins that are bound to the vesicles inside it will be preserved.
 
-Strains lacking *VPS4* are deficient in cleavage of something, so all of the something is localized at the membrane.
+#### Step by step
 
-Based on some argument about homology, they think that ubiquitin is important. So they use an error-prone PCR mutagenesis screen to look for LoF mutations in Vps23, and they isolate a mutation in Vps23^M85T which is non-functional but associates with the others to form a complex. This mutation is located in a domain predicted to have something to do with ubiquitination, supporting their idea that ubiquitin will somehow prove to be involved.
++ The authors already knew of a protein called Vps23 and knew that it was involved in turnover of cell surface receptors. They therefore used this protein as a point of entry into figuring out what else was involved, and how. They fused Vps23 to something called "protA" because they had antibodies to the latter (analogous to a Flag tag or HA).
++ In Figure 1A, they immunoprecipitate Vps23 using antibodies to protA and they characterize the other proteins they pull down. This revealed Vps28 and Vps37, hypothesized to be members of a complex with Vps23.
++ In Figure 1B, they perform "gel filtration analysis" - basically chromatography - and each lane on the gel represents one fraction of eluent coming off the machine. Elution from a column is sort of a random walk, which is why any given molecule will elute over a few minutes and not all at once - hence the complex is seen in multiple fractions (multiple lanes). The main conclusion here is that Vps23 is never seen monomerically - it exists solely as part of the ESCRT-I complex. They also use an error-prone PCR mutagenesis screen to look for LoF mutations in Vps23, and they isolate a mutation in Vps23^M85T which is non-functional but associates with the others to form a complex. This mutation is located in a domain predicted to have something to do with ubiquitination, supporting their idea that ubiquitin will somehow prove to be involved.
++ Figure 2 seeks to show that Vps23 (fused to GFP for visualization) co-localizes with Snf7, a marker of endosomes. In Figure 2B, there is a lot of green, so under the null hypothesis that Vps23 localizes nowhere in particular (say it's cytosolic), of course the authors would have been able to find *two* cells in which red Snf7 localized in a subset of places where green Vps23 was found. Even the two cherry-picked examples here do not imply Vps23 is exclusively endosomal. This figure on its own is fairly weak evidence for the subcellular localization of Vps23.
++ Armed with the hypothesis that ESCRT-I is important for turnover of receptors, the authors studied a vacuolar hydrolase called [carboxypeptidase S (CPS)](http://www.uniprot.org/uniprot/P27614).
++ In Figure 3, they immunoprecipitate CPS and then probe with antibodies to either CPS or ubiquitin. This blot shows many different things. First, CPS is ubiquitinated. Second, its ubiquitination can be affected by a series of different mutants. At the time, the pathways indicated in blue text and yellow bubbles in Figure 3B had already been worked out, so the authors used mutations in these proteins to figure out *where* CPS was being ubiquitinated and de-ubiquitinated.
 
-In Figure 3, they IP with an antibody against CPS, and then probe the blot with antibodies to CPS and to Ub. DOA4's function is to de-ubiquitylate things, so the *&Delta;doa4* strain in lane 2 has CPS that is more highly ubiquitylated.
+    The mutants they chose all affect different steps in the sorting pathway:
+    
+    | mutant | what step it messes up |
+    | ------ | ----------------- |
+    | &Delta;gga1 | Golgi &rarr; early endosome |
+    | &Delta;pep12 | early endosome &rarr; late endosome |
+    | &Delta;doa4 | late endosome |
+    | &Delta;vam3 | late endosome &rarr; multi-vesicular body |
 
-The mutants they obtain all affect different steps in the sorting pathway:
+    Doa4's function is to de-ubiquitylate things, so the *&Delta;doa4* strain in lane 2 has CPS that is more highly ubiquitylated. When they mutate Gga1, they get *no* ubiquitination at all (empty-looking second-to-last lane), implying that ubiqutination happens after the Golgi. When they knock out Pep12, do get ubiquitination, implying ubiquitination has occurred in the early endosome. Doa4 is known to act in the late endosome, and knocking it out causes CPS to stay heavily ubiquitinated. Vam3 is known to manage trafficking from late endosomes to MVBs, so knocking it out gives CPS more time to interact with Doa4, hence it is fully de-ubiquitinated. Double knockout of Vam3 and Doa4 rescues this and allows CPS to be ubiquitinated.
 
-| mutant | what step it messes up |
-| ------ | ----------------- |
-| &Delta;gga1 | Golgi &rarr; early endosome |
-| &Delta;pep12 | early endosome &rarr; late endosome |
-| &Delta;doa4 | late endosome |
-| &Delta;vam3 | late endosome &rarr; multi-vesicular body |
-
-In 2001 it was already known where each of these proteins acted in the secretory pathway. Therefore by knocking each of them out they can determine *where* ubiquitination and de-ubiquitination occur.
-
-When they mutate Gga1, they get *no* ubiquitination at all (empty-looking second-to-last lane), implying that ubiqutination happens after the Golgi. When they knock out Pep12, do get ubiquitination, implying ubiquitination has occurred in the early endosome. Doa4 is known to act in the late endosome, and knocking it out causes CPS to stay heavily ubiquitinated. Vam3 is known to manage trafficking from late endosomes to MVBs, so knocking it out gives CPS more time to interact with Doa4, hence it is fully de-ubiquitinated. Double knockout of Vam3 and Doa4 rescues this and allows CPS to be ubiquitinated.
-
-In Figure 4, they mutate residue K8 and show that this affects ubiquitination; mutating K12 doesn't do as much. From this they conclude that K8 is the likely site of ubiquitination.
-
-The theory of the MVB pathway is that invagination creates vesicles inside the late endosomes, and that anything left in the lumen, unbound to these vesicles, will be degraded.
-
-In Figure 5, to see if ubiquitination is *sufficient* to cause cargo to be saved from ending up in the lumen and getting degraded, they express a constitutively ubiquitinated GFP-CPS and show that it ends up in the lumen. If you delete Vps4 this does not occur. 
-
-In Figure 6 they show that Vps23 can bind ubiquitinated proteins and that someplace around residue 85 is important for this.
-
-
+    From the blot in Figure 3A they are able to deduce that CPS gets ubiquitinated in the early endosome and de-ubiquitinated (by Doa4) in the late endosome, and that it is degraded upon fusion with the lysosome if and only if it is not ubiquitinated. All this is diagrammed in Figure 3B.
++ In Figure 4, they seek to determine at which residue CPS is ubiquitinated. In Figure 4A they IP CPS and then probe with anti-Ub. The mutation K8R nearly abolishes Ub signal, suggesting that most ubiquitination is on K8. The K12R mutation is less severe. Accordingly, in Figure 4B they fuse the mutant CPSs to GFP and show that K8R is not properly preserved in MVBs. This is also true in K8R K12R, but not in the strain with K12R alone. Therefore ubiquitination of K8 in particular is essential for proper sorting of CPS.
++ In Figure 5, they express a GFP with only the 7 residues of the ubiquitination site of CPS and show that this is sufficient to get GFP into the MVBs. This suggests that ubiquitination is sufficient for CPS sorting to MVBs.
++ In Figure 6 they show that the Vps23 M85T mutant is unable to grab ubiquitinated CPS, and that Vps23 is unable to grab CPS that hasn't been ubiquitinated due to the K8R and K12R mutations.
++ Figure 7 diagrams the pathway they have arrived at from all their experiments. ESCRT-I is responsible for sorting ubiquitinated proteins into invaginating vesicles. Doa4 removes the Ub tag before invagination is complete. The proteins sorted in this manner will stay bound to the membrane and not be degraded in the lysosome. 
 
 
 [Bankaitis 1986]: http://www.ncbi.nlm.nih.gov/pubmed/3538017 "Bankaitis VA, Johnson LM, Emr SD. Isolation of yeast mutants defective in protein targeting to the vacuole. Proc Natl Acad Sci U S A. 1986 Dec;83(23):9075-9. PubMed PMID: 3538017; PubMed Central PMCID: PMC387077."
