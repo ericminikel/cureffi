@@ -9,40 +9,6 @@ location: Boston, MA
 
 *These are my notes from lecture 04 of Harvard's BCMP 200: Molecular Biology course, delivered by Joe Loparo on September 10, 2014.*
 
-### Michaelis-Menten equation continued
-
-(Continued from [lecture 03](/2014/09/08/molecular-biology-03)). The Michaelis-Menten equation represents the simplest possible explanation of enzyme kinetics that is still a remotely good model of reality for some (but still not all) reactions.
-
-Continuing the derivation from last time, we can get that:
-
-V<sub>max</sub> = k<sub>2</sub>[E]<sub>0</sub>
-
-Substituting this in, we get:
-
-V<sub>0</sub> = V<sub>max</sub> / (1 + K<sub>m</sub>/[S])
-
-If we plot \[S\] (x-axis) vs. V<sub>0</sub> we find that at low [S] where [S] << K<sub>m</sub>, the curve is nearly linear. In this range, the slope is approximated by K<sub>2</sub> / K<sub>m</sub>, because:
-
-V<sub>0</sub> = V<sub>max</sub> / (1 + K<sub>m</sub>/[S]) &asymp; V<sub>max</sub> / (K<sub>m</sub>/[S]) = (K<sub>2</sub>/K<sub>m</sub>)\[E\]<sub>0</sub>\[S\]
-
-The meaning of these constants may be understood as follows:
-
-+ K<sub>m</sub> is a ratio of rate constants, (K<sub>-1</sub> + K<sub>2</sub>)/K<sub>1</sub>. If K<sub>2</sub> << K<sub>-1</sub>, then K<sub>m</sub> &asymp; K<sub>-1</sub>/K<sub>1</sub> which is simply the K<sub>D</sub> from the E + S &harr; E&middot;S reaction. Thus K<sub>m</sub> describes how much enzyme has substrate bound to it.
-
-The **apparent rate constant** for an enzyme functioning at its maximum possible rate is called the catalytic rate constant, denoted K<sub>cat</sub>. This is the velocity when the enzyme is saturated:
-
-V<sub>max</sub> = K<sub>cat</sub>[E]<sub>0</sub>
-
-The rate constant has E<sub>A</sub> in its exponent, thus even small increases in E<sub>A</sub> can cause a large increase in reaction rate. Consider for instance, myosin, which stabilizes (reduces the free energy of) the transition state in ATP hydrolysis, lowering E<sub>A</sub> for what is otherwise a spontaneous, but very slow, reaction. Enzymes can lower these energy barriers by (1) stabilizing the transition state through additional interactions (hydrogen bonds, salt bridges) with the substrate and by (2) promoting the correct *orientation* of substrates with respect to each other. Another example is DNA polymerase, which overcomes the electromagnetic repulsion of a negatively charged DNA backbone and a new triphosphate group through interactions with metal cations.
-
-### Nomenclature clarification
-
-Rate constants should be written with lowercase k.
-
-Thermodynamic equilibrium constants should be written with capital K.
-
-K<sub>m</sub> is technically a rate constant, but is capitalized because in the limit discussed above it becomes K<sub>D</sub>.
-
 ### DNA structure and topology
 
 Watson and Crick's double helix structure raised two questions that we'll discuss today:
