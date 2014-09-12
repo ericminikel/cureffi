@@ -1,0 +1,128 @@
+---
+layout: post
+title:  "Genetics 04: 'Molecular and genomic studies in yeast'"
+date:   2014-09-12 12:00:00
+author: ericminikel
+tag: genetics-201
+location: Boston, MA
+---
+
+*These are my notes from lecture 04 of Harvard's Genetics 201 course, delivered by Fred Winston on September 12, 2014.*
+
+### Lasker award news
+
+Yesterday [Kazutoshi Mori and Peter Walter won the Lasker award](http://www.laskerfoundation.org/awards/2014_b_description.htm) for using the very yeast genetics techniques we've just been learning about to discover the unfolded protein response incluing BiP and Ire1.
+
+### Example techniques
+
+Fred showed us an example of a tetrad dissection. The spores are plated on YPD (yeast extract, peptone, dextrose) with the parent strains also present as controls. He uses velveteen from Jo-Ann Fabrics to transfer them to replica plates.
+
+### Yeast sex swapping
+
+The MAT locus is flanked by HMRa on one side and HMR&alpha; on the other side. These two contain all of the sex-determining information but are silenced by chromatin marks. Yeast have an HO gene which allows recombination to let haploid yeast change their own sex. Laboratory strains of yeast have HO mutated so that this doesn't happen, so that you can grow an all-one-sex colony of haploids and know that you won't accidentally end up with diploids.
+
+### Review
+
+Recall that you can use the segregation of two markers in yeast tetrads (PD, NPD, TT) to determine linkage.
+
+| outcome | meaning |
+| ------- | ------- |
+| PD = NPD | unlinked |
+| PD > NPD | linked |
+| PD < NPD | #DoingItWrong |
+| P = NP | probably true but no one has proven it yet |
+
+### Centromere linkage
+
+Why do we care?
+
+1. Mapping the physical position of a gene.
+2. Makes it easier to clone genes with dominant mutations.
+3. Easy to do.
+
+You can only determine centromere linkage when two genes are unlinked to each other (PD=NPD). In this case, you know when a crossover has occurred between a marker and its centromere when TT tetrads are produced. If &ge; 1 of the 2 markers is unlinked from the centromere, you will see tetratypes. If and only if both markers are very tightly centromere-linked, you will see no tetratypes. In practice, these studies are always done with a gene of interest vs. a mutant in a known centromere-linked gene, usually *trp1* (which requires tryptophan for survival), which is extremely close to the centromere of chr16.
+
+Example: cross *trp1* &times; B, and get PD=45, NPD=45, TT=10. Because PD=NPD, *trp1* and B are unlinked to one another. The centromeric linkage is given by &half;T/(P+N+T). This quantity times 100 is B's genomic distance from the centromere in centiMorgans. In this case, you get &half;&times;10/(100) &times; 100 = 5 cM. Again, remember that because *trp1* is so very tightly centromerically linked, we assume that 100% of tetratypes result from crossovers between B and its centromere. Note that this formula is less accurate than the one for linkage of two genes to each other, because there is no way to detect double crossovers.
+
+Now consider an AB &times; ab cross, where A is tightly CEN-linked, and B is unlinked to its centromere. Here are the six possible tetrad genotypes:
+
+| spore genotypes | interpretation |
+| --------------- | -------------- |
+| AB AB ab ab | PD |
+| Ab Ab aB aB | NPD |
+| Ab AB aB ab | TT |
+| AB Ab ab aB | TT |
+| AB Ab aB ab | TT |
+| Ab AB ab aB | TT | 
+
+In the limit where A&rarr;right in the centromere and B&rarr;as far away as possible, the ratio P:N:T is 1:1:4. This ratio indicates that at least one of the two markers is non-CEN-linked. The ratio is the same whether one or *both* markers is non-CEN-linked. A ratio of 1:1:<4 means that *both* markers are CEN-linked. This formula is not very accurate above about 25 or 30 cM.
+
+### More examples
+
+Here are some N:P:T data and you can figure out the interpretation of each case:
+
+| PD | NPD | TT | Are A and B linked? | Are both CEN-linked? | 
+| ---- | ---- | ---- | ---- | ---- |
+| 10 | 10 | 40 | No | No |
+| 30 | 30 | 0 | Yes | No |
+| 20 | 20 | 20 | No | Yes, because P:N:T is 1:1:<4 |
+| 50 | 0 | 10 | Yes | Cannot be determined |
+
+Remember, one can only determine CEN linkage when dealing with two unlinked markers.
+
+### The yeast gene discovery pipeline
+
+1. Isolate mutants
+2. Test dominance vs. recessiveness
+3. Find complementation groups
+4. Determine linkage of markers with each other and with centromeres
+5. Identify the gene (next)
+
+In complementation tests, you will often do a few extra crosses between a subset of mutants within and between complementation groups just to check if there is unlinked noncomplementation or linked noncomplementation. In these crosses you can also throw in a CEN-linked gene to see if any of your mutants are CEN-linked.
+
+### Identifying a gene
+
+Suppose we have isolated a mutant *cis1* and now we want to identify the gene that is mutated. There are two ways this is done in labs:
+
+1. **Cloning by complementation**. Isolate a plasmid with the yeast gene that complements *cis1*. This only works for recessive mutations. It requries a yeast recombinant library and a yeast strain with the right markers including *cis1*. 
+2. **Whole genome sequencing** (next lecture).
+
+A yeast recombinant library is random pieces of ~10-15kb each of yeast DNA, in an *E. coli*/yeast plasmid. Yeast have very few and very small introns, therefore genomic DNA is used (as opposed to in mammalian cells, we would use a cDNA library). You can cleave up the genomic DNA for these libraries using sonication, or partial digests with restriction enzymes. The latter technique is more commonly used because then ligation into vectors is easier. To get 10-15kb pieces you want a restriction enzyme whose recognition site is abundant. If you had an enzyme with rare recognition sites, then to get 15 kb pieces you would need to do a longer, more complete digest, at which point the pieces are non-random. Randomness is maximized with a highly non-specific restriction enzyme and a very short digest. The one that is used in practice is Sau3A, which recognizes the sequence GATC.
+
+The plasmids must contain a centromeric sequence (just a few hundred bp is fine for *S. cerevisiae*), and a stable low copy number. It must contain origins of replicaton for both yeast and *E. coli*, and selection markers for each, usually *ura3&Delta;* and Amp^R (ampicillin resistance) respectively. This was originally done by making thousands of *E. coli* transformants from your cleaved-up yeast DNA. But this problem only had to be solved once (or a few times at most). Because people did this a long time ago, now you can just get a copy of the library from your friend. 
+
+The use of *ura3&Delta;* is important because the entire *URA3* sequence is deleted, whereas if you had merely a single point mutation in *URA3*, there is a reasonably high probability of revertants (spontaneous mutations back to wild-type), which complicates interpretation of your results.
+
+Now to identify genes which might be where *cis1* is located:
+
+1. Use your recombinant library to transform the *cis1* *ura3&Delta;* strain
+2. Select for Ura3+ transformants
+3. Screen for Cis^S transformants by replica plating
+
+How many Ura3+ transformants do we need to plate to have a good shot at subsequently identifying a Cis^S transformant? This depends on genome size (here, 1.2e7 bp) and the size of your inserts (here, 10-15kb). In practice for *S. cerevisiae* this usually requires screening 6,000 transformants. However if *cis1* happens to be CEN-linked, the number will be much larger, for the following complicated reason. A CEN-linked gene will have centromeric sequence in its plasmid, which is fine in *E. coli* but once it is transformed into yeast, centromeric proteins will bind the plasmid DNA at these sequences and then the plasmid will be ripped apart upon cell division, as if it were a chromosome. This destroys the plasmid.
+
+After you find Cis^S transformants, you transfer the winning plasmid back into *E. coli* and then sequence the two ends of the insert. You then check these against the yeast reference genome. (Apparently the first *S. cerevisiae* reference genome came out in 1996 [[Goffeau 1996]]). Often a plasmid will contain something like 3 genes. In the yeast reference genome, every gene has been given a systematic name, such as YKL051W. Here's what this means:
+
+| character | meaning |
+| --------- | ------- |
+| Y | yeast |
+| K | chromosome 12 |
+| L | left arm |
+| 051 | 51st gene, numbering from the centromere outward |
+| W | Watson, the strand that is transcribed |
+
+To determine which of the multiple genes on your winning plasmid is *CIS1*, you subclone each one on to its own plasmid and test each for complementation. Once you identify the gene that complements your mutant - say it's YKL051W - you still can't be positive yet that you've got the right gene. Sometimes a 2-fold increase in copy number of one gene is sufficient to suppress the phenotype of a mutant in a different gene. A classic example is that *TUB1* and *TUB3* both encode &beta;-tubulin. *TUB1* is highly expressed and *TUB2* is lowly expressed. Overexpression of *TUB3* can rescue mutants of *TUB1*.
+
+To confirm that the gene we've isolated - say YKL051W - really is the same gene in which the *cis1* mutation is located, we need a test of position (linkage) in addition to our test of function (complementation). Create or purchase a geneticin-resistant deletion of YKL051W (this only works if YKL051W is not essential for survival) and cross the following haploids: a *cis1* &times; &alpha; ykl051w&Delta;G418<sup>R</sup>.
+
+If YKL051W and *cis1* are linked, you'll get only PD tetrads, which means you'll get 2:2 *cis1*:ykl051w&Delta;G418<sup>R</sup>. It is possible that ykl051w&Delta;G418<sup>R</sup> is also cisplatin resistant, in which case this 2:2 ratio will manifest phenotypically as 100% being cisplatin resistant and 50% being both cisplatin and geneticin resistant. However it is also possible that *cis1* is a gain of function, in which case 50% will be only cisplatin resistant and 50% will be only geneticin resistant.
+
+If, on the other hand, *cis1* &ne; YKL051W, and the two are not even linked, you'll also get NPD and TT tetrads. Whether or not ykl051w&Delta;G418<sup>R</sup> is cisplatin resistant, this will still reveal itself phenotypically because tetratypes will contain spores that are neither cisplatin nor geneticin resistant.
+
+[Goffeau 1996]: http://www.ncbi.nlm.nih.gov/pubmed/8849441 "Goffeau A, Barrell BG, Bussey H, Davis RW, Dujon B, Feldmann H, Galibert F, Hoheisel JD, Jacq C, Johnston M, Louis EJ, Mewes HW, Murakami Y, Philippsen P, Tettelin H, Oliver SG. Life with 6000 genes. Science. 1996 Oct 25;274(5287):546,  563-7. Review. PubMed PMID: 8849441."
+
+
+
+
+
+
