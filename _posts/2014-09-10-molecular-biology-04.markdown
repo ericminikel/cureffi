@@ -74,4 +74,10 @@ Almost all genomes exist in a negatively supercoiled state. Consider a 1kb circu
 
 There are two types of supercoiling, called plectonemic and solenoidal. In the latter, DNA is wrapped around something (say, a nucleosome), but the fundamental topology is the same. Eukaryotes wrap DNA around nucleosomes to introduce negative supercoil instead of using gyrase.
 
+A left-handed solenoidal wrap of one segment of DNA around histones results in a left handed plectoname (positive supercoil) in the rest of the DNA, for conservation of link number. To relieve this stress, topoisomerases are needed to un-writhe the rest of the DNA. Unlike bacterial gyrases, topoisomerases do not need ATP - they just use the energy in the supercoiled DNA to cut and re-ligate the DNA.
+
+The conformation of DNA is of practical importance in the lab. In DNA gel electrophoresis, a closed relaxed circle will migrate the slowest. A linear DNA will run faster. A supercoiled DNA will run yet faster than linear DNA because its size exposed to the gel is smaller. The more supercoiled, the faster it runs. Ethidium bromide, by intercalating DNA, relaxes the curvature of the DNA helix from 34.6&deg; to only 10&deg;. Remember that Lk is conserved in the absence of breaking strands, so this doesn't result in a decrease in Lk. This instead decreases Tw and increases Wr, introducing positive supercoils. The direction of effect is the same as that of unwinding DNA with a helicase.
+
+
+
 [Postow 2004]: http://www.ncbi.nlm.nih.gov/pubmed/15256503 "Postow L, Hardy CD, Arsuaga J, Cozzarelli NR. Topological domain structure of  the Escherichia coli chromosome. Genes Dev. 2004 Jul 15;18(14):1766-79. PubMed PMID: 15256503; PubMed Central PMCID: PMC478196."
