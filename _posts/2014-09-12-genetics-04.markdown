@@ -117,7 +117,7 @@ To confirm that the gene we've isolated - say YKL051W - really is the same gene 
 
 If YKL051W and *cis1* are linked, you'll get only PD tetrads, which means you'll get 2:2 *cis1*:ykl051w&Delta;G418<sup>R</sup>. It is possible that ykl051w&Delta;G418<sup>R</sup> is also cisplatin resistant, in which case this 2:2 ratio will manifest phenotypically as 100% being cisplatin resistant and 50% being both cisplatin and geneticin resistant. However it is also possible that *cis1* is a gain of function, in which case 50% will be only cisplatin resistant and 50% will be only geneticin resistant.
 
-If, on the other hand, *cis1* &ne; YKL051W, and the two are not even linked, you'll also get NPD and TT tetrads. Whether or not ykl051w&Delta;G418<sup>R</sup> is cisplatin resistant, this will still reveal itself phenotypically because tetratypes will contain spores that are neither cisplatin nor geneticin resistant.
+If, on the other hand, *cis1* &ne; YKL051W, and the two are not even linked, you'll also get NPD and TT tetrads. Whether or not ykl051w&Delta;G418<sup>R</sup> is cisplatin resistant, this will still reveal itself phenotypically because tetratypes will contain spores that are neither cisplatin resistant nor geneticin resistant.
 
 [Goffeau 1996]: http://www.ncbi.nlm.nih.gov/pubmed/8849441 "Goffeau A, Barrell BG, Bussey H, Davis RW, Dujon B, Feldmann H, Galibert F, Hoheisel JD, Jacq C, Johnston M, Louis EJ, Mewes HW, Murakami Y, Philippsen P, Tettelin H, Oliver SG. Life with 6000 genes. Science. 1996 Oct 25;274(5287):546,  563-7. Review. PubMed PMID: 8849441."
 
