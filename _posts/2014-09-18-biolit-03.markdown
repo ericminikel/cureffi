@@ -1,0 +1,50 @@
+---
+layout: post
+title:  "Biolit 03: cGAMP"
+date:   2014-09-18 12:00:00
+author: ericminikel
+tag: bbs-230
+location: Boston, MA
+---
+
+*These are my notes for week 03 of Harvard's BBS 230 "Analysis of the biological literature" course (September 16-18, 2014). This includes my own reading and analysis of the papers, as well as my notes from discussion section.*
+
+The papers for this week are [[Sun 2013]] and [[Wu 2013]], published by the same group &mdash; Chen Zhijian (陈志坚)'s group at UT Southwestern Medical Center &mdash; in the same issue of *Science*. Together, the two papers established this pathway:
+
+![](/media/2014/09/biolit-03-pathway-diagram.png)
+
+### [Wu 2013]: Cyclic GMP-AMP is an endogenous second messenger in innate immune signaling by cytosolic DNA
+
+#### Figure by figure
+
+1. Figure 1 uses IRF3 dimerization as a readout for whether the pathway of interest is being activated. They find it can be activated by any just old DNA sequence - herring testis DNA, poly(dA:dT), poly(dG:dC), poly(dI:dC), or interferon-stimulatory DNA all work. No RNA sequence works - for instance, poly(I:C) (the RNA equivalent of dI:dC) or some unspecified ssRNA don't work. For the DNA sequences which do work, shRNA against STING prevents the IRF3 dimerization. This all works in a number of different cell lines (though not HEK293T cells). The activating messenger is not degraded by heat nor nucleases nor proteases, so it must be a small molecule. So: cytosolic DNA, but not RNA, stimulates IRF3 dimerization via STING via a small molecule messenger.
+2. In Figure 2 they performed mass spec to identify the small molecule messenger. In reality they may have already had a hypothesis that it would be some sort of cyclic dinucleotide, because they mention elsewhere that c-di-GMP and c-di-AMP were already known to stimulate STING. But in any event, they tagged STING with FLAG, and then performed affinity chromatography to get fractions containing the active molecule, then subjected these fractions to mass spec. The mass spectra identified a peak present only in active fractions, which was halfway between the c-di-GMP and c-di-AMP mass/charge ratios, and this molecule proved to be cyclic GMP-AMP (cGAMP). They then chemically synthesized it and showed that the synthetic cGAMP gave the same peak in mass spec.
+3. In Figure 3 they show that their synthetic cGAMP can activate IFN&beta;, and they also show that infection by DNA viruses (but not RNA viruses) also causes IRF3 dimerization similar to that seen in Figure 1. As far as I can tell, these two messages ("synthetic cGAMP induces IFN&beta;" and "DNA virus infection causes IRF3 dimerization") were combined into one figure just for space.
+4. By this point, there are already a few sources of evidence that cGAMP binds STING (we saw that shRNA against STING blocks the pathway in Figure 1, and we saw that cGAMP elutes with STING in affinity chromatography in Figure 2). But Figure 4 provides more evidence to confirm this. Remember how HEK293T cells lacked a response to cGAMP in Figure 1? Well now they show that STING is lowly expressed in HEK cells, and that if you transfect them to overexpress STING, then they *do* have a response to cGAMP. Remember how shRNA against STING blocks the pathway in Figure 1? Well that was with heat supernatants from cytosolic DNA-stimulated cells; now they repeat that experiment but with chemically synthesized cGAMP. Plus they cross-link STING to radiolabeled cGAMP and show that they migrate together.
+
+#### Conclusions
+
+This paper was unbelievably thorough. It established cGAMP as a second messenger in animals &mdash; until then, cyclic dinucleotides had only been known to be second messengers in *Dictyostelium*.
+
+#### Thoughts and questions
+
+If cGAMP is called a second messenger, then the cytosolic DNA must be considered the "first messenger".
+
+### [Sun 2013]: Cyclic GMP-AMP synthase is a cytosolic DNA sensor that activates the type I interferon pathway
+
+This paper asks how cytosolic DNA induces cGAMP production. The answer: a cyclic GMP-AMP synthase (cGAS) encoded (in humans) by the *MB21D1* gene.
+
+#### Figure by figure
+
+1. First they tried three different methods for fractioning activated cell lysates and seeing which proteins co-purify with cGAMP-synthesizing activity. On silver staining they did not see any obvious protein bands that co-purified, so instead they did mass spec, and found three proteins that co-purified via all three routes. One of these, a protein then called E330016A19, appeared to be homologous to a different nucleotidase (NTase) called oligoadenylate synthase, so they pursued that one further. The multiple alignment is shown in Figure 1A. In Figure 1B and 1C, the mRNA for this gene is expressed in cells that do have the cGAMP-synthesizing activity but not in those that don't (HEK cells). 
+2. In HEK cells which endogenously lack activity in this pathway, you can get IFN&beta; induction if and only if you transfect them to express *both* cGAS and STING (Fig 2A). The same conditions that induce IFN&beta; also trigger IRF3 dimerization (Fig 2B). This doesn't work if you mutate the putative catalytic site on cGAS. Other DNA sensors besides cGAS don't do this (Fig 2C). In Fig 2D, note that MAVS *does* induce IRF3 dimerization, but this IRF3 dimerization is not "transmissible" to other permeabilized cells, a test which they call the "cGAMP activity assay".
+3. In Figure 3 they test whether knockdown or overexpression of parts of the pathway affect the IFN&beta; response. It took us a *long* time to understand this figure. The transfection with the overexpression or siRNA plasmids is responsible *both* for inducing IFN&beta; (because these experimental procedures involve introducing foreign DNA) *and* for manipulating parts of the pathway in order to understand it. In addition, one has to stare at Fig 3B in particular for a long time to figure out that, for instance, in the middle gray column labeled "cGAS" they are both knocking down *and* overexpressing cGAS *at the same time*, and apparently the overexpression "wins" since an IFN&beta; response is observed. And so on. Note that Fig 3A shows that the shRNAs against cGAS are not perfect, which is why you *do* still get a response (indeed, a quite robust one) when you knock down cGAS in cells overexpressing STING but not cGAS. Overall, it seems one could conclude that even a little bit of cGAS is sufficient to support pathway induction, whereas STING is limiting, such that if STING is knocked down then IFN&beta; induction is reduced. Similarly, overexpression of STING greatly increases pathway induction, whereas overexpression of cGAS doesn't increase activity that much. Knockdown of cGAS affects IRF3 dimerization response to a DNA virus (Fig 3D) but not to an RNA virus (Fig 3E). What Fig 3F and 3G add is that shRNA against cGAS to reduce response to DNA viruses also results in a reduction in cGAMP.
+4. Figure 4 boils it down to purified components to show that cGAS, DNA and ATP + GTP are *sufficient* to create cGAMP. They expressed and purified a FLAG-tagged cGAS in HEK cells (demonstrated in Fig 4A). They then performed a cell-free reaction of cGAS + ATP + GTP + DNA, and showed that this reaction creates cGAMP, as measured by their cGAMP activity assay (Fig 4B). This worked with any old DNA, but only when GTP and ATP are both present as substrates (Fig 3C). It also works with recombinant, SUMO-tagged cGAS (from *E. coli*) and doesn't work if you mutate the putative catalytic site (Fig 3D). The IRF3 dimerization activity induced by the products of the recombinant cGAS + ATP + GTP + DNA is seen at the same time as cGAMP production (measured by mass spec) peaks.
+5. Figure 5 confirms a physical interaction between cGAS and DNA. The use of streptavidin beads to pull down biotinylated DNA also pulls down GST-tagged cGAS (Fig 5A). Based on the success of the purified components reaction in Figure 4, it *had* to be the case that cGAS physically binds DNA, but this experiment just confirms it. Figure 5C uses deletion mutants to figure out which parts of cGAS do what. They couldn't purify 161-212, but at least they can say that 1-212 is necessary & sufficient to bind DNA.
+6. Figure 6 shows that cGAS localizes largely in the cytosol. Note that the nomenclature is that S100, for instance, means "supernatant after centrifugation at 100,000g", with P meaning pellet, etc. They found cGAS in S100 and P100 indicating it might be partly in the cytosol and party in "light organelles", but it wasn't in the P20, meaning it's not in heavy organelles such as the ER. Their images of cells (Fig 6C) indicate that cGAS binds DNA in the cytosol.
+
+
+
+[Sun 2013]: http://www.ncbi.nlm.nih.gov/pubmed/23258413 "Sun L, Wu J, Du F, Chen X, Chen ZJ. Cyclic GMP-AMP synthase is a cytosolic DNA sensor that activates the type I interferon pathway. Science. 2013 Feb 15;339(6121):786-91. doi: 10.1126/science.1232458. Epub 2012 Dec 20. PubMed PMID: 23258413; PubMed Central PMCID: PMC3863629."
+
+[Wu 2013]: http://www.ncbi.nlm.nih.gov/pubmed/23258412 "Wu J, Sun L, Chen X, Du F, Shi H, Chen C, Chen ZJ. Cyclic GMP-AMP is an endogenous second messenger in innate immune signaling by cytosolic DNA. Science. 2013 Feb 15;339(6121):826-30. doi: 10.1126/science.1229963. Epub 2012 Dec 20. PubMed PMID: 23258412; PubMed Central PMCID: PMC3855410."
