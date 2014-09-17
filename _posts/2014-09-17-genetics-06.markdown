@@ -1,0 +1,121 @@
+---
+layout: post
+title:  "Genetics 06: 'Methods to find interacting proteins'"
+date:   2014-09-17 12:00:00
+author: ericminikel
+tag: genetics-201
+location: Boston, MA
+---
+
+*These are my notes from lecture 06 of Harvard's Genetics 201 course, delivered by Fred Winston on September 17, 2014.*
+
+### Protein purification: the biochemical approach to the interactome
+
+The method we'll discuss today is similar to that employed by [[Katzmann 2001]] as covered in [biolit 02](/2014/09/11/biolit-02).
+
+The goal of protein purification as we'll discuss it today is to answer the question "does Cis1 stably interact with other proteins?"
+
+One experimental method to answer this question involves 3 steps:
+
+1. Use gene replacement methods (homologous primers, etc.) as discussed in previous lectures to create a fusion of *CIS1* and an epitope tag that allows easy purification. A commonly used tag is a TAP (tandem affinity purification) tag which lends itself to [a 2-step purification process](http://en.wikipedia.org/wiki/Tandem_affinity_purification).
+2. Lyse cells and purify the protein. It will co-purify with stably interacting proteins. 
+3. Digest the co-purified proteins with trypsin and perform mass spectrometry; look up the mass/charge ratios in UniProt to find which proteins the trypsinized peptides originate from.
+
+Through this method you'll obtain a list of interacting proteins. A couple of controls are useful:
+
+1. Perform the procedure in cells without the fusion construct. Anything that pulls down here might be interacting with the antibody or the beads.
+2. Perform the procedure in cells expressing just the tag not fused to Cis1. Anything that pulls down here might be just interacting with the tag.
+
+Only the proteins that are unique to pulldown of the fusion construct are relevant; the ones that pull down in controls (1 & 2) are non-specific. You may also want to do a functional test on the fusion protein to make sure it maintains native function (in this case, the cells should be cisplatin-sensitive). And you might try a few different tags, each of which you can try at either the N or C terminus of the protein. Some people will even put tags in the middle of their protein if they think that region is non-conserved.
+
+Once you've identified putative interactors, you can tag one of *those*, pull it down and see if you obtain the same set of proteins - if so, presumably you've pulled down the same complex.
+
+Even if others have already studied the interactome of your protein, you may want to try it again. Results can vary with many environmental factors - pH, salt concentration, temperature, and so on. For example, the standard protocol for TAP purification is 350 mM but people have done it from 300 mM to 600 mM and get very different results.
+
+Note also that you can never rule *out* possible interactors. Whether you can find a protein using this method depends on the stability of the interaction, the stability of the protein, the abundance of the protein, its tendency to aggregate, and its size. Because mass spec quantifies separate tryptic peptides, it is harder to quantify small proteins.
+
+### Genetic interaction: the genetic approach to the interactome
+
+To identify either a functional or a physical interaction, you can use genetics to search for:
+
+1. **suppressors** - look for a second mutation that corrects the defect of the first mutation
+2. **unlinked noncomplementation** - look for a second, recessive, mutation where the mutant phenotype is observed even when both mutations are present only in a het state
+3. **2-hybrid screens** - look for protein-protein interactions
+4. **double mutant analysis** - look for a second mutation that enhances or suppresses the mutant phenotype - note this overlaps with suppressor analysis (#1 above) but uses a different method.
+
+Double mutant analysis was recently done all-by-all on all N choose 2 viable deletion mutants in yeast [[Costanzo 2010]].
+
+Here are more details about each approach.
+
+#### Suppressor analysis
+
+Begin with a cisplatin-resistant (Cis<sup>R</sup>) mutant, mutagenize it and screen for "revertants" that have gone back to the wild-type phenotype, i.e. that are cisplatin-sensitive (Cis<sup>S</sup>). This can come about via:
+
++ **true revertants** that undo the *cis1* mutation, restoring the wild-type *CIS1* gene
++ **suppressors** that still have the *cis1* mutation plus also have a second mutation which suppresses the phenotype. These may be:
+    + **intragenic** - a second mutation in *CIS1*
+    + **extragenic** - the suppressor is in a different gene
+
+To distinguish these scenarios, take your revertant strain and cross it with wild-type. You can't fully distinguish the three scenarios just by crossing:
+
+| Cis<sup>S</sup>:Cis<sup>R</sup> ratios in tetrads | ditypes | interpretation |
+| --------- | ---- | -------------- |
+| 4:0 | all PD | true revertant |
+| 4:0&dagger; | all PD | intragenic suppressor |
+| 2:2, 3:1, and 4:0&Dagger; | PD, TT and NPD all observed | extragenic suppressor |
+
+&dagger; If it's a large gene and the two mutations are far apart, you might be lucky enough to see like 1% tetratypes.
+&Dagger; This makes no assumption about linkage or whether the suppressor has its own phenotype. Regardless, you should see tetrads that are 2:2 (PD, where 2 spores got the *cis1* mutation and the other 2 got the suppressor mutation), 3:1 (TT, where 1 spore got the *cis1* mutation alone, being Cis<sup>R</sup>, 1 got both, being Cis<sup>S</sup>, 1 got only suppressor and 1 got neither - these too are Cis<sup>S</sup>), and 2:2 (NPD, where *cis1* segregated with the suppressor). Note also that the PD, NPD, and TT may be in different ratios if the two genes are linked, but just the presence of NPD and TT at all means that you have an extragenic suppressor.
+
+To distinguish true revertants from intragenic suppressors, you really have to do sequencing.
+
+We further define four types of extragenic suppressors:
+
+| class | type of mutation it suppresses |
+| ----- | ----------------------------- |
+| informational or nonsense suppressors | nonsense |
+| bypass | deletions, nonsense, frameshift, missense |
+| epistatic | deletions, nonsense, frameshift, missense |
+| interaction | missense |
+
+Here's what they are:
+
+**Informational suppressors** or **nonsense suppressors** involve tRNA mutations. Recall that stop codons have names: TAG = amber, TAA = ochre, TGA = opal. A nonsense suppressor is a mutation in a tRNA so that either a stop tRNA now encodes an amino acid, or a tRNA that already encoded an amino acid is now complementary to the stop codon. In both cases, you might think these tRNA mutations would be lethal (and occasionally they are - there is a famous example with a leucine tRNA). But in the former case, read-through of stop codons in other genes is limited by additional stop codons in the 3'UTR, and in the latter case, there are often other tRNAs for the same amino acid which can substitute.
+
+**Bypass suppressors** create a new functional protein which obviates the mutated protein. A famous example from *E. coli* was discovered by Shuman and Beckwith - a maltose transporter deletion mutant was rescued by a mutation in a lactose transporter lacY that made it able to transport both lactose *and* maltose.
+
+**Epistatic suppressors** act via a pathway. As an example, consider signal transduction during yeast mating. MATa encodes an &alpha; factor receptor which is a 7-pass transmembrane protein. When a MAT&alpha; cell comes by, it secretes &alpha; factor which binds the receptor and transduces a signal via Ste4 ("sterile 4") to activate several genes that need to be active during mating. People did screens for mutants that could not mate, and also screens for mutants that suppressed the *ste4&Delta;* sterile phenotype, and they found several mutations, which later turned out to be in genes encoding protein kinases:
+
+| strain | mating phenotype |
+| ------ | ---------------- |
+| wt | + (requires &alpha; factor) |
+| *ste7&Delta;* | - |
+| *ste11&Delta;* | - |
+| *ste20&Delta;* | - |
+| *STE11-4* | constitutive |
+| *STE11-4*/*ste20&Delta;* | constitutive |
+| *STE11-4*/*ste7&Delta;* | - |
+
+In other words, the *STE11-4* mutant is dominant to *ste20&Delta;*, hence all caps. Cells with that mutation *always* have the mating signaling pathway turned on, even in the absence of &alpha; factor. However *STE11-4*/*ste7&Delta;* were still sterile. Turns out, Ste20 is upstream of Ste11 is upstream of Ste7 in a phosphorylation cascade. We say that *STE11-4* is epistatic to *ste20&Delta;* and *ste7&Delta;* is epistatic to *STE11-4*.
+
+**Interaction suppressors** are where a missense mutation in one protein abolishes an interaction, but a missense in the interacting protein resotres it. An example is given in [[Sandrock 1997]]. One model has been a "lock and key" model where the change in shape or charge or something on the suppressor protein exactly restores affinity between the two mutated residues. Sandrock's example argues instead for an "increased affinity" model where the suppressor mutation increases the overall affinity of the protein-protein interaction interface such that the original mutation is no longer sufficient to abolish the interaction. It is difficult to distinguish between these two models using genetic approaches alone, though if the suppressor mutation in protein B suppresses *many different* mutations in protein A, that would argue for the "increased affinity" model.
+
+People doing genetic screens are often most interested in finding interaction suppressors, because they teach you about the original protein's interactome and native function.
+
+Now suppose we've done a mutant hunt and found Cis<sup>R</sup> mutations in 3 genes:
+
+| gene | essential? | types of mutations found |
+| ---- | ---------- | ------------------------ |
+| *CIS1* | no | missense, nonsense, deletion |
+| *CIS2* | no | deletion |
+| *CIS3* | yes | temperature-sensitive missense (grows and is Cis<sup>R</sup> at 30&deg;C but does not grow at 37&deg;C) |
+
+Now you want to do a suppressor screen. If you look for suppressors of *CIS2* mutations you'll only be able to find bypass suppressors. Looking for *CIS1* and *CIS2* suppressors both require doing a high-throughput screen - because you are looking for a cisplatin-sensitive screen, you can't positively select for suppressors of interest. *CIS3* affords you the ability to do negative selection using the temperature sensitive phenotype, which is really nice.
+
+Once you've found suppressors, you would use the same methods we've discussed - recessiveness tests, complementation tests, linkage tests, whole genome sequencing, etc. - to identify the mutations responsible for them.
+
+[Katzmann 2001]: http://www.ncbi.nlm.nih.gov/pubmed/11511343 "Katzmann DJ, Babst M, Emr SD. Ubiquitin-dependent sorting into the multivesicular body pathway requires the function of a conserved endosomal protein sorting complex, ESCRT-I. Cell. 2001 Jul 27;106(2):145-55. PubMed PMID: 11511343."
+
+[Costanzo 2010]: http://www.ncbi.nlm.nih.gov/pubmed/20093466 "Costanzo M, Baryshnikova A, Bellay J, Kim Y, Spear ED, Sevier CS, Ding H, Koh  JL, Toufighi K, Mostafavi S, Prinz J, St Onge RP, VanderSluis B, Makhnevych T, Vizeacoumar FJ, Alizadeh S, Bahr S, Brost RL, Chen Y, Cokol M, Deshpande R, Li Z, Lin ZY, Liang W, Marback M, Paw J, San Luis BJ, Shuteriqi E, Tong AH, van Dyk N,  Wallace IM, Whitney JA, Weirauch MT, Zhong G, Zhu H, Houry WA, Brudno M, Ragibizadeh S, Papp B, Pál C, Roth FP, Giaever G, Nislow C, Troyanskaya OG, Bussey H, Bader GD, Gingras AC, Morris QD, Kim PM, Kaiser CA, Myers CL, Andrews BJ, Boone C. The genetic landscape of a cell. Science. 2010 Jan 22;327(5964):425-31. doi: 10.1126/science.1180823. PubMed PMID: 20093466."
+
+[Sandrock 1997]: http://www.ncbi.nlm.nih.gov/pubmed/9409826 "Sandrock TM, O'Dell JL, Adams AE. Allele-specific suppression by formation of  new protein-protein interactions in yeast. Genetics. 1997 Dec;147(4):1635-42. PubMed PMID: 9409826; PubMed Central PMCID: PMC1208336."
