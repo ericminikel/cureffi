@@ -65,6 +65,7 @@ To distinguish these scenarios, take your revertant strain and cross it with wil
 | 2:2, 3:1, and 4:0&Dagger; | PD, TT and NPD all observed | extragenic suppressor |
 
 &dagger; If it's a large gene and the two mutations are far apart, you might be lucky enough to see like 1% tetratypes.
+
 &Dagger; This makes no assumption about linkage or whether the suppressor has its own phenotype. Regardless, you should see tetrads that are 2:2 (PD, where 2 spores got the *cis1* mutation and the other 2 got the suppressor mutation), 3:1 (TT, where 1 spore got the *cis1* mutation alone, being Cis<sup>R</sup>, 1 got both, being Cis<sup>S</sup>, 1 got only suppressor and 1 got neither - these too are Cis<sup>S</sup>), and 2:2 (NPD, where *cis1* segregated with the suppressor). Note also that the PD, NPD, and TT may be in different ratios if the two genes are linked, but just the presence of NPD and TT at all means that you have an extragenic suppressor.
 
 To distinguish true revertants from intragenic suppressors, you really have to do sequencing.
