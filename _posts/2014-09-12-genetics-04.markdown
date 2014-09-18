@@ -64,9 +64,9 @@ Here are some N:P:T data and you can figure out the interpretation of each case:
 | PD | NPD | TT | Are A and B linked? | Are both CEN-linked? | 
 | ---- | ---- | ---- | ---- | ---- |
 | 10 | 10 | 40 | No | No |
-| 30 | 30 | 0 | Yes | No |
+| 30 | 30 | 0 | No | Yes, because P:N:T is 1:1:<4 |
 | 20 | 20 | 20 | No | Yes, because P:N:T is 1:1:<4 |
-| 50 | 0 | 10 | Yes | Cannot be determined |
+| 50 | 0 | 10 | Yes | Cannot be determined because genes are linked |
 
 Remember, one can only determine CEN linkage when dealing with two unlinked markers.
 
