@@ -111,7 +111,7 @@ Now suppose we've done a mutant hunt and found Cis<sup>R</sup> mutations in 3 ge
 | *CIS2* | no | deletion |
 | *CIS3* | yes | temperature-sensitive missense (grows and is Cis<sup>R</sup> at 30&deg;C but does not grow at 37&deg;C) |
 
-Now you want to do a suppressor screen. If you look for suppressors of *CIS2* mutations you'll only be able to find bypass suppressors. Looking for *CIS1* and *CIS2* suppressors both require doing a high-throughput screen - because you are looking for a cisplatin-sensitive screen, you can't positively select for suppressors of interest. *CIS3* affords you the ability to do negative selection using the temperature sensitive phenotype, which is really nice.
+Now you want to do a suppressor screen. If you look for suppressors of *CIS2* mutations you'll only be able to find bypass suppressors. Looking for *CIS1* and *CIS2* suppressors both require doing a high-throughput screen - because you are looking for a cisplatin-sensitive screen, you can't positively select for suppressors of interest. *CIS3* affords you the ability to do negative selection using the temperature sensitive phenotype, which is really nice. Alternately, it helps you narrow down mechanisms of suppression - for instance, any suppressor that still *doesn't* grow at 37&deg;C cannot be a true revertant.
 
 Once you've found suppressors, you would use the same methods we've discussed - recessiveness tests, complementation tests, linkage tests, whole genome sequencing, etc. - to identify the mutations responsible for them.
 
