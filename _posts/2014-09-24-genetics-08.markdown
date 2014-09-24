@@ -1,0 +1,86 @@
+---
+layout: post
+title:  "Genetics 08: 'Bacterial Basics, Phages, and CRISPR elements'"
+date:   2014-09-24 12:00:00
+author: ericminikel
+tag: genetics-201
+location: Boston, MA
+---
+
+*These are my notes from lecture 08 of Harvard's Genetics 201 course, delivered by Tom Bernhardt on September 24, 2014.*
+
+Tom's reasons to care about bacteria:
+
++ Pathogenesis.
++ Basic science. Signaling, translation, evolution.
++ Synthetic biology. Bioremediation, biofuels.
++ Food production
+
+### Bacteria basics
+
+The biggest division in bacteria is gram negative vs. gram positive.
+
+![](/media/2014/09/gram-negative-vs-gram-positive.png)
+
+Examples of gram negative bacteria include *E. coli*, *V. cholerae*, *Salmonella*, *Shigella*. Examples of gram positive include *Staph. aureus*, *Streptomyces*, *B. subtils*, *Lactobacillus*. *Streptomyces* is responsible for the smell of soil.
+
+| Property | Human | Yeast | *E. coli* |
+| -------- | ----- | ----- | --------- |
+| Genome size (bp) | 3e9 | 1.2e7 | 4e6 |
+| Number of genes | ~20K | ~6K | ~4K |
+| Cell diameter | 10-20 &mu;m | 5 &mu;m | 1 &mu;m (and 2-5&mu;m length) |
+
+The bacterial genome consists of 1 circular chromosome with 1 origin of replication, haploid, usually no introns. DNA is unenveloped in the cytoplasm. Bacterial genes are often organized as follows. A single operon controls multiple genes. One promoter runs from positions -35 to -10 relative to the transcription start site of the first gene in the array. Sigma factors bind the promoter and recruit RNA polymerase.
+
+Plasmids can be used to transfer information between bacteria via transformation or conjugation. Antibiotic resistance cassettes such as ampicillin, streptomycin, kanamycin or chloramphenicol resistance can be used to select clones of interest. Phages can be used to transduce genes and get genome integration.
+
+### Phages
+
+The bacteriophage life cycle is as follows:
+
+1. Bind a receptor on the outside of the bacterium.
+2. Inject DNA into host cell.
+3. Express genes.
+4. Replicate the genome.
+5. Form capsids.
+6. Assemble whole viruses from genomes and capsids.
+7. Lyse the cell to get out again.
+
+For bacteriophage &lambda; for instance, one infected cell can produce ~100 viruses, with the whole life cycle lasting about 40 minutes (in LB at 37&deg;C).
+
+Fun numbers:
+
++ Bacterial cells on earth: 1e30
++ Phages on earth: 1e31
++ The 1e31 phages contain DNA totaling 200 million light years in linear dimension.
++ The entire earth's bacterial population turns over every 2 days, mostly due to phage infection. This corresponds to 1e25 infection events per second.
+
+A classic assay for studying phages is the "plaque assay". Start with a phage stock and create serial 10-fold dilutions. Introduce each dilution into a bacterial culture, let them infect for, say, 20 minutes, then add 4mL of soft (warm and molten, but not hot enough to kill cells) agar, then put it onto a petri plate coated with LB agar. By the next morning you'll have a full bacterial lawn on the plate if the bacteria are healthy (weak dilutions), and a totally clean plate if there were enough phage to completely destroy all of the bacteria (strong dilutions). At intermediate dilutions you will have a lawn interspersed with dots ("plaques") which represent sites of replication of individual clones of phage. The plate which has this dotted pattern is the limiting dilution, and from the number of such plaques can be used to infer the concentration of phage in the original stock. With many phages, the plaques are clear, representing sites of no bacterial growth. Other phages integrate into the host genome and the bacteria thus stably infected become resistant to further infection, and can live, thus the plaques appear turbid.
+
+A typical overnight *E. coli* culture contains 1e9 cells per mL.
+
+Some phages can *only* replicate by lysis. Such phages are called **virulent**. Other phages can replicate either by lysis or by lysogeny. For instance, bacteriophage &lambda;'s DNA has sticky ends which allow it to circularize after injection into the host cytoplasm, and it also has an attachment site called attP. The bacterial genome has a corresponding site called attB. A viral site-specific recombinase will cause crossover between these two sites, catalyzed by integrase (*int* gene in &lambda;), integrating the viral genome into the host genome. Now the viral genome is replicated whenever the cell divides. The viral genome encodes a repressor which binds most of the viral gene promoters and silences them. The phage DNA in the host genome is called a **prophage** and the cell is called a **lysogen**. The repressor will *also* silence any incoming DNA from additional phages that attack the cell, thus preventing infection by additional phages. Phages capable of forming lysogens are called **temperate** phages. Temperate phages tend to contain a mechanism for **prophage induction**, where if it senses a danger signal (e.g. DNA damage in the bacterium) it will convert to lytic replication.
+
+Site-specific recombination using &lambda;'s proteins is the basis for **gateway cloning**. Many bacterial strains that are pathogenic to humans, such as *E. coli* 0157, are lysogens, and the sickness-causing toxins they produce are actually encoded in viral genes.
+
+### CRISPR
+
+Phages are the biggest predators of bacteria, and so much of bacterial behavior is evolved to counter phages. Evolution against phages led to **restriction enzymes**. Bacteria produce restriction enzymes to cleave phage DNA, and then the bacteria methylate their *own* genomes, which makes them resistant to their own restriction enzymes. **CRISPR** is another such defense mechanism. Ishino first reported in *Journal of Bacteriology* the identification of some strange repeating 20-30 nt sequences in an *E. coli* genome [[Ishino 1987]]. The significance of these repeats was not clear until 2002 when it was revelead that such repeats were common to many bacterial genomes, and were found adjacent to a set of open reading frames [[Jansen 2002]]. Jansen dubbed the repeats Clustered Regularly Interspaced Short Palindromic Repeats (CRISPRs), and named the ORFs CRISPR-associated or "Cas" genes. In between the repeats were sequences from phage plasmids. It was eventually hypothesized that this represented an immune system targeting phage DNA, and an analogy to RNAi was later suggested [[Makarova 2006]].
+
+A promoter upstream of the CRISPR sequences induces transcription of a CRISPR RNA which forms stem loops. The stem loops are processed into small RNAs which are bound by Cas protein. The small RNAs bind phage DNA, and Cas is a nuclease which cuts the phage DNA. The target sequence in the phage has to have an adjacent motif called a PAM (protospacer adjacent motif) in order to be cut. The PAM is *not* present in the copy of the DNA stored in the bacterial genome, which is how the bacteria avoid cutting their own DNA.
+
+CRISPR is now in use to edit genomes by cutting with Cas's nuclease activity, or to silence genes by simply binding but not cutting DNA using a defective Cas called dCas9 - this technique is called CRISPRi (CRISPR interference).
+
+#### An example genetics experiment
+
+Suppose we want to test the hypothesis that CRISPR/Cas systems confer resistance to phage. This vignette will be loosely based on the experiments of Danisco Inc., a dairy company in Madison, WI interested in combatting phage infection because it is a blight to yogurt production [[Barrangou 2007]].
+
+We might start with (1) an *E. coli* strain that is sensitive to bacteriphage &lamda; (this strain will be called &lambda;<sup>S</sup>) and which also has an active CRISPR/Cas system, and (2) a stock of &lambda; at 1e9 pfu/mL, where pfu is phage-forming units. We could expose the bacterial to &lambda;, selecting for cells resistant to death by &lambda; infection, and then see if the resistant strains have gained a sgRNA complementary to phage DNA sequence. To do this, we'll plate *E. coli* with LB and &lambda;, and we'll see only rare survivors - instead of a lawn we'll have individual clonal colonies, and endpoint dilution will show that only about 1e-4 of the original bacterial population acquire resistance. Besides CRISPR, there are other potential resistance mechanisms such as mutations in the &lambda; receptor.
+
+[Ishino 1987]: http://www.ncbi.nlm.nih.gov/pubmed/3316184 "Ishino Y, Shinagawa H, Makino K, Amemura M, Nakata A. Nucleotide sequence of the iap gene, responsible for alkaline phosphatase isozyme conversion in Escherichia coli, and identification of the gene product. J Bacteriol. 1987 Dec;169(12):5429-33. PubMed PMID: 3316184; PubMed Central PMCID: PMC213968."
+
+[Jansen 2002]: http://www.ncbi.nlm.nih.gov/pubmed/11952905 "Jansen R, Embden JD, Gaastra W, Schouls LM. Identification of genes that are associated with DNA repeats in prokaryotes. Mol Microbiol. 2002 Mar;43(6):1565-75. PubMed PMID: 11952905."
+
+[Makarova 2006]: http://www.ncbi.nlm.nih.gov/pubmed/16545108 "Makarova KS, Grishin NV, Shabalina SA, Wolf YI, Koonin EV. A putative RNA-interference-based immune system in prokaryotes: computational analysis of the predicted enzymatic machinery, functional analogies with eukaryotic RNAi, and hypothetical mechanisms of action. Biol Direct. 2006 Mar 16;1:7. PubMed PMID: 16545108; PubMed Central PMCID: PMC1462988."
+
+[Barrangou 2007]: http://www.ncbi.nlm.nih.gov/pubmed/17379808 "Barrangou R, Fremaux C, Deveau H, Richards M, Boyaval P, Moineau S, Romero DA, Horvath P. CRISPR provides acquired resistance against viruses in prokaryotes. Science. 2007 Mar 23;315(5819):1709-12. PubMed PMID: 17379808."
