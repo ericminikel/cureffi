@@ -1,0 +1,87 @@
+---
+layout: post
+title:  "Biolit 04: bacterial pathogenesis"
+date:   2014-09-25 12:00:00
+author: ericminikel
+tag: bbs-230
+location: Boston, MA
+---
+
+*These are my notes for week 04 of Harvard's BBS 230 "Analysis of the biological literature" course (September 23-25, 2014). This includes my own reading and analysis of the papers, as well as my notes from discussion section.*
+
+The papers for this week are [[Alto 2006]] and [[Huang & Sutton 2009]].
+
+### Context
+
+As explained [in week 01](/2014/09/04/biolit-01/), type III secretion systems (T3SS) are a feature of certain gram-negative bacteria that evolved from flagella and retain structural similarity to flagella. They are basically a pore-forming syringe that can inject effector proteins into the host cytoplasm. Though we understand how some effector proteins work, many remain enigmatic.
+
+For any given effector protein, a question will be, does it *replace*, *mimic* or *hijack* a host pathway? And how does it do that, at the molecular level. These papers were both efforts to answer those questions for one class of proteins which share a WxxxE motif, represented by three members: *Shigella*'s IpgB1 and IpgB2, and enterohemhorragic *E. coli*'s Map.
+
+Now, recall that GTPases in general are facilitated by **guanine exchange factors (GEFs)** which replace GDP with GTP in the GTPase's grasp - placing the GTPase in the "on" position - and **GTPase activating proteins (GAPs)** which encourage the GTPase to hydrolyze its GTP to GDP, placing it back in the "off" position. This is diagrammed below, using Rac GTPases (a sub-family of Rho GTPases) as an example:
+
+![](/media/2014/09/biolit-04-rac-gtpase.png)
+
+By 2006, several different bacterial effector proteins were reported to act as GEFs to activate host GTPases &mdash; a quick Google Scholar search revealed *Salmonella typhimurium*'s SopE2 [[Stender 2000]], *Burkholderia pseudomallei*'s BopE [[Stevens 2003]], and *Legionella pneumophila*'s DrrA [[Murata 2006]] to name a few examples. Therefore, when PI Jack Dixon and his postdoc Neal Alto set out to identify the mechanism of bacterial effector proteins Map, IpgB1 and IpgB2, a reasonable prior expectation was that they would prove to be GEFs too. Instead, in [[Alto 2006]] they concluded that these three proteins actually acted as GTPase mimetics themselves, despite lacking any homology or obvious structural similarity to GTPases. The fact that this conclusion was so surprising is likely what got [[Alto 2006]] into *Cell*.
+
+However, the conclusion was incorrect. Map, IpgB1 and IpgB2 actually all acted as GEFs, and after becoming a PI himself, Neal Alto set out to set the record straight with a crystal structure of Map bound to its host target, the GTPase Cdc42 [[Huang & Sutton 2009]]. In setting out to disprove his earlier work from the Dixon lab, Alto was following in the footsteps of Kim Orth, another former Dixon postdoc - see [week 01](/2014/09/04/biolit-01/).
+
+### [Alto 2006]: Identification of a bacterial type III effector family with G protein mimicry functions.
+
+#### Big picture
+
+This paper claims that:
+
++ *Shigella*'s IpgB2 mimics RhoA, affecting actin stress fibers
++ *Shigella*'s IpgB1 mimics Rac1, affecting lamellopodia
++ Enterohemhorragic *E. coli*'s Map mimics Cdc42, affecting filopodia
+
+#### Figure by figure
+
+Figure 1A shows there is a motif consisting of two residues, WxxxE. Figures 1B-E show that transfection of HEK293A cells with IpgB2 induces actin stress fibers, and that mutating away the WxxxE motif abolishes this activity. Figure 1F quantifies this effect across multiple cells. All that Figure 1 shows is the endpoint of the pathway: actin stress fibers. It doesn't yet make any arguments about mechanism.
+
+In Figure 2, A and B have IpgB2, while C and D do not; in B and D they used C3 botulinum toxin to inhibit RhoA-C. In D, there are no stress fibers, from which they conclude that the toxin has inhibited RhoA-C, whereas in B, there *are* stress fibers, which leads them to claim that IpgB2's action is independent of RhoA. This is incorrect; one possible explanation is that the botulinum toxin did not inhibit *all* of RhoA.
+
+They did a [two-hybrid screen](http://en.wikipedia.org/wiki/Two-hybrid_screening). They had a library of cDNAs expressed in 5-10 day mouse embryos. These cDNAs were fused to an activator and introduced into a yeast culture expressing the bait (in this case IpgB2) and then plated to determine in which cells a reporter gene had been activated. The reporter gene requires having the cDNA-encoded protein physically bind the bait in order to bring the activator and something into proximity so they can activate the reporter gene. 
+ROCK are Rho-binding kinases needed to activate actin fibers.
+
+In Figure 3, the two-hybrid screen indicated that IpgB2 binds CRIK (Fig 3B). Separately they used co-IP with GFP as a tag, and found that IP of GFP-IpgB2 pulled down several ROCK family members. It would have been nice to show that this method *doesn't* pull down Rho - otherwise the possibility remains that IpgB2 interacts with ROCK via Rho.
+
+In Figure 4, they transformed yeast to express IpgB2 under the *GAL1* promoter so that when the yeast are grown on galactose, turning on IpgB2, they die (because IpgB2 is toxic). Figure A just shows this works - and that some deletion mutants of IpgB2 are not toxic.
+RhoA is essential in yeast so they can't do a knockout; instead they show that overexpression of RhoA and IpgB2 result in similar changes in gene expression profiles in E.
+
+In Figure 5, they move on to two other effectors in the WxxxE family - Map and IpgB1. These also induce actin cytoskeleton rearrangements, by inducing filopodia and lamellipodia respectively.
+
+They never expressed the proteins as recombinants and reconstiuted the binding event or kinase activity in a cell-free assay. They never overexpressed a GEF as a control (e.g. in Figure 2 instead of overexpressing RhoA itself).
+
+In Figure 6, H and I are at extremely different scales (H is a whole cell, I is way more zoomed in) and so not really comparable. H has no scale bar.
+
+In Figure 7, they suggest that because Map's expression level is fairly low during pathogenesis, its localization must be important for targeting.
+
+### [Huang & Sutton 2009]: Structural insights into host GTPase isoform selection by a family of bacterial GEF mimics
+
+This paper presents a crystal structure for Map binding Cdc42, [PDB# [3GCG](http://pdb.org/pdb/explore/explore.do?structureId=3GCG)].
+
+Figure 1A provides direct evidence for Map binding Cdc42, and Figure 1B provides direct evidence for Map assisting with GTP exchange in Cdc42.
+
+### Discussion
+
+The [[Alto 2006]] paper reads well, and in fact *does* contain many true observations. At first glance nothing seems obviously wrong with it. How, then, can one avoid reaching incorrect conclusions, or believing others' incorrect conclusions?
+
+At the micro level, one can imagine a number of controls, any one of which could likely have falsified the "GTPase mimetic" hypothesis of [[Alto 2006]]:
+
++ Figure 2 could have included a mammalian GEF as an additional control. Presumably the reason why IpgB2 still induced stress fibers when the Rho proteins were inhibited was that the inhibition was not absolute, and even a small amount of free Rho protein, if activated by IpgB2, could have a powerful effect. If so, then overexpressing a mammalian GEF might have had the same effect as IpgB2.
++ In Figure 3 they could have blotted for Rho as well as for CRIK and ROCK. They would presumably have seen that Rho was *also* co-immunoprecipitated, suggesting that it is the intermediary which binds both IpgB2 and CRIK/ROCK.
++ They never tried to reconstitute anything in a cell-free reaction - for example, they never directly measured the ability of purified IpgB2 to hydrolyze GTP.
+
+At the more macro level, one could describe most of the experiments in [[Alto 2006]] as being confirmatory - they aimed to confirm the hypothesis that IpgB2 et al were GTPase mimetics. None were specifically designed to falsify the hypothesis. So a moral of the story is to always be suspicious of your own hypothesis and try as hard as you can to disprove it.
+
+[Alto 2006]: http://www.ncbi.nlm.nih.gov/pubmed/16413487 "Alto NM, Shao F, Lazar CS, Brost RL, Chua G, Mattoo S, McMahon SA, Ghosh P, Hughes TR, Boone C, Dixon JE. Identification of a bacterial type III effector family with G protein mimicry functions. Cell. 2006 Jan 13;124(1):133-45. PubMed  PMID: 16413487."
+
+[Huang & Sutton 2009]: http://www.ncbi.nlm.nih.gov/pubmed/19620963 "Huang Z, Sutton SE, Wallenfang AJ, Orchard RC, Wu X, Feng Y, Chai J, Alto NM.  Structural insights into host GTPase isoform selection by a family of bacterial GEF mimics. Nat Struct Mol Biol. 2009 Aug;16(8):853-60. doi: 10.1038/nsmb.1647. Epub 2009 Jul 20. PubMed PMID: 19620963."
+
+[Stender 2000]: http://www.ncbi.nlm.nih.gov/pubmed/10931274 "Stender S, Friebel A, Linder S, Rohde M, Mirold S, Hardt WD. Identification of SopE2 from Salmonella typhimurium, a conserved guanine nucleotide exchange factor for Cdc42 of the host cell. Mol Microbiol. 2000 Jun;36(6):1206-21. PubMed PMID: 10931274."
+
+[Stevens 2003]: http://www.ncbi.nlm.nih.gov/pubmed/12897019 "Stevens MP, Friebel A, Taylor LA, Wood MW, Brown PJ, Hardt WD, Galyov EE. A Burkholderia pseudomallei type III secreted protein, BopE, facilitates bacterial  invasion of epithelial cells and exhibits guanine nucleotide exchange factor activity. J Bacteriol. 2003 Aug;185(16):4992-6. PubMed PMID: 12897019; PubMed Central PMCID: PMC166480."
+
+[Murata 2006]: http://www.ncbi.nlm.nih.gov/pubmed/16906144 "Murata T, Delprato A, Ingmundson A, Toomre DK, Lambright DG, Roy CR. The Legionella pneumophila effector protein DrrA is a Rab1 guanine nucleotide-exchange factor. Nat Cell Biol. 2006 Sep;8(9):971-7. Epub 2006 Aug 13. PubMed PMID: 16906144."
+
