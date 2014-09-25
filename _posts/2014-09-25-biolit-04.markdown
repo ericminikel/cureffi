@@ -7,19 +7,45 @@ tag: bbs-230
 location: Boston, MA
 ---
 
-*These are my notes for week 04 of Harvard's BBS 230 "Analysis of the biological literature" course (September 23-25, 2014). This includes my own reading and analysis of the papers, as well as my notes from discussion section.*
+*These are my notes for week 04 of Harvard's BBS 230 "Analysis of the biological literature" course (September 23-25, 2014). This includes my own reading and analysis of the papers, as well as my notes from both discussion sections.*
 
 The papers for this week are [[Alto 2006]] and [[Huang & Sutton 2009]].
 
 ### Context
 
-As explained [in week 01](/2014/09/04/biolit-01/), type III secretion systems (T3SS) are a feature of certain gram-negative bacteria that evolved from flagella and retain structural similarity to flagella. They are basically a pore-forming syringe that can inject effector proteins into the host cytoplasm. Though we understand how some effector proteins work, many remain enigmatic.
+#### Bacterial effector proteins
+
+As explained [in week 01](/2014/09/04/biolit-01/), type III secretion systems (T3SS) are a feature of certain gram-negative bacteria that evolved from flagella and retain structural similarity to flagella. They are basically a pore-forming syringe that can inject effector proteins from the bacterial cytoplasm (inside the inner membrane) into the host cytoplasm. Sometimes the purpose is to let the bacterium gain entry into host cytosol - e.g. for *Shigella*. Other bacteria use them to create vacuoles in the host cell - e.g. *Salmonella*'s SifA. Though we understand how some effector proteins work, many remain enigmatic.
 
 For any given effector protein, a question will be, does it *replace*, *mimic* or *hijack* a host pathway? And how does it do that, at the molecular level. These papers were both efforts to answer those questions for one class of proteins which share a WxxxE motif, represented by three members: *Shigella*'s IpgB1 and IpgB2, and enterohemhorragic *E. coli*'s Map.
 
-Now, recall that GTPases in general are facilitated by **guanine exchange factors (GEFs)** which replace GDP with GTP in the GTPase's grasp - placing the GTPase in the "on" position - and **GTPase activating proteins (GAPs)** which encourage the GTPase to hydrolyze its GTP to GDP, placing it back in the "off" position. This is diagrammed below, using Rac GTPases (a sub-family of Rho GTPases) as an example:
+#### Actin
+
+Neutrophils chase invading bacteria via chemotaxis - by extending lamellipodia, which are created by actin polymerization creating protrusions which push the cell forward. They use these to engulf and destroy bacteria.
+
+<iframe width="420" height="315" src="//www.youtube.com/embed/I_xh-bkiv_c" frameborder="0" allowfullscreen></iframe>
+
+If bacteria are successful in invading the host cell, they can polymerize host cell actin to push themselves along.
+
+<iframe width="420" height="315" src="//www.youtube.com/embed/sF4BeU60yT8" frameborder="0" allowfullscreen></iframe>
+
+They do this by making their tail edge mimic the leading edge of a lamellipodium. They do this by mimicking a protein called Wasp (encoded by the human gene *WAS*) which activates Arp2/3 (*ARPC2* and *APRC3*).
+
+Lamellipodia are blunt protrusions thanks to Arp2/3 branching and filamin cross-linking, where as filopodia form finer finger-like protrusions as shown here:
+
+<iframe width="420" height="315" src="//www.youtube.com/embed/Fgmt2RBow0I" frameborder="0" allowfullscreen></iframe>
+
+There are yet other types of actin fibers, such as stress fibers.
+
+### GTPases
+
+Recall that GTPases in general are facilitated by **guanine exchange factors (GEFs)** which replace GDP with GTP in the GTPase's grasp - placing the GTPase in the "on" position - and **GTPase activating proteins (GAPs)** which encourage the GTPase to hydrolyze its GTP to GDP, placing it back in the "off" position. This is diagrammed below, using Rac GTPases (a sub-family of Rho GTPases) as an example:
 
 ![](/media/2014/09/biolit-04-rac-gtpase.png)
+
+In the early 1990s, several proteins including rac, rho and Cdc42 were purified and injected into cells, demonstrating their ability to induce actin fiber formation [e.g. [Ridley & Hall 1992], [Ridley 1992], [Nobes & Hall 1995]]. RhoA mutations and fusions are now known to be common in gastric cancers 
+
+#### The story for this week
 
 By 2006, certain other bacterial effector proteins were reported to act as GEFs to activate host GTPases &mdash; a quick Google Scholar search revealed *Salmonella typhimurium*'s [SopE2](http://www.uniprot.org/uniprot/Q7CQD4) [[Stender 2000]] and *Burkholderia pseudomallei*'s [BopE](http://www.uniprot.org/uniprot/A3NLC8) [[Stevens 2003]] to name two examples. Therefore, when PI Jack Dixon and his postdoc Neal Alto set out to identify the mechanism of the WxxxE bacterial effector proteins Map, IpgB1 and IpgB2, a reasonable prior expectation was that they would prove to be GEFs too. Instead, in [[Alto 2006]] they concluded that these three proteins actually acted as GTPase mimetics themselves, despite lacking any homology or obvious structural similarity to GTPases. The fact that this conclusion was so surprising is likely what got [[Alto 2006]] into *Cell*.
 
@@ -31,49 +57,73 @@ However, the conclusion was incorrect. Later that same year, two different group
 
 This paper claims that:
 
-+ *Shigella*'s IpgB2 mimics RhoA, affecting actin stress fibers
-+ *Shigella*'s IpgB1 mimics Rac1, affecting lamellopodia
-+ Enterohemhorragic *E. coli*'s Map mimics Cdc42, affecting filopodia
++ *Shigella*'s IpgB2 mimics RhoA, inducing actin stress fibers
++ *Shigella*'s IpgB1 mimics Rac1, inducing lamellopodia
++ Enterohemhorragic *E. coli*'s Map mimics Cdc42, inducing filopodia
 
 #### Figure by figure
 
-Figure 1A shows there is a motif consisting of two residues, WxxxE. Figures 1B-E show that transfection of HEK293A cells with IpgB2 induces actin stress fibers, and that mutating away the WxxxE motif abolishes this activity. Figure 1F quantifies this effect across multiple cells. All that Figure 1 shows is the endpoint of the pathway: actin stress fibers. It doesn't yet make any arguments about mechanism.
+The paper begins with a BLAST search for proteins homologous to Map. They found 24 sequences from 11 distinct proteins (Figure 1A). They found that only two residues were perfectly conserved, in a WxxxE motif, but there was also a structural similarity, with 6-8 alpha helices in each protein. To confirm that the WxxxE motif was important, they transfected HEK293A cells with IpgB2, and saw stress fibers similar to what had been reported in the literature for RhoA activation. These stress fibers did not appear if the W or E residues were mutated. Two other random mutations did not prevent stress fiber induction. The stress fibers are imaged using [phalloidin](http://en.wikipedia.org/wiki/Phalloidin), an *Amanitas* death cap toxin that binds actin with great specificity.
 
-In Figure 2, A and B have IpgB2, while C and D do not; in B and D they used C3 botulinum toxin to inhibit RhoA-C. In D, there are no stress fibers, from which they conclude that the toxin has inhibited RhoA-C, whereas in B, there *are* stress fibers, which leads them to claim that IpgB2's action is independent of RhoA. This is incorrect; one possible explanation is that the botulinum toxin did not inhibit *all* of RhoA.
+Next they asked whether IpgB2 was *epistatic to* RhoA, meaning whether it was in the same pathway. They transfected HEK239A cells to express botulinum toxin to inhibit RhoA, B, and C, and then expressed IpgB2 as well. IpgB2 appeared capable of inducing stress fibers even when the Rhos were inhibited (though in a very close look at Fig 2B it appears the intensity of the stress fibers *is* reduced somewhat when RhoA is inhibited). They took this to suggest that IpgB2 was independent of RhoA, and furthermore that it was sufficiently structurall different so as to not be inhibited by botulinum toxin itself. Some bacterial effector proteins are actually evolved from host proteins for which bacteria managed to steal a copy of the host gene; the fact that IpgB2 bore no sequence similarity to RhoA and also lacked enough structural similarity to be inhibited by botulinum toxin suggested it had evolved independently.
 
-They did a [two-hybrid screen](http://en.wikipedia.org/wiki/Two-hybrid_screening). They had a library of cDNAs expressed in 5-10 day mouse embryos. These cDNAs were fused to an activator and introduced into a yeast culture expressing the bait (in this case IpgB2) and then plated to determine in which cells a reporter gene had been activated. The reporter gene requires having the cDNA-encoded protein physically bind the bait in order to bring the activator and something into proximity so they can activate the reporter gene. 
-ROCK are Rho-binding kinases needed to activate actin fibers.
+Next they set out to do a [yeast two-hybrid screen](http://en.wikipedia.org/wiki/Two-hybrid_screening). A typical two-hybrid screen involves fusing a protein of interest ("bait") to the DNA-binding domain of *GAL4*, and every member of a cDNA library of interest ("prey") to the transcription-activating domain of *GAL4*. If and only if a probe binds the bait, the two pieces of GAL4 will come into close enough proximity to activate transcription of a reporter gene under control of a Gal4-dependent promoter. By making the reporter gene something essential for life under certain media conditions - say, a histidine biosynthesis gene when yeast are grown on histidine-deficient media - you can select for cells that express a cDNA whose protein product *does* bind the bait. Then you sequence the cDNA in the surviving cells to see which cDNAs they were. Once you have hits, you can confirm by isolating clones and re-validating in yeast, then moving on to co-immunoprecipitation and other biochemical methods.
 
-In Figure 3, the two-hybrid screen indicated that IpgB2 binds CRIK (Fig 3B). Separately they used co-IP with GFP as a tag, and found that IP of GFP-IpgB2 pulled down several ROCK family members. It would have been nice to show that this method *doesn't* pull down Rho - otherwise the possibility remains that IpgB2 interacts with ROCK via Rho.
+In this study, they found that IpgB2 expression in yeast was lethal, which made it tough to do a two-hybrid screen with IpgB2 as bait. So they mutated the E residue from the WxxxE motif, hoping this would render IpgB2 catalytically inactive but still able to bind its binding partners. In their screen they identified CRIK, a kinase which Rho activates (Fig 3B). CRIK has homology to ROCK proteins, so next they performed co-immunoprecipitation to confirm their hypothesis that IpgB2 would bind ROCK as well. They expressed IpgB2 fused to GFP in HEK239A cells, and then immunoprecipitated by mixing cell lysates with anti-GFP antibody conjugated to beads, and washing away anything unbound to the beads. Their blot in Fig 3C shows that ROCKs were immunoprecipitated by this method. In Figure 3D they measure ROCK kinase activity of their various immunoprecipitates, and show that IpgB2, co-immunoprecipitates with ROCK kinase activity. Map also has the WxxxE motif, yet doesn't pull down ROCK activity, so the WxxxE motif must not be what binds ROCK. This activity is inhibited by the ROCK inhibitor [Y27632](http://en.wikipedia.org/wiki/Y-27632), so it is definitely ROCK. Moreover, inhibiting ROCK prevents IpgB2 from inducing actin stress fibers (Fig 3E) which indicates that ROCK lies downstream of IpgB2 in the pathway by which IpgB2 induces actin stress fibers. Next they pulled down FLAG-tagged mDia1 (*DIAPH1* gene in humans), another Rho substrate which has formin homology domains (FH1 and FH2) which are involved in promoting actin polymerization, and showed that this pulled down IpgB2 (Fig 3G). mDia1 &Delta;N3 did not do this, suggesting the N3 domain is required for binding.
 
-In Figure 4, they transformed yeast to express IpgB2 under the *GAL1* promoter so that when the yeast are grown on galactose, turning on IpgB2, they die (because IpgB2 is toxic). Figure A just shows this works - and that some deletion mutants of IpgB2 are not toxic.
-RhoA is essential in yeast so they can't do a knockout; instead they show that overexpression of RhoA and IpgB2 result in similar changes in gene expression profiles in E.
+It is somewhat mysterious that CRIK does not appear anywhere in Figure 3. After they spent months on the yeast two-hybrid screen to identify CRIK, they immediately depart from CRIK in favor of two related candidate proteins, and never really explain why. The existence of ROCK inhibitors may be one factor; it is possible they tried to co-immunoprecipitate CRIK and were unable to do so and did not report it.
 
-In Figure 5, they move on to two other effectors in the WxxxE family - Map and IpgB1. These also induce actin cytoskeleton rearrangements, by inducing filopodia and lamellipodia respectively.
+They expressed a variety of mutants of IpgB2 in yeast to see which were toxic. Of the few options they tried, only mutating the WxxxE motif or introducing a "&Delta;N84" mutation (which they never explain but was probably a deletion of 84 N-terminal residues) restored yeast viability. They screened yeast deletion mutants to try to find genes whose deletion restored viability in cells expressing IpgB2. In an effort to confirm their hits, they claimed a correlation between gene signatures detected by microarray (Fig 4E).
 
-They never expressed the proteins as recombinants and reconstiuted the binding event or kinase activity in a cell-free assay. They never overexpressed a GEF as a control (e.g. in Figure 2 instead of overexpressing RhoA itself).
+Then they examined the end consequences of IpgB2 and Map, which is that they induce lamellipodia and filopodia (Fig 5). Map transfection results in phosphorylation of JNK and c-Jun in HEK239A cells, but evidently does not phosphorylate ERK (Fig 5I), although since there is no positive control for ERK1/2 phosphorylation it is impossible to rule out ERK activation.
 
-In Figure 6, H and I are at extremely different scales (H is a whole cell, I is way more zoomed in) and so not really comparable. H has no scale bar.
+Next they sought to identify binding partners of a C-terminal sequence conserved across many WxxxE proteins, which is VQDTRL in Map. They found Ebp50, and confirmed by radiolabeling Ebp50 (Fig 6E-F) and by co-immunoprecipitation (Fig 6G) that it does bind Map. Ebp50 is also known to bind the VQDTRL sequence in CFTR, which is a cell surface membrane protein. TMutating this sequence abolished the filopodia-inducing activity of Map (Fig 6H-I). Together these results suggest that Map's subcellular localization is important for its activity.
 
-In Figure 7, they suggest that because Map's expression level is fairly low during pathogenesis, its localization must be important for targeting.
+Finally, in Figure 7 they move to *in vivo* experiments with live bacteria - everything until now was just using transfections. They show enteropathic *E. coli* on HeLa cells (Fig 7A-D) though *E. coli* are extracellular, so they are not *in* the cells. Mutant versions of Map do not induce filopodia, and knocking down Ebp50 reduces filopodia formation.
+
+#### Limitations
+
+Some specific limitations are:
+
++ To show that Map is independent of Cdc42, it would have been nice to show that Map can induce filopodia without Cdc42. Unfortunately Cdc42 knockout is cytotoxic. However, they could have used a hypomorphic allele. If Map is truly independent of Cdc42, it should function the same in the presence of hypomorphic Cdc42.
++ They never directly tested possible GEF activity of IpgB2 or Map.
++ Figure 2 could have included a mammalian GEF as an additional control. Presumably the reason why IpgB2 still induced stress fibers when the Rho proteins were inhibited was that the inhibition was not absolute, and even a small amount of free Rho protein, if activated by IpgB2, could have a powerful effect. If so, then overexpressing a mammalian GEF might have had the same effect as IpgB2.
++ In Figure 3 they could have blotted for Rho as well as for CRIK and ROCK. They would presumably have seen that Rho was *also* co-immunoprecipitated, suggesting that it is the intermediary which binds both IpgB2 and CRIK/ROCK.
++ They never tried to reconstitute anything in a cell-free reaction - for example, they never directly measured the ability of purified IpgB2 to hydrolyze GTP.
+
+Overall, the paper also surveys a vast expanse of topics - three different bacterial proteins and their host targets - without exhaustively tackling any one of them. The text does little to transition between different experiments or provide a unifying logical flow.
 
 ### [Huang & Sutton 2009]: Structural insights into host GTPase isoform selection by a family of bacterial GEF mimics
 
-This paper presents a crystal structure for Map binding Cdc42, [PDB# [3GCG](http://pdb.org/pdb/explore/explore.do?structureId=3GCG)].
+As mentioned above, shortly after [[Alto 2006]] came out, two other groups showed that DrrA, a different WxxxE protein, was a GEF. In 2008, Alto and Dixon themselves were involved in an effort to crystallize *Salmonella* SifA, another WxxxE protein, which revealed that it too must be a GEF [[Ohlson 2008]]. Based on this, Alto hypothesized that Map was actually a GEF that bound Cdc42.
 
-Figure 1A provides direct evidence for Map binding Cdc42, and Figure 1B provides direct evidence for Map assisting with GTP exchange in Cdc42.
+#### Figure by figure
+
+To purify the two proteins, they expressed MBP-tagged Map and GST-tagged Cdc42. They confirmed that the two proteins bound one another, and that the WxxxE motif was critical for binding (Fig 1A). They then tested the ability of Cdc42 to bind GTP, and found that the rate of binding was enhanced by the presence of Map (Fig 1B). This was direct biochemical evidence that Map was a GEF. Therefore they set out to crystallize the complex, and structures are shown in Fig 1C-D.
+
+The structure is deposited as [PDB# [3GCG](http://pdb.org/pdb/explore/explore.do?structureId=3GCG)]. Using [PyMOL](/2014/09/15/molecular-biology-pymol/) I created this image of Map (red) binding Cdc42 (yellow), with the Map W74 and E78 residues shown in green. Apparently they are important for the binding interface, though it is not visually obvious why it should be so, and the paper simply says they "contribute many interactions between them (not shown)".
+
+    fetch 3gcg
+    hide everything
+    show cartoon
+    color red, chain B # Map
+    color yellow, chain A # Cdc42
+    show sticks, chain B and (resi 74 or resi 78)
+    color green, chain B and (resi 74 or resi 78)
+
+![Map binding Cdc42](/media/2014/09/map-cdc42.png)
+
+Next they used a panel of Map mutants to confirm that a a catalytic loop was crucial for GEF activity (Figure 2A), and that other regions were crucial for binding to Cdc42 (Figure 2B).
+
+They compare their structure to other reported structures of two other GEFs bound to Cdc42. The interaction of Map and Cdc42 looks very similar to that of bacterial effector SopE and Cdc42 (Figure 3B). In contrast, the endogenous human GEF ITSN binds to Cdc42 with a totally different protein-protein interaction interface, though the key contacts at the "switch" sites are still the same, indicating that Map and SopE are non-homologous mimics of ITSN.
+
+Map and SopE are both specific for Cdc42 and not other GTPases, which raises the question of how specificity is achieved. Figure 4 zooms in on a "beta patch" interface that may help to confer this specificity, and shows how RhoA and Rac1 would be expected *not* to fit here. Mutating the specificity-conferring "beta patch" on Cdc42's side abolishes the interaction (Figure 5C), while swapping Cdc42's beta patch into Rac1 causes Map to bind Rac1. This confirms that the "beta patch" is necessary and sufficient for specificity. Moreover, if you mutate the "beta patch" of Cdc42 or Rac1 to be that of RhoA (IpgB2's target), you can get IpgB2 to exert GEF activity on Cdc42 or Rac1 (Figure 6C).
 
 ### Discussion
 
 The [[Alto 2006]] paper reads well, and in fact *does* contain many true observations. At first glance nothing seems obviously wrong with it. How, then, can one avoid reaching incorrect conclusions, or believing others' incorrect conclusions?
 
-At the micro level, one can imagine a number of controls, any one of which could likely have falsified the "GTPase mimetic" hypothesis of [[Alto 2006]]:
-
-+ Figure 2 could have included a mammalian GEF as an additional control. Presumably the reason why IpgB2 still induced stress fibers when the Rho proteins were inhibited was that the inhibition was not absolute, and even a small amount of free Rho protein, if activated by IpgB2, could have a powerful effect. If so, then overexpressing a mammalian GEF might have had the same effect as IpgB2.
-+ In Figure 3 they could have blotted for Rho as well as for CRIK and ROCK. They would presumably have seen that Rho was *also* co-immunoprecipitated, suggesting that it is the intermediary which binds both IpgB2 and CRIK/ROCK.
-+ They never tried to reconstitute anything in a cell-free reaction - for example, they never directly measured the ability of purified IpgB2 to hydrolyze GTP.
-
-At the more macro level, one could describe most of the experiments in [[Alto 2006]] as being confirmatory - they aimed to confirm the hypothesis that IpgB2 et al were GTPase mimetics. None were specifically designed to falsify the hypothesis. So a moral of the story is to always be suspicious of your own hypothesis and try as hard as you can to disprove it.
+As discussed above, there are a number of controls and experiments that [[Alto 2006]] could have added at the micro level which would have helped. At the more macro level, one could describe most of the experiments in [[Alto 2006]] as being confirmatory - they aimed to confirm the hypothesis that IpgB2 et al were GTPase mimetics. None were specifically designed to falsify the hypothesis. So one moral of the story is to always be suspicious of your own hypothesis and try as hard as you can to disprove it. Alternatively, you could argue that all of the data presented in [[Alto 2006]] is in fact both accurate and consistent with the true story from [[Huang & Sutton 2009]], and that it is simply the interpretation which is incorrect, so this argues for being more conservative in interpreting one's data.
 
 [Alto 2006]: http://www.ncbi.nlm.nih.gov/pubmed/16413487 "Alto NM, Shao F, Lazar CS, Brost RL, Chua G, Mattoo S, McMahon SA, Ghosh P, Hughes TR, Boone C, Dixon JE. Identification of a bacterial type III effector family with G protein mimicry functions. Cell. 2006 Jan 13;124(1):133-45. PubMed  PMID: 16413487."
 
@@ -87,3 +137,10 @@ At the more macro level, one could describe most of the experiments in [[Alto 20
 
 [Murata 2006]: http://www.ncbi.nlm.nih.gov/pubmed/16906144 "Murata T, Delprato A, Ingmundson A, Toomre DK, Lambright DG, Roy CR. The Legionella pneumophila effector protein DrrA is a Rab1 guanine nucleotide-exchange factor. Nat Cell Biol. 2006 Sep;8(9):971-7. Epub 2006 Aug 13. PubMed PMID: 16906144."
 
+[Ridley & Hall 1992]: http://www.ncbi.nlm.nih.gov/pubmed/1643657 "Ridley AJ, Hall A. The small GTP-binding protein rho regulates the assembly of focal adhesions and actin stress fibers in response to growth factors. Cell. 1992 Aug 7;70(3):389-99. PubMed PMID: 1643657."
+
+[Nobes & Hall 1995]: http://www.ncbi.nlm.nih.gov/pubmed/7536630 "Nobes CD, Hall A. Rho, rac, and cdc42 GTPases regulate the assembly of multimolecular focal complexes associated with actin stress fibers, lamellipodia, and filopodia. Cell. 1995 Apr 7;81(1):53-62. PubMed PMID: 7536630."
+
+[Ridley 1992]: http://www.ncbi.nlm.nih.gov/pubmed/1643658 "Ridley AJ, Paterson HF, Johnston CL, Diekmann D, Hall A. The small GTP-binding protein rac regulates growth factor-induced membrane ruffling. Cell. 1992 Aug 7;70(3):401-10. PubMed PMID: 1643658."
+
+[Ohlson 2008]: http://www.ncbi.nlm.nih.gov/pubmed/18996344 "Ohlson MB, Huang Z, Alto NM, Blanc MP, Dixon JE, Chai J, Miller SI. Structure  and function of Salmonella SifA indicate that its interactions with SKIP, SseJ, and RhoA family GTPases induce endosomal tubulation. Cell Host Microbe. 2008 Nov  13;4(5):434-46. doi: 10.1016/j.chom.2008.08.012. PubMed PMID: 18996344; PubMed Central PMCID: PMC2658612."
