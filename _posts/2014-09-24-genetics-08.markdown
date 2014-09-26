@@ -71,11 +71,10 @@ A promoter upstream of the CRISPR sequences induces transcription of a CRISPR RN
 
 CRISPR is now in use to edit genomes by cutting with Cas's nuclease activity, or to silence genes by simply binding but not cutting DNA using a defective Cas called dCas9 - this technique is called CRISPRi (CRISPR interference).
 
-#### An example genetics experiment
+### An example genetics experiment
 
-Suppose we want to test the hypothesis that CRISPR/Cas systems confer resistance to phage. This vignette will be loosely based on the experiments of Danisco Inc., a dairy company in Madison, WI interested in combatting phage infection because it is a blight to yogurt production [[Barrangou 2007]].
+At the end of class we started an example genetics experiment to test the hypothesis that the CRISPR system confers immunity to phages. Please see the [lecture 09 notes](/2014/09/26/genetics-09).
 
-We might start with (1) an *E. coli* strain that is sensitive to bacteriphage &lamda; (this strain will be called &lambda;<sup>S</sup>) and which also has an active CRISPR/Cas system, and (2) a stock of &lambda; at 1e9 pfu/mL, where pfu is phage-forming units. We could expose the bacterial to &lambda;, selecting for cells resistant to death by &lambda; infection, and then see if the resistant strains have gained a sgRNA complementary to phage DNA sequence. To do this, we'll plate *E. coli* with LB and &lambda;, and we'll see only rare survivors - instead of a lawn we'll have individual clonal colonies, and endpoint dilution will show that only about 1e-4 of the original bacterial population acquire resistance. Besides CRISPR, there are other potential resistance mechanisms such as mutations in the &lambda; receptor.
 
 [Ishino 1987]: http://www.ncbi.nlm.nih.gov/pubmed/3316184 "Ishino Y, Shinagawa H, Makino K, Amemura M, Nakata A. Nucleotide sequence of the iap gene, responsible for alkaline phosphatase isozyme conversion in Escherichia coli, and identification of the gene product. J Bacteriol. 1987 Dec;169(12):5429-33. PubMed PMID: 3316184; PubMed Central PMCID: PMC213968."
 
