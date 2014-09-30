@@ -1,11 +1,11 @@
 ---
 layout: post
-title:  "The conformation holds the information: a deep read of a classic prion paper"
+title:  "The conformation holds the information"
 date:   2014-09-30 12:00:00
 author: ericminikel
 location: Boston, MA
-thumb120: insert-link-here
-summary200: "insert-summary-here"
+thumb120: http://www.cureffi.org/media/2014/09/breakable-filament-thumbnail.png
+summary200: "A backgrounder and deep read of Motomasa Tanaka and Jonathan Weissman's breakthrough 2004 paper showing that in [PSI+] yeast prions, strain information is encoded in protein conformation."
 ---
 
 As a first-year biology PhD student, I am taking a [class](/tag/bbs-230) called "Analysis of the Biological Literature", otherwise known as "how to read papers". One of this week's papers is the classic prion paper "Conformational variations in an infectious protein determine prion strain differences" by Motamasa Tanaka and Jonathan Weissman [[Tanaka 2004]]. This landmark work demonstrated that, at least for one yeast prion, strain information is encoded in the physical conformation of the prions. This post is intended to provide a historical context and a full unpacking of the findings of this paper.
@@ -48,7 +48,9 @@ The truth that eventually revealed itself was as follows. Sup35 is a yeast prote
 
 *Credit: the photographs of yeast in the above diagram are from [Figure 1](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3561065/figure/pgen-1003257-g001/) of [[Bateman & Wickner 2013]].*
 
-The [*PSI<sup>+</sup>*] prion proved a facile model system for exploring aspects of the prion hypothesis that had proven fairly intractible for PrP. Years before scientists would succeed at generating synthetic PrP prions, UCSF's Jonathan Weissman had already in 2000 managed to create [*PSI<sup>+</sup>*] prions *in vitro* from recombinant Sup35 and had successfully infected yeast with them [[Sparrer 2000]], and had used this system to explore the biochemical basis for "strain barriers" which inhibit transmission of prion states between proteins that are not identical. By 2004, Weissman and his postoc Motomasa Tanaka were able to generate synthetic prions of different strains, thus finally proving that, for yeast prions at least, the conformation holds the information [[Tanaka 2004]].
+As an aside, you might ask: but isn't read-through of stop codons *bad*? Whether prions, including [*PSI<sup>+</sup>*], are good or bad for yeast remains controversial. Reed Wickner advocates the view that yeast prions harm their hosts, and that prion domains have evolved divergently to erect prion transmission barriers between different yeast strains [[Wickner 2011]], while Susan Lindquist champions the notion of yeast prions as being adaptive, and argues that evolution has in fact acted to conserve certain proteins' ability to form prions [[Halfmann & Jarosz 2012]].
+
+In either case, the [*PSI<sup>+</sup>*] prion proved a facile model system for exploring aspects of the prion hypothesis that had proven fairly intractible for PrP. Years before scientists would succeed at generating synthetic PrP prions, UCSF's Jonathan Weissman had already in 2000 managed to create [*PSI<sup>+</sup>*] prions *in vitro* from recombinant Sup35 and had successfully infected yeast with them [[Sparrer 2000]], and had used this system to explore the biochemical basis for "strain barriers" which inhibit transmission of prion states between proteins that are not identical. By 2004, Weissman and his postoc Motomasa Tanaka were able to generate synthetic prions of different strains, thus finally proving that, for yeast prions at least, the conformation holds the information [[Tanaka 2004]].
 
 ### Contributions of this paper
 
@@ -179,3 +181,7 @@ Surprisingly, though, whether conformation is the *sole* determinant of PrP prio
 [Medori 1992]: http://www.ncbi.nlm.nih.gov/pubmed/1346338 "Medori R, Tritschler HJ, LeBlanc A, Villare F, Manetto V, Chen HY, Xue R, Leal S, Montagna P, Cortelli P, et al. Fatal familial insomnia, a prion disease with a mutation at codon 178 of the prion protein gene. N Engl J Med. 1992 Feb 13;326(7):444-9. PubMed PMID: 1346338."
 
 [Lansbury & Caughey 1995]: http://www.ncbi.nlm.nih.gov/pubmed/9383397 "Lansbury PT Jr, Caughey B. The chemistry of scrapie infection: implications of the 'ice 9' metaphor. Chem Biol. 1995 Jan;2(1):1-5. Review. PubMed PMID: 9383397."
+
+[Wickner 2011]: http://www.ncbi.nlm.nih.gov/pubmed/22052353 "Wickner RB, Edskes HK, Bateman D, Kelly AC, Gorkovskiy A. The yeast prions [PSI+] and [URE3] are molecular degenerative diseases. Prion. 2011 Oct-Dec;5(4):258-62. doi: 10.4161/pri.17748. Epub 2011 Oct 1. Review. PubMed PMID: 22052353; PubMed Central PMCID: PMC4012404."
+
+[Halfmann & Jarosz 2012]: http://www.ncbi.nlm.nih.gov/pubmed/22337056 "Halfmann R, Jarosz DF, Jones SK, Chang A, Lancaster AK, Lindquist S. Prions are a common mechanism for phenotypic inheritance in wild yeasts. Nature. 2012 Feb 15;482(7385):363-8. doi: 10.1038/nature10875. PubMed PMID: 22337056; PubMed Central PMCID: PMC3319070."
