@@ -59,7 +59,7 @@ This is what this process looks like:
 
 Next time we'll discuss how to create knockouts.
 
-
+[Barrangou 2007]: http://www.ncbi.nlm.nih.gov/pubmed/17379808 "Barrangou R, Fremaux C, Deveau H, Richards M, Boyaval P, Moineau S, Romero DA, Horvath P. CRISPR provides acquired resistance against viruses in prokaryotes. Science. 2007 Mar 23;315(5819):1709-12. PubMed PMID: 17379808."
 
 
 
