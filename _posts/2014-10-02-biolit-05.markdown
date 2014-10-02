@@ -1,0 +1,49 @@
+---
+layout: post
+title:  "Biolit 05: protein aggregation"
+date:   2014-10-02 12:00:00
+author: ericminikel
+tag: bbs-230
+location: Boston, MA
+---
+
+*These are my notes for week 05 of Harvard's BBS 230 "Analysis of the biological literature" course (September 30 - October 2, 2014). This includes my own reading and analysis of the papers, as well as my notes from both discussion sections.*
+
+The papers for this week are [[Tanaka 2004]] and [[Kwon 2013]].
+
+### [Tanaka 2004]: Conformational variations in an infectious protein determine prion strain differences
+
+I have blogged about this paper [here](/2014/09/30/the-conformation-holds-the-information/).
+
+### [Kwon 2013]: Phosphorylation-regulated binding of RNA polymerase II to fibrous polymers of low-complexity domains
+
+This paper discusses the aggregation of **low-complexity domains** in transcription-activating proteins. These LC domains contain only a few different amino acids (mostly G, S, Q and Y) and no clear secondary structure. Some of these contain repeats which can polymerize, and the polymerization may provide the structure that the monomeric repeats lack.
+
+#### Figure by figure
+
+The first approach that the authors take is to fuse the transcription-activating LC domains with the DNA-binding domain of Gal4, to compare the transcription-activating activity of different mutants. They measure transcriptional activity via a luciferase reporter gene. In Figure 1A, they find that the LC domains retain wild-type levels of activity if a few amino acids are mutated, but as you increase the number of tyrosines added to the sequence by missense mutations, you gradually lose the ability to activate transcription.
+
+Next they created hydrogels made of the LC domain of FUS fused to mCherry (red), and tested the ability of this matrix to grab different test proteins fused to GFP. The more GFP they see on their gel, the more test protein must be binding to the LC domain of FUS. Analogous to Figure 1A, they find in Figure 1B that an increasing number of mutations to tyrosine results in less affinity for the FUS LC domain. Indeed, Figure 1C simply plots, for each mutant they created, its affinity in Fig 1B versus its activity in Fig 1A. The two are highly correlated, which they argue validates their hydrogel assay. One potential critique is that this is a cell-free system with very high protein concentrations that may not reflect behavior *in vivo*.
+
+Then they used biotinylated isoxazole, which they call b-isox. B-isox has the property that it precipiates the unphosphorylated form of RNA pol II's largest subunit, while not precipitating the phosphorylated form. In Figure 2 they show that this selective precipitation property holds true even for just the C-terminal domain (hereafter "CTD") of that RNA pol II subunit, being able to discriminate the unphosphorylated state from a state phosphorylated by CDK7 or CDK9. The reason they are testing this is because in between Fig 1 and Fig 2 they have identified a number of proteins with LC domains that bind to the CTD and can be precipitated by b-isox.
+
+In Figure 3A they repeat their hydrogel assay from Fig 1B, but this time the hydrogels are composed of mCherry fused to a bunch of different LC domain proteins, and they are looking for their ability to capture GFP fused to the CTD (they call this GFP:CTD). TAF15 is the most effective. Then in Fig 3B-C they test different subsegments and mutants of CTD, and determine that the affinity depends most heavily on the C-terminal half of the CTD, and is higher the more degenerate repeats the CTD contains. The authors' interpretation is that the affinity between TAF15 and CTD depends upon copolymerization of the low-complexity repeats in both proteins.
+
+In Figure 4 they use CDK7 to phosphorylate GFP:CTD and show that this reduces the affinity between TAF15 and CTD. This is analogous to how phosphorylation of CTD reduced the affinity between b-isox and CTD in Figure 2.
+
+Figure 5 investigates in further detail a FUS mutant which showed aberrant behavior in Figure 1C. This so-called FUS "2A mutant" has little hydrogel binding activity but plenty of transcription-activating activity in Figure 1C. In Figure 5A they argue that the "2A mutant" actually does have increased affinity for the low-complexity degenerate repeats of the CTD.
+
+In the text they have argued that FUS binds microsatellite DNA. In Figure 6 they perform transmission electron microscopy on a triple fusion protein made of mCherry, the FUS LC, and a domain of a protein called FLI. They argue that this protein exhibits increased propensity to form fibrils ("[sleave](http://www.merriam-webster.com/dictionary/sleave)", they call it) in the presence of microsatellite DNA (Fig 6A) than in its absence (Fig 6B).
+
+In Figure 7 they make a series of Y-to-S mutations in the LC domain of TAF15. All of these mutants exhibit dramatically reduced transcription-activating activity compared to wild-type (Fig 7A).
+
+#### Conclusions
+
+Figure 7D shows their final model for what's going on physiologically. They depict the LC proteins such as FUS binding DNA, copolymerizing and then recruiting the CTD of RNA pol II's subunit. Then when the CTD gets phosphorylated, the affinity is lost, and RNA pol II is released.
+
+The majority of their data supporting this model are from cell-free systems. It would be useful to have additional experiments to test the model's relevance at least in live cells if not *in vivo*. For instance, one could use BRET or similar to test the proximity of RNA pol II and the different LC domain proteins to one another in cells. You could use ChIP-seq to see what DNA sequences are bound by the proteins of interest in cells.
+
+
+[Tanaka 2004]: http://www.ncbi.nlm.nih.gov/pubmed/15029196 "Tanaka M, Chien P, Naber N, Cooke R, Weissman JS. Conformational variations in an infectious protein determine prion strain differences. Nature. 2004 Mar 18;428(6980):323-8. PubMed PMID: 15029196."
+
+[Kwon 2013]: http://www.ncbi.nlm.nih.gov/pubmed/24267890 "Kwon I, Kato M, Xiang S, Wu L, Theodoropoulos P, Mirzaei H, Han T, Xie S, Corden JL, McKnight SL. Phosphorylation-regulated binding of RNA polymerase II to fibrous polymers of low-complexity domains. Cell. 2013 Nov 21;155(5):1049-60. doi: 10.1016/j.cell.2013.10.033. Erratum in: Cell. 2014 Jan 16;156(1-2):374. PubMed PMID: 24267890; PubMed Central PMCID: PMC4010232."
