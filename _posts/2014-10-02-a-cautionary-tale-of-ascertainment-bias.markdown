@@ -8,7 +8,7 @@ thumb120: http://www.cureffi.org/media/2014/10/ascertainment-bias-thumbnail.png
 summary200: "In my first scientific paper, we refute claims that children have a younger age of onset in E200K genetic prion disease than their parents do, and show that age of onset is fraught with bias."
 ---
 
-I am proud to announce today the publication of my first scientific paper in *The American Journal of Human Genetics* [[Minikel 2014](http://dx.doi.org/10.1016/j.ajhg.2014.09.003), [full text](/media/2014/10/minikel-2014-ascertainment-bias-authoracceptedmanuscript.pdf)]:
+I am proud to announce today the publication of my first scientific paper in *The American Journal of Human Genetics* [[Minikel 2014](http://dx.doi.org/10.1016/j.ajhg.2014.09.003), [full text](/media/2014/10/minikel-2014-ascertainment-bias-authoracceptedmanuscript.pdf), [source code here](https://github.com/ericminikel/e200k-anticipation)]:
 
 ![](/media/2014/10/e200k-paper-ajhg-title.png)
 
