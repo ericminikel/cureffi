@@ -14,7 +14,7 @@ As a first-year biology PhD student, I am taking a [class](/tag/bbs-230) called 
 
 #### A brief history of the prion hypothesis
 
-When Stanley Prusiner first coined the term *prion* in 1982, many biologists weren't happy. He invented this term, a contraction of "proteinaceous infectious particle", to describe the unique nature of the pathogens that cause a class of diseases such as scrapie, kuru and Creutzfeldt-Jakob disease. The pathogenic agent contained, said Prusiner, "a protein that is required for infectivity"
+When Stanley Prusiner first coined the term *prion* in 1982, many biologists weren't happy. He invented this term, a contraction of "proteinaceous infectious particle", to describe the unique nature of the pathogens that cause a class of diseases such as scrapie, kuru and Creutzfeldt-Jakob disease. The pathogenic agent contained, said Prusiner, "a protein that is required for infectivity" [[Prusiner 1982]].
 
 In 1982, Prusiner's principal lines of evidence for the uniquely proteinaceous nature of the pathogen all revolved around what it took to destroy the its infectivity. The infectivity of scrapie, a model prion disease that Prusiner studied in hamsters, could be destroyed by a variety of chemical and enzymatic treatements known to destroy proteins, but was unaffected by a wide range of chemical and enzymatic treatments (and UV light) known to destroy nucleic acids.
 
