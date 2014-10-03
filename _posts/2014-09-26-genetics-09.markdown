@@ -44,7 +44,7 @@ While the above-outlined experiment might give you results *consistent* with the
 4. Perform a second round of selection by re-streaking your transformants on more LB + chloramphenicol media.
 5. Grow a flask worth of culture in LB + chloramphenicol at 30&deg;C.
 6. Plate the culture on LB + chloramphenicol at 42&deg;C. The temperature will halt replication of the standalone plasmid, so that the survivors at this stage will be those cells in which the plasmid was integrated into the genome ("loop in").
-7. Now plate transformants on LB + sucrose. This further selects for cells in which the homologous recombination event *removed* the rest of the plasmid besides the desired CRISPR locus ("loop out"). These cells will have become sucrose-resistant, and will also have lost the chloramphenicol resistance.
+7. Now plate transformants on LB + sucrose. This further selects for cells in which a second, non-allelic homologous recombination event occurs which *removes* the rest of the plasmid besides the desired CRISPR locus ("loop out"). These cells will have become sucrose-resistant, and will also have lost the chloramphenicol resistance.
 8. Test your remaining transformants for &lambda; resistance, and if you find resistant clones, sequence them to confirm presence of the DNA encoding the anti-&lambda; sgRNA.
 
 This is what this process looks like:
