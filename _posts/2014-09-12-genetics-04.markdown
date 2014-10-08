@@ -40,7 +40,9 @@ Why do we care?
 2. Makes it easier to clone genes with dominant mutations.
 3. Easy to do.
 
-You can only determine centromere linkage when two genes are unlinked to each other (PD=NPD). In this case, you know when a crossover has occurred between a marker and its centromere when TT tetrads are produced. If &ge; 1 of the 2 markers is unlinked from the centromere, you will see tetratypes. If and only if both markers are very tightly centromere-linked, you will see no tetratypes. In practice, these studies are always done with a gene of interest vs. a mutant in a known centromere-linked gene, usually *trp1* (which requires tryptophan for survival), which is extremely close to the centromere of chr16.
+*An earlier version of these notes claimed that one could only compute centromere linkage for two unlinked markers. Apparently this was false. You can compute centromere linkage regardless of whether two markers are linked.*
+
+You know when a crossover has occurred between a marker and its centromere when TT tetrads are produced. If &ge; 1 of the 2 markers is unlinked from the centromere, you will see tetratypes. If and only if both markers are very tightly centromere-linked, you will see no tetratypes. In practice, these studies are always done with a gene of interest vs. a mutant in a known centromere-linked gene, usually *trp1* (which requires tryptophan for survival), which is extremely close to the centromere of chr16.
 
 Example: cross *trp1* &times; B, and get PD=45, NPD=45, TT=10. Because PD=NPD, *trp1* and B are unlinked to one another. The centromeric linkage is given by &half;T/(P+N+T). This quantity times 100 is B's genomic distance from the centromere in centiMorgans. In this case, you get &half;&times;10/(100) &times; 100 = 5 cM. Again, remember that because *trp1* is so very tightly centromerically linked, we assume that 100% of tetratypes result from crossovers between B and its centromere. Note that this formula is less accurate than the one for linkage of two genes to each other, because there is no way to detect double crossovers.
 
