@@ -40,8 +40,6 @@ Why do we care?
 2. Makes it easier to clone genes with dominant mutations.
 3. Easy to do.
 
-*An earlier version of these notes claimed that one could only compute centromere linkage for two unlinked markers. Apparently this was false. You can compute centromere linkage regardless of whether two markers are linked.*
-
 You know when a crossover has occurred between a marker and its centromere when TT tetrads are produced. If &ge; 1 of the 2 markers is unlinked from the centromere, you will see tetratypes. If and only if both markers are very tightly centromere-linked, you will see no tetratypes. In practice, these studies are always done with a gene of interest vs. a mutant in a known centromere-linked gene, usually *trp1* (which requires tryptophan for survival), which is extremely close to the centromere of chr16.
 
 Example: cross *trp1* &times; B, and get PD=45, NPD=45, TT=10. Because PD=NPD, *trp1* and B are unlinked to one another. The centromeric linkage is given by &half;T/(P+N+T). This quantity times 100 is B's genomic distance from the centromere in centiMorgans. In this case, you get &half;&times;10/(100) &times; 100 = 5 cM. Again, remember that because *trp1* is so very tightly centromerically linked, we assume that 100% of tetratypes result from crossovers between B and its centromere. Note that this formula is less accurate than the one for linkage of two genes to each other, because there is no way to detect double crossovers.
@@ -70,7 +68,7 @@ Here are some N:P:T data and you can figure out the interpretation of each case:
 | 20 | 20 | 20 | No | Yes, because P:N:T is 1:1:<4 |
 | 50 | 0 | 10 | Yes | Cannot be determined because genes are linked |
 
-Remember, one can only determine CEN linkage when dealing with two unlinked markers.
+Note: in class, Fred Winston stated that centromere linkage could only be computed for two markers that are unlinked to one another, and [section 7.9 of these notes](http://winstonlab.med.harvard.edu/pdfs/Reviews%20Chapters%20Books%20/Winston_2002_Ergito.pdf) by Fred imply the same. However, in problem sets and practice problems for discussion section, we were expected to compute centromere linkage in crosses with *trp1* which produced 0 NPD tetrads, implying the marker in question was linked to *trp1*. Notice that if you get 0 NPD tetrads, then the formulas for linkage and CEN linkage become identical, reflecting the fact that because *trp1* is practically in the centromere, a marker's distance to *trp1* is equal to its distance to the centromere. Therefore, apparently in this case you *can* compute CEN linkage for linked markers.
 
 ### The yeast gene discovery pipeline
 
