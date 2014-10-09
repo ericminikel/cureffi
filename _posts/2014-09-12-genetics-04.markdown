@@ -30,7 +30,7 @@ Recall that you can use the segregation of two markers in yeast tetrads (PD, NPD
 | PD = NPD | unlinked |
 | PD > NPD | linked |
 | PD < NPD | #DoingItWrong |
-| P = NP | probably true but no one has proven it yet |
+| [P &ne; NP](http://en.wikipedia.org/wiki/P_versus_NP_problem) | probably true but no one has proven it yet |
 
 ### Centromere linkage
 
