@@ -15,7 +15,7 @@ location: Boston, MA
 
 Here we'll consider the example of creating knockouts.
 
-In Step 1, you clone a kanamycin resistance (Kan<sup>R</sup>) cassette with primers homologous to the chromosomal locus you wish to target, into a plasmid that also contains a rep<sup>ts</sup> cassette (see [last time](/2014/09/26/genetics-09)), and an array of three &lambda; recombination genes (exo, beta and gamma, all under the Para promoter), which greatly increase the frequency of homologous recombination.
+In Step 1, you clone a kanamycin resistance (Kan<sup>R</sup>) cassette with primers homologous to the chromosomal locus you wish to target, into a plasmid that also contains a rep<sup>ts</sup> cassette (see [last time](/2014/09/26/genetics-09)), and an array of three &lambda; recombination genes (exo, beta and gamma, all under the Para promoter), which greatly increase the frequency of homologous recombination. Although no live phage is present, the use of these three &lambda; genes leads to this technique sometimes being called "lambda recombineering".
 
 In Step 2, you grow your bacterial strain of interest at 30&deg;C in LB plus arabinose. You can make your cells "electro competent" (able to survive electroporation) by spinning them down at a low temperature. Electroporate them to introduce your PCR product from step 1 into the cytosol. Plate them on LB with kanamycin at 37&deg;C and then raise to 42&deg;C. At the high temperature the plasmid cannot replicate, so you end up with only the bacteria that have undergone recombination.
 
