@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Some musings on age of death in FamiLinx"
-date:   2014-10-03 12:05:00
+date:   2014-10-10 12:05:00
 author: ericminikel
 location: Boston, MA
 thumb120: http://www.cureffi.org/media/2014/10/familinx-thumbnail.png
