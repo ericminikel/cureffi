@@ -57,6 +57,17 @@ Now consider an AB &times; ab cross, where A is tightly CEN-linked, and B is unl
 
 In the limit where A&rarr;right in the centromere and B&rarr;as far away as possible, the ratio P:N:T is 1:1:4. This ratio indicates that at least one of the two markers is non-CEN-linked. The ratio is the same whether one or *both* markers is non-CEN-linked. A ratio of 1:1:<4 means that *both* markers are CEN-linked. This formula is not very accurate above about 25 or 30 cM.
 
+To review, the formulas for linkage and centromere linkage are as follows:
+
+```r
+linkage = function(P,N,T) { 
+    return (.5*(6*N+T)/(P+N+T))
+}
+cenlinkage = function(P,N,T) { 
+    return (.5*T/(P+N+T))
+}
+```
+
 ### More examples
 
 Here are some N:P:T data and you can figure out the interpretation of each case:
