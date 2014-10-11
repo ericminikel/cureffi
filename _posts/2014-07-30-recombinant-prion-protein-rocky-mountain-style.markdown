@@ -75,6 +75,8 @@ First pour the LB into the culture bottle, followed by the MgSO<sub>4</sub>, the
 
 ![](/media/2014/07/rprp-day-1-overnight-incubation.png)
 
+*Troubleshooting tips from Andy Hughson*: It is possible that conditions in your laboratory will differ from those in the Caughey lab - so if the exact numbers in this post don't produce good results for you, here are some pointers. First, you can adjust your culture container, number of hours and RPMs to achieve maximum bacterial growth so that you get the largest possible pellet - this means providing plenty of aeration, and growing long enough to exhaust the exponential growth phase, and if necessary you can even run a little ways into stationary phase. Second, though the principles of induction are the same, different induction kits or homemade recipes will differ in details, so do read the instructions on your kit before proceeding. Two helpful references for induction are [[Fox & Blommel 2009] and [Studier 2005], [full text here](http://wolfson.huji.ac.il/expression/local/bacteria/studierAutoInduced.pdf)].
+
 ### Day 2
 
 As with the 6h timepoint for the mini-cultures, the 20h timepoint for the 1L culture is chosen to allow the bacteria to just exhaust their exponential growth phase without spending too long in a state of arrested development (i.e. stationary phase). If you grab them at 24h, that's not too big a deal. As with the mini-cultures, the liquid should now be cloudy. Pour it into four <a href="http://catalog2.corning.com/LifeSciences/en-US/Shopping/ProductDetails.aspx?productid=430776(Lifesciences)&categoryname=General+Labware+and+Equipment(Lifesciences)%7cBottles%2c+Centrifuge%2c+Plastic(Lifesciences)%7c250mL+Screw+Cap+Conical+Bottom+Centrifuge+Tubes(Lifesciences)">250 mL conical tubes</a> and centrifuge them at 2900g for 20 minutes. After this step, the bacterial solids will be in a pellet at the tip of the tube - this is what you want. Pour off the supernatant back into the culture flask and decontaminate the flask with bleach. Don't leave the bleach to sit for more than 5 or 10 minutes before pouring it out, because the flask is made of porous material that will absorb it, inhibiting the growth of future cultures. After decontaminating the solution this way, the flask can be autoclaved before next use.
@@ -368,3 +370,6 @@ As shown above, at 130 mM NaCl, our batch of rMoPrP23-231 was plenty robust enou
 
 We owe a huge debt of gratitude to Andy Hughson, who patiently trained us on all of this and has spent countless hours fine-tuning this protocol.
 
+[Fox & Blommel 2009]: http://www.ncbi.nlm.nih.gov/pubmed/19365792 "Fox BG, Blommel PG. Autoinduction of protein expression. Curr Protoc Protein Sci. 2009 Apr;Chapter 5:Unit 5.23. doi: 10.1002/0471140864.ps0523s56. PubMed PMID: 19365792."
+
+[Studier 2005]: http://www.ncbi.nlm.nih.gov/pubmed/15915565 "Studier FW. Protein production by auto-induction in high density shaking cultures. Protein Expr Purif. 2005 May;41(1):207-34. PubMed PMID: 15915565."
