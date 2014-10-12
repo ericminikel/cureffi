@@ -30,32 +30,38 @@ date: 2013-12-18 18:29:24
 <tr><th>mouse genotype name</th>
 <th>PrPC expression level<br/>(relative to wild-type)</th>
 <th>days to onset of symptoms</th>
+<th>days to terminal illness</th>
 </tr>
 </thead>
 <tbody>
 <tr><td><em>Prnp<sup>+/-</sup></em></td>
 <td>0.5</td>
 <td>290</td>
+<td>415</td>
 </tr>
 
 <tr><td><em>Prnp<sup>+/+</sup></em></td>
 <td>1.0</td>
 <td>131</td>
+<td>166</td>
 </tr>
 
 <tr><td><em>Tga19/+</em></td>
 <td>3.5</td>
 <td>87</td>
+<td>100</td>
 </tr>
 
 <tr><td><em>Tga20/+</em></td>
 <td>6.5</td>
 <td>64</td>
+<td>68</td>
 </tr>
 
 <tr><td><em>Tga20/Tga20</em></td>
 <td>10</td>
 <td>60</td>
+<td>62</td>
 </tr>
 </tbody></table></p>
 <p>Here&#8217;s a plot of those data:</p>
@@ -63,7 +69,8 @@ date: 2013-12-18 18:29:24
 <pre style="line-height: 125%;">mousename <span style="color: #666666;">=</span> c(<span style="color: #ba2121;">"Prnp+/-"</span>,<span style="color: #ba2121;">"Prnp+/+"</span>,<span style="color: #ba2121;">"Tga19/+"</span>,<span style="color: #ba2121;">"Tga20/+"</span>,<span style="color: #ba2121;">"Tga20/Tga20"</span>)
 explevel <span style="color: #666666;">=</span> c(<span style="color: #666666;">.5</span>,<span style="color: #666666;">1</span>,<span style="color: #666666;">3.5</span>,<span style="color: #666666;">6.5</span>,<span style="color: #666666;">10</span>) <span style="color: #408080; font-style: italic;"># PrPC expression level</span>
 symptoms <span style="color: #666666;">=</span> c(<span style="color: #666666;">290</span>,<span style="color: #666666;">131</span>,<span style="color: #666666;">87</span>,<span style="color: #666666;">64</span>,<span style="color: #666666;">60</span>) <span style="color: #408080; font-style: italic;"># time to symptoms</span>
-plot(explevel,terminal,type<span style="color: #666666;">=</span><span style="color: #ba2121;">'b'</span>,pch<span style="color: #666666;">=15</span>,lwd<span style="color: #666666;">=2</span>,xlim<span style="color: #666666;">=</span>c(<span style="color: #666666;">0</span>,<span style="color: #666666;">12</span>),xlab<span style="color: #666666;">=</span><span style="color: #ba2121;">'PrPC expression level'</span>,ylab<span style="color: #666666;">=</span><span style="color: #ba2121;">'days to clinical onset'</span>,ylim<span style="color: #666666;">=</span>c(<span style="color: #666666;">0</span>,max(terminal)),main<span style="color: #666666;">=</span><span style="color: #ba2121;">'Effect of PrPC expression level'</span>)
+terminal <span style="color: #666666;">=</span> c(<span style="color: #666666;">415</span>,<span style="color: #666666;">166</span>,<span style="color: #666666;">100</span>,<span style="color: #666666;">68</span>,<span style="color: #666666;">62</span>) <span style="color: #408080; font-style: italic;"># time to terminal illness</span>
+plot(explevel,terminal,type<span style="color: #666666;">=</span><span style="color: #ba2121;">'b'</span>,pch<span style="color: #666666;">=15</span>,lwd<span style="color: #666666;">=2</span>,xlim<span style="color: #666666;">=</span>c(<span style="color: #666666;">0</span>,<span style="color: #666666;">12</span>),xlab<span style="color: #666666;">=</span><span style="color: #ba2121;">'PrPC expression level'</span>,ylab<span style="color: #666666;">=</span><span style="color: #ba2121;">'days to terminal illness'</span>,ylim<span style="color: #666666;">=</span>c(<span style="color: #666666;">0</span>,max(terminal)),main<span style="color: #666666;">=</span><span style="color: #ba2121;">'Effect of PrPC expression level'</span>)
 text(explevel,terminal,labels<span style="color: #666666;">=</span>mousename,pos<span style="color: #666666;">=</span>c(<span style="color: #666666;">4</span>,<span style="color: #666666;">4</span>,<span style="color: #666666;">1</span>,<span style="color: #666666;">1</span>,<span style="color: #666666;">1</span>))</pre>
 </div>
 <p><a href="/wp-content/uploads/2013/12/effect-of-prpc-expression-level.png"><img class="alignnone size-full wp-image-3442" alt="effect-of-prpc-expression-level" src="/wp-content/uploads/2013/12/effect-of-prpc-expression-level.png"/></a></p>
