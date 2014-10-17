@@ -9,8 +9,6 @@ location: Boston, MA
 
 *These are my notes from lecture 12 of Harvard's Genetics 201 course, delivered by Max G. Heiman on October 15, 2014.*
 
-The midterm average was 72.
-
 ![](/media/2014/10/worms.png)
 
 ### Scene setting
