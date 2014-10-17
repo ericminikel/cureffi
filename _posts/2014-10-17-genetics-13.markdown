@@ -80,6 +80,8 @@ They then asked when in development lin-12 acts, by using conditional inactivati
 
 The great reveal: lin-12 is the worm ortholog of Notch. Its protein product LIN-12 is a receptor for a signal transmitted by LAG-2, which is like a Notch ligand.
 
+A further experiment was to put GFP and RFP (or, back in the day, LacZ and something else) under the lin-22 and lag-2 promoters in order to monitor when the promoters are active. It was found that once one cell commits to AC, it shuts off its own expression of lin-22.
+
 [Kimble 1981]: http://www.ncbi.nlm.nih.gov/pubmed/7286433 "Kimble J. Alterations in cell lineage following laser ablation of cells in the somatic gonad of Caenorhabditis elegans. Dev Biol. 1981 Oct 30;87(2):286-300. PubMed PMID: 7286433."
 
 [Greenwald 1983]: http://www.ncbi.nlm.nih.gov/pubmed/6616618 "Greenwald IS, Sternberg PW, Horvitz HR. The lin-12 locus specifies cell fates  in Caenorhabditis elegans. Cell. 1983 Sep;34(2):435-44. PubMed PMID: 6616618."
