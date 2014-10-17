@@ -1,0 +1,87 @@
+---
+layout: post
+title:  "Genetics 13: 'How to study developmental mechanisms using C. elegans'"
+date:   2014-10-17 12:00:00
+author: ericminikel
+tag: genetics-201
+location: Boston, MA
+---
+
+*These are my notes from lecture 13 of Harvard's Genetics 201 course, delivered by Max G. Heiman on October 17, 2014.*
+
+In *C. elegans* in addition to gene disruption, there is **cell ablation** where you can disrupt a cell type to study its function. **Mosaic analysis** can be used to figure out where a gene acts, and **conditional gene inactivation** can figure out when a gene acts.
+
+### Linkage
+
+Suppose you have an unmapped recessive mutant unc-22, and a recessive mutant dpy-11 which has been mapped to chromosome V. Cross a unc-22/unc-22 male with a dpy-11/dpy-11 hermaphrodite to get F1s. Regardless of whether unc-22 is linked, the F1s will be unc-22/+; dpy-11/+. Self the F1s to obtain F2s. Results can be interpreted as follows:
+
+| F2 phenotype | proportion if tightly linked | proportion if unlinked |
+| ---- | ---- | ---- |
+| non-Unc non-Dpy | 2 | 9 |
+| Unc, non-Dpy | 1 | 3 |
+| non-Unc, Dpy | 1 | 3 |
+| Unc Dpy | 0 | 1 |
+
+A shorthand for this table is simply to ask how many of the Unc F2s are also Dpy. If 1/4 of them are Dpy, the markers are unlinked. If <1/4 of them are Dpy, the markers are linked. The proportion of recombinants between the two markers gives the genetic distance in cM. However, unlike yeast, *C. elegans* have exactly <em>one</em> crossover event per chromosome during meiosis, so double crossovers are biologically impossible, which makes the linkage formula simpler. In addition, *C. elegans* have no centromeres, and hence no centromere linkage. *C. elegans* are called "holocentric" because they have a number of different microtubule attachment sites across each chromosome.
+
+Brenner found that markers associated with phenotypes are not uniformly distributed across *C. elegans* chromosomes in genetic distance. The genetic map is "clumpy", with markers clustered in the center of chromosomes. This turned out to be due to *both* (1) uneven spacing in physical distance, and (2) unequal crossover frequency. *C. elegans* genes are clustered in the center of chromosomes, and in addition, crossover rates are higher further from the center.
+
+### *C. elegans* cell lineage
+
+Through saturating mutagenesis (disrupting all genes) and accounting for all cells, Brenner sought to prove the negative - to not only identify proteins, pathways, etc. involved in a phenotype, but also rule out the existence of anything else that contributes to the phenotype. *C. elegans* are a uniquely suitable system for this because their embryonic development is so tightly programmed - every last cell division has been catalogued - the entire lineage tree is [here](http://www.wormatlas.org/celllineages.html).
+
+Here is a video of *C. elegans* development:
+
+<iframe width="420" height="315" src="//www.youtube.com/embed/M2ApXHhYbaw" frameborder="0" allowfullscreen></iframe>
+
+People have used reporter genes such as fluorescently labeled histones under tissue specific promoters to visualize the division and commitment of different cell lineages.
+
+One exception to the completely rigid developmental programming of *C. elegans* is the probabilistic development of the reproductive system in hermaphrodites. At the L1 stage, there are four cells, called Z1 through Z4, which will eventually become the entire reproductive system of the worm. As cells divide, the anterior cell is "a" and the posterior cell is "p", so that for instance Z1's anterior daughter's posterior daughter is "1.ap".
+
+![](/media/2014/10/z1-z4-lineage.png)
+
+In this diagram, the Z1.ppp and Z4.aaa cells exhibit non-deterministic behavior. Of the two, one becomes the "anchor cell" (AC fate) and the other becomes the "ventral uterus" (VU fate). This is accomplished by **lateral inhibition** - the organism needs one of one cell type and one of the other, so once one of the two cells commits, it inhibits the other from taking on the same fate. Humans have lateral inhibition as well - for instance, in photoreceptor differentiation, rods will inhibit nearby cells from becoming rods, so that you end up with a mix of rods and cones.
+
+### How to probe *C. elegans* cell lineage experimentally
+
+#### Cell ablation
+
+An important experiment used a laser to kill either the Z1.ppp or Z4.aaa cell [[Kimble 1981]]. If you kill either Z1.aaa or Z1.ppp before they differentiate, the other one becomes an anchor cell. This indicates that the fate is not pre-determined. If you kill both, you don't get an anchor cell - so no other cells can step in and fill the role. In addition if you wait until Z1.aaa or Z4.ppp acquires an AC fate and then kill it, the other one won't become AC - so once a decision is made it is irreversible. If you kill every gonadal cell except Z1.ppp it will still become an AC - this indicates that the choice of AC cell fate is cell-autonomous. These results also imply that Z1.aaa or Z4.ppp will always acquire AC fate as a default unless inhibited by a signal from the other cell. Thus AC is the "default fate" and VU is the "induced fate".
+
+#### Mosaic analysis
+
+In a large mutagenesis screen, [[Greenwald 1983]] found lin-12 loss of function mutants which developed two AC cells, and lin-12 gain of function mutants which developed two VU cells. These results implied lin-12 induces VU fate. This interpretation lends itself to two models, though:
+
+1. lin-12 transmits a signal from one cell that tells the other to become VU
+2. lin-12 is a receptor for a signal that says to become VU
+
+In other words, does lin-12 act in the sender or receiver cell? To solve this problem, researchers turned to a technique called **mosaic analysis** [[Seydoux & Greenwald 1989]]. They introduced a 0.5 Mb extrachromosomal element. Normal *C. elegans* chromosomes are ~15 Mb, and *C. elegans* genetic machinery is not good at dealing with such small extrachromosomal elements, so they are sometimes replicated and sometimes not, and often divide asymmetrically, with only one daughter (Ex+) receiving the extrachromosomal element and the other (Ex-) not. This process is stochastic.
+
+To do these experiments, you can add your plasmid or PCR product along with a co-injection marker such as GFP+ or rol-6 (d). rol-6 (d) is a dominant allele that causes a "rolling in circles" behavioral phenotype, and like GFP, it is used as a marker. You co-inject these two plasmids in a mix into an embryo using a glass needle. The gonad of *C. elegans* is a **syncytium** - many nuclei sharing one cytoplasm - so if you hit that cytoplasm with your needle you can reach many nuclei in one shot. This technique is not so hard, and once you get the hang of it you can inject 15 worms in a half hour or hour. These are your P0 generation. 4 days later you'll have 25 to 250 Ex+ F1s. Most of these Ex+ F1s just have a collection of loose plasmids which are not reliably replicated and so will not transmit in the germline. In a subset of worms, the loose plasmids will recombine into a larger, high copy number (~100 gene copies in an array) extrachromosomal element which is more stably replicate and transmitted. You'll get 2 to 20 F2s that have inherited this Ex+ element. Once the F2s inherit this Ex+ element, it is more stable than the small plasmids - stable enough to follow it and do experiments with it, but it is still not as stable as a true chromosome, which is how it leads to mosaicism.
+
+You can put your co-injection marker (GFP+ for instance) on the same plasmid with your gene of interest, but surprisingly you actually don't need to. As long as the two are injected in an equimolar ratio, the law of large numbers dictates that when an extrachromosomal element does form at high copy number, its gene array will consist about 50% of the GFP+ marker and 50% of the gene of interest.
+
+Now, you can co-inject a lin-12 plasmid along with GFP into worms with a lin-12&Oslash; background and examine the cell fate decisions in worms where the GFP marker is seen in the Z1, Z4, both, or neither lineages. Here are the results of that experiment:
+
+| Z1 lineage | Z4 lineage | results |
+| ---------- | ---------- | ------- |
+| GFP- | GFP- | AC, AC |
+| GFP+ | GFP+ | AC + VU, random which is which |
+| GFP- | GFP+ | Z1 is AC, Z4 is VU |
+| GFP+ | GFP- | Z1 is VU, Z4 is AC |
+
+These data indicate that the cell which expresses GFP, and by proxy, lin-12, is the one that becomes VU. Therefore it was determined that lin-12 is the receptor for the VU-determining signal.
+
+#### Conditional inactivation
+
+They then asked when in development lin-12 acts, by using conditional inactivation. They used a mutant of lin-12 with two mutations in cis, called lin-12(n137n460). n137 is a dominant gain of function and n460 is a temperature-sensitive suppressor. At 15&deg;C this allele exhibits a gain of function, such that any Z1.ppp or Z4.aaa cell expressing it will become VU; at 25&deg;C this allele behaves like a wild-type. If worms expressing this allele are shifted to 15&deg;C in L1, both cells become VU. If you shift in L2, some worms get two VU cells, others get a normal AC + VU outcome. If you shift in L3 there is no effect - all of the worms get one AC and one VU. Alternately, if you start at 15&deg;C and then shift to 25&deg;C, shifting at L1 leads to a normal AC + VU outcome, while shifting in L2 or L3 leads to both cells becoming VU.
+
+#### Epilogue
+
+The great reveal: lin-12 is the worm ortholog of Notch. Its protein product LIN-12 is a receptor for a signal transmitted by LAG-2, which is like a Notch ligand.
+
+[Kimble 1981]: http://www.ncbi.nlm.nih.gov/pubmed/7286433 "Kimble J. Alterations in cell lineage following laser ablation of cells in the somatic gonad of Caenorhabditis elegans. Dev Biol. 1981 Oct 30;87(2):286-300. PubMed PMID: 7286433."
+
+[Greenwald 1983]: http://www.ncbi.nlm.nih.gov/pubmed/6616618 "Greenwald IS, Sternberg PW, Horvitz HR. The lin-12 locus specifies cell fates  in Caenorhabditis elegans. Cell. 1983 Sep;34(2):435-44. PubMed PMID: 6616618."
+
+[Seydoux & Greenwald 1989]: http://www.ncbi.nlm.nih.gov/pubmed/2736627 "Seydoux G, Greenwald I. Cell autonomy of lin-12 function in a cell fate decision in C. elegans. Cell. 1989 Jun 30;57(7):1237-45. PubMed PMID: 2736627."
