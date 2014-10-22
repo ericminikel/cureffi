@@ -1,0 +1,95 @@
+---
+layout: post
+title:  "Genetics 14: 'C. Elegans methods workshop' or, 'Putting genes into pathways'"
+date:   2014-10-20 12:00:00
+author: ericminikel
+tag: genetics-201
+location: Boston, MA
+---
+
+*This is my understanding based on notes by Thao Truong from lecture 14 of Harvard's Genetics 201 course, delivered by Max G. Heiman on October 20, 2014.*
+
+This lecture described how to put genes into a pathway using genetic approaches in *C. elegans*, using the example of the apoptosis pathway which I've previously described in my [Cell Biology 11](/2013/04/28/cell-biology-11-apoptosis-necrosis/) notes.
+
+### Historical perspective
+
+The notion of programmed cell death was originally quite counter-intuitive - why would death be a part of development? In 1842, [Vogt](http://en.wikipedia.org/wiki/Karl_Vogt) observed that some cells disappeared in the course of amphibian metamorphosis. In 1949, Hamburger and Levi-Montalcini found that some spinal cord neurons in chicks died as part of development. Kerr, Wyllie and Currie finally coined the term **apoptosis** to describe the process they observed whereby a healthy cell would condense into a "corpse" which would later be engulfed by a healthy cell. This history is reviewed in [[Peter 1997]].
+
+The mechanism by which this occurred was eventually deciphered using genetic approaches in *C. elegans*. 
+
+### Nomenclature of pathway diagrams
+
+In pathway diagrams, a flathead arrow indicates negative regulation, and a pointed arrow indicates positive regulation. These arrows refer to requirements or dependencies and do not necessarily imply a direct molecular interaction.
+
+Note that an arrow implies **epistasis**. An analogy is that non-Asians believe it is impossible to eat soup without a spoon, therefore a spoon is "epistatic to" delicious soop. Lacking a spoon doesn't mean the soup isn't delicious, but nevertheless means you cannot enjoy it.
+
+### Deciphering apoptosis with *C. elegans*
+
+Here is the pathway as it was eventually worked out in a series of four papers [[Hedgecock 1983], [Ellis & Horvitz 1986], [Hengartner 1992], [Conradt & Horvitz 1998]].
+
+![](/media/2014/10/apoptosis-pathway.png)
+
+Placing mutants into different pathways requires the following logical leaps:
+
+1. For mutants with different phenotypes, use double mutants to test epistasis
+2. For mutants with the same, strong phenotype, try to find phenotypic differences in pathway intermediates
+3. For mutants with the same, weak phenotype, perform double mutant (enhancer) analysis
+
+Each of these will be explained in more detail below.
+
+#### 1. Tests of epistasis
+
+For tests of epistasis, here are interpretations of some data collected on *C. elegans* mutants:
+
++ ced-9 loss of function mutations cause excess cell death, and ced-9 gain of function mutations exhibit no cell death. Therefore, ced-9's function is to prevent cell death.
++ ced-3 loss of function mutants exhibit no cell death. Therefore, ced-3's function is to promote cell death.
++ ced-3 loss of function; ced-9 loss of function double mutants exhibit no cell death, therefore ced-3 is epistatic to ced-9, implying that ced-9 is upstream of ced-3 in the pathway.
++ egl-1 loss of function mutants exhibit no cell death. Therefore egl-1's function is to promote cell death.
++ ced-9 loss of function; egl-1 loss of function double mutants exhibit excess cell death, i.e. ced-9 is epistatic to egl-1. Therefore egl-1 is upstream of ced-9.
++ ced-1 loss of function mutants have cell death, but no engulfment or DNA degradation
++ ced-3 loss of function; ced-1 loss of function double mutants have no cell death, just like ced-3 LoF single mutants. This implies ced-3 is upstream of ced-1.
+
+Note that context still matters in the interpretation of epistasis experiments. The fact that ced-3 LoF; ced-9 LoF exhibits the ced-3 LoF phenotype is taken to mean that ced-9 is *upstream* of ced-3. Yet the fact that ced-3 LoF; ced-1 LoF mutants exhibit the ced-3 LoF phenotype is taken to mean that ced-1 is *downstream* of ced-3. From analogous data we reach opposite conclusions. In the former case this interpretation is supported by the ced-9 gain of function mutants (top bullet). In the latter case, the interpretation is supported by ced-1 LoF single mutants achieving cell death but being deficient in downstream processes.
+
+#### 2. Pathway intermediates
+
+For mutants with the same, strong phenotype, you cannot learn anything by creating double mutants. Instead, you can look at intermediate steps leading to the ultimate phentoype and see if any of them differ. For instance, consider these data:
+
+| mutant | cell death | engulfment | DNA degradation |
+| ------ | ---------- | ---------- | --------------- |
+| ced-1 LoF | + | - | - |
+| nuc-1 LoF | + | + | - |
+| ced-3 LoF | - | - | - |
+
+Though all three mutants lead to a failure of DNA degradation, ced-1 LoF still achieves the intermediate step of cell death, and nuc-1 LoF still achieves the intermediate steps of cell death and engulfment. This provides information about the order in which the pathway steps occur.
+
+#### 3. Same weak phenotype
+
+Suppose you have a pathway you suspect acts like A &rarr; B &rarr; C, and you have two mutants mut-1 and mut-2 which both have a weak phenotype, say, a 10% reduction in C-ness. Here are the interpretations of two posssible results for a double mutant.
+
+1. If a mut-1; mut-2 double mutant has a 20% reduction in C-ness then the mutants are said to be **mildly additive** and the best interpretation is that they act at different steps (e.g. mut-1 in the A &rarr; B step, mut-2 in the B &rarr; C step). This must imply that neither is absolutely required for its step because each step has some redundancy.
+
+2. If the mut-1; mut-3 double mutant has a more severe phenotype, say a 100% reduction in C-ness, then the mutants are said to be **synergistic**, implying they are in two genes redundant for one another at the same step in the pathway.
+
+As an example, [[Ellis 1991]] studied four mutants: ced-1, ced-2, ced-6, and ced-7, each of which gave weak defects in corpse engulfment - some, but not all, cell death corpses would persist unengulfed. Ellis made every possible double mutant, and gave them scores (apparently on a 0 to 50 scale) of how severe the phenotype was. Here are the data:
+
+|      | ced-1 | ced-2 | ced-6 | ced-7 |
+| ---- | ---- | ---- | ---- | ---- |
+| **ced-1** | 0 | 50 | 0  | 3  |
+| **ced-2** |   | 2  | 22 | 47 |
+| **ced-6** |   |    | 0  |  0 |
+| **ced-7** |   |    |    |  1 |
+
+The data indicate that ced-2 exhibits synergy with each of ced-1, ced-6 and ced-7, while ced-1, ced-6 and ced-7 exhibit only mild additivity with one another. This implies there are two pathways leading from cell death to cell engulfment. One requires ced-1, ced-6 and ced-7; the other pathway requires ced-2. Only if you break both pathways in at least one place each do you get synergy.
+
+[Peter 1997]: http://www.ncbi.nlm.nih.gov/pubmed/9398063 "Peter ME, Heufelder AE, Hengartner MO. Advances in apoptosis research. Proc Natl Acad Sci U S A. 1997 Nov 25;94(24):12736-7. Review. PubMed PMID: 9398063; PubMed Central PMCID: PMC34166."
+
+[Hedgecock 1983]: http://www.ncbi.nlm.nih.gov/pubmed/6857247 "Hedgecock EM, Sulston JE, Thomson JN. Mutations affecting programmed cell deaths in the nematode Caenorhabditis elegans. Science. 1983 Jun 17;220(4603):1277-9. PubMed PMID: 6857247."
+
+[Ellis & Horvitz 1986]: http://www.ncbi.nlm.nih.gov/pubmed/3955651 "Ellis HM, Horvitz HR. Genetic control of programmed cell death in the nematode C. elegans. Cell. 1986 Mar 28;44(6):817-29. PubMed PMID: 3955651."
+
+[Hengartner 1992]: http://www.ncbi.nlm.nih.gov/pubmed/1560823 "Hengartner MO, Ellis RE, Horvitz HR. Caenorhabditis elegans gene ced-9 protects cells from programmed cell death. Nature. 1992 Apr 9;356(6369):494-9. PubMed PMID: 1560823."
+
+[Conradt & Horvitz 1998]: http://www.ncbi.nlm.nih.gov/pubmed/9604928 "Conradt B, Horvitz HR. The C. elegans protein EGL-1 is required for programmed cell death and interacts with the Bcl-2-like protein CED-9. Cell. 1998 May 15;93(4):519-29. PubMed PMID: 9604928."
+
+[Ellis 1991]: http://www.ncbi.nlm.nih.gov/pubmed/1936965 "Ellis RE, Jacobson DM, Horvitz HR. Genes required for the engulfment of cell corpses during programmed cell death in Caenorhabditis elegans. Genetics. 1991 Sep;129(1):79-94. PubMed PMID: 1936965; PubMed Central PMCID: PMC1204584."
