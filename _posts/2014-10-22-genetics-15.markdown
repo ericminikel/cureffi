@@ -1,0 +1,52 @@
+---
+layout: post
+title:  "Genetics 15: 'How to study the neural basis of behavior using C. elegans'"
+date:   2014-10-22 12:00:00
+author: ericminikel
+tag: genetics-201
+location: Boston, MA
+---
+
+*This is my understanding based on notes by Thao Truong from lecture 15 of Harvard's Genetics 201 course, delivered by Max G. Heiman on October 22, 2014.*
+
+### From mutant to gene: establishing that a gene causes a phenotype
+
+Three approaches are useful, in this order, for demonstrating that a gene is responsible for a phenotype.
+
+1. Linkage analysis (link gene to phenotype)
+2. Lesion analysis (show >1 mutation in gene gives same phenotype)
+3. Rescue (wild-type gene rescues mutants)
+
+For linkage and lesion analysis, you can perform pooled whole-genome sequencing on different genetic backgrounds of worms, as follows. Say you start with your homozygous Unc mutant on an N2 (Bristol) background. Cross to a CB846 (Hawaiian) wild-type. These two genetic backgrounds differ by about 1 SNP per kilobase. Self the F1s to obtain F2s which will each have ~50% Bristol DNA and ~50% Hawaiian DNA. 25% of F2s will be homozygous mutant. Separate the F2s by phenotype and perform whole genome sequencing on only the mutants. There should be one genomic locus where 100% of DNA is N2-derived. This is the locus in linkage with the causal mutation.
+
+For lesion analysis, you'd like to have more than one mutant allele. If you only have one, here are a few other options for you:
+
+1. Buy a knockout - >10,000 *C. elegans* genes are available as knockouts.
+2. Use RNAi to knock down the gene.
+3. Use CRISPR to disrupt the gene.
+
+RNAi is easy to use in *C. elegans* - you can microinject dsRNA (laborious), soak the worms in dsRNA (easier) or feed them bacteria producing the dsRNA (easiest). There are libraries of bacteria expressing over 20,000 different siRNAs against *C. elegans* genes. One caveat of RNAi is that some worm tissues are more affected by it than others.
+
+Injecting CRISPR/Cas9 into P0 syncytium has relatively low efficiency, resulting in a heterozygous disruption of the gene in only 1 in 100 F1s. It is sometimes useful to provide a visible or selectable template (e.g. GFP) with 40bp flanking homology to the gene of interest to try to get it to homologously recombine itself in.
+
+Rescue experiments are similar to mosaic analysis from [lecture 13](/2014/10/17/genetics-13/). Most of the *C. elegans* genome is available in the form of fosmid clones. Inject a large number of these into the syncytium and sometimes they'll recombine to form an extrachromosomal element. Or an alternate rescue experiment is simply to add a wild-type copy of the gene into the genome via double-strand breaks and homologous recombination.
+
+### Studying the genetic basis of behavior
+
+Humans have 1e11 neurons, *Drosophila* have 1e5 neurons, and *C. elegans* have exactly 302 neurons. The connectome of these 302 neurons is genetically hardwired and the connectivity of every neuron is known [[White 1986], [browsable at WormAtlas](http://www.wormatlas.org/ver1/MoW_built0.92/toc.html), [list of neurons](http://www.wormatlas.org/neurons/Individual%20Neurons/Neuronframeset.html)].
+
+Some phenotypes are difficult to score for individual worms - they require populations. For example, life expectancy follows a certain distribution and you need a population of mutant and wild-type worms to compare distributions. The same is true of looking for enhancer genes that affect GFP brightness, or looking for mutants that affect **chemotaxis**. Chemotaxis is when worms move up a chemical gradient - for example, they like diacetyl (the fake butter smell in popcorn) and will move towards higher concentrations of it. Bargman has been a pioneer of studying quantitative behavioral phenotypes in *C. elegans* since 1993.
+
+Chemotaxis towards diacetyl is controlled by odr-10, a 7-pass transmembrane receptor specific for diacetyl. odr-10 mutants are normal in their chemotaxis towards other desirable chemicals such as pyrazine and benzaldehyde. To study it required mutagenizing germ cells of the P0 generation at the L4 stage to get heterozygous mutant F1s, then selfing the F1s to get homozygous mutant F2s, then isolating individual mutant F2s and selfing them to get a clonal population of F3s so that the distribution of behavior could be quantified.
+
+An alternate approach for identifying genes involved in quantitative phenotypes is to use an arrayed library of 20,000 *E. coli* expressing RNAi constructs against various *C. elegans* genes. This is somewhat laborious but has the advantage that you immediately know the identity of the gene, and you can get basically complete coverage of the genome. On the net it can be faster than mutagenesis sometimes.
+
+### Studying the cellular basis of behavior
+
+Cell ablation can be used to determine which cells are required for a phenotype - again, consider the example of chemotaxis up a diacetyl gradient. Remember that all cells in *C. elegans* are named, and you can kill individual ones with lasers. By cell ablation it was discovered that the AWA neuron is responsible for chemotaxis towards diacetyl and towards pyrazine; the AWC neuron is responsible for chemotaxis towards benzaldehyde. odr-10 expression in AWA is necessary and sufficient for chemotaxis towards diacetyl.
+
+### Intermediates
+
+To achieve the ultimate goal of placing every *C. elegans* gene into a pathway, you need to be able to assay pathway intermediates which are not always genetically encoded proteins - for instance, some pathways have a step mediated by a small molecule or ion concentration signal. odr-10 is a GPCR that induces movement via a Ca<sup>2+</sup> influx. Luckily, there is a cAMP assay useful for monitoring calcium influx in neurons. This seems to involve some sort of fusion protein containing calmodulin and a split bioluminescent or fluorescent protein, where only when calmodulin binds calcium do the two parts of the other protein come into close enough proximity to be able to emit light. Using this assay, you can watch the time course at which different neurons fire (visualized by light indicating Ca<sup>2+</sup> influx) after exposure to a stimulus (say, an odor). A neuron that fires immediately upon exposure probably expresses the receptor, while a neuron that fires slowly afterward is probably downstream. You can also identify mutations in genes required for neurotransmission between the first neuron and the second neuron.
+
+[White 1986]: http://www.ncbi.nlm.nih.gov/pubmed/22462104 "White JG, Southgate E, Thomson JN, Brenner S. The structure of the nervous system of the nematode Caenorhabditis elegans. Philos Trans R Soc Lond B Biol Sci. 1986 Nov 12;314(1165):1-340. PubMed PMID: 22462104."
