@@ -63,7 +63,7 @@ For mutants with the same, strong phenotype, you cannot learn anything by creati
 
 Though all three mutants lead to a failure of DNA degradation, ced-1 LoF still achieves the intermediate step of cell death, and nuc-1 LoF still achieves the intermediate steps of cell death and engulfment. This provides information about the order in which the pathway steps occur.
 
-#### 3. Same weak phenotype
+#### 3. Enhancer analysis
 
 Suppose you have a pathway you suspect acts like A &rarr; B &rarr; C, and you have two mutants mut-1 and mut-2 which both have a weak phenotype, say, a 10% reduction in C-ness. Here are the interpretations of two posssible results for a double mutant.
 
