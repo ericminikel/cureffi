@@ -49,4 +49,16 @@ Cell ablation can be used to determine which cells are required for a phenotype 
 
 To achieve the ultimate goal of placing every *C. elegans* gene into a pathway, you need to be able to assay pathway intermediates which are not always genetically encoded proteins - for instance, some pathways have a step mediated by a small molecule or ion concentration signal. odr-10 is a GPCR that induces movement via a Ca<sup>2+</sup> influx. Luckily, there is a cAMP assay useful for monitoring calcium influx in neurons. This seems to involve some sort of fusion protein containing calmodulin and a split bioluminescent or fluorescent protein, where only when calmodulin binds calcium do the two parts of the other protein come into close enough proximity to be able to emit light. Using this assay, you can watch the time course at which different neurons fire (visualized by light indicating Ca<sup>2+</sup> influx) after exposure to a stimulus (say, an odor). A neuron that fires immediately upon exposure probably expresses the receptor, while a neuron that fires slowly afterward is probably downstream. You can also identify mutations in genes required for neurotransmission between the first neuron and the second neuron.
 
+### *C. elegans* review
+
+*This section is notes from the review section led by Aditi Shukla on October 24, 2014.*
+
+We covered 3 types of *C. elegans* screens:
+
+1. **Non-clonal**. Good for general purposes.
+2. **Clonal**. Good for looking for lethal, sick or sterile mutations. A lethal recessive mutation will manifest as a non-Mendelian outcome with 2/3 hets and 1/3 wild-type F2s, all of which will have a wild-type phenotype. Therefore your ability to notice a lethal recessive mutation relies on either (A) seeing dead embryos, or (2) genotyping the worms.
+3. **F3**. Good for looking at quantitative phenotypes where you need a population of worms to see a distribution.
+
+
+
 [White 1986]: http://www.ncbi.nlm.nih.gov/pubmed/22462104 "White JG, Southgate E, Thomson JN, Brenner S. The structure of the nervous system of the nematode Caenorhabditis elegans. Philos Trans R Soc Lond B Biol Sci. 1986 Nov 12;314(1165):1-340. PubMed PMID: 22462104."
