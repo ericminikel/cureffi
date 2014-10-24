@@ -10,7 +10,7 @@ The easiest way to access full-text articles through Harvard libraries is via th
 
 becomes
 
-<a href="http://www.nature.com.ezp-prod1.hul.harvard.edu/nature/journal/v356/n6370/abs/356577a0.html">http://www.nature.com<b><u>.ezp-prod1.hul.harvard.edu</u></b>/nature/journal/v356/n6370/abs/356577a0.html</a>
+[http://www.nature.com<b><u>.ezp-prod1.hul.harvard.edu</u></b>/nature/journal/v356/n6370/abs/356577a0.html</a>](http://www.nature.com.ezp-prod1.hul.harvard.edu/nature/journal/v356/n6370/abs/356577a0.html)
 
 To avoid having to type this in every time, you can create a bookmark. First, show the Bookmarks bar in your browser. In Chrome:
 
