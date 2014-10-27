@@ -57,7 +57,7 @@ Much of yeast secretion was elucidated through a very clever mutant hunt [[Novic
 + A wild-type gene is written in all-caps italics: *CIS1*
 + A mutant gene is written in lowercase italics, sometimes followed by a hyphen and allele number: *cis1-1*
 + Proteins are written in initcaps: Cis1
-+ Phenotypes are written with initcaps and superscripts: Cis^R and Cis^S
++ Phenotypes are written with initcaps and superscripts: Cis<sup>R</sup> and Cis<sup>S</sup>
 
 ### How to do a mutant hunt in yeast
 
@@ -67,7 +67,7 @@ There are two possible strategies for isolating mutants in yeast.
 
 2. **Screen the yeast deletion set.** There exists a commercially available library of yeast strains each of which has one gene deleted and replaced with a gene encoding resistance to geneticin (aka G418, hence the resistance trait is denoted G418<sup>R</sup>).
 
-Here is how you delete genes to make such a library. Say you want to delete a hypothetical chromosomal gene we'll call *GEN1*. Start with a diploid wild-type cell and a plasmid encoding the G418^R phenotype. PCR amplify the G418 resistance gene with primers that have ~40bp of homology to the region flanking *GEN1*. Transform yeast with the PCR product, and by homologous recombination some cells will end up with the G418 resistance gene replacing one of their copies of *GEN1*. Then select for the G418^R phenotype. Sporulate the resistant yeast and separate tetrads.
+Here is how you delete genes to make such a library. Say you want to delete a hypothetical chromosomal gene we'll call *GEN1*. Start with a diploid wild-type cell and a plasmid encoding the G418<sup>R</sup> phenotype. PCR amplify the G418 resistance gene with primers that have ~40bp of homology to the region flanking *GEN1*. Transform yeast with the PCR product, and by homologous recombination some cells will end up with the G418 resistance gene replacing one of their copies of *GEN1*. Then select for the G418<sup>R</sup> phenotype. Sporulate the resistant yeast and separate tetrads.
 
 The creation of these deletion libraries revealed that ~20% of genes are essential for viability (presumably this reveals itself when you find that only 2/4 of the tetrad offspring are viable, and those 2 are not resistant to G418). The ~80% that are viable can be purchased for ~$2000 in either diploid or haploid forms.
 
@@ -77,19 +77,19 @@ The "library" approach lets you immediately know the identity of the mutated gen
 
 The "mutagenize" approach allows you to find gain-of-function mutations. It is higher throughput because you don't need to run thousands separate plates in parallel. You can find epistatic effects, as you might have mutations in &gt;1 gene. You can also find mutations in essential genes (presumably the idea is that there may be viable hypomorphic alleles of these). (Though the "library" people have now responded to this by creating libraries of temperature-sensitive mutants of essential genes).
 
-Suppose you've done a "mutagenize" approach and have isolated Cis^R mutants. The next thing you want to do might be to figure out if the trait is dominant or recessive. Mate each mutant with a wild-type strain. Suppose we found two mutants, *cis1* and *cis2* and we mate an "a" cell of each with a wild-type cell. 
+Suppose you've done a "mutagenize" approach and have isolated Cis<sup>R</sup> mutants. The next thing you want to do might be to figure out if the trait is dominant or recessive. Mate each mutant with a wild-type strain. Suppose we found two mutants, *cis1* and *cis2* and we mate an "a" cell of each with a wild-type cell. 
 
 | diploid genotype | phenotype | conclusion |
 | ---- | ---- | ---- | 
-| *cis1*/+ | Cis^S | recessive |
-| *cis2*/+ | Cis^R | dominant |
+| *cis1*/+ | Cis<sup>S</sup> | recessive |
+| *cis2*/+ | Cis<sup>R</sup> | dominant |
 
 Only for recessive mutations, you sometimes move on to a complementation test. 
 
 | cross | diploid phenotype | complement? | number of genes |
 | ---- | ---- | ---- | ---- |
-| *cis1* &times; *cis3* | Cis^S | yes | 2 |  
-| *cis1* &times; *cis4* | Cis^R | no | 1 |
+| *cis1* &times; *cis3* | Cis<sup>S</sup> | yes | 2 |  
+| *cis1* &times; *cis4* | Cis<sup>R</sup> | no | 1 |
 
 *cis1* and *cis3* are said to "complement" each other because each can supply what the other is missing. This means they must be mutations in different genes. (Remember we only do this for recessive mutations, i.e. when the wild-type is dominant to the mutant). *cis1* and *cis4* do *not* complement each other, implying they are different mutations in the same gene. Complementation is a *test of function*, always done by mating two haploids to get a diploid and checking its phenotype.
 
