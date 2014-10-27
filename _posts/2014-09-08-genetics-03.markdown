@@ -11,7 +11,7 @@ location: Boston, MA
 
 Here are some key review points from [last time](/2014/09/05/genetics-02):
 
-1. We discussed 2 methods for isolating haploid Cis^R mutants.
+1. We discussed 2 methods for isolating haploid Cis<sup>R</sup> mutants.
 2. Tests of dominance vs. recessiveness must be done in diploids.
 3. Complementation is done only in recessive phenotypes and tests the function of two mutations.
 
