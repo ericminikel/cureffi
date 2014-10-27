@@ -65,7 +65,7 @@ cd fibonacci
 git init . # start a git repo locally
 ```
 
-Now we have a *local* git repo, though we still haven't connected to anything on the web. Let's add some Python code to calculate the n^th Fibonacci number:
+Now we have a *local* git repo, though we still haven't connected to anything on the web. Let's add some Python code to calculate the n<sup>th</sup> Fibonacci number:
 
 ```python
 def nth_fibonacci(n): 
