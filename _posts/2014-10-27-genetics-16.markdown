@@ -1,0 +1,79 @@
+---
+layout: post
+title:  "Genetics 16: 'Introduction to Drosophila: genotypes, recombination and balancer chromosomes'"
+date:   2014-10-27 12:00:00
+author: ericminikel
+tag: genetics-201
+location: Boston, MA
+---
+
+*These are my notes from lecture 16 of Harvard's Genetics 201 course, delivered by Mitzi Kuroda on October 27, 2014.*
+
+### Intro to *Drosophila*
+
+Why study flies?
+
++ Easy to work with
++ Short life cycle (~2 weeks)
++ Great phenotypes (if you like looking at fly eyes)
++ Great chromosome analysis
++ Easy to cross
+
+From egg fertilization and embryogenesis, *Drosophila* spend a total of ~4 days in three larval stages, then ~5 days in prepupa and pupa stages. Then the adult emerges from the pupal case, an event called **eclosure**, and they become reproductively active within 8 hours after. They can live 45-60 days under good conditions.
+
+A few classic phenotypes are Curly wings (Cy; dominant), white eyes (w), yellow body (y), Stubble (Sb), and irregular facets in the eye (If). Flies are often used for studying development, chromosome structure, neurobiology, and behavior. Morgan and Muller did the earliest famous work on *Drosophila*. *Drosophila* have [polytene chromosomes](http://en.wikipedia.org/wiki/Polytene_chromosome) in some tissues, which made the chromosomes large enough to see even with the microscopes of yesteryear. Lewis, N&uuml;sslein-Volhard & Wieschaus won the [1995 Nobel Prize in Physiology or Medicine](http://www.nobelprize.org/nobel_prizes/medicine/laureates/1995/) for studying embryonic development in *Drosophila* and discovering Hox genes. Anntennapedia is a gain-of-function mutation where legs, instead of antennae, grow out of the head.
+
+#### Comparison to other organisms
+
+In contrast to model organisms we've recently studied in this class, *Drosophila* come in male (&#x2640;) and female (&#x2642;) only (no hermaphrodites &#x26A5;) and are always diploid. Here are some other comparisons:
+
+| organism | cells | neurons | genome size | protein-coding genes |
+| -------- | ----- | ------- | ----------- | -------------------- |
+| yeast | 1 | 0 | 12 Mb | 6,600 |
+| *C. elegans* | 1031 (males), 959 (hermaphrodites) | 302 | 100 Mb | 20,000 |
+| *Drosophila* | ? | 100,000 | 165 Mb | 13,000 |
+
+*Drosophila* have chromosomes X, Y, 2, 3 and 4. Females are X/X and males are X/Y. Chromosome 4 is small and contains hardly any genes. Like most organisms, *Drosophila* have the annoying property that most genes are named after their loss-of-function phenotype, i.e. the opposite of what they do. For instance, the white gene makes eyes red. However, you can't count on this always being true. For instance, cinnabar (*cn*) and brown (*bw*) are two genes which encode <span style='color: #E44D2E; font-weight: bold;'>cinnabar</span>-colored and <span style='color: #BC7642; font-weight: bold;'>brown</span>-colored pigments, such that a *cn bw / cn bw* double mutant is white.
+
+#### Nomenclature
+
+A singed (*sn*; crooked bristles, recessive, on chrom 2), cinnabar (*cn*) and brown (*bw*) (both recessive, both on chrom 3, this combination gives white eyes), Serrate\[d\] wing (*Ser*; dominant, hence Initcaps, located on chrom 4) fly would be written:
+
+*sn/sn ; cn bw / cn bw ; Ser/+*
+
+By default, *sn* means the mutant gene, while wild-type genotypes are simply omitted. If you need to emphasize for clarity, you can write the wild-type allele as sn+ and the mutant as sn-. If you have multiple singed mutants you could write them <i>sn<sup>1</sup></i>, <i>sn<sup>2</sup></i>, etc. Genes known to be on the same chromosome are written in one fraction. Reference is [Flybase.org](http://flybase.org)
+
+Chromosomal position and phase are represented in this fraction nomenclature, such that *cn bw / + +* has the cinnabar and brown mutations in cis, while *cn + / + bw* has them in trans.
+
+Protein products are written in Initcaps, no italics. Flybase has [full nomenclature rules](http://flybase.org/static_pages/docs/nomenclature/nomenclature3.html).
+
+### Balancer chromosomes
+
+A challenge of *Drosophila* is they cannot be readily frozen or archived - mutants have to be continuously propagated. In addition, many of the most interesting genes in *Drosophila* are essential for life, and have to be propagated as heterozygotes which have no phenotype. This gives you two problems: first, it leaves you blind as to whether you're still propagating the mutation. Second, as you cross your heterozygotes to one another, you lose all the *mut1/mut1* offspring, and this selection reduces the allele frequency of your mutation of interest in every generation. This is a problem in all constitutively diploid organisms, including mice. In *Drosophila*, the solution for studying mutations that are recessive lethal or recessive sterile is as follows:
+
+1. "Balance" the mutation with another lethal/sterile marker, so for instance all your flies are of a *mut1 + / + mut2* genotype, such that only hets for both mutations can survive.
+2. Add a visible dominant marker in cis with one of the two balancing mutations: *mut1 + + / + mut2 Curly*
+3. To prevent recombination from short-circuiting your system, you additionally introduce multiple inversions into the *trans* chromosome. This gives you a **multiply inverted balancer chromosome** which contains *mut2* and *Curly*. A downside is that this doesn't *completely* prevent recombination - in fact, when recombination does still occur, it results in crazy copy number variations because parts of the multiply inverted chromosome will be gained or lost.
+
+#### Example
+
+*DTS* is a dominant temperature sensitive mutation that causes flies not to develop at 29&deg;C (their preferred temperature is around 22&deg;C but wild-type flies can go from 19&deg;C to 29&deg;C). *DTS* is recessive lethal at any temperature. *CyO* ("Curly O") is a balancer chromosome which is wild-type at the *DTS* locus and also has a recessive lethal mutation. Implicit in the nomenclature *DTS/CyO* is that each chromosome is wild-type for the other chromosome's mutation. In a cross:
+
+|       | *DTS* | *CyO* |
+| ----- | --------- | --------- |
+| <b><i>DTS</b></i> | *DTS/DTS* | *DTS/CyO* |
+| <b><i>CyO</b></i> | *DTS/CyO* | *CyO/CyO* |
+
+The *DTS/DTS* and *CyO/CyO* are both recessive lethal, so you have successfully propagated only the parental genotype, *DTS/CyO*.
+
+Because *Drosophila* have only three chromosomes of appreciable length, there are only three balancer chromosomes in common use.
+
+| Chromosome | Name of balancer chromosome | Dominant phenotype |
+| ---- | ---- | ---- |
+| X (<u>F</u>irst) | FM7 | Bar eye |
+| 2 (<u>S</u>econd) | SM5 or CyO | Curly wings |
+| 3 (<u>T</u>ird) | TM3 or TM6 | Stubble bristles, Ser wings or Tb (Tubby) body |
+
+### How to get mutants
+
+Usually you mutagenize males with EMS or X-rays. Males are used because they don't need to be virgins. Also they are more resistant to DNA damage, which means they can tolerate enough damage to get useful mutations. Note that you only care about mutations in the germline, not soma. Then you cross to females. Each F1 will have a unique heterozygous mutation inherited from the father's germline. At the F1 stage, you can only identify viable dominant mutations. (An exception is if you mutagenize females instead of males, you can find X-linked recessive mutations in the male F1s). If your viable dominant mutation is sterile, you're out of luck, because you can't propagate it beyond that one male. This motivates a need for more complicated screen designs, which will be covered later this week.
