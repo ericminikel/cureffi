@@ -77,7 +77,8 @@ Circadian rhythm screens identified period (per), a transcription factor. Mutati
 
 Learning and memory screens. Wild-type flies will avoid an odor associated with a prior bad experience. Mutants deficient in this behavior turn out to have mutations in enzymes affecting cAMP signaling in neurons.
 
-Ethanol tolerance screens used an "inebriometer" - an apparatus of a series of funnels, where each funnel spits out its contents onto the rim of the next one. Sober flies will get tired of sliding down the funnels and just fly away. Drunk flies just roll with it. So at the bottom of all the funnels you get the drunkest flies. By mutagenizing flies and the exposing them to ethanol vapor, people identified mutants with low ethanol tolerance. The causal gene was named CHEAPDATE and encodes a neuropeptide involved in regulating cAMP.
+Ethanol tolerance screens used an "inebriometer" - an apparatus of a series of funnels, where each funnel spits out its contents onto the rim of the next one. Sober flies will get tired of sliding down the funnels and just fly away, but drunk flies, [like drunk humans](http://www.slidesf.com/), love sliding down slides. So at the bottom of all the funnels you get the drunkest flies. By mutagenizing flies and the exposing them to ethanol vapor, people identified mutants with low ethanol tolerance. The causal gene was named CHEAPDATE and encodes a neuropeptide involved in regulating cAMP.
 
+![](/media/2014/10/inebriometer.png)
 
 [Nusslein-Volhard & Wieschaus 1980]: http://www.ncbi.nlm.nih.gov/pubmed/6776413 "Nüsslein-Volhard C, Wieschaus E. Mutations affecting segment number and polarity in Drosophila. Nature. 1980 Oct 30;287(5785):795-801. PubMed PMID: 6776413."
