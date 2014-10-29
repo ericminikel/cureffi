@@ -25,7 +25,7 @@ A few classic phenotypes are Curly wings (Cy; dominant), white eyes (w), yellow 
 
 #### Comparison to other organisms
 
-In contrast to model organisms we've recently studied in this class, *Drosophila* come in male (&#x2640;) and female (&#x2642;) only (no hermaphrodites &#x26A5;) and are always diploid. Here are some other comparisons:
+In contrast to model organisms we've recently studied in this class, *Drosophila* come in male (&#x2642;) and female (&#x2640;) only (no hermaphrodites &#x26A5;) and are always diploid. Here are some other comparisons:
 
 | organism | cells | neurons | genome size | protein-coding genes |
 | -------- | ----- | ------- | ----------- | -------------------- |
