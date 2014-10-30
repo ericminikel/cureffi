@@ -1,0 +1,81 @@
+---
+layout: post
+title:  "Biolit 07: epigenetics"
+date:   2014-10-30 12:00:00
+author: ericminikel
+tag: bbs-230
+location: Boston, MA
+---
+
+*These are my notes for week 07 of Harvard's BBS 230 "Analysis of the biological literature" course (October 28-30, 2014). This includes my own reading and analysis of the papers, as well as my notes from both discussion sections.*
+
+The papers for this week are [[Jiang 2013]] and [[Rechavi 2014]].
+
+### [Jiang 2013]: Translating dosage compensation to trisomy 21
+
+#### Background
+
+According to the paper, about 1 in 600 live births in the U.S. have Down's syndrome. Trisomy 21 should in theory result in 50% overexpression of all the genes on chromosome 21, but in practice there is only, on average, 22% overexpression (see paper). Not all genes on chromosome 21 are triplosensitive, but enough are that collectively they result in the phenotypes of Down's syndrome.
+
+In human females, one copy of the X chromosome is inactivated by *XIST* - thus, although a few genes escape inactivation, most genes on the X have similar dosage in males and females. (Flies have the opposite strategy for X chromosome dosage as mammals: they upregulate the one X in males). This paper uses *XIST* to try to silence the extra copy of chr21 in Down's syndrome iPS cells.
+
+Vocabulary note: **hnRNA** is an abbreviation for "heterogeneous nuclear RNA" and corresponds to what we otherwise call pre-mRNA
+
+#### Goals and strategy
+
+*XIST* is a non-coding RNA which is spliced - a diagram of the exon structure is shown in Figure 1B. It is large, so to reduce its size the authors just used an *XIST* cDNA, which lacks introns.
+
+Their strategy was to use a zinc finger nuclease to guide an *XIST* cDNA to the *DYRK1A* locus on chr31. Two of the authors are employees of Sangamo Biosciences, which holds the patent on ZFNs. They put *XIST* under a Tet-on promoter so that they can induce it with doxycycline. They used male iPS cells, which makes the microscopy cleaner. In female cells you would have one *XIST*-coated X chromosome, and so every time you did RNA FISH you'd have to somehow distinguish that X chromosome from the chr21 Barr body.
+
+#### Figure by figure
+
+Their approach was unable to guarantee that the *XIST* vector would only integrate into only one copy of chromosome 21. (Though you could imagine trying to achieve this with an allele-specific zinc finger). Instead, they found that cells in which 2 or 3 of the chromosomes were silenced eventually lost *XIST* expression (p. 298), suggesting some sort of selection or correction mechanism.
+
+In Figure 1E they do *not* induce the *XIST* transgene with doxycyline, and simply perform FISH against the genomic copy of *XIST* to confirm that it has integrated into only one of the three copies of chromosome 21. In Figure 1D they induce with doxycycline and perform FISH against *XIST* RNA, showing coverage of that chromosome. 
+
+In Figure 2 they show that the chr21 Barr body indeed has acquired repressive histone marks: H3K27me3, UbH2A, H4K20me3, and macroH2A.
+
+Because they want to show that exactly *one* chromosome is silenced, everything has to be done with microscopy. Figure 3 shows FISH from several different chr21-encoded RNAs. You don't see a green dot inside a red blob anywhere in Fig 3A, meaning that you don't have expression of genes from the *XIST*-silenced chromosome.
+
+According to [Supplementary Figure 6](http://www.nature.com/nature/journal/v500/n7462/extref/nature12394-s1.pdf) the individual from whom these iPS cells were created actually had three *unique* chromosomes (rather than two copies of one identical chromosome and one unique). They used qPCR to look for silencing of several SNPs. 
+
+The clones with exactly one *XIST* integeration into chr21 had about a 22% reduction in gene expression of chr21 genes, measured by microarray (Figure 4A). This was about the same as in disomic vs. trisomic cells (they had isolated a clone which had spontaneously lost one of the copies of chr21), suggesting approximately complete correction of the overexpression problem. As a control, they also used the parental line (i.e. without *XIST* integration) and found it had no appreciable change upon doxycycline treatment. Interestingly there was some upregulation of some genes elsewhere - this could be due to regulation *in trans*, or a depletion of repressive chromatin remodeling complexes that are too busy on chr21 to repress genes elsewhere.  Zooming in, there was pretty consistently a reduction in gene expression on chr21 (Figure 4B) and not much difference on any other chromosome (Figure 4C).
+
+In Figure 5, they argue that their procedure increases proliferation (Fig 5B) and improves neural rosette formation (Fig 5C). This is the least convincing part of the paper. iPS cell differentiation is incredibly clone-dependent, so the fact that they found more rosettes in two (note: not all six) of their corrected clones in Fig 5C does not necessarily mean the *XIST* integration is causal. Similarly, although Fig 5B at least shows all 6 clones, there are still plenty of possible confounders (e.g. there is only one parental subclone, so we don't have a ton of evidence that clone selection didn't select for faster-growing cells). They might well be right that the *XIST*-induced silencing of one chr21 improves these iPS phenotypes, but it is incredibly difficult to convincingly show this.
+
+#### Conclusions
+
+This is still a long ways away from any therapeutic applications. But it is a very cool proof of concept. It was a plenary talk at ASHG2013.
+
+One cool application of this system would be to decipher the mechanisms by which some genes escape from X-inactivation.
+
+### [Rechavi 2014]: Starvation-induced transgenerational inheritance of small RNAs in *C. elegans*
+
+#### Background
+
+[Lamarck](http://en.wikipedia.org/wiki/Jean-Baptiste_Lamarck) is generally credited with the idea that environmentally acquired characteristics could be inherited. This theory fell dramatically from favor for a couple of centuries before it was recognized that heritable information can be encoded in several places besides DNA sequence: DNA methylation, histone modifications, dsRNA (in worms, see below) and prions (in yeast). That said, much of the variation in histone modifications is in fact driven by DNA sequence via transcription factors, which often act as the "boss" of histones. The term "epigenetic" was originally used by developmental biologists to refer to the differences between different cell types in the same organism despite sharing the same genome.
+
+*C. elegans* (unlike humans) have [RNA-dependent RNA polymerase](http://en.wikipedia.org/wiki/RNA-dependent_RNA_polymerase) (RdRP), which replicates dsRNAs and can stably propagate them over >80 generations. This epigenetic inheritance of dsRNAs also requires that the dsRNAs be able to diffuse into new germ cells in each generation. It has been known that olfactory imprinting in *C. elegans* can be transmitted over many generations. This sort of stable, 80-generation dsRNA inheritance was originally demonstrated in the context of dsRNAs silencing GFP or retrotransposons. This paper now asks whether there is also transgenerational inheritance of dsRNAs against endogenous genes. They look at starvation of worms during the L1 phase to see if it affects gene expression in subsequent generations.
+
+The paper deals with two elements of the Argonaute pathway. In the Argonaute pathway, HRDE-1 directs small RNAs to silence their targets, while CSR-1 directs them to "license" their targets (allowing them to be expressed). *C. elegans* have two types of small RNAs, 26G and 22G (26nt and 22nt in length respectively).
+
+They compare wild-type to two mutants: *rde-4* which completely lack an RNAi mechanism, and *hrde-1* which lack a component of the RNAi pathway. And then for each of these three genotypes, they starve or don't starve a P0 generation during L1 phase, then do feed them from L2 onward. They then characterized these P0 worms themselves as well as the F3 progeny of the starved worms. Right off the bat, there is a major hole in this experimental design: they did not characterize the F3 progeny of the fed worms as a control. Any hypothetical experimental problems during the lifespan of the P0, F1, F2 and F3 generations (say, an incubator failure) would show up as differences in the F3 starved worms.
+
+#### Figure by figure
+
+They prepped RNA, ligated adapters, size-selected for small RNAs, and then performed sequencing. A hazard of small RNA sequencing is that there is so little unique sequence information that it is impossible to mark [PCR duplicates](/2012/12/11/how-pcr-duplicates-arise-in-next-generation-sequencing/). For instance, notice in Figure 1B that they have many reads that are exactly identical - it is impossible to tell if these are PCR dups or just very abundant small RNAs. It is possible to distinguish these scenarios by using adapters that have a fixed sequence (so you can PCR-amplify your library) but also incorporate a random hexamer (so that you can distinguish reads that came from unique fragments at the first step of library prep). They didn't do that here. Figure 1B illustrates how they grouped small RNAs by gene for later analyses (Fig 2 and beyond). Instead of quantifying the number of copies of every individual small RNA, they group by gene and take the sum. Then, on those values, they perform principal components analysis. The difference between the wild-type (N2) and the *hrde-1* and *rde-4* mutants dominates at least the first two principal components. That's the main thing that Figure 1A shows, though it does appear that the experimental conditions cluster together within each mutant.
+
+They also coin the term STG: small RNA targeting a specific gene, to refer to restricting their analysis to small RNAs that aligned to a transcript and on the antisense strand.
+
+In Figure 2 they ask questions about genes whose STGs are up- or down-regulated upon starvation. Figure 2A is simply descriptive and shows that about an equal number of genes have small RNAs against them up- vs. down-regulated upon starvation. In Figure 2B they claim that using GOrilla there is an enrichment for up- and down-regulation of STGs targeting genes involved in "nutrient reservoir activity." In these sorts of gene set enrichment analyses it is always hard to tell what the null hypothesis is and whether it's a good null hypothesis. A reasonable approach would have been to bootstrap - run 10,000 iterations of randomly sampling 1000 genes for which they found STGs, and then see how often you get a significantly enriched GO term by chance. In Figure 2C they show that for genes where starvation was associated with an increase in small RNAs against them, more had their mRNA downregulated (88) than upregulated (13). That is reassuring that there is some real signal here: their measurement of STGs is really measuring some real RNAi activity. It would be even more reassuring if they also had the converse plot: one hopes it is also the case that among genes that had a *decrease* in small RNAs against them, the mRNAs should be disproportionately *upregulated*.
+
+In the text, they note that there was significant enrichment for the same genes being up- or down-regulated in the P0 starved worms and in their F3 progeny. This is based on a hypergeometric test, but it is not clear if the pool of genes from which they are drawing without replacement for this test is *all* genes, or genes for which there were any STGs at all. The latter would of course be the fairer comparison. For instance, if worms have 20,000 genes and only 1,000 of them have small RNAs targeting them, then you'd expect any two sets of 500 genes each drawn *from the 1000* to have a considerable overlap, yet this overlap would appear to be unlikely-by-chance if you performed a statistical test that assumed they'd both been drawn from the full 20,000 set. The authors may well have done the analysis correctly, but the details are never explained. The best control would have been to show that there is *not* significant enrichment of genes up-regulated in P0 starved being down-regulated in F3 starved, nor any significant enrichment of genes down-regulated in P0 starved being up-regulated in F3 starved.
+
+Worms have ~30 different Argonaute proteins which each do different things. 22G RNAs have two possible fates: they can be loaded into CSR-1, which actually uses siRNA to recognize _up_regulate targeted mRNAs, or they can be loaded into HRDE-1, which silences its targets. The authors could have designed their experiment to pull down CSR-1 and HRDE-1 and then characterize the small RNAs bound to each. Instead, they sequenced all small RNAs, and now in Figure 4 they begin to deconvolute. They classify genes targeted by small RNAs as being HRDE-1 or CSR-1 substrates based on two prior papers by other groups (one by Scott Kennedy and one by Craig Mello). This results in the points in the Figure 4A scatterplots being very sparse, because only 22mers that are *exactly identical* to a 22mer identified in those other papers can be included. Among CSR-1 substrates, increase in small RNA abundance is correlated with increase in mRNA abundance, consistent with the expected biology. Among HRDE-1 substrates there is no correlation.
+
+In Figure 5 and then in Figure S6 they show a series of survival curves indicating that the descendants of starved worms live longer than fed worms. It is surprising that they did not prepare similar figures for the *hrde-1* and *rde-4* mutants. They state in the text that "At this point, we do not know whether inherited RNA molecules are responsible for this lifespan effect," but they could easily have tested this hypothesis by comparing the results from wild-type worms in Figs 5 and S6 to those from the mutants deficient in small RNA inheritance. Under the hypothesis that small RNA inheritance is responsible for the lifespan effect, there should not be a survival difference in the mutant strains. This is also a case where the additional F3 fed control would have been nice, to rule out some change in experimental conditions between the P0 generation and the F3 generation that increased lifespan.
+
+
+[Jiang 2013]: http://www.ncbi.nlm.nih.gov/pubmed/23863942 "Jiang J, Jing Y, Cost GJ, Chiang JC, Kolpa HJ, Cotton AM, Carone DM, Carone BR, Shivak DA, Guschin DY, Pearl JR, Rebar EJ, Byron M, Gregory PD, Brown CJ, Urnov FD, Hall LL, Lawrence JB. Translating dosage compensation to trisomy 21. Nature. 2013 Aug 15;500(7462):296-300. doi: 10.1038/nature12394. Epub 2013 Jul 17. PubMed PMID: 23863942; PubMed Central PMCID: PMC3848249."
+
+[Rechavi 2014]: http://www.ncbi.nlm.nih.gov/pubmed/25018105 "Rechavi O, Houri-Ze'evi L, Anava S, Goh WS, Kerk SY, Hannon GJ, Hobert O. Starvation-induced transgenerational inheritance of small RNAs in C. elegans. Cell. 2014 Jul 17;158(2):277-87. doi: 10.1016/j.cell.2014.06.020. Epub 2014 Jul 10. PubMed PMID: 25018105."
