@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Neurodegeneration seminar 1: 'Prions'"
-date:   2014-11-03 12:00:00
+date:   2014-11-03 12:05:00
 author: ericminikel
 tag: neuro-305qc
 location: Boston, MA
