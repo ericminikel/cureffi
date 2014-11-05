@@ -1,0 +1,118 @@
+---
+layout: post
+title:  "Genetics 19: 'Zebrafish genetics'"
+date:   2014-11-05 12:00:00
+author: ericminikel
+tag: genetics-201
+location: Boston, MA
+---
+
+*These are my notes from lecture 19 of Harvard's Genetics 201 course, delivered by Matthew Harris on November 5, 2014.*
+
+### Introduction: why zebrafish?
+
+Genetics in *Drosophila* had identified genes involved in specific developmental processes, which was a surprise. Skeptics had expected that perturbing any developmental gene would result in an embryo that was just "mush", from which you could learn nothing mechanistic.
+
+In the late 1980s - early 1990s it became clear that *Drosophila* development shared a lot with our own development. One group studied a set of viral integrases called int1-10, in mouse mammary tumor cells. They found that int1 was inserted into a locus that contained a novel secreted glycoprotein [[Nusse & Varmus 1982]]. Another group later found that this protein was homologous to the wng (wingless) gene in *Drosophila*, and named it Dwnt-1 [[Rijsewijk 1987]]. The name "wnt" is actually a portmanteau of "wng" and "int". This discovery demonstrated that developmental genes might be conserved between insects and vertebrates. Therefore, Cliff Tabin (of HMS), Andrew McMahon and Phil Ingham looked for homologues of hedgehog, a *Drosophila* development gene. They did not find a single clear homologue, so they named the three genes they did find Sonic hedgehog (Shh), Indian hedgehog, and Twigglewinkle hegdehog. They wrote a whole series of papers - one on the importance of Shh in mice is [[Echelard 1993]]. The situation here is typical in that orthology between *Drosophila* and vertebrates is often not one-to-one. The discovery of all this homology meant that evolution wasn't very creative when it came to development. It also implied a degree of evolutionary conservation between humans and insects that had not been previously appreciated.
+
+To carry this line of inquiry further, it would be really helpful to have the right vertebrate model organism. Here is a comparison of other vertebrate model organisms:
+
+| organism | generation time |advantages | disadvantages |
+| ---- | ---- | ---- | ---- |
+| [axolotl](http://en.wikipedia.org/wiki/Axolotl) | 1 year | they regenerate limbs | |
+| chicken | 6 months | many offspring. good for embryogenesis, you can study development in real time | crosses require manual insemination with a turkey baster |
+| Xenopus | >6 months | biochemistry, embryology | large genome, tetraploid |
+| mouse | 2-3 months | they're mammals | development is internal - hard to study embryos. small litters, prohibitive cost. |
+
+[George Streisinger](http://en.wikipedia.org/wiki/George_Streisinger) set out to find a vertebrate organism ideally suited to forward genetics. It needed to have a large number of progeny, be easy to house en masse, easy to mutagenize, and easy to cross. Zebrafish (*Danio rerio*) fit the bill. A single male-female pair would give 200-800 progeny, and you can watch their development from the single cell stage onward. You can house up to 100 fish in a single tank, and a zebrafish investigator might raise 150,000 fish in a year. This kind of scale made it possible, for the first time, to do systematic screens in a vertebrate. And of course, zebrafish have lots of body parts relevant to the study of human disease. They have various brain regions, livers, kidneys, gut, cloaca, ovaries/testes, and fins which are homologous to our limbs.
+
+### Zebrafish facts
+
+Zebrafish facts-at-a-glance:
+
++ Genome: 1.6 Gb, about 3% of which is coding
++ Chromosomes: 25
++ They share with us a whole genome duplication (WGD) in their history. Some common ancestor of humans and zebrafish had a duplication of its entire genome, and then subsequent loss of unnecessary second copies of stuff, leaving many within-organism paralogs.
++ Zebrafish come in different strains which (unlike *C. elegans* or mice) are not purely inbred, in part because they have too many deleterious LoF mutations which get homozygosed if you try to inbreed them. There is a pretty large amount of genetic variation among strains: 70,000 non-synonymous variants, 600 of which are nonsense. Of these 13,000 non-synonymous are fixed between strains, and 100 nonsense are fixed between strains. This adds up to a great deal of genetic variation, which is helpful for mapping things in crosses. 
+
+Here is the nomenclature, using golden (gol), albino (alb), and Sonic hedgehog (shh) as examples:
+
+| thing | example | 
+| ---- | ---- |
+| mutant | gol |
+| heterozygous genotype | gol/+ |
+| homozygous genotype | gol/gol |
+| genotypes at two loci | gol/+; alb/+ |
+| gene | *shh* |
+| protein | Shh |
+| transgenic genotype | Tg[cmlc:GFP] |
+
+That last example is a transgene with the cardiomyosin light chain (cmlc) promoter driving (:) GFP.
+
+Zebrafish can be bred using the **iSPAWN** method. You can put up to 60 pairs of zebrafish in a bucket and suddenly remove a mesh separating the males and females. In about 10 minutes they'll produce 40,000 fertilized embryos which will be developmentally timed.
+
+Transgenesis and other manipulations are performed by using a puff of air to inject solution into a single egg. You can inject oligonucleotides, chemicals, transposons, proteins, or plasmids. Most transgenic zebrafish are made using **mariner transposons** aka TOL2. TOL2 is a transposon discovered in a very unrelated fish called medaka, and researchers stripped the transposon down to the minimal essential seqeunce. Typically you inject the transposon with your gene of interest along with transposase, and you'll get integration into the germline about 10-15% of the time. 
+
+### Genetic screens
+
+Zebrafish screens often begin with ENU mutagenesis. [ENU](http://en.wikipedia.org/wiki/ENU) is an alkylating agent that causes a high rate of SNVs and is preferred for most vertebrate mutagenesis. You can figure out the rate of mutations you've generated by crossing recessive golden gol/gol fish to your mutagenized fish and seeing how often you get a golden phenotype indicating a *de novo* mutation has emerged in trans to the gol allele.
+
+As a general note, once you've finished your screen and found mutations, the methods and standards for proving causality of a mutation are essentially the same in zebrafish as in any model organism.
+
+Here are different types of zebrafish screens:
+
+#### Zygotic F3
+
+After ENU mutagenesis on P0s, you get tons of different mutations in your F1s. Any one F1 fish will have many mutations. Now outcross each F1 fish to wild-type fish, so that at any one mutant position you get 50% of F2s in one family having a +/m genotype and 50% having +/+. Now inbreed the F2s and you'll get 25% of F3s being homozygous.&dagger;
+
+&dagger; Only one in four pairs of F2s are het for the *same* mutation, so only 1 in 16 F3s are homozygous for any given mutation. But you have n mutations, so it seems each F3 should be homozygous for, on expectation, n/16 mutations. I am not sure where the 25% figure above comes from.
+
+When you homozygose the mutations in the F3 generation, you'll also be inadvertently homozygosing plenty of polymorphic loss-of-function variants that zebrafish harbor. Because most zebrafish genes have paralogs, these homozygosed LoF variants collectively make them sickly, and harder to maintain - but by and large, these polymorphic LoFs do not cause Mendelian disease, and thus do not make it impossible to do an F3 screen.
+
+In a zygotic F3 screen, the numbers get large fast. You typically need to use 30 P0s, 100 F1s, 1000 F2s, and 40,000 F3s.
+
+#### Haploid zygotic
+
+Mutagenize P0 males, outcross to get F1s that harbor various mutations. Get your F1 females to lay eggs which carry various mutations in a hemizygous state.
+
+Then take wild-type males and irradiate their sperm to make them non-functional. These sperm will still be able to trigger the egg to develop into an embryo. Thus you can get haploid embryos from the F1 females. Haploid embryos are sickly and don't live past three days, but give you a chance to very quickly observe the mutations in a hemizygous state. Useful for larval phenotypes.
+
+#### Gynogenic haploid/diploid
+
+See [[Walker 2009]]. You use the same irradiate-the-sperm technique as above, but then you apply physical pressure to the eggs (sometimes people literally do this in a French press) to cause spindles to disassemble during meiosis II, such that the maternal genome ends up getting duplicated. Thus you get whole-genome uniparental disomy in the resulting embryo. This is an accelerated method for viewing maternal mutations in a homozygous state. 
+
+#### Insertional mutagenesis - gene trap and transposons
+
+You can insert ~3kb fragments using retroviruses. This gives you a very high mutation rate which is helpful. Disadvantages are that the genotype-phenotype mapping is not perfect, because the insertions are large enough to sometimes affect the function of things downstream of them. (I think this just means you can have one mutation affect more than one gene, which makes things confusing).
+
+One method is to use TOL2 transposons with dsred and SV40, and then look for cell- or tissue-specific expression in F1s.
+
+Another strategy is to put GFP in the transposon, which allows you to create mutations useful in two ways. The insertion usually causes loss-of-function, but the GFP may still be translated, so you can look at the subcellular localization of the protein you've inactivated.
+
+Yet another method is called FLPTRAP (pronounced "fliptrap").
+
+All of these transposon methods have the disadvantage of having a much lower mutational rate than ENU mutagenesis.
+
+#### F4 screens
+
+Sometimes in zebrafish, a fish's phenotype is dependent on its mother's genotype rather than its own genotype. For instance, you may have a female you believe is homozygous null for a gene, -/-. You outcross her to a +/+ wild-type male, and to your surprise you discover that 100% of the offspring have the mother's phenotype. This is often because many RNAs for embryonic development are provided by the mother.
+
+These two terms exist: maternal zygotic transition (MZT) and mid-blastula transition (MBT).
+
+All of the above screens were "zygotic" meaning you were looking for phenotypes associated with the fish's *own* genotype. If you need to look at phenotypes associated with mother's genotype, you need to phenotype your F4s after you've homozygosed mutations in the F3.
+
+This type of screen has been done in *Drosophila* but never in any vertebrate besides zebrafish, simply because the scale involved would be prohibitive. Famous names in this field of study are Mary Mullins, Francisco Peligini, and Nusslein and Volhard.
+
+These F4 screens are really time- and space-consuming. You can accelerate this by using gynogenesis (see above) to homozygose the mutations in one fewer generation.
+
+#### Modifier
+
+Modifier screens in zebrafish are exactly like [modifier screens in *Drosophila*](/2014/10/31/genetics-18/).
+
+[Nusse & Varmus 1982]: http://www.ncbi.nlm.nih.gov/pubmed/6297757 "Nusse R, Varmus HE. Many tumors induced by the mouse mammary tumor virus contain a provirus integrated in the same region of the host genome. Cell. 1982 Nov;31(1):99-109. PubMed PMID: 6297757."
+
+[Rijsewijk 1987]: http://www.ncbi.nlm.nih.gov/pubmed/3111720 "Rijsewijk F, Schuermann M, Wagenaar E, Parren P, Weigel D, Nusse R. The Drosophila homolog of the mouse mammary oncogene int-1 is identical to the segment polarity gene wingless. Cell. 1987 Aug 14;50(4):649-57. PubMed PMID: 3111720."
+
+[Echelard 1993]: http://www.ncbi.nlm.nih.gov/pubmed/7916661 "Echelard Y, Epstein DJ, St-Jacques B, Shen L, Mohler J, McMahon JA, McMahon AP. Sonic hedgehog, a member of a family of putative signaling molecules, is implicated in the regulation of CNS polarity. Cell. 1993 Dec 31;75(7):1417-30. PubMed PMID: 7916661."
+
+[Walker 2009]: http://www.ncbi.nlm.nih.gov/pubmed/19568220/ "Walker C, Walsh GS, Moens C. Making gynogenetic diploid zebrafish by early pressure. J Vis Exp. 2009 Jun 30;(28). pii: 1396. doi: 10.3791/1396. PubMed PMID: 19568220; PubMed Central PMCID: PMC2798835."
