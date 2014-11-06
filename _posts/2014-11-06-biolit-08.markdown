@@ -1,0 +1,135 @@
+---
+layout: post
+title:  "Biolit 08: small RNAs"
+date:   2014-11-06 12:00:00
+author: ericminikel
+tag: bbs-230
+location: Boston, MA
+---
+
+*These are my notes for week 08 of Harvard's BBS 230 "Analysis of the biological literature" course (November 4-6, 2014). This includes my own reading and analysis of the papers, as well as my notes from both discussion sections.*
+
+The papers for this week are [[Lee 1993]] and [[Barrangou 2007]].
+
+### [Lee 1993]: The C. elegans heterochronic gene lin-4 encodes small RNAs with antisense complementarity to lin-14
+
+This paper discovered what we now call microRNAs.
+
+#### Historical context
+
+In 1981, a *C. elegans* lin-4 loss-of-function mutant was demonstrated which had developmental defects. In 1984, mutants in lin-14, lin-28 and lin-29 were found to have similar phenotypes. These genes were called **heterochronic** meaning that they made developmental events happen with the wrong timing - either **precocious** or **retarded**. A lin-14 gain-of-function mutation was later demonstrated to map to the lin-14 3'UTR, and the mechanism by which this could be causal was unknown.
+
+The lin-4 mutant is unusual in that it's a large deletion. It was created in an EMS mutagenesis screen, which usually just creates SNVs - it is rare for an indel like this to turn up, and a lucky thing since SNVs in lin-4 would have been less likely to give this phenotype.
+
+This paper came out in the same issue of *Cell* as another paper with similar findings, [[Wightman 1993]].
+
+#### Methods
+
+Once you have a mutation, the first thing you do is cross it with known markers to try to create a coarse linkage map. *C. elegans* has six chromosomes and it is relatively easy to figure out what chromosome your mutant is on. Finer mapping depends on how closely spaced of markers are available, and how patient you are. If you're willing to score 1000 worms, you can get down to 0.1% recombination frequency, so 0.1 cM, which in *C. elegans* is tens of kb and may contain 50-100 genes. Even if you're willing to score more worms than this, you will be limited by the fact that there doesn't exist a phenotype which maps any closer to your mutation of interest than 0.1 cM.
+
+What to do to get greater resolution, then? Mutagenesis screens are usually done with an EMS concentration that gives hundreds of mutations per chromosome. Therefore, even with today's technology, there are likely to be tens of candidate causal SNPs within the linkage region, so sequencing isn't the answer. So cloning by complementation is the necessary next step. You get a bunch of yeast artificial chromosomes (YACs) and microinject them to transform mutant yeast and test for rescue. This is incredibly laborious because the YACs often multimerize and get silenced, so you have to do a ton of microinjections to really figure out whether a given YAC complements or not. You can then delete all but successively smaller regions of your YAC to look for which pieces of the YAC are required for rescue.
+
+Another way to get down to lower resolution is to do RFLP mapping. Think of each RFLP as being a phenotype. A restriction site can be created or abolished by a SNP. The distance between restriction sites is therefore a marker for local genetic variation - and offers a much finer map than visible phenotypes do. To genotype RFLPs, you digest genomic DNA with restriction enzymes, and probe with radiolabeled DNA from clones of the region of DNA you're interested in. Though they're now ancient technology, I still remember gels of RFLPs being [on the nightly news in the 1990s](http://law2.umkc.edu/faculty/projects/ftrials/Simpson/Dna.htm). 
+
+Collectively, the whole process outlined above is what we call **mapping**.
+
+Once you're very close to your causaul mutation, you can use **chromosome walking** to sequence it. In this technqiue you use only a forward primer to Sanger sequence as much DNA as you can (probably ~600bp), then you take the furthest-away reliable base calls and use those to design a new forward primer, then repeat. This lets you iteratively sequence consecutive bits of genome. 
+
+[**Primer extension**](http://en.wikipedia.org/wiki/Primer_extension) is a way to figure out where a transcript starts.
+
+#### Figure by figure
+
+Figure 1 illustrates the mapping process. They knew that their gene of interest, lin-4, was 0.1 cM away from maP12, based on prior RFLP mapping. They had access to several already-mapped YAC clones within that range. They tested them until they found a YAC clone that rescued the lin-4 mutant phenotype, then made successive deletions within that clone to see what part was indispensible for rescue. 
+
+Figure 2 is a Southern blot of the restriction fragments created by different restriction enzymes. The wild-type and lin-4(e912) mutant clones give different fragment sizes. Based on this they conclude the mutation is probably a deletion and is "single-copy" meaning there is only one copy of the gene per chromosome, i.e. there is not an array of paralogous genes in *cis*.
+
+At this point, by far the most likely guess was that lin-4 encoded a protein. The authors had to work very hard to rule out this null hypothesis. 
+
+Figure 3 shows the sequence of the gene from four different *Caenorhabditis* species. The gene is conserved enough to appear in all of these animals, yet the sequences from each other by many 1- and 2-bp indels - not by indels whose length is necessarily a multiple of 3. In addition, the location of ATG and TAG/TGA/TAA demarcating putative open reading frames are not conserved. Finally, they also added theoretically frameshifting indels in the lab, and found these did not disrupt the gene. Together, these facts are their evidence that lin-4 does not encode a protein. In addition, once they had sequenced their rescuing clone and matched it with known sequences from cDNA libraries, they saw that lin-4 appears to reside within the intron of another gene.
+
+Even today, it is not clear that there is a easier way to demonstrate that a transcript of interest does not encode a protein. One way to do this would be to put it in an *in vitro* translation system with <sup>35</sup>S-methionineand see if a protein gets translated. You could also do sucrose gradient sedimentation and ribosome profiling. A problem with both of these methods is that it is hard to prove the negative. Your "no protein here" result could always just mean it's not being translated *right now*, at this stage in cell cycle or with this set of RNA-binding proteins available, etc.
+
+Next they used probes to try to detect a lin-4 transcript. A way to do this is to create a DNA probe with the smallest piece of DNA that you know is able to rescue your phenotype, and radiolabel both strands. Then you run total RNA on a polyacrylamide gel and develop it with your probe - this is a Northern blot. They show the probes in Figure 4 - this was important because there was no Genbank yet in 1993, so figures like this were the main way to share sequences you'd used.
+
+You can get 4-20% polyacrylamide gels, but no one gel has the dynamic range to resolve a long and short transcript. If you are picking up 5kb RNAs then your 20bp RNAs are running off the gel, and if you picking up 20bp RNAs then your 5kb RNAs haven't run from where you put them. Therefore it is incredibly lucky that the authors of this paper were able to see both the short and long transcript (Figure 5). The full-length transcript, lin-4L, is a rare species that only shows up when you overdevelop your blot - normally, it gets processed very quickly into a short transcript, lin-4S, which is more abundant.
+
+In Figure 6 they use primer extension to find the transcription start site and total length of lin-4L, the *long* transcript.
+
+In Figure 7 they find the 5' and 3' ends of lin-4S to see what the *short* transcript consists of. They use RNAse protection instead of primer extension for this - maybe because lin-4S is too short for primer extension.
+
+In Figure 8 they show that lin-4S is complementary to lin-14. They had hypothesized this relationship because prior literature had shown that regulation of lin-14 depended on its 3'UTR. This is their punchline, their argument that instead of encoding a protein, lin-4 negatively regulates lin-14 by antisense complementarity at the RNA level. Adding to this, a known loss-of-function SNP in lin-14 (indicated with arrow) disrupts the hybridization between lin-4S and lin-14.
+
+What's amazing is that Figure 8 is completely correct. In fact, it exhibits many features of miRNAs that we know today: 22nt RNA, importance of seed sequence, regulation of 3'UTRs, imperfectness of hairpins.
+
+#### Epilogue
+
+Major future directions opened up by this paper are:
+
++ Are there other small RNAs that do this?
++ How does the small RNA regulate the mRNA?
++ How does lin-4L get processed into lin-4S?
+
+One of the subsequent approaches people used was to make a reporter gene - a &beta;-gal transgene with the lin-14 3'UTR and then a mutagenesis screen to find mutants other than in lin-4 that allow &beta;-gal to be expressed.
+
+Initially it was unclear whether this phenomenon was unique to worms. lin-4 is not highly conserved in other organisms. However, later on people found another miR called let-7 whose sequence is highly conserved even in humans. That made it clear that miRNA were probably a general mechanism.
+
+### [Barrangou 2007]: CRISPR provides acquired resistance against viruses in prokaryotes
+
+#### Historical context
+
+Historically, there were two models for how evolution worked: Darwinian and Lamarckian. Darwinian evolution involves natural selection acting on heritable variation. Lamarckian evolution involves acquiring new heritable variation from environmental experience. A classic experiment that supported Darwinian evolution was the [Luria-Delbruck experiment](http://en.wikipedia.org/wiki/Luria%E2%80%93Delbr%C3%BCck_experiment) [[Luria & Delbruck 1943]], studying resistant bacteria selected by phage attack. If resistance to phage attack were acquired stochastically at the moment of phage attack, then the number of resistant colonies per plate should follow a binomial distribution. If resistance were a trait that a small subset of bacteria had *prior to* phage attack, then some plates should have a high number of resistant colonies (if a founder was resistant) while others should have zero (if no founder was resistant). The Luria-Delbruck experiment found the latter result, supporting Darwinian evolution.
+
+It is interesting to realize that if they had studied a bacteria strain that had a CRISPR system, they might have gotten the opposite result. (About 40% of bacteria and 90% of archaea have a CRISPR system). As recently as a few years ago, and to some extent today, high school students are taught that Lamarckian evolution is an idea to be laughed at. This may be because the original partisans advocated that Lamarckian inheritance was *instead of* Darwinian evolution, when in fact it is just a relatively minor exception to it.
+
+#### Background
+
+Up to this point, people had identified CRISPR sequences and knew that the spacers contained sequence complementary to phages. This was enough to speculate a resistance mechanism, but no one knew what that mechanism was, other than maybe it's something like RNAi. Also, the Cas genes were uncharacterized.
+
+#### Figure by figure
+
+In Figure 1, they found that bacteria that acquired resistance to phage acquired new spacers at one end of the CRISPR locus. In Figure 2, they found that these new spacers were complementary to phage DNA sequence.
+
+Figure 3 has several points:
+
++ IV introduces a spacer from a resistant phage into a sensitive phage. This result in resistance. This shows that the spacer is sufficient to confer resistance to a specific phage.
++ V shows that knockout of cas5 makes you lose resistance.
++ VI shows that if you knockout cas7 you are still resistant to phages you've seen previously, but you lose the ability to acquire new resistance.
+
+In addition, at the end they show that the few phages that are competent to infect resistant bacteria have evolved nucleotide differences against the CRISPR spacers.
+
+#### Epilogue
+
+cas5 turns out to be what we now call cas9.
+
+The biggest outstanding question at the end is the mechanism:
+
+1. How does the CRISPR response get activated?
+2. How do bacteria distinguish self from nonself DNA?
+3. How do bacteria chop up nonself DNA into new spacers?
+4. How do new spacers get integrated into the bacterial genome?
+5. What exactly do the palindromic repeats and spacers produce that allows targeting phage geome?
+5. How do the spacers allow the bacteria to target phage?
+
+At the end, the authors speculate that cas5 (cas9) may be nuclease, but this remained to be shown.
+
+To study #1, you could see if replication-defective phage were able to stimulate immunity to replication-competent phage.
+
+For #5 you could hypothesize it forms hairpins because that's what palindromic sequence does. You could then blot to see if the CRISPR locus is indeed transcribed and then chopped into many small hairpins. You might then want to know what nuclease cleaves this RNA into hairpins. (This eventually led to the discovery of a class of enzymes that are analogous to restriction enzymes but cleave RNA, rather than DNA, in a sequence-specific manner).
+
+To study #6, since cas5 appears to be essential, and they have hypothesized it is a nuclease, you could do *in vitro* assays to see if cas5 cleaves DNA.
+
+sgRNAs turn out to always target their own sequence plus NGG aftwerward (this is the "protospacer adjacent motif" or PAM). The DNA encoding the sgRNA in the bacterial genome lacks the NGG, and this serves as the basis for self/nonself discrimination for nuclease action.
+
+No one in our class knew how bacteria are able to discriminate self vs. nonself DNA in the *acquisition* of new CRISPR spacers. In a few minutes of Googling I was not able to find an answer in the literature. If you know the answer, please leave me a comment.
+
+See also the authors' subsequent review [[Horvath & Barrangou 2010]].
+
+[Lee 1993]: http://www.ncbi.nlm.nih.gov/pubmed/8252621 "Lee RC, Feinbaum RL, Ambros V. The C. elegans heterochronic gene lin-4 encodes small RNAs with antisense complementarity to lin-14. Cell. 1993 Dec 3;75(5):843-54. PubMed PMID: 8252621."
+
+[Barrangou 2007]: http://www.ncbi.nlm.nih.gov/pubmed/17379808 "Barrangou R, Fremaux C, Deveau H, Richards M, Boyaval P, Moineau S, Romero DA, Horvath P. CRISPR provides acquired resistance against viruses in prokaryotes. Science. 2007 Mar 23;315(5819):1709-12. PubMed PMID: 17379808."
+
+[Wightman 1993]: http://www.ncbi.nlm.nih.gov/pubmed/8252622 "Wightman B, Ha I, Ruvkun G. Posttranscriptional regulation of the heterochronic gene lin-14 by lin-4 mediates temporal pattern formation in C. elegans. Cell. 1993 Dec 3;75(5):855-62. PubMed PMID: 8252622."
+
+[Horvath & Barrangou 2010]: http://www.ncbi.nlm.nih.gov/pubmed/20056882 "Horvath P, Barrangou R. CRISPR/Cas, the immune system of bacteria and archaea. Science. 2010 Jan 8;327(5962):167-70. doi: 10.1126/science.1179555. Review. PubMed PMID: 20056882."
+
+[Luria & Delbruck 1943]: http://www.ncbi.nlm.nih.gov/pubmed/17247100/ "Luria SE, Delbrück M. Mutations of Bacteria from Virus Sensitivity to Virus Resistance. Genetics. 1943 Nov;28(6):491-511. PubMed PMID: 17247100; PubMed Central PMCID: PMC1209226."
