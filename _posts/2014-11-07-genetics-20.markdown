@@ -1,0 +1,78 @@
+---
+layout: post
+title:  "Genetics 20: 'How to do genetics in cultured somatic cells'"
+date:   2014-11-07 12:00:00
+author: ericminikel
+tag: genetics-201
+location: Boston, MA
+---
+
+*These are my notes from lecture 20 of Harvard's Genetics 201 course, delivered by Max G. Heiman on November 7, 2014.*
+
+### Introduction: why cell culture?
+
+Cell culture affords most of the same experimental opportunities that unicellular or small multicellular organisms do.
+
+| thing | cell culture | bacteria | yeast | *C. elegans* | *Drosophila* | zebrafish | mice |
+| ----- | ------------ | -------- | ----- | ------------ | ------------ | --------- | ---- |
+| test single transgenes/cDNAs | yes | yes | yes | yes | yes | yes | yes |
+| screen a library of transgenes/cDNAs | yes | yes | yes | no | no | no | no |
+| knock out/down a single gene | yes | yes | yes | yes | yes | yes | yes |
+| knock out/down a short list of candidate genes | yes (RNAi, CRISPR) | yes (deletion set) | yes (keio library) |  yes | yes | yes | yes |
+| unbiased, genome-wide screen of knockout/down | sort of&dagger; | yes | yes | yes | yes | yes | not really |
+
+&dagger;Because cultured cells are diploid and you can't cross them, an EMS mutagenesis screen is not very useful for recessive mutations. However there are now starting to be cell lines that are nearly haploid. In addition, [CRISPR LoF screens](/2014/07/18/four-flavors-of-crispr-knockout-screens/) offer this opportunity, though they are not yet available in arrayed form.
+
+### Types of cell culture
+
+**Primary cultures** are tissue taken directly from animals and grown in a dish. It contains a mixture of cell types, and you can create cultures from an animal of any genotype of interest. Culturing these is expensive and laborious.
+
+**Established cultures** or **cell lines** are long-cultured populations of cells, usually clonal, constantly dividing, "transformed" and tumor-like. The cell type may be well-defined but there may not exist a cell line for the particular genotype and/or tissue/cell type you are interested in. They can be grown in large quantities, frozen, distributed and maintained indefinitely.
+
+Today we'll talk about a few commonly used general-purpose cell lines:
+
++ 3T3 mouse fibroblasts - general purpose, easy to transfect
++ HEK human kidney cells - general purpose, easy to transfect
++ CHO hamster ovary cells - general purpose, easy to transfect
++ HeLa human cervical cancer cells - grows quickly, easy to do suspension cultures, highly aneuploid
++ MDCK dog kidney cells - model for epithelial sheets and tubes
++ PC12 rat adrenal tumor - neuron-like except they still divide
+
+### How to use cell lines to study cancer
+
+Cell lines have made much greater contributions to the study of cancer than *C. elegans*, *Drosophila* or zebrafish have. Three properties are considered defining properties of cancer cells:
+
++ loss of **contact inhibition**. Normal cells will arrest their growth when they become **confluent**, i.e. touching each other, but cancer cells will keep growing and form clumps called **foci**.
++ not requiring **adhesion**. Normal cells need to adhere to a surface to grow, they die if made free-floating. Transformed cells often will grow in suspension. The **soft agar assay** tests whether cells can grow in a soft 3D matrix.
++ **invasiveness**. Normal cells will not grow past a basement membrane made of extracellular matrix, but tumor cells will. You can measure this in a a **filter assay**. You grow cells on top of an extracellular matrix-coated filter underneath which is more media. If they go through the filter and grow in the basement, they're tumor cells.
+
+Cell lines can become **transformed** either through:
+
++ activation of oncogenes. Typically these activation events are dominant gain-of-function mutations.
++ loss of tumor suppressors. Typically these loss events are recessive loss-of-function mutations.
+
+The first oncogene was cloned using cell culture [[Shih & Weinberg 1982]]. In this experiment, they isolated genomic DNA from a bladder carcinoma of human epithelial origin. They fragmented the DNA and transfected 3T3 cells. 3T3 cells are "partly transformed" - they grow readily but do still show contact inhibition. Therefore 3T3 cells are kind of like a "sensitized background" in [*Drosophila* mosaic screens](/2014/10/31/genetics-18/). After transfecting the 3T3 cells they plated them and then selectively picked foci, figuring that these foci consisted of cells which had lost contact inhibition. Each such "primary focus" was expected to contain multiple pieces of the human cancer genomic DNA, so they next isolated the genomic DNA from that focus, fragmented it, and re-transfected it into a fresh batch of parental 3T3 cells. Once again, they obtained foci, and picked these "secondary foci" and repeated. At each repetition you further dilute the human DNA until you can isolate the piece responsible for loss of contact inhibition. Further, the fact that transfection with this DNA altered the cells was proof that DNA sequence alone could be sufficient to encode this trait. They took genomic DNA from the secondary focus, restriction-digested it, ran it as a Southern blot and compared it to whole genomic DNA fragmented from parental 3T3 cells and the parental bladder carcinoma cells. They probed the Southern blot with human-specific "Alu" repeat sequences, which mice lack. The bladder carcinoma cells had tons of human sequence, 3T3 had none, and the secondary focus had a single band.
+
+They next fragmented the DNA from that band and cloned it into phage stock, replica plated it to a filter and probed the filter with the Alu sequence. They found one plaque that reacted with the Alu probe, and they then went back to the phage stock and sequenced it. This revealed the Ras oncogene.
+
+To do this today, you'd isolate the bladder tumor DNA, fragment it, ligate PCR adapters, transfect 3T3 cells, pick foci, repeat. Then once you had your band you'd be able to use those PCR adapters to sequence your gene.
+
+### Expression cloning
+
+Today we'll go through the example of how the capsaicin receptor gene [*TRPV1*](http://en.wikipedia.org/wiki/TRPV1) was cloned [[Caterina 1997]]. This experiment used primary culture neurons from dorsal root ganglia (DRG). These cells are pain sensors, and "ganglia" simply means bundles of nerves. They used a calcium-sensitive dye called [Fura-2](http://en.wikipedia.org/wiki/Fura-2), which lights up fluorescently in the presence of calcium. In these primary cultures, adding capsaicin causes a calcium influx resulting in fluorescence. HEK cells, by contrast, do not react to capsaicin. Caterina & Julius hypothesized that DRG neurons, but not HEK cells, express a single gene sufficient for capsaicin response. Unlike in the bladder carcinoma hypothesis, one does not expect a genomic mutation to be responsible - the HEK cells may well also harbor the capsaicin receptor gene, they just don't express it, so transfecting with genomic DNA from DRGs will not work. Instead, the researchers created a cDNA library from DRGs, and placed each one into a plasmid under the control of a ubiquitous promoter. They made clonal bacterial populations each expressing one cDNA. They then pooled the bacterial clones in groups of 100 or so, prepped DNA and transfected these pooled cDNA mini-libraries onto the HEK cells and performed the Fura-2 assay. Most pools gave no cells that lit up when exposed to capsaicin. Pool #11 caused some cDNAs to light up, so they subdivided it, and found that subpool 11-6 contained the activity, then they subdivided that, and so on. Finally they got down to a single cDNA which encoded *TRPV1*. *TRPV1* turns out to encode a transmembrane protein whose native function is as a heat (high temperature) receptor; capsaicin is an agonist of it.
+
+### Loss-of-function screens in cell culture
+
+The approach that revealed the Ras oncogene (above) wouldn't work for loss-of-function mutations in tumor suppressors. For these you need a different approach. A high-throughput method for doing this awaited the development of RNAi as a laboratory tool. Berns and Bernards used RNAi to screen for genes whose knockdown promoted proliferation, and found other components of the p53 pathway [[Berns 2004]]. They started with primary fibroblast cultures. One standard way to get fibroblasts to grow is to transform them with the "large T" antigen from the [SV40 virus](http://en.wikipedia.org/wiki/SV40). This protein binds p53 in the host cell, causing the cells to proliferate rapidly. Transforming with SV40 lets you grow your cells and expand them clonally. However you now have the problem that they are already transformed, so you can't screen for shRNAs that knock down tumor suppressors. A solution is to use a temperature-sensitive allele of large T antigen that reversibly inhibits p53. You can grow a large volume of cells at 32&deg;C, where this allele's protein product is active, but then shift to 39&deg;C, arresting cell proliferation and allowing you to do your screen. Berns and Bernards grew largeT<sup>ts</sup>-transformed cells at 32&deg;C and transfected them with a library of RNAi constructs, then screened for inappropriate proliferation after shifting to 39&deg;C. Their RNAi library was small by modern standards - they had 3 shRNAs against each of 8,000 predicted open reading frames. They used an arrayed library of these 24,000 constructs but pooled them into groups to reduce the number of wells that had to be screened. Once they found proliferating cell clumps at 39&deg;C they performed PCR with primers corresponding to the universal sequence they had flanking the shRNA construct in every viral vector.
+
+As a result, they found p53, which they already knew about, but also found five other candidate tumor suppressors, most of which were unexpected. 
+
+#### Off-target effects
+
+On Monday, Dr. Heiman will cover an important caveat of these screens, which is off-target effects.
+
+[Shih & Weinberg 1982]: http://www.ncbi.nlm.nih.gov/pubmed/6286138 "Shih C, Weinberg RA. Isolation of a transforming sequence from a human bladder carcinoma cell line. Cell. 1982 May;29(1):161-9. PubMed PMID: 6286138."
+
+[Caterina 1997]: http://www.ncbi.nlm.nih.gov/pubmed/9349813 "Caterina MJ, Schumacher MA, Tominaga M, Rosen TA, Levine JD, Julius D. The capsaicin receptor: a heat-activated ion channel in the pain pathway. Nature. 1997 Oct 23;389(6653):816-24. PubMed PMID: 9349813."
+
+[Berns 2004]: http://www.ncbi.nlm.nih.gov/pubmed/15042092 "Berns K, Hijmans EM, Mullenders J, Brummelkamp TR, Velds A, Heimerikx M, Kerkhoven RM, Madiredjo M, Nijkamp W, Weigelt B, Agami R, Ge W, Cavet G, Linsley PS, Beijersbergen RL, Bernards R. A large-scale RNAi screen in human cells identifies new components of the p53 pathway. Nature. 2004 Mar 25;428(6981):431-7. PubMed PMID: 15042092."
