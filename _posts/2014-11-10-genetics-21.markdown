@@ -1,0 +1,61 @@
+---
+layout: post
+title:  "Genetics 21: 'Mouse models of human disease'"
+date:   2014-11-10 12:01:00
+author: ericminikel
+tag: genetics-201
+location: Boston, MA
+---
+
+*These are my notes from lecture 21 of Harvard's Genetics 201 course, delivered by Max G. Heiman on November 10, 2014.*
+
+### How to make transgenic mice
+
+To make Tg mice, you [**microinject**](http://en.wikipedia.org/wiki/Microinjection) transgene DNA into either of the two **pronuclei** of a (fertilized single-cell) zygote you've obtained by sacrificing a pregnant mother. The transgene will typically integrate into a single array of multiple copies of the transgene all in the same orientation - this is called a **head-to-tail concatemer**. You then transplant these zygotes into **pseudopregnant** mothers that have been mated with sterile males.
+
+![](/media/2014/11/how-to-make-tg-mice.png)
+
+The process is shown in this video:
+
+<iframe width="420" height="315" src="//www.youtube.com/embed/oH9rfkqWw_0?start=101" frameborder="0" allowfullscreen></iframe>
+
+#### Example: retinoblastoma
+
+Today we'll discuss one example of a human disease modeled in mice: retinoblastoma associated with heterozygous loss-of-function of Rb (*RB1*). In humans, heterozygous LoF of Rb leads to retinoblastoma in at least one eye by ~5 years of age, with almost complete penetrance. Although the disease presents as being autosomal dominant according to the patient's germline genotype, the tumors actually arise from cells that experience somatic loss of heterozygosity and become homozygous LoF. (This is also true of BRCA cancers and some others).
+
+The first mouse model of retinoblastoma arose by accident [[Windle 1990]]. The researchers were seeking to model pituitary tumors, so they created mice expressing a transgene encoding SV40 large T antigen under control of a pituitary-specific promoter. They found that in 1 of their 15 transgenic lines, 100% of the mice developed retinal tumors by 2 months of age. This transgenic line turned out to have the transgene inserted into a retina gene, resulting in expression in the retina and consequent disabling of p53 and other tumor suppressors. It turned out the transgene actually did *not* disrupt the mouse ortholog of *RB1*.
+
+Next, another group sought to create an *Rb1* knockout mouse as another model of retinoblastoma.
+
+### How to make knockout mice
+
+To make knockout mice, you design a construct which contains a stop codon or other mutation predicted to disable your gene of interest, and you get it to replace the endogenous copy of the gene by homologous recombination. You first transfect mouse embryonic stem (ES) cells with your KO construct. Because homologous recombination is rare, you need a positive selection marker (usually G418 resistance conferred by a neo cassette under its own promoter) in order to select for cells that have taken up your DNA. However, random integration will be more common than homologous recombination and will also result in a copy of the neo cassette being integrated. You therefore also need a negative selection marker which lies *outside* of the region of homology. For this, you usually use Herpes thymidine kinase, a gene which confers sensitivity to gancyclovir. Therefore you select ES cells first with G418 and then with gancyclovir. After that, you should have only cells which have the KO construct integrated into the targeted locus, replacing the endogenous gene. You then inject these ES cells into a mouse blastocyst. You then transplant this blastocyst into a pseudopregnant mother. This results in chimeric offspring. Usually you use ES cells from a mouse line of a different coat color than the blastocyst, so that you can identify your chimeras as offspring with mottled coats.
+
+![](/media/2014/11/ko-mouse-step-1.png)
+
+![](/media/2014/11/ko-mouse-step-2.png)
+
+This process typically takes $50,000 and ~2 years. It is currently being replaced by CRISPR (with CRISPR/Cas9 transgenes microinjected much like the process for Tg mice), which can give you knockouts within a few months at a cost of ~$2,500. However, most existing knockout lines used the method described above. In addition, homologous recombination is still required to create knock-in mice, though CRISPR can be used to create double-strand breaks to increase the frequency of recombination.
+
+Here is a video of injecting ES cells into a blastocyst:
+
+<iframe width="560" height="315" src="//www.youtube.com/embed/ysq-lqp1-Ho?start=28" frameborder="0" allowfullscreen></iframe>
+
+#### *Rb1* knockout mice
+
+Surprisingly, heterozyous *Rb1* knockout mice do not get retinoblastoma; homozygous *Rb1* knockout is embryonic lethal [[Jacks 1992]]. Therefore, the next experiment was to create a mouse with conditional knockout of *Rb1* only in its retina.
+
+### How to make conditional knockout mice 
+
+To make a conditional knockout, you need a copy of your gene of interest with part or all of the gene **floxed**, meaning flanked by loxP site. This floxed gene can be knocked-in, or if gene dosage is not particularly sensitive, you can add a floxed transgene on a knockout background. Then you express Cre recombinase under a tissue-specific promoter, so that the floxed gene will be excised only in that tissue. It is helpful if the Cre transgene and the floxed gene-of-interest are on the same chromosome, so that they segregate together when you breed your mice.
+
+#### *Rb1* conditional knockout mice
+
+<em>Rb<sup>lox</sup>/Rb<sup>lox</sup>; Cre/+</em> mice, in which *Rb1* is conditionally knocked out in the retina don't get retinoblastoma [[Chen 2004]]. It turns out that p107 and p130 proteins have similar functions as Rb, and p107 is upregulated in cells that lose Rb. Only when Rb conditional knockout mice were crossed to p107 knockout mice did they finally see retinoblastomas.
+
+
+[Windle 1990]: http://www.ncbi.nlm.nih.gov/pubmed/1689463 "Windle JJ, Albert DM, O'Brien JM, Marcus DM, Disteche CM, Bernards R, Mellon PL. Retinoblastoma in transgenic mice. Nature. 1990 Feb 15;343(6259):665-9. PubMed PMID: 1689463."
+
+[Jacks 1992]: http://www.ncbi.nlm.nih.gov/pubmed/1406933 "Jacks T, Fazeli A, Schmitt EM, Bronson RT, Goodell MA, Weinberg RA. Effects of an Rb mutation in the mouse. Nature. 1992 Sep 24;359(6393):295-300. PubMed PMID:  1406933."
+
+[Chen 2004]: http://www.ncbi.nlm.nih.gov/pubmed/15193257 "Chen D, Livne-bar I, Vanderluit JL, Slack RS, Agochiya M, Bremner R. Cell-specific effects of RB or RB/p107 loss on retinal development implicate an intrinsically death-resistant cell-of-origin in retinoblastoma. Cancer Cell. 2004 Jun;5(6):539-51. PubMed PMID: 15193257."
