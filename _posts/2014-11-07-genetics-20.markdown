@@ -67,9 +67,16 @@ The approach that revealed the Ras oncogene (above) wouldn't work for loss-of-fu
 
 As a result, they found p53, which they already knew about, but also found five other candidate tumor suppressors, most of which were unexpected. 
 
-#### Off-target effects
+These sorts of screens suffer from a few limitations:
 
-On Monday, Dr. Heiman will cover an important caveat of these screens, which is off-target effects.
++ False negatives due to shRNAs not achieving efficient knockdown
++ False positives due to off-target effects
+
+shRNA results can be validated by:
+
++ Introducing a transgene resistant to the shRNA. This could be the same gene with synonymous variants introduced to escape siRNA complementarity, or an orthologous gene from a different species (e.g. a human p53 is resistant to a mouse p53 shRNA).
++ Replicating the result with a different approach - say, CRISPR, or a small molecule inhibitor.
+
 
 [Shih & Weinberg 1982]: http://www.ncbi.nlm.nih.gov/pubmed/6286138 "Shih C, Weinberg RA. Isolation of a transforming sequence from a human bladder carcinoma cell line. Cell. 1982 May;29(1):161-9. PubMed PMID: 6286138."
 
