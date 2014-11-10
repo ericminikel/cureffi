@@ -99,3 +99,5 @@ I didn't find any other transgenes in use in the literature - if you know of any
 [Beringue 2008]: http://www.ncbi.nlm.nih.gov/pubmed/18183299/ "Béringue V, Le Dur A, Tixador P, Reine F, Lepourry L, Perret-Liaudet A, Haïk S, Vilotte JL, Fontés M, Laude H. Prominent and persistent extraneural infection  in human PrP transgenic mice infected with variant CJD. PLoS One. 2008 Jan 9;3(1):e1419. doi: 10.1371/journal.pone.0001419. PubMed PMID: 18183299; PubMed Central PMCID: PMC2171367."
 
 [Bueler 1992]: http://www.ncbi.nlm.nih.gov/pubmed/1373228 "Büeler H, Fischer M, Lang Y, Bluethmann H, Lipp HP, DeArmond SJ, Prusiner SB,  Aguet M, Weissmann C. Normal development and behaviour of mice lacking the neuronal cell-surface PrP protein. Nature. 1992 Apr 16;356(6370):577-82. PubMed PMID: 1373228."
+
+[Fischer 1996]: http://www.ncbi.nlm.nih.gov/pubmed/8635458/ "Fischer M, Rülicke T, Raeber A, Sailer A, Moser M, Oesch B, Brandner S, Aguzzi A, Weissmann C. Prion protein (PrP) with amino-proximal deletions restoring susceptibility of PrP knockout mice to scrapie. EMBO J. 1996 Mar 15;15(6):1255-64. PubMed PMID: 8635458; PubMed Central PMCID: PMC450028."
