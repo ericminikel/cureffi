@@ -1,0 +1,134 @@
+---
+layout: post
+title:  "Biolit 09: genome-wide approaches"
+date:   2014-11-13 12:00:00
+author: ericminikel
+tag: bbs-230
+location: Boston, MA
+---
+
+*These are my notes for week 09 of Harvard's BBS 230 "Analysis of the biological literature" course (November 11-13, 2014). Currently this includes my notes from first discussion section and will be updated after class on Thursday.*
+
+The papers for this week are [[Kaida 2010]] and [[Ingolia 2011]].
+
+### [Kaida 2010]: U1 snRNP protects pre-mRNAs from premature cleavage and polyadenylation
+
+#### Background
+
+snRNPs ("snurps") are RNA-protein complexes involved in splicing. Loss of Survival of Motor Neurons (SMN) protein due to loss-of-function mutations in *SMN1* that cause spinal muscular atrophy result in failure to assemble snRNPs.
+
+#### Figure-by-figure
+
+**[Figure 1](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2996489/figure/F1/)**
+
+An antisense morpholino (AMO) against U1 snRNP protects it against RNase H.
+
+**[Figure 2](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2996489/figure/F2/)**
+
+The AMO from Figure 1 disrupts splicing activity, causing premature termination of transcripts.
+
+**[Figure 3](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2996489/figure/F3/)**
+
+This is similar to Figure 3. Some students in our class felt that instead of or in addition to showing 10 different specific genes in these two figures, it would have been nice to have some sort of meta-plot encompassing premature termination in all genes.
+
+**[Figure 4](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2996489/figure/F4/)**
+
+They use 3'RACE to identify polyadenylation sites in the prematurely terminated transcripts. The prematurely terminated mRNAs from Figs 2-3 turn out to get polyadenylated at cryptic polyadenylation sites (PASs). 
+
+**[Figure 5](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2996489/figure/F5/)**
+
+They name the phenomenon they've observed so far "premature cleavage and polyadenylation" (PCPA). They now show that the PCPA problem that occurs upon U1 knockdown is not alleviated by mutating away splice sites. PCPA does not occur if you knockdown U2, a different snRNP.
+
+### [Ingolia 2011]: Ribosome profiling of mouse embryonic stem cells reveals the complexity and dynamics of mammalian proteomes
+
+#### Historical context
+
+The opening cites the papers announcing the first two drafts of the human genome [[Lander 2001], [Venter 2001]] and the various new sequencing methods invented since then. They argue the next frontier is to be able to profile translation rates using sequencing.
+
+#### Contribution
+
+This paper introduces a method called "ribosome profiling" in which you arrest ribosomes, digest RNA that isn't protected by them, then sequence the remaining RNA. This tells you the extent to which different mRNAs are being actively translated.
+
+#### Figure-by-figure
+
+**[Figure 1](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3225288/figure/F1/)**
+
+They figured they needed to stop ribosome progression first. They compared two translation-inhibiting small molecules - cyclohexamide and emetine - and just a buffer expected to stop translation. The two small molecules cause a heavier pileup of ribosomes at start codons than the buffer does (Fig 1C), probably because they prevent *elongation* but not *initiation*, thus ribosomes still hop on to mRNAs even after the drug treatment. On the flip side, the buffer does not seem to totally halt elongation, because with buffer there ends up being a pileup of ribosomes at stop codons (Fig 1D). Also, emetine seems to favor protection of slightly longer mRNA fragments (Fig 1B). Nonetheless, there is a very tight correlation between the number of reads per coding sequence in different methods (Fig 1A).
+
+**[Figure 2](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3225288/figure/F2/)**
+
+In Fig 2A, they quantify how skewed the distribution of read density over codons is. They ask "what percentage of codons in an mRNA (y axis) have at least blank times as many reads (y axis) as the median codon in that same mRNA?" For instance, tautologically, 50% of codons must have at least 1x as many reads as the median, so (1,50%) has to be a point on the teal line. Thus, the teal line (all ribosome-profiled reads) indicates that "100% of codons have at least 0 times as many reads as the median", "10% of codoons have at least 5x as many reads as the median", "0.02% have at least 50x" and so on. Their null distribution is given by random shearing of mRNA rather than using the ribosome profiling approach (green line labeled "mRNA"). By comparing teal to blue you can see that the distribution of reads is far more skewed in ribosome profiling than expected by chance, which indicates that ribosome pausing exists. By comparing purple to teal, you can see that stop codons have way more paused ribosomes than other codons do. In any event, they decide to draw a cutoff where a codon is considered to be a pause site if it has >25x the density of the median codon for its mRNA. This cutoff means 0.1% of codons will be considered pause sites. The rest of Fig 2 goes on to characterize thusly-defined pause sites.
+
+One might expect that when a ribosome pauses, other ribosomes pile up behind it. If that were true, you'd expect that the read density around ribosome pause sites would be asymmetric, with a heavy left shoulder due to additional ribosomes piled up behind. That turns out not to be the case, at least on the average: Fig 2B shows that pause sites tend to have a single, sharp, symmetric, peak.
+
+Pause sites are heavily enriched for D and E as the currently-being-translated codon, and P as the translated-two-codons-ago codon (Fig 1C). According to the same plotting method as Fig 1A, this motif is hugely enriched in ribosome-profiled reads (Fig 1D).
+
+Apparently there is a type of secretory pathway protein called "tail-anchored" which is different from any of [Type I through Type IV and GPI-anchored](/2013/02/24/cell-biology-04-the-secretory-pathway/). In "tail-anchored" (TA) proteins, the N terminus is in the cytosol and the C terminus is just stuck into the membrane, they are not "transmembrane" per se because nothing sticks out into the ER. Two such TA proteins were recently reported to have ribosome pausing at the stop codon, and this was purported to be a special feature allowing the insertion of the C terminus. This paper confirms that these transcripts do have pausing at the stop codons (Fig 2E) but also shows that there is just generally a lot of pausing at stop codons (Fig 2A) and that this is not particularly enriched in TA proteins.
+
+They also confirm that there is an interesting pause site in the middle of *Xbp1* which had been previously reported and seems to have an important functional role (Fig 2F).
+
+**[Figure 3](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3225288/figure/F3/)**
+
+In Figure 3 they use their new technique to measure the kinetics of translation. They use harringtonine to arrest translation *initiation*, then they wait 90, 120, or 150 seconds before adding cycloheximide to arrest translation *elongation*. Then they measure to what degree ribosomes are depleted in the early part of transcripts. This depletion is due to ribosomes having moved on (elongation) and not being replaced (by new ones doing initiation). They call this a "pulse-chase" strategy (note that no radiation is required though). They find that the average rate of elongation is 5.6 codons per second, and doesn't vary much between any of the categories they stratified on - for instance, highly vs. lowly-expressed genes. They also don't see slower elongation over rare codons.
+
+**[Figure 4](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3225288/figure/F4/)**
+
+It turns out harringtonine lets ribosomes bind to the mRNA at a start codon, but they can't elongate past it. Thus when you treat with hartingtonine you get ribosomes piling up at start codons. In Figure 4 they take advantage of this to identify alternate translation start sites and alternate reading frames. The way they do this is complicated. Rather than just looking at places where reads pile up when you add harringtonine, they specifically look for a pileup with an asymmetrical distribution of reads left and right of it. They use a support vector machine (basically doing a discriminant analysis) trained on known translation start sites to figure out what this asymmetric profile looks like, then use the trained SVM to identify novel sites. They find that translation sometimes starts at a non-AUG codon, and that the non-AUG starts are enriched for "near cognates" (things that differ by 1 base from AUG), particularly CUG.
+
+**[Figure 5](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3225288/figure/F5/)**
+
+They next asked whether lincRNAs are ever translated. They found that many lincRNAs contained a region on the order of 90 bp long that was as densely occupied by ribosomes as canonical protein-coding genes are. Based on this the authors speculated that maybe lincRNAs encode proteins. This speculation, however, turned out to be false. Eric Lander later led an effort, which Ingolia and Weissman helped with, that showed that lincRNAs do not in fact encode proteins [[Guttman 2013]].
+
+**[Figure 6](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3225288/figure/F6/)**
+
+This figure characterizes the upstream open reading frames (uORFs) that appear in their harringtonine experiments. They argue that these may play regulatory roles in some cases but may also actually be included in the translated protein sometimes.
+
+Some students in our class felt that they had not done enough validation to confirm that these ORFs really serve as initiation sites *in vivo* and that this is not just an artifact of harringtonine treatment - for instance, if harringtonine just makes ribosomes pause at possible start sites even though the ribosomes were otherwise just about to disengage rather than begin translation at those sites.
+
+**[Figure 7](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3225288/figure/F7/)**
+
+In this figure they look at how the profiles change as ES cells lose pluripotency and become embryoid bodies (EBs). There are tons of changes in translation, most of which are buried in a supplement. Figure 7 highlight one interesting subset which is that ribosomal proteins are still highly expressed in EBs at the mRNA level but are much less heavily translated in EBs than ES cells. The interpretation is that ES cells are stockpiling additional ribosomes, and by the time they become EBs they have enough ribosomes.
+
+#### Epilogue
+
+The data from this study are [available on GEO](http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE30839) in the mm9 reference genome. I checked out their harringtonine profiling data for my favorite gene, *Prnp*, for which I *think* they have used the annotation [uc008mly.2](http://genome.ucsc.edu/cgi-bin/hgGene?hgg_gene=uc008mly.2&org=mouse), whose canonical start site should be at nucleotide 155. In bash:
+
+```bash
+wget ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE30nnn/GSE30839/suppl/GSE30839_GSM765295_ribo_mesc_harr150s-profiles.tar.gz
+gunzip GSE30839_GSM765295_ribo_mesc_harr150s-profiles.tar.gz
+tar -xvfGSE30839_GSM765295_ribo_mesc_harr150s-profiles.tar
+cd fp_mesc_harr150s/
+cat chr2\:131735655-131764173_45031_nt_counts.txt > ../prnp-mm9.txt
+```
+
+And then in R:
+
+```r
+setwd('~/d/sci/061bbs230/week09/')
+prnp = read.table('prnp-mm9.txt')
+plot(1:length(prnp$V1),prnp$V1,type='h',axes=FALSE,xlab='location',ylab='read depth',main='Harringtonine-arrested ribosome profiling\nof Prnp in mouse ES cells',cex.main=.8)
+axis(side=2,at=(0:3)*10,labels=(0:3)*10,lwd=0,lwd.ticks=1,las=1)
+axis(side=1,at=c(155,155+765),labels=c('\ncanonical\nstart','\ncanonical\nstop'),lwd=1,lwd.ticks=1,cex.axis=.6)
+which(prnp$V1==max(prnp$V1))
+which(prnp$V1==max(prnp$V1[-139]))
+```
+
+I was impressed to find there actually is some decent data for *Prnp* - I had thought it was not very highly expressed in ES cells and might not even be detectable. Here's what the profile looks like when ribosomes are arrested with harringtonine:
+
+![](/media/2014/11/harringtonine-prnp.png)
+
+The main peak is at nt 139 (this may indicate they had a different transcript annotation than the one I had where the canonical start site is at 155). There is a smaller peak just to the right, at 212, about 24 codons downstream of 139, so right near the end of the signal peptide. I wonder if this represents ribosome pausing due to cotranslational translocation. There are also some smaller peaks to the left, which might be the uORFs which they discuss in [Figure 6](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3225288/figure/F6/) and which have been discussed in [[Moreno 2012]]. The putative alternate start codon of altPrP [[Vanderperre 2011]] is not present in mouse *Prnp*.
+
+[Kaida 2010]: http://www.ncbi.nlm.nih.gov/pubmed/20881964 "Kaida D, Berg MG, Younis I, Kasim M, Singh LN, Wan L, Dreyfuss G. U1 snRNP protects pre-mRNAs from premature cleavage and polyadenylation. Nature. 2010 Dec  2;468(7324):664-8. doi: 10.1038/nature09479. Epub 2010 Sep 29. PubMed PMID: 20881964; PubMed Central PMCID: PMC2996489."
+
+[Ingolia 2011]: http://www.ncbi.nlm.nih.gov/pubmed/22056041 "Ingolia NT, Lareau LF, Weissman JS. Ribosome profiling of mouse embryonic stem cells reveals the complexity and dynamics of mammalian proteomes. Cell. 2011 Nov  11;147(4):789-802. doi: 10.1016/j.cell.2011.10.002. Epub 2011 Nov 3. PubMed PMID: 22056041; PubMed Central PMCID: PMC3225288."
+
+[Lander 2001]: http://www.ncbi.nlm.nih.gov/pubmed/11237011/ "Lander ES, Linton LM, Birren B, Nusbaum C, Zody MC, Baldwin J, Devon K, Dewar  K, Doyle M, FitzHugh W, Funke R, Gage D, Harris K, Heaford A, Howland J, Kann L,  Lehoczky J, LeVine R, McEwan P, McKernan K, Meldrim J, Mesirov JP, Miranda C, Morris W, Naylor J, Raymond C, Rosetti M, Santos R, Sheridan A, Sougnez C, Stange-Thomann N, Stojanovic N, Subramanian A, Wyman D, Rogers J, Sulston J, Ainscough R, Beck S, Bentley D, Burton J, Clee C, Carter N, Coulson A, Deadman R, Deloukas P, Dunham A, Dunham I, Durbin R, French L, Grafham D, Gregory S, Hubbard T, Humphray S, Hunt A, Jones M, Lloyd C, McMurray A, Matthews L, Mercer S, Milne  S, Mullikin JC, Mungall A, Plumb R, Ross M, Shownkeen R, Sims S, Waterston RH, Wilson RK, Hillier LW, McPherson JD, Marra MA, Mardis ER, Fulton LA, Chinwalla AT, Pepin KH, Gish WR, Chissoe SL, Wendl MC, Delehaunty KD, Miner TL, Delehaunty  A, Kramer JB, Cook LL, Fulton RS, Johnson DL, Minx PJ, Clifton SW, Hawkins T, Branscomb E, Predki P, Richardson P, Wenning S, Slezak T, Doggett N, Cheng JF, Olsen A, Lucas S, Elkin C, Uberbacher E, Frazier M, Gibbs RA, Muzny DM, Scherer SE, Bouck JB, Sodergren EJ, Worley KC, Rives CM, Gorrell JH, Metzker ML, Naylor SL, Kucherlapati RS, Nelson DL, Weinstock GM, Sakaki Y, Fujiyama A, Hattori M, Yada T, Toyoda A, Itoh T, Kawagoe C, Watanabe H, Totoki Y, Taylor T, Weissenbach  J, Heilig R, Saurin W, Artiguenave F, Brottier P, Bruls T, Pelletier E, Robert C, W...ump A, Yang H, Yu J, Wang J,  Huang G, Gu J, Hood L, Rowen L, Madan A, Qin S, Davis RW, Federspiel NA, Abola AP, Proctor MJ, Myers RM, Schmutz J, Dickson M, Grimwood J, Cox DR, Olson MV, Kaul R, Raymond C, Shimizu N, Kawasaki K, Minoshima S, Evans GA, Athanasiou M, Schultz R, Roe BA, Chen F, Pan H, Ramser J, Lehrach H, Reinhardt R, McCombie WR,  de la Bastide M, Dedhia N, Blöcker H, Hornischer K, Nordsiek G, Agarwala R, Aravind L, Bailey JA, Bateman A, Batzoglou S, Birney E, Bork P, Brown..."
+
+[Venter 2001]: http://www.ncbi.nlm.nih.gov/pubmed/11181995 "Venter JC, Adams MD, Myers EW, Li PW, Mural RJ, Sutton GG, Smith HO, Yandell M, Evans CA, Holt RA, Gocayne JD, Amanatides P, Ballew RM, Huson DH, Wortman JR,  Zhang Q, Kodira CD, Zheng XH, Chen L, Skupski M, Subramanian G, Thomas PD, Zhang  J, Gabor Miklos GL, Nelson C, Broder S, Clark AG, Nadeau J, McKusick VA, Zinder N, Levine AJ, Roberts RJ, Simon M, Slayman C, Hunkapiller M, Bolanos R, Delcher A, Dew I, Fasulo D, Flanigan M, Florea L, Halpern A, Hannenhalli S, Kravitz S, Levy S, Mobarry C, Reinert K, Remington K, Abu-Threideh J, Beasley E, Biddick K,  Bonazzi V, Brandon R, Cargill M, Chandramouliswaran I, Charlab R, Chaturvedi K, Deng Z, Di Francesco V, Dunn P, Eilbeck K, Evangelista C, Gabrielian AE, Gan W, Ge W, Gong F, Gu Z, Guan P, Heiman TJ, Higgins ME, Ji RR, Ke Z, Ketchum KA, Lai Z, Lei Y, Li Z, Li J, Liang Y, Lin X, Lu F, Merkulov GV, Milshina N, Moore HM, Naik AK, Narayan VA, Neelam B, Nusskern D, Rusch DB, Salzberg S, Shao W, Shue B,  Sun J, Wang Z, Wang A, Wang X, Wang J, Wei M, Wides R, Xiao C, Yan C, Yao A, Ye J, Zhan M, Zhang W, Zhang H, Zhao Q, Zheng L, Zhong F, Zhong W, Zhu S, Zhao S, Gilbert D, Baumhueter S, Spier G, Carter C, Cravchik A, Woodage T, Ali F, An H, Awe A, Baldwin D, Baden H, Barnstead M, Barrow I, Beeson K, Busam D, Carver A, Center A, Cheng ML, Curry L, Danaher S, Davenport L, Desilets R, Dietz S, Dodson  K, Doup L, Ferriera S, Garg N, Gluecksmann A, Hart B, Haynes J, Haynes C, Heiner  C, Hladun S, Hostin D, Houck J, Howland T, Ibegwam C, Johnson J, Kalush F, Kline  L, Koduru S, Love A, Mann F, May D, McCawley S, McIntosh T, McMullen I, Moy M, Moy L, Murphy B, Nelson K, Pfannkoch C, Pratts E, Puri V, Qureshi H, Reardon M, Rodriguez R, Rogers YH, Romblad D, Ruhfel B, Scott R, Sitter C, Smallwood M, Stewart E, Strong R, Suh E, Thomas R, Tint NN, Tse S, Vech C, Wang G, Wetter J, Williams S, Williams M, Windsor S, Winn-Deen E, Wolfe K, Zaveri J, Zaveri K, Abril JF, Guigó..."
+
+[Moreno 2012]: http://www.ncbi.nlm.nih.gov/pubmed/22622579 "Moreno JA, Radford H, Peretti D, Steinert JR, Verity N, Martin MG, Halliday M, Morgan J, Dinsdale D, Ortori CA, Barrett DA, Tsaytler P, Bertolotti A, Willis AE, Bushell M, Mallucci GR. Sustained translational repression by eIF2α-P mediates prion neurodegeneration. Nature. 2012 May 6;485(7399):507-11. doi: 10.1038/nature11058. Erratum in: Nature.2014 Jul 17;511(7509):370. PubMed PMID: 22622579; PubMed Central PMCID: PMC3378208."
+
+[Vanderperre 2011]: http://www.ncbi.nlm.nih.gov/pubmed/21478263 "Vanderperre B, Staskevicius AB, Tremblay G, McCoy M, O'Neill MA, Cashman NR, Roucou X. An overlapping reading frame in the PRNP gene encodes a novel polypeptide distinct from the prion protein. FASEB J. 2011 Jul;25(7):2373-86. doi: 10.1096/fj.10-173815. Epub 2011 Apr 8. PubMed PMID: 21478263."
+
+[Guttman 2013]: http://www.ncbi.nlm.nih.gov/pubmed/23810193 "Guttman M, Russell P, Ingolia NT, Weissman JS, Lander ES. Ribosome profiling provides evidence that large noncoding RNAs do not encode proteins. Cell. 2013 Jul 3;154(1):240-51. doi: 10.1016/j.cell.2013.06.009. Epub 2013 Jun 27. PubMed PMID: 23810193; PubMed Central PMCID: PMC3756563."
