@@ -7,7 +7,7 @@ tag: bbs-230
 location: Boston, MA
 ---
 
-*These are my notes for week 09 of Harvard's BBS 230 "Analysis of the biological literature" course (November 11-13, 2014). Currently this includes my notes from first discussion section and will be updated after class on Thursday.*
+*These are my notes for week 09 of Harvard's BBS 230 "Analysis of the biological literature" course (November 11-13, 2014). This includes my own reading and analysis of the papers, as well as my notes from both discussion sections.*
 
 The papers for this week are [[Kaida 2010]] and [[Ingolia 2011]].
 
@@ -17,11 +17,15 @@ The papers for this week are [[Kaida 2010]] and [[Ingolia 2011]].
 
 snRNPs ("snurps") are RNA-protein complexes involved in splicing. Loss of Survival of Motor Neurons (SMN) protein due to loss-of-function mutations in *SMN1* that cause spinal muscular atrophy result in failure to assemble snRNPs.
 
+A "cleavage and polyadenylation" machinery is recruited after RNA pol II finishes the canonical end of an mRNA. This machinery cleaves off the remaining transcript that RNA pol II kept making, and brings in polyA polymerase to just add a bunch of As to the end.
+
 #### Figure-by-figure
 
 **[Figure 1](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2996489/figure/F1/)**
 
 An antisense morpholino (AMO) against U1 snRNP protects it against RNase H.
+
+On the surface of it, Fig 1C could be interpreted to mean that the *control* AMO is *inducing* splicing, because the does response only goes down to 2.5 &mu;M, i.e. there is no control without an AMO. That's an unlikely interpretation, but still it would have been nice to see this control.
 
 **[Figure 2](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2996489/figure/F2/)**
 
@@ -37,7 +41,11 @@ They use 3'RACE to identify polyadenylation sites in the prematurely terminated 
 
 **[Figure 5](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2996489/figure/F5/)**
 
-They name the phenomenon they've observed so far "premature cleavage and polyadenylation" (PCPA). They now show that the PCPA problem that occurs upon U1 knockdown is not alleviated by mutating away splice sites. PCPA does not occur if you knockdown U2, a different snRNP.
+They name the phenomenon they've observed so far "premature cleavage and polyadenylation" (PCPA). They now show that the PCPA problem that occurs upon U1 knockdown is not alleviated by mutating away splice sites. According to Fig 5A left panel, PCPA occurs far less if you knockdown U2, a different snRNP, or if you just generally inhibit the spliceosome with SSA. However, there is no loading control in Fig 5A to confirm equal amounts of RNA between bands.
+
+#### Discussion
+
+One student in our class criticized this paper for relying exclusively on HeLa cells. Confirming the findings in some sort of primary cultures or at a minimum some less aneuploid immortalized cells to show the phenomena here are not unique to HeLa would have been helpful.
 
 ### [Ingolia 2011]: Ribosome profiling of mouse embryonic stem cells reveals the complexity and dynamics of mammalian proteomes
 
@@ -47,13 +55,13 @@ The opening cites the papers announcing the first two drafts of the human genome
 
 #### Contribution
 
-This paper introduces a method called "ribosome profiling" in which you arrest ribosomes, digest RNA that isn't protected by them, then sequence the remaining RNA. This tells you the extent to which different mRNAs are being actively translated.
+This paper introduces a method called "ribosome profiling" in which you arrest ribosomes, digest RNA that isn't protected by them, then sequence the remaining ~30nt segments of RNA that were protected. This tells you the extent to which different mRNAs are being actively translated. They later published another paper specifically on this method [[Ingolia 2012]], which continues to be widely used today, although some of the specific biological conclusions of the 2011 paper have been challenged [[Guttman 2013]].
 
 #### Figure-by-figure
 
 **[Figure 1](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3225288/figure/F1/)**
 
-They figured they needed to stop ribosome progression first. They compared two translation-inhibiting small molecules - cyclohexamide and emetine - and just a buffer expected to stop translation. The two small molecules cause a heavier pileup of ribosomes at start codons than the buffer does (Fig 1C), probably because they prevent *elongation* but not *initiation*, thus ribosomes still hop on to mRNAs even after the drug treatment. On the flip side, the buffer does not seem to totally halt elongation, because with buffer there ends up being a pileup of ribosomes at stop codons (Fig 1D). Also, emetine seems to favor protection of slightly longer mRNA fragments (Fig 1B). Nonetheless, there is a very tight correlation between the number of reads per coding sequence in different methods (Fig 1A).
+They figured they needed to stop ribosome progression first. They compared two translation-inhibiting small molecules - cyclohexamide and emetine - and just a buffer expected to stop translation. The two small molecules cause a heavier pileup of ribosomes at start codons than the buffer does (Fig 1C), probably because they prevent *elongation* but not *initiation*, thus ribosomes still hop on to mRNAs even after the drug treatment. On the flip side, the buffer does not seem to totally halt elongation, because with buffer there ends up being a pileup of ribosomes at stop codons (Fig 1D). Also, emetine seems to favor protection of slightly longer mRNA fragments, though still on the order of 30nt (Fig 1B). Nonetheless, there is a very tight correlation between the number of reads per coding sequence in different methods (Fig 1A).
 
 **[Figure 2](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3225288/figure/F2/)**
 
@@ -61,15 +69,15 @@ In Fig 2A, they quantify how skewed the distribution of read density over codons
 
 One might expect that when a ribosome pauses, other ribosomes pile up behind it. If that were true, you'd expect that the read density around ribosome pause sites would be asymmetric, with a heavy left shoulder due to additional ribosomes piled up behind. That turns out not to be the case, at least on the average: Fig 2B shows that pause sites tend to have a single, sharp, symmetric, peak.
 
-Pause sites are heavily enriched for D and E as the currently-being-translated codon, and P as the translated-two-codons-ago codon (Fig 1C). According to the same plotting method as Fig 1A, this motif is hugely enriched in ribosome-profiled reads (Fig 1D).
+Pause sites are heavily enriched for D and E as the currently-being-translated codon, and P as the translated-two-codons-ago codon (Fig 1C). According to the same plotting method as Fig 1A, this motif is hugely enriched in ribosome-profiled reads (Fig 1D). From this paper, it is not clear why this should be the case. In Fig 1D you can see that a particular subset of four possible combinations of sequence at the nucleotide level (red line) is even more enriched than the >30 possible combinations of sequences that could encode the same few amino acids (yellow line). The authors don't really dwell on this distinction. Our instructors speculated that this might be evidence that the pausing is not related to the amino acid, but rather associated with the RNA sequence itself - perhaps interaction with a [Kozak sequence](http://en.wikipedia.org/wiki/Kozak_consensus_sequence), analogous to the situation in *E. coli* ribosomes where pausing is caused by interactions between the rRNA and mRNA at any [Shine-Dalgarno sequences](http://en.wikipedia.org/wiki/Shine-Dalgarno_sequence).
 
 Apparently there is a type of secretory pathway protein called "tail-anchored" which is different from any of [Type I through Type IV and GPI-anchored](/2013/02/24/cell-biology-04-the-secretory-pathway/). In "tail-anchored" (TA) proteins, the N terminus is in the cytosol and the C terminus is just stuck into the membrane, they are not "transmembrane" per se because nothing sticks out into the ER. Two such TA proteins were recently reported to have ribosome pausing at the stop codon, and this was purported to be a special feature allowing the insertion of the C terminus. This paper confirms that these transcripts do have pausing at the stop codons (Fig 2E) but also shows that there is just generally a lot of pausing at stop codons (Fig 2A) and that this is not particularly enriched in TA proteins.
 
-They also confirm that there is an interesting pause site in the middle of *Xbp1* which had been previously reported and seems to have an important functional role (Fig 2F).
+They also confirm that there is an interesting pause site in the middle of *Xbp1* which had been previously reported and seems to have an important functional role (Fig 2F). *Xbp1* is a transcription factor that reacts to ER stress. The RNA is by default paused, until stress occurs, at which time the RNA is spliced in the cytosol and translation finishes, allowing the transcription factor to translocated to the nucleus where it activates the ER stress response [[Calfon 2002], [Yanagitani 2011]].
 
 **[Figure 3](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3225288/figure/F3/)**
 
-In Figure 3 they use their new technique to measure the kinetics of translation. They use harringtonine to arrest translation *initiation*, then they wait 90, 120, or 150 seconds before adding cycloheximide to arrest translation *elongation*. Then they measure to what degree ribosomes are depleted in the early part of transcripts. This depletion is due to ribosomes having moved on (elongation) and not being replaced (by new ones doing initiation). They call this a "pulse-chase" strategy (note that no radiation is required though). They find that the average rate of elongation is 5.6 codons per second, and doesn't vary much between any of the categories they stratified on - for instance, highly vs. lowly-expressed genes. They also don't see slower elongation over rare codons.
+In Figure 3 they use their new technique to measure the kinetics of translation. [Harringtonine](http://www.abcam.com/harringtonine-ab141941.html) is a small molecule inhibitor of ribosomes which allows them to engage a potential initiation site but not to begin translation. Weirdly, it comes from [these pine trees](http://en.wikipedia.org/wiki/Cephalotaxus_harringtonii). These researchers apply harringtonine and then they wait 90, 120, or 150 seconds before adding cycloheximide to arrest translation *elongation*. Then they measure to what degree ribosomes are depleted in the early part of transcripts. This depletion is due to ribosomes having moved on (elongation) and not being replaced (by new ones doing initiation). They call this a "pulse-chase" strategy (note that no radiation is required though). They find that the average rate of elongation is 5.6 codons per second, and doesn't vary much between any of the categories they stratified on - for instance, highly vs. lowly-expressed genes. They also don't see slower elongation over rare codons.
 
 **[Figure 4](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3225288/figure/F4/)**
 
@@ -77,17 +85,21 @@ It turns out harringtonine lets ribosomes bind to the mRNA at a start codon, but
 
 **[Figure 5](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3225288/figure/F5/)**
 
-They next asked whether lincRNAs are ever translated. They found that many lincRNAs contained a region on the order of 90 bp long that was as densely occupied by ribosomes as canonical protein-coding genes are. Based on this the authors speculated that maybe lincRNAs encode proteins. This speculation, however, turned out to be false. Eric Lander later led an effort, which Ingolia and Weissman helped with, that showed that lincRNAs do not in fact encode proteins [[Guttman 2013]].
+They next asked whether lincRNAs have ribosome footprints. They found very clear evidence that many lincRNAs do engage the ribosome, which is interesting, because others had previously thought lincRNAs were mostly nuclear, whereas if they engage ribosomes they must be cytosolic. It's also interesting because what are the ribosomes *doing* on the lincRNA? The authors found that many lincRNAs contained a region on the order of 90 bp long that was as densely occupied by ribosomes as canonical protein-coding genes are. Based on this the authors speculated that maybe lincRNAs encode proteins, and even went so far as to dub them sprcRNAs. They didn't present any orthogonal evidence for the presence of these proteins, nor for a codon-wise conservation pattern (first two bases in a codon are more highly conserved than the third) as seen in canonical protein-coding sequence. 
+
+Eric Lander later led an effort, which Ingolia and Weissman contributed to, that showed that lincRNAs are no more densely populated by ribosomes than 5'UTRs are, and concluded that lincRNAs do not in fact encode proteins [[Guttman 2013]].
 
 **[Figure 6](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3225288/figure/F6/)**
 
 This figure characterizes the upstream open reading frames (uORFs) that appear in their harringtonine experiments. They argue that these may play regulatory roles in some cases but may also actually be included in the translated protein sometimes.
 
+I was interested in this because there is a body of literature, mostly about *ATF4* (which they look at in Fig 6B), concerning the idea that mRNAs with uORFs have the unusual property that their translation rate actually *increases* when the unfolded protein response is activated and translation is globally inhibited [[Morris & Geballe 2000], [Harding 2000], [Lu 2004], [Calvo 2009]] and there is a mechanism worked out for this, which involves translation starting from these uORFs [reviewed in [Spriggs 2010]]. It has been proposed that *PRNP* mRNA behaves in this manner, with translation rate increasing upon UPR activation and eIF2&alpha; phosphorylation [[Moreno 2012]]. There are indeed ribosomes bound to the 5'UTR of *Prnp* mRNA in the harringtonine-treated ES cells in this experiment - see epilogue below.
+
 Some students in our class felt that they had not done enough validation to confirm that these ORFs really serve as initiation sites *in vivo* and that this is not just an artifact of harringtonine treatment - for instance, if harringtonine just makes ribosomes pause at possible start sites even though the ribosomes were otherwise just about to disengage rather than begin translation at those sites.
 
 **[Figure 7](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3225288/figure/F7/)**
 
-In this figure they look at how the profiles change as ES cells lose pluripotency and become embryoid bodies (EBs). There are tons of changes in translation, most of which are buried in a supplement. Figure 7 highlight one interesting subset which is that ribosomal proteins are still highly expressed in EBs at the mRNA level but are much less heavily translated in EBs than ES cells. The interpretation is that ES cells are stockpiling additional ribosomes, and by the time they become EBs they have enough ribosomes.
+In this figure they look at how the profiles change as ES cells lose pluripotency and become embryoid bodies (EBs). There are tons of changes in translation, most of which are buried in a supplement. Fig 7A highlight one interesting subset which is that ribosomal proteins are still highly expressed in EBs at the mRNA level but are much less heavily translated in EBs than ES cells. The interpretation is that ES cells are stockpiling additional ribosomes, and by the time they become EBs they have enough ribosomes. In Fig 7B they show that there is a bit of a trend towards EBs having relatively less 5'UTR uORF translation than ES cells do, but this is not dissected any more finely. If you look at some of the uORF references [e.g. [Spriggs 2010]] there is a specific pattern of how regulatory uORFs work - the first one is constitutively translated, and then whether a second, out-of-frame one is translated is what determines whether the main ORF gets translated. So if you wanted to look for a signal of uORF regulation of main ORFs between EBs and ESs you would want to stratify by first vs. second uORF. You could also induce ER stress with tunicaymycin as a positive control for something that you strongly expect to cause a decrease in (second) uORF translation.
 
 #### Epilogue
 
@@ -132,3 +144,22 @@ The main peak is at nt 139 (this may indicate they had a different transcript an
 [Vanderperre 2011]: http://www.ncbi.nlm.nih.gov/pubmed/21478263 "Vanderperre B, Staskevicius AB, Tremblay G, McCoy M, O'Neill MA, Cashman NR, Roucou X. An overlapping reading frame in the PRNP gene encodes a novel polypeptide distinct from the prion protein. FASEB J. 2011 Jul;25(7):2373-86. doi: 10.1096/fj.10-173815. Epub 2011 Apr 8. PubMed PMID: 21478263."
 
 [Guttman 2013]: http://www.ncbi.nlm.nih.gov/pubmed/23810193 "Guttman M, Russell P, Ingolia NT, Weissman JS, Lander ES. Ribosome profiling provides evidence that large noncoding RNAs do not encode proteins. Cell. 2013 Jul 3;154(1):240-51. doi: 10.1016/j.cell.2013.06.009. Epub 2013 Jun 27. PubMed PMID: 23810193; PubMed Central PMCID: PMC3756563."
+
+[Calfon 2002]: http://www.ncbi.nlm.nih.gov/pubmed/11780124 "Calfon M, Zeng H, Urano F, Till JH, Hubbard SR, Harding HP, Clark SG, Ron D. IRE1 couples endoplasmic reticulum load to secretory capacity by processing the XBP-1 mRNA. Nature. 2002 Jan 3;415(6867):92-6. Erratum in: Nature 2002 Nov 14;420(6912):202. PubMed PMID: 11780124."
+
+[Yanagitani 2011]: http://www.ncbi.nlm.nih.gov/pubmed/21233347 "Yanagitani K, Kimata Y, Kadokura H, Kohno K. Translational pausing ensures membrane targeting and cytoplasmic splicing of XBP1u mRNA. Science. 2011 Feb 4;331(6017):586-9. doi: 10.1126/science.1197142. Epub 2011 Jan 13. PubMed PMID: 21233347."
+
+[Ingolia 2012]: http://www.ncbi.nlm.nih.gov/pubmed/22836135 "Ingolia NT, Brar GA, Rouskin S, McGeachy AM, Weissman JS. The ribosome profiling strategy for monitoring translation in vivo by deep sequencing of ribosome-protected mRNA fragments. Nat Protoc. 2012 Jul 26;7(8):1534-50. doi: 10.1038/nprot.2012.086. PubMed PMID: 22836135; PubMed Central PMCID: PMC3535016."
+
+[Moreno 2012]: http://www.ncbi.nlm.nih.gov/pubmed/22622579/ "Moreno JA, Radford H, Peretti D, Steinert JR, Verity N, Martin MG, Halliday M, Morgan J, Dinsdale D, Ortori CA, Barrett DA, Tsaytler P, Bertolotti A, Willis AE, Bushell M, Mallucci GR. Sustained translational repression by eIF2α-P mediates prion neurodegeneration. Nature. 2012 May 6;485(7399):507-11. doi: 10.1038/nature11058. Erratum in: Nature.2014 Jul 17;511(7509):370. PubMed PMID: 22622579; PubMed Central PMCID: PMC3378208."
+
+[Harding 2000]: http://www.ncbi.nlm.nih.gov/pubmed/11106749/ "Harding HP, Novoa I, Zhang Y, Zeng H, Wek R, Schapira M, Ron D. Regulated translation initiation controls stress-induced gene expression in mammalian cells. Mol Cell. 2000 Nov;6(5):1099-108. PubMed PMID: 11106749."
+
+[Spriggs 2010]: http://www.ncbi.nlm.nih.gov/pubmed/20965418/ "Spriggs KA, Bushell M, Willis AE. Translational regulation of gene expression  during conditions of cell stress. Mol Cell. 2010 Oct 22;40(2):228-37. doi: 10.1016/j.molcel.2010.09.028. Review. PubMed PMID: 20965418."
+
+[Calvo 2009]: http://www.ncbi.nlm.nih.gov/pubmed/19372376 "Calvo SE, Pagliarini DJ, Mootha VK. Upstream open reading frames cause widespread reduction of protein expression and are polymorphic among humans. Proc Natl Acad Sci U S A. 2009 May 5;106(18):7507-12. doi: 10.1073/pnas.0810916106. Epub 2009 Apr 16. PubMed PMID: 19372376; PubMed Central PMCID: PMC2669787."
+
+[Lu 2004]: http://www.ncbi.nlm.nih.gov/pubmed/15479734 "Lu PD, Harding HP, Ron D. Translation reinitiation at alternative open reading frames regulates gene expression in an integrated stress response. J Cell Biol. 2004 Oct 11;167(1):27-33. PubMed PMID: 15479734; PubMed Central PMCID: PMC2172506."
+
+[Morris & Geballe 2000]: http://www.ncbi.nlm.nih.gov/pubmed/11073965 "Morris DR, Geballe AP. Upstream open reading frames as regulators of mRNA translation. Mol Cell Biol. 2000 Dec;20(23):8635-42. Review. PubMed PMID: 11073965; PubMed Central PMCID: PMC86464."
+
