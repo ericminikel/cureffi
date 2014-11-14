@@ -25,6 +25,8 @@ Graham Coop has some great blog posts about this and related stuff - for instanc
 
 ![](/media/2014/11/key-to-pedigree-charts.png)
 
+A more detailed key is available [here](http://carrier.pbworks.com/f/pedigreeSymbols.jpg).
+
 Here are examples of pedigrees suggestive of particular inheritance modes:
 
 ![](/media/2014/11/autosomal-dominant.png)
