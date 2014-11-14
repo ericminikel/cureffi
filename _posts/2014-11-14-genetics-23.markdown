@@ -1,0 +1,66 @@
+---
+layout: post
+title:  "Genetics 23: 'Genetics in families and the analysis of Mendelian traits'"
+date:   2014-11-14 12:00:00
+author: ericminikel
+tag: genetics-201
+location: Boston, MA
+---
+
+*These are my notes from lecture 23 of Harvard's Genetics 201 course, delivered by Steve McCarroll on November 14, 2014.*
+
+### Recombination and segment sharing in families
+
+In humans there are on average 1-2 recombination events per chromosome per generation, for a total of about 30 across the whole genome. Our genomes are therefore mosaics of *long* segments that we inherit from recent ancestors.
+
+![](/media/2014/11/identity-by-descent.png)
+
+Total IBD between siblings is normally distributed 50% &plusmn; 4% [[Visscher 2006]].
+
+Graham Coop has some great blog posts about this and related stuff - for instance [this](http://gcbias.org/2014/01/26/genomic-variation-in-sharing-between-siblings/) and [this](http://gcbias.org/2013/11/04/how-much-of-your-genome-do-you-inherit-from-a-particular-ancestor/).
+
+### Monogenic ("Mendelian") inheritance
+
+**Monogenic**, **oligogenic** and **polygenic** traits are controlled by genetic variation at one, several or many loci respectively.
+
+![](/media/2014/11/key-to-pedigree-charts.png)
+
+Here are examples of pedigrees suggestive of particular inheritance modes:
+
+![](/media/2014/11/autosomal-dominant.png)
+
+Note that X-linked dominant looks just like autosomal recessive except for an absence of father-to-son transmissions.
+
+![](/media/2014/11/autosomal-recessive.png)
+
+![](/media/2014/11/x-linked-recessive.png)
+
+X-linked recessive typically affects males, the male has unaffected parents, and all the affected males in a pedigree share ancestry via mothers rather than fathers.
+
+![](/media/2014/11/mitochondrial.png)
+
+Recessive traits have to occupy parts of the genome that are IBD-2 among affected siblings.
+
+Dominant traits have to occupy parts of the genome that are IBD-1 or IBD-2 among affected siblings and, if you assume complete penetrance, IBD-0 between affected siblings and unaffected siblings.
+
+**Penetrance** is defined as "the proportion of individuals carrying a variant who also express an associated trait."
+
+### How mapping using microsatellites works
+
+For monogenic traits in large families it is possible to identify the locus based on extended linkage with surrounding polymorphisms. The methods for assigning grandparental haplotypes to grandchildren were originally worked out by the likes of Eric Lander and Mark Daly [[Lander 1987], [Donis-Keller 1987]]. Though now done with SNPs, back in that day the mapping was done by genotyping **microsatellites**, a.k.a. short tandem repeats (STRs). A useful fact about these is that they are highly multi-allelic so you can uniquely identify grandparental haplotypes and **identity-by-state** (IBS) between siblings. To wit:
+
+![](/media/2014/11/microsatellite-ibs-mapping.png)
+
+Fine linkage mapping requires either a very large family - like the huge Venezuelan family used to map the Huntington's disease mutation [[MacDonald 1993]] or a multiple affected families who all have the same causal mutation, or at least have causal mutations at the same locus.
+
+Linkage is quantified using a **LOD score**, which stands for "log of the odds". A LOD score is calculated for every genotyped marker and is basically a log likelihood ratio. A marker's LOD score is log10(likelihood of data if the phenotype is in linkage with this marker / likelihood of data if phenotype is not linked to this marker). Generally a LOD score of 3.0 is considered to be "some evidence" for linkage, and 4.0 is "stronger evidence". This rule of thumb is based on multiple testing correction from the days when about 10<sup>3</sup> markers would be genotyped.
+
+There are now >3,000 human diseases known to have monogenic inheritance \[citation needed\].
+
+[Visscher 2006]: http://www.ncbi.nlm.nih.gov/pubmed/16565746/ "Visscher PM, Medland SE, Ferreira MA, Morley KI, Zhu G, Cornes BK, Montgomery  GW, Martin NG. Assumption-free estimation of heritability from genome-wide identity-by-descent sharing between full siblings. PLoS Genet. 2006 Mar;2(3):e41. Epub 2006 Mar 24. PubMed PMID: 16565746; PubMed Central PMCID: PMC1413498."
+
+[Lander 1987]: http://www.ncbi.nlm.nih.gov/pubmed/3692487 "Lander ES, Green P, Abrahamson J, Barlow A, Daly MJ, Lincoln SE, Newberg LA. MAPMAKER: an interactive computer package for constructing primary genetic linkage maps of experimental and natural populations. Genomics. 1987 Oct;1(2):174-81. Erratum in: Genomics. 2009 Apr;93(4):398. Newburg, L [corrected  to Newberg, L A]. PubMed PMID: 3692487."
+
+[Donis-Keller 1987]: http://www.ncbi.nlm.nih.gov/pubmed/3664638 "Donis-Keller H, Green P, Helms C, Cartinhour S, Weiffenbach B, Stephens K, Keith TP, Bowden DW, Smith DR, Lander ES, et al. A genetic linkage map of the human genome. Cell. 1987 Oct 23;51(2):319-37. PubMed PMID: 3664638."
+
+[MacDonald 1993]: http://www.ncbi.nlm.nih.gov/pubmed/8458085 "A novel gene containing a trinucleotide repeat that is expanded and unstable on Huntington's disease chromosomes. The Huntington's Disease Collaborative Research Group. Cell. 1993 Mar 26;72(6):971-83. PubMed PMID: 8458085."
