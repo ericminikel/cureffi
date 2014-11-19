@@ -1,0 +1,95 @@
+---
+layout: post
+title:  "Primer on PCSK9 genetics"
+date:   2014-11-19 12:05:00
+author: ericminikel
+location: Boston, MA
+thumb120: http://www.cureffi.org/media/2014/11/pcsk9-thumbnail.png
+summary200: "PCSK9 has emerged as the poster child for using human genetics to inform therapeutics. Here's a primer on how PCSK9 went from novel gene to drug target in just a few years."
+---
+
+The *PCSK9* gene has emerged as a poster child of genetics and genomics. These days, almost any time you hear someone talk about the value of looking for loss-of-function mutations (as in [this MIT Technology Review article](http://www.technologyreview.com/featuredstory/532421/the-search-for-exceptional-genomes/)), the value of human genetics for informing therapeutics (for instance in [[Plenge 2013]]), or the surprising power of "N of 1" studies (George Church's talk at Harvard interview weekend), *PCSK9* is sure to be mentioned. Here's a primer on how this gene rose to fame in the past decade.
+
+*PCSK9* came to the attention of researchers a decade ago, when two missense mutations - S127R and F216L - were found to be associated with dominantly inherited familial hypercholesterolemia in two different families [[Abifadel 2003]]. Individuals with these mutations had high levels of low density lipoprotein (LDL or "bad cholesterol") in their blood. The mechanism was originally unclear, but the authors speculated that the variants might cause a gain of function.
+
+This speculation was soon vindicated: overexpression of *PCSK9* - either the wild-type or mutant allele - in mice was shown to reduce LDL receptor levels and increase circulating LDL [[Maxwell 2004]], while *Pcsk9* knockout in mice caused increased LDL receptor levels and reduced circulating LDL [[Rashid 2005]]. The knockout mice were also viable and fertile and seemed healthy.
+
+Human genetics soon provided further validation: heterozygous nonsense mutations - causing a clear loss of function - were found in individuals with very low LDL [[Cohen 2005]]. Moreover, the association between less PCSK9 and less LDL wasn't just binary, it was continuous - a whole spectrum of hypomorphic missense alleles resulted in reduced secretion of PCSK9 and reduced LDL [[Kotowski 2006]].
+
+That was exciting because, as cardiac geneticist Sekar Kathiresan [says](https://twitter.com/skathire/status/533340489920311296), "If there's one thing in medicine that's certain, it's that LDL causes heart attack". And indeed, a followup study in a much larger cohort soon revealed that not only were full or partial loss-of-functions in *PCSK9* associated with reduced LDL, which is but a mere biomarker, they were also associated with a true clinical outcome: heart disease risk [[Cohen 2006]].
+
+By 2006, statins had already been on the market for 20 years, and some had already started to become available as generics, yet millions of people still had high LDL [[Kidd 2006], [Steinberg & Witztum 2009], [Crunkhorn 2012]], and heart disease was ([is](http://www.cdc.gov/nchs/data/nvsr/nvsr61/nvsr61_04.pdf)) still the number one cause of death in the United States. Could inhibitors of PCSK9 be the next generation of LDL-lowering drugs?
+
+The enthusiasm for PCSK9 inhibition as a therapeutic strategy got a huge boost when one compound heterozygote - someone entirely lacking a functional copy of *PCKS9* - was identified [[Zhao 2006]]. She had one nonsense mutation and, *in trans*, an in-frame deletion, &Delta;R97, that entirely prevented secretion of the protein. This individual had extraordinarily low LDL and no other obvious phenotype:
+
+> Despite having no immunodetectable circulating PCSK9 and an LDL-C of only 14 mg/dL, II.2 is an apparently healthy, fertile, normotensive, college-educated woman with normal liver and renal function tests (including urinalysis) who works as an aerobics instructor.
+
+This was the kind of "N of 1" insight that George Church loves to tell aspiring biologists about: just one healthy individual lacking a gene is enough to prove you can live without it. (An additional knockout individual, homozygous for a nonsense mutation, was also identified in [[Kotowski 2006]], although no phenotypic data were reported.)
+
+So what *is* PCSK9? It turns out that it is a secreted serine protease [[Horton 2007]]. The N terminus has a signal peptide that directs it to the ER, followed by a prodomain. Once the prodomain is cleaved, PCSK9 becomes active and binds and degrades the LDL receptor, [LDLR](http://en.wikipedia.org/wiki/LDL_receptor). LDLR is found on the surface of many cells, chiefly hepatocytes, and binds and internalizes circulating LDL. Thus, less PCKS9 means more LDLR, means more LDL.
+
+![](/media/2014/11/pcsk9-ldlr-ldl.png)
+
+Together, all of this evidence made a brilliant case for therapeutics. It's easier to develop inhibitors than activators, and here's a gene whose loss is protective against the most common disease in the developed world, without any obviously deleterious side effects. Adding to that, there wasn't just one loss-of-function allele but a full allelic spectrum, from homozygous or compound heterozygous loss of function, to heterozygous loss of function, to heterozygous partial loss of function, to wild-type, to pathogenic gain of function. It was, as David Altshuler and others would later observe, nature's own dose-response curve [[Plenge 2013]].
+
+Accordingly, Amgen developed a monoclonal antibody, [evolocumab](http://en.wikipedia.org/wiki/Evolocumab), which showed efficacy first in mice and non-human primates [[Chan 2009]] and later [in humans](http://investors.amgen.com/phoenix.zhtml?c=61656&p=RssLanding&cat=news&id=1893028). In parallel, Regeneron/Sanofi developed their own mAb, [alirocumab](http://en.wikipedia.org/wiki/Alirocumab), which showed outstanding results in Phase 1 and 2 trials [[Stein 2012a], [Stein 2012b]]. The two companies were, at last count, locked in [a bitter struggle](http://www.fiercebiotech.com/story/amgen-sues-block-sanofi-and-regeneron-pcsk9-goal-line/2014-10-17) to have their drug approved first - but as far as I've seen, all observers seem to agree that they will likely be approved, probably in 2015 (see e.g. [Forbes](http://www.forbes.com/sites/larryhusten/2014/08/31/early-hint-at-cardiovascular-outcomes-with-sanofis-and-regenerons-rapidly-advancing-cholesterol-drug/), [TheStreet](http://www.thestreet.com/story/12879832/2/pcsk9-and-other-novel-hypercholesterolemia-drugs-market-2014--2024.html)). Other companies have mAbs in development as well, and small peptides, siRNAs, and small molecules are in the works as well, further back in the pipeline. 
+
+If drugs against PCSK9 are indeed approved, it will be a proud day for human genetics. Loss-of-function mutations in several other genes have been reported to have beneficial phenotypes (some in a heterozygous, some in a homzygous state) - *CCR5* and *CXCR4* for HIV resistance [[Samson 1996], citation needed], *FUT2* for norovirus resistance [[Thorven 2005]], *LPA*, *APOC3*, and *NPC1L1* for reduced LDL/heart disease risk [[Ogorelkova 1999], [Pollin 2008], [MIGCI 2014]], *ACTN3* for endurance athletic performance [[MacArthur 2007]], *MSTN* for strength and musculature [[Schuelke 2004]], *SLC30A8* for reduced type 2 diabetes risk [[Flannick 2014]], and *IFIH1* for reduced type 1 diabetes risk [[Nejentsev 2009]]. Some of these discoveries have already inspired (or in the case of *NPC1L1*, [retrospectively validated](http://en.wikipedia.org/wiki/Ezetimibe)) efforts to develop inhibitors. New human "knockouts" are being discovered all the time - see *APOE* earlier this year [[Mak 2014]]. Hopefully as we learn the loss-of-function phenotypes for more and more genes, we'll have better and better ideas of what proteins to target with drugs.
+
+
+[Yang 2002]: http://www.ncbi.nlm.nih.gov/pubmed/12202038 "Yang T, Espenshade PJ, Wright ME, Yabe D, Gong Y, Aebersold R, Goldstein JL, Brown MS. Crucial step in cholesterol homeostasis: sterols promote binding of SCAP to INSIG-1, a membrane protein that facilitates retention of SREBPs in ER. Cell. 2002 Aug 23;110(4):489-500. PubMed PMID: 12202038."
+
+[Chen 2013]: http://www.ncbi.nlm.nih.gov/pubmed/23580231 "Chen XW, Wang H, Bajaj K, Zhang P, Meng ZX, Ma D, Bai Y, Liu HH, Adams E, Baines A, Yu G, Sartor MA, Zhang B, Yi Z, Lin J, Young SG, Schekman R, Ginsburg D. SEC24A deficiency lowers plasma cholesterol through reduced PCSK9 secretion. Elife. 2013 Apr 9;2:e00444. doi: 10.7554/eLife.00444. PubMed PMID: 23580231; PubMed Central PMCID: PMC3622177."
+
+[Abifadel 2003]: http://www.ncbi.nlm.nih.gov/pubmed/12730697 "Abifadel M, Varret M, Rabès JP, Allard D, Ouguerram K, Devillers M, Cruaud C,  Benjannet S, Wickham L, Erlich D, Derré A, Villéger L, Farnier M, Beucler I, Bruckert E, Chambaz J, Chanu B, Lecerf JM, Luc G, Moulin P, Weissenbach J, Prat A, Krempf M, Junien C, Seidah NG, Boileau C. Mutations in PCSK9 cause autosomal dominant hypercholesterolemia. Nat Genet. 2003 Jun;34(2):154-6. PubMed PMID: 12730697."
+
+[Maxwell 2004]: http://www.ncbi.nlm.nih.gov/pubmed/15118091/ "Maxwell KN, Breslow JL. Adenoviral-mediated expression of Pcsk9 in mice results in a low-density lipoprotein receptor knockout phenotype. Proc Natl Acad  Sci U S A. 2004 May 4;101(18):7100-5. Epub 2004 Apr 26. PubMed PMID: 15118091; PubMed Central PMCID: PMC406472."
+
+[Rashid 2005]: http://www.ncbi.nlm.nih.gov/pubmed/15805190/ "Rashid S, Curtis DE, Garuti R, Anderson NN, Bashmakov Y, Ho YK, Hammer RE, Moon YA, Horton JD. Decreased plasma cholesterol and hypersensitivity to statins  in mice lacking Pcsk9. Proc Natl Acad Sci U S A. 2005 Apr 12;102(15):5374-9. Epub 2005 Apr 1. PubMed PMID: 15805190; PubMed Central PMCID: PMC556275."
+
+[Cohen 2005]: http://www.ncbi.nlm.nih.gov/pubmed/15654334 "Cohen J, Pertsemlidis A, Kotowski IK, Graham R, Garcia CK, Hobbs HH. Low LDL cholesterol in individuals of African descent resulting from frequent nonsense mutations in PCSK9. Nat Genet. 2005 Feb;37(2):161-5. Epub 2005 Jan 16. Erratum in: Nat Genet. 2005 Mar;37(3):328. PubMed PMID: 15654334."
+
+[Cohen 2006]: http://www.ncbi.nlm.nih.gov/pubmed/16554528 "Cohen JC, Boerwinkle E, Mosley TH Jr, Hobbs HH. Sequence variations in PCSK9,  low LDL, and protection against coronary heart disease. N Engl J Med. 2006 Mar 23;354(12):1264-72. PubMed PMID: 16554528."
+
+[Kotowski 2006]: http://www.ncbi.nlm.nih.gov/pubmed/16465619 "Kotowski IK, Pertsemlidis A, Luke A, Cooper RS, Vega GL, Cohen JC, Hobbs HH. A spectrum of PCSK9 alleles contributes to plasma levels of low-density lipoprotein cholesterol. Am J Hum Genet. 2006 Mar;78(3):410-22. Epub 2006 Jan 20. PubMed PMID: 16465619; PubMed Central PMCID: PMC1380285."
+
+[Zhao 2006]: http://www.ncbi.nlm.nih.gov/pubmed/16909389/ "Zhao Z, Tuakli-Wosornu Y, Lagace TA, Kinch L, Grishin NV, Horton JD, Cohen JC, Hobbs HH. Molecular characterization of loss-of-function mutations in PCSK9 and identification of a compound heterozygote. Am J Hum Genet. 2006 Sep;79(3):514-23. Epub 2006 Jul 18. PubMed PMID: 16909389; PubMed Central PMCID: PMC1559532."
+
+[Plenge 2013]: http://www.ncbi.nlm.nih.gov/pubmed/23868113 "Plenge RM, Scolnick EM, Altshuler D. Validating therapeutic targets through human genetics. Nat Rev Drug Discov. 2013 Aug;12(8):581-94. doi: 10.1038/nrd4051. Epub 2013 Jul 19. Review. PubMed PMID: 23868113."
+
+[Kidd 2006]: http://www.ncbi.nlm.nih.gov/pubmed/17078172 "Kidd J. Life after statin patent expiries. Nat Rev Drug Discov. 2006 Oct;5(10):813-4. PubMed PMID: 17078172."
+
+[Crunkhorn 2012]: http://www.ncbi.nlm.nih.gov/pubmed/22212668 "Crunkhorn S. Trial watch: PCSK9 antibody reduces LDL cholesterol. Nat Rev Drug Discov. 2012 Jan 3;11(1):11. doi: 10.1038/nrd3633. PubMed PMID: 22212668."
+
+[Horton 2007]: http://www.ncbi.nlm.nih.gov/pubmed/17215125/ "Horton JD, Cohen JC, Hobbs HH. Molecular biology of PCSK9: its role in LDL metabolism. Trends Biochem Sci. 2007 Feb;32(2):71-7. Epub 2007 Jan 9. Review. PubMed PMID: 17215125; PubMed Central PMCID: PMC2711871."
+
+[Steinberg & Witztum 2009]: http://www.ncbi.nlm.nih.gov/pubmed/19506257 "Steinberg D, Witztum JL. Inhibition of PCSK9: a powerful weapon for achieving  ideal LDL cholesterol levels. Proc Natl Acad Sci U S A. 2009 Jun 16;106(24):9546-7. doi: 10.1073/pnas.0904560106. Epub 2009 Jun 8. PubMed PMID: 19506257; PubMed Central PMCID: PMC2701045."
+
+[Chan 2009]: http://www.ncbi.nlm.nih.gov/pubmed/19443683 "Chan JC, Piper DE, Cao Q, Liu D, King C, Wang W, Tang J, Liu Q, Higbee J, Xia  Z, Di Y, Shetterly S, Arimura Z, Salomonis H, Romanow WG, Thibault ST, Zhang R, Cao P, Yang XP, Yu T, Lu M, Retter MW, Kwon G, Henne K, Pan O, Tsai MM, Fuchslocher B, Yang E, Zhou L, Lee KJ, Daris M, Sheng J, Wang Y, Shen WD, Yeh WC, Emery M, Walker NP, Shan B, Schwarz M, Jackson SM. A proprotein convertase subtilisin/kexin type 9 neutralizing antibody reduces serum cholesterol in mice and nonhuman primates. Proc Natl Acad Sci U S A. 2009 Jun 16;106(24):9820-5. doi: 10.1073/pnas.0903849106. Epub 2009 May 14. PubMed PMID: 19443683; PubMed Central  PMCID: PMC2682542."
+
+[Stein 2012a]: http://www.ncbi.nlm.nih.gov/pubmed/22435370 "Stein EA, Mellis S, Yancopoulos GD, Stahl N, Logan D, Smith WB, Lisbon E, Gutierrez M, Webb C, Wu R, Du Y, Kranz T, Gasparino E, Swergold GD. Effect of a monoclonal antibody to PCSK9 on LDL cholesterol. N Engl J Med. 2012 Mar 22;366(12):1108-18. doi: 10.1056/NEJMoa1105803. PubMed PMID: 22435370."
+
+[Stein 2012b]: http://www.ncbi.nlm.nih.gov/pubmed/22633824 "Stein EA, Gipe D, Bergeron J, Gaudet D, Weiss R, Dufour R, Wu R, Pordy R. Effect of a monoclonal antibody to PCSK9, REGN727/SAR236553, to reduce low-density lipoprotein cholesterol in patients with heterozygous familial hypercholesterolaemia on stable statin dose with or without ezetimibe therapy: a  phase 2 randomised controlled trial. Lancet. 2012 Jul 7;380(9836):29-36. doi: 10.1016/S0140-6736(12)60771-5. Epub 2012 May 26. PubMed PMID: 22633824."
+
+[Samson 1996]: http://www.ncbi.nlm.nih.gov/pubmed/8751444 "Samson M, Libert F, Doranz BJ, Rucker J, Liesnard C, Farber CM, Saragosti S, Lapoumeroulie C, Cognaux J, Forceille C, Muyldermans G, Verhofstede C, Burtonboy  G, Georges M, Imai T, Rana S, Yi Y, Smyth RJ, Collman RG, Doms RW, Vassart G, Parmentier M. Resistance to HIV-1 infection in caucasian individuals bearing mutant alleles of the CCR-5 chemokine receptor gene. Nature. 1996 Aug 22;382(6593):722-5. PubMed PMID: 8751444."
+
+[Ogorelkova 1999]: http://www.ncbi.nlm.nih.gov/pubmed/10484779 "Ogorelkova M, Gruber A, Utermann G. Molecular basis of congenital lp(a) deficiency: a frequent apo(a) 'null' mutation in caucasians. Hum Mol Genet. 1999  Oct;8(11):2087-96. PubMed PMID: 10484779."
+
+[Pollin 2008]: http://www.ncbi.nlm.nih.gov/pubmed/19074352 "Pollin TI, Damcott CM, Shen H, Ott SH, Shelton J, Horenstein RB, Post W, McLenithan JC, Bielak LF, Peyser PA, Mitchell BD, Miller M, O'Connell JR, Shuldiner AR. A null mutation in human APOC3 confers a favorable plasma lipid profile and apparent cardioprotection. Science. 2008 Dec 12;322(5908):1702-5. doi: 10.1126/science.1161524. PubMed PMID: 19074352; PubMed Central PMCID: PMC2673993."
+
+[MacArthur 2007]: http://www.ncbi.nlm.nih.gov/pubmed/17828264 "MacArthur DG, Seto JT, Raftery JM, Quinlan KG, Huttley GA, Hook JW, Lemckert FA, Kee AJ, Edwards MR, Berman Y, Hardeman EC, Gunning PW, Easteal S, Yang N, North KN. Loss of ACTN3 gene function alters mouse muscle metabolism and shows evidence of positive selection in humans. Nat Genet. 2007 Oct;39(10):1261-5. Epub 2007 Sep 9. PubMed PMID: 17828264."
+
+[Schuelke 2004]: http://www.ncbi.nlm.nih.gov/pubmed/15215484 "Schuelke M, Wagner KR, Stolz LE, Hübner C, Riebel T, Kömen W, Braun T, Tobin JF, Lee SJ. Myostatin mutation associated with gross muscle hypertrophy in a child. N Engl J Med. 2004 Jun 24;350(26):2682-8. PubMed PMID: 15215484."
+
+[Balemans 2001]: http://www.ncbi.nlm.nih.gov/pubmed/11181578 "Balemans W, Ebeling M, Patel N, Van Hul E, Olson P, Dioszegi M, Lacza C, Wuyts W, Van Den Ende J, Willems P, Paes-Alves AF, Hill S, Bueno M, Ramos FJ, Tacconi P, Dikkers FG, Stratakis C, Lindpaintner K, Vickery B, Foernzler D, Van Hul W. Increased bone density in sclerosteosis is due to the deficiency of a novel secreted protein (SOST). Hum Mol Genet. 2001 Mar 1;10(5):537-43. PubMed PMID: 11181578."
+
+[Thorven 2005]: http://www.ncbi.nlm.nih.gov/pubmed/16306606 "Thorven M, Grahn A, Hedlund KO, Johansson H, Wahlfrid C, Larson G, Svensson L. A homozygous nonsense mutation (428G-->A) in the human secretor (FUT2) gene provides resistance to symptomatic norovirus (GGII) infections. J Virol. 2005 Dec;79(24):15351-5. PubMed PMID: 16306606; PubMed Central PMCID: PMC1315998."
+
+[Flannick 2014]: http://www.ncbi.nlm.nih.gov/pubmed/24584071 "Flannick J, Thorleifsson G, Beer NL, Jacobs SB, Grarup N, Burtt NP, Mahajan A, Fuchsberger C, Atzmon G, Benediktsson R, Blangero J, Bowden DW, Brandslund I, Brosnan J, Burslem F, Chambers J, Cho YS, Christensen C, Douglas DA, Duggirala R, Dymek Z, Farjoun Y, Fennell T, Fontanillas P, Forsén T, Gabriel S, Glaser B, Gudbjartsson DF, Hanis C, Hansen T, Hreidarsson AB, Hveem K, Ingelsson E, Isomaa  B, Johansson S, Jørgensen T, Jørgensen ME, Kathiresan S, Kong A, Kooner J, Kravic J, Laakso M, Lee JY, Lind L, Lindgren CM, Linneberg A, Masson G, Meitinger T, Mohlke KL, Molven A, Morris AP, Potluri S, Rauramaa R, Ribel-Madsen R, Richard AM, Rolph T, Salomaa V, Segrè AV, Skärstrand H, Steinthorsdottir V, Stringham HM, Sulem P, Tai ES, Teo YY, Teslovich T, Thorsteinsdottir U, Trimmer JK, Tuomi T, Tuomilehto J, Vaziri-Sani F, Voight BF, Wilson JG, Boehnke M, McCarthy MI, Njølstad PR, Pedersen O; Go-T2D Consortium; T2D-GENES Consortium, Groop L, Cox DR, Stefansson K, Altshuler D. Loss-of-function mutations in SLC30A8 protect against type 2 diabetes. Nat Genet. 2014 Apr;46(4):357-63. doi: 10.1038/ng.2915.  Epub 2014 Mar 2. PubMed PMID: 24584071; PubMed Central PMCID: PMC4051628."
+
+[Mak 2014]: http://www.ncbi.nlm.nih.gov/pubmed/25111166 "Mak AC, Pullinger CR, Tang LF, Wong JS, Deo RC, Schwarz JM, Gugliucci A, Movsesyan I, Ishida BY, Chu C, Poon A, Kim P, Stock EO, Schaefer EJ, Asztalos BF, Castellano JM, Wyss-Coray T, Duncan JL, Miller BL, Kane JP, Kwok PY, Malloy MJ. Effects of the absence of apolipoprotein e on lipoproteins, neurocognitive function, and retinal function. JAMA Neurol. 2014 Oct 1;71(10):1228-36. doi: 10.1001/jamaneurol.2014.2011. PubMed PMID: 25111166."
+
+[Nejentsev 2009]: http://www.ncbi.nlm.nih.gov/pubmed/19264985 "Nejentsev S, Walker N, Riches D, Egholm M, Todd JA. Rare variants of IFIH1, a  gene implicated in antiviral responses, protect against type 1 diabetes. Science. 2009 Apr 17;324(5925):387-9. doi: 10.1126/science.1167728. Epub 2009 Mar 5. PubMed PMID: 19264985; PubMed Central PMCID: PMC2707798."
+
+[MIGCI 2014]: http://www.ncbi.nlm.nih.gov/pubmed/25390462 "The Myocardial Infarction Genetics Consortium Investigators. Inactivating Mutations in NPC1L1 and Protection from Coronary Heart Disease. N Engl J Med. 2014 Nov 12. [Epub ahead of print] PubMed PMID: 25390462."
+
