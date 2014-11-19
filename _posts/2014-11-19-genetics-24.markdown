@@ -1,0 +1,93 @@
+---
+layout: post
+title:  "Genetics 24: 'Complex traits, heritability, and the genetics of populations'"
+date:   2014-11-19 12:00:00
+author: ericminikel
+tag: genetics-201
+location: Boston, MA
+---
+
+*These are my notes from lecture 24 of Harvard's Genetics 201 course, delivered by Steve McCarroll on November 19, 2014.*
+
+### Why perform exome sequencing?
+
+This part of the lecture is a continuation of [the last lecture](/2014/11/14/genetics-23/) on monogenic disorders.
+
+#### Whole genomes vs. whole exomes
+
+Whole exome sequencing remains a preferred alternative to whole genome sequencing in most cases. It is still a few times cheaper (perhaps 1/5 the cost), and it produces less data (a good exome is 15GB, a good whole genome is 200GB) which makes it computationally easier to manage, while it still includes the parts of the genome that we have the best ability to interpret functionally. For further comparison of whole genome and whole exome, see [this post](http://macarthurlab.org/2014/07/21/what-do-we-miss-with-exome-sequencing/).
+
+#### Exomes vs. linkage mapping
+
+Certain kinds of genetic causality cannot be uncovered with linkage analysis, but can be uncovered with sequencing. For example, *de novo* mutations, which are a plausible inheritance model for rare, sporadic congenital disorders with low sibling recurrence. See for instance Ben Neale and Mark Daly's landmark paper on *de novo* mutations in autism [[Neale 2012]].
+
+One of the first, if not the first, genetic disorder to be solved using exome sequencing was Kabuki syndrome, which turns out to be due to heterozygous loss-of-function mutations in the haploinsufficient gene *MLL2* [[Ng 2010]]. The researchers sequenced the exomes of 10 trios, and applied aggressive filtering, removing variants that were seen in public databases such as dbSNP and 1000 Genomes, and looking specifically for loss-of-function mutations. They also used the clever strategy of ranking the patients according to how closely their phenotype resembled canonical features of Kabuki syndrome, as outlined in [Table 2](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2930028/table/T2/). Through these strategies they were able to find that 9 of the 10 patients had rare variants in *MLL2*, four of which were clear loss-of-function variants.
+
+### Polygenic inheritance
+
+The study of polygenic traits and disorders in humans has been informed in large part by agricultural genetics. Some of this is reviewed in [[Visscher 2008]].
+
+Consider the example of Angus cattle, which were imported from Scotland in the 1900s and have been selectively bred to increase meat yield. In each generation, bulls from the right tail of the distribution of meat yield are selected to contribute sperm for the next generation. This progressively shifts the mean meat yield upward in each generation. As a result, meat yields have increased linearly ever since the 1950s. This was somewhat surprising. Initially, people thought that meat yield would plateau after several generations once all of the favorable alleles had become fixed. And if meat yield were a mono- or oligogenic trait, that might indeed be expected. Instead, the heritability of meat yield has remained high even as average meat yield has increased, which is consistent with polygenic inheritance.
+
+[Francis Galton](http://en.wikipedia.org/wiki/Francis_Galton) was Charles Darwin's half-cousin and a contemporary of Mendel. Whereas Mendel studied binary traits, which turned out to be monogenic (or "Mendelian" as we now say), Galton studied quantitative traits, which he called "blending characters" and which we now recognize as being polygenic. Galton posited that quantitative traits owed to "multifactorial" inheritance.
+
+Distinguishing which human traits are mono- or polygenic is not trivial. Traits with continuous variation, such as height, are clearly polygenic, but the converse is not true, meaning that binary traits are not necessarily monogenic. For instance, whether you get (late-onset) Alzheimer's disease is a binary trait, yet many genes contribute to risk [[Hollingworth 2011]]. How, then, can one determine whether a trait is polygenic? Polygenic traits will tend to aggregate in families but not to show Mendelian segregation. 
+
+### Heritability of polygenic traits
+
+I've reviewed some of the approaches for measuring heritability [in this post](/2013/02/04/how-to-calculate-heritability/).
+
+#### Parent-offspring regression
+
+Galton invented the idea of **parent-offspring regression** for quantitative traits. In this technique, you regress the "mid-parent value" (average of the two parents' traits) against the child's value, and the slope of the regression line is taken to be an estimate of additive heritability (h<sup>2</sup>). If you only have the trait available for one parent, you can perform single parent-offspring regression, in which case twice the slope of the regression line is an estimator of additive heritability. In human populations, however, parents and children tend to share more of their environment than two random people plucked off the street. Therefore, the correlation between their phenotypes should be considered as an estimator of additive heritability *plus* environmental contributions, or in other words, an upper bound on heritability. (Self promotion on: I've found that parent-offspring regression is also vulnerable to ascertainment bias for some phenotypes [[Minikel 2014]]).
+
+#### Twin studies
+
+**Twin studies** were invented to control for this environmental confounding. Any set of twins is assumed to share about the same amount of environmental influence, but monozygotic (MZ) twins share 100% of their genome, while dizygotic (DZ) twins share just 50%. Therefore, **Falconer's formula** considers additive heritability to be twice the difference between correlation between MZ twins and correlation between DZ twins:
+
+h<sup>2</sup> = 2(r<sub>MZ</sub> - r<sub>DZ</sub>)
+
+Intuitively, this makes sense because a trait that is no more shared between MZ twins than it is between DZ twins must just be environmental.
+
+#### Modern approaches
+
+Though not mentioned in lecture, I feel compelled to add a few modern techniques. Sibling IBD regression compares phenotypic similarity in siblings with different amounts of genome sharing, taking advantage of the fact that sib pair IBD is normally distributed ~50% &plusmn; 4% [[Visscher 2006]]. [GCTA](http://www.complextraitgenomics.com/software/gcta/index.html) [[Yang 2011]] uses genome-wide SNP data to estimate heritability based on genetic similarity between unrelated individuals. LD score regression [[Bulik-Sullivan 2014]] is a brand new approach to discriminate true polygenicity from bias in genome-wide association studies.
+
+#### Limitations and caveats regarding heritability
+
+1. Heritability is an abstract concept that in no way tells you *which* genes contribute.
+2. Heritability is a population-level concept with only limited predictive value for individuals.
+3. Measured heritability depends upon the variance in environment in the population being studied. For instance, heritability estimates for some traits are higher in populations in Europe than in individuals of European descent in the United States, which is believed to be because there is greater environmental variability in the U.S. For this reason, a heritability estimate is meaningful only within the context where it is measured. This also means that heritability estimates do not explain differences in the mean value of a trait between different populations.
+4. Heritability does not provide a bound on the potential effect of therapeutic interventions.
+
+As an example, consider that the additive heritability of human height is estimated to be about 80%. Yet mean height has increased dramatically in the last 300 years, a time scale in which the genetic composition of the population has not changed appreciably, reflecting a huge environmental contribution. This discrepancy can be reconciled by observing that the heritability estimates were made based entirely on modern humans, a cross-section which does not capture those huge environmental changes.
+
+Similarly, the prevalence of many disorders, such as type 2 diabetes or peanut allergies, has increased dramatically in incidence within our lifetimes. This indicates that environmental factors strongly influence these traits, yet we also know that strong genetic factors exist, and therapeutic interventions based on these genetic factors can have enormous effects.
+
+### Mapping the genetic basis of polygenic traits
+
+[Last time](/2014/11/14/genetics-23/) we discussed recombination in families, where there are only 1 or 2 recombination events per chromosome per generation. In contrast, in populations, there have been thousands of recombination events since the most recent common ancestor of any two unrelated individuals. These recombination events are concentrated in **recombination hotspots**, where the hotspots are sites where PRDM9 site-specific recombinase preferentially acts. Mark Daly and others recognized that a consequence of this is that the human genome can be dissected into **haplotype blocks** where there is little or no recombination within blocks, and limited haplotype diversity within blocks [[International HapMap Consortium 2003]]. Haplotype blocks are variable in size (2 - 200kb) due to variation in how far apart recombination hotspots are.
+
+![](/media/2014/11/haplotype-blocks.png)
+
+Within each block, there are a limited number of common haplotypes. Each block has on average 2-10 common haplotypes in African populations, and 2-5 in Europeans or East Asians (who have less diversity due to the out-of-Africa bottleneck). You can think of recent genetic variation as being sprinkled in on top of these common haplotypes. A consequence of the existence of haplotype blocks is that you don't need to sequence every variant in a person's genome in order to figure out what *locus* contains common variants that contribute to a phenotype. This last sentence foreshadows genome-wide association studies, the topic of Dr. McCarroll's next lecture.
+
+[Ng 2010]: http://www.ncbi.nlm.nih.gov/pubmed/20711175 "Ng SB, Bigham AW, Buckingham KJ, Hannibal MC, McMillin MJ, Gildersleeve HI, Beck AE, Tabor HK, Cooper GM, Mefford HC, Lee C, Turner EH, Smith JD, Rieder MJ,  Yoshiura K, Matsumoto N, Ohta T, Niikawa N, Nickerson DA, Bamshad MJ, Shendure J. Exome sequencing identifies MLL2 mutations as a cause of Kabuki syndrome. Nat Genet. 2010 Sep;42(9):790-3. doi: 10.1038/ng.646. Epub 2010 Aug 15. PubMed PMID:  20711175; PubMed Central PMCID: PMC2930028."
+
+[Neale 2012]: http://www.ncbi.nlm.nih.gov/pubmed/22495311 "Neale BM, Kou Y, Liu L, Ma'ayan A, Samocha KE, Sabo A, Lin CF, Stevens C, Wang LS, Makarov V, Polak P, Yoon S, Maguire J, Crawford EL, Campbell NG, Geller ET, Valladares O, Schafer C, Liu H, Zhao T, Cai G, Lihm J, Dannenfelser R, Jabado O,  Peralta Z, Nagaswamy U, Muzny D, Reid JG, Newsham I, Wu Y, Lewis L, Han Y, Voight BF, Lim E, Rossin E, Kirby A, Flannick J, Fromer M, Shakir K, Fennell T, Garimella K, Banks E, Poplin R, Gabriel S, DePristo M, Wimbish JR, Boone BE, Levy SE, Betancur C, Sunyaev S, Boerwinkle E, Buxbaum JD, Cook EH Jr, Devlin B, Gibbs  RA, Roeder K, Schellenberg GD, Sutcliffe JS, Daly MJ. Patterns and rates of exonic de novo mutations in autism spectrum disorders. Nature. 2012 Apr 4;485(7397):242-5. doi: 10.1038/nature11011. PubMed PMID: 22495311; PubMed Central PMCID: PMC3613847."
+
+[Visscher 2008]: http://www.ncbi.nlm.nih.gov/pubmed/18319743 "Visscher PM, Hill WG, Wray NR. Heritability in the genomics era--concepts and  misconceptions. Nat Rev Genet. 2008 Apr;9(4):255-66. doi: 10.1038/nrg2322. Epub 2008 Mar 4. Review. PubMed PMID: 18319743."
+
+[Hollingworth 2011]: http://www.ncbi.nlm.nih.gov/pubmed/21460840/ "Hollingworth P, Harold D, Sims R, Gerrish A, Lambert JC, Carrasquillo MM, Abraham R, Hamshere ML, Pahwa JS, Moskvina V, Dowzell K, Jones N, Stretton A, Thomas C, Richards A, Ivanov D, Widdowson C, Chapman J, Lovestone S, Powell J, Proitsi P, Lupton MK, Brayne C, Rubinsztein DC, Gill M, Lawlor B, Lynch A, Brown  KS, Passmore PA, Craig D, McGuinness B, Todd S, Holmes C, Mann D, Smith AD, Beaumont H, Warden D, Wilcock G, Love S, Kehoe PG, Hooper NM, Vardy ER, Hardy J,  Mead S, Fox NC, Rossor M, Collinge J, Maier W, Jessen F, Rüther E, Schürmann B, Heun R, Kölsch H, van den Bussche H, Heuser I, Kornhuber J, Wiltfang J, Dichgans  M, Frölich L, Hampel H, Gallacher J, Hüll M, Rujescu D, Giegling I, Goate AM, Kauwe JS, Cruchaga C, Nowotny P, Morris JC, Mayo K, Sleegers K, Bettens K, Engelborghs S, De Deyn PP, Van Broeckhoven C, Livingston G, Bass NJ, Gurling H, McQuillin A, Gwilliam R, Deloukas P, Al-Chalabi A, Shaw CE, Tsolaki M, Singleton  AB, Guerreiro R, Mühleisen TW, Nöthen MM, Moebus S, Jöckel KH, Klopp N, Wichmann  HE, Pankratz VS, Sando SB, Aasly JO, Barcikowska M, Wszolek ZK, Dickson DW, Graff-Radford NR, Petersen RC; Alzheimer's Disease Neuroimaging Initiative, van Duijn CM, Breteler MM, Ikram MA, DeStefano AL, Fitzpatrick AL, Lopez O, Launer LJ, Seshadri S; CHARGE consortium, Berr C, Campion D, Epelbaum J, Dartigues JF, Tzourio C, Alpérovitch A, Lathrop M; EADI1 consortium, Feulner TM, Friedrich P, Riehle C, Krawczak M, Schreiber S, Mayhaus M, Nicolhaus S, Wagenpfeil S, Steinberg S, Stefansson H, Stefansson K, Snaedal J, Björnsson S, Jonsson PV, Chouraki V, Genier-Boley B, Hiltunen M, Soininen H, Combarros O, Zelenika D, Delepine M, Bullido MJ, Pasquier F, Mateo I, Frank-Garcia A, Porcellini E, Hanon  O, Coto E, Alvarez V, Bosco P, Siciliano G, Mancuso M, Panza F, Solfrizzi V, Nacmias B, Sorbi S, Bossù P, Piccardi P, Arosio B, Annoni G, Seripa D, Pilotto A, Scarpini E, Galimberti D, Brice A"
+
+[Minikel 2014]: http://www.ncbi.nlm.nih.gov/pubmed/25279981 "Minikel EV, Zerr I, Collins SJ, Ponto C, Boyd A, Klug G, Karch A, Kenny J, Collinge J, Takada LT, Forner S, Fong JC, Mead S, Geschwind MD. Ascertainment bias causes false signal of anticipation in genetic prion disease. Am J Hum Genet. 2014 Oct 2;95(4):371-82. doi: 10.1016/j.ajhg.2014.09.003. PubMed PMID: 25279981; PubMed Central PMCID: PMC4185115."
+
+[Bulik-Sullivan 2014]: http://biorxiv.org/content/early/2014/02/21/002931.short "Brendan Bulik-Sullivan, Po-Ru Loh, Hilary Finucane, Stephan Ripke, Jian Yang, Schizophrenia Working Group Psychiatric Genomics Consortium, Nick Patterson, Mark J Daly, Alkes L Price, Benjamin M Neale. LD Score Regression Distinguishes Confounding from Polygenicity in Genome-Wide Association Studies. doi: http://dx.doi.org/10.1101/002931"
+
+[Yang 2011]: http://www.ncbi.nlm.nih.gov/pubmed/21167468/ "Yang J, Lee SH, Goddard ME, Visscher PM. GCTA: a tool for genome-wide complex  trait analysis. Am J Hum Genet. 2011 Jan 7;88(1):76-82. doi: 10.1016/j.ajhg.2010.11.011. Epub 2010 Dec 17. PubMed PMID: 21167468; PubMed Central PMCID: PMC3014363."
+
+[Myers 2005]: http://www.ncbi.nlm.nih.gov/pubmed/16224025 "Myers S, Bottolo L, Freeman C, McVean G, Donnelly P. A fine-scale map of recombination rates and hotspots across the human genome. Science. 2005 Oct 14;310(5746):321-4. PubMed PMID: 16224025."
+
+[International HapMap Consortium 2003]: http://www.ncbi.nlm.nih.gov/pubmed/14685227 "International HapMap Consortium. The International HapMap Project. Nature. 2003 Dec 18;426(6968):789-96. PubMed PMID: 14685227."
+
+[Visscher 2006]: http://www.ncbi.nlm.nih.gov/pubmed/16565746/ "Visscher PM, Medland SE, Ferreira MA, Morley KI, Zhu G, Cornes BK, Montgomery  GW, Martin NG. Assumption-free estimation of heritability from genome-wide identity-by-descent sharing between full siblings. PLoS Genet. 2006 Mar;2(3):e41. Epub 2006 Mar 24. PubMed PMID: 16565746; PubMed Central PMCID: PMC1413498."
