@@ -5,6 +5,7 @@ date:   2014-11-21 12:00:00
 author: ericminikel
 tag: genetics-201
 location: Boston, MA
+summary200: "Linkage disequilibrium between common SNPs in unrelated individuals makes it possible to explore the genetic basis of complex traits through genome-wide association studies."
 ---
 
 *These are my notes from lecture 25 of Harvard's Genetics 201 course, delivered by Steve McCarroll on November 21, 2014.*
