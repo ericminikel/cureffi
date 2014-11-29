@@ -63,9 +63,7 @@ Here are different types of zebrafish screens:
 
 #### Zygotic F3
 
-After ENU mutagenesis on P0s, you get tons of different mutations in your F1s. Any one F1 fish will have many mutations. Now outcross each F1 fish to wild-type fish, so that at any one mutant position you get 50% of F2s in one family having a +/m genotype and 50% having +/+. Now inbreed the F2s and you'll get 25% of F3s being homozygous.&dagger;
-
-&dagger; Only one in four pairs of F2s are het for the *same* mutation, so only 1 in 16 F3s are homozygous for any given mutation. But you have n mutations, so it seems each F3 should be homozygous for, on expectation, n/16 mutations. I am not sure where the 25% figure above comes from.
+After ENU mutagenesis on P0s, you get tons of different mutations in your F1s. Any one F1 fish will have many mutations. Now outcross each F1 fish to wild-type fish to generate families of F2 fish that are 50% +/m and 50% +/+. Next randomly pick pairs of siblings from a given F2 family to generate F3 families. The chance of picking a pair of siblings for a cross that are both heterozygous is 25%, so we expect 1 in 4 sibling F2 crosses will yield an F3 family which contains homozygous mutants. Such F3 families will be composed of 25% homozygous mutants.
 
 When you homozygose the mutations in the F3 generation, you'll also be inadvertently homozygosing plenty of polymorphic loss-of-function variants that zebrafish harbor. Because most zebrafish genes have paralogs, these homozygosed LoF variants collectively make them sickly, and harder to maintain - but by and large, these polymorphic LoFs do not cause Mendelian disease, and thus do not make it impossible to do an F3 screen.
 
