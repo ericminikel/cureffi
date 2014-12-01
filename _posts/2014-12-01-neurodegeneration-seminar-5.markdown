@@ -53,7 +53,7 @@ This study describes the results of autologous stem cell transplantation into th
 
 Q. Explain how MPTP causes a Parkinsonian-like disease. What are the pros and cons of using the MPTP model?
 
-A. MPTP is a neurotoxic small molecule that specificlaly kills dopaminergic neurons:
+A. MPTP is a neurotoxic small molecule that specifically kills dopaminergic neurons:
 
 ![](/media/2014/12/mptp.png)
 
