@@ -1,0 +1,74 @@
+---
+layout: post
+title:  "Biolit 11: complex genetics"
+date:   2014-12-04 12:00:00
+author: ericminikel
+tag: bbs-230
+location: Boston, MA
+---
+
+*These are my notes for week 11 of Harvard's BBS 230 "Analysis of the biological literature" course (December 2-4, 2014). This includes my own reading and analysis of the papers, as well as my notes from the first discussion section.*
+
+The papers for this week are [[Deutschbauer & Davis 2005]] and [[Sjoblom 2006]].
+
+### [Deutschbauer & Davis 2005]: Quantitative trait loci mapped to single-nucleotide resolution in yeast
+
+#### Background
+
+In the wild, *S. cerevisiae* are almost always diploid. After sporulation, they can quickly change sex in order to find a mating partner and become diploid again. To enable the study of haploid yeast, all laboratory strains are deleted for the gene that allows sex switching, called *HO*. In this study, they cross S288c haploids to SK1 haploids to obtain a diploid, and then they dissect tetrads and grow each haploid offspring clonally. Then they introduce into each clonal population a *HO* plasmid in order to allow the haploids to change sex and mate with themselves. The result is that each haploid self-mates to form a diploid that is genome-wide homozygous. This procedure is what they refer to in the paper as "restoring to diploidy".
+
+#### Figure by figure
+
+**Figure 1**. They show that the restored-to-diploid F1s have an average sporulation efficiency between that of S288c and SK1 (Fig 1A). Among the F1s there is a quantitative distribution of sporulation efficiency (Fig 1B). If a single locus controlled sporulation efficiency, then 50% of the F1s should have the same efficiency as SK1. If two loci controlled it, then 25% should have SK1's efficiency. In fact, only 1 of 53 has an efficiency comparable to SK1, which they calculate means that a lower bound of at least 5.7 loci contribute to the phenotype.
+
+**Figure 2** shows that they backcrossed the efficiently-sporulating F1 to S288c to perform finer QTL mapping and narrowed it down to three loci.
+
+**Table 1** shows that after enough backcrossing they obtained "congenic" strains which each were purely S288c except for one SK1 locus. In **Figure 3** they used these to perform even finer mapping to narrow down the possible genes where the causal variants might be. When they did crosses with their congenic strains they got 2:2 segregation of sporulation efficiency, meaning they had narrowed it down to one causal locus - possibly a single causal variant, or a set of tightly linked genes. Note that the QTL linkage plots are a bit hard to read - the map of the locus across the top of each one is two lines - one for the forward strand and one for the reverse strand - with genes indicated in larger blocks. Only the area called out by the dashed black lines is shown.
+
+**Figure 4** uses **reciprocal hemizygosity analysis** to determine which gene under each linkage peak is responsible. They delete either allele (the S288c or SK1 allele) of each gene, leaving the other one hemizygous, and measure the phenotype. This narrows it down to one gene under each peak. Next they need to narrow it down to one variant, which they do by **allelic exchange** (using loop-in, loop-out with positive and negative selection to get a range of different pieces of each gene to be S288c vs. SK1) and subsequent **site-directed mutagenesis** (inserting specific nucleotide changes into the genome). At the end of this figure they have identified the causal variants.
+
+**Figure 5** asks whether the causal variants are artifacts of yeast domestication or are polymorphic among wild strains. Two of the three are indeed polymorphic among wild strains. In the case of the *RME1* variant, a 1-bp insertion in the promoter, the insertion is also seen in two low-sporulation strains but those strains also have a second variant *in cis*, which might explain their low sporulation efficiency. Thus the data are consistent with these three variants being causal.
+
+**Figure 6** quantifies the cumulative sporulation and the kinetics of sporulation in the presence of any 1 of the 3 variants, any 2 of the 3, vs. all 3. At 48h, the relationship appears to be additive (effect of all three is about equal to the sum of each) while at 24h they say it looks more epistatic (2% + 2% + 2.5% = 20%). These conclusions are fairly speculative since there are no statistics here and they don't do a lot more to dissect the kinetics.
+
+#### Conclusions
+
+Depending which phenotype you think is important - sporulation at 24h or sporulation after 1 week - the authors were able to re-create either 25% or 92% of the sporulation efficiency of SK1. That's a big difference. The pitch of the abstract is that they more or less solved a quantitative phenotype since they re-created 92% of it with 3 variants. But some of our classmates disputed this claim, since they only achieved 25% of the phenotype they originally set out to study and, after all, they only found 3 variants whereas they say there must be at least 5.7 of them. Whether or not you believe that this paper is the first to almost exhaustively solve a quantitative trait, though, another possible reason why this paper was so well-received is simply that it's a beautiful demonstration of how to do QTL fine-mapping in yeast.
+
+### [Sjoblom 2006]: The consensus coding sequences of human breast and colorectal cancers
+
+#### Background
+
+All of the sequencing methods are buried in the supplement, and even there, are not explained with a perspective that was easy for any of us to understand, as no one in our class was working in genomics eight years ago. Illumina reversible terminator chemistry was not invented until 2007, and ABI SOLiD sequencing came into being right around 2006 - too late to be of help to this paper. This paper was still doing automated Sanger sequencing, not so different from how much of the Human Genome Project was completed. They PCR-amplified exons of interest using separate forward and reverse primers for each, then ligated a univeral forward primer and performed capillary sequencing with irreversible terminator nucleotides on a ABI PRISM 3730xl, which is an automated Sanger sequencer. For clarity: both the sequencing technology (Sanger/capillary) and the exon enrichment method (arrayed PCR reactions with specially designed primers) in this study are very different from a modern tumor exome (Illumina chemistry and hybridization-based exome capture).
+
+However, the sequencing methods are not the reason this paper was chosen for this class. As you can tell from the large number of comments in PubMed Commons, the latter paper has some serious statistical flaws [[Forrest & Cavet 2007], [Getz & Hofling 2007] \(see esp. [supplement](http://www.sciencemag.org/content/suppl/2013/04/02/317.5844.1500-a.DC1/Getz_SOM.pdf)\], [Rubin & Green 2007]].
+
+#### Figure by figure
+
+Figure 1 outlines their analytical approach. In modern times, you'd start with a tumor exome and a normal exome right off the bat, to restrict your analysis to somatic variants rather than germline, then you'd apply computational filters (e.g. ignoring synonymous variants). In 2006, to economize, they did this in a few steps. First they sequenced the tumors and just *two* germline samples, and threw out all synonymous variants, all variants found in either germline sample, and all variants in dbSNP (which was a much smaller database then). They also claim they reviewed 353,000 variants "by visual inspection" of the Sanger chromatograms, a figure which beggars belief, particularly since Amazon Mechanical Turk didn't exist back then. In any case, all of these filters got them down to a smaller number of exons they had to sequence in further germline samples, which in turn removed most of the remaining variants. Finally they arrived at 1,149 genes which contained somatic mutations in their original discovery set of samples. They then sequenced only these genes' exons in an additional validation set. 
+
+Table 1 shows some descriptive stats about the variants they found. Colorectal cancers have way more CpG to TpG mutations than breast, which apparently was already known in 2006 but no one in our class was certain of what the mechanism for this is. 
+
+Now that they had a list of mutations in their tumors, they wanted to distinguish passenger mutations from driver mutations. The principle here is that every tumor will have different passenger mutations, whereas driver mutations should arise over and over again in different people's tumors. To determine which genes were mutated more often than expected by chance, they first had to define "by chance", meaning they had to choose a background mutation rate as a parameter determining the expected number of times a gene would be mutated. They did apply several correct and important calibrations to this calculation, taking account of the different mutation rates between breast vs. colorectal, incorporating the number of high-quality bases, gene length, etc. Nevertheless, this step is where two major statistical problems arise in this paper, as pointed out by [[Getz & Hofling 2007]]:
+
+1. They should have calibrated a mutation rate based on their own data rather than using one from a separate study. The mutation rate they used (1.2 mutations per Mb) turned out to be way too low, which made more mutations seem like they had a higher number of mutations than expected by chance. (In addition, the mutation rate should have been treated as an estimate with its own sampling variance, rather than a single infallible number.)
+2. They applied a Benjamini-Hochberg FDR correction (equivalent of `p.adjust(p_values,method='fdr')` in R) but they fed in the *point* probabilities instead of *tail* probabilities - meaning, P(*exactly* 5 mutations in this gene | mutation rate) rather than P(*at least* 5 mutations  in this gene | mutation rate).
+
+Correcting these two problems reduces the number of significantly-mutated-more-often-than-expected-by-chance genes from 191 to 12.
+
+#### Conclusions
+
+This sort of analysis - finding driver mutations in cancers in a genome-wide unbiased way - was eventually done right by the cancer genome atlas (TCGA) in a series of papers, one for each histological subtype - for instance, colorectal was reported in [[Cancer Genome Atlas Network 2012]].
+
+
+[Deutschbauer & Davis 2005]: http://www.ncbi.nlm.nih.gov/pubmed/16273108 "Deutschbauer AM, Davis RW. Quantitative trait loci mapped to single-nucleotide resolution in yeast. Nat Genet. 2005 Dec;37(12):1333-40. Epub 2005 Nov 6. PubMed  PMID: 16273108."
+
+[Sjoblom 2006]: http://www.ncbi.nlm.nih.gov/pubmed/16959974 "Sjöblom T, Jones S, Wood LD, Parsons DW, Lin J, Barber TD, Mandelker D, Leary  RJ, Ptak J, Silliman N, Szabo S, Buckhaults P, Farrell C, Meeh P, Markowitz SD, Willis J, Dawson D, Willson JK, Gazdar AF, Hartigan J, Wu L, Liu C, Parmigiani G, Park BH, Bachman KE, Papadopoulos N, Vogelstein B, Kinzler KW, Velculescu VE. The consensus coding sequences of human breast and colorectal cancers. Science. 2006  Oct 13;314(5797):268-74. Epub 2006 Sep 7. PubMed PMID: 16959974."
+
+[Forrest & Cavet 2007]: http://www.ncbi.nlm.nih.gov/pubmed/17872427 "Forrest WF, Cavet G. Comment on "The consensus coding sequences of human breast and colorectal cancers". Science. 2007 Sep 14;317(5844):1500; author reply 1500. PubMed PMID: 17872427."
+
+[Getz & Hofling 2007]: http://www.ncbi.nlm.nih.gov/pubmed/17872428 "Getz G, Höfling H, Mesirov JP, Golub TR, Meyerson M, Tibshirani R, Lander ES.  Comment on "The consensus coding sequences of human breast and colorectal cancers". Science. 2007 Sep 14;317(5844):1500. PubMed PMID: 17872428."
+
+[Rubin & Green 2007]: http://www.ncbi.nlm.nih.gov/pubmed/17872429 "Rubin AF, Green P. Comment on "The consensus coding sequences of human breast  and colorectal cancers". Science. 2007 Sep 14;317(5844):1500. PubMed PMID: 17872429."
+
+[Cancer Genome Atlas Network 2012]: http://www.ncbi.nlm.nih.gov/pubmed/22810696 "Cancer Genome Atlas Network. Comprehensive molecular characterization of human colon and rectal cancer. Nature. 2012 Jul 18;487(7407):330-7. doi: 10.1038/nature11252. PubMed PMID: 22810696; PubMed Central PMCID: PMC3401966."
