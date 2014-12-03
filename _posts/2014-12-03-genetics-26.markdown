@@ -5,7 +5,7 @@ date:   2014-12-03 12:00:00
 author: ericminikel
 tag: genetics-201
 location: Boston, MA
-summary200: ""
+summary200: "Part I of a general introduction to epigenetics by Fred Winston, focusing on histone modifications and DNA methylation."
 ---
 
 *These are my notes from lecture 26 of Harvard's Genetics 201 course, delivered by Fred Winston on December 3, 2014.*
