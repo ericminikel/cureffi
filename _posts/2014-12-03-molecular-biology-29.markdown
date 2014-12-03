@@ -10,10 +10,6 @@ summary200: "A research seminar on angiogenin, tRNA and amyotrophic lateral scle
 
 *These are my notes from lecture 29 in Harvard's BCMP 200: Molecular Biology course, delivered by [Paul Anderson](http://dms.hms.harvard.edu/immunology/fac/Anderson.php) on December 3, 2014.*
 
-Today's research seminar will cover angiogenin, tRNA and amyotrophic lateral sclerosis.
-
-Angiogenin is a secreted ribonuclease which specifically targets tRNAs.
-
 ### Background: translation and stress
 
 Under normal conditions, the eIF2 complex is important for allowing the 40S translation initiation complex to mature into a full 48S initiation complex which is ready to begin scanning in search of a start codon. When the 48S complex finds a start codon, GTP is hydrolyzed to GDP, the early initiation factors are ejected, and translation begins. However, environmental stress - heat, oxidation, UV irradiation, etc. - leads to activation of a variety of factors (PKR, PERK, HRI and GCN2) which phosphorylate residue S51 of eIF2&alpha;. Under these conditions, a protein called TIA-1, which contains a prion domain, is also incorporated into initiation complexes and causes them to aggregate into **stress granules**. The initiation complexes during stress are called 48S\* complexes because they are broadly similar to canonical 48S but are non-canonical in that they lack initiation factors 2 and 5, and contain TIA-1. The translational downregulation caused by this stress response selectively targets transcripts with a 5' cap, while sparing both IRES-mediated translation initiation and transcripts with upstream ORFs. Therefore these IRES- or uORF-containing transcripts are preferentially translated under stress conditions, and these encode proteins that help cells survive stress. 
