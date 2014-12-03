@@ -137,7 +137,7 @@ In mice, DNMT3a and DNMT3b:
 3. act over different genomic regions than each other
 4. interact primarily with the tails of H3 that lack K4 methylation
 
-In humans, DNMT3b mutations cause a recessive disease called ICF syndrome [OMIM #242860](http://www.omim.org/entry/242860).
+In humans, DNMT3b mutations cause a recessive disease called ICF syndrome [[OMIM #242860](http://www.omim.org/entry/242860)].
 
 After DNA replication occurs, dimethylated CpG sites (as created by DNMT3a/b) will end up hemimethylated. A different enzyme, DNMT1, is responsible for then returning these to a dimethylated state. DNMT1 knockout is embryonic lethal.
 
