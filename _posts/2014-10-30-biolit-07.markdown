@@ -5,6 +5,7 @@ date:   2014-10-30 12:00:00
 author: ericminikel
 tag: bbs-230
 location: Boston, MA
+summary200: "Week 7 discusses the two papers 'Translating dosage compensation to trisomy 21' and 'Starvation-induced transgenerational inheritance of small RNAs in C. elegans'"
 ---
 
 *These are my notes for week 07 of Harvard's BBS 230 "Analysis of the biological literature" course (October 28-30, 2014). This includes my own reading and analysis of the papers, as well as my notes from both discussion sections.*
