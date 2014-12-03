@@ -1,0 +1,156 @@
+---
+layout: post
+title:  "Genetics 26: 'Epigenetics Part I'"
+date:   2014-12-03 12:00:00
+author: ericminikel
+tag: genetics-201
+location: Boston, MA
+summary200: ""
+---
+
+*These are my notes from lecture 26 of Harvard's Genetics 201 course, delivered by Fred Winston on December 3, 2014.*
+
+This is part of a two-lecture series on epigenetics. Today will include a general introduction to epigenetics, histone modifications and DNA methylation. The next lecture will cover imprinting and X inactivation.
+
+### Introduction
+
+Until now, we've been told that a genotype is the state of a DNA sequence. In other words, a wild-type phenotype is associated with a wild-type sequence, while a Mendelian mutant phenotype is associated with a mutant sequence, and a complex mutant phenotype is associated with many sequence changes. However, sometimes inheritance of a phenotype is determined by factors other than DNA sequence. Such factors are referred to as **epigenetic**. We now know that **units of inheritance** *also* include (but are not limited to):
+
+1. DNA sequence
+2. DNA modifications
+3. Proteins and RNAs bound to DNA
+
+Where items 1-3 comprise **chromatin**. Item 3 includes:
+
++ histones
++ tautologically, "non-histone proteins" (which include transcription factors, repressors, etc)
++ ncRNAs such as *XIST*
+
+These factors can in turn be modified by:
+
++ environmental factors
++ the chromosomal position of a gene
++ the nuclear position of a gene
++ interactions between homologous genes
+
+Units of inheritance are not limited to chromatin either - consider also [prions in yeast](/2014/09/30/the-conformation-holds-the-information/) and dsRNA propagated by RNA-dependent RNA polymerase in *C. elegans*, though this series of two lectures will only cover chromatin.
+
+It is currently controversial how much is included in the term "epigenetics". For example, some histone modifications exhibit clear transgenerational inheritance and thus definitely qualify as epigenetic, while other histone modifications seem to be established *de novo* in each individual, so some investigators argue these should not be categorized as epigenetic.
+
+Two useful references are [[Brookes & Shi 2014], [Ho 2014]].
+
+### Examples
+
+#### Gene silencing in yeast
+
+Recall that yeast have two mating types dubbed a and &alpha;, and the gene complex determining mating type covers ~317kb on yeast chromosome III. The *MATa/MAT&alpha;* locus includes genes transcribed in opposite directions from a common starting point. 190kb to the left is a locus *HML&alpha;* and 90kb to the right is a locus called *HMRa*. These two loci encode, respectively, all of the same machinery as *MATa* and *MAT&alpha;* do, but in the normal state of yeast, the *MAT* locus is expressed while the other two loci are silenced. This silencing is accomplished by repressive histone modifications and by a class of non-histone proteins called Sir proteins. Sir proteins have orthologs in mammals called Sirtuins which regulate metabolism, mitochondrial function and so on.
+
+![](/media/2014/12/epigenetics-sex-in-yeast.png)
+
+#### Variegation in flies
+
+Wild-type *Drosophila* have red eyes; the gene which encodes the red pigment is confusingly called *white*, after its knockout phenotype. A chromosomal inversion which moves the wild-type *white* gene closer to heterochromtain results in variable silencing of the gene in some cells but not others, causing a phenotype in which some but not all cells of the eye lose their red color. This formed the basis of some [enhancer screens](/2014/10/31/genetics-18/) in *Drosophila* and helped to reveal some of the first histone methytransferases which act on H3K9.
+
+![](/media/2014/12/epigenetics-in-fly-eyes.png)
+
+#### Reprogramming of somatic cells
+
+Somatic cells can be reprogrammed to induced pluripotent stem cells (iPSC) by transient expression of *SOX2*, *OCT4*, *KLF4* and *MYC*. This can be accomplished by transfection with only the mRNAs, or expression of a non-integrating virus (e.g. Sendai) or an integrating virus (lentivirus). Typically only 5% of cells exposed to the reprogramming factors will successfully revert to pluripotency. 
+
+#### Phage &lambda;-infected *E. coli*
+
+The lysogeny vs. lytic replication decision is controlled epigenetically.
+
+#### *Drosophila* sex determination
+
+Cellular sex determination in flies is determined through chromatin.
+
+#### Honeybee queen/worker determination
+
+Compare and contrast the queen and worker bees:
+
+| bee | food | lifespan | fertility |
+| ---- | ---- | ---- | ---- |
+| workers | pollen + nectar | weeks | sterile |
+| queen | royal jelly | 1-3 years | up to 2000 eggs/day |
+
+A breakthrough paper showed that RNAi against *DNMT3* - a DNA methyltranferase - caused most larvae to develop as queens [[Kucharski 2008]].
+
+Amusingly, Fred notes that royal jelly is [available](http://www.amazon.com/Freeze-Dried-Fresh-Royal-Jelly/dp/B00028NBJW/) for human consumption on Amazon.
+
+#### Lifespan in *C. elegans*
+
+Mutations in set-2 in *C. elegans* decrease H3K4me3 marks and increase longevity by ~30%. This phenotype is then inherited transgenerationally even after crossing to remove the originally causal genetic mutation [[Greer 2011]]. The increase in lifespan remains significant through the F4 generation of wild-type descendants (see below diagram) and finally disappears by F5.
+
+![](/media/2014/12/epigenetics-longevity-worms.png)
+
+### Histone modifications
+
+Recall from Timur Yusufzai's [molecular biology lecture 15](/2014/10/15/molecular-biology-15/) that histones are small proteins, ~100 amino acids. They are subject to a wide variety of post-translational modifications including but not limited to: acetylation, methylation, ubiquitylation, sumoylation and phosphorylation. Usually these modifications occur in the N-terminal tail, which is roughly residues 1-25. Occasionally you'll hear of a modification to the C-terminal core of the histones, usually at K56 or K79. The notation is as follows: H3K4me3 means histone 3 lysine 4 trimethylation. 
+
+Some of the most important modifications are on histone 3:
+
+| modification | association |
+| ---- | ---- |
+| H3K4me3 | active transcription |
+| H3K9me3 | repressed transcription |
+| H3K9Ac | active transcription |
+| H3K27me3 | repressed transcription |
+
+The ENCODE project is an effort to systematically map histone methylation (among other things) in humans [[ENCODE 2012]]. There are comparable efforts in other organisms, such as mod-ENCODE in *Drosophila* and *C. elegans*. These have been largely descriptive efforts. For instance, in *Drosophila* they've now mapped 18 histone modifications and 9 combinatorial patterns, yet we still do not know how the different domains form, what their roles are, how they differ between cell types, or what the cause-effect relationship is between these and other findings. Dissecting the functional relationships will require interventions rather than just observations - for instance, experiments using RNAi.
+
+### DNA methylation
+
+DNA methylation is the chemical modification of cytosine to 5-methyl-cytosine (5mc).
+
+![](/media/2014/12/cytosine-5mc.png)
+
+This occurs (almost?) exclusively in a CpG dinucleotide context. In mammals, 70-80% of cytosines CpG dinucleotides are 5-methylcytosines.
+
+Some organisms have DNA methylation, while others do not:
+
+| organism | DNA methylation |
+| ---- | ---- |
+| *E. coli* | yes |
+| yeast | no |
+| fungi | yes |
+| worms | no |
+| flies | a little |
+| mammals | yes |
+| zebrafish | yes |
+| plants | yes |
+
+DNA methylation regulates gene expression by several mechanisms:
+
+1. It affects the binding of transcription factors
+2. Some proteins specifically bind 5mc
+3. It can "act with histone modifications"
+
+Several enzymes control DNA methylation. DNMT3a and DNMT3b recognize CpG dinucleotides and methylate the C on both strands.
+
+![](/media/2014/12/dnmt3ab.png)
+
+In mice, DNMT3a and DNMT3b:
+
+1. are required for new DNA methylation
+2. are each essential for normal development
+3. act over different genomic regions than each other
+4. interact primarily with the tails of H3 that lack K4 methylation
+
+In humans, DNMT3b mutations cause a recessive disease called ICF syndrome [OMIM #242860](http://www.omim.org/entry/242860).
+
+After DNA replication occurs, dimethylated CpG sites (as created by DNMT3a/b) will end up hemimethylated. A different enzyme, DNMT1, is responsible for then returning these to a dimethylated state. DNMT1 knockout is embryonic lethal.
+
+![](/media/2014/12/dnmt1.png)
+
+
+[Brookes & Shi 2014]: http://www.ncbi.nlm.nih.gov/pubmed/25195505 "Brookes E, Shi Y. Diverse epigenetic mechanisms of human disease. Annu Rev Genet. 2014 Nov 23;48:237-68. doi: 10.1146/annurev-genet-120213-092518. Epub 2014 Sep 5. PubMed PMID: 25195505."
+
+[Kucharski 2008]: http://www.ncbi.nlm.nih.gov/pubmed/18339900 "Kucharski R, Maleszka J, Foret S, Maleszka R. Nutritional control of reproductive status in honeybees via DNA methylation. Science. 2008 Mar 28;319(5871):1827-30. doi: 10.1126/science.1153069. Epub 2008 Mar 13. PubMed PMID: 18339900."
+
+[Greer 2011]: http://www.ncbi.nlm.nih.gov/pubmed/22012258 "Greer EL, Maures TJ, Ucar D, Hauswirth AG, Mancini E, Lim JP, Benayoun BA, Shi Y, Brunet A. Transgenerational epigenetic inheritance of longevity in Caenorhabditis elegans. Nature. 2011 Oct 19;479(7373):365-71. doi: 10.1038/nature10572. PubMed PMID: 22012258; PubMed Central PMCID: PMC3368121."
+
+[Ho 2014]: http://www.ncbi.nlm.nih.gov/pubmed/25164756 "Ho JW, Jung YL, Liu T, Alver BH, Lee S, Ikegami K, Sohn KA, Minoda A, Tolstorukov MY, Appert A, Parker SC, Gu T, Kundaje A, Riddle NC, Bishop E, Egelhofer TA, Hu SS, Alekseyenko AA, Rechtsteiner A, Asker D, Belsky JA, Bowman SK, Chen QB, Chen RA, Day DS, Dong Y, Dose AC, Duan X, Epstein CB, Ercan S, Feingold EA, Ferrari F, Garrigues JM, Gehlenborg N, Good PJ, Haseley P, He D, Herrmann M, Hoffman MM, Jeffers TE, Kharchenko PV, Kolasinska-Zwierz P, Kotwaliwale CV, Kumar N, Langley SA, Larschan EN, Latorre I, Libbrecht MW, Lin X, Park R, Pazin MJ, Pham HN, Plachetka A, Qin B, Schwartz YB, Shoresh N, Stempor P, Vielle A, Wang C, Whittle CM, Xue H, Kingston RE, Kim JH, Bernstein BE, Dernburg  AF, Pirrotta V, Kuroda MI, Noble WS, Tullius TD, Kellis M, MacAlpine DM, Strome S, Elgin SC, Liu XS, Lieb JD, Ahringer J, Karpen GH, Park PJ. Comparative analysis of metazoan chromatin organization. Nature. 2014 Aug 28;512(7515):449-52. doi: 10.1038/nature13415. PubMed PMID: 25164756; PubMed Central PMCID: PMC4227084."
+
+[ENCODE 2012]: http://www.ncbi.nlm.nih.gov/pubmed/22955616 "ENCODE Project Consortium. An integrated encyclopedia of DNA elements in the human genome. Nature. 2012 Sep 6;489(7414):57-74. doi: 10.1038/nature11247. PubMed PMID: 22955616; PubMed Central PMCID: PMC3439153."
+
