@@ -101,7 +101,7 @@ The ENCODE project is an effort to systematically map histone methylation (among
 
 ### DNA methylation
 
-DNA methylation is the chemical modification of cytosine to 5-methyl-cytosine (5mc).
+DNA methylation is the chemical modification of cytosine to 5-methylcytosine (5mc).
 
 ![](/media/2014/12/cytosine-5mc.png)
 
@@ -142,7 +142,6 @@ In humans, DNMT3b mutations cause a recessive disease called ICF syndrome [[OMIM
 After DNA replication occurs, dimethylated CpG sites (as created by DNMT3a/b) will end up hemimethylated. A different enzyme, DNMT1, is responsible for then returning these to a dimethylated state. DNMT1 knockout is embryonic lethal.
 
 ![](/media/2014/12/dnmt1.png)
-
 
 [Brookes & Shi 2014]: http://www.ncbi.nlm.nih.gov/pubmed/25195505 "Brookes E, Shi Y. Diverse epigenetic mechanisms of human disease. Annu Rev Genet. 2014 Nov 23;48:237-68. doi: 10.1146/annurev-genet-120213-092518. Epub 2014 Sep 5. PubMed PMID: 25195505."
 
