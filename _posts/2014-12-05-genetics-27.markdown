@@ -67,8 +67,8 @@ In different organisms this is acheived in different ways:
 | ---- | ---- | ---- | ---- |
 | flies | XY | XX | elevation of X expression in males |
 | worms | XO | XX | repression of X in hermaphrodites |
-| mice | XY | XX | random inactivation of 1 or 2 X chromosomes in females |
-| humans | XY | XX | random inactivation of 1 or 2 X chromosomes in females | 
+| mice | XY | XX | random inactivation of 1 of 2 X chromosomes in females |
+| humans | XY | XX | random inactivation of 1 of 2 X chromosomes in females | 
 
 The fact that flies and worms had opposing mechanisms was originally worked out through genetic analysis of mutants.
 
