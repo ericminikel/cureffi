@@ -1,0 +1,121 @@
+---
+layout: post
+title:  "Genetics 27: 'Epigenetics Part II'"
+date:   2014-12-05 12:00:00
+author: ericminikel
+tag: genetics-201
+location: Boston, MA
+summary200: "Part II of an introduction to epigenetics by Fred Winston. Covers imprinting and X-inactivation."
+---
+
+*These are my notes from lecture 27 of Harvard's Genetics 201 course, delivered by Fred Winston on December 5, 2014.*
+
+This is part II of a two-lecture series on epigenetics. [Last time](/2014/12/03/genetics-26/) included a general introduction to epigenetics, histone modifications and DNA methylation. This lecture covers imprinting and X inactivation.
+
+The beginning of this lecture finished up last time's the discussion of DNA methylation - I have added those notes to [the notes from last lecture](/2014/12/03/genetics-26/).
+
+### Introduction
+
+Imprinting and X-inactivation are both:
+
+1. important phenonmena in human biology
+2. longstanding research areas
+3. currently popular research areas
+4. still mysterious in many ways
+
+Some reviews on this subject include [[Wilkins & Haig 2003]], [[Heard 2005]], [[Zakharova 2009]], [[Barlow 2011]], and [[Erwin & Lee 2008]].
+
+### Imprinting
+
+**Imprinting** is a phenomenon in mammals where an autosomal gene is inherited in a silent state from one parent and in an active state from the other parent. 
+
+In mice, 144 genes are known to be imprinted. In humans, about 100 imprinted genes have been documented. This number can be debated in part because in some cases the "silenced" copy of the gene is not completely silenced, so it depends on your threshold to define a gene as being imprinted. Imprinted genes are involved in a number of human diseases.
+
+The first demonstration of imprinting came from nuclear transfer experiments. In mice zygotes, there exists a moment in time after the sperm enters the egg but before nuclear fusion, where there is a separate male pronucleus and female pronucleus. At this stage, the pronucleus can be transplanted. Transplanting one male and one female nucleus is viable, but transplanting two female or two male pronuclei leads to inviability.
+
+![](/media/2014/12/pronuclear-transfer.png)
+
+An additional line of evidence came from translocations, as diagrammed below. Mice have 19 autosomal chromosome pairs plus X and Y, and unlike human chromosomes, all mouse chromosomes are **acrocentric**, meaning they have the centromere all the way at one end. Thus, chromosomes sometimes fuse near the centromere without loss of genetic information, creating a **metacentric** chromosome, also known as a **Robertsonian fusion** (1). A common example is the fusion of 11 and 13. Consider mice heterozygous for the fusion, such that they have one copy of chr11/13, and one copy each of chr11 and chr13 (2). While the chromosomes still *can* segregate propertly, this fusion scenario results in an increased rate of **nondisjunction** (3), creating aneuploid gametes. With this setup, a classic experiment was done by [[Cattanach & Kirk 1985]] and is reviewed and explained further in [[Cattanach 1986], [full text here](http://dev.biologists.org/content/97/Supplement/137.full.pdf?origin=publication_detail)]. In this experiment, you cross two mice which are heterozygous for the fusion (4). Because there are six possible gametes from each parent (see 3), the Punnett square for this cross (5) is huge. Three outcomes are possible. Some offspring will get one copy of each chromosome from each parent (smiley faces) which is not interesting. Others will get trisomy or monosomy of at least one chromosome, which is lethal (red X). Yet other offspring will be balanced (diploid for every chromosome), but have **uniparental disomy** of one chromosome (UD). To can use recessive markers to distinguish these from the normal offspring. Phenotyping these offspring (6) revealed that for one chromosome, mice with **balanced maternal disomy** had reduced size, while the mice in with **balanced paternal disomy** had increased size. This was then done systematically for every chromosome, revealing only ~10 regions, each containing several genes, which were subject to imprinting. Some imprints were male-specific and others female-specific.
+
+![](/media/2014/12/translocations-imprinting.png)
+
+Mechanistically, you can reason that the imprint must be:
+
+1. established in the gametes
+2. maintained during development
+3. erased and established during germ cell development
+
+The first connection to human disease came from the characterization of **Angelman syndrome** in 1965 by a British pediatrician. In the U.S. Angelman syndrome is found in ~1 in 20,000 live births. It is caused by mutations in the *UBE3A*, which encodes a ubiquitin ligase. About 75% of cases are associated with a large 6Mb deletion on chr15 including *UBE3A*. This in itself was not evidence for imprinting - there are plenty of deletions of this size or smaller which cause severe diseases simply because they include at least one haploinsufficient gene. ~15% of cases have point mutations in *UBE3A*, which narrows it down to that gene. Analysis of Angelman syndrome pedigrees revealed that the condition manifests in a child only when transmitted from a female carrier, not from a male carrier, as shown in [this pedigree chart](http://www.ncbi.nlm.nih.gov/books/NBK1144/figure/angelman.F3/).
+
+This unusual inheritance pattern provided evidence that imprinting was involved. Only the maternal allele of *UBE3A* is expressed in neurons, while both alleles are expressed in other cell types. This is due to a long non-coding antisense RNA whose expression is controlled by a cluster of DNA methylation:
+
+![](/media/2014/12/imprinting-angelman.png)
+
+This has led to a new potential therapy for Angelman syndrome, currently in preclinical development: using ASOs to knock down the long antisense RNA, thus allowing expression of the paternal allele [[Meng 2014]].
+
+Prader-Willi syndrome is associated with another imprinted region nearby, where only the paternal allele is expressed, and not the maternal allele.
+
+We still don't entirely know why nature evolved imprinting; some theories are reviewed in [[Wilkins & Haig 2003]].
+
+### X-inactivation
+
+Males and females have different numbers of X chromosomes, but express approximately the same level of X-encoded information, indicating there is some mechanism for **dosage compensation**. 
+
+In different organisms this is acheived in different ways:
+
+| organism | male | female | dosage compensation mechanism |
+| flies | XY | XX | elevation of X expression in males |
+| worms | XO | XX | repression of X in hermaphrodites |
+| mice | XY | XX | random inactivation of 1 or 2 X chromosomes in females |
+| humans | XY | XX | random inactivation of 1 or 2 X chromosomes in females | 
+
+The fact that flies and worms had opposing mechanisms was originally worked out through genetic analysis of mutants.
+
+In mammals, X-inactivation:
+
+1. Is the transcriptional silencing of almost an entire X
+2. Occurs early in the development of female embryos, at the ~64 cell stage
+3. Occurs at random, but is subsequently stable in each cell for the rest of the organism's lifespan
+
+As a result, adult female mammals are mosaics.
+
+X-inactivation was first described by [[Barr & Bertram 1949]]. They noted a dark staining of a condensed body at the nuclear periphery only in female cells. Later, Mary Lyon in 1961 proposed the from random inactivation of one X chromosome early in development. Xi came to refer to the inactive chromosome and Xa to the active one.
+
+Xi has several unique features:
+
++ undergoes late DNA replication
++ has more condensed chromatin (hence the "Barr body" appearance)
++ is enriched for repressive histone modifications
++ has a distinct pattern of DNA methylation
++ most genes are completely silenced
++ is coated in a 17kb lincRNA called Xist
+
+X inactivation requires several steps:
+
+1. Establishment of the Xi requires **counting**, **choice** and **spreading**. Counting obeys an "n-1 rule" ensuring that the number of inactive Xs is the total number of Xs minus 1. This is trivially obvious in XY and XX genotypes, but females with three X chromosomes (XXX) turn out to have 2 inactive Xs. Once an inactivation signal originates on one chromosome, silencing spreads *in cis*, mediated by Xist RNA. 
+2. Maintenance of the Xi requires that its silenced-ness is transmitted upon every cell division.
+3. Erasure of the silencing is performed in gametes so that either X can be active upon transmission to a zygote.
+
+Xist is expressed only in females, does not encode a protein, coats the Xi and is required for establishment but not maintenance of Xi.
+
+Heterozygous deletion of Xist in ES cells results in a situation where the &Delta;Xist X chromosome never inactivates, while the wild-type chromosome, designated X+, sometimes inactivates. Thus, Xist is required for inactivation but *not* for choice. It turns out that there is also a 40kb antisense RNA whose genomic sequene is a superset of Xist's, which is called Tsix and which negatively regulates Xist. There are many other non-coding RNAs which are also involved in ensuring that only one X gets silenced. 
+
+[Barlow 2011]: http://www.ncbi.nlm.nih.gov/pubmed/21942369 "Barlow DP. Genomic imprinting: a mammalian epigenetic discovery model. Annu Rev Genet. 2011;45:379-403. doi: 10.1146/annurev-genet-110410-132459. Epub 2011 Sep 13. Review. PubMed PMID: 21942369."
+
+[Erwin & Lee 2008]: http://www.ncbi.nlm.nih.gov/pubmed/18508252 "Erwin JA, Lee JT. New twists in X-chromosome inactivation. Curr Opin Cell Biol. 2008 Jun;20(3):349-55. doi: 10.1016/j.ceb.2008.04.007. Epub 2008 May 26. Review. PubMed PMID: 18508252; PubMed Central PMCID: PMC2491718."
+
+[Meng 2014]: http://www.ncbi.nlm.nih.gov/pubmed/25470045 "Meng L, Ward AJ, Chun S, Bennett CF, Beaudet AL, Rigo F. Towards a therapy for Angelman syndrome by targeting a long non-coding RNA. Nature. 2014 Dec 1. doi: 10.1038/nature13975. [Epub ahead of print] PubMed PMID: 25470045."
+
+[Wilkins & Haig 2003]: http://www.ncbi.nlm.nih.gov/pubmed/12728278 "Wilkins JF, Haig D. What good is genomic imprinting: the function of parent-specific gene expression. Nat Rev Genet. 2003 May;4(5):359-68. Review. PubMed PMID: 12728278."
+
+[Zakharova 2009]: http://www.ncbi.nlm.nih.gov/pubmed/19242715 "Zakharova IS, Shevchenko AI, Zakian SM. Monoallelic gene expression in mammals. Chromosoma. 2009 Jun;118(3):279-90. doi: 10.1007/s00412-009-0206-8. Epub 2009 Feb 26. Review. PubMed PMID: 19242715."
+
+[Heard 2005]: http://www.ncbi.nlm.nih.gov/pubmed/16107314 "Heard E. Delving into the diversity of facultative heterochromatin: the epigenetics of the inactive X chromosome. Curr Opin Genet Dev. 2005 Oct;15(5):482-9. Review. PubMed PMID: 16107314."
+
+[Barr & Bertram 1949]: http://www.ncbi.nlm.nih.gov/pubmed/18120749 "BARR ML, BERTRAM EG. A morphological distinction between neurones of the male  and female, and the behaviour of the nucleolar satellite during accelerated nucleoprotein synthesis. Nature. 1949 Apr 30;163(4148):676. PubMed PMID: 18120749."
+
+[Cattanach & Kirk 1985]: http://www.ncbi.nlm.nih.gov/pubmed/4000278 "Cattanach BM, Kirk M. Differential activity of maternally and paternally derived chromosome regions in mice. Nature. 1985 Jun 6-12;315(6019):496-8. PubMed PMID: 4000278."
+
+[Cattanach 1986]: http://www.ncbi.nlm.nih.gov/pubmed/3625109 "Cattanach BM. Parental origin effects in mice. J Embryol Exp Morphol. 1986 Oct;97 Suppl:137-50. PubMed PMID: 3625109."
+
+
