@@ -95,3 +95,6 @@ Related to this paper we discussed whether loss of tumor suppressors has to be h
 
 [Parmigiani 2007]: http://www.sciencemag.org/content/317/5844/1500.4.abstract "Science 14 September 2007: Vol. 317 no. 5844 p. 1500  DOI: 10.1126/science.1138773"
 
+[Huang 2010]: http://www.ncbi.nlm.nih.gov/pubmed/20976243 "Huang N, Lee I, Marcotte EM, Hurles ME. Characterising and predicting haploinsufficiency in the human genome. PLoS Genet. 2010 Oct 14;6(10):e1001154. doi: 10.1371/journal.pgen.1001154. PubMed PMID: 20976243; PubMed Central PMCID: PMC2954820."
+
+
