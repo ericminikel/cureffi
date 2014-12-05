@@ -64,6 +64,7 @@ Males and females have different numbers of X chromosomes, but express approxima
 In different organisms this is acheived in different ways:
 
 | organism | male | female | dosage compensation mechanism |
+| ---- | ---- | ---- | ---- |
 | flies | XY | XX | elevation of X expression in males |
 | worms | XO | XX | repression of X in hermaphrodites |
 | mice | XY | XX | random inactivation of 1 or 2 X chromosomes in females |
