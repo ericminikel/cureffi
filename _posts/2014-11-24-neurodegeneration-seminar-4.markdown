@@ -23,7 +23,9 @@ Frontotemporal dementia (FTD) is also known as frontotemporal lobar dementia (FT
 | *C9orf72* | repeat expansion | dipeptide repeat deposits, RNA foci, sometimes TDP-43 deposits | FTD/ALS |
 | *SOD1* | missense, late frameshift or nonsense | ubiquitylated SOD1 aggregates | ALS |
 
-*MAPT* and *GRN* are both located on chromosome 17. The fact that causal *GRN* mutations are usuall heterozygous nonsense mutations suggests haploinsufficiency. Many forms of FTD/ALS are associated with neuronal cytoplasmic inclusions (NCIs) and/or neuronal intranuclear inclusions (NIIs) composed of one or another aggregated protein. 
+*MAPT* and *GRN* are both located on chromosome 17. The fact that causal *GRN* mutations are usuall heterozygous nonsense mutations suggests haploinsufficiency. There are several other genes in which Mendelian variants causing FTD/ALS have been reported as well, including X-linked dominant mutations in *UBQLN2* [[Deng 2011]].
+
+Many forms of FTD/ALS are associated with neuronal cytoplasmic inclusions (NCIs) and/or neuronal intranuclear inclusions (NIIs) composed of one or another aggregated protein. 
 
 From the reviews and from our discussion it seems to me that the terms "frontotemporal dementia" and "amyotrophic lateral sclerosis" are each a phenomenological diagnosis, based on some collection of symptoms and perhaps crude pathology. Neither term has a specific molecular definition, and there is no single molecule that is known to be involved in all cases of the disease. This is in contrast to the term "Alzheimer's disease", which, the way most people seem to use it, **does* have a molecular definition (it is defined as having A&beta; plaques and hyperphosphorylated tau deposits), or "Huntington's" or "prion disease", each of which refers to disease associated with a single protein (huntingtin and PrP respectively). Therefore, if one wishes to classify diseases at the molecular level, then FTD/ALS is probably several diseases, and it is not clear to me that insights from one of these diseases can necessarily be extrapolated to the others.
 
@@ -111,5 +113,9 @@ A. No; their presence does not imply that they are what causes the disease. The 
 [Mizielinska 2014]: http://www.ncbi.nlm.nih.gov/pubmed/25103406 "Mizielinska S, Grönke S, Niccoli T, Ridler CE, Clayton EL, Devoy A, Moens T, Norona FE, Woollacott IO, Pietrzyk J, Cleverley K, Nicoll AJ, Pickering-Brown S,  Dols J, Cabecinha M, Hendrich O, Fratta P, Fisher EM, Partridge L, Isaacs AM. C9orf72 repeat expansions cause neurodegeneration in Drosophila through arginine-rich proteins. Science. 2014 Sep 5;345(6201):1192-4. doi: 10.1126/science.1256800. Epub 2014 Aug 7. PubMed PMID: 25103406."
 
 [Prusiner 1984]: http://www.ncbi.nlm.nih.gov/pubmed/6432339 "Prusiner SB, Groth DF, Bolton DC, Kent SB, Hood LE. Purification and structural studies of a major scrapie prion protein. Cell. 1984 Aug;38(1):127-34. PubMed PMID: 6432339."
+
+[Deng 2011]: http://www.ncbi.nlm.nih.gov/pubmed/21857683 "Deng HX, Chen W, Hong ST, Boycott KM, Gorrie GH, Siddique N, Yang Y, Fecto F,  Shi Y, Zhai H, Jiang H, Hirano M, Rampersaud E, Jansen GH, Donkervoort S, Bigio EH, Brooks BR, Ajroud K, Sufit RL, Haines JL, Mugnaini E, Pericak-Vance MA, Siddique T. Mutations in UBQLN2 cause dominant X-linked juvenile and adult-onset  ALS and ALS/dementia. Nature. 2011 Aug 21;477(7363):211-5. doi: 10.1038/nature10353. PubMed PMID: 21857683; PubMed Central PMCID: PMC3169705."
+
+
 
 
