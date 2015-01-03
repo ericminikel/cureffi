@@ -254,6 +254,6 @@ A few different lines of mice have been created which express full-length PrP wh
 
 [Finckh 2000b]: http://www.ncbi.nlm.nih.gov/pubmed/11193137 "Finckh U, Müller-Thomsen T, Mann U, Eggers C, Marksteiner J, Meins W, Binetti  G, Alberici A, Sonderegger P, Hock C, Nitsch RM, Gal A. High frequency of mutations in four different disease genes in early-onset dementia. Ann N Y Acad Sci. 2000;920:100-6. PubMed PMID: 11193137."
 
-[Beck 2001]: http://www.ncbi.nlm.nih.gov/pubmed/ "Neurology. 2001 Jul 24;57(2):354-6.  Two-octapeptide repeat deletion of prion protein associated with rapidly progressive dementia.  Beck JA, Mead S, Campbell TA, Dickinson A, Wientjens DP, Croes EA, Van Duijn CM, Collinge J. PMID: 11468331"
+[Beck 2001]: http://www.ncbi.nlm.nih.gov/pubmed/11468331 "Neurology. 2001 Jul 24;57(2):354-6.  Two-octapeptide repeat deletion of prion protein associated with rapidly progressive dementia.  Beck JA, Mead S, Campbell TA, Dickinson A, Wientjens DP, Croes EA, Van Duijn CM, Collinge J. PMID: 11468331"
 
 [Capellari 2002]: http://www.ncbi.nlm.nih.gov/pubmed/12451210 "Capellari S, Parchi P, Wolff BD, Campbell J, Atkinson R, Posey DM, Petersen RB, Gambetti P. Creutzfeldt-Jakob disease associated with a deletion of two repeats in the prion protein gene. Neurology. 2002 Nov 26;59(10):1628-30. PubMed  PMID: 12451210."
