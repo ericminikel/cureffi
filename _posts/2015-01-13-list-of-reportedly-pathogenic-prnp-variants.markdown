@@ -4,7 +4,7 @@ title:  "List of reportedly pathogenic PRNP variants"
 date:   2015-01-13 12:00
 author: ericminikel
 location: Boston, MA
-summary200: "60 different genetic variants in the PRNP gene have been reported to cause prion disease, including missense, nonsense, frameshift, and in-frame insertion and deletions."
+summary200: "63 different genetic variants in the PRNP gene have been reported to cause prion disease, including missense, nonsense, frameshift, and in-frame insertion and deletions."
 ---
 
 Today I set out to compile an exhaustive list of rare variants in *PRNP* which have been reported to be pathogenic. I am posting this list here as a reference. Here are some disclaimers:
@@ -13,6 +13,8 @@ Today I set out to compile an exhaustive list of rare variants in *PRNP* which h
 + The "see also" column is far from exhaustive. Many of these variants have been discussed in tens of publications.
 + I compiled this list by reading two reviews [[Kong 2004], [Beck 2010]] and [OMIM #176640](http://www.omim.org/entry/176640) and by searching PubMed for new reports since 2010. I think it's complete but if you know of something I missed, please leave a comment below.
 + I excluded any variants known to have an allele frequency >0.5% in at least one population, including 1-OPRD [[Palmer 1993]], and [G54S](http://exac.broadinstitute.org/variant/20-4680026-G-A), [M129V](http://exac.broadinstitute.org/variant/20-4680251-A-G), [G142S](http://exac.broadinstitute.org/variant/20-4680290-G-A), [N171S](http://exac.broadinstitute.org/variant/20-4680378-A-G), and [E219K](http://exac.broadinstitute.org/variant/20-4680521-G-A).
+
+*Last updated 2015-01-20, now contains 63 variants. Thanks to Simon Mead for pointing out variants I had missed.*
 
 | variant | first report | see also |
 | ---- | ---- | ---- |
@@ -44,6 +46,7 @@ Today I set out to compile an exhaustive list of rare variants in *PRNP* which h
 | R148H | [Krebs 2005](http://www.ncbi.nlm.nih.gov/pubmed/15776279/) | [Pastore 2005](http://www.ncbi.nlm.nih.gov/pubmed/16314483/) |
 | Q160X | [Finckh 2000](http://www.ncbi.nlm.nih.gov/pubmed/10631141/) | [Jayadev 2011](http://www.ncbi.nlm.nih.gov/pubmed/21416485/) |
 | Y163X | [Revesz 2009](http://www.ncbi.nlm.nih.gov/pubmed/19225789/) | [Mead 2013](http://www.ncbi.nlm.nih.gov/pubmed/24224623/) |
+| D167G | [Bishop 2009](http://www.ncbi.nlm.nih.gov/pubmed/20035629) |  |
 | D167N | [Beck 2010](http://www.ncbi.nlm.nih.gov/pubmed/20583301) |  |
 | V176G | [Simpson 2013](http://www.ncbi.nlm.nih.gov/pubmed/23857164) |  |
 | D178fs25X | [Mastuzono 2013](http://www.ncbi.nlm.nih.gov/pubmed/23577609) |  |
@@ -61,11 +64,13 @@ Today I set out to compile an exhaustive list of rare variants in *PRNP* which h
 | F198V | [Zheng 2008](http://www.ncbi.nlm.nih.gov/pubmed/18425766) |  |
 | E200G | [Kim 2013](http://www.ncbi.nlm.nih.gov/pubmed/24330864) |  |
 | E200K | [Goldgaber 1989](http://www.ncbi.nlm.nih.gov/pubmed/2572450) | [Hsiao 1991](http://www.ncbi.nlm.nih.gov/pubmed/2008182) |
+| D202G | [Heinemann 2008](http://www.ncbi.nlm.nih.gov/pubmed/18443555) |  |
 | D202N | [Piccardo 1998](http://www.ncbi.nlm.nih.gov/pubmed/9786248) |  |
 | V203I | [Peoc'h 2000](http://www.ncbi.nlm.nih.gov/pubmed/10790216) |  |
 | R208C | [Zheng 2008](http://www.ncbi.nlm.nih.gov/pubmed/18425766) |  |
 | R208H | [Mastrianni 1996](http://www.ncbi.nlm.nih.gov/pubmed/8909447) | [Capellari 2005](http://www.ncbi.nlm.nih.gov/pubmed/15753435), [Roeber 2005](http://www.ncbi.nlm.nih.gov/pubmed/15739100) |
 | V210I | [Pocchiari 1993](http://www.ncbi.nlm.nih.gov/pubmed/7902693) | [Mouillet-Richard 1999](http://www.ncbi.nlm.nih.gov/pubmed/10526198) |
+| E211D | [Peoc'h 2012](http://www.ncbi.nlm.nih.gov/pubmed/22965875) |  |
 | E211Q | [Peoc'h 2000](http://www.ncbi.nlm.nih.gov/pubmed/10790216) |  |
 | Q212P | [Piccardo 1998](http://www.ncbi.nlm.nih.gov/pubmed/9786248) |  |
 | I215V | [Munoz-Nieto 2013](http://www.ncbi.nlm.nih.gov/pubmed/22763467) |  |
