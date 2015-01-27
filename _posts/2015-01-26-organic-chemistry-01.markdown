@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Organic Chemistry 01: What is organic chemistry, drawing structures"
+title:  "Organic chemistry 01: What is organic chemistry, drawing structures"
 date:   2015-01-26 12:00:00
 author: ericminikel
 tag: chem-20
