@@ -3,7 +3,7 @@ layout: post
 title:  "The search for genetic modifiers of prion disease"
 date:   2015-01-27 12:01:00
 author: ericminikel
-location: Boston, MA
+location: Cambridge, MA
 thumb120: http://www.cureffi.org/media/2015/01/genetic-modifiers-thumbnail.png
 summary200: "For >15 years people have searched for a gene other than PRNP that can affect the course of prion disease. What have we learned from these efforts?"
 ---
