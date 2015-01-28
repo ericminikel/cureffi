@@ -70,7 +70,7 @@ That picture may now be changing. Simon Mead announced at [Prion2014 Day 4](/201
 
 ### Knockout and overexpression in mice
 
-Arguably, the ultimate test of whether a mouse gene affects prion incubation time is whether knockout or overexpressing mice have different incubation times than their wild-type littermates do. Additionally, we should hope that if the association is real, then knockout and overexpression should have opposite effects.
+Arguably, the ultimate test of whether a mouse gene affects prion incubation time is whether knockout or overexpressing mice have different incubation times than their wild-type littermates do. Additionally, we might hope that if the association is real, then knockout and overexpression should have opposite effects. But that wasn't true in the case of Hsp104 in yeast, so we should also stay open-minded if there is strong evidence for knockout and overexpression both giving real effects and in the same direction.
 
 To date, tens of genes have been knocked out and/or overexpressed in an effort to determine whether they affect the course of prion disease. Such studies have identified genes that dramatically affect the ability of peripherally acquired prion disease to invade the CNS - for instance, complement receptors CD21/35 [[Michel 2012]]. However, studies of i.c. inoculated mice have given largely negative results, and the few positive results that have been reported are of very limited effect size. In the table below, I have tried to collect all of the candidate gene knockout and/or overexpression studies from i.c. inoculated mice. Blank cells indicate the experiment has not been reported.
 
