@@ -12,7 +12,7 @@ Today I set out to compile an exhaustive list of rare variants in *PRNP* which h
 + This does not constitute an endorsement that each of these variants is indeed associated with prion disease risk - some may actually be benign. This is just a review of what has been reported in the literature.
 + The "see also" column is far from exhaustive. Many of these variants have been discussed in tens of publications.
 + I compiled this list by reading two reviews [[Kong 2004], [Beck 2010]] and [OMIM #176640](http://www.omim.org/entry/176640) and by searching PubMed for new reports since 2010. I think it's complete but if you know of something I missed, please leave a comment below.
-+ I excluded any variants known to have an allele frequency >0.5% in at least one population, including 1-OPRD [[Palmer 1993]], and [G54S](http://exac.broadinstitute.org/variant/20-4680026-G-A), [M129V](http://exac.broadinstitute.org/variant/20-4680251-A-G), [G142S](http://exac.broadinstitute.org/variant/20-4680290-G-A), [N171S](http://exac.broadinstitute.org/variant/20-4680378-A-G), and [E219K](http://exac.broadinstitute.org/variant/20-4680521-G-A).
++ I excluded any variants known to have an allele frequency >0.5% in at least one continental population, including 1-OPRD [[Palmer 1993]], and [G54S](http://exac.broadinstitute.org/variant/20-4680026-G-A), [M129V](http://exac.broadinstitute.org/variant/20-4680251-A-G), [G142S](http://exac.broadinstitute.org/variant/20-4680290-G-A), [N171S](http://exac.broadinstitute.org/variant/20-4680378-A-G), and [E219K](http://exac.broadinstitute.org/variant/20-4680521-G-A).
 
 *Last updated 2015-01-20, now contains 64 variants. Thanks to Simon Mead for pointing out variants I had missed.*
 
