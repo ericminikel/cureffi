@@ -22,6 +22,8 @@ Another example of resonance is carboxylate ions. Here, the small curvy arrows i
 
 ![](/media/2015/02/carboxylate-resonance.png)
 
+Note that the small arrows must always point *from* a place that has electrons *to* a place that can accept electrons.
+
 A final example is nitrites. Once again, the two structures are equal contributors.
 
 ![](/media/2015/02/nitrite-resonance.png)
