@@ -72,7 +72,8 @@ Here are factors that affect the values in the table above:
 2. **Size of electron shell**. Among halogens, the size of the electron shell involved in bonding is so important that it overcomes the difference in electronegativity, hence why HCl has lower pKa than HF. Similarly, H-SH is a stronger acid than H-OH even though S is more electronegative than O.
 3. **Bond strength and size matter**. I wasn't clear if this is a separate thing or just a re-statement of the "size" thing above.
 4. **Hybridization state**. Hybridized orbitals with more s character are more willing to take on extra electrons. Thus, a triple bond (sp hybridized) more readily takes the electrons from a proton than a single bond (sp<sup>3</sup> hybridized), which is why ethyne is more acidic than methane.
-5. **Resonance**. Cyclohexanol has a pKa of 16, while phenol has a pKa of 9, because the O<sup>-</sup> is able to share the extra electron density into the pi system of benzene. Another example is that ethanol has a pKa of 16, while acetic acid has a much lower pKa of 5 thanks to its double bond.6. **Induction**. The following three compounds differ in pKa not because of explicit resonance structures per se, but due to different ability to distribute electron density across the molecule via dipole moments. This effect is less strong than resonance.
+5. **Resonance**. Cyclohexanol has a pKa of 16, while phenol has a pKa of 9, because the O<sup>-</sup> is able to share the extra electron density into the pi system of benzene. Another example is that ethanol has a pKa of 16, while acetic acid has a much lower pKa of 5 thanks to its double bond.
+6. **Induction**. The following three compounds differ in pKa not because of explicit resonance structures per se, but due to different ability to distribute electron density across the molecule via dipole moments. This effect is less strong than resonance.
 
 ![](/media/2015/02/induction-affecting-pka.png)
 
