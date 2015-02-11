@@ -76,6 +76,8 @@ Here are factors that affect the values in the table above:
 
 ![](/media/2015/02/induction-affecting-pka.png)
 
+[This handout](http://isites.harvard.edu/fs/docs/icb.topic93502.files/Lectures_and_Handouts/20-Acidity_Concepts.pdf) contains some additional useful pKas and concepts.
+
 ### How to make the conjugate base of hydrocarbons
 
 Alkyllithium reagents and alkylmagnesium reagents can make the conjugate base of hydrocarbons.
