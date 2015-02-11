@@ -55,7 +55,7 @@ The pKa of compounds depends on several factors.
 | H-Cl | -7 |
 | H-I | -9 |
 | H-OH | 16 |
-| H-SH | 8 |
+| H-SH | 7 |
 | H-NH<sub>2</sub> | 38 |
 | H-O<sup>+</sup>H<sub>2</sub> | -2 |
 | H-N<sup>+</sup>H<sub>3</sub> | 9 |
