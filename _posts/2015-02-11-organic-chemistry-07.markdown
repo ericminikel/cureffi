@@ -79,6 +79,8 @@ Here are factors that affect the values in the table above:
 
 [This handout](http://isites.harvard.edu/fs/docs/icb.topic93502.files/Lectures_and_Handouts/20-Acidity_Concepts.pdf) contains some additional useful pKas and concepts.
 
+When you see a reaction, the quick way to figure out the Keq is as follows: &Delta;pKa = pKa<sub>product</sub> - pKa<sub>reactant</sub>, and Keq = 10<sup>&Delta;pKa</sup>, where Keq values <1 indicate running forward is favored, and >1 indicate running in reverse is favored.
+
 ### How to make the conjugate base of hydrocarbons
 
 Alkyllithium reagents and alkylmagnesium reagents can make the conjugate base of hydrocarbons.
