@@ -38,14 +38,17 @@ Even a 300 amino acid protein has 20<sup>300</sup> possible sequences, which is 
 
 The first growth of protein crystals was achieved by J.D. Bernal and Dorothy Hodgkin (1936-8; see [1964 Nobel Prize in Chemistry](http://www.nobelprize.org/nobel_prizes/chemistry/laureates/1964/perspectives.html)). The first 3-D protein structure to be solved was myoglobin, solved via X-ray crystallography by Max Perutz and John Kendrew (1956-8; see [Nobel Prize in Chemistry 1962](http://www.nobelprize.org/nobel_prizes/chemistry/laureates/1962/)). As of [today](http://web.archive.org/web/20150205201505/http://pdb.org/pdb/home/home.do), Protein Data Bank (PDB) contains 106,293 empirically determined structures (though the number of unique proteins is much smaller).
 
-Until the structure was solved, people expected that myoglobin would possess, at the monomer level, the elegant symmetry of the myoglobin crystal. In fact, its structure is utterly asymmetric. The original structure is available as [[PDB# 1MBN](http://pdb.org/pdb/explore/explore.do?structureId=1mbn)]:
+Until the structure was solved, people expected that myoglobin would possess, at the monomer level, the elegant symmetry of the myoglobin crystal. In fact, its structure is utterly asymmetric. The original structure is available as [[PDB# 1MBN](http://pdb.org/pdb/explore/explore.do?structureId=1mbn)]. I show it here in yellow, with the heme in red and sticks shown for the side chains of two histidines coordinating it:
 
 ```
 fetch 1mbn
 bg_color white
 hide everything
 show cartoon
-spectrum
+color yellow
+show sticks, organic
+color red, organic
+show sticks, resi 64 or resi 97
 ```
 
 ![](/media/2015/02/myoglobin-structure.png "myoglobin")
