@@ -155,6 +155,7 @@ We can categorize protein association reactions as follows:
 | self-assembly\*\* | strong | specific | no |
 
 \*If you dilute, will it go back into solution?
+
 \*\*Self-assembly refers to things like actin polymerization. 
 
 For years, people working in protein production in biotechnology thought that aggregation was the same thing as precipitation. But we now separate these two concepts by an important operational definition: if you add solvent back to it and it does *not* go back into solution, then it was aggregated, not precipitated. Many small molecules precipitate, but none of them *aggregate*. Aggregation is a property exclusive to proteins, because it requires a biomolecule large enough to have multiple conformations.
