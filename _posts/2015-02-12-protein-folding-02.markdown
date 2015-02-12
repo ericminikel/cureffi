@@ -54,6 +54,55 @@ Anfinsen and colleagues discuss five mechanisms (A1, A2, A3, A4 and B) for how p
 + A4. The limiting rate for regaining of enzymatic activity is secondary structure folding, not disulfide bond formation. They rule this out on the basis of a number of their earlier studies they cite which suggest that secondary structure formation is very rapid, whereas the lag time in their own experiments is on the order of hours.
 + B. Disulfide bonds form incorrectly (meaning between all 8 choose 2 pairs of cysteines rather than only the four correct combinations) at first, and then get rearranged later as folding proceeds. They believe this explanation is most likely.
 
+### Lecture notes
+
+The major classes of protein folds are:
+
+1. **Globular proteins**. These are usually soluble, and are the substrate for most biochemistry research.
+2. **Fibrous proteins**. These include coiled coil proteins, which we will discuss today.
+3. **Membrane proteins**. This is perhaps 30% of our proteome, but they are vastly under-studied because they cannot be crystallized.
+4. **Natively unstructured**. These proteins are unstructured in aqueous solution and usually cannot be crystallized. It is unclear whether some of these might actually have well-defined structures in their native compartment of the cell. This class includes alpha synuclein, which we will cover in detail in this class.
+
+Many important insights in the field have come not from computational analysis, but simply through spending a ton of time staring at a structure and contemplating it. For instance, [[Chothia 1981]] stared at 50 helix-helix contacts in a a number of different proteins, and came to understand the importance of helix-helix packing in defining the fold of globular proteins. The helices they examined were on average 15 residues long (range, 6 to 23) and the interfaces of Van der Waals contact between helices were on average 4.7 residues long (range, 3 to 7). Note that the residues closest in 3D space in these contacts are not necessarily anywhere near each other in 1D sequence, confounding any attempts to gain computational insights.
+
+One of the things Chothia recognized is a topology present on the surface of alpha helices. Grooves and ridges are formed by the i&plusmn;4n (e.g. 1, 5, 9, 13...), i&plusmn;3n and i&plusmn;1n series of residues. The bulkiness of the residues determines the height of ridges and depth of grooves. Pairs of helices usually intercalate 4-4, 3-4 or 1-4, meaning there is almost always at least one i&plusmn;4n ridge/groove involved.
+
+Helix-helix interface residues are predominantly hydrophobic - 50% are A, I, L, F, V. Another 25% are the hydrophilic D, N, E, Q, K, R, usually found at the edge of the interface, half contacting the solvent.
+
+In helix-helix packing, the distance between the two helix axes avearges 9.4&Aring; (range, 6.8 to 12.0&Aring;), depending on the size of side chains. The interpenetration of atoms from each helix into the other one's grooves is only 2.3&Aring;, though. In other words, only the tips of the side chains really interdigitate, and the peptide backbone is not involved in the packing at all.
+
+Myoglobins from many different species have been crystallized. It is easy to align the sequences (or structures) due to absolute conservation of the heme-binding histidines. Once these are aligned, you find that only about 15% of the remainder of residues are highly conserved by some metric.
+
+Here, again, is that myoglobin structure from last time:
+
+![](/media/2015/02/myoglobin-structure.png "myoglobin")
+
+The fact that almost all proteins use almost all 20 amino acids suggests that each amino acid can do something unique and special at least some of the time. There are amino acids that are often found at the ends of alpha helices and help to define the beginning of a helix - these sometimes form turns and are often called "helix caps".
+
+Some of the first studies of protein structure used not X-ray crystallography but X-ray fiber diffraction. Fibers of hair diffracted X-rays with meridional signal at 5.15&Aring; and equatorial at 9.8&Aring;. When the hairs were stretched, the pattern changed. This was evidence that (1) keratin in hair had a particular conformation, consistent between all the different copies of keratin, and (2) that this structure could be distorted into a different specific conformation by force. X-ray fiber diffraction has come back into importance in recent years as a tool for understanding amyloid folds.
+
+In contrast to keratin, actin is not fibrous, it is globular, but it polymerizes into filaments. Tropomyosin is a coiled coil fibrous protein which binds actin filaments and walks along them in order to flex a muscle.
+
+Examples of 2-stranded coiled coils include:
+
++ Myosin
++ Paramyosin - this is what clamps bivalve sea creatures shut
++ M-protein
++ Lamin
++ Intermediate filament (IF)
++ Tropomyosin - introduced above
+
+Because you can get large amounts of muscle from animals, it is relatively easy to purify muscle proteins, and their amino acid sequences were determined relatively early on. Tropomyosin, myosin, paramyosin and intermediate filament all contain heptapeptide repeat motifs which are fairly well conserved. Leucine is the most common residue in the 1st ("a") position of the repeat. Positions a and d are hydrophobic and face into the interface, g and e are charged, and b, c and f face outward and could be anything. This creates a hydrophobic core at the interface, locked together by opposing charges on either helix.
+
+![](/media/2015/02/heptad-repeat.png)
+
+The first complete high resolution structure of a coiled coil protein was that of a fragment of GCN4, a parallel coiled coil with two alpha helices each containing 8 turns and 31 residues [[PDB# 2ZTA](http://pdb.org/pdb/explore/explore.do?structureId=2zta)].
+
+Even though alpha helices themselves are right-handed, they can coil around each other in a left-handed fashion. Helices are said to be parallel if the N termini are both at one end, and the C termini both at the other end, and antiparallel if they are head-to-foot with one helix's C at the other one's N. Counterintuitively, both structures are stable and exist in nature. As you might guess from the above diagram, it turns out that the charges of residues g and e on the two strands are a large part of what determines the parallel vs. antiparallelness of the coiled coil. 
+
+It turns out there are even 3-stranded parallel coiled coils with axial symmetry, a hydrophobic core and three ionic pairs. Similarly, there are 4-, 5-, and 6-stranded coiled coils. The larger ones are not as tightly packed due to steric issues, but do nevertheless appear in nature.
+
+The coiled coil proteins are considered some of the best examples where we really understand how amino acid sequence determines structure. However, the fact that we can look at the structure and see how sequence helps to *hold* the protein in its conformation doesn't actually tell us how the protein *got into* that conformation in the first place. An analogy is that the wedge shape of stones in an archway is clearly important for the stability of the arch, but it doesn't tell you how to *build* the arch. In fact, it is impossible to build an arch without a scaffold - you need the scaffold to support it until you finish it and add the keystone, at which you can remove the scaffold and it will self-support. Moral of the story: the forces that hold a structure together may not be sufficient to create that structure.
 
 [Eisenberg 2003]: http://www.ncbi.nlm.nih.gov/pubmed/12966187 "Eisenberg D. The discovery of the alpha-helix and beta-sheet, the principal structural features of proteins. Proc Natl Acad Sci U S A. 2003 Sep 30;100(20):11207-10. Epub 2003 Sep 9. PubMed PMID: 12966187; PubMed Central PMCID: PMC208735."
 
@@ -66,3 +115,7 @@ Anfinsen and colleagues discuss five mechanisms (A1, A2, A3, A4 and B) for how p
 [Perutz 1987]: http://www.the-scientist.com/?articles.view/articleNo/8440/title/-I-Wish-I-d-Made-You-Angry-Earlier-/ "Perutz. February 23, 1987. 'I Wish I'd Made You Angry Earlier'"
 
 [Knaus 2001]: http://www.ncbi.nlm.nih.gov/pubmed/11524679 "Knaus KJ, Morillas M, Swietnicki W, Malone M, Surewicz WK, Yee VC. Crystal structure of the human prion protein reveals a mechanism for oligomerization. Nat Struct Biol. 2001 Sep;8(9):770-4. PubMed PMID: 11524679."
+
+[Chothia 1981]: http://www.ncbi.nlm.nih.gov/pubmed/7265198 "Chothia C, Levitt M, Richardson D. Helix to helix packing in proteins. J Mol Biol. 1981 Jan 5;145(1):215-50. PubMed PMID: 7265198."
+
+
