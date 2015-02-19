@@ -5,7 +5,7 @@ date:   2015-02-19 12:00:00
 author: ericminikel
 tag: mit-7.88j
 location: Cambridge, MA
-summary200: ""
+summary200: "Alpha/beta structures, the leucine zipper to coiled coil story, history of globular proteins, introduction to beta sheets, and gamma D crystallin."
 ---
 
 *These are my notes from week 3 of MIT course 7.88j: Protein Folding and Human Disease, held by Dr. Jonathan King on February 19, 2015.*
@@ -18,7 +18,7 @@ The reading for this week was [[O'Shea 1989]] as well as chapters 4-5 of [Brande
 
 &alpha;/&beta; structures are common to many small molecule-binding enzymes, including all of "glycolytic" enzymes (which bind and break down glucose in glycolysis). In such a structure, there is a core &beta;-barrel consisting of several beta sheets, either all parallel or mixed parallel/antiparallel, surrounded by a cage of alpha helices. In linear sequence, the alpha helices and beta sheets alternate. Thus, you can think of the structure as being made up of repeating &alpha;&beta;&alpha; motifs. It is actually the loops at one end of the barrel that form the active site for binding the small molecule.
 
-Current phylogenetic evidence suggests that the 15 or so distinct proteins known to have alpha/beta structures arose by convergent evolution.
+Current phylogenetic evidence suggests that the 15 or so distinct proteins known to have alpha/beta structures arose by convergent evolution. However, interestingly, in parallel beta barrels, the active site is always at the end that has the C terminus of each beta strand, and there is no obvious reason why this should need to be the case. There is one theory out there about charge having something to do with it.
 
 #### From leucine zipper to coiled coil
 
@@ -26,11 +26,13 @@ By the late 1980s, the "coiled coil" introduced [last time](/2015/02/12/protein-
 
 It is worth recapping the major arguments of the 1989 paper one by one. O'Shea created 33-residue synthetic peptides corresponding to the proposed leucine zipper region of GCN4. In this paper, they did not yet determine a high-resolution structure - that came a few years later [[O'Shea 1991]] - but they used several clever experiments to narrow down the range of possible structures. First, they settled on some basic aspects of the structure:
 
-+ Circular dichroism ([introduced here](/2015/01/22/the-quest-for-the-structure-of-prpsc/)) indicated 100% alpha helical structure.
++ Circular dichroism ([introduced here](/2015/01/22/the-quest-for-the-structure-of-prpsc/)) indicated 100% alpha helical structure. Note, however, that because they later show that the peptide spontaneously forms dimers in solution, all this really shows is that the *dimer* is alpha helical - it is impossible to tell what structure the monomer has. In fact, Prof. King believes that the dramatic decrease in &theta; 222nm signal in the CD spectrum of Fig 2B as you heat the protein suggests a loss of alpha helical content when you dissociate the dimers. This is an important lesson that you cannot dissociate secondary structure from tertiary struture.
 + The melting point depended on peptide concentration, which meant the peptide must form dimers or higher-order oligomers. They cite another group's sedimentation experiments showing that it is in fact a dimer.
 + The peptide is highly soluble, indicating the hydrophobic side chains must be buried in the helix-helix interface.
 
-Then they tackled their core question of whether the helices were arranged in a parallel or antiparallel fashion. To do this, they synthesized 36-residue peptides with the original sequence plus CGG at the N terminus or GGC at the C terminus. The glycines allow flexibility so that the cysteine can form disulfide bonds under oxidizing conditions. They apparently could distinguish the C-terminal and N-terminal versions on HPLC, though I don't understand why that would be the case, as they should have the exact same molecular weight. In any event, they observed:
+Then they tackled their core question of whether the helices were arranged in a parallel or antiparallel fashion. To do this, they synthesized 36-residue peptides with the original sequence plus CGG at the N terminus or GGC at the C terminus. The glycines allow flexibility so that the cysteine can form disulfide bonds under oxidizing conditions. They could distinguish the C-terminal homodimers, N-terminal homodimers, and heterodimers, on HPLC, even though the molecular weight for all is the exact same. Prof. King explained in class that the C versus N-terminal disulfide bond and parallel versus antiparallel configurations result in differential neutralization of charged residues along the helix, which affects migration of the dimer on HPLC.
+
+In any event, they observed:
 
 + In oxidizing conditions, one could readily obtain homodimers (N-N or C-C disulfides) whereas heterodimers were rarely recovered, indicating that the parallel configuration was preferred for the folded protein.
 + In conditions that were both oxidizing *and* denaturing, it became possible to obtain heterodimers, indicating that the unfolded protein was capable of forming heterodimers. This seems to be a sort of control for the above bullet point.
@@ -96,6 +98,14 @@ In a **parallel &beta;-helix** fold, the same motif repeats in a regular fashion
 
 As an example of a &beta;-helix, here is the *Bordetella pertussis* virulence factor P.69 pertactin [[PDB# 1DAB](http://pdb.org/pdb/explore/explore.do?structureId=1DAB)] from [[Emsley 1996]]:
 
+```
+fetch 1dab
+bg_color white
+hide everything
+show cartoon
+spectrum count, yellow_red
+```
+
 ![](/media/2015/02/1dab-spectrum.png)
 
 When an alpha helix is packed against a beta sheet, the angle between them is usually within &plusmn;30&deg;. This is thought to be explained by the complementary twist model. All known beta sheets have a right-handed tilt of about 18-19&deg; per strand. It is not entirely clear why these are always right-handed, though it must in some way relate to amino acids being left-handed. The grooves in beta sheets are thus perfect to accommodate the ridges formed by the i, i+5, i+8, i+1, i+5 and i+9 residues of an alpha helix, with perfect Van der Waals packing.
@@ -107,6 +117,54 @@ For years, people suspected that the side chains sticking out in front and behin
 The situation with perpendicular beta sandwiches is similar, except that they have two "splayed corners" where there may be other interactions.
 
 The most important beta sheet-rich proteins in our daily life are immunoglobulins. 
+
+#### Folding intermediates
+
+It is hard to even imagine by what series of steps the complicated beta sheet-rich proteins might fold. In order to study the folding process of any protein - from fully denatured polypeptide to native state - you need some way of characterizing the intermediates along the pathway. The tools for this are usually:
+
++ Circular dichroism
++ Fluorescence\*
++ NMR
++ H/D exchange
+
+Note that X-ray crystallography is not on the list because it is usually impossible to crystallize an intermediate.
+
+\*Here is a further note about the "fluorescence" option. This actually uses the same principle as measuring protein concentration on the NanoDrop. Proteins absorb UV light with a peak absorbance at 280nm due first and foremost to tryptophan (W), although W is rare and some proteins don't have a single W residue. Y also absorbs at 280 nm, though several times less. F has a peak closer to 260 nm, and its 280 nm absorption is barely on the chart. Anyway, the principle is that when any of these residues absorbs a photon, the excited state will within 1e-15 seconds lose some of its energy again and go back down to the lowest excited state. If this doesn't chemically change the molecule, the next step is it will usually fall back to ground state, emitting another photon - but because it already lost a little bit of energy, the emitted photon has a lower wavelength than the absorbed photon (represented here by a slightly shorter arrow):
+
+![](/media/2015/02/excitation-emission.png)
+
+Usually, when you do excitation-emission measurements, you have the sample in a cuvette, and you shine the excitation photons in a tight beam from one angle, whereas the emitted photons will come off at any which angle, so you have the measuring device orthogonal to the excitation beam:
+
+![](/media/2015/02/placement-of-reader.png)
+
+So when you're using the NanoDrop you are measuring absorbance, but if you want conformation information, you can also measure emission. When W is in an unfolded protein, its &lambda;<sub>max</sub> (peak emission wavelength) is at about 350 nm, and when it is buried in the hydrophobic core of a protein, its &lambda;<sub>max</sub> drops to 330 nm.
+
+A typical procedure to gain conformational information about intermediates is either **equilibrium folding**, in which you start with your protein in a very strong denaturant, say, 8M GdnHCl, and serially dilute it into 6M, 4M, 2M, 1M GdnHCl and so on - or **equilibrium unfolding** in which you start in a native buffer and add denaturant. Either way, you'll likely see a peak at 350 in your 6M GdnHCl solution, but at 330 in your lowest GdnHCl solution. In between, you can quantify the extent of protein folding by calculating the absorbance at 330 nm as a proportion of the absorbance at 330 nm in the native state. For most proteins, what has been discovered is that folding is a cooperative process, resulting in a relatively steep dropoff from native to denatured state:
+
+![](/media/2015/02/steep-dropoff.png)
+
+This allows you to calculate &Delta;G, but tells you nothing about the mechanism of folding. However, sometimes you see a curve more like this:
+
+![](/media/2015/02/folding-with-intermediate.png)
+
+In this case, there are two processes: N &harr; I, and I &harr; U (N = native, I = intermediate, U = unfolded), and you can figure out how much the tryptophan is buried in the intermediate state.
+
+If you measure enzymatic activity and fluorescence of a protein in various denaturant concentrations, you sometimes see a tight relationship between the two: native protein has activity, denatured protein does not, plain and simple. Other times, the two are uncoupled at certain intermediate concentrations, indicating that a partially folded intermediate may retain enzymatic activity but expose its W residues, or vice versa.
+
+Sometimes re-folding takes time, not just dilution of denaturant. In this case, you need to measure UV emission (or another readout) over time within each dilution. This is called **kinetic refolding** or **kinetic unfolding** as opposed to equilibrium refolding and unfolding. When you see an inflection point in your kinetic curve, it suggests the existence of an intermediate:
+
+![](/media/2015/02/intermediate-in-kinetic-refolding.png)
+
+#### Example: the lens protein gamma D-crystallin
+
+The &gamma;D-crystallin in your lens was translated by a ribosome when you were in the womb and deposited in what became your lens. This initial supply of the protein lasts your entire life - your lens has no nuclei so it cannot produce more crystallin. This protein is therefore among the longest-lived of proteins. These proteins have a ton of tryptophan in them, because the retina is highly sensitive to UV light. The lens functions to protect the retina from UV light, while being perfectly transparent in the visible spectrum. Note that W only sometimes emits a photon when excited - the rest of the time, the indole ring is broken instead, and the amino acid you now have is no longer quite tryptophan. &gamma;D-crystallin has a structure exquisitely evolved to shunt excitatory energy away from its tryptophans, so that the protein will not be destroyed by years of exposure to UV radiation. As a result, the tryptophans are much brighter than tryptophans in most proteins.
+
+This protein provides a great example of folding through intermediates. It has four W, and by making a series of mutants where all but one of them were substituted by F, Jonathan King was able to measure the refolding kinetics for each individual tryptophan. The data indicate that C-terminal tryptophans resume native state fluorescence much quicker (on the order of 15 minutes faster) than N-terminal tryptophans, suggesting that the protein folds sequentially from its C terminus [[Kosinski-Collins 2004]]. The protein has two domains - C terminal and N terminal. King's group made a series of mutations in residues at the interface between the two domains, and found that these did not affect the final, fully folded structure of the protein, but *did* affect the kinetics of folding - most of the substitutions increased the time required for folding by over 10x. Thus, the C terminus appears to act as a template for the folding of the N terminal part, and when this templating ability is lost, you have to wait much longer for the N terminal domain to fold on its own [[Flaugh 2005a], [Flaugh 2005b]]. There are several pairs of aromatic residues pointed at one another in the beta sheets of &gamma;D-crystallin. Prof. King's lab tried mutating each of these residues one by one [[Kong & King 2011]]. Predictably, most of the mutations affected the equilibrium unfolding curves. However, surprisingly, only one pair - Y133/Y138 - affected kinetic refolding. This is the most C-terminal of all of the pairs studied, and appears to nucleate early folding events in the C terminus.
+
+Sea slugs or something have orthologs of &gamma;D-crystallin but with only one domain, whereas all vertebrates have a two-domain version. The two-domain version is thought to have been favored in the vertebrate lens due to higher stability.
+
+Sometimes at very low denaturant concnetrations, where you are mostly in the native state, you will see a lot of noise in your UV spectra from aggregates. The aggregates have a locally native conformation, but are formed from intermolecular rather than intramolecular Greek keys. The aggregates quench tryptophan fluorescence but have a lot of conventional light scattering which introduces noise into the measurement.
+
 
 [O'Shea 1989]: http://www.ncbi.nlm.nih.gov/pubmed/2911757 "O'Shea EK, Rutkowski R, Kim PS. Evidence that the leucine zipper is a coiled coil. Science. 1989 Jan 27;243(4890):538-42. PubMed PMID: 2911757."
 
@@ -125,3 +183,13 @@ The most important beta sheet-rich proteins in our daily life are immunoglobulin
 [Emsley 1996]: http://www.ncbi.nlm.nih.gov/pubmed/8609998 "Emsley P, Charles IG, Fairweather NF, Isaacs NW. Structure of Bordetella pertussis virulence factor P.69 pertactin. Nature. 1996 May 2;381(6577):90-2. PubMed PMID: 8609998."
 
 [Chothia & Janin 1981]: http://www.ncbi.nlm.nih.gov/pubmed/16593054 "Chothia C, Janin J. Relative orientation of close-packed beta-pleated sheets in proteins. Proc Natl Acad Sci U S A. 1981 Jul;78(7):4146-50. PubMed PMID: 16593054; PubMed Central PMCID: PMC319745."
+
+[Kosinski-Collins 2004]: http://www.ncbi.nlm.nih.gov/pubmed/15273315/ "Kosinski-Collins MS, Flaugh SL, King J. Probing folding and fluorescence quenching in human gammaD crystallin Greek key domains using triple tryptophan mutant proteins. Protein Sci. 2004 Aug;13(8):2223-35. PubMed PMID: 15273315; PubMed Central PMCID: PMC2279819."
+
+[Flaugh 2005a]: http://www.ncbi.nlm.nih.gov/pubmed/15722442/ "Flaugh SL, Kosinski-Collins MS, King J. Contributions of hydrophobic domain interface interactions to the folding and stability of human gammaD-crystallin. Protein Sci. 2005 Mar;14(3):569-81. PubMed PMID: 15722442; PubMed Central PMCID:  PMC2279286."
+
+[Flaugh 2005b]: http://www.ncbi.nlm.nih.gov/pubmed/16046626/ "Flaugh SL, Kosinski-Collins MS, King J. Interdomain side-chain interactions in human gammaD crystallin influencing folding and stability. Protein Sci. 2005 Aug;14(8):2030-43. PubMed PMID: 16046626; PubMed Central PMCID: PMC2279314."
+
+[Kong & King 2011]: http://www.ncbi.nlm.nih.gov/pubmed/21432932 "Kong F, King J. Contributions of aromatic pairs to the folding and stability of long-lived human γD-crystallin. Protein Sci. 2011 Mar;20(3):513-28. doi: 10.1002/pro.583. PubMed PMID: 21432932; PubMed Central PMCID: PMC3064831."
+
+
