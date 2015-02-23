@@ -65,7 +65,7 @@ We'll consider CH<sub>3</sub>Br, properly bromomethane but we'll call it methyl 
 
 ![](/media/2015/02/methyl-bromide.png)
 
-![](/media/2015/02/butyl-bromide-three-ways.pngs)
+![](/media/2015/02/butyl-bromide-three-ways.png)
 
 When a halide is bonded directly to a C that has a double bond, it is called a "vinylic halide". If it is bonded directly to an aromatic ring it is an "aryl halide". Both of these are non-reactive - because of the adjacent bond, they will not act like alkyl halides in the S1, S2, E1 and E2 reactions diagrammed above.
 
