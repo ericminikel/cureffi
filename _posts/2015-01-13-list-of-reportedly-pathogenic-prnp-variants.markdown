@@ -49,7 +49,7 @@ Today I set out to compile an exhaustive list of rare variants in *PRNP* which h
 | D167G | [Bishop 2009](http://www.ncbi.nlm.nih.gov/pubmed/20035629) |  |
 | D167N | [Beck 2010](http://www.ncbi.nlm.nih.gov/pubmed/20583301) |  |
 | V176G | [Simpson 2013](http://www.ncbi.nlm.nih.gov/pubmed/23857164) |  |
-| D178fs25X | [Mastuzono 2013](http://www.ncbi.nlm.nih.gov/pubmed/23577609) |  |
+| D178Efs25X | [Mastuzono 2013](http://www.ncbi.nlm.nih.gov/pubmed/23577609) |  |
 | D178N | [Goldfarb 1991](http://www.ncbi.nlm.nih.gov/pubmed/1671440) | [Medori 1992](http://www.ncbi.nlm.nih.gov/pubmed/1346338), [Goldfarb 1992](http://www.ncbi.nlm.nih.gov/pubmed/1439789) |
 | V180I | [Hitoshi 1993](http://www.ncbi.nlm.nih.gov/pubmed/8138811) |  |
 | T183A | [Nitrini 1997](http://www.ncbi.nlm.nih.gov/pubmed/9266722) | [Grasbon-Frodl 2004](http://www.ncbi.nlm.nih.gov/pubmed/15558291) |
