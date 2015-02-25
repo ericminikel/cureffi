@@ -39,13 +39,13 @@ A group's ability to be a leaving group is somewhat correlated with the acidity 
 
 Substitution and elimination can each proceed via one of two mechanisms: **unimolecular (dissociative)** or **bimolecular (concerted)**.
 
-#### S1: Unimolecular (dissociative) substitution
+#### SN1: Unimolecular (dissociative) substitution
 
 ![](/media/2015/02/unimolecular-substitution.png)
 
 Above, the departure of bromide is the rate-limiting part. Once you have formed a carbocation it is highly reactive and the second step will proceed rapidly.
 
-#### S2: Bimolecular (concerted) substitution
+#### SN2: Bimolecular (concerted) substitution
 
 ![](/media/2015/02/bimolecular-substitution.png)
 
