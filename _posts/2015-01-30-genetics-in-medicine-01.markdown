@@ -3,7 +3,7 @@ layout: post
 title:  "Genetics in medicine 01: Huntington disease"
 date:   2015-01-30 12:01:00
 author: ericminikel
-tag: gen-228
+tag: genetics-228
 location: Cambridge, MA
 summary200: ""
 ---

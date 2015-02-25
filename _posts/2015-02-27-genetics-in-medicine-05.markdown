@@ -3,7 +3,7 @@ layout: post
 title:  "Genetics in medicine 05: Cystic fibrosis"
 date:   2015-02-27 12:01:00
 author: ericminikel
-tag: gen-228
+tag: genetics-228
 location: Cambridge, MA
 summary200: ""
 ---

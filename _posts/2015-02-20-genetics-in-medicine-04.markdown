@@ -3,7 +3,7 @@ layout: post
 title:  "Genetics in medicine 04: Down syndrome"
 date:   2015-02-20 12:01:00
 author: ericminikel
-tag: gen-228
+tag: genetics-228
 location: Cambridge, MA
 summary200: "Brian Skotko lectures on clinical aspects of Down syndrome. Faycal Guedj lectures on mouse models of Down syndrome and preclinical therapeutic trials."
 ---
