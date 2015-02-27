@@ -16,9 +16,17 @@ Cystic fibrosis is the classic example of a recessive disease. It is classic bec
 
 *CFTR* encodes a chloride channel, and different genetic mutations cause a loss of its function by different mechanisms. Nonsense and frameshift mutations simply abolish the full-length protein. Splice site variants can reduce expression levels. &Delta;F508 causes the protein to be retained and degraded in the ER instead of transported to the cell surface, possibly by burying the di-acidic signal for cell surface localization [[Wang 2004]]. R334W affects the ability of chloride to pass through the channel. Finally, a whole class of missense variants including G551D affect the "gating" of the chloride channel.
 
+![](/media/2015/02/ivacaftor.png)
+
+*Above: ivacaftor, or N-(2,4-di-tert-butyl-5-hydroxyphenyl)-4-oxo-1,4-dihydroquinoline-3-carboxamide.*
+
 Vertex Pharmaceuticals, with the help $75M in funding [contributed](http://www.genengnews.com/gen-news-highlights/cystic-fibrosis-foundation-therapeutics-to-pay-vertex-75m-in-second-deal/81244966/) by the Cystic Fibrosis Foundation, developed the drug ivacaftor (Kalydeco&trade;) which corrects CFTR gating defects. It received [FDA approval in 2012](http://www.fda.gov/NewsEvents/Newsroom/PressAnnouncements/ucm289633.htm) after clinical trials in compound heterozygous patients with G551D and a different mutation *in trans* [[Accurso 2010], [Ramsey 2011]]. It was exceptionally effective in one G551D homozygote [[Harrison 2013]]. In 2014, ivacaftor's indication was [expanded](http://investors.vrtx.com/releasedetail.cfm?ReleaseID=827435) to include eight other missense mutations associated with gating defects. Cystic Fibrosis Foundation has since [sold its royalties on the drug](http://www.nytimes.com/2014/11/19/business/for-cystic-fibrosis-foundation-venture-yields-windfall-in-hope-and-cash.html) for $3.3 billion, and in his 2015 State of the Union address, President Barack Obama [praised](http://www.cff.org/aboutCFFoundation/NewsEvents/1-21-Obama-Highlights-CF-in-State-of-the-Union.cfm) ivacaftor as an example of what he hopes is a new wave of precision medicine drugs.
 
 Without doubt, ivcaftor is a smashing success story. Yet even with its newly expanded indication, it is approved for only a few percent of CF patients. About 70% of CF patients have at least one &Delta;F508 allele [[Castellani 2008]]. These patients and Vertex Pharmaceuticals alike would be thrilled if ivacaftor were to prove effective for that mutation as well. The paper for this week [[van Goor 2014]] therefore sets out to quantify the degree to which ivacaftor corrects defects in cells expressiong *CFTR* with a panel of different genetic mutations.
+
+
+
+
 
 
 [Schroeder 1995]: http://www.ncbi.nlm.nih.gov/pubmed/7585155 "Schroeder SA, Gaughan DM, Swift M. Protection against bronchial asthma by CFTR delta F508 mutation: a heterozygote advantage in cystic fibrosis. Nat Med. 1995 Jul;1(7):703-5. PubMed PMID: 7585155."
