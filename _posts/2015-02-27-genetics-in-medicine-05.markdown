@@ -50,11 +50,11 @@ Not all *CFTR* mutations are created alike. We divide them into the following cl
 
 | class | severity | genetic basis | description |
 | ---- | ---- | ---- | ---- | 
-| Class I | severe | Nonsense, frameshift | No synthesis of CFTR |
-| Class II | severe | &Delta;F508 and some missense | Increased degradation of CFTR |
-| Class III | severe | G551D and other missense | Gating defect. Protein is synthesized and localizes correctly but does not open and close. |
-| Class IV | mild | Missense | Abnormal conductance |
-| Class V | mild | Splice site | Reduced CFTR expression because not all transcripts are viable |
+| I | severe | Nonsense, frameshift | No synthesis of CFTR |
+| II | severe | &Delta;F508 and some missense | Increased degradation of CFTR |
+| III | severe | G551D and other missense | Gating defect. Protein is synthesized and localizes correctly but does not open and close. |
+| IV | mild | Missense | Abnormal conductance |
+| V | mild | Splice site | Reduced CFTR expression because not all transcripts are viable |
 
 Wild-type CFTR is incredibly efficient, transporting about 10,000 Cl<sup>-</sup> ions per second. It is believed that the disease presents only when you drop below about 20% of wild-type function.
 
