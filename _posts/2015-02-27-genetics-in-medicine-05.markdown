@@ -8,7 +8,7 @@ location: Cambridge, MA
 summary200: ""
 ---
 
-*These are my notes from week 5 of Harvard's Genetics 228: Genetics in Medicine from Bench to Bedside course, February 27, 2015. Lectures delivered by [Dr. Leonard Sicilian](http://www.massgeneral.org/transplant/doctors/doctor.aspx?ID=17625) and [Sam Moskowitz](http://www2.massgeneral.org/MoskowitzLab/people-sammoskowitz.htm).*
+*These are my notes from week 5 of Harvard's Genetics 228: Genetics in Medicine from Bench to Bedside course, February 27, 2015. Lectures delivered by [Dr. Leonard Sicilian](http://www.massgeneral.org/transplant/doctors/doctor.aspx?ID=17625) and [Dr. Sam Moskowitz](http://www2.massgeneral.org/MoskowitzLab/people-sammoskowitz.htm).*
 
 ### Backgrounder
 
@@ -24,7 +24,7 @@ Vertex Pharmaceuticals, with the help $75M in funding [contributed](http://www.g
 
 Without doubt, ivcaftor is a smashing success story. Yet even with its newly expanded indication, it is approved for only a few percent of CF patients. About 70% of CF patients have at least one &Delta;F508 allele [[Castellani 2008]]. These patients and Vertex Pharmaceuticals alike would be thrilled if ivacaftor were to prove effective for that mutation as well. The paper for this week [[van Goor 2014]] therefore sets out to quantify the degree to which ivacaftor corrects defects in cells expressiong *CFTR* with a panel of different genetic mutations.
 
-### [Dr. Leonard Sicilian](http://www.massgeneral.org/transplant/doctors/doctor.aspx?ID=17625): CF in the clinic
+### [Leonard Sicilian](http://www.massgeneral.org/transplant/doctors/doctor.aspx?ID=17625): CF in the clinic
 
 CFTR protein regulates the composition and quality of liquid on the surface of the airway. Lack of functional CFTR dehydrates the cilia on the airway, impairing mucus clearance and creating an environment where bacteria can thrive. The *CFTR* gene was cloned in 1989 [[Riordan 1989]].
 
