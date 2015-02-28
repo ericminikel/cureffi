@@ -8,7 +8,7 @@ location: Cambridge, MA
 summary200: ""
 ---
 
-*These are my notes from week 5 of Harvard's Genetics 228: Genetics in Medicine from Bench to Bedside course, February 27, 2015.*
+*These are my notes from week 5 of Harvard's Genetics 228: Genetics in Medicine from Bench to Bedside course, February 27, 2015. Lectures delivered by [Dr. Leonard Sicilian](http://www.massgeneral.org/transplant/doctors/doctor.aspx?ID=17625) and [Sam Moskowitz](http://www2.massgeneral.org/MoskowitzLab/people-sammoskowitz.htm).*
 
 ### Backgrounder
 
@@ -24,8 +24,61 @@ Vertex Pharmaceuticals, with the help $75M in funding [contributed](http://www.g
 
 Without doubt, ivcaftor is a smashing success story. Yet even with its newly expanded indication, it is approved for only a few percent of CF patients. About 70% of CF patients have at least one &Delta;F508 allele [[Castellani 2008]]. These patients and Vertex Pharmaceuticals alike would be thrilled if ivacaftor were to prove effective for that mutation as well. The paper for this week [[van Goor 2014]] therefore sets out to quantify the degree to which ivacaftor corrects defects in cells expressiong *CFTR* with a panel of different genetic mutations.
 
+### [Dr. Leonard Sicilian](http://www.massgeneral.org/transplant/doctors/doctor.aspx?ID=17625): CF in the clinic
 
+CFTR protein regulates the composition and quality of liquid on the surface of the airway. Lack of functional CFTR dehydrates the cilia on the airway, impairing mucus clearance and creating an environment where bacteria can thrive. The *CFTR* gene was cloned in 1989 [[Riordan 1989]].
 
+Children tend to be the face of cystic fibrosis, and indeed, a generation or two ago, there was no such thing as an adult CF patient. Projected median lifespan has risen dramatically, from 27 years in 1986 to 37 years in 2011, mostly due to better antibiotics and better nutrition. The number of adults with CF has risen dramatically, both because more patients survive childhood and because there is increased diagnosis of individuals who have less expressive mutations and a milder phenotype. Though we think of CF as a chronic debilitating disease, most adults with CF are employed and reasonably well-educated, and only about 15% of them are considered disabled. The usual measure of lung function is forced expiratory volume in 1 second (FEV1), which is the volume of air you can exhale in 1 second. By this metric, most patients are only mildly impaired in childhood (age ~7) but the proportion that are severely impaired rises to almost one third by age ~20. FEV1 is a predictor of mortality.
+
+The progressive decline in respiratory function is attributed to something called "Cole's vicious cycle". Decreased mucociliary clearance in CF leads to bacterial infections, which causes inflammation, which leads to further insult of the airway, further impairing mucociliary clearance.
+
+A variety of respiratory tract infections are common in individuals with CF. The most common in children with CF is *S. aureus* and the most common in adults with CF is *Pseudomonas aeruginosa*. MRSA is also a growing problem. To make matters worse, these infections are transmissible between CF patients, and outbreaks periodically occur. There was once a hospital that had an outbreak that killed 20% of their CF patients over about 18 months. Even though antibiotics are a mainstay in the treatment of CF patients, they are used with great caution, to avoid promoting antibiotic resistance.
+
+Of these infections, *P. aeruginosa* is responsible for the greatest mortality burden. Chronic colonization by *P. aeuroginosa* is associated with far worse survival outcomes. It was proposed that aggressive treatment at the first infection with *P. aeruginosa* might prevent chronic infection, but this hasn't proven to be the case. 
+
+Initial clinical presentation of CF is usually one or more of the following:
+
++ Chronic sinopulmonary disease. Chronic (read: daily) cough and sputum production, repeated airway infections, airflow obstruction, abnormalities on chest X-ray, and sinus disease and/or nasal polyps. This can be seen with tomography as [bronchiectasis](http://www.nhlbi.nih.gov/health/health-topics/topics/brn), which is scarring of the airway / lungs.
++ Gastriointestinal abnormalities leading to nutritional defecits. Pancreatic exocrine insufficiency, painful recurrent pancreatitis, intestinal obstruction (because the GI tract is unable to hydrate stool), and sometimes cirrhosis.
++ Male infertility. The vas deferens can atrophy absent CFTR function, resulting in obstructive azoospermia. Sometimes adults are referred based on infertility and only later are determined to have CF.
+
+CF patients have a dramtically increased risk of diabetes (due to pancreatic beta cell death), bone disease (due to poor nutrient absorption), and depression (probably secondary to receiving a grim prognosis). The prevalence of these conditions among CF patients rises with age, rising above 25% in one's 30s.
+
+CF diagnosis was traditionally made using sweat chloride levels, but increasingly, the diagnostic test is immunoreactivity for some other protein whose levels are upregulated in the absence of CFTR. Alternately, finding two genetic mutations *in trans* that are known to cause CF is considered sufficient for a diagnosis. Finally, diagnosis can also be made by measuring electrical potential in the nasal passage, which is altered in CF patients due to ion imbalance.
+
+Not all *CFTR* mutations are created alike. We divide them into the following classes:
+
+| class | severity | genetic basis | description |
+| ---- | ---- | ---- | ---- | 
+| Class I | severe | Nonsense, frameshift | No synthesis of CFTR |
+| Class II | severe | &Delta;F508 and some missense | Increased degradation of CFTR |
+| Class III | severe | G551D and other missense | Gating defect. Protein is synthesized and localizes correctly but does not open and close. |
+| Class IV | mild | Missense | Abnormal conductance |
+| Class V | mild | Splice site | Reduced CFTR expression because not all transcripts are viable |
+
+Wild-type CFTR is incredibly efficient, transporting about 10,000 Cl<sup>-</sup> ions per second. It is believed that the disease presents only when you drop below about 20% of wild-type function.
+
+In addition to directly transporting chloride, CFTR has some other native functions as well. It also down-regulates transepithelial sodium channels, regulates calcium-activated chloride and potassium channels, and influences inflammation, cell maturation, ion transport and cell signaling.
+
+Treatment of bronchiectasis includes i dentifying the bacteria that have colonized the airway, and aggressively treating acute exacerbations with intravenous antibiotics. Outside of acute exacerbations, doctors prescribe aerosolized antibiotics, delivered by an inhaler, for chronic suppression of infections, typically in a one month on, one month off region. The month off is intended to give non-resistant bacteria a chance to grow again and outcompete resistant bacteria, as resistance is presumed to come at some cost in terms of proliferation efficiency. However, in the long term, this regimen does lead to resistance traits becoming fixed in the bacterial population. Mucolytic drugs such as [dornase alfa](http://en.wikipedia.org/wiki/Dornase_alfa) are also used to help clear mucus. Dornase alfa is actually a recombinant DNAse, and it reduces mucus viscosity by digesting DNA from dead cells. Hypertonic saline is used to extract moisture from lungs into mucus by osmotic pressure. This treatment was actually discovered after patients reported that their symptoms were partially alleviated after spending time in the ocean. Anti-inflammatories such as systemic or inhaled steroids can help airway flow, but have too severe of side effects for long-term use. NSAIDs have more limited benefits, and only at huge doses that are toxic to the kidney.
+
+GI symptoms of CF can be treated by supplementing pancreatic enzymes, adding vitamins that are malabsorbed, and having a high-calorie diet to compensate for low nutrient absorption. If diabetes develops, it is treated with insulin, with no dietary restrictions (because of the need to get as many calories as possible). Laxatives are used to improve stool passage.
+
+Inhalable adenovirus-vectored wild-tpe *CFTR* was tested as a gene therapy for CF. It showed transient benefits for a few weeks, which ended when the adenovirus was rejected by the host immune system. Interest in gene therapy for CF declined after a man named Jesse Gelsinger died of a severe immune reaction to an adenoviral vector used in a gene therapy clinical trial for a different disease [[Sibbald 2001]].
+
+In the clinical trials for ivacaftor, the first sign of efficacy was a reduction in sweat chloride levels. Untreated patients had a progressive decline in FEV1, while treated patients' FEV1 improved by about 15%. Treated patients also had improvements in several other endpoints, including quality of life [[Ramsey 2011]].
+
+More recent clinical trials have tested ivacaftor, in combination with a new compound called lumacaftor, in &Delta;F508 homozygotes - see [[Boyle 2014]] and the [CFF press release](http://www.cff.org/research/ClinicalResearch/FAQs/CombinedKalydeco-VX-809/) and the [Vertex press release](http://investors.vrtx.com/releasedetail.cfm?ReleaseID=856185). FEV1 improved by 4.3 to 6.7%, an amount which is highly statistically significant in the clinical trial, but which may represent a small, perhaps even borderline imperceptible, benefit to any individual patient. 
+
+### [Sam Moskowitz](http://www2.massgeneral.org/MoskowitzLab/people-sammoskowitz.htm): Q&A
+
+The relationship between CF and weather is complicated. Cold, dry weather can cause bronchospasms, but hot, humid air tends to contain more particulates. In addition, CF patients are at risk for hyponatremia when it's very hot out and they sweat a lot, because they lose a ton of NaCl in their sweat. Parents of children with CF are advised to leave salty snacks out and available at all times.
+
+Genotype is highly predictive of pancreatic phenotype - about 95% of people with the "severe" alleles according to the above table have pancreatic insufficiency. Genotype is less predictive of pulmonary phenotype - for instance, there is a huge range of severity of respiratory symptoms among &Delta;F508 homozygotes.Age at first *P. aeruginosa* infection is more predictive of pulmonary decline. TGF&beta; receptor genotype is believed to have modest effects on lung phenotypes in CF [[Drumm 2005]].
+
+Participating in CF clinical trials requires a rigorous schedule of clinical visits which can be hard for people who work.
+
+Infection control messaging for CF patients has grown more strident over time, to the point that CF patients are even advised not to associate with other CF patients, due to the potential for transmission of antibiotic-resitant bacteria. This has been driven by a series of outbreaks, most famously an [outbreak](http://www.boston.com/news/local/massachusetts/articles/2003/12/03/childrens_hospital_fights_new_bacteria_strain/) of *Burkholderia dolosa* at Boston Children's a decade ago. The Cystic Fibrosis Foundation has a rule that no more than *one* CF patient can attend any CFF event. Hospitals have special protocols for cleaning rooms between when CF patients come in.
 
 
 
@@ -37,7 +90,7 @@ Without doubt, ivcaftor is a smashing success story. Yet even with its newly exp
 
 [Wang 2004]: http://www.ncbi.nlm.nih.gov/pubmed/15479737/ "Wang X, Matteson J, An Y, Moyer B, Yoo JS, Bannykh S, Wilson IA, Riordan JR, Balch WE. COPII-dependent export of cystic fibrosis transmembrane conductance regulator from the ER uses a di-acidic exit code. J Cell Biol. 2004 Oct 11;167(1):65-74. PubMed PMID: 15479737; PubMed Central PMCID: PMC2172508."
 
-[Harrison 2013]: http://www.ncbi.nlm.nih.gov/pubmed/24066763 "Harrison MJ, Murphy DM, Plant BJ. Ivacaftor in a G551D homozygote with cystic  fibrosis. N Engl J Med. 2013 Sep 26;369(13):1280-2. doi: 10.1056/NEJMc1213681. PubMed PMID: 24066763."
+[Harrison 2013]: http://www.ncbi.nlm.nih.gov/pubmed/24066763 "Harrison MJ, Murphy DM, Plant BJ. Ivacaftor in a G551D homozygote with cystic fibrosis. N Engl J Med. 2013 Sep 26;369(13):1280-2. doi: 10.1056/NEJMc1213681. PubMed PMID: 24066763."
 
 [Accurso 2010]: http://www.ncbi.nlm.nih.gov/pubmed/21083385/ "Accurso FJ, Rowe SM, Clancy JP, Boyle MP, Dunitz JM, Durie PR, Sagel SD, Hornick DB, Konstan MW, Donaldson SH, Moss RB, Pilewski JM, Rubenstein RC, Uluer  AZ, Aitken ML, Freedman SD, Rose LM, Mayer-Hamblett N, Dong Q, Zha J, Stone AJ, Olson ER, Ordoñez CL, Campbell PW, Ashlock MA, Ramsey BW. Effect of VX-770 in persons with cystic fibrosis and the G551D-CFTR mutation. N Engl J Med. 2010 Nov  18;363(21):1991-2003. doi: 10.1056/NEJMoa0909825. PubMed PMID: 21083385; PubMed Central PMCID: PMC3148255."
 
@@ -48,4 +101,15 @@ Without doubt, ivcaftor is a smashing success story. Yet even with its newly exp
 [Quinton 1999]: http://www.ncbi.nlm.nih.gov/pubmed/9922374 "Quinton PM. Physiological basis of cystic fibrosis: a historical perspective.  Physiol Rev. 1999 Jan;79(1 Suppl):S3-S22. Review. PubMed PMID: 9922374."
 
 [van Goor 2014]: http://www.ncbi.nlm.nih.gov/pubmed/23891399 "Van Goor F, Yu H, Burton B, Hoffman BJ. Effect of ivacaftor on CFTR forms with missense mutations associated with defects in protein processing or function. J Cyst Fibros. 2014 Jan;13(1):29-36. doi: 10.1016/j.jcf.2013.06.008. Epub 2013 Jul  23. PubMed PMID: 23891399."
+
+[Riordan 1989]: http://www.ncbi.nlm.nih.gov/pubmed/2475911 "Riordan JR, Rommens JM, Kerem B, Alon N, Rozmahel R, Grzelczak Z, Zielenski J, Lok S, Plavsic N, Chou JL, et al. Identification of the cystic fibrosis gene: cloning and characterization of complementary DNA. Science. 1989 Sep 8;245(4922):1066-73. Erratum in: Science 1989 Sep 29;245(4925):1437. PubMed PMID: 2475911."
+
+[Sibbald 2001]: http://www.ncbi.nlm.nih.gov/pubmed/11402803/ "Sibbald B. Death but one unintended consequence of gene-therapy trial. CMAJ. 2001 May 29;164(11):1612. PubMed PMID: 11402803; PubMed Central PMCID: PMC81135."
+
+[Drumm 2005]: http://www.ncbi.nlm.nih.gov/pubmed/16207846 "Drumm ML, Konstan MW, Schluchter MD, Handler A, Pace R, Zou F, Zariwala M, Fargo D, Xu A, Dunn JM, Darrah RJ, Dorfman R, Sandford AJ, Corey M, Zielenski J,  Durie P, Goddard K, Yankaskas JR, Wright FA, Knowles MR; Gene Modifier Study Group. Genetic modifiers of lung disease in cystic fibrosis. N Engl J Med. 2005 Oct 6;353(14):1443-53. PubMed PMID: 16207846."
+
+[Boyle 2014]: http://www.ncbi.nlm.nih.gov/pubmed/24973281 "Boyle MP, Bell SC, Konstan MW, McColley SA, Rowe SM, Rietschel E, Huang X, Waltz D, Patel NR, Rodman D; VX09-809-102 study group. A CFTR corrector (lumacaftor) and a CFTR potentiator (ivacaftor) for treatment of patients with cystic fibrosis who have a phe508del CFTR mutation: a phase 2 randomised controlled trial. Lancet Respir Med. 2014 Jul;2(7):527-38. doi: 10.1016/S2213-2600(14)70132-8. Epub 2014 Jun 24. PubMed PMID: 24973281."
+
+
+
 
