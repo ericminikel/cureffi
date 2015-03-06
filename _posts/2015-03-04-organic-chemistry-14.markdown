@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Organic chemistry 14: Unimolecular beta elimination - carbocation rearrangements"
-date:   2015-03-02 12:00:00
+date:   2015-03-04 12:00:00
 author: ericminikel
 tag: chem-20
 location: Cambridge, MA
