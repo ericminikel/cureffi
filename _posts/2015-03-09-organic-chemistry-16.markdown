@@ -5,7 +5,7 @@ date:   2015-03-09 12:00:00
 author: ericminikel
 tag: chem-20
 location: Cambridge, MA
-summary200: ""
+summary200: "Prochiarlity, axial chirality. Homotopic vs. enantiotopic vs. diastereotopic faces/atoms/groups. Chirality without stereogenic carbon: heteroatoms, chiral conformations, and atropisomerism."
 ---
 
 *These are my notes from lecture 16 of Harvard's Chemistry 20: Organic Chemistry course, delivered by Dr. Ryan Spoering on March 9, 2015.*
