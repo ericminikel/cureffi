@@ -5,7 +5,7 @@ date:   2015-03-12 12:00:00
 author: ericminikel
 tag: mit-7.88j
 location: Cambridge, MA
-summary200: "Amyloid beta, functional amyloid, and a guest lecture by Peter Lansbury on alpha synuclein as a drug target."
+summary200: "The history of amyloid beta in Alzheimer disease, and a guest lecture by Peter Lansbury on alpha synuclein as a drug target."
 ---
 
 *These are my notes from week 6 of MIT course 7.88j: Protein Folding and Human Disease, held by Dr. Jonathan King on March 12, 2015.*
@@ -83,7 +83,49 @@ One example model for how nucleation and growth could differ is as follows. Perh
 
 The Tycko group did important work identifying different fibril conformations and the possible ways in which different oligomers or "protofibrils" give rise to them [[Petkova 2005]].
 
-### Guest lecture by Peter T. Lansbury
+### Guest lecture by Peter T. Lansbury, Jr.
+
+Dr. Lansbury's lecture is entitled *Synuclein as a therapeutic target for Parkinson's disease: 20 years and counting*.
+
+Alpha synuclein was first discovered by [[Maroteaux 1988]]. It turned out to be one of the ten most abundant proteins in the brain, but no one knew what it did or why it was important. At the time, Lansbury was interested in the question of whether one protein could seed or nucleate a *different* protein to aggregate. Therefore it caught his notice when Tsunao Saitoh reported that a protein he called "NAC" (what we now call synuclein) was involved in Alzheimer disease (as far as I know, this was actually incorrect) [[Ueda 1993]]. Saitoh was later murdered, so Lansbury felt it was on him to take up the torch of studying this protein [[Weinreb 1996]]. Soon thereafter, the causal mutation in the Contursi pedigree - a large family with inherited Parkinson disease - was shown to map to the locus of the *SNCA* gene [[Polymeropoulous 1996]], and alpha synuclein was shown to be the major component of Lewy bodies, the chief pathological feature of PD [[Spillantini 1997]]. Lansbury soon discovered by biochemical methods that the A53T substitution of the Contursi pedigree accelerated fibril formation *in vitro* [[Conway 1998]].
+
+Lansbury became optimistic that, because PD is quite slowly progressive, drugs that inhibit alpha synuclein aggregation could make a difference in patients' quality of life even if not administered until symptom onset. The disadvantage, of course, is that it takes a very long time to see whether an already-slow progression has been made even slower by a drug. The prototype model for clinical trials in PD is an 18-month clinical trial of 500 patients, at a price tag of about $200 million, with no success stories in this or any other neurodegenerative disease to inspire investor confidence. This combination of challenges has proven to be a hard sell for some pharma companies.
+
+Lansbury partnered with a fly lab to express alpha synuclein in *Drosophila* and screen FDA-approved drugs to find compounds that reduced synuclein toxicity measured by an eye phenotype. They found that tocainide was highly effective, but it is a fairly toxic sodium channel blocker. They next asked whether they could find a small molecule that would stabilize a non-aggregating conformer of alpha synuclein. They began with an *in vitro* screen of FDA-approved drugs, and identified three hits: fluoxetine (Prozac), nortriptyline (Pamelor) and indatraline (all antidepressants). In a secondary screen they found that indatraline and nortriptyline also alleviated the eye phenotypes in the transgenic flies. They then tested some analogues of these in an alpha synuclein mouse model [the mouse model is reported in [Masilah 2000]] and in rat neuronal cell cultures, and got positive results.
+
+Nortriptyline has a terrible side effect though: postural instability. This side effect would be considered unacceptable in Parkinson disease patients. Lansbury and colleagues therefore put this effort on hold for a while. Interestingly, though, a couple of years ago a retrospective study reported that PD patients who happened to take antidepressants had a slower disease progression [[Paumier 2012]]. 
+
+Lansbury's next move was to try to increase autophagy, with the goal of increasing turnover of all soluble proteins including alpha synuclein, theoretically giving it less time to aggregate.
+
+A series of candidate genes studies proposed the *UCHL1* S18Y variant as a modifier of Parkinson disease [meta-analysis in [Maraganore 2004]]. The proposed mechanism was that the protective genotype reduced farnesylation. Lansbury therefore acquired a patent on a farnesyltransferase inhibitor, called CP-609,754 from an oncology company, which had developed this compound for bladder cancer. It had an excellent safety profile but had failed on efficacy in cancer. Lansbury moved a compound, LNK-754, into clinical trials for Alzheimer disease. There were several major problems with the trial. First, the compound causes hypospermia, so they had to recruit only women for the clinical trial. Second, mild-to-moderate Alzheimer disease was the indication, but cerebrospinal fluid biomarkers indicated that many of the recruited patients had been misdiagnosed and did not actually have Alzheimer disease. Third, one woman died of a cerebral hemhorrage - a common complication in Alzheimer disease and probably unrelated to the compound - on day 3 of the phase 1b. Finally, Lansbury gave up and sold the assets to AstraZeneca, which tried to position it for Huntington disease. Sadly, by this time, much of the drug's patent period had already passed, and the commercial incentive to get it to market was on the decline.
+
+Lansbury next turned his attention back to lysosomes. He became glucocerebrosidase, encoded by the *GBA* gene. Mutations in *GBA* cause autosomal recessive Gaucher disease, which can be treated with intravenous recombinant glucocerebrosidase, which Genzyme makes. Gaucher disease is highly comorbid with Parkinson disease - about 10-20% of Gaucher patients eventually get diagnosed with PD (over an 0.5% baseline risk, so an odds ratio of 20-40). Heterozygous carrier parents have increased risk of Parkinson disease, too, with an odds ratio of about 8. (Also, *GBA* is a significant locus in Parkinson GWAS -EVM). Finally, the causal allele for Gaucher has an allele frequency of about 6% in Ashkenazi Jews, which Lansbury realized makes it possible to gather enough people for a clinical trial by recruiting mutation carriers in just three cities: Tel Aviv, New York, and Boca Raton, FL.
+
+There is cell culture evidence that the relationship between synuclein pathology and reduced glucocerebrosidase activity has bidirectional causality [[Mazzulli 2011]]. Genzyme therefore took a mouse model of Gaucher and a mouse model of Parkinson disease, and showed that expression of *GBA* via a viral vector injected into the mouse brain could alleviate synucleinopathy [[Sardi 2011], [Sardi 2013]]. Lansbury and his company, [Lysosomal Therapeutics Inc.](http://www.lysosomaltx.com/), screened for compounds that could increase glucocerebrosidase activity. They worked from a lead compound, NIH-758, which at 10&mu;M substantially increases glucocerebrosidase activity and decreases total alpha synuclein in iPS-derived neurons from Parkinson disease patients. They were able to obtain analogues that are more potent, have better pharmacokinetics, and are sufficiently chemically distant from the initial lead so as to be patentable. The mechanism of action is still unknown.
+
+Lansbury lists his lessons learned as follows:
+
+1. Don't bother trying to repurpose already FDA-approved drugs, for three reasons. First, they're unlikely to be highly effective for your indication. Second, paradoxically, many of them actually have terrible safety profiles and would not be approved by FDA today, especially for a chronic, slowly progressive disorder, where you would need to take the drug for years. Third, there's no way to make money off of them, so it will be hard to raise money for a clincial trial.
+2. You need the right target.
+3. You need a wide enough therapeutic window.
+4. You need a fresh patent with 20 years of life on it in order to maximize commercial potential.
+5. Glucocerebrosidase activity is appealing as a target because it offers a route to initial approval for Gaucher disease, and then later going after the Parkinson disease market.
+
+#### Q&A
+
+Q. How does membrane association affect synuclein aggregation?
+
+A. Chris Dobson just published a paper arguing that membrane association nucleates synuclein aggregation [[Galvagnion 2015]]. However, this is inconsistent with the A30P mutation, which is known to cause Parkinson disease.
+
+Q. How could NIH-758 or its analogues be effective in Gaucher disease if their mechanism of action is to increase glucocerebrosidase activity and those patients lack glucocerebrosidase?
+
+A. Most patients have one of two missense mutations: N370S or L444P. Total loss-of-function mutations are far rarer. In N370S, the protein is translated and localizes correctly, and has some residual enzymatic activity and we would seek to increase that activity. In L444P there appears to be no residual enzymatic activity, so it is less clear whether the compounds would work for individuals with that variant.
+
+Q. Would NIH-758 or analogues work for Parkinson disease patients without *GBA* mutations?
+
+A. There was a study that found decreased glucocerebrosidase activity in brains of Parkinson disease patients who lacked *GBA* mutations, so there is some evidence that decreased glucocerebrosidase activity is a more general problem in PD, and therefore these compounds could be broadly effective.
+
+
 
 
 
@@ -105,5 +147,30 @@ The Tycko group did important work identifying different fibril conformations an
 
 [Petkova 2005]: http://www.ncbi.nlm.nih.gov/pubmed/15653506 "Petkova AT, Leapman RD, Guo Z, Yau WM, Mattson MP, Tycko R. Self-propagating,  molecular-level polymorphism in Alzheimer's beta-amyloid fibrils. Science. 2005 Jan 14;307(5707):262-5. PubMed PMID: 15653506."
 
+[Maroteaux 1988]: http://www.ncbi.nlm.nih.gov/pubmed/3411354 "Maroteaux L, Campanelli JT, Scheller RH. Synuclein: a neuron-specific protein  localized to the nucleus and presynaptic nerve terminal. J Neurosci. 1988 Aug;8(8):2804-15. PubMed PMID: 3411354."
+
+[Ueda 1993]: http://www.ncbi.nlm.nih.gov/pubmed/8248242 "Uéda K, Fukushima H, Masliah E, Xia Y, Iwai A, Yoshimoto M, Otero DA, Kondo J, Ihara Y, Saitoh T. Molecular cloning of cDNA encoding an unrecognized component of amyloid in Alzheimer disease. Proc Natl Acad Sci U S A. 1993 Dec 1;90(23):11282-6. PubMed PMID: 8248242; PubMed Central PMCID: PMC47966."
+
+[Weinreb 1996]: http://www.ncbi.nlm.nih.gov/pubmed/8901511 "Weinreb PH, Zhen W, Poon AW, Conway KA, Lansbury PT Jr. NACP, a protein implicated in Alzheimer's disease and learning, is natively unfolded. Biochemistry. 1996 Oct 29;35(43):13709-15. PubMed PMID: 8901511."
+
+[Polymeropoulos 1996]: http://www.ncbi.nlm.nih.gov/pubmed/8895469 "Polymeropoulos MH, Higgins JJ, Golbe LI, Johnson WG, Ide SE, Di Iorio G, Sanges G, Stenroos ES, Pho LT, Schaffer AA, Lazzarini AM, Nussbaum RL, Duvoisin RC. Mapping of a gene for Parkinson's disease to chromosome 4q21-q23. Science. 1996 Nov 15;274(5290):1197-9. PubMed PMID: 8895469."
+
+[Spillantini 1997]: http://www.ncbi.nlm.nih.gov/pubmed/9278044 "Spillantini MG, Schmidt ML, Lee VM, Trojanowski JQ, Jakes R, Goedert M. Alpha-synuclein in Lewy bodies. Nature. 1997 Aug 28;388(6645):839-40. PubMed PMID: 9278044."
+
+[Conway 1998]: http://www.ncbi.nlm.nih.gov/pubmed/9809558 "Conway KA, Harper JD, Lansbury PT. Accelerated in vitro fibril formation by a  mutant alpha-synuclein linked to early-onset Parkinson disease. Nat Med. 1998 Nov;4(11):1318-20. PubMed PMID: 9809558."
+
+[Masliah 2000]: http://www.ncbi.nlm.nih.gov/pubmed/10678833 "Masliah E, Rockenstein E, Veinbergs I, Mallory M, Hashimoto M, Takeda A, Sagara Y, Sisk A, Mucke L. Dopaminergic loss and inclusion body formation in alpha-synuclein mice: implications for neurodegenerative disorders. Science. 2000 Feb 18;287(5456):1265-9. PubMed PMID: 10678833."
+
+[Paumier 2012]: http://www.ncbi.nlm.nih.gov/pubmed/22555881 "Paumier KL, Siderowf AD, Auinger P, Oakes D, Madhavan L, Espay AJ, Revilla FJ, Collier TJ; Parkinson Study Group Genetics Epidemiology Working Group. Tricyclic  antidepressants delay the need for dopaminergic therapy in early Parkinson's disease. Mov Disord. 2012 Jun;27(7):880-7. doi: 10.1002/mds.24978. Epub 2012 May  3. PubMed PMID: 22555881."
+
+[Maraganore 2004]: http://www.ncbi.nlm.nih.gov/pubmed/15048890 "Maraganore DM, Lesnick TG, Elbaz A, Chartier-Harlin MC, Gasser T, Krüger R, Hattori N, Mellick GD, Quattrone A, Satoh J, Toda T, Wang J, Ioannidis JP, de Andrade M, Rocca WA; UCHL1 Global Genetics Consortium. UCHL1 is a Parkinson's disease susceptibility gene. Ann Neurol. 2004 Apr;55(4):512-21. Erratum in: Ann Neurol. 2004 Jun;55(6):899. Toda, Taksushi [corrected to Toda, Tatsushi]. PubMed  PMID: 15048890."
+
+[Mazzulli 2011]: http://www.ncbi.nlm.nih.gov/pubmed/21700325 "Mazzulli JR, Xu YH, Sun Y, Knight AL, McLean PJ, Caldwell GA, Sidransky E, Grabowski GA, Krainc D. Gaucher disease glucocerebrosidase and α-synuclein form a bidirectional pathogenic loop in synucleinopathies. Cell. 2011 Jul 8;146(1):37-52. doi: 10.1016/j.cell.2011.06.001. Epub 2011 Jun 23. PubMed PMID: 21700325; PubMed Central PMCID: PMC3132082."
+
+[Sardi 2011]: http://www.ncbi.nlm.nih.gov/pubmed/21730160 "Sardi SP, Clarke J, Kinnecom C, Tamsett TJ, Li L, Stanek LM, Passini MA, Grabowski GA, Schlossmacher MG, Sidman RL, Cheng SH, Shihabuddin LS. CNS expression of glucocerebrosidase corrects alpha-synuclein pathology and memory in a mouse model of Gaucher-related synucleinopathy. Proc Natl Acad Sci U S A. 2011  Jul 19;108(29):12101-6. doi: 10.1073/pnas.1108197108. Epub 2011 Jul 5. PubMed PMID: 21730160; PubMed Central PMCID: PMC3141921."
+
+[Sardi 2013]: http://www.ncbi.nlm.nih.gov/pubmed/23297226 "Sardi SP, Clarke J, Viel C, Chan M, Tamsett TJ, Treleaven CM, Bu J, Sweet L, Passini MA, Dodge JC, Yu WH, Sidman RL, Cheng SH, Shihabuddin LS. Augmenting CNS  glucocerebrosidase activity as a therapeutic strategy for parkinsonism and other  Gaucher-related synucleinopathies. Proc Natl Acad Sci U S A. 2013 Feb 26;110(9):3537-42. doi: 10.1073/pnas.1220464110. Epub 2013 Jan 7. PubMed PMID: 23297226; PubMed Central PMCID: PMC3587272."
+
+[Galvagnion 2015]: http://www.ncbi.nlm.nih.gov/pubmed/25643172 "Galvagnion C, Buell AK, Meisl G, Michaels TC, Vendruscolo M, Knowles TP, Dobson CM. Lipid vesicles trigger α-synuclein aggregation by stimulating primary  nucleation. Nat Chem Biol. 2015 Mar;11(3):229-34. doi: 10.1038/nchembio.1750. Epub 2015 Feb 2. PubMed PMID: 25643172."
 
 
