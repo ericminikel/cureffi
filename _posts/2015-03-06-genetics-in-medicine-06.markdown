@@ -8,7 +8,7 @@ location: Cambridge, MA
 summary200: ""
 ---
 
-*These are my notes from week 5 of Harvard's [Genetics 228: Genetics in Medicine from Bench to Bedside](http://www2.massgeneral.org/bbs/gen228/gen228_syllabus_material.asp) course, held on March 6, 2015. Lectures delivered by [Dr. Nancy LeGendre](http://cnsfoundation.org/blog/undiagnosed-diagnosed-journey), [Dr. Ron Thibert](http://www.massgeneral.org/neurology/doctors/doctor.aspx?id=18326),  [Dr. David Sweetser](http://www.massgeneral.org/cancer/research/researchlab.aspx?id=1196), and [Dr. Steve Haggarty](http://www.haggartylab.org/stephen-j-haggarty/).*
+*These are my notes from week 6 of Harvard's [Genetics 228: Genetics in Medicine from Bench to Bedside](http://www2.massgeneral.org/bbs/gen228/gen228_syllabus_material.asp) course, held on March 6, 2015. Lectures delivered by [Dr. Nancy LeGendre](http://cnsfoundation.org/blog/undiagnosed-diagnosed-journey), [Dr. Ron Thibert](http://www.massgeneral.org/neurology/doctors/doctor.aspx?id=18326),  [Dr. David Sweetser](http://www.massgeneral.org/cancer/research/researchlab.aspx?id=1196), and [Dr. Steve Haggarty](http://www.haggartylab.org/stephen-j-haggarty/).*
 
 ### [Nancy LeGendre](http://cnsfoundation.org/blog/undiagnosed-diagnosed-journey): Introduction to Pitt Hopkins syndrome
 
