@@ -88,6 +88,21 @@ An elegant experiment answered this question using collagen from rat calvaria [[
 
 Tanning of leather involves making the cross-links between collagen triple helices resistant to degradation by bacterial and fungal collagenases.
 
+#### Addendum from lecture 8
+
+*These notes were added from the April 2, 2015 lecture.*
+
+One more important experiment about collagen folding [[Harrington & Rao 1970]] deserves mention.
+
+Collagen *in vitro* refolding is studied by heating the protein to melt it, then performing serial dilutions at the high temperature, then lowering the temperature to 30&deg;C to allow re-folding. This was originally done using "optical rotatory dispersion" (ORD) instruments, which apparently no longer exist, having been replaced by circular dichroism (CD), which follows the same principles. After lowering the temperature, you measure the re-attainment of helical structure as measured by ORD (y axis), over the course of tens of minutes (x axis). They then varied the concentration of collagen. Because 3 chains have to associate, you might hypothesize that the refolding rate would be proportional to the 3rd power of the collagen chain concentration. But in fact what they found is that the refolding curve was almost unchanged between .002, .004, and .008 g/mL. Only when you raise the concentration to .016 g/mL do you finally see an increase in the refolding rate. The authors did not have an explanation for this phenomenon.
+
+Later on, an explanation was uncovered. Collagen is >1,000 residues long and composed of triplet repeats. The helicity measurement obtained by ORD is only measuring local helical structure and can tell you nothing about the superstructure. It turns out that at low concentrations, helicity was dominanted by intramolecular helix formation - the protein curls around on itself twice and forms a triple helix with itself. Only when you cross a particular concentration threshold do the molecules find each other at a significant enough rate to be able to form intermolecular triple helices. Even then, they are forming gelatin with local alignment but lacking proper global alignment (because they are mature collagen peptides lacking the registration domains).
+
+They also looked at the *initial* rate of refolding vs. temperature, over a range of temperatures below the melting point, from about 10&deg;C to 30&deg;C. In other proteins, it was known that refolding proceeds faster at higher temperatures, provided you are still below the melting point. But surprisingly, collagen refolded most quickly at the low end, around 10&deg;C, and refolded much more slowly at 30&deg;C. This turns out to be explained by a nucleation and growth model. Collagen folding is processive once three chains have come together, but the initial "nucleus" - the initial point of association of the three chains in the proper helical conformation - is highly thermolabile. So at temperatures closer to 30&deg;C, the nucleus is less likely to survive long enough to nucleate a full refolding event.
+
+An interesting contrast is that in collagen we are confident that the "nucleus" has the same conformation as the rest of the chain eventually will after folding proceeds. For amyloid nucleation models, we do not know whether the initial nucleus of misfolding has the same conformation as the final amyloid fiber does.
+
+
 [Rich & Crick 1955]: http://www.ncbi.nlm.nih.gov/pubmed/13272717 "RICH A, CRICK FH. The structure of collagen. Nature. 1955 Nov 12;176(4489):915-6. PubMed PMID: 13272717."
 
 [Rich & Crick 1961]: http://www.ncbi.nlm.nih.gov/pubmed/14491907 "RICH A, CRICK FH. The molecular structure of collagen. J Mol Biol. 1961 Oct;3:483-506. PubMed PMID: 14491907."
@@ -106,6 +121,6 @@ Tanning of leather involves making the cross-links between collagen triple helic
 
 [Bellamy & Bornstein 1971]: http://www.ncbi.nlm.nih.gov/pubmed/4942180 "Bellamy G, Bornstein P. Evidence for procollagen, a biosynthetic precursors of collagen. Proc Natl Acad Sci U S A. 1971 Jun;68(6):1138-42. PubMed PMID: 4942180; PubMed Central PMCID: PMC389137."
 
-
+[Harrington & Rao 1970]: http://www.ncbi.nlm.nih.gov/pubmed/5534097 "Harrington WF, Rao NV. Collagen structure in solution. I. Kinetics of helix regeneration in single-chain gelatins. Biochemistry. 1970 Sep 15;9(19):3714-24. PubMed PMID: 5534097."
 
 
