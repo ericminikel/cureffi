@@ -64,7 +64,7 @@ That said, the failure of anti-A&beta; antibodies such as Lilly's solanezumab is
 
 For information on preclinical stages of AD, a useful reference is [[Sperling 2011]].
 
-Dr. Tanzi has seen brains of elderly people who had extensive A&beta; and tau pathology but no inflammation and who were asymptomatic at time of death. Therefore, inflammation must be critically important in AD. Dr. Tanzi has also reported that A&beta; has antimicrobial properties [[Soscia 2010]]. He is now promoting the "immunogenetic hypothesis of AD" - that compromised adaptive immunity due to  
+Dr. Tanzi has seen brains of elderly people who had extensive A&beta; and tau pathology but no inflammation and who were asymptomatic at time of death. Therefore, inflammation must be critically important in AD. Dr. Tanzi has also reported that A&beta; has antimicrobial properties [[Soscia 2010]]. He is now promoting the "immunogenetic hypothesis of AD" involving compromised adaptive immunity.
 
 #### Q&A
 
