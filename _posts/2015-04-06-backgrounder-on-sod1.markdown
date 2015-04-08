@@ -118,7 +118,12 @@ That last round of experiments was done with H64R SOD1 being expressed by all of
 
 #### *Mutant Copper-Zinc Superoxide Dismutase (SOD1) Induces Protein Secretion Pathway Alterations and Exosome Release in Astrocytes* [[Basso 2013]]
 
-In this study they harvested cortical tissue from mouse embryos overexpressing mutant (G93A) or WT human *SOD1*, and isolated/differentiated astrocytes, then performed a number of tests on the astrocytes. The major limitation of all of the results is that as far as I can tell, for each experiment there are only two data points: one point for mutant *SOD1* cells and one for WT *SOD1* cells. In other words, there are no technical or biological replicates of any of the conditions. As a result, all of the comparisons are qualitative and no statistical tests are performed, leaving plenty of opportunity for experimental variability to creep in. This is why, for insatnce, [Table 1](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3668729/table/T1/) lists differentially expressed genes according to MALDI-TOF proteomics with only effect sizes (no p values or confidence intervals) given. The main conclusions of the study were that the astrocytes expressing mutant *SOD1* produced more exosomes, and that these exosomes caused some (36%) neuronal death when added to motor neuron cultures. 
+In this study they harvested cortical tissue from mouse embryos overexpressing mutant (G93A) or WT human *SOD1*, and isolated/differentiated astrocytes, then performed a number of tests on the astrocytes, including:
+
+1. Western blot on GFAP as a control - the GFAP band was a broader smear in the mutant SOD1 astrocytes, which they attribute to GFAP fragmentation due to calpain activation.
+2. 2D gels on pools of mutant SOD1 astrocytes (n=3) versus pools of WT SOD1 astrocytes and image analysis to identify dots that were more intense one gel than the other. They then identified these proteins by MALDI-TOF mass spec and technically validated the difference in protein abundance of a few of them with Western blots.
+3. Measurements of total protein secretion and exosome production.
+4. Exposing cultured motor neurons to exosomes from the astrocytes. They found that SOD1 was able to move from the exosomes into the neurons, and that the exosomes from the mutant SOD1 astrocytes caused some (36%) motor neuron death.
 
 [Matsumoto 2005]: http://www.ncbi.nlm.nih.gov/pubmed/16216923 "Matsumoto G, Stojanovic A, Holmberg CI, Kim S, Morimoto RI. Structural properties and neuronal toxicity of amyotrophic lateral sclerosis-associated Cu/Zn superoxide dismutase 1 aggregates. J Cell Biol. 2005 Oct 10;171(1):75-85. PubMed PMID: 16216923; PubMed Central PMCID: PMC2171239."
 
