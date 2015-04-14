@@ -225,3 +225,6 @@ In this study they harvested cortical tissue from mouse embryos overexpressing m
 
 [Holmes 2013]: http://www.ncbi.nlm.nih.gov/pubmed/23898162/ "Holmes BB, DeVos SL, Kfoury N, Li M, Jacks R, Yanamandra K, Ouidja MO, Brodsky FM, Marasa J, Bagchi DP, Kotzbauer PT, Miller TM, Papy-Garcia D, Diamond MI. Heparan sulfate proteoglycans mediate internalization and propagation of specific proteopathic seeds. Proc Natl Acad Sci U S A. 2013 Aug 13;110(33):E3138-47. doi:  10.1073/pnas.1301440110. Epub 2013 Jul 29. PubMed PMID: 23898162; PubMed Central  PMCID: PMC3746848."
 
+[Bruijn 1998]: http://www.ncbi.nlm.nih.gov/pubmed/9743498 "Bruijn LI, Houseweart MK, Kato S, Anderson KL, Anderson SD, Ohama E, Reaume AG, Scott RW, Cleveland DW. Aggregation and motor neuron toxicity of an ALS-linked SOD1 mutant independent from wild-type SOD1. Science. 1998 Sep 18;281(5384):1851-4. PubMed PMID: 9743498."
+
+
