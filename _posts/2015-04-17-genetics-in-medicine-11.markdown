@@ -8,7 +8,7 @@ location: Cambridge, MA
 summary200: "Roy Perlis and Ben M. Neale discuss the clinical aspects and genetics of psychiatric disease."
 ---
 
-*These are my notes from week 11 of Harvard's [Genetics 228: Genetics in Medicine from Bench to Bedside](http://www2.massgeneral.org/bbs/gen228/gen228_syllabus_material.asp) course, held on April 17, 2015. Lectures by [Ben Neale](https://www.broadinstitute.org/scientific-community/science/programs/psychiatric-disease/stanley-center-psychiatric-research/benjam) and [Roy Perlis](http://chgr.org/index-faculty_perlis.html) of the Center for Experimental Drugs and Diagnostics at MGH.*
+*These are my notes from week 11 of Harvard's [Genetics 228: Genetics in Medicine from Bench to Bedside](http://www2.massgeneral.org/bbs/gen228/gen228_syllabus_material.asp) course, held on April 17, 2015. Lectures by [Ben Neale](https://www.broadinstitute.org/scientific-community/science/programs/psychiatric-disease/stanley-center-psychiatric-research/benjam) of ATGU / the Stanley Center, and [Roy Perlis](http://chgr.org/index-faculty_perlis.html) of the Center for Experimental Drugs and Diagnostics at MGH.*
 
 ### Journal club: *Synaptic, transcriptional and chromatin genes disrupted in autism* [[De Rubeis 2014]]
 
