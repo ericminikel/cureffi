@@ -25,22 +25,25 @@ AGPHFNPLSRKHGGPKDEERHVGDLGNVTADKDGVADVSIEDSVISLSGDHCIIGRTLVV
 HEKADDLGKGGNEESTKTGNAGSRLACGVIGIAQ
 ```
 
-Note that the translated sequence above is 154 residues, but like many cytosolic proteins [[Giglione 2004]], SOD1 undergoes N-terminal methionine excision, thus yielding a 153-residue protein. The residue numbering in common use in publications about *SOD1* is based on 153-residue counting and thus appears as shifted from this reference sequence by -1: for instance, people refer to D90A [[Al-Chalabi 1998]] and G93A [[Yang 2013]], which correspond to residues 91 and 94, respectively, in the above sequence or in any output generated programmatically by genomic tools. [In ExAC](http://exac.broadinstitute.org/gene/ENSG00000142168), the *SOD1* gene (canonical transcript ENST00000270142) has three predicted loss-of-function variants, all singletons. The protein is localized to the cytosol and the mitochondrial intermembrane space [[Kawamata & Manfredi 2010]]. SOD1 was known as an enzyme responsible for inactivating superoxide radicals before it was ever linked to ALS, and its crystal structure was solved in 1992 [[PDB# 1SOS](http://pdb.org/pdb/explore/explore.do?structureId=1sos), [Parge 1992]]:
+Note that the translated sequence above is 154 residues, but like many cytosolic proteins [[Giglione 2004]], SOD1 undergoes N-terminal methionine excision, thus yielding a 153-residue protein. The residue numbering in common use in publications about *SOD1* is based on 153-residue counting and thus appears as shifted from this reference sequence by -1: for instance, people refer to D90A [[Al-Chalabi 1998]] and G93A [[Yang 2013]], which correspond to residues 91 and 94, respectively, in the above sequence or in any output generated programmatically by genomic tools. [In ExAC](http://exac.broadinstitute.org/gene/ENSG00000142168), the *SOD1* gene (canonical transcript ENST00000270142) has three predicted loss-of-function variants, all singletons. The protein is localized to the cytosol and the mitochondrial intermembrane space [[Kawamata & Manfredi 2010]]. SOD1 was known as an enzyme responsible for inactivating superoxide radicals before it was ever linked to ALS, and its crystal structure was solved in 1982 [[Tainer 1982], [PDB# 2SOD](http://www.rcsb.org/pdb/explore/explore.do?structureId=2SOD)]. It both functions *in vivo*, and crystallizes, as a dimer:
 
 ```
-fetch 1sos
+fetch 2sod
 bg_color white
 hide everything
-show cartoon, chain A
-show spheres, inorganic and chain A
-color 0x0000CD, chain A
-color 0xC77F33, element Cu
-color 0x7c7faf, element Zn
+show cartoon, chain O or chain Y
+color orange, chain O
+color yellow, chain Y
+show spheres, inorganic and (chain O or chain Y)
+color 0xC77F33, element Cu 
+color 0x7C7FAF, element Zn
 ```
 
-(Note these are the [official PyMOL element colors](http://www.pymolwiki.org/index.php/Color_Values#Color_by_Element.2FAtom) for Zn and Cu).
+![](/media/2015/04/2sod.png)
 
-![](/media/2015/04/sod1-structure-1sos.png)
+*Above: SOD1 dimer structure as solved by [[Tainer 1982]], with the [official PyMOL element colors](http://www.pymolwiki.org/index.php/Color_Values#Color_by_Element.2FAtom) for Zn and Cu*
+
+Many later versions of the structure have been solved as well (e.g. [[PDB# 1SOS](http://pdb.org/pdb/explore/explore.do?structureId=1sos), [Parge 1992]]).
 
 I blogged about ALS last semester in [these notes from neurodegeneration seminar](/2014/11/24/neurodegeneration-seminar-4/) and an important point is that ALS is the name for a constellation of clincial signs, a syndrome. The name ALS refers to what are probably **several different diseases** at the molecular level. Most cases are sporadic; of the cases that are familial, there are a variety of genes, often with distinct pathology.
 
@@ -227,4 +230,4 @@ In this study they harvested cortical tissue from mouse embryos overexpressing m
 
 [Bruijn 1998]: http://www.ncbi.nlm.nih.gov/pubmed/9743498 "Bruijn LI, Houseweart MK, Kato S, Anderson KL, Anderson SD, Ohama E, Reaume AG, Scott RW, Cleveland DW. Aggregation and motor neuron toxicity of an ALS-linked SOD1 mutant independent from wild-type SOD1. Science. 1998 Sep 18;281(5384):1851-4. PubMed PMID: 9743498."
 
-
+[Tainer 1982]: http://www.ncbi.nlm.nih.gov/pubmed/7175933 "Tainer JA, Getzoff ED, Beem KM, Richardson JS, Richardson DC. Determination and analysis of the 2 A-structure of copper, zinc superoxide dismutase. J Mol Biol. 1982 Sep 15;160(2):181-217. PubMed PMID: 7175933."
