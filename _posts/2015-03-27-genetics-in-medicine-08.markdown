@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Genetics in medicine 8: Inflammatory bowel disease"
+title:  "Genetics in medicine 08: Inflammatory bowel disease"
 date:   2015-03-27 12:01:00
 author: ericminikel
 tag: genetics-228
