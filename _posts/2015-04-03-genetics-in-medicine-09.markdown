@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Genetics in medicine 9: Alzheimer disease"
+title:  "Genetics in medicine 09: Alzheimer disease"
 date:   2015-04-03 12:01:00
 author: ericminikel
 tag: genetics-228
