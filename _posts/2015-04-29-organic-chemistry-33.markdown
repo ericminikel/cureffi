@@ -5,7 +5,7 @@ date:   2015-04-29 12:00:00
 author: ericminikel
 tag: chem-20
 location: Cambridge, MA
-summary200: ""
+summary200: "Introduction to mass spectrometry: ionization and mass selection methods. Spin-spin coupling continued: cis vs. trans alkenes, deuterium, longer-range coupling. 13C NMR."
 ---
 
 *These are my notes from lecture 33 of Harvard's Chemistry 20: Organic Chemistry course, delivered by Dr. Ryan Spoering on April 29, 2015.*
