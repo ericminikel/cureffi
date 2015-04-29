@@ -75,3 +75,7 @@ H<sub>A</sub> is split twice, by H<sub>B</sub> and H<sub>C</sub>, hence it is th
 
 To make matters more complicated, each of what appears to be a single peak within a doublet in the styrene spectrum actually has two mini-peaks if you zoom in really close on the peak. We'll talk about why that is next time.
 
+This discussion of spin-spin coupling is continued in [lecture 33](/2015/04/29/organic-chemistry-33/).
+
+
+
