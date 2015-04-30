@@ -5,7 +5,7 @@ date:   2015-04-30 12:01:00
 author: ericminikel
 location: Boston, MA
 thumb120: http://www.cureffi.org/media/2015/04/sod1-dz-residue-thumbnail.png
-summary200: "An outsider's look at some pivotal questions in the SOD1 ALS field over the past 20 years: gain vs. loss of function, oxidative damage vs. aggregation, and the monomer hypothesis."
+summary200: "An outsider's look at some pivotal questions in the SOD1 ALS field over the past 20 years: gain vs. loss of function, oxidative damage vs. aggregation, and transmissibility."
 ---
 
 I am continuing to work on my final project for my [protein folding class](/tag/mit-7.88j) on the mechanism by which *SOD1* mutations cause ALS. After getting acquainted with some [basic background](/2015/04/06/backgrounder-on-sod1/), this second post on the subject, meandering through a few different aspects of the protein and the disease. Bear in mind that I'm an outsider here - I study PrP, not SOD1 - so I might be totally off base on any of this. If I am, please feel free to leave me a comment below!
