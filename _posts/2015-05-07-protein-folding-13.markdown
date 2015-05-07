@@ -101,7 +101,11 @@ One of the theories of how alpha synuclein misfolding is neurotoxic is that it d
 
 Recommended readings: [[Lashuel 2002], [Zhu 2003], [Feng 2010]].
 
+#### Q&A
 
+Q. Do we have any idea what causes sporadic Parkinson disease?
+
+A. Jonathan King: the environmental risk factor with the greatest amount of evidence behind it is the pesticide paraquat [[McCormack 2002], [Costello 2009]].
 
 [Randall 1990]: http://www.ncbi.nlm.nih.gov/pubmed/2188362 "Randall LL, Topping TB, Hardy SJ. No specific recognition of leader peptide by SecB, a chaperone involved in protein export. Science. 1990 May 18;248(4957):860-3. PubMed PMID: 2188362."
 
@@ -140,4 +144,8 @@ Recommended readings: [[Lashuel 2002], [Zhu 2003], [Feng 2010]].
 [Zhu 2003]: http://www.ncbi.nlm.nih.gov/pubmed/12885775 "Zhu M, Li J, Fink AL. The association of alpha-synuclein with membranes affects bilayer structure, stability, and fibril formation. J Biol Chem. 2003 Oct 10;278(41):40186-97. Epub 2003 Jul 28. PubMed PMID: 12885775."
 
 [Feng 2010]: http://www.ncbi.nlm.nih.gov/pubmed/20550572 "Feng LR, Federoff HJ, Vicini S, Maguire-Zeiss KA. Alpha-synuclein mediates alterations in membrane conductance: a potential role for alpha-synuclein oligomers in cell vulnerability. Eur J Neurosci. 2010 Jul;32(1):10-7. doi: 10.1111/j.1460-9568.2010.07266.x. Epub 2010 Jun 14. PubMed PMID: 20550572; PubMed Central PMCID: PMC2900531."
+
+[McCormack 2002]: http://www.ncbi.nlm.nih.gov/pubmed/12127150 "McCormack AL, Thiruchelvam M, Manning-Bog AB, Thiffault C, Langston JW, Cory-Slechta DA, Di Monte DA. Environmental risk factors and Parkinson's disease: selective degeneration of nigral dopaminergic neurons caused by the herbicide paraquat. Neurobiol Dis. 2002 Jul;10(2):119-27. PubMed PMID: 12127150."
+
+[Costello 2009]: http://www.ncbi.nlm.nih.gov/pubmed/19270050 "Costello S, Cockburn M, Bronstein J, Zhang X, Ritz B. Parkinson's disease and  residential exposure to maneb and paraquat from agricultural applications in the  central valley of California. Am J Epidemiol. 2009 Apr 15;169(8):919-26. doi: 10.1093/aje/kwp006. Epub 2009 Mar 6. PubMed PMID: 19270050; PubMed Central PMCID: PMC2727231."
 
