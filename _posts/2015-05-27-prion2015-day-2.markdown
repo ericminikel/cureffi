@@ -1,0 +1,283 @@
+---
+layout: post
+title:  "Prion2015 Day 2"
+date:   2015-05-27 12:01:00
+author: ericminikel
+location: Ft. Collins, CO
+thumb120: 
+summary200: "Notes from Day 2 of the Prion2015 conference in Ft. Collins, CO."
+---
+
+### Claudio Soto
+
+Dr. Soto opened with a review of his lab's development of PMCA over the past 15 years, starting all the way from the beginning [[Saborio 2001]]. He then focused on recent applications of PMCA to diagnostics. He discussed blood, where his lab achieved detection of prions in hamsters a decade ago [[Castilla 2005], [Saa 2006]]. Last year, his lab was able to amplify PrP<sup>Sc</sup> from urine of 13 out of 14 patients with vCJD [[Moda 2014]]. Next, he discussed the application of endpoint titration bioassay [[Morales 2015]] and PMCA [[Salvadores 2014]] to A&beta;. He concluded that section of his talk by expressing hope for the eventual development of a blood-based test for Alzheimer disease, a point which he has made in published literature as well: "adaptation of Aβ-PMCA to detect A&beta; oligomers, which may potentially be circulating in the blood of AD patients, may offer a great opportunity for more-routine testing" [[Salvadores 2014]]. He then presented unpublished results regarding A&beta; and blood, which I can't share here.
+
+Finally, Dr. Soto switched to the topic of environmental routes of prion transmission. He remarked that CWD is readily transmissible in nature, and that this may arise both from direct animal-to-animal transmission and from environmental accumulation due to urine, feces, animal carcasses, etc. depositing prions in water, soil, plants, etc. His lab recently published a battery of experiments on the binding of prions to plants [[Pritzkow 2015]]. They found, for instance, that plants dipped in prion-infected brain homogenate and then washed retain the ability to infect hamsters by the oral route, and that plants grown in prion-containing soil acquire prion seeding activity detectable by PMCA in their stems and leaves. Last, he discussed some unpublished results regarding prion binding to surfaces.
+
+#### Q&A
+
+Q. How would the presence of A&beta; seeds in blood relate to immunotherapy strategies?
+
+A. David Housman has proposed the "sink hypothesis", wherein binding peripheral protein seeds with an antibody would result in a net flow of pathogenic seeds out of the brain.
+
+### Marc Diamond
+
+Dr. Diamond began by saying that he would present evidence that tau can, for all intents and purposes, be considered a prion.
+
+He reviewed the basic biology of tau. It binds to microtubules, though we still don't have a full picture of its native function. It contains a repeat domain (RD) which alone is sufficient to form fibrils and cause pathology. There are >25 different tauopathies including sporadic forms, and genetic forms linked to mutations in the *MAPT* gene.
+
+Following that introduction, Dr. Diamond presented some results he published last year [[Sanders & Kaufman 2014]] and which his student David Sanders [presented in Trieste last year](/2014/05/29/prion2014-day-3/). First, they created cell lines stably expressing different mutant proteins or fragments thereof - huntingtin, A&beta;, &alpha;-Syn, and Tau RD - and infected them with fibrils made of each type of protein. They observed that "like seeds like" - proteins can seed their own aggregation but not the aggregation of other proteins. In fact, even single point mutations in tau can create transmission barriers between tau prions and incompatible tau substrates. They then did a series of experiments on cell-to-cell transmission of tau prions [[Sanders & Kaufman 2014]]. This transmission of tau prion seeds appears to be mediated by heparan sulfate proteoglycans (HSPGs) [[Holmes 2013]], similar to what is known for PrP<sup>Sc</sup> [[Horonchik 2005]]. Most recently, Dr. Diamond's lab developed a FRET-based assay to measure tau oligomers in Alzheimer brains, and they estimated that the mininum multimeric size required for a tau prion seed is a trimer [[Mirbaha 2015]]. When Dr. Diamond presented that result at a meeting recently, Stanley Prusiner pointed out that this result is identical to a result that the Prusiner lab once obtained for PrP<sup>Sc</sup> [[Bellinger-Kawahara 1988]]. They also used their FRET assay to perform time-series quantification of tau prion seeds in Virginia Lee's *MAPT* P301S mice [[Holmes & Furman 2014]]. He touched briefly on a classic paper on the staging of Alzheimer disease [[Braak & Braak 1991]], and then returned to the findings of [[Sanders & Kaufman 2014]], discussing the faithful propagation of distinct tau prion strains in cell culture and upon inoculation back into transgenic animals. He noted their data on different tau prion morphologies in different tauopathy patient brains, and 
+
+#### Q&A
+
+Q. Jean-Philippe Deslys: Didn't the 1988 Prusiner lab results indicate a minimum PrP<sup>Sc</sup> size of 55 kDa?
+
+A. Marc Diamond: Yes, I re-read the paper carefully last night and have also discussed this with Dr. Prusiner. In that experiment, the PrP was deglycosylated, giving a size of 17-21 kDa, so 55 kDa does indeed correspond to a trimer.
+
+### Ina Vorberg
+
+Dr. Vorberg's talk centered on the intercellular transmission of prions in mammalian cells. She pointed out that the transmission of cytosolic prions between cells requires some means for prions to exit the cell, as well as some means for prions to be taken up into other cells. She noted that Sup35p, like PrP, contains am octapeptide repeat region. In yeast, propagation of Sup35p prions requires Hsp104 [[Chernoff 1995]], and *de novo* formation of Sup35p prions requires the <em>[PIN<sup>+</sup>]</em> prion [[Derkatch 2001]]. This inspired Dr. Vorberg to fuse a portion of Sup35p to PrP and express it in mammalian cells in an effort to identify analogous mammalian cellular factors involved in the formation and propagation of prions [[Krammer 2008a], [Krammer 2008b]]. They then expressed Sup35NM in mammalian cells and observed self-sustaining propagation and intercellular spread of Sup35NM prions [[Hofmann 2013]].
+
+The second half of Dr. Vorberg's talk consisted of new unpublished results on the same theme.
+
+Finally, she recommended two posters on totally different topics by her group, #P.10 and #P.16 - see [poster abstracts](http://www.tandfonline.com/doi/full/10.1080/19336896.2015.1033248).
+
+### Lary Walker
+
+Dr. Walker covered three topics related to A&beta; strains:
+
++ A&beta; in humans vs. other primates
++ A&beta; strains in different patients with Alzheimer disease
++ Pittsburgh compound B (PiB), its binding site, and A&beta; strains
+
+Primates have very different maximum life expectancies. The record for human longevity is 120 years, while for chimpanzees it is 60 years, and other primates have even lower records. Like humans, many non-human primates develop A&beta; plaques as they age [[Rosen 2011]]. Many of these primates' brain extracts even transmit A&beta; pathology to transgenic rodents, yet A&beta; pathology does not seem to result in dementia in any species other than human [[Heuer 2012]]. PiB is a small molecule probe that binds with high specificity to A&beta; plaques in the human brain [[Klunk 2004]]. Yet, curiously, it does not bind to A&beta; plaques in rodents, even when those rodents express human A&beta; [[Klunk 2005]]. There is also essentially no PiB binding in non-human primate brains with A&beta; pathology [[Rosen 2011]]. Dr. Walker hypothesized that this difference in binding may reflect differences in A&beta; prion conformation.
+
+Dr. Walker then discussed an unpublished case study.
+
+Next he discussed efforts to identify the PiB binding site [[Matveev 2014]]. They homogenized and centrifuged human AD brain samples. The supernatant plus "fluffy pellet" contained 95% of total protein and 96% of PiB binding but only 35% of A&beta;. The hard pellet contained 65% of A&beta; but only 4% of PiB binding. They re-centrifuged the supernatant plus fluffy pellet at 100,000g and obtained an ultra-pellet which contained 5% of total protein but 93% of PiB binding. They then ran this fraction on a sucrose gradient to identify the size of the PiB-binding species. They concluded that the PiB binding site is on a discrete sub-population of A&beta; fibrils, and that both proteins and lipids are required for binding. Along with A&beta;, they also identified ApoE, tau, ubiquitin, and CLAC (also known as AMY [[Soderberg 2003]]) as being enriched in the fraction that contained most of the PiB-binding activity. CLAC is interesting because it is not found in A&beta; plaques in non-human primates nor in rodents [[Matveev 2014]]. The presence of lipids in this fraction is also interesting in light of evidence for lipid involvement in A&beta; fibrillization [[Chi 2008]].
+
+Finally, Dr. Walker noted that A&beta; shares essentially all of the key prion-like molecular features of PrP, except that it is not known to be transmissible to humans. He and Dr. Jucker recently opined that the term "prion" should be redefined as a backronym for "proteinaceous nucleating particle", a definition which would focus on the molecular properties of proteins rather than on infectivity *per se* [[Walker & Jucker 2015]].
+
+#### Q&A
+
+Q. Jean Manson: You describe Alzheimer's as an exclusively human disease, but cats and dogs have similar neurodegenerative diseases.
+
+A. Lary Walker: Dogs have been extensively studied. They do get A&beta; deposits, but like non-human primates, their deposits are mostly vascular, and do not seem to lead to neurofibrillary tangles of tau. It is true that dogs with these A&beta; deposits do get dementia, but the disease still may not be sufficiently similar to the human disease to merit being called Alzheimer's.
+
+### Erdem Tamg&uuml;ney
+
+Dr. Tamg&uuml;ney presented entirely unpublished work on &alpha;-synuclein. Most of the salient details are in his abstract O.01, which is available publicly [here](http://www.tandfonline.com/doi/full/10.1080/19336896.2015.1036655), and I received permission from Dr. Tamg&uuml;ney to post my notes from his talk here.
+
+Dr. Tamg&uuml;ney's lab created mice which have endogenous &alpha;-Syn knocked out, but have a P1 phage artificial chromosome encoding wild-type human *SNCA*. These mice express &alpha;-Syn at about 1.5x mouse wild-type levels, but have no detectable neuropathology or symptoms within a mouse lifetime. They injected them with brain homogenates from two different MSA patients, or non-demented aged controls (NDACs), or PBS. They then sacked the mice at 3, 6, or 9 months. By 9 months, the MSA-injected mice accumulate phosphorylated &alpha;-Syn deposits in the cytosol of neurons. However, so do the mice injected with NDAC brain homogenates. In all of these mice, the &alpha;-Syn co-localized with ubiquitin, but not neurofilament light chain (not sure why the latter is significant). They were then able to obtain brain samples for histology from both MSA patients and one of the two NDACs. In the original MSA patients, the phosphorylated &alpha;-Syn was found in oligodendrocytes. The one NDAC turned out to have neuronal deposits of phosphorylated &alpha;-Syn. This individual may have had early changes preceeding onset of Parkinson disease or dementia with Lewy bodies. Thus, even people without clinical signs of synucleinopathy may have &alpha;-Syn seeds in their brains.
+
+### Jacob Ayers
+
+Dr. Ayers began with an overview of published *in vitro* and cell culture evidence for seeding of mutant SOD1, much of which I've also reviewed in my [protein folding term paper](/2015/05/15/protein-folding-term-paper/). He also noted his earlier success in transducing the mouse spinal cord with injections of AAV vectors [[Ayers 2015]]. Based on these findings, he and David Borchelt hypothesized that they could transmit SOD1 misfolding to mice via injections into the spinal cord. They created SOD1 G85R-YFP mice that do not develop spontaneous disease, and found that these mice *do* develop an ALS-like disease if they are injected with spinal cord homogenates from SOD1 G93A mice [[Ayers 2014]]. This is the first *in vivo* evidence for transmissibility of mutant SOD1 aggregates. They also also looked at aged Gurney WT mice [[Graffmo 2013]], which express high levels of wild-type SOD1 and develop some SOD1 pathology but no clinical symptoms. When spinal cord homogenates from these mice were injected into the G85R-YFP mice, 1 out of 3 mice did develop paralysis. Interestingly, the pathology in those mice looked different than that in the mice injected with G93A homogenates [[Ayers 2014]], suggestive of possible strain differences. Dr. Ayers then moved into a few unpublished results involving these mouse models. He dubbed SOD1 a "pseudo-prion" in that it has some properties of a prion but is not naturally transmissible and has a "very restricted host specificity".
+
+#### Q&A
+
+Q. David Harris: What is missing for SOD1 and for many other "prions" is evidence that the aggregates transmit between cells *in vivo*. Do you have ideas for how you could demonstrate this for SOD1?
+
+A. Jacob Ayers: It's definitely an ongoing challenge, and we are working on addressing this.
+
+### Ilia Baskakov
+
+Dr. Baskakov opened by arguing that glycosylation remains a poorly understood area of prion biology. PrP is variably glycosylated at residues N181 and N197 (human numbering). There are a wide range of possible glycan chains on PrP depending on linkers (&alpha;-2,3 vs. &alpha;-2,6 etc.) and the sugars involved (sialic acid, galactose, fucose, xylose, etc). There are exist ~20 sialyltransferases and 4 neuraminidases which help to determine the composition of glycan chains. The variable sialylation of glycan chains is important for self vs. non-self discrimination. Macrophages and dendritic cells recognize "pathogen-associated molecular patterns" (PAMPs) based partly on foreign glycans, and apoptotic cells also exhibit altered glycan composition that helps tag apoptotic bodies for destruction.
+
+It has long been recognized that PrP<sup>C</sup> and PrP<sup>Sc</sup> each exhibit great variability in glycan composition, but are not categorically different from one another [[Rudd 1999]]. Dr. Baskakov hypothesized that differences in sialylation between different PrP<sup>Sc</sup> molecules could help to determine their fate.
+
+To test this hypothesis, his lab sought to remove sialylation from PrP<sup>Sc</sup>. The use of bacterial de-sialylation enzymes directly on PrP<sup>Sc</sup> proved inefficient, so they then tried de-sialyating PrP<sup>C</sup> and subjecting it to PMCA. They found that undersialyated PrP<sup>C</sup> was the preferred substrate for conversion to PrP<sup>Sc</sup> in PMCA [[Katorcha 2014]]. Because secondary lymphoid organs are important in peripheral prion spreading [[Mabbott 2012]], Dr. Baskakov next compared the sialylation profiles of brain- vs. spleen-derived PrP<sup>C</sup> and found differences [[Katorcha 2014]]. From here he moved into additional unpublished results regarding sialylation of PrP.
+
+#### Q&A
+
+Q. Mark Zabel: Have you looked at advanced glycation end products *in vivo*?
+
+A. Ilia Baskakov: No, we haven't. Someone else came out with a paper about it last week, though \[citation needed\].
+
+Q. Byron Caughey: If your theory is correct, how do you explain the infectivity of severely underglycosylated anchorless PrP?
+
+A. Ilia Baskakov: Because macrophages and microglia recognize glycans, we hypothesize there is a difference between undersialyation and the total absence of glycosylation. The latter would make it harder for the immune system to recognize prions.
+
+### Bruce Chesebro
+
+Dr. Chesebro presented unpublished work on the very early spread of PrP<sup>Sc</sup> after intracerebral inoculation. His oral abstract O.03 is [here](http://www.tandfonline.com/doi/full/10.1080/19336896.2015.1036655). 
+
+### Jiyan Ma
+
+Unfortunately I missed most of Dr. Ma's talk because of the long lunch line. When I came in, he was presenting a summary table arguing that *de novo* prions generated by PMCA from recombinant PrP can possess all the properties of bona fide brain-derived prions, while noting that PMCA can also give rise to self-propagating but non-infectious PrP conformers. These points have been made to some degree in Dr. Ma's previously published work [[Zhang 2013]], though it appeared that he was presenting some new data as well.
+
+### Fiona Houston
+
+Dr. Houston began with a review of the risks of prion transmission via blood products. Three individuals (all 129MM) have developed vCJD after receiving non-leukodepleted blood transfusions from individuals with vCJD (presumably referring to [[Hewitt 2006]]), and two individuals (129MV) have developed subclinical infections, one after blood transfusion and one after plasma infusion (not sure what the citation is for this). It is estimated, based on histological analysis of irreversibly anonymized appendix samples, that 1 in 2000 people in Britain carry subclinical peripheral prion infections [[Gill 2013]]. Therefore, blood transfusion remains an important source of vCJD transmission risk. For this reason, Dr. Houston has been studying blood transfusion transmission of prions, using scrapie-infected sheep as a model system [[Houston 2008]]. They sought to identify which blood fractions contain prion infectivity, and found that although the blood fractions vary in degree, all of them carry at least some amount of infectivity [[McCutcheon 2011]]. Dr. Houston's group also investigated genetic control of sheep susceptibility to BSE prions via oral exposure, and found that the F141L polymorphism significantly altered incubation time [[Tan 2012]].
+
+### Jean-Philippe Deslys
+
+Dr. Deslys presented 10 year followup data on cynomolgus macaques inoculated with a variety of prion strains.
+
+He also reviewed historical data on transmission of different prion strains to non-human primates. For instance, scrapie was transmitted to cynomolgus macaques, but only after repeated passage in mice [[Gibbs & Gajdusek 1972]], thus leaving doubt as to whether scrapie prions derived directly from sheep could infect macaques. Sheep-derived scrapie prions transmitted disease to squirrel monkeys [[Gibbs 1980]], but because these are New World monkeys, it left doubt as to whether primates more closely related to humans were susceptible.
+
+He concluded by observing that transmission experiments are limited by the natural lifespan of the host species, and that therefore the results that people see when they attempt to transmit non-PrP "prions" between animals may simply represent the "tip of the pyramid", where much greater transmissibility might occur if only the animals could be observed for longer.
+
+### David Borchelt
+
+Dr. Borchelt began by reviewing the evidence from cell culture and animal models for the growing family of prions - tau, A&beta;, SOD1, and so on. Then he recalled the difficulty of transmitting prions from a mouse model of P102L GSS, where prions exhibited no transmissibility to wild-type mice and only limited attack rates when inoculated into hamsters or mice expressing lower levels of the mutant protein [[Hsiao 1994]]. And the need to delete endogenous MoPrP in order to transmit human prions to mice expressing HuPrP [[Telling 1995]].
+
+When mice overexpressing wild-type or mutant (A53T) &alpha;-Syn (the M20 and M83 mouse models respectively) were inoculated intramuscularly with &alpha;-Syn fibrils, they developed a motor phenotype and had reduced survival [[Sacino 2014]]. Dr. Borchelt also discussed how the transmission of tau prions to *MAPT* P301L mice is inefficient [[Chakrabarty 2015]].
+
+Finally, Dr. Borchelt presented the negative results from the SOD1 *in vivo* transmission paper [[Ayers 2014]], as a complement to Jacob Ayers having presented the positive data earlier in the day.
+
+#### Q&A
+
+Q. Something about transgenes.
+
+A. We saw no transmissions of SOD1 aggregates to mice overexpressing wild-type human *SOD1*. We had them on a wild-type mouse *Sod1* background; one could contemplate crossing them to a mouse *Sod1* knockout background.
+
+### Yury Chernoff
+
+Dr. Chernoff presented unpublished data on properties of A&beta; and tau fused to Sup35 fragments and expressed in yeast; you can see his abstract O.06 [here](http://www.tandfonline.com/doi/full/10.1080/19336896.2015.1036655). He previously described this experimental system in [his Prion2014 talk](/2014/05/28/prion2014-day-2/) and today he presented a variety of new data from this system.
+
+### Ed Hoover
+
+CWD is now found in free-ranging cervids in 23 U.S. states, with Michigan just [yesterday](http://www.michigan.gov/dnr/0,4570,7-153--355592--,00.html) becoming the latest state to report CWD. Dr. Hoover is interested in two questions related to how prions are naturally transmitted in deer: first, which tissues are the earliest to become infected after exposure to prions, and second, how are prions shed from the animal into the environment? Answering these questions requires characterizing the distribution of CWD prions across different tissues in infected cervids. He presented data comparing the diagnostic success of immunohistochemistry, RT-QuIC, and ELISA in lymph nodes of deer [[Haley 2014]] and using RT-QuIC lag time to quantify prions in different tissues from deer [[Henderson 2015]]. He also touched briefly on work from Candace Mathiason's lab which she had presented yesterday at the animal prion workshop.
+
+### Qingzhong Kong
+
+Dr. Kong presented unpublished findings on the zoonotic potential of CWD prions. His abstract is not online and I don't have permission to share any of the results here.
+
+He did open with a backgrounder on CWD, which included the interesting factoid that deer velvet is valued in herbal medicine. Upon Googling it I learned that it's reputed to be a body building supplement (see [this](http://news.nationalgeographic.com/news/2013/01/130130-deer-velvet-antler-spray-science-health-football-sports/)) and, by the name of [&#x9E7F;&#x8338;](http://zh.wikipedia.org/wiki/%E9%B9%BF%E8%8C%B8) (l&ugrave;r&oacute;ng), is also an ingredient in traditional Chinese medicine. 
+
+### David Berry
+
+![](/media/2015/05/ind24.png)
+
+*Above: IND24, the Prusiner lab's lead 2-aminothiazole compound.*
+
+Readers who've been following antiprion drug discovery efforts will recall that David Berry led the Prusiner lab's *in vivo* testing of IND24, its lead 2-aminothiazole compound [[Berry 2013]]. The compound, which has an EC<sub>50</sub> of about 1 &mu;M in cell culture, proved effective at extending survival in mice infected with RML or ME7 prions, but not MM1 or VV2 sCJD prions. The difference in efficacy between RML and MM1 sCJD was observed even when both strains of prion were inoculated into Tg1014 mice [[Giles 2010]], which express a chimeric mouse/human PrP and are susceptible to prions from both species. This indicated that the specificity of IND24 efficacy was dictated by prion conformation and rather than PrP amino acid sequence.
+
+In that study [[Berry 2013]] they also found that IND24 was surprisingly effective against one CWD isolate, more than doubling the survival time in transgenic elk PrP mice infected with one CWD prion isolate. When IND24 was administered starting at 1 dpi, the treated mice survived to an average of 237 dpi, while untreated mice only lived to 108 dpi.
+
+Today, Dr. Berry presented unpublished work extending the experiments with IND24 to two additional natural CWD isolates as well as two natural sheep scrapie isolates. His abstract O.07 is [here](http://www.tandfonline.com/doi/full/10.1080/19336896.2015.1036655) and he gave permission for me to blog his talk.
+
+Dr. Berry tested IND24 against two natural scrapie isolates, SSBP/1 and CH1641, in Tg(OvPrP) mice, and saw absolutely no effect on survival. He then tried CWD isolates from elk and white-tailed deer (WTD) in Tg(ElkPrP) mice and saw about a 2x increase in survival in the elk CWD-inoculated mice and a slightly smaller effect size in the WTD CWD-inoculated mice. The effects were reproducible across a range of IND24 doses from 50 to 210 mg/kg/day.
+
+IND24 treatment alters the strain properties of RML prions, giving rise to prions that have longer incubation times *in vivo* but are resistant to IND24 treatment in CAD5 cells [[Berry 2013]]. Therefore, they wondered whether IND24 would also alter the properties of CWD. Surprisingly, though, CWD prions in IND24-treated mice were biochemically and histopathologically indistinguishable from the original CWD prions and retained their original incubation time. They inoculated the original and IND-treated CWD prions into Glenn Telling's RK13 cells expressing elk PrP, and upon treating the cells with IND24, found no evidence of drug resistance.
+
+Dr. Berry noted that this is exciting news because it means that the drug resistance phenomenon of antiprion compounds may not be inevitable, but rather a property of the original strains being treated. He also noted that it would be interesting to test IND24's efficacy in cervids, as this would be a way to test the drug discovery model that we are using, wherein we assume that putting an animal's transgene into a mouse is sufficient to make that mouse predictive of therapeutic efficacy in the original animal.
+
+Finally, Dr. Berry recommended Kurt Giles's poster #P.121 (see [here](http://www.tandfonline.com/doi/full/10.1080/19336896.2015.1033248)), which is on medicinal chemistry and dosing regimen improvements for 2-aminothiazoles.
+
+### S Jo Moore 
+
+Dr. Moore presented her and Justin Greenlee's work on transmission properties of prions from cattle with the PrP E211K mutation, which is homologous to E200K in humans. This variant was first identified in a cow with atypical (H-type) BSE [[Richt & Hall 2008]] and later in its offspring [[Nicholson 2008]]. When they inoculated brain homogenate from an E211K heterozygous animal into another cow of the same genotype, they saw an incubation time of just under 10 months, which is extremely fast for cattle [[Greenlee 2012]].
+
+They have previously seen early changes in the retina of BSE-infected cattle [[Greenlee 2015]], so they next asked whether there were retinal changes associated with the E211K H-type BSE. This work is unpublished, but you can see Dr. Moore's abstract O.08 [here](http://www.tandfonline.com/doi/full/10.1080/19336896.2015.1036655).
+
+
+
+[Greenlee 2015]: http://www.ncbi.nlm.nih.gov/pubmed/25756286 "Greenlee MH, Smith JD, Platt EM, Juarez JR, Timms LL, Greenlee JJ. Changes in  retinal function and morphology are early clinical signs of disease in cattle with bovine spongiform encephalopathy. PLoS One. 2015 Mar 10;10(3):e0119431. doi: 10.1371/journal.pone.0119431. eCollection 2015. PubMed PMID: 25756286; PubMed Central PMCID: PMC4355414."
+
+[Greenlee 2012]: http://www.ncbi.nlm.nih.gov/pubmed/22715405 "Greenlee JJ, Smith JD, West Greenlee MH, Nicholson EM. Clinical and pathologic features of H-type bovine spongiform encephalopathy associated with E211K prion protein polymorphism. PLoS One. 2012;7(6):e38678. doi: 10.1371/journal.pone.0038678. Epub 2012 Jun 8. Erratum in: PLoS One. 2013;8(1). doi:10.1371/annotation/256348ad-e2eb-40ef-8f0c-fa14475ea5fb. PubMed PMID: 22715405; PubMed Central PMCID: PMC3371052."
+
+[Nicholson 2008]: http://www.ncbi.nlm.nih.gov/pubmed/18698343 "Nicholson EM, Brunelle BW, Richt JA, Kehrli ME Jr, Greenlee JJ. Identification of a heritable polymorphism in bovine PRNP associated with genetic transmissible  spongiform encephalopathy: evidence of heritable BSE. PLoS One. 2008 Aug 13;3(8):e2912. doi: 10.1371/journal.pone.0002912. PubMed PMID: 18698343; PubMed Central PMCID: PMC2488391."
+
+[Richt & Hall 2008]: http://www.ncbi.nlm.nih.gov/pubmed/18787697 "Richt JA, Hall SM. BSE case associated with prion protein gene mutation. PLoS  Pathog. 2008 Sep 12;4(9):e1000156. doi: 10.1371/journal.ppat.1000156. PubMed PMID: 18787697; PubMed Central PMCID: PMC2525843."
+
+[Henderson 2015]: http://www.ncbi.nlm.nih.gov/pubmed/25304654 "Henderson DM, Davenport KA, Haley NJ, Denkers ND, Mathiason CK, Hoover EA. Quantitative assessment of prion infectivity in tissues and body fluids by real-time quaking-induced conversion. J Gen Virol. 2015 Jan;96(Pt 1):210-9. doi:  10.1099/vir.0.069906-0. Epub 2014 Oct 10. PubMed PMID: 25304654; PubMed Central PMCID: PMC4268821."
+
+[Haley 2014]: http://www.ncbi.nlm.nih.gov/pubmed/24958799 "Haley NJ, Carver S, Hoon-Hanks LL, Henderson DM, Davenport KA, Bunting E, Gray S, Trindle B, Galeota J, LeVan I, Dubovos T, Shelton P, Hoover EA. Detection of chronic wasting disease in the lymph nodes of free-ranging cervids by real-time quaking-induced conversion. J Clin Microbiol. 2014 Sep;52(9):3237-43. doi: 10.1128/JCM.01258-14. Epub 2014 Jun 23. PubMed PMID: 24958799; PubMed Central PMCID: PMC4313144."
+
+[Giles 2010]: http://www.ncbi.nlm.nih.gov/pubmed/20695008 "Giles K, Glidden DV, Patel S, Korth C, Groth D, Lemus A, DeArmond SJ, Prusiner SB. Human prion strain selection in transgenic mice. Ann Neurol. 2010 Aug;68(2):151-61. doi: 10.1002/ana.22104. PubMed PMID: 20695008; PubMed Central PMCID: PMC2935907."
+
+[Berry 2013]: http://www.ncbi.nlm.nih.gov/pubmed/24128760 "Berry DB, Lu D, Geva M, Watts JC, Bhardwaj S, Oehler A, Renslo AR, DeArmond SJ, Prusiner SB, Giles K. Drug resistance confounding prion therapeutics. Proc Natl Acad Sci U S A. 2013 Oct 29;110(44):E4160-9. doi: 10.1073/pnas.1317164110. Epub 2013 Oct 15. PubMed PMID: 24128760; PubMed Central PMCID: PMC3816483."
+
+[US Patent WO2014025785A2]: https://www.google.com/patents/WO2014025785A2 "Emiliano BIASINI, David A. Harris, Aaron BEELER, Brian R. FLUHARTY, Maria Letizia BARRECA, Nunzio Iraci, Oscar INGHAM; Trustees Of Boston University, Universita Di Perugia. US Patent WO2014025785 A2"
+
+[Chakrabarty 2015]: http://www.ncbi.nlm.nih.gov/pubmed/25982997 "Chakrabarty P, Hudson Iii VJ, Sacino AN, Brooks MM, D'Alton S, Lewis J, Golde  TE, Giasson BI. Inefficient induction and spread of seeded tau pathology in P301L mouse model of tauopathy suggests inherent physiological barriers to transmission. Acta Neuropathol. 2015 May 16. [Epub ahead of print] PubMed PMID: 25982997."
+
+[Sacino 2014]: http://www.ncbi.nlm.nih.gov/pubmed/25002524 "Sacino AN, Brooks M, Thomas MA, McKinney AB, Lee S, Regenhardt RW, McGarvey NH, Ayers JI, Notterpek L, Borchelt DR, Golde TE, Giasson BI. Intramuscular injection of α-synuclein induces CNS α-synuclein pathology and a rapid-onset motor phenotype in transgenic mice. Proc Natl Acad Sci U S A. 2014 Jul 22;111(29):10732-7. doi: 10.1073/pnas.1321785111. Epub 2014 Jul 7. PubMed PMID: 25002524; PubMed Central PMCID: PMC4115570." 
+
+[Telling 1995]: http://www.ncbi.nlm.nih.gov/pubmed/7553876 "Telling GC, Scott M, Mastrianni J, Gabizon R, Torchia M, Cohen FE, DeArmond SJ, Prusiner SB. Prion propagation in mice expressing human and chimeric PrP transgenes implicates the interaction of cellular PrP with another protein. Cell. 1995 Oct 6;83(1):79-90. PubMed PMID: 7553876."
+
+[Hsiao 1994]: http://www.ncbi.nlm.nih.gov/pubmed/7916462/ "Hsiao KK, Groth D, Scott M, Yang SL, Serban H, Rapp D, Foster D, Torchia M, Dearmond SJ, Prusiner SB. Serial transmission in rodents of neurodegeneration from transgenic mice expressing mutant prion protein. Proc Natl Acad Sci U S A. 1994 Sep 13;91(19):9126-30. PubMed PMID: 7916462; PubMed Central PMCID: PMC44760."
+
+[Gibbs 1980]: http://www.ncbi.nlm.nih.gov/pubmed/6997404 "Gibbs CJ Jr, Amyx HL, Bacote A, Masters CL, Gajdusek DC. Oral transmission of  kuru, Creutzfeldt-Jakob disease, and scrapie to nonhuman primates. J Infect Dis.  1980 Aug;142(2):205-8. PubMed PMID: 6997404."
+
+[Gibbs & Gajdusek 1972]: http://www.ncbi.nlm.nih.gov/pubmed/4623139 "Gibbs CJ Jr, Gajdusek DC. Transmission of scrapie to the cynomolgus monkey (Macaca fascicularis). Nature. 1972 Mar 10;236(5341):73-4. PubMed PMID: 4623139."
+
+[Tan 2012]: http://www.ncbi.nlm.nih.gov/pubmed/22971821 "Tan BC, Blanco AR, Houston EF, Stewart P, Goldmann W, Gill AC, de Wolf C, Manson JC, McCutcheon S. Significant differences in incubation times in sheep infected with bovine spongiform encephalopathy result from variation at codon 141 in the PRNP gene. J Gen Virol. 2012 Dec;93(Pt 12):2749-56. doi: 10.1099/vir.0.039008-0. Epub 2012 Sep 12. PubMed PMID: 22971821."
+
+[McCutcheon 2011]: http://www.ncbi.nlm.nih.gov/pubmed/21858015 "McCutcheon S, Alejo Blanco AR, Houston EF, de Wolf C, Tan BC, Smith A, Groschup MH, Hunter N, Hornsey VS, MacGregor IR, Prowse CV, Turner M, Manson JC.  All clinically-relevant blood components transmit prion disease following a single blood transfusion: a sheep model of vCJD. PLoS One. 2011;6(8):e23169. doi: 10.1371/journal.pone.0023169. Epub 2011 Aug 17. PubMed PMID: 21858015; PubMed Central PMCID: PMC3157369."
+
+[Gill 2013]: http://www.ncbi.nlm.nih.gov/pubmed/24129059 "Gill ON, Spencer Y, Richard-Loendt A, Kelly C, Dabaghian R, Boyes L, Linehan J, Simmons M, Webb P, Bellerby P, Andrews N, Hilton DA, Ironside JW, Beck J, Poulter M, Mead S, Brandner S. Prevalent abnormal prion protein in human appendixes after bovine spongiform encephalopathy epizootic: large scale survey.  BMJ. 2013 Oct 15;347:f5675. doi: 10.1136/bmj.f5675. PubMed PMID: 24129059; PubMed Central PMCID: PMC3805509."
+
+[Houston 2008]: http://www.ncbi.nlm.nih.gov/pubmed/18647958 "Houston F, McCutcheon S, Goldmann W, Chong A, Foster J, Sisó S, González L, Jeffrey M, Hunter N. Prion diseases are efficiently transmitted by blood transfusion in sheep. Blood. 2008 Dec 1;112(12):4739-45. doi: 10.1182/blood-2008-04-152520. Epub 2008 Jul 22. PubMed PMID: 18647958."
+
+[Hewitt 2006]: http://www.ncbi.nlm.nih.gov/pubmed/16958834 "Hewitt PE, Llewelyn CA, Mackenzie J, Will RG. Creutzfeldt-Jakob disease and blood transfusion: results of the UK Transfusion Medicine Epidemiological Review  study. Vox Sang. 2006 Oct;91(3):221-30. PubMed PMID: 16958834."
+
+[Zhang 2013]: http://www.ncbi.nlm.nih.gov/pubmed/23970796 "Zhang Z, Zhang Y, Wang F, Wang X, Xu Y, Yang H, Yu G, Yuan C, Ma J. De novo generation of infectious prions with bacterially expressed recombinant prion protein. FASEB J. 2013 Dec;27(12):4768-75. doi: 10.1096/fj.13-233965. Epub 2013 Aug 22. PubMed PMID: 23970796; PubMed Central PMCID: PMC3834773."
+
+[Mabbott 2012]: http://www.ncbi.nlm.nih.gov/pubmed/22895090 "Mabbott NA. Prion pathogenesis and secondary lymphoid organs (SLO): tracking the SLO spread of prions to the brain. Prion. 2012 Sep-Oct;6(4):322-33. doi: 10.4161/pri.20676. Epub 2012 Aug 16. PubMed PMID: 22895090; PubMed Central PMCID: PMC3609058."
+
+[Rudd 1999]: http://www.ncbi.nlm.nih.gov/pubmed/10557270 "Rudd PM, Endo T, Colominas C, Groth D, Wheeler SF, Harvey DJ, Wormald MR, Serban H, Prusiner SB, Kobata A, Dwek RA. Glycosylation differences between the normal and pathogenic prion protein isoforms. Proc Natl Acad Sci U S A. 1999 Nov  9;96(23):13044-9. PubMed PMID: 10557270; PubMed Central PMCID: PMC23897."
+
+[Katorcha 2014]: http://www.ncbi.nlm.nih.gov/pubmed/25211026 "Katorcha E, Makarava N, Savtchenko R, D'Azzo A, Baskakov IV. Sialylation of prion protein controls the rate of prion amplification, the cross-species barrier, the ratio of PrPSc glycoform and prion infectivity. PLoS Pathog. 2014 Sep 11;10(9):e1004366. doi: 10.1371/journal.ppat.1004366. eCollection 2014 Sep. PubMed PMID: 25211026; PubMed Central PMCID: PMC4161476."
+
+[Graffmo 2013]: http://www.ncbi.nlm.nih.gov/pubmed/23026746 "Graffmo KS, Forsberg K, Bergh J, Birve A, Zetterström P, Andersen PM, Marklund SL, Brännström T. Expression of wild-type human superoxide dismutase-1 in mice causes amyotrophic lateral sclerosis. Hum Mol Genet. 2013 Jan 1;22(1):51-60. doi: 10.1093/hmg/dds399. Epub 2012 Oct 1. PubMed PMID: 23026746."
+
+[Ayers 2014]: http://www.ncbi.nlm.nih.gov/pubmed/25262000 "Ayers JI, Fromholt S, Koch M, DeBosier A, McMahon B, Xu G, Borchelt DR. Experimental transmissibility of mutant SOD1 motor neuron disease. Acta Neuropathol. 2014 Dec;128(6):791-803. doi: 10.1007/s00401-014-1342-7. Epub 2014 Sep 28. PubMed PMID: 25262000."
+
+[Ayers 2015]: http://www.ncbi.nlm.nih.gov/pubmed/25228069 "Ayers JI, Fromholt S, Sinyavskaya O, Siemienski Z, Rosario AM, Li A, Crosby KW, Cruz PE, DiNunno NM, Janus C, Ceballos-Diaz C, Borchelt DR, Golde TE, Chakrabarty P, Levites Y. Widespread and efficient transduction of spinal cord and brain following neonatal AAV injection and potential disease modifying effect in ALS mice. Mol Ther. 2015 Jan;23(1):53-62. doi: 10.1038/mt.2014.180. Epub 2014  Sep 17. PubMed PMID: 25228069; PubMed Central PMCID: PMC4426802."
+
+[Walker & Jucker 2015]: http://www.ncbi.nlm.nih.gov/pubmed/25840008 "Walker LC, Jucker M. Neurodegenerative Diseases: Expanding the Prion Concept.  Annu Rev Neurosci. 2015 Mar 30. [Epub ahead of print] PubMed PMID: 25840008."
+
+[Chi 2008]: http://www.ncbi.nlm.nih.gov/pubmed/18186465 "Chi EY, Ege C, Winans A, Majewski J, Wu G, Kjaer K, Lee KY. Lipid membrane templates the ordering and induces the fibrillogenesis of Alzheimer's disease amyloid-beta peptide. Proteins. 2008 Jul;72(1):1-24. doi: 10.1002/prot.21887. PubMed PMID: 18186465."
+
+[Soderberg 2003]: http://www.ncbi.nlm.nih.gov/pubmed/14656069 "Söderberg L, Zhukareva V, Bogdanovic N, Hashimoto T, Winblad B, Iwatsubo T, Lee VM, Trojanowski JQ, Näslund J. Molecular identification of AMY, an Alzheimer  disease amyloid-associated protein. J Neuropathol Exp Neurol. 2003 Nov;62(11):1108-17. PubMed PMID: 14656069."
+
+[Matveev 2014]: http://www.ncbi.nlm.nih.gov/pubmed/24995708 "Matveev SV, Spielmann HP, Metts BM, Chen J, Onono F, Zhu H, Scheff SW, Walker  LC, LeVine H 3rd. A distinct subfraction of Aβ is responsible for the high-affinity Pittsburgh compound B-binding site in Alzheimer's disease brain. J  Neurochem. 2014 Nov;131(3):356-68. doi: 10.1111/jnc.12815. Epub 2014 Jul 28. PubMed PMID: 24995708; PubMed Central PMCID: PMC4205261."
+
+[Klunk 2005]: http://www.ncbi.nlm.nih.gov/pubmed/16291932 "Klunk WE, Lopresti BJ, Ikonomovic MD, Lefterov IM, Koldamova RP, Abrahamson EE, Debnath ML, Holt DP, Huang GF, Shao L, DeKosky ST, Price JC, Mathis CA. Binding of the positron emission tomography tracer Pittsburgh compound-B reflects the amount of amyloid-beta in Alzheimer's disease brain but not in transgenic mouse brain. J Neurosci. 2005 Nov 16;25(46):10598-606. PubMed PMID: 16291932."
+
+[Klunk 2004]: http://www.ncbi.nlm.nih.gov/pubmed/14991808 "Klunk WE, Engler H, Nordberg A, Wang Y, Blomqvist G, Holt DP, Bergström M, Savitcheva I, Huang GF, Estrada S, Ausén B, Debnath ML, Barletta J, Price JC, Sandell J, Lopresti BJ, Wall A, Koivisto P, Antoni G, Mathis CA, Långström B. Imaging brain amyloid in Alzheimer's disease with Pittsburgh Compound-B. Ann Neurol. 2004 Mar;55(3):306-19. PubMed PMID: 14991808."
+
+[Heuer 2012]: http://www.ncbi.nlm.nih.gov/pubmed/22288403 "Heuer E, Rosen RF, Cintron A, Walker LC. Nonhuman primate models of Alzheimer-like cerebral proteopathy. Curr Pharm Des. 2012;18(8):1159-69. Review.  PubMed PMID: 22288403; PubMed Central PMCID: PMC3381739."
+
+[Rosen 2011]: http://www.ncbi.nlm.nih.gov/pubmed/19329226 "Rosen RF, Walker LC, Levine H 3rd. PIB binding in aged primate brain: enrichment of high-affinity sites in humans with Alzheimer's disease. Neurobiol Aging. 2011 Feb;32(2):223-34. doi: 10.1016/j.neurobiolaging.2009.02.011. Epub 2009 Mar 28. PubMed PMID: 19329226; PubMed Central PMCID: PMC2891164."
+
+[Hofmann 2013]: http://www.ncbi.nlm.nih.gov/pubmed/23509289 "Hofmann JP, Denner P, Nussbaum-Krammer C, Kuhn PH, Suhre MH, Scheibel T, Lichtenthaler SF, Schätzl HM, Bano D, Vorberg IM. Cell-to-cell propagation of infectious cytosolic protein aggregates. Proc Natl Acad Sci U S A. 2013 Apr 9;110(15):5951-6. doi: 10.1073/pnas.1217321110. Epub 2013 Mar 18. PubMed PMID: 23509289; PubMed Central PMCID: PMC3625284."
+
+[Krammer 2008a]: http://www.ncbi.nlm.nih.gov/pubmed/17928365 "Krammer C, Suhre MH, Kremmer E, Diemer C, Hess S, Schätzl HM, Scheibel T, Vorberg I. Prion protein/protein interactions: fusion with yeast Sup35p-NM modulates cytosolic PrP aggregation in mammalian cells. FASEB J. 2008 Mar;22(3):762-73. Epub 2007 Oct 10. PubMed PMID: 17928365."
+
+[Krammer 2008b]: http://www.ncbi.nlm.nih.gov/pubmed/19195120 "Krammer C, Kremmer E, Schätzl HM, Vorberg I. Dynamic interactions of Sup35p and PrP prion protein domains modulate aggregate nucleation and seeding. Prion. 2008 Jul-Sep;2(3):99-106. PubMed PMID: 19195120; PubMed Central PMCID: PMC2634527."
+
+[Chernoff 1995]: http://www.ncbi.nlm.nih.gov/pubmed/7754373 "Chernoff YO, Lindquist SL, Ono B, Inge-Vechtomov SG, Liebman SW. Role of the chaperone protein Hsp104 in propagation of the yeast prion-like factor [psi+]. Science. 1995 May 12;268(5212):880-4. PubMed PMID: 7754373."
+
+[Derkatch 2001]: http://www.ncbi.nlm.nih.gov/pubmed/11511345 "Derkatch IL, Bradley ME, Hong JY, Liebman SW. Prions affect the appearance of  other prions: the story of [PIN(+)]. Cell. 2001 Jul 27;106(2):171-82. PubMed PMID: 11511345."
+
+[Saborio 2001]: http://www.ncbi.nlm.nih.gov/pubmed/11459061 "Saborio GP, Permanne B, Soto C. Sensitive detection of pathological prion protein by cyclic amplification of protein misfolding. Nature. 2001 Jun 14;411(6839):810-3. PubMed PMID: 11459061."
+
+[Moda 2014]: http://www.ncbi.nlm.nih.gov/pubmed/25099577 "Moda F, Gambetti P, Notari S, Concha-Marambio L, Catania M, Park KW, Maderna E, Suardi S, Haïk S, Brandel JP, Ironside J, Knight R, Tagliavini F, Soto C. Prions in the urine of patients with variant Creutzfeldt-Jakob disease. N Engl J  Med. 2014 Aug 7;371(6):530-9. doi: 10.1056/NEJMoa1404401. PubMed PMID: 25099577;  PubMed Central PMCID: PMC4162740."
+
+[Castilla 2005]: http://www.ncbi.nlm.nih.gov/pubmed/16127436 "Castilla J, Saá P, Soto C. Detection of prions in blood. Nat Med. 2005 Sep;11(9):982-5. Epub 2005 Aug 28. PubMed PMID: 16127436."
+
+[Saa 2006]: http://www.ncbi.nlm.nih.gov/pubmed/16825570/ "Saá P, Castilla J, Soto C. Presymptomatic detection of prions in blood. Science. 2006 Jul 7;313(5783):92-4. PubMed PMID: 16825570."
+
+[Salvadores 2014]: http://www.ncbi.nlm.nih.gov/pubmed/24656814 "Salvadores N, Shahnawaz M, Scarpini E, Tagliavini F, Soto C. Detection of misfolded Aβ oligomers for sensitive biochemical diagnosis of Alzheimer's disease. Cell Rep. 2014 Apr 10;7(1):261-8. doi: 10.1016/j.celrep.2014.02.031. Epub 2014 Mar 20. PubMed PMID: 24656814."
+
+[Morales 2015]: http://www.ncbi.nlm.nih.gov/pubmed/25879692 "Morales R, Bravo-Alegria J, Duran-Aniotz C, Soto C. Titration of biologically  active amyloid-β seeds in a transgenic mouse model of Alzheimer's disease. Sci Rep. 2015 Mar 23;5:9349. doi: 10.1038/srep09349. PubMed PMID: 25879692; PubMed Central PMCID: PMC4399520."
+
+[Pritzkow 2015]: http://www.ncbi.nlm.nih.gov/pubmed/25981035 "Pritzkow S, Morales R, Moda F, Khan U, Telling GC, Hoover E, Soto C. Grass Plants Bind, Retain, Uptake, and Transport Infectious Prions. Cell Rep. 2015 May  12. pii: S2211-1247(15)00437-4. doi: 10.1016/j.celrep.2015.04.036. [Epub ahead of print] PubMed PMID: 25981035."
+
+[Sanders & Kaufman 2014]: http://www.ncbi.nlm.nih.gov/pubmed/24857020 "Sanders DW, Kaufman SK, DeVos SL, Sharma AM, Mirbaha H, Li A, Barker SJ, Foley AC, Thorpe JR, Serpell LC, Miller TM, Grinberg LT, Seeley WW, Diamond MI. Distinct tau prion strains propagate in cells and mice and define different tauopathies. Neuron. 2014 Jun 18;82(6):1271-88. doi: 10.1016/j.neuron.2014.04.047. Epub 2014 May 22. PubMed PMID: 24857020; PubMed Central PMCID: PMC4171396."
+
+[Mirbaha 2015]: http://www.ncbi.nlm.nih.gov/pubmed/25887395 "Mirbaha H, Holmes BB, Sanders DW, Bieschke J, Diamond MI. Tau trimers are the  minimal propagation unit spontaneously internalized to seed intracellular aggregation. J Biol Chem. 2015 Apr 17. pii: jbc.M115.652693. [Epub ahead of print] PubMed PMID: 25887395."
+
+[Bellinger-Kawahara 1988]: http://www.ncbi.nlm.nih.gov/pubmed/3130718 "Bellinger-Kawahara CG, Kempner E, Groth D, Gabizon R, Prusiner SB. Scrapie prion liposomes and rods exhibit target sizes of 55,000 Da. Virology. 1988 Jun;164(2):537-41. PubMed PMID: 3130718."
+
+[Holmes & Furman 2014]: http://www.ncbi.nlm.nih.gov/pubmed/25261551 "Holmes BB, Furman JL, Mahan TE, Yamasaki TR, Mirbaha H, Eades WC, Belaygorod L, Cairns NJ, Holtzman DM, Diamond MI. Proteopathic tau seeding predicts tauopathy in vivo. Proc Natl Acad Sci U S A. 2014 Oct 14;111(41):E4376-85. doi: 10.1073/pnas.1411649111. Epub 2014 Sep 26. PubMed PMID: 25261551; PubMed Central  PMCID: PMC4205609."
+
+[Horonchik 2005]: http://www.ncbi.nlm.nih.gov/pubmed/15668247 "Horonchik L, Tzaban S, Ben-Zaken O, Yedidia Y, Rouvinski A, Papy-Garcia D, Barritault D, Vlodavsky I, Taraboulos A. Heparan sulfate is a cellular receptor for purified infectious prions. J Biol Chem. 2005 Apr 29;280(17):17062-7. Epub 2005 Jan 24. PubMed PMID: 15668247."
+
+[Holmes 2013]: http://www.ncbi.nlm.nih.gov/pubmed/23898162 "Holmes BB, DeVos SL, Kfoury N, Li M, Jacks R, Yanamandra K, Ouidja MO, Brodsky FM, Marasa J, Bagchi DP, Kotzbauer PT, Miller TM, Papy-Garcia D, Diamond MI. Heparan sulfate proteoglycans mediate internalization and propagation of specific proteopathic seeds. Proc Natl Acad Sci U S A. 2013 Aug 13;110(33):E3138-47. doi:  10.1073/pnas.1301440110. Epub 2013 Jul 29. PubMed PMID: 23898162; PubMed Central  PMCID: PMC3746848."
+
+[Braak & Braak 1991]: http://www.ncbi.nlm.nih.gov/pubmed/1759558 "Braak H, Braak E. Neuropathological stageing of Alzheimer-related changes. Acta Neuropathol. 1991;82(4):239-59. Review. PubMed PMID: 1759558."
