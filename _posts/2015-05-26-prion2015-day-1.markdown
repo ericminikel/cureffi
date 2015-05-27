@@ -3,14 +3,16 @@ layout: post
 title:  "Prion2015 Day 1"
 date:   2015-05-26 12:01:00
 author: ericminikel
-location: Cambridge, MA
-thumb120: 
+location: Ft. Collins, CO
+thumb120: http://www.cureffi.org/media/2015/05/prion2015-day-1-thumbnail.png
 summary200: "Prion2015 opening ceremony and keynote lectures by Byron Caughey and Reed Wickner."
 ---
 
+![](/media/2015/05/prion2015-day-1-photo.png)
+
 ### Opening ceremony
 
-Mark Zabel and Glenn Telling welcomed the crowd and thanked all of the sponsors and organizers. Debbie Yobs, president of the CJD Foundation, announced that CJD Foundation will be awarding another round of research grants in early 2016. Suzanne Solvyns welcomed Deanna Simpson as the new co-chair of the CJD International Support Alliance, taking Florence Kranitz's place after her retirement. Jean-Philippe Deslys reminded us of Alliance Biosecure's [Call for Projects 2015](http://www.fondation-alliance-biosecure.org/new_eng/grants_calls/grant_apps_2015.asp), with a deadline of June 30 for new applications. Applicants passing the first round of review will be invited to present their proposal in Paris on October 28, with successful grantees notified in November. Alan Rudolph, CSU Vice President for Research, welcomed us and expressed his enthuiasm for prion research and the potential implications for human health.
+Mark Zabel and Glenn Telling welcomed the crowd and thanked all of the sponsors and organizers. Debbie Yobs, president of the CJD Foundation, announced that CJD Foundation will be awarding another round of $50,000 research grants in February 2016. Letters of intent are due August 1, 2015. Suzanne Solvyns welcomed Deanna Simpson as the new co-chair of the CJD International Support Alliance, taking Florence Kranitz's place after her retirement. Jean-Philippe Deslys announced that Alliance Biosecure has extended the deadline for its [Call for Projects 2015](http://www.fondation-alliance-biosecure.org/new_eng/grants_calls/grant_apps_2015.asp) to June 30, so you can still submit a new application. Applicants passing the first round of review will be invited to present their proposal in Paris on October 28, with successful grantees notified in November. Alan Rudolph, CSU Vice President for Research, welcomed us and expressed his enthuiasm for prion research and the potential implications for human health.
 
 ### Byron Caughey &mdash; PrP conformational conversions and the detection of prions
 
