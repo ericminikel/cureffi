@@ -1,0 +1,120 @@
+---
+layout: post
+title:  "Prion2015 Day 1"
+date:   2015-05-26 12:01:00
+author: ericminikel
+location: Cambridge, MA
+thumb120: 
+summary200: "Prion2015 opening ceremony and keynote lectures by Byron Caughey and Reed Wickner."
+---
+
+### Opening ceremony
+
+Mark Zabel and Glenn Telling welcomed the crowd and thanked all of the sponsors and organizers. Debbie Yobs, president of the CJD Foundation, announced that CJD Foundation will be awarding another round of research grants in early 2016. Suzanne Solvyns welcomed Deanna Simpson as the new co-chair of the CJD International Support Alliance, taking Florence Kranitz's place after her retirement. Jean-Philippe Deslys reminded us of Alliance Biosecure's [Call for Projects 2015](http://www.fondation-alliance-biosecure.org/new_eng/grants_calls/grant_apps_2015.asp), with a deadline of June 30 for new applications. Applicants passing the first round of review will be invited to present their proposal in Paris on October 28, with successful grantees notified in November. Alan Rudolph, CSU Vice President for Research, welcomed us and expressed his enthuiasm for prion research and the potential implications for human health.
+
+### Byron Caughey &mdash; PrP conformational conversions and the detection of prions
+
+Ed Hoover gave a nice introduction to Byron Caughey. I learned that Dr. Caughey is a native of Ft. Collins and a CSU alum. His father, Winslow Caughey, was a professor at CSU. Dr. Caughey opened by noting that he was delivering this keynote lecture in place of Stanley Prusiner. In his characteristically self-effacing manner, Dr. Caughey quipped that he had tried to grow more hair in order to be an effective sub for Dr. Prusiner, but that it had grown on his face instead of his head.
+
+Dr. Caughey opened with a general introduction to prions, which he defines as a "proteinaceous infections agent that lacks a nucleic acid genome". He offered three requirements for a protein to be classified as a prion, which I'll paraphrase as:
+
+1. It acquires self-propagating state that rarely accumulates spontaneously
+2. It replicates by recruiting the non-prion state of the same protein
+3. It can spread to na&iuml;ve hosts, finding new sources of substrate protein
+
+This last point requires that prions be able to escape their host and find new hosts. Using the example of chronic wasting disease, he listed the many routes by which CWD prions have been demonstrated to be transmissible [reviewed in [Kraus 2013]]. He raised the possibility of a spectrum of transmissibility. CWD, at one end of the spectrum, is readily transmissible between individuals in nature. Along the spectrum there may be other neurodegenerative diseases that involve proteins that acquire prion states that can be transmitted experimentally but are rarely or never transmitted in nature. At the other end there may be misfolded protein states that exhibit limited or no transmissibility.
+
+A longstanding question in the prion field has been how strain identity is encoded in protein conformation. Similarly, it is unclear why synthetic amyloids made of recombinant PrP exhibit little or no infectivity, whereas purified brain-derived PrP<sup>Sc</sup> fibrils are highly infectious. He then reviewed proposed structures of PrP<sup>Sc</sup>. Most of the early structures included alpha helices, but it is now almost universally agreed that the true structure of PrP<sup>Sc</sup> includes no alpha helix structure. He noted that other groups have reported evidence that synthetic recombinant PrP amyloids adopt a parallel in-register intermolecular beta sheet (PIRIBS) conformation [[Cobb 2008], [Tycko 2010]]. This inspired Dr. Caughey and his group, in collaboration with Reed Wickner, to use solid-state NMR to query the structure of recombinant PrP amyloids derived from RT-QuIC reactions seeded with brain-derived prions. They have generated a PIRIBS model for these amyloids that is consistent with the solid-state NMR data [[Groveman 2014]]. This model also fits certain structural constraints that have been proposed for PrP<sup>Sc</sup>, for instance based on the introduction of non-native disulfide bonds [[Hafner-Bratkovic 2011]]. The PIRIBS model would imply that the dimensions of amyloid fibrils seen on electron microscopy must be comprised of two intertwined "celery stalks" or "half-pipes". 
+
+Dr. Caughey noted that infectious prions have a PK-resistant core from residue ~90-231 and require anionic co-factors [[Deleault 2007], [Wang 2010], [Deleault 2012a], [Deleault 2012b]], whereas non-infectious PrP amyloids have a much smaller PK-resistant core, from ~160-231, and do not require co-factors. He therefore hypothesized that the "central lysine cluster" or CLC for short (KPSKPKTNMK, residues 101-110 in humans) could represent the group of positive charges that are responsible for binding anionic co-factors, and that neutralization of these positive charges by mutating the lysines to alanines or asparagines (K&rarr;A or K&rarr;N) might allow misfolding to proceed more readily. His group has now reported that mutating all four of these lysines (sets of mutations dubbed K<sub>4</sub>A or K<sub>4</sub>N) indeed allows recombinant PrP to adopt an amyloid state with a larger PK-resistant core, spanning ~20 kDa instead of just ~10 kDa for wild-type recombinant PrP [[Groveman & Kraus 2015]]. The CLC is in the most highly conserved portion of PrP's amino acid sequence, and Dr. Caughey speculates this could be either due to its importance for PrP<sup>C</sup>'s native function, and/or because mutations here might increase the propensity to form PrP<sup>Sc</sup> *in vivo*.
+
+Next, Dr. Caughey pivoted to diagnostics for prion diseases. He reviewed the efforts by his lab and Ryuichiro Atarashi's lab to develop RT-QuIC as a plate-based method for fluorescence detection of prion seeding activity [[Wilham 2010], [Atarashi 2011], [Orru 2011]]. The sensitivity of RT-QuIC reaches to 1 attogram (10<sup>-18</sup> g) of PrP<sup>Sc</sup>. Early tests on human CSF samples indicated diagnostic sensitivity on the order of 90% [[Atarashi 2011], [McGuire 2012]], but Christina Orru has recently developed a new set of reaction conditions that appears to give more like 95% sensitivity for CSF samples [[Orru 2015a]]. The Caughey lab also collaborated with Gianluigi Zanusso, who for over a decade has been interested in the detection of PrP<sup>Sc</sup> in the olfactory mucosa of Creutzfeldt-Jakob disease patients [[Zanusso 2003]]. Together, they found that performing RT-QuIC on olfactory mucosa brushings gave even better diagnostic accuracy than RT-QuIC on CSF, reaching &ge;97% sensitivity and 100% specificity [[Orru 2014]]. RT-QuIC seems to be the closest thing so far to a definitive antemortem diagnostic test for CJD.
+
+He then presented unpublished data which I can't share here, but you can check out Christina Orru's [poster](http://www.tandfonline.com/doi/full/10.1080/19336896.2015.1033248) #P.47 tomorrow.
+
+Dr. Caughey concluded by expressing his hope that RT-QuIC and similar assays will allow earlier diagnosis and discrimination between different protein folding diseases, and that it might one day even be used to monitor efficacy in clinical trials.
+
+### Reed Wickner &mdash; Yeast prions: how proteins template their conformation, anti-prion systems, prion clouds
+
+Eric Ross, the sole yeast prionologist in the CSU prion group, introduced Reed Wickner. He recalled that a little over twenty years ago, <em>[URE3]</em> and <em>[PSI<sup>+</sup>]</em> were both considered to be "non-chromosomal genetic elements" with an unknown molecular basis. It was Dr. Wickner who realized that yeast have prions.
+
+Dr. Wickner divided his talk into three stories, relating to structural biology [[Gorkovskiy 2014]], prion "clouds" [[Bateman & Wickner 2013]], and anti-prion systems [[Wickner 2014]]. Before beginning those stories, he introduced the four major proteins that will make appearances in his talk:
+
++ **Ure2p** has a native function related to nitrogen utilization. Its incorporation into <em>[URE3]</em> amyloid results in a loss of function.
++ **Sup35p** has a native function of translation termination. Its incorporation into <em>[PSI<sup>+</sup>]</em> amyloid results in a loss of function.
++ **Rnq1p**'s native function is unknown, but in its prion state, <em>[PIN<sup>+</sup>]</em>, it can seed the formation of <em>[PSI<sup>+</sup>]</em> prions.
++ **HETs** is a protein of *Podospora* (the other three proteins above are of yeast). It achieves its native function only in the amyloid state, known as <em>[Het-s]</em>, in which it governs heterokaryon incompatibility. He likened it to the major histocompatibility complex in humans.
+
+The first three of these proteins can each adopt multiple different prion strains, whereas HETs has only one known prion state.
+
+When Eric Ross was a student in Dr. Wickner's lab, he experimented with shuffling the amino acid sequences of the Q/N-rich prion domains of Sup35p and Ure2p. They found that the *formation* of prions was sequence independent, even though *transmission* of prions required compatible sequences [[Ross 2005a], [Ross 2005b]]. They ventured that the best explanation for this behavior would be if these yeast prions adopted parallel in-register intermolecular beta sheet (PIRIBS) conformations. In a PIRIBS conformation, the corresponding residues of each molecule are aligned (this is what "in-register" means), so sequence identity between molecules is critical. Meanwhile, the side chains of residues in PIRIBS hydrogen bond with the side chains of the corresponding residues in the molecules adjacent to them, rather than with other residues, thus shuffling the sequence makes little difference in the propensity to form prions. They have since found additional evidence in favor of the PIRIBS structure for yeast prions [[Kryndushkin 2011]]. It appears that differences in amino acid sequence dictate the positions of the folds in the PIRIBS structure [[Gorkovskiy 2014]].
+
+Another protege of Dr. Wickner's, David Bateman, collected Sup35p sequences from a variety of wild yeasts. He identified a number of naturally occurring polymorphisms in these yeast that hinder the transmission of <em>[PSI<sup>+</sup>]</em> prions [[Bateman & Wickner 2012]]. These polymorphisms may be analogous to the *PRNP* M129V polymorphism in humans. They then grew and subcloned a population of <em>[PSI<sup>+</sup>]</em> yeast for 75 generations, and found that on subcloning they were able to obtain divergent prion strains with differing abilities to infect yeast expressing the polymorphic wild Sup35p sequences [[Bateman & Wickner 2013]]. This is believed to arise from spontaneous mutation of prion conformations in the absence of selection. This argues in favor of the prion "cloud" hypothesis. Moreover, because laboratory experiments do inevitably select for living cells, studies of prions will tend to select for non-lethal prion variants.
+
+In another set of experiments, Wickner and colleagues found that overexpression of Btn2p cures yeast of <em>[URE3]</em> prions [[Kryndushkin 2008]]. They hypothesized that the mechanism might be that Btn2p brings all of the prions together in one big clump, reducing the probability that one prion seed will segregate into a daughter cell. Indeed, even normal levels of Btn2p appear to reduce the number of prion seeds, as Btn2p&Delta; yeast retain prion seeds over a larger number of generations when grown in guanidine levels sufficient to prevent new prion propagation [[Kryndushkin 2008]]. They've since discovered that normal levels of Btn2p and Cur1 proteins are sufficient to cure most newly formed <em>[URE3]</em> prions, which have low seed numbers [[Wickner 2014]]. The <em>[URE3]</em> prions that cannot be cured by normal levels of Btn2p and Cur1 are those with elevated seed numbers, which Jonathan Weissman refers to as "strong" prion strains.
+
+Dr. Wickner noted that his lab's most recent work on yeast prion structural biology will be presented by Anton Gorkovskiy on Day 4 of this conference (talk O.20).
+
+
+[Orru 2014]: http://www.ncbi.nlm.nih.gov/pubmed/25099576 "Orrú CD, Bongianni M, Tonoli G, Ferrari S, Hughson AG, Groveman BR, Fiorini M, Pocchiari M, Monaco S, Caughey B, Zanusso G. A test for Creutzfeldt-Jakob disease using nasal brushings. N Engl J Med. 2014 Aug 7;371(6):519-29. doi: 10.1056/NEJMoa1315200. Erratum in: N Engl J Med. 2014 Nov 6;371(19):1852. PubMed  PMID: 25099576; PubMed Central PMCID: PMC4186748."
+
+[Groveman 2014]: http://www.ncbi.nlm.nih.gov/pubmed/25028516 "Groveman BR, Dolan MA, Taubner LM, Kraus A, Wickner RB, Caughey B. Parallel in-register intermolecular β-sheet architectures for prion-seeded prion protein (PrP) amyloids. J Biol Chem. 2014 Aug 29;289(35):24129-42. doi: 10.1074/jbc.M114.578344. Epub 2014 Jul 15. PubMed PMID: 25028516; PubMed Central  PMCID: PMC4148845."
+
+[Orru 2015a]: http://www.ncbi.nlm.nih.gov/pubmed/25604790 "Orrú CD, Groveman BR, Hughson AG, Zanusso G, Coulthart MB, Caughey B. Rapid and sensitive RT-QuIC detection of human Creutzfeldt-Jakob disease using cerebrospinal fluid. MBio. 2015 Jan 20;6(1). pii: e02451-14. doi: 10.1128/mBio.02451-14. PubMed PMID: 25604790; PubMed Central PMCID: PMC4313917."
+
+[Orru 2015b]: http://www.ncbi.nlm.nih.gov/pubmed/25609728 "Orrú CD, Favole A, Corona C, Mazza M, Manca M, Groveman BR, Hughson AG, Acutis PL, Caramelli M, Zanusso G, Casalone C, Caughey B. Detection and discrimination of classical and atypical L-type bovine spongiform encephalopathy by real-time quaking-induced conversion. J Clin Microbiol. 2015 Apr;53(4):1115-20. doi: 10.1128/JCM.02906-14. Epub 2015 Jan 21. PubMed PMID: 25609728; PubMed Central PMCID: PMC4365258."
+
+[Groveman & Kraus 2015]: http://www.ncbi.nlm.nih.gov/pubmed/25416779 "Groveman BR, Kraus A, Raymond LD, Dolan MA, Anson KJ, Dorward DW, Caughey B. Charge neutralization of the central lysine cluster in prion protein (PrP) promotes PrP(Sc)-like folding of recombinant PrP amyloids. J Biol Chem. 2015 Jan  9;290(2):1119-28. doi: 10.1074/jbc.M114.619627. Epub 2014 Nov 21. PubMed PMID: 25416779; PubMed Central PMCID: PMC4294479."
+
+[Wickner 2015a]: http://www.ncbi.nlm.nih.gov/pubmed/25654539 "Wickner RB, Edskes HK, Bateman DA, Gorkovskiy A, Dayani Y, Bezsonov EE, Mukhamedova M. Yeast prions: proteins templating conformation and an anti-prion system. PLoS Pathog. 2015 Feb 5;11(2):e1004584. doi: 10.1371/journal.ppat.1004584. eCollection 2015 Feb. PubMed PMID: 25654539; PubMed Central PMCID: PMC4412292."
+
+[Wickner 2015b]: http://www.ncbi.nlm.nih.gov/pubmed/25631286 "Wickner RB, Shewmaker FP, Bateman DA, Edskes HK, Gorkovskiy A, Dayani Y, Bezsonov EE. Yeast prions: structure, biology, and prion-handling systems. Microbiol Mol Biol Rev. 2015 Mar;79(1):1-17. doi: 10.1128/MMBR.00041-14. PubMed PMID: 25631286; PubMed Central PMCID: PMC4402965."
+
+[Edskes 2014]: http://www.ncbi.nlm.nih.gov/pubmed/25081567 "Edskes HK, Khamar HJ, Winchester CL, Greenler AJ, Zhou A, McGlinchey RP, Gorkovskiy A, Wickner RB. Sporadic distribution of prion-forming ability of Sup35p from yeasts and fungi. Genetics. 2014 Oct;198(2):605-16. doi: 10.1534/genetics.114.166538. Epub 2014 Jul 31. PubMed PMID: 25081567; PubMed Central PMCID: PMC4196616."
+
+[Wickner 2014]: http://www.ncbi.nlm.nih.gov/pubmed/24938787 "Wickner RB, Bezsonov E, Bateman DA. Normal levels of the antiprion proteins Btn2 and Cur1 cure most newly formed [URE3] prion variants. Proc Natl Acad Sci U  S A. 2014 Jul 1;111(26):E2711-20. doi: 10.1073/pnas.1409582111. Epub 2014 Jun 17. PubMed PMID: 24938787; PubMed Central PMCID: PMC4084489."
+
+[Doyle 2013]: http://www.ncbi.nlm.nih.gov/pubmed/24061228 "Doyle SM, Genest O, Wickner S. Protein rescue from aggregates by powerful molecular chaperone machines. Nat Rev Mol Cell Biol. 2013 Oct;14(10):617-29. doi: 10.1038/nrm3660. Review. PubMed PMID: 24061228."
+
+[Kelly 2014]: http://www.ncbi.nlm.nih.gov/pubmed/24812307 "Kelly AC, Busby B, Wickner RB. Effect of domestication on the spread of the [PIN+] prion in Saccharomyces cerevisiae. Genetics. 2014 Jul;197(3):1007-24. doi: 10.1534/genetics.114.165670. Epub 2014 May 8. PubMed PMID: 24812307; PubMed Central PMCID: PMC4096356."
+
+[Gorkovskiy 2014]: http://www.ncbi.nlm.nih.gov/pubmed/25313080 "Gorkovskiy A, Thurber KR, Tycko R, Wickner RB. Locating folds of the in-register parallel β-sheet of the Sup35p prion domain infectious amyloid. Proc  Natl Acad Sci U S A. 2014 Oct 28;111(43):E4615-22. doi: 10.1073/pnas.1417974111.  Epub 2014 Oct 13. PubMed PMID: 25313080; PubMed Central PMCID: PMC4217437."
+
+[Kraus 2013]: http://www.ncbi.nlm.nih.gov/pubmed/23808331 "Kraus A, Groveman BR, Caughey B. Prions and the potential transmissibility of  protein misfolding diseases. Annu Rev Microbiol. 2013;67:543-64. doi: 10.1146/annurev-micro-092412-155735. Epub 2013 Jun 28. Review. PubMed PMID: 23808331."
+
+[Tycko 2010]: http://www.ncbi.nlm.nih.gov/pubmed/20925423 "Tycko R, Savtchenko R, Ostapchenko VG, Makarava N, Baskakov IV. The α-helical  C-terminal domain of full-length recombinant PrP converts to an in-register parallel β-sheet structure in PrP fibrils: evidence from solid state nuclear magnetic resonance. Biochemistry. 2010 Nov 9;49(44):9488-97. doi: 10.1021/bi1013134. PubMed PMID: 20925423; PubMed Central PMCID: PMC3025268."
+
+[Cobb 2008]: http://www.ncbi.nlm.nih.gov/pubmed/18930924 "Cobb NJ, Apetri AC, Surewicz WK. Prion protein amyloid formation under native-like conditions involves refolding of the C-terminal alpha-helical domain. J Biol Chem. 2008 Dec 12;283(50):34704-11. doi: 10.1074/jbc.M806701200. Epub 2008 Oct 17. PubMed PMID: 18930924; PubMed Central PMCID: PMC2596397."
+
+[Hafner-Bratkovic 2011]: http://www.ncbi.nlm.nih.gov/pubmed/21324909 "Hafner-Bratkovic I, Bester R, Pristovsek P, Gaedtke L, Veranic P, Gaspersic J, Mancek-Keber M, Avbelj M, Polymenidou M, Julius C, Aguzzi A, Vorberg I, Jerala R. Globular domain of the prion protein needs to be unlocked by domain swapping to support prion protein conversion. J Biol Chem. 2011 Apr 8;286(14):12149-56. doi:  10.1074/jbc.M110.213926. Epub 2011 Feb 15. PubMed PMID: 21324909; PubMed Central  PMCID: PMC3069419."
+
+[Deleault 2007]: http://www.ncbi.nlm.nih.gov/pubmed/17535913 "Deleault NR, Harris BT, Rees JR, Supattapone S. Formation of native prions from minimal components in vitro. Proc Natl Acad Sci U S A. 2007 Jun 5;104(23):9741-6. Epub 2007 May 29. Erratum in: Proc Natl Acad Sci U S A. 2008 Aug 26;105(34):12636. PubMed PMID: 17535913; PubMed Central PMCID: PMC1887554."
+
+[Wang 2010]: http://www.ncbi.nlm.nih.gov/pubmed/20110469 "Wang F, Wang X, Yuan CG, Ma J. Generating a prion with bacterially expressed recombinant prion protein. Science. 2010 Feb 26;327(5969):1132-5. doi: 10.1126/science.1183748. Epub 2010 Jan 28. PubMed PMID: 20110469; PubMed Central  PMCID: PMC2893558."
+
+[Deleault 2012a]: http://www.ncbi.nlm.nih.gov/pubmed/22586108 "Deleault NR, Piro JR, Walsh DJ, Wang F, Ma J, Geoghegan JC, Supattapone S. Isolation of phosphatidylethanolamine as a solitary cofactor for prion formation  in the absence of nucleic acids. Proc Natl Acad Sci U S A. 2012 May 29;109(22):8546-51. doi: 10.1073/pnas.1204498109. Epub 2012 May 14. PubMed PMID:  22586108; PubMed Central PMCID: PMC3365173."
+
+[Deleault 2012b]: http://www.ncbi.nlm.nih.gov/pubmed/22711839 "Deleault NR, Walsh DJ, Piro JR, Wang F, Wang X, Ma J, Rees JR, Supattapone S.  Cofactor molecules maintain infectious conformation and restrict strain properties in purified prions. Proc Natl Acad Sci U S A. 2012 Jul 10;109(28):E1938-46. doi: 10.1073/pnas.1206999109. Epub 2012 Jun 18. PubMed PMID: 22711839; PubMed Central PMCID: PMC3396481."
+
+[Wilham 2010]: http://www.ncbi.nlm.nih.gov/pubmed/21152012 "Wilham JM, Orrú CD, Bessen RA, Atarashi R, Sano K, Race B, Meade-White KD, Taubner LM, Timmes A, Caughey B. Rapid end-point quantitation of prion seeding activity with sensitivity comparable to bioassays. PLoS Pathog. 2010 Dec 2;6(12):e1001217. doi: 10.1371/journal.ppat.1001217. PubMed PMID: 21152012; PubMed Central PMCID: PMC2996325."
+
+[Atarashi 2011]: http://www.ncbi.nlm.nih.gov/pubmed/21278748 "Atarashi R, Satoh K, Sano K, Fuse T, Yamaguchi N, Ishibashi D, Matsubara T, Nakagaki T, Yamanaka H, Shirabe S, Yamada M, Mizusawa H, Kitamoto T, Klug G, McGlade A, Collins SJ, Nishida N. Ultrasensitive human prion detection in cerebrospinal fluid by real-time quaking-induced conversion. Nat Med. 2011 Feb;17(2):175-8. doi: 10.1038/nm.2294. Epub 2011 Jan 30. PubMed PMID: 21278748."
+
+[Orru 2011]: http://www.ncbi.nlm.nih.gov/pubmed/21558432 "Orrú CD, Wilham JM, Raymond LD, Kuhn F, Schroeder B, Raeber AJ, Caughey B. Prion disease blood test using immunoprecipitation and improved quaking-induced conversion. MBio. 2011 May 10;2(3):e00078-11. doi: 10.1128/mBio.00078-11. Print 2011. PubMed PMID: 21558432; PubMed Central PMCID: PMC3101782."
+
+[McGuire 2012]: http://www.ncbi.nlm.nih.gov/pubmed/22926858 "McGuire LI, Peden AH, Orrú CD, Wilham JM, Appleford NE, Mallinson G, Andrews M, Head MW, Caughey B, Will RG, Knight RS, Green AJ. Real time quaking-induced conversion analysis of cerebrospinal fluid in sporadic Creutzfeldt-Jakob disease. Ann Neurol. 2012 Aug;72(2):278-85. doi: 10.1002/ana.23589. PubMed PMID: 22926858; PubMed Central PMCID: PMC3458796."
+
+[Zanusso 2003]: http://www.ncbi.nlm.nih.gov/pubmed/12594315 "Zanusso G, Ferrari S, Cardone F, Zampieri P, Gelati M, Fiorini M, Farinazzo A, Gardiman M, Cavallaro T, Bentivoglio M, Righetti PG, Pocchiari M, Rizzuto N, Monaco S. Detection of pathologic prion protein in the olfactory epithelium in sporadic Creutzfeldt-Jakob disease. N Engl J Med. 2003 Feb 20;348(8):711-9. PubMed PMID: 12594315."
+
+[Ross 2005a]: http://www.ncbi.nlm.nih.gov/pubmed/16123127 "Ross ED, Edskes HK, Terry MJ, Wickner RB. Primary sequence independence for prion formation. Proc Natl Acad Sci U S A. 2005 Sep 6;102(36):12825-30. Epub 2005 Aug 25. PubMed PMID: 16123127; PubMed Central PMCID: PMC1200301."
+
+[Ross 2005b]: http://www.ncbi.nlm.nih.gov/pubmed/16385730 "Ross ED, Minton A, Wickner RB. Prion domains: sequences, structures and interactions. Nat Cell Biol. 2005 Nov;7(11):1039-44. Review. PubMed PMID: 16385730."
+
+[Kryndushkin 2011]: http://www.ncbi.nlm.nih.gov/pubmed/21497604 "Kryndushkin DS, Wickner RB, Tycko R. The core of Ure2p prion fibrils is formed by the N-terminal segment in a parallel cross-β structure: evidence from solid-state NMR. J Mol Biol. 2011 Jun 3;409(2):263-77. doi: 10.1016/j.jmb.2011.03.067. Epub 2011 Apr 8. PubMed PMID: 21497604; PubMed Central PMCID: PMC3095661."
+
+[Bateman & Wickner 2012]: http://www.ncbi.nlm.nih.gov/pubmed/22095075 "Bateman DA, Wickner RB. [PSI+] Prion transmission barriers protect Saccharomyces cerevisiae from infection: intraspecies 'species barriers'. Genetics. 2012 Feb;190(2):569-79. doi: 10.1534/genetics.111.136655. Epub 2011 Nov 17. PubMed PMID: 22095075; PubMed Central PMCID: PMC3276615."
+
+[Bateman & Wickner 2013]: http://www.ncbi.nlm.nih.gov/pubmed/23382698 "Bateman DA, Wickner RB. The [PSI+] prion exists as a dynamic cloud of variants. PLoS Genet. 2013;9(1):e1003257. doi: 10.1371/journal.pgen.1003257. Epub 2013 Jan 31. PubMed PMID: 23382698; PubMed Central PMCID: PMC3561065."
+
+[Kryndushkin 2008]: http://www.ncbi.nlm.nih.gov/pubmed/18833194 "Kryndushkin DS, Shewmaker F, Wickner RB. Curing of the [URE3] prion by Btn2p,  a Batten disease-related protein. EMBO J. 2008 Oct 22;27(20):2725-35. doi: 10.1038/emboj.2008.198. Epub 2008 Oct 2. PubMed PMID: 18833194; PubMed Central PMCID: PMC2572181."
+
