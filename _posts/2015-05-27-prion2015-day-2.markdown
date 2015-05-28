@@ -4,9 +4,11 @@ title:  "Prion2015 Day 2"
 date:   2015-05-27 12:01:00
 author: ericminikel
 location: Ft. Collins, CO
-thumb120: 
+thumb120: http://www.cureffi.org/media/2015/05/prion2015-day-2-thumbnail.png
 summary200: "Notes from Day 2 of the Prion2015 conference in Ft. Collins, CO."
 ---
+
+![](/media/2015/05/prion2015-day-2-photo.png)
 
 ### Claudio Soto
 
