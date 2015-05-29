@@ -1,0 +1,273 @@
+---
+layout: post
+title:  "Prion2015 Day 3"
+date:   2015-05-28 12:01:00
+author: ericminikel
+location: Ft. Collins, CO
+thumb120: http://www.cureffi.org/media/2015/05/prion2015-day-3-thumbnail.png
+summary200: "Notes from Day 3 of the Prion2015 conference in Ft. Collins, CO."
+---
+
+![](/media/2015/05/prion2015-day-3-photo.png)
+
+### John Collinge
+
+Dr. Collinge began with an overview of several topics including acquired prion disease in humans, the codon 129 polymorphism, the crystal structure of PrP<sup>C</sup>, and the concept of transmission barriers. He discussed several of MRC Prion Unit's earlier findings regarding how genetic polymorphisms and transgenes can affect the transmission barrier [[Collinge 1995], [Wadsworth 2004], [Lukic 2010]]. Much of the first half of the talk was a documentary-style narrative on the history of kuru, featuring images of the Papua New Guinea landscape and videos of interviews with several Fore people. Dr. Collinge recalled that when he first started publishing on kuru, he began to receive angry letters from anthropologists who believed that kuru was an imperialist myth concocted to make the Fore look like savages. He likes to show the interviews in part to demonstrate that this isn't the case. He showed some striking photographs of the field research station that MRC Prion Unit set up in the mountains of the Fore region, including a hand-powered centrifuge. He discussed the incredibly length incubation periods of kuru. Endocannibalism was phased out by ~1961, yet there was still a trickle of people falling ill with kuru in the late 1990s, and they even identified one new case last year. He discussed the way in which kuru selected for 129MV and 127VG heterozygotes [[Mead 2009]], and the evidence for worldwide balancing selection favoring heterozygosity for *PRNP* [[Mead 2003]]. He noted that the 129V allele has an allele frequency of ~55% in the Fore region, the highest allele frequency observed anywhere in the world.
+
+Next he moved into some new results that are currently in press. He asked me not to share any of these results here, but he expects the paper will be published within a few weeks.
+
+### Stephen Strittmatter
+
+Dr. Strittmatter began with a review of his lab's screen that identified PrP<sup>C</sup> as a high-affinity ligand for A&beta; oligomers [[Lauren 2009]]. He also discussed his lab's findings that A&beta; binding to PrP<sup>C</sup> triggers a signaling pathway via Fyn and mGluR5 [[Um 2012], [Um 2013]]. He discussed the effects of this binding event on long-term potentiation [[Lauren 2009]], which have been replicated by John Collinge's group [[Freir 2011]]. They have used antibody binding to map the mGluR5 binding site on PrP, which appears to be within PrP residues 91-153 and binds preferentially to the activated state of mGluR5 [[Haas 2014]]. A small molecule allosteric antagonist of mGluR5, called MTEP, ameliorates behavioral deficits in APP/PS1 mice [[Um 2013]]. They have also tested a small molecule inhibitor of Fyn, called AZD0530 and originally developed for cancer, and found that it rescued synaptic and behavioral phenotypes [[Kaufman 2015]]. Based on these promising results, he initiated a multi-site clinical trial, [NCT01864655](https://clinicaltrials.gov/ct2/show/NCT01864655), to test AZD0530 for treatment of Alzheimer disease.
+
+He also presented a number of unpublished results.
+
+### David A. Harris
+
+Dr. Harris began by reviewing his and other labs' evidence that membrane-bound PrP<sup>C</sup> is required for transduction of a neurotoxic signal by PrP<sup>Sc</sup>. To understand how PrP transduces this signal, it is necessary to consider the structure of PrP as divided into three sections: the unstructured N terminus, the "hinge region" (from the end of the octarepeats to the first beta sheet), and then the C-terminal globular domain [[Biasini 2012]]. He then listed the [deletion mutants](/2014/04/29/structural-mutants-of-prp/) of PrP created by his lab and the Weissmann and Aguzzi labs, focusing on his &Delta;CR mutant [[Li 2007]], which gives the most dramatic phenotype. PrP &Delta;CR results in spontaneous inward transmembrane currents, which require residues 23-31 [[Solomon 2010], [Solomon 2011]].
+
+He quickly moved into a large volume of unpublished results that I cannot share here.
+
+### Heather True-Krob
+
+Dr. Krob began by reviewing the list of known prions in yeast, and introducing the <em>[PSI<sup>+</sup>]</em> model system (which I've also introduced [here](/2014/09/30/the-conformation-holds-the-information/)). In short, the incorporation of Sup35 protein into <em>[PSI<sup>+</sup>]</em> amyloid results in a loss of Sup35's native translation termination function. In yeast with a stop codon in the *ade* gene grown on minimal adenine media, <em>[psi<sup>-</sup>]</em> colonies are red, while <em>[PSI<sup>+</sup>]</em> colonies are white. She reviewed Jonathan Weissman's work characterizing strong vs. weak <em>[PSI<sup>+</sup>]</em> prions, which appear to have ~40 vs. ~70 amino acid cores. Strong <em>[PSI<sup>+</sup>]</em> prions are more thermolabile but also fragment more readily, creating a greater number of propagons, and thus are less readily cured [[Tanaka 2006], [Toyama 2007]]. She then reviewed evidence from the Liebman lab regarding different <em>[RNQ<sup>+</sup>]</em> prions and how these have differential effects on <em>[PSI<sup>+</sup>]</em> seeding. (I'm not too familiar with that literature but she may have been referring to [[Vitrenko 2007a], [Vitrenko 2007b]]). She then moved into her own lab's work on how genetic and environmental factors affect the ability of <em>[RNQ<sup>+</sup>]</em> to seed <em>[PSI<sup>+</sup>]</em>. Some of this work appears to be published [[Huang 2013], [Westergard & True 2014], [Stein & True 2014]], but I am not sufficiently familiar with this literature to be certain of what is acceptable to blog here. She then discussed the establishment of *DNAJB6* as a limb-girdle muscular dystrophy gene [[Harms 2012]]. *DNAJB6* encodes an HSP40 chaperone, and Dr. True's lab has used a yeast system to examine how the human mutations affect chaperone activity including recognition of two conformers of <em>[RNQ<sup>+</sup>]</em> and <em>[PSI<sup>+</sup>]</em> [[Stein 2014]]. 
+
+### Christina Sigurdson
+
+Those who have been following Dr. Sigurdson's work will know that she has been interested in the molecular basis of the prion strain barrier for chronic wasting disease, ever since her days in the Hoover lab and then the Aguzzi lab. She has amassed a variety of lines of evidence indicating that the &beta;2-&alpha;2 loop in PrP governs susceptibility to CWD [[Sigurdson 2009], [Sigurdson 2010], [Sigurdson 2011]]. Since starting her own lab she has investigated the structural basis of this transmission barrier through additional mouse models and NMR studies [[Kurt 2014a], [Kurt 2014b], [Kurt 2015]]. After reviewing these published works, she went on to discuss unpublished results from new mouse models.
+
+As an aside, Dr. Sigurdson also noted that she has started using an experimental system where cell lysate is a substrate for PMCA [[Mays 2011]]. And she talked about some interesting results on amyloid structure from the Eisenberg lab [[Sawaya 2007], [Goldschmidt 2010]].
+
+### Olivier Andreoletti
+
+Dr. Andreoletti opened with a very brief overview of the importance of understanding the risk of prion transmission by blood transfusion, citing the U.K. appendix study [[Gill 2013]]. He acknowledged Fiona Houston's important work, presented [yesterday](/2015/05/27/prion2015-day-2/), and said that he is looking at similar questions using different animal models. He spent most of the talk presenting 8-year followup data on a study of transfusion risk in sheep and mouse models. I believe most of this was unpublished, though there was at least some overlap with results he published a few years ago [[Andreoletti 2012]]. He also spent a bit of time discussing his published results indicating that endpoint titration gives similar results in sheep or in mice overexpressing sheep PrP [[Douet 2014]], and on the effects of leukodepletion of blood products on prion titer [[Lacroux 2012]].
+
+### Roberto Chiesa
+
+Dr. Chiesa reviewed his mouse models of PrP octapeptide repeat insertions [[Chiesa 1998]], D178N-129V [[Dossena 2008]], and D178N-129M [[Bouybayoune 2015]], and his prior work investigating the molecular basis of toxicity in these mouse models [[Chiesa 2001], [Quaglio 2011], [Senatore 2012]]. He presented unpublished results, which are summarized in his abstract O.09 [here](http://www.tandfonline.com/doi/full/10.1080/19336896.2015.1036655), following up on these lines of inquiry. He also noted that his previous finding that post-Golgi trafficking is impaired in cells expressing D178N-129M PrP [[Bouybayoune 2015]] mirror the findings from scrapie-infected cells [[Uchiyama 2013]].
+
+### Hugh Perry
+
+I didn't catch all of this talk but the part that I saw appeared to be mostly published work regarding the role of innate immunity and microglial activation in experimental prion disease [e.g. [Cunningham 2009], [Gomez-Nicola 2013]]. He also discussed the results of a recent clinical trial of etanercept, a TNF&alpha; inhibitor, in Alzheimer disease [[Butchart 2015]].
+
+### Corinne Lasmezas
+
+Dr. Lasmezas spoke about the role of NAD+ starvation in prion-induced neurotoxicity. She presented on this topic at Prion2013 in Banff and the findings were recently published [[Zhou 2015]]. This line of inquiry started with efforts to develop a cellular model for prion neurotoxicity. By testing different fractions of recombinant PrP, Dr. Lasmezas identified a monomeric, alpha-helical species of PrP that causes death in cultured PK1 cells [[Zhou 2012]]. This species, dubbed TPrP, is toxic at only 20 nM. Nicotinamide, however, was found to rescue the toxicity. Nicotinamide is considered a vitamin, and is the precuror for NAD+. Adding FK866, an inhibitor of the phosphoribosyltransferase that makes NAD+ from nicotinamide, reverses the rescue of toxicity by nicotinamide. They then found that intracellular NAD+ and ATP levels decline after cells are exposed to TPrP. TPrP appears to cause excessive ADP-ribosylation independent of PARP1. Intranasal NAD+ administration to prion-infected mice was observed to improve behavioral phenotypes but had no effect on survival [[Zhou 2015]].
+
+### Ted Allison
+
+Dr. Allison used a zinc finger nuclease to engineer a targeted disruption of the PrP2 gene in zebrafish [[Fleisch 2013]]. They looked pretty hard for a phenotype in the homozygous PrP2 knockout fish but they did not see anything morphologically or behaviorally wrong with them at baseline. When the fish were exposed to a convulsant, however, they had increased susceptibility to seizures, and they observed electrophysiological differences in NMDA signaling [[Fleisch 2013]]. He noted that it has been reported that PrP regulates NMDA in mice, but that the effect requires copper [[You 2012]], whereas it appears that PrP2 in zebrafish does not bind copper - in place of the mammalian octapeptide repeat, it has a hexapeptide repeat (consensus PAQGGY) which lacks copper-binding histidines.
+
+He next discussed his experiments knocking down zebrafish appb (an ortholog of *APP*), prp1, and prp2 with morpholinos [[Kaiser 2012]], and lateral line developmental phenotypes in PrP2 knockouts and knockdowns [[Huc-Brandt 2014]]. He also presented a few unpublished results from these systems.
+
+He concluded by arguing that PrP has an ancient role in regulating neuronal excitability.
+
+#### Q&A
+
+Q. Alex McDonald: Have you thought about using CRISPR-Cas to knock in a PrP mutant lacking the repeat domain or the polybasic tail?
+
+A. It's a great idea. CRISPR-Cas reagents for zebrafish have become available just over the past 9-12 months and we have started doing some experiments with them.
+
+Q. Joel Watts: Is APP in the zebrafish processed the same way as it is in mammals?
+
+A. No one has published any data on that, but the structure of zebrafish APP certainly would lead you to expect it to be cleaved in the same positions.
+
+### Hermann Altmeppen
+
+Dr. Altmeppen presented some of his work in Markus Glatzel's lab that was recently published [[Altmeppen 2015]]. He introduced the concepts of PrP [alpha cleavage](/2013/06/26/proteolysis-of-prion-protein-in-the-central-region-alpha-and-beta-cleavage/) and [shedding](/2013/06/29/proteolytic-shedding-of-prion-protein/), and said he would not discuss [beta cleavage](/2013/06/26/proteolysis-of-prion-protein-in-the-central-region-alpha-and-beta-cleavage/). He noted that these proteolytic events are conserved and probably constitutive, and may represent an important aspect of PrP's native function. He examined a published Nestin-Cre neuronal ADAM10 conditional knockout (cKO) mouse [[Jorissen 2010]] and found that these mice lack PrP shedding, accumulate PrP<sup>C</sup> in the early secretory pathway, but have unimpaired alpha cleavage [[Altmeppen 2011]]. These data establish ADAM10 as the major sheddase for PrP<sup>C</sup>. The Jorissen ADAM10 conditional knockout mouse exhibits perinatal lethality, which made it impossible to assess the effects of ADAM10 deletion on prion disease progression. Therefore, in the new study, Dr. Altmeppen generated a new CamKII&alpha;-Cre conditional knockout (cKO) mouse, which lacks ADAM10 only in forebrain neurons. These mice were i.c. inoculated with RML prions into the striatum. The homozygous and, to a lesser extent, heterozygous cKO mice had truncated incubation times compared to wild-type mice [[Altmeppen 2015]]. They also had increased levels of PrP<sup>C</sup>, perhaps due to the retention / lack of shedding characterized earlier [[Altmeppen 2011]]. However, Dr. Altmeppen believes that the shortened incubation time is probably not due solely to increased PrP<sup>C</sup> levels, because PrP<sup>Sc</sup> levels were increased more dramatically than total PrP. He suspects that shed PrP may have a dual role, being capable both of spreading pathology but also of blocking PrP<sup>Sc</sup> formation. He is now interested in in ADAM10 activation as a potential therapeutic target for treating prion diseases.
+
+### Andrea LeBlanc
+
+I missed almost all of this talk but according to the oral abstract it appears to have all been unpublished work.
+
+### Jean Manson
+
+This talk was all unpublished data; Dr. Manson said it would be publicly available soon.
+
+### Fabrizio Chiti
+
+Dr. Chiti's talk sought to answer the question of what structural elements in amyloid conversion are involved in toxicity. Like in [his Prion2014 talk](/2014/05/29/prion2014-day-3/), he used the HypF-N protein (the N-terminal domain of *E. coli* HypF protein) as a model system. He briefly reviewed his work in this area going back to 2001 [e.g. [Chiti 2001], [Campioni 2008]] and state that HypF-N forms amyloid fibrils that are tinctorally and biochemically indistiguishable from the amyloid fibrils associated with disease, and are cytotoxic. He defined two types of HypF-N oligomers, of which only type A presents exposed hydrophobic surfaces and is cytotoxic [[Campioni 2010], [Zampagni 2011]]. In primary cell cultures, slice cultures, and in rats, these oligomers exhibit many of the same properties as A&beta; oligomers [[Tatini 2013]]. He discussed how chaperones suppress the toxicity of these oligomers. The chaperones appear to work to group the oligomers into large aggregates [[Mannini & Cascella 2012]]. Finally, he presented results from his most recent study, in which they mutated charged residues to hydrophobic residues and found that across the different mutants they generated, cytotoxicity was a function of hydrophobic surface area and size [[Mannini 2014]].
+
+#### Q&A
+
+Q. Glenn Telling: How exactly do these things interact with cells in order to be toxic?
+
+A. We do observe a calcium influx [presumably referring to [Campioni 2010], [Zampagni 2011]], but we also know there are a lot of biological determinants of the toxicity, including membrane composition.
+
+Q. Neil Cashman: Are you sure there is no difference in size between type A and B oligomers? You would expect tighter packing in type B, leading to a smaller diameter.
+
+A. We've looked carefully using techniques that allow us to measure shape and height, but it would be useful to look with electron microscopy as well.
+
+### Karen Hsiao Ashe
+
+Dr. Ashe opened with a quote:
+
+> This structural transition from &alpha;-helixes to &beta;-sheet in PrP is the fundamental event underlying prion diseases.
+> 
+> &mdash; [Prusiner 2001]
+
+She recalled her early work on GSS [[Hsiao 1989], [Hsiao 1990], [Hsiao 1994]], and noted that while GSS and Alzheimer disease both involve plaques made of transmissible proteins, in GSS fatal disease is transmitted, while in Alzheimer disease only the plaques are transmitted. Moreover, while "amyloid" is a distinctive feature of prion disease, the properties we refer to by this term are not actually necessary for infectivity [[Wille 2000]], raising the question of what the infectious species really is.
+
+Dr. Ashe noted that 412 clinical trials have been registered for Alzheimer disease between 2002 and 2012, with a 99.6% failure rate.Is the failure rate so high for lack of fundamental scientific understanding of the disease process, or for lack of clinical application of the science we do understand? She urged us to be patient, noting that immune checkpoints were discovered 20 years ago, but our understanding of them has only begun to aid cancer therapeutics within the past few years [[Topalian 2015]].
+
+Dr. Ashe refers to the unknown, non-amyloid species of protein responsible for transmissibility in various diseases as "protein\*". She drew a distinction between three protein species seen in neurodegenerative disease: amyloid, the transmissible protein\* species, and the species responsible for neuronal impairment or death. She recalled her studies of a mouse model with tau under a Tet-off promoter [[SantaCruz 2005]]. After the mice developed neurofibrillary tangle pathology, tau expression was reduced by administration of doxycycline. Mouse behavioral phenotypes improved even while NFTs continued to grow. This was definitive evidence that the tangles themselves are not the prion or the "protein\*". With that prefacing, she launched into recent unpublished work on tau.
+
+She later spent some time discussing the search for the species of A&beta; responsible for neuronal impairment [[Lesne 2006]], and the development of antibodies against soluble oligomers [[Kayed 2003]]. Then she went into recent data, some of which are in press, on characterizing distinct species of A&beta; oligomers.
+
+
+
+[Kayed 2003]: http://www.ncbi.nlm.nih.gov/pubmed/12702875 "Kayed R, Head E, Thompson JL, McIntire TM, Milton SC, Cotman CW, Glabe CG. Common structure of soluble amyloid oligomers implies common mechanism of pathogenesis. Science. 2003 Apr 18;300(5618):486-9. PubMed PMID: 12702875."
+
+[Lesne 2006]: http://www.ncbi.nlm.nih.gov/pubmed/16541076 "Lesné S, Koh MT, Kotilinek L, Kayed R, Glabe CG, Yang A, Gallagher M, Ashe KH. A specific amyloid-beta protein assembly in the brain impairs memory. Nature. 2006 Mar 16;440(7082):352-7. PubMed PMID: 16541076."
+
+[Hoover 2010]: http://www.ncbi.nlm.nih.gov/pubmed/21172610 "Hoover BR, Reed MN, Su J, Penrod RD, Kotilinek LA, Grant MK, Pitstick R, Carlson GA, Lanier LM, Yuan LL, Ashe KH, Liao D. Tau mislocalization to dendritic spines mediates synaptic dysfunction independently of neurodegeneration. Neuron.  2010 Dec 22;68(6):1067-81. doi: 10.1016/j.neuron.2010.11.030. PubMed PMID: 21172610; PubMed Central PMCID: PMC3026458."
+
+[SantaCruz 2005]: http://www.ncbi.nlm.nih.gov/pubmed/16020737 "Santacruz K, Lewis J, Spires T, Paulson J, Kotilinek L, Ingelsson M, Guimaraes A, DeTure M, Ramsden M, McGowan E, Forster C, Yue M, Orne J, Janus C, Mariash A,  Kuskowski M, Hyman B, Hutton M, Ashe KH. Tau suppression in a neurodegenerative mouse model improves memory function. Science. 2005 Jul 15;309(5733):476-81. PubMed PMID: 16020737; PubMed Central PMCID: PMC1574647."
+
+[Topalian 2015]: http://www.ncbi.nlm.nih.gov/pubmed/25858804 "Topalian SL, Drake CG, Pardoll DM. Immune Checkpoint Blockade: A Common Denominator Approach to Cancer Therapy. Cancer Cell. 2015 Apr 13;27(4):450-461. doi: 10.1016/j.ccell.2015.03.001. Epub 2015 Apr 6. Review. PubMed PMID: 25858804; PubMed Central PMCID: PMC4400238."
+
+[Wille 2000]: http://www.ncbi.nlm.nih.gov/pubmed/10940236 "Wille H, Prusiner SB, Cohen FE. Scrapie infectivity is independent of amyloid  staining properties of the N-terminally truncated prion protein. J Struct Biol. 2000 Jun;130(2-3):323-38. PubMed PMID: 10940236."
+
+[Hsiao 1994]: http://www.ncbi.nlm.nih.gov/pubmed/7916462 "Hsiao KK, Groth D, Scott M, Yang SL, Serban H, Rapp D, Foster D, Torchia M, Dearmond SJ, Prusiner SB. Serial transmission in rodents of neurodegeneration from transgenic mice expressing mutant prion protein. Proc Natl Acad Sci U S A. 1994 Sep 13;91(19):9126-30. PubMed PMID: 7916462; PubMed Central PMCID: PMC44760."
+
+[Hsiao 1990]: http://www.ncbi.nlm.nih.gov/pubmed/1980379 "Hsiao KK, Scott M, Foster D, Groth DF, DeArmond SJ, Prusiner SB. Spontaneous neurodegeneration in transgenic mice with mutant prion protein. Science. 1990 Dec 14;250(4987):1587-90. PubMed PMID: 1980379."
+
+[Hsiao 1989]: http://www.ncbi.nlm.nih.gov/pubmed/2564168 "Hsiao K, Baker HF, Crow TJ, Poulter M, Owen F, Terwilliger JD, Westaway D, Ott J, Prusiner SB. Linkage of a prion protein missense variant to Gerstmann-Sträussler syndrome. Nature. 1989 Mar 23;338(6213):342-5. PubMed PMID:  2564168."
+
+[Prusiner 2001]: http://www.ncbi.nlm.nih.gov/pubmed/11357156 "Prusiner SB. Shattuck lecture--neurodegenerative diseases and prions. N Engl J Med. 2001 May 17;344(20):1516-26. Review. PubMed PMID: 11357156."
+
+[Mannini 2014]: http://www.ncbi.nlm.nih.gov/pubmed/25079908 "Mannini B, Mulvihill E, Sgromo C, Cascella R, Khodarahmi R, Ramazzotti M, Dobson CM, Cecchi C, Chiti F. Toxicity of protein oligomers is rationalized by a  function combining size and surface hydrophobicity. ACS Chem Biol. 2014 Oct 17;9(10):2309-17. doi: 10.1021/cb500505m. Epub 2014 Aug 11. PubMed PMID: 25079908."
+
+[Mannini & Cascella 2012]: http://www.ncbi.nlm.nih.gov/pubmed/22802614 "Mannini B, Cascella R, Zampagni M, van Waarde-Verhagen M, Meehan S, Roodveldt  C, Campioni S, Boninsegna M, Penco A, Relini A, Kampinga HH, Dobson CM, Wilson MR, Cecchi C, Chiti F. Molecular mechanisms used by chaperones to reduce the toxicity of aberrant protein oligomers. Proc Natl Acad Sci U S A. 2012 Jul 31;109(31):12479-84. doi: 10.1073/pnas.1117799109. Epub 2012 Jul 16. PubMed PMID: 22802614; PubMed Central PMCID: PMC3411936."
+
+[Campioni 2010]: http://www.ncbi.nlm.nih.gov/pubmed/20081829 "Campioni S, Mannini B, Zampagni M, Pensalfini A, Parrini C, Evangelisti E, Relini A, Stefani M, Dobson CM, Cecchi C, Chiti F. A causative link between the structure of aberrant protein oligomers and their toxicity. Nat Chem Biol. 2010 Feb;6(2):140-7. doi: 10.1038/nchembio.283. Epub 2010 Jan 10. PubMed PMID: 20081829."
+
+[Tatini 2013]: http://www.ncbi.nlm.nih.gov/pubmed/23601807 "Tatini F, Pugliese AM, Traini C, Niccoli S, Maraula G, Ed Dami T, Mannini B, Scartabelli T, Pedata F, Casamenti F, Chiti F. Amyloid-β oligomer synaptotoxicity is mimicked by oligomers of the model protein HypF-N. Neurobiol Aging. 2013 Sep;34(9):2100-9. doi: 10.1016/j.neurobiolaging.2013.03.020. Epub 2013 Apr 18. PubMed PMID: 23601807."
+
+[Zampagni 2011]: http://www.ncbi.nlm.nih.gov/pubmed/21155974 "Zampagni M, Cascella R, Casamenti F, Grossi C, Evangelisti E, Wright D, Becatti M, Liguri G, Mannini B, Campioni S, Chiti F, Cecchi C. A comparison of the biochemical modifications caused by toxic and non-toxic protein oligomers in  cells. J Cell Mol Med. 2011 Oct;15(10):2106-16. doi: 10.1111/j.1582-4934.2010.01239.x. PubMed PMID: 21155974; PubMed Central PMCID: PMC4394221."
+
+[Campioni 2008]: http://www.ncbi.nlm.nih.gov/pubmed/18466920 "Campioni S, Mossuto MF, Torrassa S, Calloni G, de Laureto PP, Relini A, Fontana A, Chiti F. Conformational properties of the aggregation precursor state  of HypF-N. J Mol Biol. 2008 Jun 6;379(3):554-67. doi: 10.1016/j.jmb.2008.04.002.  Epub 2008 Apr 8. PubMed PMID: 18466920."
+
+[Chiti 2001]: http://www.ncbi.nlm.nih.gov/pubmed/11714922 "Chiti F, Bucciantini M, Capanni C, Taddei N, Dobson CM, Stefani M. Solution conditions can promote formation of either amyloid protofilaments or mature fibrils from the HypF N-terminal domain. Protein Sci. 2001 Dec;10(12):2541-7. PubMed PMID: 11714922; PubMed Central PMCID: PMC2374049."
+
+[Rouget 2015]: http://www.ncbi.nlm.nih.gov/pubmed/25572400 "Rouget R, Sharma G, LeBlanc AC. Cyclin-dependent kinase 5 phosphorylation of familial prion protein mutants exacerbates conversion into amyloid structure. J Biol Chem. 2015 Feb 27;290(9):5759-71. doi: 10.1074/jbc.M114.630699. Epub 2015 Jan 8. PubMed PMID: 25572400; PubMed Central PMCID: PMC4342486."
+
+[Altmeppen 2011]: http://www.ncbi.nlm.nih.gov/pubmed/21619641 "Altmeppen HC, Prox J, Puig B, Kluth MA, Bernreuther C, Thurm D, Jorissen E, Petrowitz B, Bartsch U, De Strooper B, Saftig P, Glatzel M. Lack of a-disintegrin-and-metalloproteinase ADAM10 leads to intracellular accumulation and loss of shedding of the cellular prion protein in vivo. Mol Neurodegener. 2011 May 27;6:36. doi: 10.1186/1750-1326-6-36. PubMed PMID: 21619641; PubMed Central PMCID: PMC3224557."
+
+[Jorissen 2010]: http://www.ncbi.nlm.nih.gov/pubmed/20371803/ "Jorissen E, Prox J, Bernreuther C, Weber S, Schwanbeck R, Serneels L, Snellinx A, Craessaerts K, Thathiah A, Tesseur I, Bartsch U, Weskamp G, Blobel CP, Glatzel M, De Strooper B, Saftig P. The disintegrin/metalloproteinase ADAM10 is essential for the establishment of the brain cortex. J Neurosci. 2010 Apr 7;30(14):4833-44. doi: 10.1523/JNEUROSCI.5221-09.2010. PubMed PMID: 20371803; PubMed Central PMCID: PMC2921981."
+
+[Altmeppen 2015]: http://www.ncbi.nlm.nih.gov/pubmed/25654651 "Altmeppen HC, Prox J, Krasemann S, Puig B, Kruszewski K, Dohler F, Bernreuther C, Hoxha A, Linsenmeier L, Sikorska B, Liberski PP, Bartsch U, Saftig P, Glatzel  M. The sheddase ADAM10 is a potent modulator of prion disease. Elife. 2015 Feb 5;4. doi: 10.7554/eLife.04260. PubMed PMID: 25654651; PubMed Central PMCID: PMC4346534."
+
+[Huc-Brandt 2014]: http://www.ncbi.nlm.nih.gov/pubmed/25436888 "Huc-Brandt S, Hieu N, Imberdis T, Cubedo N, Silhol M, Leighton PL, Domaschke T, Allison WT, Perrier V, Rossel M. Zebrafish prion protein PrP2 controls collective migration process during lateral line sensory system development. PLoS One. 2014 Dec 1;9(12):e113331. doi: 10.1371/journal.pone.0113331. eCollection 2014. PubMed PMID: 25436888; PubMed Central PMCID: PMC4249873."
+
+[Kaiser 2012]: http://www.ncbi.nlm.nih.gov/pubmed/23236467 "Kaiser DM, Acharya M, Leighton PL, Wang H, Daude N, Wohlgemuth S, Shi B, Allison WT. Amyloid beta precursor protein and prion protein have a conserved interaction affecting cell adhesion and CNS development. PLoS One. 2012;7(12):e51305. doi: 10.1371/journal.pone.0051305. Epub 2012 Dec 7. PubMed PMID: 23236467; PubMed Central PMCID: PMC3517466."
+
+[You 2012]: http://www.ncbi.nlm.nih.gov/pubmed/22307640 "You H, Tsutsui S, Hameed S, Kannanayakal TJ, Chen L, Xia P, Engbers JD, Lipton SA, Stys PK, Zamponi GW. Aβ neurotoxicity depends on interactions between copper  ions, prion protein, and N-methyl-D-aspartate receptors. Proc Natl Acad Sci U S A. 2012 Jan 31;109(5):1737-42. doi: 10.1073/pnas.1110789109. Epub 2012 Jan 17. PubMed PMID: 22307640; PubMed Central PMCID: PMC3277185."
+
+[Fleisch 2013]: http://www.ncbi.nlm.nih.gov/pubmed/23523635 "Fleisch VC, Leighton PL, Wang H, Pillay LM, Ritzel RG, Bhinder G, Roy B, Tierney KB, Ali DW, Waskiewicz AJ, Allison WT. Targeted mutation of the gene encoding prion protein in zebrafish reveals a conserved role in neuron excitability. Neurobiol Dis. 2013 Jul;55:11-25. doi: 10.1016/j.nbd.2013.03.007. Epub 2013 Mar 21. PubMed PMID: 23523635."
+
+[Zhou 2012]: http://www.ncbi.nlm.nih.gov/pubmed/22323583 "Zhou M, Ottenberg G, Sferrazza GF, Lasmézas CI. Highly neurotoxic monomeric α-helical prion protein. Proc Natl Acad Sci U S A. 2012 Feb 21;109(8):3113-8. doi: 10.1073/pnas.1118090109. Epub 2012 Feb 7. PubMed PMID: 22323583; PubMed Central PMCID: PMC3286986."
+
+[Zhou 2015]: http://www.ncbi.nlm.nih.gov/pubmed/25678560 "Zhou M, Ottenberg G, Sferrazza GF, Hubbs C, Fallahi M, Rumbaugh G, Brantley AF, Lasmézas CI. Neuronal death induced by misfolded prion protein is due to NAD+ depletion and can be relieved in vitro and in vivo by NAD+ replenishment. Brain.  2015 Apr;138(Pt 4):992-1008. doi: 10.1093/brain/awv002. Epub 2015 Feb 11. PubMed  PMID: 25678560."
+
+[Butchart 2015]: http://www.ncbi.nlm.nih.gov/pubmed/25934853 "Butchart J, Brook L, Hopkins V, Teeling J, Püntener U, Culliford D, Sharples R, Sharif S, McFarlane B, Raybould R, Thomas R, Passmore P, Perry VH, Holmes C. Etanercept in Alzheimer disease: A randomized, placebo-controlled, double-blind,  phase 2 trial. Neurology. 2015 May 26;84(21):2161-8. doi: 10.1212/WNL.0000000000001617. Epub 2015 May 1. PubMed PMID: 25934853."
+
+[Cunningham 2009]: http://www.ncbi.nlm.nih.gov/pubmed/18801476 "Cunningham C, Campion S, Lunnon K, Murray CL, Woods JF, Deacon RM, Rawlins JN, Perry VH. Systemic inflammation induces acute behavioral and cognitive changes and accelerates neurodegenerative disease. Biol Psychiatry. 2009 Feb 15;65(4):304-12. doi: 10.1016/j.biopsych.2008.07.024. Epub 2008 Sep 18. PubMed PMID: 18801476; PubMed Central PMCID: PMC2633437."
+
+[Gomez-Nicola 2013]: http://www.ncbi.nlm.nih.gov/pubmed/23392676 "Gómez-Nicola D, Fransen NL, Suzzi S, Perry VH. Regulation of microglial proliferation during chronic neurodegeneration. J Neurosci. 2013 Feb 6;33(6):2481-93. doi: 10.1523/JNEUROSCI.4440-12.2013. PubMed PMID: 23392676."
+
+[Uchiyama 2013]: http://www.ncbi.nlm.nih.gov/pubmed/23673631 "Uchiyama K, Muramatsu N, Yano M, Usui T, Miyata H, Sakaguchi S. Prions disturb post-Golgi trafficking of membrane proteins. Nat Commun. 2013;4:1846. doi: 10.1038/ncomms2873. PubMed PMID: 23673631."
+
+[Quaglio 2011]: http://www.ncbi.nlm.nih.gov/pubmed/21559407 "Quaglio E, Restelli E, Garofoli A, Dossena S, De Luigi A, Tagliavacca L, Imperiale D, Migheli A, Salmona M, Sitia R, Forloni G, Chiesa R. Expression of mutant or cytosolic PrP in transgenic mice and cells is not associated with endoplasmic reticulum stress or proteasome dysfunction. PLoS One. 2011 Apr 29;6(4):e19339. doi: 10.1371/journal.pone.0019339. PubMed PMID: 21559407; PubMed  Central PMCID: PMC3084828."
+
+[Senatore 2012]: http://www.ncbi.nlm.nih.gov/pubmed/22542184 "Senatore A, Colleoni S, Verderio C, Restelli E, Morini R, Condliffe SB, Bertani I, Mantovani S, Canovi M, Micotti E, Forloni G, Dolphin AC, Matteoli M, Gobbi M, Chiesa R. Mutant PrP suppresses glutamatergic neurotransmission in cerebellar granule neurons by impairing membrane delivery of VGCC α(2)δ-1 Subunit. Neuron. 2012 Apr 26;74(2):300-13. doi: 10.1016/j.neuron.2012.02.027. PubMed PMID: 22542184; PubMed Central PMCID: PMC3339322."
+
+[Chiesa 2001]: http://www.ncbi.nlm.nih.gov/pubmed/11300723 "Chiesa R, Pestronk A, Schmidt RE, Tourtellotte WG, Ghetti B, Piccardo P, Harris DA. Primary myopathy and accumulation of PrPSc-like molecules in peripheral tissues of transgenic mice expressing a prion protein insertional mutation. Neurobiol Dis. 2001 Apr;8(2):279-88. PubMed PMID: 11300723."
+
+[Chiesa 1998]: http://www.ncbi.nlm.nih.gov/pubmed/9883727 "Chiesa R, Piccardo P, Ghetti B, Harris DA. Neurological illness in transgenic  mice expressing a prion protein with an insertional mutation. Neuron. 1998 Dec;21(6):1339-51. PubMed PMID: 9883727."
+
+[Dossena 2008]: http://www.ncbi.nlm.nih.gov/pubmed/19038218 "Dossena S, Imeri L, Mangieri M, Garofoli A, Ferrari L, Senatore A, Restelli E, Balducci C, Fiordaliso F, Salio M, Bianchi S, Fioriti L, Morbin M, Pincherle A, Marcon G, Villani F, Carli M, Tagliavini F, Forloni G, Chiesa R. Mutant prion protein expression causes motor and memory deficits and abnormal sleep patterns in a transgenic mouse model. Neuron. 2008 Nov 26;60(4):598-609. doi: 10.1016/j.neuron.2008.09.008. PubMed PMID: 19038218."
+
+[Bouybayoune 2015]: http://www.ncbi.nlm.nih.gov/pubmed/25880443 "Bouybayoune I, Mantovani S, Del Gallo F, Bertani I, Restelli E, Comerio L, Tapella L, Baracchi F, Fernández-Borges N, Mangieri M, Bisighini C, Beznoussenko  GV, Paladini A, Balducci C, Micotti E, Forloni G, Castilla J, Fiordaliso F, Tagliavini F, Imeri L, Chiesa R. Transgenic fatal familial insomnia mice indicate prion infectivity-independent mechanisms of pathogenesis and phenotypic expression of disease. PLoS Pathog. 2015 Apr 16;11(4):e1004796. doi: 10.1371/journal.ppat.1004796. eCollection 2015 Apr. PubMed PMID: 25880443; PubMed Central PMCID: PMC4400166."
+
+[Lacroux 2012]: http://www.ncbi.nlm.nih.gov/pubmed/22860049 "Lacroux C, Bougard D, Litaise C, Simmons H, Corbiere F, Dernis D, Tardivel R,  Morel N, Simon S, Lugan S, Costes P, Weisbecker JL, Schelcher F, Grassi J, Coste  J, Andréoletti O. Impact of leucocyte depletion and prion reduction filters on TSE blood borne transmission. PLoS One. 2012;7(7):e42019. doi: 10.1371/journal.pone.0042019. Epub 2012 Jul 31. PubMed PMID: 22860049; PubMed Central PMCID: PMC3409224."
+
+[Andreoletti 2012]: http://www.ncbi.nlm.nih.gov/pubmed/22737075 "Andréoletti O, Litaise C, Simmons H, Corbière F, Lugan S, Costes P, Schelcher  F, Vilette D, Grassi J, Lacroux C. Highly efficient prion transmission by blood transfusion. PLoS Pathog. 2012;8(6):e1002782. doi: 10.1371/journal.ppat.1002782.  Epub 2012 Jun 21. PubMed PMID: 22737075; PubMed Central PMCID: PMC3380953."
+
+[Douet 2014]: http://www.ncbi.nlm.nih.gov/pubmed/24574409 "Douet JY, Lacroux C, Corbière F, Litaise C, Simmons H, Lugan S, Costes P, Cassard H, Weisbecker JL, Schelcher F, Andreoletti O. PrP expression level and sensitivity to prion infection. J Virol. 2014 May;88(10):5870-2. doi: 10.1128/JVI.00369-14. Epub 2014 Feb 26. PubMed PMID: 24574409; PubMed Central PMCID: PMC4019126."
+
+[Gill 2013]: http://www.ncbi.nlm.nih.gov/pubmed/24129059 "Gill ON, Spencer Y, Richard-Loendt A, Kelly C, Dabaghian R, Boyes L, Linehan J, Simmons M, Webb P, Bellerby P, Andrews N, Hilton DA, Ironside JW, Beck J, Poulter M, Mead S, Brandner S. Prevalent abnormal prion protein in human appendixes after bovine spongiform encephalopathy epizootic: large scale survey.  BMJ. 2013 Oct 15;347:f5675. doi: 10.1136/bmj.f5675. PubMed PMID: 24129059; PubMed Central PMCID: PMC3805509."
+
+[Goldschmidt 2010]: http://www.ncbi.nlm.nih.gov/pubmed/20133726 "Goldschmidt L, Teng PK, Riek R, Eisenberg D. Identifying the amylome, proteins capable of forming amyloid-like fibrils. Proc Natl Acad Sci U S A. 2010 Feb 23;107(8):3487-92. doi: 10.1073/pnas.0915166107. Epub 2010 Feb 3. PubMed PMID: 20133726; PubMed Central PMCID: PMC2840437."
+
+[Sawaya 2007]: http://www.ncbi.nlm.nih.gov/pubmed/17468747 "Sawaya MR, Sambashivan S, Nelson R, Ivanova MI, Sievers SA, Apostol MI, Thompson MJ, Balbirnie M, Wiltzius JJ, McFarlane HT, Madsen AØ, Riekel C, Eisenberg D. Atomic structures of amyloid cross-beta spines reveal varied steric  zippers. Nature. 2007 May 24;447(7143):453-7. Epub 2007 Apr 29. PubMed PMID: 17468747."
+
+[Mays 2011]: http://www.ncbi.nlm.nih.gov/pubmed/21464935 "Mays CE, Yeom J, Kang HE, Bian J, Khaychuk V, Kim Y, Bartz JC, Telling GC, Ryou C. In vitro amplification of misfolded prion protein using lysate of cultured cells. PLoS One. 2011 Mar 28;6(3):e18047. doi: 10.1371/journal.pone.0018047. PubMed PMID: 21464935; PubMed Central PMCID: PMC3065467."
+
+[Kurt 2015]: http://www.ncbi.nlm.nih.gov/pubmed/25705888 "Kurt TD, Jiang L, Fernández-Borges N, Bett C, Liu J, Yang T, Spraker TR, Castilla J, Eisenberg D, Kong Q, Sigurdson CJ. Human prion protein sequence elements impede cross-species chronic wasting disease transmission. J Clin Invest. 2015 Apr;125(4):1485-96. doi: 10.1172/JCI79408. Epub 2015 Feb 23. PubMed  PMID: 25705888."
+
+[Kurt 2014b]: http://www.ncbi.nlm.nih.gov/pubmed/24596090 "Kurt TD, Jiang L, Bett C, Eisenberg D, Sigurdson CJ. A proposed mechanism for  the promotion of prion conversion involving a strictly conserved tyrosine residue in the β2-α2 loop of PrPC. J Biol Chem. 2014 Apr 11;289(15):10660-7. doi: 10.1074/jbc.M114.549030. Epub 2014 Mar 4. PubMed PMID: 24596090; PubMed Central PMCID: PMC4036184."
+
+[Kurt 2014a]: http://www.ncbi.nlm.nih.gov/pubmed/24431459 "Kurt TD, Bett C, Fernández-Borges N, Joshi-Barr S, Hornemann S, Rülicke T, Castilla J, Wüthrich K, Aguzzi A, Sigurdson CJ. Prion transmission prevented by modifying the β2-α2 loop structure of host PrPC. J Neurosci. 2014 Jan 15;34(3):1022-7. doi: 10.1523/JNEUROSCI.4636-13.2014. PubMed PMID: 24431459; PubMed Central PMCID: PMC3891945."
+
+[Sigurdson 2011]: http://www.ncbi.nlm.nih.gov/pubmed/21957246 "Sigurdson CJ, Joshi-Barr S, Bett C, Winson O, Manco G, Schwarz P, Rülicke T, Nilsson KP, Margalith I, Raeber A, Peretz D, Hornemann S, Wüthrich K, Aguzzi A. Spongiform encephalopathy in transgenic mice expressing a point mutation in the β2-α2 loop of the prion protein. J Neurosci. 2011 Sep 28;31(39):13840-7. doi: 10.1523/JNEUROSCI.3504-11.2011. PubMed PMID: 21957246; PubMed Central PMCID: PMC3205959." 
+
+[Sigurdson 2010]: http://www.ncbi.nlm.nih.gov/pubmed/20551516 "Sigurdson CJ, Nilsson KP, Hornemann S, Manco G, Fernández-Borges N, Schwarz P, Castilla J, Wüthrich K, Aguzzi A. A molecular switch controls interspecies prion  disease transmission in mice. J Clin Invest. 2010 Jul;120(7):2590-9. doi: 10.1172/JCI42051. Epub 2010 Jun 14. PubMed PMID: 20551516; PubMed Central PMCID:  PMC2898603."
+
+[Sigurdson 2009]: http://www.ncbi.nlm.nih.gov/pubmed/19073920 "Sigurdson CJ, Nilsson KP, Hornemann S, Heikenwalder M, Manco G, Schwarz P, Ott D, Rülicke T, Liberski PP, Julius C, Falsig J, Stitz L, Wüthrich K, Aguzzi A. De  novo generation of a transmissible spongiform encephalopathy by mouse transgenesis. Proc Natl Acad Sci U S A. 2009 Jan 6;106(1):304-9. doi: 10.1073/pnas.0810680105. Epub 2008 Dec 10. PubMed PMID: 19073920; PubMed Central  PMCID: PMC2629180."
+
+[Harms 2012]: http://www.ncbi.nlm.nih.gov/pubmed/22334415 "Harms MB, Sommerville RB, Allred P, Bell S, Ma D, Cooper P, Lopate G, Pestronk A, Weihl CC, Baloh RH. Exome sequencing reveals DNAJB6 mutations in dominantly-inherited myopathy. Ann Neurol. 2012 Mar;71(3):407-16. doi: 10.1002/ana.22683. Epub 2012 Feb 14. PubMed PMID: 22334415; PubMed Central PMCID: PMC3314127."
+
+[Stein 2014]: http://www.ncbi.nlm.nih.gov/pubmed/24920671 "Stein KC, Bengoechea R, Harms MB, Weihl CC, True HL. Myopathy-causing mutations in an HSP40 chaperone disrupt processing of specific client conformers. J Biol Chem. 2014 Jul 25;289(30):21120-30. PubMed PMID: 24920671; PubMed Central  PMCID: PMC4110315."
+
+[Huang 2013]: http://www.ncbi.nlm.nih.gov/pubmed/24205387 "Huang VJ, Stein KC, True HL. Spontaneous variants of the [RNQ+] prion in yeast demonstrate the extensive conformational diversity possible with prion proteins.  PLoS One. 2013 Oct 25;8(10):e79582. doi: 10.1371/journal.pone.0079582. eCollection 2013. PubMed PMID: 24205387; PubMed Central PMCID: PMC3808357."
+
+[Westergard & True 2014]: http://www.ncbi.nlm.nih.gov/pubmed/24628771 "Westergard L, True HL. Extracellular environment modulates the formation and propagation of particular amyloid structures. Mol Microbiol. 2014 May;92(4):698-715. doi: 10.1111/mmi.12579. Epub 2014 Apr 9. PubMed PMID: 24628771."
+
+[Stein & True 2014]: http://www.ncbi.nlm.nih.gov/pubmed/24811344 "Stein KC, True HL. Extensive diversity of prion strains is defined by differential chaperone interactions and distinct amyloidogenic regions. PLoS Genet. 2014 May 8;10(5):e1004337. doi: 10.1371/journal.pgen.1004337. eCollection  2014 May. PubMed PMID: 24811344; PubMed Central PMCID: PMC4014422."
+
+[Vitrenko 2007a]: http://www.ncbi.nlm.nih.gov/pubmed/17121829 "Vitrenko YA, Gracheva EO, Richmond JE, Liebman SW. Visualization of aggregation of the Rnq1 prion domain and cross-seeding interactions with Sup35NM. J Biol Chem. 2007 Jan 19;282(3):1779-87. Epub 2006 Nov 22. PubMed PMID: 17121829."
+
+[Vitrenko 2007b]: http://www.ncbi.nlm.nih.gov/pubmed/17415568 "Vitrenko YA, Pavon ME, Stone SI, Liebman SW. Propagation of the [PIN+] prion by fragments of Rnq1 fused to GFP. Curr Genet. 2007 May;51(5):309-19. Epub 2007 Apr 6. PubMed PMID: 17415568; PubMed Central PMCID: PMC2597802."
+
+[Tanaka 2006]: http://www.ncbi.nlm.nih.gov/pubmed/16810177 "Tanaka M, Collins SR, Toyama BH, Weissman JS. The physical basis of how prion  conformations determine strain phenotypes. Nature. 2006 Aug 3;442(7102):585-9. Epub 2006 Jun 28. PubMed PMID: 16810177."
+
+[Toyama 2007]: http://www.ncbi.nlm.nih.gov/pubmed/17767153 "Toyama BH, Kelly MJ, Gross JD, Weissman JS. The structural basis of yeast prion strain variants. Nature. 2007 Sep 13;449(7159):233-7. Epub 2007 Sep 2. PubMed PMID: 17767153."
+
+
+[Solforosi 2004]: http://www.ncbi.nlm.nih.gov/pubmed/14752167 "Solforosi L, Criado JR, McGavern DB, Wirz S, Sánchez-Alavez M, Sugama S, DeGiorgio LA, Volpe BT, Wiseman E, Abalos G, Masliah E, Gilden D, Oldstone MB, Conti B, Williamson RA. Cross-linking cellular prion protein triggers neuronal apoptosis in vivo. Science. 2004 Mar 5;303(5663):1514-6. Epub 2004 Jan 29. PubMed PMID: 14752167."
+
+[Sonati 2013]: http://www.ncbi.nlm.nih.gov/pubmed/23903654 "Sonati T, Reimann RR, Falsig J, Baral PK, O'Connor T, Hornemann S, Yaganoglu S, Li B, Herrmann US, Wieland B, Swayampakula M, Rahman MH, Das D, Kav N, Riek R, Liberski PP, James MN, Aguzzi A. The toxicity of antiprion antibodies is mediated by the flexible tail of the prion protein. Nature. 2013 Sep 5;501(7465):102-6. doi: 10.1038/nature12402. Epub 2013 Jul 31. PubMed PMID: 23903654."
+
+[Solomon 2011]: http://www.ncbi.nlm.nih.gov/pubmed/21385869 "Solomon IH, Khatri N, Biasini E, Massignan T, Huettner JE, Harris DA. An N-terminal polybasic domain and cell surface localization are required for mutant prion protein toxicity. J Biol Chem. 2011 Apr 22;286(16):14724-36. doi: 10.1074/jbc.M110.214973. Epub 2011 Mar 8. PubMed PMID: 21385869; PubMed Central PMCID: PMC3077669."
+
+[Solomon 2010]: http://www.ncbi.nlm.nih.gov/pubmed/20573963 "Solomon IH, Huettner JE, Harris DA. Neurotoxic mutants of the prion protein induce spontaneous ionic currents in cultured cells. J Biol Chem. 2010 Aug 20;285(34):26719-26. doi: 10.1074/jbc.M110.134619. Epub 2010 Jun 23. PubMed PMID: 20573963; PubMed Central PMCID: PMC2924115."
+
+[Li 2007]: http://www.ncbi.nlm.nih.gov/pubmed/17245437 "Li A, Christensen HM, Stewart LR, Roth KA, Chiesa R, Harris DA. Neonatal lethality in transgenic mice expressing prion protein with a deletion of residues 105-125. EMBO J. 2007 Jan 24;26(2):548-58. PubMed PMID: 17245437; PubMed Central  PMCID: PMC1783448."
+
+[Biasini 2012]: http://www.ncbi.nlm.nih.gov/pubmed/22137337 "Biasini E, Turnbaugh JA, Unterberger U, Harris DA. Prion protein at the crossroads of physiology and disease. Trends Neurosci. 2012 Feb;35(2):92-103. doi: 10.1016/j.tins.2011.10.002. Epub 2011 Dec 1. Review. PubMed PMID: 22137337;  PubMed Central PMCID: PMC3273588."
+
+[Kaufman 2015]: http://www.ncbi.nlm.nih.gov/pubmed/25707991 "Kaufman AC, Salazar SV, Haas LT, Yang J, Kostylev MA, Jeng AT, Robinson SA, Gunther EC, van Dyck CH, Nygaard HB, Strittmatter SM. Fyn inhibition rescues established memory and synapse loss in Alzheimer mice. Ann Neurol. 2015 Jun;77(6):953-71. doi: 10.1002/ana.24394. Epub 2015 Mar 21. PubMed PMID: 25707991."
+
+[Haas 2014]: http://www.ncbi.nlm.nih.gov/pubmed/25148681 "Haas LT, Kostylev MA, Strittmatter SM. Therapeutic molecules and endogenous ligands regulate the interaction between brain cellular prion protein (PrPC) and  metabotropic glutamate receptor 5 (mGluR5). J Biol Chem. 2014 Oct 10;289(41):28460-77. doi: 10.1074/jbc.M114.584342. Epub 2014 Aug 22. PubMed PMID: 25148681; PubMed Central PMCID: PMC4192497."
+
+[Freir 2011]: http://www.ncbi.nlm.nih.gov/pubmed/21654636 "Freir DB, Nicoll AJ, Klyubin I, Panico S, Mc Donald JM, Risse E, Asante EA, Farrow MA, Sessions RB, Saibil HR, Clarke AR, Rowan MJ, Walsh DM, Collinge J. Interaction between prion protein and toxic amyloid β assemblies can be therapeutically targeted at multiple sites. Nat Commun. 2011 Jun 7;2:336. doi: 10.1038/ncomms1341. PubMed PMID: 21654636; PubMed Central PMCID: PMC3156817."
+
+[Um 2013]: http://www.ncbi.nlm.nih.gov/pubmed/24012003 "Um JW, Kaufman AC, Kostylev M, Heiss JK, Stagi M, Takahashi H, Kerrisk ME, Vortmeyer A, Wisniewski T, Koleske AJ, Gunther EC, Nygaard HB, Strittmatter SM. Metabotropic glutamate receptor 5 is a coreceptor for Alzheimer aβ oligomer bound to cellular prion protein. Neuron. 2013 Sep 4;79(5):887-902. doi: 10.1016/j.neuron.2013.06.036. Erratum in: Neuron. 2013 Oct 16;80(2):531. PubMed PMID: 24012003; PubMed Central PMCID: PMC3768018."
+
+[Um 2012]: http://www.ncbi.nlm.nih.gov/pubmed/22820466 "Um JW, Nygaard HB, Heiss JK, Kostylev MA, Stagi M, Vortmeyer A, Wisniewski T,  Gunther EC, Strittmatter SM. Alzheimer amyloid-β oligomer bound to postsynaptic prion protein activates Fyn to impair neurons. Nat Neurosci. 2012 Sep;15(9):1227-35. doi: 10.1038/nn.3178. Epub 2012 Jul 22. PubMed PMID: 22820466; PubMed Central PMCID: PMC3431439."
+
+[Lauren 2009]: http://www.ncbi.nlm.nih.gov/pubmed/19242475 "Laurén J, Gimbel DA, Nygaard HB, Gilbert JW, Strittmatter SM. Cellular prion protein mediates impairment of synaptic plasticity by amyloid-beta oligomers. Nature. 2009 Feb 26;457(7233):1128-32. doi: 10.1038/nature07761. PubMed PMID: 19242475; PubMed Central PMCID: PMC2748841."
+
+[Collinge 1995]: http://www.ncbi.nlm.nih.gov/pubmed/8524411 "Collinge J, Palmer MS, Sidle KC, Hill AF, Gowland I, Meads J, Asante E, Bradley R, Doey LJ, Lantos PL. Unaltered susceptibility to BSE in transgenic mice expressing human prion protein. Nature. 1995 Dec 21-28;378(6559):779-83. Erratum  in: Nature 1997 Oct 2;389(6650):526. PubMed PMID: 8524411."
+
+[Wadsworth 2004]: http://www.ncbi.nlm.nih.gov/pubmed/15539564 "Wadsworth JD, Asante EA, Desbruslais M, Linehan JM, Joiner S, Gowland I, Welch J, Stone L, Lloyd SE, Hill AF, Brandner S, Collinge J. Human prion protein with valine 129 prevents expression of variant CJD phenotype. Science. 2004 Dec 3;306(5702):1793-6. Epub 2004 Nov 11. PubMed PMID: 15539564."
+
+[Lukic 2010]: http://www.ncbi.nlm.nih.gov/pubmed/20697057 "Lukic A, Beck J, Joiner S, Fearnley J, Sturman S, Brandner S, Wadsworth JD, Collinge J, Mead S. Heterozygosity at polymorphic codon 219 in variant creutzfeldt-jakob disease. Arch Neurol. 2010 Aug;67(8):1021-3. doi: 10.1001/archneurol.2010.184. PubMed PMID: 20697057."
+
+[Mead 2003]: http://www.ncbi.nlm.nih.gov/pubmed/12690204 "Mead S, Stumpf MP, Whitfield J, Beck JA, Poulter M, Campbell T, Uphill JB, Goldstein D, Alpers M, Fisher EM, Collinge J. Balancing selection at the prion protein gene consistent with prehistoric kurulike epidemics. Science. 2003 Apr 25;300(5619):640-3. Epub 2003 Apr 10. PubMed PMID: 12690204."
+
+[Mead 2009]: http://www.ncbi.nlm.nih.gov/pubmed/19923577 "Mead S, Whitfield J, Poulter M, Shah P, Uphill J, Campbell T, Al-Dujaily H, Hummerich H, Beck J, Mein CA, Verzilli C, Whittaker J, Alpers MP, Collinge J. A novel protective prion protein variant that colocalizes with kuru exposure. N Engl J Med. 2009 Nov 19;361(21):2056-65. doi: 10.1056/NEJMoa0809716. PubMed PMID: 19923577."
+
+
+
