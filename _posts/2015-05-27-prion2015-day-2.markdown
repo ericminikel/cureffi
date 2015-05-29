@@ -60,6 +60,8 @@ Next he discussed efforts to identify the PiB binding site [[Matveev 2014]]. The
 
 Finally, Dr. Walker noted that A&beta; shares essentially all of the key prion-like molecular features of PrP, except that it is not known to be transmissible to humans. He and Dr. Jucker recently opined that the term "prion" should be redefined as a backronym for "proteinaceous nucleating particle", a definition which would focus on the molecular properties of proteins rather than on infectivity *per se* [[Walker & Jucker 2015]].
 
+*Update 2015-05-29: Dr. Walker's talk was the subject of a [Nature News article](10.1038/nature.2015.17654).*
+
 #### Q&A
 
 Q. Jean Manson: You describe Alzheimer's as an exclusively human disease, but cats and dogs have similar neurodegenerative diseases.
