@@ -1,0 +1,203 @@
+---
+layout: post
+title:  "Prion2015 Day 4"
+date:   2015-05-29 12:01:00
+author: ericminikel
+location: Ft. Collins, CO
+thumb120: 
+summary200: "Notes from Day 4 of the Prion2015 conference in Ft. Collins, CO."
+---
+
+### Thomas Wisniewski
+
+Dr. Wisniewski's talk spanned his last decade-plus worth of work towards the development of vaccines against peripherally acquired prion disease in mouse models [[Goni 2005], [Goni 2008]] and more recently in deer [[Goni 2015]].
+
+He then moved on to reviewing both active and passive immunization approaches for Alzheimer disease, following along the lines of a review he recently published [[Wisniewski & Goni 2015]]. He listed the different types of toll-like receptors and the opportunities for stimulating innate immunity, and then presented some results from a study last year in which he targeted TLR9 in a mouse model of Alzheimer disease [[Scholtzova 2014]]. He then discussed some recent unpublished results and plans for future experiments.
+
+### Randal Halfmann
+
+Dr. Halfmann began with a review of some interesting complexities of yeast prions. He noted that some prion states result in either cell death, or multicellular cooperative behavior.
+
+He discussed Zhijian Chen's discovery that the mammalian protein MAVS forms a prion as part of its innate immune signaling role [[Hou 2011]]. The mechanism is that MAVS polymerization along the mitochonrdiral outer membrane activates NF-&Kappa;B and ultimately interferon. MAVS is unlike other prions. Diverse prion substrates such as PrP, tau, and Sup35 are united by having intrinsically disordered domains, while MAVS is a highly structured alpha-helical protein with a well-characterized crystal structure. Dr. Halfmann wanted more evidence that MAVS is a bona fide prion, so he partnered with Dr. Chen [[Cai 2014]]. They fused the MAVS prion domain, called CARD, to Sup35's translation termination domain, and found that it was able to form a prion and inactivate the Sup35 native function, just like the Sup35NM domain can do. The prion state was also transmissible via cytoplasmic mixing (cytoduction), and overall behaved exactly like <em>[PSI<sup>+</sup>]</em>. They also found that a mammalian protein, RIG-I, involved in the same innate immune pathway, can trigger MAVS prion formation in yeast. And they found that a series of mutants that were already shown to prevent pathway activation [[Liu 2013]] can prevent prion polymerization in yeast, and can prevent RIG-I from nucleating prion formation. Then they did the converse experiment, which Dr. Halfmann said he thought would never work: they tried to reconstitute the behavior of MAVS in a mammalian cell system using a yeast prion domain. They swapped out the CARD domain of MAVS for the Sup35NM domain. They found that the interferon response could then be activated by inoculating Sup35NM fibrils into the cells. This effect had "like seeds like" specificity - adding PrP fibrils did not induce an interferon response.
+
+Finally, they repeated the entire battery of experiments for a different putative functional mammalian prion, called ASC. The results were very similar to the results for MAVS. For both MAVS and ASC, they found that the prions do not meet the definition of amyloid - they have some morphological similarities but different tinctoral properties, for instance not binding ThT. The structure of these prions has now been solved to 3.8&Aring; by cryo-EM by [[Lu 2014]]. Here is the structure [PDB# [3J63](http://www.rcsb.org/pdb/explore/explore.do?structureId=3J63)]:
+
+```
+fetch 3j63
+hide everything
+bg_color white
+show surface
+color 0xFF2015
+```
+
+![](/media/2015/05/3j63.png)
+
+Soon thereafter, two other groups reported that these prion particles are released by cells and taken up into other cells, serially propagating the innate immune response [[Franklin 2014] and I didn't catch the other citation].
+
+He has since explored the larger realm of prions in innate immunity and cell death / apoptosis. He believes there are a lot of prions in these gene families and that many of them are conserved across very distantly related species. For instance, he mentioned a recent report that the mammalian RHIM motif, found in some cell death pathway proteins, is orthologous to *Porospoda*'s HET-s [[Kajava 2014]].
+
+#### Q&A
+
+I didn't follow exactly all of the arguments, but there was some back-and-forth between Dr. Halfmann, Claudio Soto, Holger Wille and one other person I couldn't see, about whether ASC and MAVS really meet the criteria to be a prion, and if they do meet it, then how are actin and tubulin not also prions? Dr. Halfmann replied that he thought it was important not to focus on the terminology.
+
+Also, Peter Kl&ouml;hn asked whether they've determined how exactly the aggregates cause cell death - for instance, have they used caspase inhibitors to show that it's caspase-dependent. Dr. Halfmann replied that it is indeed caspase-dependent.
+
+### Tricia Serio
+
+Dr. Serio presented unpublished data on the role of chaperones in the nucleation and curing of prions in yeast. 
+
+### Jes&uacute;s Requena
+
+Dr. Requena explained the use of limited proteolysis plus mass spectrometry to map the structure of PrP<sup>Sc</sup>, an approach he applied to anchorless prions a couple of years ago [[Vazquez-Fernandez 2012]]. As stated in his oral abstract O.14 [here](http://www.tandfonline.com/doi/full/10.1080/19336896.2015.1036655), he has now applied this approach to PMCA-derived recombinant PrP prions (provided by Joaqu&iacute;n Castilla), and he sees the same signature, thus suggesting that brain-derived and PMCA-derived prions share a common structure. He also spent a few minutes discussing his poster #P.112 [here](http://www.tandfonline.com/doi/full/10.1080/19336896.2015.1033248), which argues that the protease accessibility sites in multiple PrP<sup>Sc</sup> strains, together with other lines of evidence, suggest a &beta;-solenoid structure.
+
+#### Q&A
+
+Q. Jiri Safar: There is a risk that your preparations contain a mixture of infectious prions and non-infectious amyloid species, and that the species you are measuring is not the infectious one. Have you considered looking at known non-infectious recombinant amyloid as a negative control?
+
+A. Jes&uacute;s Requena: A problem is that to some degree, the data from non-infectious amyloids suggest a similar secondary structure - the same portions of PrP form beta strands - the question is whether the larger superstructure is a solenoid or something different. But yes, you're right that there could be some degree of mixture.
+
+### Anton Gorikovskiy
+
+Dr. Gorikovskiy explained in greater detail his and Reed Wickner's published work on locating the folds in the parallel in-register intermolecular &beta;-sheet (PIRIBS) structure of Sup35 amyloid [[Gorkovskiy 2014]], which Dr. Wickner discussed briefly in his [keynote](/2015/05/26/prion2015-day-1/). He explained the utility of dipolar recoupling as a method to discriminate between scenarios of parallel in-register vs. anti-parallel vs. parallel out-of-register structures. This method lets you measure the distance between copies of the same residue in different molecules of the protein. Based on this distance you can tell which residues are or are not parallel and in-register. They applied this method to a variety of Sup35 mutants with <sup>13</sup>C-labeled isoleucine introduced at various points. He also explained how they took great care to ensure that the species of amyloid they were measuring in these mutants were able to propagate *in vivo*. They identified specific residues that appear to be parallel in-register and other residues that are clearly not parallel in-register, which therefore appear to represent the folds of the PIRIBS structure (loops between beta sheets).
+
+#### Q&A
+
+Mark Zabel announced that it is Dr. Gorikovskiy's birthday and that his brother sponsored cake and ice cream which will be served momentarily.
+
+### Eric Ross
+
+Dr. Ross studies the amino acid composition and sequence requirements for prion formation. He began by discussing his lab's *in silico* studies [[Toombs 2010], esp. [Figure 6](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2798286/figure/f6/)], indicating that the proteins that form prions in yeast are those that have both a high "prion propensity" and a low "order propensity". A series of experiments from the Ross lab have explored the requirements for prion activity, and the ways in which different amino acids confer differing amounts of "prion propensity", but there are also poorly understood sequence context effects [[Toombs 2011], [Gonzalez Nelson 2014], [MacLea 2015]]. As a result, there has been some success in bioinformatic prediction of prion domains [e.g. [Ross 2013]] but there is much work left to do.
+
+He concluded with some speculation on how evolution both creates prion domains, and keeps them in check. He argued that genetic drift will tend to push potential prion domains right to the edge of aggregation, to the point where a single additional mutation may be sufficient to cause prion formation. He also noted that once a prion domain is formed, its aggregation propensity can be greatly increased by the duplicaton of multiple repeating copies of the domain.
+
+### Gerold Schmitt-Ulms
+
+Back when he worked in the Prusiner lab, Dr. Schmitt-Ulms discovered that neuronal cell adhesion molecule 1 (NCAM1) is the major protein that physically interacts with PrP<sup>C</sup> [[Schmitt-Ulms 2001]]. They used formaldehyde to cross-link PrP to any interacting factors, ran it on a gel to separate cross-linked PrP from PrP monomers, and then boiled the cross-linked bands to separate the interactors. They found abundant NCAM1. At the time, the Prusiner lab's interest was in identifying [Protein X](/2013/08/16/is-protein-x-the-basis-of-dominant-negative-effects-in-prion-disease/), so when they found that NCAM1 knockout mice had unaltered prion disease incubation times, they lost all interest in the protein.
+
+Years later, once he had his own lab, Dr. Schmitt-Ulms rekindled his interest in NCAM1. This was inspired in part by the connection between PrP and ZIP proteins. He discovered that PrP and the ZIP proteins are paralogous - indeed, ZIP10 has about as much similarity to PrP as Dpl does [[Schmitt-Ulms 2009]]. Also, zebrafish studies identified similar deficits in epithelial-mesenchymal transition in embryos with zebrafish PrP1 or ZIP1 knocked down by morpholino [[Yamashita 2004], [Malaga-Trillo 2009]].
+
+Most of the talk consisted of unpublished data from experiments by his student Mohad Mehrabian. These data are summarized in his abstract O.15 [here](http://www.tandfonline.com/doi/full/10.1080/19336896.2015.1036655).
+
+He ended by saying how excited he is that [Joel Watts](http://joelwattslab.org/) has joined his department at University of Toronto, and that he looks forward to many future collaborations.
+
+### Lindsay Parrie
+
+Dr. Parrie is a postdoc in [Richard Bessen's lab](http://csu-cvmbs.colostate.edu/academics/mip/prion-research-center/Pages/bessen-people.aspx), and if you've followed Dr. Bessen's work you know he has a longstanding interest in the role of olfactory neurons and olfactory mucosa in the uptake, neuroinvasion, and shedding of prions [[Bessen 2009], [Bessen 2010], [Bessen 2012], [Crowell 2015]]. Dr. Parrie presented unpublished data (see abstract O.16 [here](http://www.tandfonline.com/doi/full/10.1080/19336896.2015.1036655)) on the effects of prion infection on olfactory sensory neuron proliferation after injury. 
+
+### Eri Saijo
+
+Dr. Saijo reviewed the Horiuchi lab's development of the 6H10 antibody. It was created by immunizing PrP knockout mice with purified Obihiro strain PrP<sup>Sc</sup>, and the antibody exhibits conformational selectivity for PrP<sup>Sc</sup> over denatured PrP<sup>Sc</sup> [[Horiuchi 2009]]. As summarized in her abstract, O.12 [here](http://www.tandfonline.com/doi/full/10.1080/19336896.2015.1036655), she presented unpublished data indicating that this antibody also exhibits differential binding between PrP<sup>Sc</sup> of different strains, and is able to discriminate between RML and 22L prions. 
+
+#### Q&A
+
+Q. Have you thought about testing the 15B3 antibody?
+
+A. No.
+
+### Holger Wille
+
+I wasn't sure how much of this was unpublished - I am checking with Dr. Wille and will update this post once I'm sure.
+
+### Jiri Safar
+
+Dr. Safar presented recently published work from his lab and Witold Surewicz's lab on the structural determinants of phenotypic diversity across prion strains [[Safar 2015]]. He started from clinical data, noting that mean survival time after disease onset is almost four times longer in MM2 sCJD than in MM1 sCJD. His earlier data from conformation-dependent immunoassay, QuIC, and PMCA indicated that it is the more unstable prion strains that replicate faster and exhibit more rapid disease progression *in vivo* [[Kim 2012]]. On the face of it, those data would seem to be in agreement with the model Jonathan Weissman has proposed for yeast prions [[Tanaka 2006], [Toyama 2007]]. However, his latest data no longer support that model. He and Dr. Surewicz then performed hydrogen/deuterium exchange on MM1 sCJD vs. MM2 sCJD prions and found large differences in solvent accessibility, with MM2 more accessible towards the central region (~117 - 144) while MM1 is more accessible in the C terminus (~153 - 224) [[Safar 2015] - [Figure 3](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC4397081/figure/ppat.1004832.g003/)]. This indicates a difference in backbone conformation. The H/D exchange difference is particularly great for histidines, indicative of "quaternary packing arrangements". The two strains also differ in particle size and replication rate in PMCA and QuIC [[Safar 2015]]. The overall interpretation is that the kinetics of replication are ultimately driven by an interaction between two factors: 1) PrP<sup>Sc</sup> stability and 2) the affinity of PrP<sup>Sc</sup> for PrP<sup>C</sup>.
+
+#### Q&A
+
+Q. Michael Geschwind: How does the replication rate of MM1 versus MM2 relate to the faster clinical course?
+
+A. This is exactly what is surprising. Jonathan Weissman's model indicates that more unstable strains replicate more quickly, while we find that MM1 is more stable but replicates more rapidly.
+
+### Jason Bartz
+
+Dr. Bartz began with his early work showing that differences in incubation time for prion strains represent an interaction between strain and inoculation route [[Bartz 2005]]. In hamsters, the DY TME strain not only has longer incubation times than HY on i.c. inoculation, it also is unable to neuroinvade after oral or peripheral inoculation. In fact, it appears to not even replicate in lymphoid tissues, as the hamsters inoculated peripherally with DY had no evidence of PrP<sup>Sc</sup> in their spleen or lymph nodes after 60 or 120 days [[Bartz 2005]]. I quickly got lost in the details, but he discussed several experiments on the transport proprties of different strains, for example their ability to cross epithelial layers after extranasal inoculation [[Kincaid 2012]]. He also discussed new results from his lab showing the presence of RT-QuIC seeding activity in blood throughout the incubation period [[Elder 2015]]. The summary conclusion of all of this work was that DY's inability to neuroinvade is due to an inability to colonize lymphoid organs. Then he presented further work dissecting the mechanism, some of which was unpublished.
+
+### Edward Pokrishevsky
+
+Dr. Pokrishevsky presented his work in Neil Cashman's lab suggesting that incorrect localization of FUS and/or TDP43 in the cytosol can induce the prionization of wild-type SOD1 [[Pokrishevsky 2012]]. These findings offer a possible link between *TARDBP* or *FUS*-linked ALS and *SOD1* ALS, and a possible common disease mechanism between genetically disparate but clinically similar forms of ALS.
+
+### Closing ceremonies
+
+Glenn Telling thanked everyone. He also praised the attendees for having made extraordinary progress in prion research in the last 20 years, and for being so collaborative. He expressed his hope that prion researchers will continue to be an outsanding example of being collegial and collaborative and attracting young talent. Mark Zabel announced the [poster](http://www.tandfonline.com/doi/full/10.1080/19336896.2015.1033248) prize winners: Malin Reiten, Yo Ching Cheng, Sean Cascarina, Tim Kurt, and Cheng Fang. Hilariously, one of the prizes was David Borchelt's brewery tour ticket. Hidehiro Mizusawa announced that Prion2016 will take place at Hitotsubashi Hall, National Center of Sciences Building, Tokyo, Japan on May 11-13, 2016 (Wed-Fri). Before the main meeting there will be a teaching course May 8-10, and workshops the morning of May 11.
+
+![](/media/2015/05/prion2016.png)
+
+![](/media/2015/05/prion2016-venue.png)
+
+The venue is the building highlighted in purple in the second image. Behind it is the Emperor's Palace.
+
+[Pokrishevsky 2012]: http://www.ncbi.nlm.nih.gov/pubmed/22493728 "Pokrishevsky E, Grad LI, Yousefi M, Wang J, Mackenzie IR, Cashman NR. Aberrant localization of FUS and TDP43 is associated with misfolding of SOD1 in amyotrophic lateral sclerosis. PLoS One. 2012;7(4):e35050. doi: 10.1371/journal.pone.0035050. Epub 2012 Apr 6. PubMed PMID: 22493728; PubMed Central PMCID: PMC3320864."
+
+[Wasmer 2008]: http://www.ncbi.nlm.nih.gov/pubmed/18339938 "Wasmer C, Lange A, Van Melckebeke H, Siemer AB, Riek R, Meier BH. Amyloid fibrils of the HET-s(218-289) prion form a beta solenoid with a triangular hydrophobic core. Science. 2008 Mar 14;319(5869):1523-6. doi: 10.1126/science.1151839. Erratum in: Science. 2008 Apr 4;320(5872):50. PubMed PMID: 18339938."
+
+[Elder 2015]: http://www.ncbi.nlm.nih.gov/pubmed/25926635 "Elder AM, Henderson DM, Nalls AV, Hoover EA, Kincaid AE, Bartz JC, Mathiason CK. Immediate and ongoing detection of prions in the blood of hamsters and deer following oral, nasal, or blood inoculations. J Virol. 2015 Apr 29. pii: JVI.00760-15. [Epub ahead of print] PubMed PMID: 25926635."
+
+[Kincaid 2012]: http://www.ncbi.nlm.nih.gov/pubmed/22973025 "Kincaid AE, Hudson KF, Richey MW, Bartz JC. Rapid transepithelial transport of prions following inhalation. J Virol. 2012 Dec;86(23):12731-40. doi: 10.1128/JVI.01930-12. Epub 2012 Sep 12. PubMed PMID: 22973025; PubMed Central PMCID: PMC3497678."
+
+[Bartz 2005]: http://www.ncbi.nlm.nih.gov/pubmed/16140762/ "Bartz JC, Dejoia C, Tucker T, Kincaid AE, Bessen RA. Extraneural prion neuroinvasion without lymphoreticular system infection. J Virol. 2005 Sep;79(18):11858-63. PubMed PMID: 16140762; PubMed Central PMCID: PMC1212615."
+
+[Tanaka 2006]: http://www.ncbi.nlm.nih.gov/pubmed/16810177 "Tanaka M, Collins SR, Toyama BH, Weissman JS. The physical basis of how prion  conformations determine strain phenotypes. Nature. 2006 Aug 3;442(7102):585-9. Epub 2006 Jun 28. PubMed PMID: 16810177."
+
+[Toyama 2007]: http://www.ncbi.nlm.nih.gov/pubmed/17767153 "Toyama BH, Kelly MJ, Gross JD, Weissman JS. The structural basis of yeast prion strain variants. Nature. 2007 Sep 13;449(7159):233-7. Epub 2007 Sep 2. PubMed PMID: 17767153."
+
+[Safar 2015]: http://www.ncbi.nlm.nih.gov/pubmed/25875953 "Safar JG, Xiao X, Kabir ME, Chen S, Kim C, Haldiman T, Cohen Y, Chen W, Cohen  ML, Surewicz WK. Structural determinants of phenotypic diversity and replication  rate of human prions. PLoS Pathog. 2015 Apr 14;11(4):e1004832. doi: 10.1371/journal.ppat.1004832. eCollection 2015 Apr. PubMed PMID: 25875953; PubMed Central PMCID: PMC4397081."
+
+[Kim 2012]: http://www.ncbi.nlm.nih.gov/pubmed/22876179 "Kim C, Haldiman T, Surewicz K, Cohen Y, Chen W, Blevins J, Sy MS, Cohen M, Kong Q, Telling GC, Surewicz WK, Safar JG. Small protease sensitive oligomers of  PrPSc in distinct human prions determine conversion rate of PrP(C). PLoS Pathog.  2012;8(8):e1002835. doi: 10.1371/journal.ppat.1002835. Epub 2012 Aug 2. PubMed PMID: 22876179; PubMed Central PMCID: PMC3410855."
+
+[Wan 2012]: http://www.ncbi.nlm.nih.gov/pubmed/22677387 "Wan W, Wille H, Stöhr J, Baxa U, Prusiner SB, Stubbs G. Degradation of fungal  prion HET-s(218-289) induces formation of a generic amyloid fold. Biophys J. 2012 May 16;102(10):2339-44. doi: 10.1016/j.bpj.2012.04.011. Epub 2012 May 15. PubMed  PMID: 22677387; PubMed Central PMCID: PMC3353098."
+
+[Wille 2009]: http://www.ncbi.nlm.nih.gov/pubmed/19805070 "Wille H, Bian W, McDonald M, Kendall A, Colby DW, Bloch L, Ollesch J, Borovinskiy AL, Cohen FE, Prusiner SB, Stubbs G. Natural and synthetic prion structure from X-ray fiber diffraction. Proc Natl Acad Sci U S A. 2009 Oct 6;106(40):16990-5. doi: 10.1073/pnas.0909006106. Epub 2009 Sep 28. PubMed PMID: 19805070; PubMed Central PMCID: PMC2761340."
+
+[Horiuchi 2009]: http://www.ncbi.nlm.nih.gov/pubmed/19766283 "Horiuchi M, Karino A, Furuoka H, Ishiguro N, Kimura K, Shinagawa M. Generation of monoclonal antibody that distinguishes PrPSc from PrPC and neutralizes prion infectivity. Virology. 2009 Nov 25;394(2):200-7. doi: 10.1016/j.virol.2009.08.025. Epub 2009 Sep 18. PubMed PMID: 19766283."
+
+[Bessen 2012]: http://www.ncbi.nlm.nih.gov/pubmed/22130543 "Bessen RA, Wilham JM, Lowe D, Watschke CP, Shearin H, Martinka S, Caughey B, Wiley JA. Accelerated shedding of prions following damage to the olfactory epithelium. J Virol. 2012 Feb;86(3):1777-88. doi: 10.1128/JVI.06626-11. Epub 2011 Nov 30. PubMed PMID: 22130543; PubMed Central PMCID: PMC3264367."
+
+[Bessen 2010]: http://www.ncbi.nlm.nih.gov/pubmed/20419120 "Bessen RA, Shearin H, Martinka S, Boharski R, Lowe D, Wilham JM, Caughey B, Wiley JA. Prion shedding from olfactory neurons into nasal secretions. PLoS Pathog. 2010 Apr 15;6(4):e1000837. doi: 10.1371/journal.ppat.1000837. PubMed PMID: 20419120; PubMed Central PMCID: PMC2855443."
+
+[Bessen 2009]: http://www.ncbi.nlm.nih.gov/pubmed/19369351 "Bessen RA, Martinka S, Kelly J, Gonzalez D. Role of the lymphoreticular system in prion neuroinvasion from the oral and nasal mucosa. J Virol. 2009 Jul;83(13):6435-45. doi: 10.1128/JVI.00018-09. Epub 2009 Apr 15. PubMed PMID: 19369351; PubMed Central PMCID: PMC2698571."
+
+[Crowell 2015]: http://www.ncbi.nlm.nih.gov/pubmed/25822718 "Crowell J, Wiley JA, Bessen RA. Lesion of the olfactory epithelium accelerates prion neuroinvasion and disease onset when prion replication is restricted to neurons. PLoS One. 2015 Mar 30;10(3):e0119863. doi: 10.1371/journal.pone.0119863. eCollection 2015. PubMed PMID: 25822718; PubMed Central PMCID: PMC4379011."
+
+[Schmitt-Ulms 2009]: http://www.ncbi.nlm.nih.gov/pubmed/19784368 "Schmitt-Ulms G, Ehsani S, Watts JC, Westaway D, Wille H. Evolutionary descent  of prion genes from the ZIP family of metal ion transporters. PLoS One. 2009 Sep  28;4(9):e7208. doi: 10.1371/journal.pone.0007208. PubMed PMID: 19784368; PubMed Central PMCID: PMC2745754."
+
+[Yamashita 2004]: http://www.ncbi.nlm.nih.gov/pubmed/15129296 "Yamashita S, Miyagi C, Fukada T, Kagara N, Che YS, Hirano T. Zinc transporter  LIVI controls epithelial-mesenchymal transition in zebrafish gastrula organizer.  Nature. 2004 May 20;429(6989):298-302. Epub 2004 May 5. PubMed PMID: 15129296."
+
+[Malaga-Trillo 2009]: http://www.ncbi.nlm.nih.gov/pubmed/19278297 "Málaga-Trillo E, Solis GP, Schrock Y, Geiss C, Luncz L, Thomanetz V, Stuermer  CA. Regulation of embryonic cell adhesion by the prion protein. PLoS Biol. 2009 Mar 10;7(3):e55. doi: 10.1371/journal.pbio.1000055. PubMed PMID: 19278297; PubMed Central PMCID: PMC2653553."
+
+[Schmitt-Ulms 2001]: http://www.ncbi.nlm.nih.gov/pubmed/11743735 "Schmitt-Ulms G, Legname G, Baldwin MA, Ball HL, Bradon N, Bosque PJ, Crossin KL, Edelman GM, DeArmond SJ, Cohen FE, Prusiner SB. Binding of neural cell adhesion molecules (N-CAMs) to the cellular prion protein. J Mol Biol. 2001 Dec 14;314(5):1209-25. PubMed PMID: 11743735."
+
+[Ross 2013]: http://www.ncbi.nlm.nih.gov/pubmed/23719919 "Ross ED, Maclea KS, Anderson C, Ben-Hur A. A bioinformatics method for identifying Q/N-rich prion-like domains in proteins. Methods Mol Biol. 2013;1017:219-28. doi: 10.1007/978-1-62703-438-8_16. PubMed PMID: 23719919."
+
+[Toombs 2011]: http://www.ncbi.nlm.nih.gov/pubmed/21760933 "Toombs JA, Liss NM, Cobble KR, Ben-Musa Z, Ross ED. [PSI+] maintenance is dependent on the composition, not primary sequence, of the oligopeptide repeat domain. PLoS One. 2011;6(7):e21953. doi: 10.1371/journal.pone.0021953. Epub 2011  Jul 8. PubMed PMID: 21760933; PubMed Central PMCID: PMC3132755."
+
+[MacLea 2015]: http://www.ncbi.nlm.nih.gov/pubmed/25547291 "MacLea KS, Paul KR, Ben-Musa Z, Waechter A, Shattuck JE, Gruca M, Ross ED. Distinct amino acid compositional requirements for formation and maintenance of the [PSI⁺] prion in yeast. Mol Cell Biol. 2015 Mar;35(5):899-911. doi: 10.1128/MCB.01020-14. Epub 2014 Dec 29. PubMed PMID: 25547291; PubMed Central PMCID: PMC4323492."
+
+[Gonzalez Nelson 2014]: http://www.ncbi.nlm.nih.gov/pubmed/24586661 "Gonzalez Nelson AC, Paul KR, Petri M, Flores N, Rogge RA, Cascarina SM, Ross ED. Increasing prion propensity by hydrophobic insertion. PLoS One. 2014 Feb 20;9(2):e89286. doi: 10.1371/journal.pone.0089286. eCollection 2014. PubMed PMID: 24586661; PubMed Central PMCID: PMC3930707."
+
+[Toombs 2010]: http://www.ncbi.nlm.nih.gov/pubmed/19884345 "Toombs JA, McCarty BR, Ross ED. Compositional determinants of prion formation  in yeast. Mol Cell Biol. 2010 Jan;30(1):319-32. doi: 10.1128/MCB.01140-09. Epub . PubMed PMID: 19884345; PubMed Central PMCID: PMC2798286."
+
+[Gorkovskiy 2014]: http://www.ncbi.nlm.nih.gov/pubmed/25313080 "Gorkovskiy A, Thurber KR, Tycko R, Wickner RB. Locating folds of the in-register parallel β-sheet of the Sup35p prion domain infectious amyloid. Proc  Natl Acad Sci U S A. 2014 Oct 28;111(43):E4615-22. doi: 10.1073/pnas.1417974111.  Epub 2014 Oct 13. PubMed PMID: 25313080; PubMed Central PMCID: PMC4217437."
+
+[Vazquez-Fernandez 2012]: http://www.ncbi.nlm.nih.gov/pubmed/23185550 "Vázquez-Fernández E, Alonso J, Pastrana MA, Ramos A, Stitz L, Vidal E, Dynin I, Petsch B, Silva CJ, Requena JR. Structural organization of mammalian prions as probed by limited proteolysis. PLoS One. 2012;7(11):e50111. doi: 10.1371/journal.pone.0050111. Epub 2012 Nov 20. PubMed PMID: 23185550; PubMed Central PMCID: PMC3502352."
+
+[Kajava 2014]: http://www.ncbi.nlm.nih.gov/pubmed/25500536 "Kajava AV, Klopffleisch K, Chen S, Hofmann K. Evolutionary link between metazoan RHIM motif and prion-forming domain of fungal heterokaryon incompatibility factor HET-s/HET-s. Sci Rep. 2014 Dec 11;4:7436. doi: 10.1038/srep07436. PubMed PMID: 25500536; PubMed Central PMCID: PMC4262963."
+
+[Franklin 2014]: http://www.ncbi.nlm.nih.gov/pubmed/24952505 "Franklin BS, Bossaller L, De Nardo D, Ratter JM, Stutz A, Engels G, Brenker C, Nordhoff M, Mirandola SR, Al-Amoudi A, Mangan MS, Zimmer S, Monks BG, Fricke M, Schmidt RE, Espevik T, Jones B, Jarnicki AG, Hansbro PM, Busto P, Marshak-Rothstein A, Hornemann S, Aguzzi A, Kastenmüller W, Latz E. The adaptor ASC has extracellular and 'prionoid' activities that propagate inflammation. Nat  Immunol. 2014 Aug;15(8):727-37. doi: 10.1038/ni.2913. Epub 2014 Jun 22. PubMed PMID: 24952505; PubMed Central PMCID: PMC4116676."
+
+[Lu 2014]: http://www.ncbi.nlm.nih.gov/pubmed/24630722 "Lu A, Magupalli VG, Ruan J, Yin Q, Atianand MK, Vos MR, Schröder GF, Fitzgerald KA, Wu H, Egelman EH. Unified polymerization mechanism for the assembly of ASC-dependent inflammasomes. Cell. 2014 Mar 13;156(6):1193-206. doi:  10.1016/j.cell.2014.02.008. PubMed PMID: 24630722; PubMed Central PMCID: PMC4000066."
+
+[Liu 2013]: http://www.ncbi.nlm.nih.gov/pubmed/23951545 "Liu S, Chen J, Cai X, Wu J, Chen X, Wu YT, Sun L, Chen ZJ. MAVS recruits multiple ubiquitin E3 ligases to activate antiviral signaling cascades. Elife. 2013 Aug 14;2:e00785. doi: 10.7554/eLife.00785. PubMed PMID: 23951545; PubMed Central PMCID: PMC3743401."
+
+[Cai 2014]: http://www.ncbi.nlm.nih.gov/pubmed/24630723 "Cai X, Chen J, Xu H, Liu S, Jiang QX, Halfmann R, Chen ZJ. Prion-like polymerization underlies signal transduction in antiviral immune defense and inflammasome activation. Cell. 2014 Mar 13;156(6):1207-22. doi: 10.1016/j.cell.2014.01.063. PubMed PMID: 24630723; PubMed Central PMCID: PMC4034535."
+
+[Hou 2011]: http://www.ncbi.nlm.nih.gov/pubmed/21782231 "Hou F, Sun L, Zheng H, Skaug B, Jiang QX, Chen ZJ. MAVS forms functional prion-like aggregates to activate and propagate antiviral innate immune response. Cell. 2011 Aug 5;146(3):448-61. doi: 10.1016/j.cell.2011.06.041. Epub 2011 Jul 21. Erratum in: Cell. 2011 Sep 2;146(5):841. PubMed PMID: 21782231; PubMed Central PMCID: PMC3179916."
+
+[Scholtzova 2014]: http://www.ncbi.nlm.nih.gov/pubmed/25178404 "Scholtzova H, Chianchiano P, Pan J, Sun Y, Goñi F, Mehta PD, Wisniewski T. Amyloid β and Tau Alzheimer's disease related pathology is reduced by Toll-like receptor 9 stimulation. Acta Neuropathol Commun. 2014 Sep 2;2:101. doi: 10.1186/s40478-014-0101-2. PubMed PMID: 25178404; PubMed Central PMCID: PMC4171548."
+
+[Wisniewski & Goni 2015]: http://www.ncbi.nlm.nih.gov/pubmed/25789753 "Wisniewski T, Goñi F. Immunotherapeutic approaches for Alzheimer's disease. Neuron. 2015 Mar 18;85(6):1162-76. doi: 10.1016/j.neuron.2014.12.064. Review. PubMed PMID: 25789753; PubMed Central PMCID: PMC4366618."
+
+[Goni 2005]: http://www.ncbi.nlm.nih.gov/pubmed/15878645 "Goñi F, Knudsen E, Schreiber F, Scholtzova H, Pankiewicz J, Carp R, Meeker HC, Rubenstein R, Brown DR, Sy MS, Chabalgoity JA, Sigurdsson EM, Wisniewski T. Mucosal vaccination delays or prevents prion infection via an oral route. Neuroscience. 2005;133(2):413-21. PubMed PMID: 15878645."
+
+[Goni 2008]: http://www.ncbi.nlm.nih.gov/pubmed/18407424 "Goñi F, Prelli F, Schreiber F, Scholtzova H, Chung E, Kascsak R, Brown DR, Sigurdsson EM, Chabalgoity JA, Wisniewski T. High titers of mucosal and systemic  anti-PrP antibodies abrogate oral prion infection in mucosal-vaccinated mice. Neuroscience. 2008 May 15;153(3):679-86. doi: 10.1016/j.neuroscience.2008.02.051. Epub 2008 Mar 6. PubMed PMID: 18407424; PubMed Central PMCID: PMC2474749."
+
+[Goni 2015]: http://www.ncbi.nlm.nih.gov/pubmed/25539804 "Goñi F, Mathiason CK, Yim L, Wong K, Hayes-Klug J, Nalls A, Peyser D, Estevez  V, Denkers N, Xu J, Osborn DA, Miller KV, Warren RJ, Brown DR, Chabalgoity JA, Hoover EA, Wisniewski T. Mucosal immunization with an attenuated Salmonella vaccine partially protects white-tailed deer from chronic wasting disease. Vaccine. 2015 Jan 29;33(5):726-33. doi: 10.1016/j.vaccine.2014.11.035. Epub 2014  Dec 21. PubMed PMID: 25539804; PubMed Central PMCID: PMC4304998."
