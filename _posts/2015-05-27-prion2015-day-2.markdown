@@ -20,7 +20,7 @@ Finally, Dr. Soto switched to the topic of environmental routes of prion transmi
 
 Q. How would the presence of A&beta; seeds in blood relate to immunotherapy strategies?
 
-A. David Housman has proposed the "sink hypothesis", wherein binding peripheral protein seeds with an antibody would result in a net flow of pathogenic seeds out of the brain.
+A. David Holtzmann has proposed the "sink hypothesis" [[DeMattos 2001]], wherein binding peripheral protein seeds with an antibody would result in a net flow of pathogenic seeds out of the brain. *Note: an earlier version of this post incorrectly stated that David Housman had proposed this hypothesis. [Thanks to Charlie Mays](http://www.cureffi.org/2015/05/27/prion2015-day-2/#comment-2051476298) for the correction and citation.*
 
 ### Marc Diamond
 
@@ -175,6 +175,7 @@ Dr. Moore presented her and Justin Greenlee's work on transmission properties of
 They have previously seen early changes in the retina of BSE-infected cattle [[Greenlee 2015]], so they next asked whether there were retinal changes associated with the E211K H-type BSE. This work is unpublished, but you can see Dr. Moore's abstract O.08 [here](http://www.tandfonline.com/doi/full/10.1080/19336896.2015.1036655).
 
 
+[DeMattos 2001]: http://www.ncbi.nlm.nih.gov/pubmed/11438712/ "DeMattos RB, Bales KR, Cummins DJ, Dodart JC, Paul SM, Holtzman DM. Peripheral anti-A beta antibody alters CNS and plasma A beta clearance and decreases brain A beta burden in a mouse model of Alzheimer's disease. Proc Natl Acad Sci U S A. 2001 Jul 17;98(15):8850-5. Epub 2001 Jul 3. PubMed PMID: 11438712; PubMed Central PMCID: PMC37524."
 
 [Greenlee 2015]: http://www.ncbi.nlm.nih.gov/pubmed/25756286 "Greenlee MH, Smith JD, Platt EM, Juarez JR, Timms LL, Greenlee JJ. Changes in  retinal function and morphology are early clinical signs of disease in cattle with bovine spongiform encephalopathy. PLoS One. 2015 Mar 10;10(3):e0119431. doi: 10.1371/journal.pone.0119431. eCollection 2015. PubMed PMID: 25756286; PubMed Central PMCID: PMC4355414."
 
