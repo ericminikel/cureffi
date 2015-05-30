@@ -102,7 +102,7 @@ While they were doing this work, the high-resolution structure of the HET-s prio
 
 ![](/media/2015/05/holger-wille-x-ray-fiber-diffraction-patterns.png)
 
-*Left: the known &beta;-solenoid structure of the *Porospoda* HET-s prion, and its X-ray fiber diffraction pattern. Center: the X-ray fiber diffraction pattern of brain-derived PrP<sup>Sc</sup>, which is similar to that of HET-s but consistent with 4 rungs rather than 2. Right: the X-ray fiber diffraction pattern of a non-infectious, *in vitro*-derived PrP amyloid, which is distinct from the other two.*
+*Left: the known &beta;-solenoid structure of the Porospoda HET-s prion, and its X-ray fiber diffraction pattern. Center: the X-ray fiber diffraction pattern of brain-derived PrP<sup>Sc</sup>, which is similar to that of HET-s but consistent with 4 rungs rather than 2. Right: the X-ray fiber diffraction pattern of a non-infectious, *in vitro*-derived PrP amyloid, which is distinct from the other two.*
 
 His talk then moved from fiber diffraction to cyro-electron microscopy. He said that EM is currently undergoing a revolution because direct electron detectors are making it possible to collect much higher-resolution images. He presented unpublished data from 3-D reconstruction and single particle analysis.
 
