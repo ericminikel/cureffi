@@ -96,7 +96,25 @@ A. No.
 
 ### Holger Wille
 
-I wasn't sure how much of this was unpublished - I am checking with Dr. Wille and will update this post once I'm sure.
+Dr. Wille started from his early X-ray fiber diffraction experiments in the Prusiner lab [[Wille 2009]], which showed a "meridional reflection" at 4.8&Aring;. He now interprets these data to indicate a 4-rung &beta;-solenoid structure where each PrP molecule occupies 4 rungs and spans a total of 19.6&Aring; along the long axis of the fibril. He then presented some unpublished work applying the same method to a variety of different prion strains. He also noted that non-infectious *in vitro* amyloids give a different structure [[Wan 2015]].
+
+While they were doing this work, the high-resolution structure of the HET-s prion was solved, revealing it to be a 2-rung &beta;-solenoid [[Wasmer 2008]]. They therefore prepared the fibrils and saw 4.8 and 9.6&Aring; signals virtually identical to the ones they saw for PrP<sup>Sc</sup>, except for the lack of a 6.4&Aring; signal, reflecting a 2-rung structure for HET-s compared to a 4-rung structure for PrP<sup>Sc</sup> [[Wan 2012]].
+
+![](/media/2015/05/holger-wille-x-ray-fiber-diffraction-patterns.png)
+
+*Left: the known &beta;-solenoid structure of the *Porospoda* HET-s prion, and its X-ray fiber diffraction pattern. Center: the X-ray fiber diffraction pattern of brain-derived PrP<sup>Sc</sup>, which is similar to that of HET-s but consistent with 4 rungs rather than 2. Right: the X-ray fiber diffraction pattern of a non-infectious, *in vitro*-derived PrP amyloid, which is distinct from the other two.*
+
+His talk then moved from fiber diffraction to cyro-electron microscopy. He said that EM is currently undergoing a revolution because direct electron detectors are making it possible to collect much higher-resolution images. He presented unpublished data from 3-D reconstruction and single particle analysis.
+
+#### Q&A
+
+Q. Detlev Riesner: One turn of the &beta;-solenoid has three bending points. Does your model predict where these are?
+
+A. The left-handed has three bending points, but the right-handed is less well defined and may not be as regular, so I stepping away from this a bit. But Jesus Requena's data presented earlier today based on limited proteolysis do provide some insight as to where the bends might be.
+
+Q. Byron Caughey: Impressive stuff, I have to think about it. Have you looked at anchorless fibrils with cryo-EM?
+
+A. No, so far we've only looked at RML with cryo-EM, and we are preparing to do it with CWD and BSE.
 
 ### Jiri Safar
 
@@ -125,6 +143,8 @@ Glenn Telling thanked everyone. He also praised the attendees for having made ex
 ![](/media/2015/05/prion2016-venue.png)
 
 The venue is the building highlighted in purple in the second image. Behind it is the Emperor's Palace.
+
+[Wan 2015]: http://www.ncbi.nlm.nih.gov/pubmed/25809267 "Wan W, Wille H, Stöhr J, Kendall A, Bian W, McDonald M, Tiggelaar S, Watts JC, Prusiner SB, Stubbs G. Structural studies of truncated forms of the prion protein PrP. Biophys J. 2015 Mar 24;108(6):1548-54. doi: 10.1016/j.bpj.2015.01.008. PubMed PMID: 25809267; PubMed Central PMCID: PMC4375555."
 
 [Pokrishevsky 2012]: http://www.ncbi.nlm.nih.gov/pubmed/22493728 "Pokrishevsky E, Grad LI, Yousefi M, Wang J, Mackenzie IR, Cashman NR. Aberrant localization of FUS and TDP43 is associated with misfolding of SOD1 in amyotrophic lateral sclerosis. PLoS One. 2012;7(4):e35050. doi: 10.1371/journal.pone.0035050. Epub 2012 Apr 6. PubMed PMID: 22493728; PubMed Central PMCID: PMC3320864."
 
