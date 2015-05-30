@@ -96,7 +96,7 @@ A. No.
 
 ### Holger Wille
 
-Dr. Wille started from his early X-ray fiber diffraction experiments in the Prusiner lab [[Wille 2009]], which showed a "meridional reflection" at 4.8&Aring;. He now interprets these data to indicate a 4-rung &beta;-solenoid structure where each PrP molecule occupies 4 rungs and spans a total of 19.6&Aring; along the long axis of the fibril. He then presented some unpublished work applying the same method to a variety of different prion strains. He also noted that non-infectious *in vitro* amyloids give a different structure [[Wan 2015]].
+Dr. Wille started from his early X-ray fiber diffraction experiments in the Prusiner lab [[Wille 2009]], which showed "meridional reflections" at 4.8, 6.4 and 9.6&Aring;. He now interprets these data to indicate a 4-rung &beta;-solenoid structure where each PrP molecule occupies 4 rungs and spans a total of 19.2&Aring; along the long axis of the fibril. He then presented some unpublished work applying the same method to a variety of different prion strains. He also noted that non-infectious *in vitro* amyloids give a different structure [[Wan 2015]].
 
 While they were doing this work, the high-resolution structure of the HET-s prion was solved, revealing it to be a 2-rung &beta;-solenoid [[Wasmer 2008]]. They therefore prepared the fibrils and saw 4.8 and 9.6&Aring; signals virtually identical to the ones they saw for PrP<sup>Sc</sup>, except for the lack of a 6.4&Aring; signal, reflecting a 2-rung structure for HET-s compared to a 4-rung structure for PrP<sup>Sc</sup> [[Wan 2012]].
 
