@@ -1,0 +1,54 @@
+---
+layout: post
+title:  "Prion2015 posters"
+date:   2015-06-01 12:01:00
+author: ericminikel
+location: Ft. Collins, CO
+thumb120: http://www.cureffi.org/media/2015/05/prion2015_posters_thumbnail.png
+summary200: "Notes from the poster sessions on days 2 and 3 of the Prion2015 conference in Ft. Collins, CO."
+---
+
+![](/media/2015/05/prion2015_posters.png)
+
+There were a lot of really awesome posters at Prion2015. Naturally, most of the data being presented were unpublished. Most of the people I talked to didn't want me to share anything about their poster on this blog, but here are a few of the most interesting posters I saw where people did give me permission to blog about it.
+
+![](/media/2015/05/kurt_giles.png)
+
+**Kurt Giles** presented a huge amount of data, consisting of all the latest findings from the Prusiner lab's *in vivo* tests of therapeutic lead compounds. Recall that a couple of years ago they announced that IND24 and cpd-b, lead compounds in the 2-aminothiazole and biaryl hydrazone classes, had both proven [strain-specific](/2013/10/17/2-aminothiazoles-a-tale-of-drug-resistance-and-strain-specificity/), extending survival in mice infected with mouse prions but not in mice infected with human prions [[Berry 2013], [Lu & Giles 2013]]. But at the same time, they were continuing medicinal chemistry efforts to improve the efficacy and pharmacokinetics of these leads [[Li 2013a], [Li 2013b], [Lu & Giles 2013]]. According to Kurt's poster, they have now completed mouse trials of several new and improved compounds from these classes, plus anle138b, and unfortunately, all compounds tested were effective against mouse RML prions but not human MM1 sCJD prions. Kurt also presented data from different dosing regimens of IND24 against RML prions. I was surprised to learn that intermittent dosing was more effective than continuous dosing. And it was amazing just how effective prophylactic dosing was, increasing survival time by more than four-fold.
+
+The fact that the new and improved 2-aminothiazoles and biaryl amides didn't work against human prions is further proof that we really need to find a way to screen compounds against human prions if we want to find one effective against human prions *in vivo*. That's our big challenge right now, and the one that Sonia is working on in her poster (below). But the fact that these compounds can be so profoundly effective against mouse prions, particularly with the improved dosing regimens, is an important proof of concept that prion diseases *can* be made treatable.
+
+![](/media/2015/05/sonia_vallabh.png)
+
+(Conflict of interest statement: we're married). **Sonia Vallabh** presented some super preliminary results from her and my efforts to find a way to screen candidate therapeutic compounds using RT-QuIC. The ultimate goal is to find a way to screen compounds against human prions. In the first half of the poster, Sonia presented data on what happens when you add known antiprion compounds to RT-QuIC reactions, and in the second half, she used RT-QuIC to measure the effects of these compounds on the (mouse) prion seeding activity in cultured cells. It's too early to draw any firm conclusions from our work, but the poster stimulated a lot of interesting discussion and brainstorms.
+
+![](/media/2015/05/zhifu_shan.png)
+
+**Zhifu Shan** and her advisor Motohiro Horiuchi presented her efforts to develop a new high-throughput assay for screening compounds against prion-infected mouse cells. They wanted a way to quantify total PrP<sup>Sc</sup> including protease-sensitive and protease-resistant species, so they are using an antibody which apparently reacts with partially denatured PrP<sup>Sc</sup> while exhibiting only limited reactivity for PrP<sup>C</sup>. This allows them to just fix the cells and apply some denaturant, then stain with their antibody without any proteinase K digestion step. 
+
+![](/media/2015/05/christina_orru.png)
+
+**Christina Orru** showed that recombinant bank vole PrP (rBvPrP) appears to be a universal substrate for RT-QuIC reactions. She performed RT-QuIC with rBvPrP on 28 different strains of prions, including a few human strains and one sheep strain that are very difficult to detect with any other substrate. She was able to detect all 28 different strains, and obtained zero false positives from any negative controls. This is awesome news because it will improve the diagnostic sensitivity of RT-QuIC in diagnosing unusual subtypes of prion disease. It will also make life simpler for those of us doing RT-QuIC: right now we have to maintain supplies of several different versions of recombinant PrP for use with different prion strains, but perhaps in the future we can just use rBvPrP for everything.
+
+![](/media/2015/05/eric_evans.png)
+
+**Eric Evans** generously spent some time explaining to me how the techniques he uses in Glenn Millhauser's lab at UCSC actually work. A couple of years ago, the Millhauser lab published a series of *in vitro* experiments exploring how zinc ions affect the docking of PrP<sup>C</sup>'s N terminus on its C terminus [[Spevacek 2013]]. But something I had never been clear on is how you actually do electron paramagnetic resonance measurements on a protein that is too long to synthesize in solid state, and has to be expressed in *E. coli* instead. Apparently it's done by adding a synthetic spin-labeled amino acid (in this case, pAcPhe) to the sequence by introducing a new tRNA overriding the amber stop codon. Eric's recent work, described in this poster, is extending those zinc experiments to copper as well. 
+
+![](/media/2015/05/brad_groveman.png)
+
+**Brad Groveman** presented what I believe is the largest study to date validating the sensitivity and specificity of RT-QuIC in testing human cerebrospinal fluid. Earlier this year, Christina Orru published a new high-temperature (55&deg;C) RT-QuIC protocol for CSF [[Orru 2015]] which is both faster (<24 hours) and more sensitive (>95%) than previous methods. Brad and Christina have now assembled a cohort of >100 patients and rising, and the sensitivity and specificity are both proving to be just as good as previously reported. RT-QuIC on human CSF was first put forth as a diagnostic test for prion disease just a few years ago [[Atarashi 2011]], and already the test has improved greatly in speed and in diagnostic utility. With every improvement, we move closer to the vision of a quick and definitive diagnostic test, which would be a great thing for patients and families, and particularly for early recruitment of patients to future clinical trials.
+
+
+[Spevacek 2013]: http://www.ncbi.nlm.nih.gov/pubmed/23290724 "Spevacek AR, Evans EG, Miller JL, Meyer HC, Pelton JG, Millhauser GL. Zinc drives a tertiary fold in the prion protein with familial disease mutation sites  at the interface. Structure. 2013 Feb 5;21(2):236-46. doi: 10.1016/j.str.2012.12.002. Epub 2013 Jan 3. PubMed PMID: 23290724; PubMed Central PMCID: PMC3570608."
+
+[Atarashi 2011]: http://www.ncbi.nlm.nih.gov/pubmed/21278748 "Atarashi R, Satoh K, Sano K, Fuse T, Yamaguchi N, Ishibashi D, Matsubara T, Nakagaki T, Yamanaka H, Shirabe S, Yamada M, Mizusawa H, Kitamoto T, Klug G, McGlade A, Collins SJ, Nishida N. Ultrasensitive human prion detection in cerebrospinal fluid by real-time quaking-induced conversion. Nat Med. 2011 Feb;17(2):175-8. doi: 10.1038/nm.2294. Epub 2011 Jan 30. PubMed PMID: 21278748."
+
+[Orru 2015]: http://www.ncbi.nlm.nih.gov/pubmed/25604790 "Orrú CD, Groveman BR, Hughson AG, Zanusso G, Coulthart MB, Caughey B. Rapid and sensitive RT-QuIC detection of human Creutzfeldt-Jakob disease using cerebrospinal fluid. MBio. 2015 Jan 20;6(1). pii: e02451-14. doi: 10.1128/mBio.02451-14. PubMed PMID: 25604790; PubMed Central PMCID: PMC4313917."
+
+[Berry 2013]: http://www.ncbi.nlm.nih.gov/pubmed/24128760 "Berry DB, Lu D, Geva M, Watts JC, Bhardwaj S, Oehler A, Renslo AR, DeArmond SJ, Prusiner SB, Giles K. Drug resistance confounding prion therapeutics. Proc Natl Acad Sci U S A. 2013 Oct 29;110(44):E4160-9. doi: 10.1073/pnas.1317164110. Epub 2013 Oct 15. PubMed PMID: 24128760; PubMed Central PMCID: PMC3816483."
+
+[Li 2013a]: http://www.ncbi.nlm.nih.gov/pubmed/23509039 "Li Z, Silber BM, Rao S, Gever JR, Bryant C, Gallardo-Godoy A, Dolghih E, Widjaja K, Elepano M, Jacobson MP, Prusiner SB, Renslo AR. 2-Aminothiazoles with  improved pharmacotherapeutic properties for treatment of prion disease. ChemMedChem. 2013 May;8(5):847-57. doi: 10.1002/cmdc.201300007. Epub 2013 Mar 18. PubMed PMID: 23509039; PubMed Central PMCID: PMC3984044."
+
+[Lu & Giles 2013]: http://www.ncbi.nlm.nih.gov/pubmed/23965382 "Lu D, Giles K, Li Z, Rao S, Dolghih E, Gever JR, Geva M, Elepano ML, Oehler A, Bryant C, Renslo AR, Jacobson MP, Dearmond SJ, Silber BM, Prusiner SB. Biaryl amides and hydrazones as therapeutics for prion disease in transgenic mice. J Pharmacol Exp Ther. 2013 Nov;347(2):325-38. doi: 10.1124/jpet.113.205799. Epub 2013 Aug 21. PubMed PMID: 23965382; PubMed Central PMCID: PMC3807058."
+
+[Li 2013b]: http://www.ncbi.nlm.nih.gov/pubmed/23977416 "Li Z, Rao S, Gever JR, Widjaja K, Prusiner SB, Silber BM. Optimization of Arylamides as Novel, Potent and Brain-penetrant Antiprion Lead Compounds. ACS Med Chem Lett. 2013 Jul 11;4(7):647-650. PubMed PMID: 23977416; PubMed Central PMCID: PMC3746989."
