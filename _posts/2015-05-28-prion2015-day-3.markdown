@@ -20,7 +20,9 @@ Next he moved into some new results that are currently in press. He asked me not
 
 Dr. Strittmatter began with a review of his lab's screen that identified PrP<sup>C</sup> as a high-affinity ligand for A&beta; oligomers [[Lauren 2009]]. He also discussed his lab's findings that A&beta; binding to PrP<sup>C</sup> triggers a signaling pathway via Fyn and mGluR5 [[Um 2012], [Um 2013]]. He discussed the effects of this binding event on long-term potentiation [[Lauren 2009]], which have been replicated by John Collinge's group [[Freir 2011]]. They have used antibody binding to map the mGluR5 binding site on PrP, which appears to be within PrP residues 91-153 and binds preferentially to the activated state of mGluR5 [[Haas 2014]]. A small molecule allosteric antagonist of mGluR5, called MTEP, ameliorates behavioral deficits in APP/PS1 mice [[Um 2013]]. They have also tested a small molecule inhibitor of Fyn, called AZD0530 and originally developed for cancer, and found that it rescued synaptic and behavioral phenotypes [[Kaufman 2015]]. Based on these promising results, he initiated a multi-site clinical trial, [NCT01864655](https://clinicaltrials.gov/ct2/show/NCT01864655), to test AZD0530 for treatment of Alzheimer disease.
 
-He also presented a number of unpublished results.
+He also presented a number of unpublished results. 
+
+*Update 2015-06-02* They have also worked to characterize the species of A&beta; that binds PrP, and it appears to be a high molecular weight species [[Kostylev 2015]].
 
 ### David A. Harris
 
@@ -114,7 +116,7 @@ Dr. Ashe refers to the unknown, non-amyloid species of protein responsible for t
 
 She later spent some time discussing the search for the species of A&beta; responsible for neuronal impairment [[Lesne 2006]], and the development of antibodies against soluble oligomers [[Kayed 2003]]. Then she went into recent data, some of which are in press, on characterizing distinct species of A&beta; oligomers.
 
-
+[Kostylev 2015]: http://www.ncbi.nlm.nih.gov/pubmed/26018073 "Kostylev MA, Kaufman AC, Nygaard HB, Patel P, Haas LT, Gunther EC, Vortmeyer A, Strittmatter SM. Prion-Protein-Interacting Amyloid-β Oligomers of High Molecular Weight are Tightly Correlated with Memory Impairment in Multiple Alzheimer Mouse Models. J Biol Chem. 2015 May 27. pii: jbc.M115.643577. [Epub ahead of print] PubMed PMID: 26018073."
 
 [Kayed 2003]: http://www.ncbi.nlm.nih.gov/pubmed/12702875 "Kayed R, Head E, Thompson JL, McIntire TM, Milton SC, Cotman CW, Glabe CG. Common structure of soluble amyloid oligomers implies common mechanism of pathogenesis. Science. 2003 Apr 18;300(5618):486-9. PubMed PMID: 12702875."
 
