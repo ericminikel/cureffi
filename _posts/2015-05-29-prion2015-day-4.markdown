@@ -8,6 +8,8 @@ thumb120:
 summary200: "Notes from Day 4 of the Prion2015 conference in Ft. Collins, CO."
 ---
 
+![](/media/2015/05/prion2015-day-4.png)
+
 ### Thomas Wisniewski
 
 Dr. Wisniewski's talk spanned his last decade-plus worth of work towards the development of vaccines against peripherally acquired prion disease in mouse models [[Goni 2005], [Goni 2008]] and more recently in deer [[Goni 2015]].
