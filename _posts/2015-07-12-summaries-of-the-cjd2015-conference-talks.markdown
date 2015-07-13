@@ -4,9 +4,11 @@ title:  "Summaries of the CJD2015 conference talks"
 date:   2015-07-12 12:02:00
 author: ericminikel
 location: Washington, DC
-thumb120: 
+thumb120: http://www.cureffi.org/media/2015/07/cjd2015-thumbnail.png
 summary200: "Notes from CJD Foundation's 2015 Family Conference in Washington, D.C. July 10-12, 2015. Scientific talks distilled into plain language for a general audience."
 ---
+
+![](/media/2015/07/cjd2015-header.png)
 
 *At the request of Debbie Yobs and Lori Nusbaum, these are my non-technical summaries of the talks at the CJD Foundation's 2015 Family Conference held in Washington, D.C. on July 10-12, 2015, intended for a general audience.*
 
@@ -143,6 +145,8 @@ CJD Foundation has issued two key requests for elected officials: continued fund
 Nikki Hurt, a legislative aide on Capitol Hill, gave an advocacy training on how to talk to your elected representative about CJD. You'll have about 30 minutes to meet with a congressional staffer focused on health policy. The most important thing to convey is your personal story, as this is what they'll remember best later on. A typical elected representative will have about 3 staffers focused on health, and will accept all meeting requests from constituents, totaling about three meetings per day for each staffer. After you meet, include your talking points in a follow-up email so they have an electronic copy of it. It is recommended to take selfies in front of your senator or congressperson's office door and share it on social media.
 
 In the Q&A, Michael Geschwind asked how to handle the situation where your elected representative does not sit on any committee relevant to the issue at hand. Hurt responded that even if someone is not on a committee, they can still weigh in with relevant staff, or when the issue comes up for a vote. Geschwind also said that many staffers inquire as to what additional asks people have, above and beyond the official talking points, and suggested that it may be worth discussing the need for increased research funding. Hurt responded that additional points, such as research funding, can be raised in the follow-up email. One audience member asked why CDC keeps half of the funds appropriated for prion surveillance. Dr. Safar responded that Dr. Ryan Maddox (see above) has described the important surveillance activities that CDC carries out, which complement the efforts of the surveillance center in Cleveland. The two organizations have a close and productive working relationship and the 50/50 split of funds is mutually beneficial.
+
+![](/media/2015/07/cjd2015-footer.png)
 
 [Verlinsky 2001]: http://www.ncbi.nlm.nih.gov/pubmed/11427142 "Verlinsky Y, Rechitsky S, Schoolcraft W, Strom C, Kuliev A. Preimplantation diagnosis for Fanconi anemia combined with HLA matching. JAMA. 2001 Jun 27;285(24):3130-3. PubMed PMID: 11427142."
 
