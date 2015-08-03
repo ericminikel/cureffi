@@ -3,7 +3,7 @@ layout: post
 title:  "Two more chapters for 2-aminothiazoles"
 date:   2015-08-02 12:00:00
 author: ericminikel
-location: Cambridge, MA
+location: Hamilton, MT
 thumb120: http://www.cureffi.org/media/2015/08/2-amt-thumbnail.png
 summary200: "The Prusiner lab's 2-aminothiazole antiprion compounds didn't prove effective against human prions. But that doesn't mean we can't learn anything from them."
 ---
