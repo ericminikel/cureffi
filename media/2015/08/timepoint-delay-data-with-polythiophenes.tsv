@@ -1,0 +1,25 @@
+compound	mouse	treatment_start_dpi	control_endpoint_dpi	treatment_endpoint_dpi	comment
+IND24	wt	-14	118	452	
+IND24	wt	1	118	204	
+IND24	wt	34	118	202	
+IND24	wt	46	118	197	
+IND24	wt	60	118	211	
+IND24	wt	61	118	221	
+IND24	wt	74	118	192	
+IND24	wt	75	118	162	
+IND24	wt	77	118	208	
+IND24	wt	90	118	118	
+IND24	tg	1	51	112	
+IND24	tg	15	51	122	
+IND24	tg	26	51	156	
+IND24	tg	40	51	64	
+anle138b	wt	0	180	355	
+anle138b	wt	80	168	242	
+anle138b	wt	120	172	224	
+cpd-b	tg	0	63	174	
+cpd-b	tg	35	63	117	
+cpd-b	tg	49	63	89	
+LIN5044	tg	-7	65.00	112.67	icv
+LIN5044	tg	49	65.83	81.88	icv
+LIN5044	tg	49	62.75	70.00	ip
+LIN5044	tg	20	60.44	70.79	263K
