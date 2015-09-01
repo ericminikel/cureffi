@@ -49,7 +49,7 @@ for (i in 1:nrow(antiprion)) {
 }
 antiprion$pos = c(2,4,2)
 
-png('~/d/j/cureffi/media/2015/08/polythiophene-chemical-property-comparison.png',width=800, height=450, pointsize=15)
+png('~/d/j/cureffi/media/2015/09/polythiophene-chemical-property-comparison.png',width=800, height=450, pointsize=15)
 par(mar=c(5,5,4,4))
 plot(NA, NA, xlim=c(0,2000), ylim=c(-20,20), xaxs='i', yaxs='i', xlab='', ylab='', main='', yaxt='n')
 axis(side=2, at=(-4:4)*5, lwd=1, lwd.ticks=1, las=2)
@@ -72,7 +72,7 @@ percent = function(proportion,digits=2) {
   return ( gsub(' ','',paste(formatC(proportion*100, digits=digits, format='fg'),"%",sep="") ) )
 }
 
-data = read.table('http://www.cureffi.org/media/2015/08/timepoint-delay-data-with-polythiophenes.tsv',sep='\t',header=TRUE)
+data = read.table('http://www.cureffi.org/media/2015/09/timepoint-delay-data-with-polythiophenes.tsv',sep='\t',header=TRUE)
 
 data$timepoint = data$treatment_start_dpi / data$control_endpoint_dpi
 data$delay = data$treatment_endpoint_dpi / data$control_endpoint_dpi - 1
@@ -86,7 +86,7 @@ leg = data.frame(display=c('IND24','cpd-b','anle138b','LIN5044','in wt mice','in
 	pch=c(20,20,20,20,15,17))
 data$color = leg$color[match(data$compound, leg$display)]
 
-png('~/d/j/cureffi/media/2015/08/polythiophene-efficacy-comparison.png',width=800, height=450, pointsize=15)
+png('~/d/j/cureffi/media/2015/09/polythiophene-efficacy-comparison.png',width=800, height=450, pointsize=15)
 par(mar=c(4,5,4,4))
 plot(NA, NA, xlab='', ylab='', xlim=c(-.15,1), ylim=c(0,3.5), yaxs='i', axes=FALSE)
 abline(h=0, lwd=2, col='#000000')
