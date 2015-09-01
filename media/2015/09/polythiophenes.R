@@ -60,6 +60,7 @@ points(drugs$mw, drugs$xlogp, pch=19, col='#00FFFF')
 points(drugs$mw[drugs$cns_drug], drugs$xlogp[drugs$cns_drug], pch=19, col='#FF9912')
 points(antiprion$mw, antiprion$xlogp, pch=20, col='#000000')
 text(x=antiprion$mw, y=antiprion$xlogp, pos=antiprion$pos, labels=antiprion$common_name, font=2, cex=.8, col='#000000')
+# MW and XLogP from ChemDraw for LIN5044:
 points(x=611.92, y=5.78, pch=20, col='#000000')
 text(x=611.92, y=5.78, pos=4, labels='LIN5044', font=2, cex=.8, col='#000000')
 legend('topright',legend=c('CNS drugs','Non-CNS drugs','antiprion compounds'), col=c('#FF9912','#00FFFF','#000000'), pch=19, cex=.8)
