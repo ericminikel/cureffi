@@ -17,10 +17,7 @@ leg = data.frame(display=c('IND24','cpd-b','anle138b','LIN5044','in wt mice','in
 #### comparison of chemical properties vs. drugs and cns drugs
 
 drugs = read.table('http://www.cureffi.org/wp-content/uploads/2013/10/drugs.txt', sep='\t', header=TRUE, quote='', comment.char='')
-
 antiprion = read.table('http://www.cureffi.org/wp-content/uploads/2013/11/antiprion_cpds.txt', sep='\t', header=TRUE, quote='', comment.char='')
-
-antiprion = read.table('http://localhost:4000/wp-content/uploads/2013/11/antiprion_cpds.txt', sep='\t', header=TRUE, quote='', comment.char='')
 
 # remove Inulin, which is really a biological, and anything w/o SMILES available
 drugs = subset(drugs, generic_name != "Inulin" & smiles != '')
