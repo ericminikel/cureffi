@@ -5,6 +5,8 @@ permalink: /archives/
 header: true
 ---
 
+<p class="meta">everything &middot; <a href="/archives-without-notes/">no notes</a></p>
+
 <ul>
 {% for post in site.posts %}
   <li>
