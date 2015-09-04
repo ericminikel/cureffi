@@ -28,7 +28,7 @@ Methods for single molecule stuff can be divided into fluorescence-based technqi
 
 To be able to image single molecules, you must meet a few conditions:
 
-1. Sufficient signal-to-noise. You rely on the Stokes shift so that the emitted wavelength is different than the excitation wavelength, and you need modern filters that can filter out the excitation wavelength by a factor of 10<sup>7</sup> or 10<sup>8<sup>, and sensitive CCDs that can detect exactly one photon.
+1. Sufficient signal-to-noise. You rely on the Stokes shift so that the emitted wavelength is different than the excitation wavelength, and you need modern filters that can filter out the excitation wavelength by a factor of 10<sup>7</sup> or 10<sup>8</sup>, and sensitive CCDs that can detect exactly one photon.
 2. Sufficiently narrow field. You need confocal lasers with such a small excitation volume that only one molecule will be excited. Or, thinking in reverse, you can excite a large field but then only detect emitted light in a narrow field. Excited molecules will emit 360&deg; in 3 dimensions but you only detect photons coming in a very narrow column above the molecule.
 3. Ability to fluroescently label the molecule of interest without disturbing its native function.
 
