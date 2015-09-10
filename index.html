@@ -4,24 +4,31 @@ layout: default
 
 <div class="home">
 
-  <h1>latest posts</h1>
+  <img class="banner" src="/media/2015/09/logo200.png" />
 
   <ul class="posts">
+    <li>latest posts</li>
     {% assign i = 0 %}
     {% for post in site.posts %}
       {% unless post.tag %}
           <li>
-            <span class="post-date">{{ post.date | date: "%b %-d, %Y" }}</span>
-            <a class="post-link" href="{{ post.url }}">{{ post.title }}</a>
+            <span class="post-date">{{ post.date | date: "%B %-d, %Y" }}</span> <a class="post-link" href="{{ post.url }}">{{ post.title }}</a>
           </li>
         {% assign i = i | plus: 1 %}
-        {% if i == 5 %}
+        {% if i == 10 %}
           {% break %}
         {% endif %}
       {% endunless %}
     {% endfor %}
+    <li>
+      {% assign j = 0 %}
+      {% for post in site.posts %}
+        {% assign j = j | plus: 1 %}
+      {% endfor %}
+      {% assign k = j - i %}
+      <a href="{{ "/archives" }}">{{ k }} more posts in archives&rarr;</a>
+    </li>
+    <li>subscribe to <a href="{{ "/feed.xml" | prepend: site.baseurl }}">RSS</a></li>
   </ul>
-
-  <p class="rss-subscribe"><a href="{{ "/archives" }}">all posts</a> &middot; subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
 
 </div>
