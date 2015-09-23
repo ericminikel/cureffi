@@ -25,7 +25,7 @@ In an ideal world, experiments of nature, via human genetics, would tell us all 
 
 In practice, though, we don't know all of the targets, it is amazing how often we are humbled by the unexpected findings that arise from phenotypic screens.
 
-Methods for target-based screens include **label-free* methods:
+Methods for target-based screens include **label-free** methods:
 
 + Mass spectrometry-based methods
 + NMR-based methods
