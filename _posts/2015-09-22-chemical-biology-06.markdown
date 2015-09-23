@@ -56,7 +56,7 @@ Here are some examples of phenotypic screens.
 
 ![](/media/2015/09/celastrol.png)
 
-*Above: celastrol, a compound that induces androgen receptor degradation.*
+*Above: celastrol, a natural product isolated from the Chinese medicinal herb [雷公藤](https://en.wikipedia.org/wiki/Tripterygium_wilfordii) that mimics the gene expression signature of androgen deprivation in prostate cancer cells [[Hieronymus 2006]].*
 
 Developing an assay is really hard. First, you need a positive control, which can sometimes be hard to find. Sometimes it could be a genetic positive control rather than a small molecule. Then you need a crisp separation between the distribution of positive control measurements and negative control measurements, known as a Z prime (Z') or Z factor [[Zhang 1999]]. The Z factor is a measurement of the distance between 3 standard deviations below the positive mean and 3 standard deviations above the negative mean:
 
