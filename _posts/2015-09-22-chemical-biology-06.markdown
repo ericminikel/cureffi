@@ -54,6 +54,10 @@ Here are some examples of phenotypic screens.
 5. If you have a small enough model organism, such as zebrafish, you can do whole-organism phenotypic screens. Randy Peterson created zebrafish with an embryonic lethal mutation called *gridlock* that causes the aortal valve to never open during cardiogenesis, as a model of the huamn condition called "congenital narrowing of the aorta". Then he did a visual phenotypic screen for compounds that would reverse this phenotype [[Peterson 2004]].
 6. Zebrafish also develop an ear-like structure called an otolith. Fish lacking an otolith can't swim straight. A measurement of straight-line swimming was used as a phenotype to look for compounds that would prevent otolith formation [[Peterson 2000]]. This revealed a tool compound that prevents otolith formation only if it was administered from hour 8 to 26 of development. If it was administered from hour 14 to 26 you got partial otolith development. This sort of timing experiment could not be done with genetic methods, so having a probe was essential. The target is still unknown.
 
+![](/media/2015/09/celastrol.png)
+
+*Above: celastrol, a compound that induces androgen receptor degradation.*
+
 Developing an assay is really hard. First, you need a positive control, which can sometimes be hard to find. Sometimes it could be a genetic positive control rather than a small molecule. Then you need a crisp separation between the distribution of positive control measurements and negative control measurements, known as a Z prime (Z') or Z factor [[Zhang 1999]]. The Z factor is a measurement of the distance between 3 standard deviations below the positive mean and 3 standard deviations above the negative mean:
 
 $$ Z' = 1 - \frac {3\sigma_{positive} + 3\sigma_{negative}}{|\ \mu_{positive} - \mu_{negative}\ |} $$
