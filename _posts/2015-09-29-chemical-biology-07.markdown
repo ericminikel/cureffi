@@ -26,7 +26,7 @@ While natural selection has given rise to incredibly potent natural products wit
 
 ### Synthetic chemistry
 
-The previous pargraph demonstrates that the dependence on natural selection limits what targets we can hit with natural products. In contrast to the examples mentioned earlier (such as halichondrin), where a natural product leads directly to a target, a goal of synthetic chemistry is to create compounds that are "natural product-like" in terms of their complexity and stereochemistry, while breaking the linkage to targets favored by nature.
+The previous pargraph demonstrates that the dependence on natural selection limits what targets we can hit with natural products. In contrast to the examples mentioned earlier (such as halichondrin), where a natural product leads directly to a target, a goal of synthetic chemistry is to create compounds that are "natural product-like" in terms of their complexity and stereochemistry, while breaking the linkage to targets favored by nature. This week's fourth reading discusses a debate over chemical library design [[Hajduk 2011]].
 
 What does it mean to create chemicals that are more natural product-like? Commercial compound collections are highly enriched for "flatlander" compounds with mostly sp<sup>2</sup> hybridization, while academic collections have more sp<sup>3</sup> hybridization. To determine if the sources of compounds affect assay performance, the Schreiber lab compared a series of commercial compounds vs. academic compounds vs. natural products in binding assays for 100 sequence-unrelated proteins [[Clemons 2010]]. The commercial compounds had a medium hit rate, but binders tended not to be very selective &mdash; in other words, many hits were shared across different assays. Some of these flat compounds may have been hitting a fairly generic flat co-factor binding site. The academic compounds from diversity-oriented synthesis had a high hit rate, and a high selectivity, meaning that most hits bound exactly one protein. Natural products had a low hit rate but high selectivity.
 
@@ -53,5 +53,5 @@ As a final thought, to enable further improvements in compound collections and p
 
 [Clemons 2010]: http://www.ncbi.nlm.nih.gov/pubmed/20956335 "Clemons PA, Bodycombe NE, Carrinski HA, Wilson JA, Shamji AF, Wagner BK, Koehler AN, Schreiber SL. Small molecules of different origins have distinct distributions of structural complexity that correlate with protein-binding profiles. Proc Natl Acad Sci U S A. 2010 Nov 2;107(44):18787-92. doi: 10.1073/pnas.1012741107. Epub 2010 Oct 18. PubMed PMID: 20956335; PubMed Central  PMCID: PMC2973913."
 
-
+[Hajduk 2011]: http://www.ncbi.nlm.nih.gov/pubmed/21293363 "Hajduk PJ, Galloway WR, Spring DR. Drug discovery: A question of library design. Nature. 2011 Feb 3;470(7332):42-3. doi: 10.1038/470042a. PubMed PMID: 21293363."
 
