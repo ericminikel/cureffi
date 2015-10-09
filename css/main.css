@@ -238,14 +238,12 @@ a:visited { color: #e65f00; }
 .post code {
   border: 1px solid #d5d5e9;
   background-color: #fff8c0;
-  padding: 8px 12px;
+  padding: 0px 0px;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
   font-size: 15px;
 }
-
-.post code { padding: 1px 5px; }
 
 .post ul,
 .post ol { margin-left: 1.35em; }
