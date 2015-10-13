@@ -23,7 +23,7 @@ Today's lecture is five vignettes of target-oriented synthesis. Main take-homes 
 
 Natural products that contain an anthracine or phenanthroline (three-ring) structure usually intercalate into DNA. Trioxacarcin A, from *Streptomyces*, is one such molecule. Synthesis of close analogs yielded one molecule with ~5 &mu;M EC<sub>50</sub> for killing HeLa and another cancer cell line (while its diastereomer was inactive) and another one with ~0.1 &mu;M EC<sub>50</sub>. The cytotoxic molecules intercalated into DNA and showed fluorescence on a gel, while the inactive one did not. However, this does not necessarily prove that the intercalation is sufficient to explain the cytotoxic activity. It would be interesting to characterize how toxic these compounds are in different types of cancers and whether there are other requirements for cytotoxicity besides just interaction with DNA.
 
-### Biyouyanagins [[Nicolau 2011]]
+### Biyouyanagins [[Nicolaou 2011]]
 
 The traditional medicinal herb *Hypericum chinense*, closely related to St. John's wort (*Hypericum perforatum*, 贯叶连翘), creates compounds called biyouyanagin A and B, which inhibit HIV replication in certain cell lines. They can be synthesized by using light &mdash; photocycloaddition of *ent*-zingiberene and hyperlactone C to one another. This yields a mix of biyouyanagin A, B, and C. They synthesized a whole library of close derivatives and tested them in an assay where a virus expresses GFP to see which ones inhibit viral replication.
 
