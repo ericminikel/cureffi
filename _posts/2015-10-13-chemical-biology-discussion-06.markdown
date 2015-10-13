@@ -31,3 +31,5 @@ The original citation for Wender's 18g-from-14-tons figure for isolation of bryo
 > 
 > &mdash; [[Schaufelberger 1991]]
 
+[Schaufelberger 1991]: http://www.ncbi.nlm.nih.gov/pubmed/1800630 "Schaufelberger DE, Koleck MP, Beutler JA, Vatakis AM, Alvarado AB, Andrews P,  Marzo LV, Muschik GM, Roach J, Ross JT, et al. The large-scale isolation of bryostatin 1 from Bugula neritina following current good manufacturing practices. J Nat Prod. 1991 Sep-Oct;54(5):1265-70. PubMed PMID: 1800630."
+
