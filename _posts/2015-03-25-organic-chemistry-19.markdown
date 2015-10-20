@@ -62,7 +62,7 @@ Chloroform (CHCl<sub>3</sub>) can be used to add cyclopropane to things:
 
 ![](/media/2015/03/chloroform-cyclopropanation.png)
 
-This is because chloroform has a pKa of ~15. The oxygen in KO<sup>t</sub>Bu will attack the H in chloroform, and then one Cl will leave with the extra electrons, giving you a neutral carbon owning 6 e<sup>-</sup>. This compound is called carbene.
+This is because chloroform has a pKa of ~15. The oxygen in KO<sup>t</sup>Bu will attack the H in chloroform, and then one Cl will leave with the extra electrons, giving you a neutral carbon owning 6 e<sup>-</sup>. This compound is called carbene.
 
 ![](/media/2015/03/chloroform-to-carbene.png)
 
