@@ -77,6 +77,8 @@ There are two main methods in quantitative proteomics &mdash; SiLAC and iTRAC. I
 
 A hot new method is cellular thermal proteome profiling (TPP) [[Savitski 2014]]. This is a method to identify targets in whole cells. It relies on the idea that soluble proteins become insoluble when they are denatured. As you heat cells, proteins bound by compound will be stabilized and will have their melting points increased. So the target of your compound should be a protein whose melting curve is shifted up in the presence of the compound. You measure that melting curve by centrifuging the cell lysates after compond treatment and then measuring the abundance of proteins in the supernatant. This doesn't work for membrane-bound proteins, which will pellet out regardless.
 
+*Addendum 2015-10-21: another method worth knowing is drug affinity responsive target stability (DARTS) [[Lomenick 2009]], where basically you look for proteins that become relatively more protease-resistant in the presence of the compound, because apparently often compound binding can do that.*
+
 
 [Peck 2006]: http://www.ncbi.nlm.nih.gov/pubmed/16859521 "Peck D, Crawford ED, Ross KN, Stegmaier K, Golub TR, Lamb J. A method for high-throughput gene expression signature analysis. Genome Biol. 2006;7(7):R61. PubMed PMID: 16859521; PubMed Central PMCID: PMC1779561."
 
@@ -109,4 +111,7 @@ A hot new method is cellular thermal proteome profiling (TPP) [[Savitski 2014]].
 [Zhang 1999]: http://www.ncbi.nlm.nih.gov/pubmed/10838414 "Zhang JH, Chung TD, Oldenburg KR. A Simple Statistical Parameter for Use in Evaluation and Validation of High Throughput Screening Assays. J Biomol Screen. 1999;4(2):67-73. PubMed PMID: 10838414."
 
 [Savitski 2014]: http://www.ncbi.nlm.nih.gov/pubmed/25278616 "Savitski MM, Reinhard FB, Franken H, Werner T, Savitski MF, Eberhard D, Martinez Molina D, Jafari R, Dovega RB, Klaeger S, Kuster B, Nordlund P, Bantscheff M, Drewes G. Tracking cancer drugs in living cells by thermal profiling of the proteome. Science. 2014 Oct 3;346(6205):1255784. doi: 10.1126/science.1255784. Epub 2014 Oct 2. PubMed PMID: 25278616."
+
+[Lomenick 2009]: http://www.ncbi.nlm.nih.gov/pubmed/19995983 "Lomenick B, Hao R, Jonai N, Chin RM, Aghajan M, Warburton S, Wang J, Wu RP, Gomez F, Loo JA, Wohlschlegel JA, Vondriska TM, Pelletier J, Herschman HR, Clardy J, Clarke CF, Huang J. Target identification using drug affinity responsive target stability (DARTS). Proc Natl Acad Sci U S A. 2009 Dec 22;106(51):21984-9.  doi: 10.1073/pnas.0910040106. Epub 2009 Dec 7. PubMed PMID: 19995983; PubMed Central PMCID: PMC2789755."
+
 
