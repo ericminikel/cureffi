@@ -34,9 +34,9 @@ The 'Bio-Activity Summary' tells you everything you need to know about one molec
 
 The 'Linked Hierarchy Visualization' uses structured assay definitions across a variety of types of annotation to let you explore your compound's activity. So for instance you can see if your compound is only hitting in luciferase-based assays, which might suggest it is just a luciferase inhibitor.
 
-A useful tool for exploring protein-protein interaction data is [STRING](http://string-db.org/).
+A useful tool for exploring protein-protein interaction data is [STRING](http://string-db.org/). See also [STITCH](http://stitch.embl.de/).
 
-
+A more wikipedia-like interface to learning more about probes - their advantages and limitations, which negative controls to use, etc. - is [ChemicalProbes.org](http://www.chemicalprobes.org/).
 
 
 
