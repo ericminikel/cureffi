@@ -134,8 +134,8 @@ GdnHCl can destroy pH meters too, so measure the pH of your NaPO<sub>4</sub> sol
 This and the next two solutions are all based on two sodium phosphate stocks as a base. You can make these and keep them around.
 
 <ul>
-<li>0.2M monobasic phosphate stock: 24g Anhydrous Sodium Phosphate Monobasic in 1L H2O</li>
-<li>0.2M monobasic phosphate stock: 28.4g Anhydrous Sodium Phosphate Dibasic in 1L H2O</li>
+<li>0.2M monobasic phosphate stock: 24g Anhydrous Sodium Phosphate Monobasic (NaH<sub>2</sub>PO<sub>4</sub>) in 1L H2O</li>
+<li>0.2M dibasic phosphate stock: 28.4g Anhydrous Sodium Phosphate Dibasic (Na<sub>2</sub>HPO<sub>4</sub>) in 1L H2O</li>
 </ul>
 
 Each of these three solutions - denaturing, refolding and elution - have as their base a balance of monobasic and dibasic sodium phosphate solution to achieve the right pH, plus <a href="http://en.wikipedia.org/wiki/Tris">Tris</a> as a buffer. In the case of denaturing buffer, there is also 6M guanidine, enough to keep the PrP completely unfolded. All of these solutions should be filtered through a Nalgene filter vacuum flask before use, both to prevent bacterial contamination and to remove any particulates which could clog the FPLC machine. Remember to rinse some dH<sub>2</sub>O through the filter before filtering the solutions, in case the filter itself sloughs off any particulates.
