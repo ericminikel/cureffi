@@ -24,7 +24,7 @@ Proposals produced in this course will be:
 + Literature cited - doesn't count towards page limit
 + Figures should be embedded in text, but do not count towards the page limit
 
-Proposal should not exceed 4,000 words including figure legends but not title page or references. Everything should be &ge;11 point Arial with &half;" margins.
+Proposal should not exceed 4,000 words including figure legends but not title page or references. Everything should be &ge;11 point Arial with &half;" margins. Note that for the final PQE proposal, which includes a third aim, you get 5,000 words.
 
 ### Pro-tips for proposal writing
 
