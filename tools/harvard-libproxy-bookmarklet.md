@@ -2,6 +2,7 @@
 layout: page
 title: Harvard libraries proxy server bookmarklet
 permalink: /tools/harvard-libproxy-bookmarklet/
+summary200: "A javascript widget that lives in your bookmarks bar and lets you access full text of paywalled journal articles through Harvard's proxy server with just one click."
 ---
 
 The easiest way to access full-text articles through Harvard libraries is via the proxy server. This means that you navigate to the publisher's website and then add **.ezp-prod1.hul.harvard.edu** after the domain name. Harvard will prompt you for your HUID and PIN. For instance:
