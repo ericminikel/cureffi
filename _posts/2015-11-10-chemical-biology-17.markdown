@@ -34,9 +34,14 @@ It was long hypothezied that schizophrenia onset in one's twenties might be trig
 
 To date, we have no new medicines to show for all this effort - but for the first time, we have a road forward.
 
+### addendum from 2015-11-17 discussion section
+
+Psychiatric disorders are exceptionally difficult to model in animals, see [[Nestler & Hyman 2010]].
+
 
 [PGC 2014]: http://www.ncbi.nlm.nih.gov/pubmed/25056061 "Schizophrenia Working Group of the Psychiatric Genomics Consortium. Biological insights from 108 schizophrenia-associated genetic loci. Nature. 2014 Jul 24;511(7510):421-7. doi: 10.1038/nature13595. Epub 2014 Jul 22. PubMed PMID: 25056061; PubMed Central PMCID: PMC4112379."
 
+[Nestler & Hyman 2010]: http://www.ncbi.nlm.nih.gov/pubmed/20877280 "Nestler EJ, Hyman SE. Animal models of neuropsychiatric disorders. Nat Neurosci. 2010 Oct;13(10):1161-9. doi: 10.1038/nn.2647. Epub 2010 Sep 27. Review. PubMed PMID: 20877280; PubMed Central PMCID: PMC3750731."
 
 
 
