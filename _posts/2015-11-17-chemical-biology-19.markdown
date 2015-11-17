@@ -42,7 +42,7 @@ A third success story is crizotinib, which was developed as an inhibitor of the 
 
 Now, those are three stories about targeted therapies for mutated driver proteins. But this isn't the whole story. For instance, in testicular cancer, cisplatin, which is not targeted at all, it's just a chemotherapy drug targeting DNA, is shockingly effective - for instance, Lance Armstrong was cured with this therapy. One interpretation is that some testicular cancers may have a dependency on the DNA damage repair pathway.
 
-Early studies of cancer genomes focused on "naive" cancers that had never seen chemotherapy drugs, and usually in the original tissue, trying to focus on the earliest mutations that drove tumor formation. One of the first studies to challenge this paradigm was [[Gerlinger 2012]]. This study of renal cell (kidney) cancers revealed that although *VHL* mutations are often the earliest driver within the kidney, metastasis seems to require also acquiring *SETD2* mutations.
+Early studies of cancer genomes focused on "na&iuml;ve" cancers that had never seen chemotherapy drugs, and usually in the original tissue, trying to focus on the earliest mutations that drove tumor formation. One of the first studies to challenge this paradigm was [[Gerlinger 2012]]. This study of renal cell (kidney) cancers revealed that although *VHL* mutations are often the earliest driver within the kidney, metastasis seems to require also acquiring *SETD2* mutations.
 
 The newest approach is single cell sequencing of tumors. See for instance [[Wang 2014]]. Tumors were long thought of as being clonal, but we are now seeing a great degree of intratumoral heterogeneity. This is especially prominent in glioblastoma, which was one categorized into classes 1-5, but we now see that class 1 tumors are just 80% class 1 and the other 20% is cells of the types 2-5.
 
@@ -54,6 +54,11 @@ Sometimes cancer therapy will kill 99.999% of cancer cells, but the 1 in 100,000
 
 We don't yet know how many cancer dependencies there are, but it may prove to be a tractable number such as 20 or 40. So personalized medicine for cancer doesn't have to mean a different drug for every individual, just one for every dependency. In the future we can imagine a greater number of targeted therapies, with patients undergoing tumor genome sequencing to identify key dependencies that can be targeted therapeutically. 
 
+### addenda from discussion section 2015-11-17
+
+Only a fraction of cells in a tumor, known as cancer stem cells, are capable of unlimited cell division - for a review, see [[Vidal 2014]]. They often assume a quiescent state where they are not dividing and thus cannot be killed by antimitotic chemotherapy. Therefore they are often the basis for resistance and relapse.
+
+The paper for discussion this week was [[Ito 2008]]. This paper shows that a protein called PML is important for keeping a population of cells quiescent in chronic myeloid leukemia, thus allowing those cells to avoid being killed by antimitotic chemotherapies, and thereby stick around and cause relapse later. Arsenic trioxide reduces PML levels, thus inducing these cells to start proliferating, so that chemotherapy kills them.
 
 [Luo 2009]: http://www.ncbi.nlm.nih.gov/pubmed/19269363 "Luo J, Solimini NL, Elledge SJ. Principles of cancer therapy: oncogene and non-oncogene addiction. Cell. 2009 Mar 6;136(5):823-37. doi: 10.1016/j.cell.2009.02.024. Erratum in: Cell. 2009 Aug 21;138(4):807. PubMed PMID: 19269363; PubMed Central PMCID: PMC2894612."
 
@@ -72,6 +77,11 @@ We don't yet know how many cancer dependencies there are, but it may prove to be
 [Basu 2013]: http://www.ncbi.nlm.nih.gov/pubmed/23993102 "Basu A, Bodycombe NE, Cheah JH, Price EV, Liu K, Schaefer GI, Ebright RY, Stewart ML, Ito D, Wang S, Bracha AL, Liefeld T, Wawer M, Gilbert JC, Wilson AJ,  Stransky N, Kryukov GV, Dancik V, Barretina J, Garraway LA, Hon CS, Munoz B, Bittker JA, Stockwell BR, Khabele D, Stern AM, Clemons PA, Shamji AF, Schreiber SL. An interactive resource to identify cancer genetic and lineage dependencies targeted by small molecules. Cell. 2013 Aug 29;154(5):1151-61. doi: 10.1016/j.cell.2013.08.003. PubMed PMID: 23993102; PubMed Central PMCID: PMC3954635."
 
 [Seashore-Ludlow 2015]: http://www.ncbi.nlm.nih.gov/pubmed/26482930 "Seashore-Ludlow B, Rees MG, Cheah JH, Cokol M, Price EV, Coletti ME, Jones V,  Bodycombe NE, Soule CK, Gould J, Alexander B, Li A, Montgomery P, Wawer MJ, Kuru  N, Kotz JD, Hon CS, Munoz B, Liefeld T, Dančík V, Bittker JA, Palmer M, Bradner JE, Shamji AF, Clemons PA, Schreiber SL. Harnessing Connectivity in a Large-Scale Small-Molecule Sensitivity Dataset. Cancer Discov. 2015 Nov;5(11):1210-23. doi: 10.1158/2159-8290.CD-15-0235. Epub 2015 Oct 19. PubMed PMID: 26482930; PubMed Central PMCID: PMC4631646."
+
+[Vidal 2014]: http://www.ncbi.nlm.nih.gov/pubmed/24096485 "Vidal SJ, Rodriguez-Bravo V, Galsky M, Cordon-Cardo C, Domingo-Domenech J. Targeting cancer stem cells to suppress acquired chemotherapy resistance. Oncogene. 2014 Sep 4;33(36):4451-63. doi: 10.1038/onc.2013.411. Epub 2013 Oct 7.  Review. PubMed PMID: 24096485."
+
+[Ito 2008]: http://www.ncbi.nlm.nih.gov/pubmed/18469801 "Ito K, Bernardi R, Morotti A, Matsuoka S, Saglio G, Ikeda Y, Rosenblatt J, Avigan DE, Teruya-Feldstein J, Pandolfi PP. PML targeting eradicates quiescent leukaemia-initiating cells. Nature. 2008 Jun 19;453(7198):1072-8. doi: 10.1038/nature07016. Epub 2008 May 11. PubMed PMID: 18469801; PubMed Central PMCID: PMC2712082."
+
 
 
 
