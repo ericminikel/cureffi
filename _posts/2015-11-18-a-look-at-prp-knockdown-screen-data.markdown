@@ -5,16 +5,16 @@ date:   2015-11-18 12:01:00
 author: ericminikel
 location: Cambridge, MA
 thumb120: http://www.cureffi.org/media/2015/11/screening-thumbnail.png
-summary200: "Three groups have conducted high-throughput screens for small molecules to knock down PrP. Here I take a look at the screening data, to see if there are any interesting leads."
+summary200: "Three groups have conducted high-throughput screens for small molecules to reduce PrP levels. Here I take a look at the screening data, to see if there are any interesting leads."
 ---
 
 ### introduction
 
-Exactly [two years ago](/2013/11/18/data-from-two-high-throughput-screens-to-deplete-prp-available-in-pubchem/) I set out to analyze the data from some high-throughput screens for small molecules to knock down PrP. At the time, I got a short ways into the analysis before getting daunted and setting it aside. Now that I'm in the Schreiber lab, with access to some excellent cheminformatic mentorship, and now that I've been doing [more](/2015/09/23/small-molecules-to-reduce-one-proteins-expression/) [thinking](/2015/10/21/is-there-anything-special-about-prps-expression/) about knockdown strategies, I decided it was time to take another look at these data. This post a preliminary, very exploratory peek at these data, which may or may not be followed up by another post depending on what feedback I get in conversations with people about this topic. All the R code for this post is in [this GitHub repo](https://github.com/ericminikel/prp_knockdown_screens).
+Exactly [two years ago](/2013/11/18/data-from-two-high-throughput-screens-to-deplete-prp-available-in-pubchem/) I set out to analyze the data from some high-throughput screens for small molecules to reduce PrP levels in cells. At the time, I got a short ways into the analysis before getting daunted and setting it aside. Now that I'm in the Schreiber lab, with access to some excellent cheminformatic mentorship, and now that I've been doing [more](/2015/09/23/small-molecules-to-reduce-one-proteins-expression/) [thinking](/2015/10/21/is-there-anything-special-about-prps-expression/) about strategies to deplete PrP, I decided it was time to take another look at these data. This post a preliminary, very exploratory peek at these data, which may or may not be followed up by another post depending on what feedback I get in conversations with people about this topic. All the R code for this post is in [this GitHub repo](https://github.com/ericminikel/prp_knockdown_screens).
 
 ### the screens
 
-Here is a summary of the three high-throughput screens for small molecules to knock down PrP that we know of:
+Here is a summary of the three high-throughput screens for small molecules to reduce PrP levels that we know of:
 
 | | 1 | 2 | 3 | 
 | ---- | ---- | ---- | ---- |
