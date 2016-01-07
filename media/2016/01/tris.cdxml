@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE CDXML SYSTEM "http://www.cambridgesoft.com/xml/cdxml.dtd" >
+<CDXML
+ CreationProgram="ChemDraw 15.0.0.106"
+ Name="ACS_Landscape_Bold.cdxml"
+ BoundingBox="0 0 0 0"
+ WindowPosition="0 0"
+ WindowSize="0 0"
+ FractionalWidths="yes"
+ InterpretChemically="yes"
+ ShowAtomQuery="yes"
+ ShowAtomStereo="no"
+ ShowAtomEnhancedStereo="yes"
+ ShowAtomNumber="no"
+ ShowResidueID="no"
+ ShowBondQuery="yes"
+ ShowBondRxn="yes"
+ ShowBondStereo="no"
+ ShowTerminalCarbonLabels="no"
+ ShowNonTerminalCarbonLabels="no"
+ HideImplicitHydrogens="no"
+ Magnification="666"
+ LabelFont="21"
+ LabelSize="10"
+ LabelFace="1"
+ CaptionFont="21"
+ CaptionSize="10"
+ CaptionFace="1"
+ HashSpacing="2.50"
+ MarginWidth="1.60"
+ LineWidth="0.60"
+ BoldWidth="2"
+ BondLength="14.40"
+ BondSpacing="18"
+ ChainAngle="120"
+ LabelJustification="Auto"
+ CaptionJustification="Left"
+ AminoAcidTermini="HOH"
+ ShowSequenceTermini="yes"
+ ShowSequenceBonds="yes"
+ ResidueWrapCount="40"
+ ResidueBlockCount="10"
+ ResidueZigZag="yes"
+ NumberResidueBlocks="no"
+ PrintMargins="36 36 36 36"
+ MacPrintInfo="000300000048004800000000033C04ECFFEEFFEE034E04FE0365087005A0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+ ChemPropName=""
+ ChemPropFormula="Chemical Formula: "
+ ChemPropExactMass="Exact Mass: "
+ ChemPropMolWt="Molecular Weight: "
+ ChemPropMOverZ="m/z: "
+ ChemPropAnalysis="Elemental Analysis: "
+ ChemPropBoilingPt="Boiling Point: "
+ ChemPropMeltingPt="Melting Point: "
+ ChemPropCritTemp="Critical Temp: "
+ ChemPropCritPres="Critical Pres: "
+ ChemPropCritVol="Critical Vol: "
+ ChemPropGibbs="Gibbs Energy: "
+ ChemPropLogP="Log P: "
+ ChemPropMR="MR: "
+ ChemPropHenry="Henry&apos;s Law: "
+ ChemPropEForm="Heat of Form: "
+ ChemProptPSA="tPSA: "
+ color="0"
+ bgcolor="1"
+><colortable>
+<color r="1" g="1" b="1"/>
+<color r="0" g="0" b="0"/>
+<color r="1" g="0" b="0"/>
+<color r="1" g="1" b="0"/>
+<color r="0" g="1" b="0"/>
+<color r="0" g="1" b="1"/>
+<color r="0" g="0" b="1"/>
+<color r="1" g="0" b="1"/>
+</colortable><fonttable>
+<font id="21" charset="x-mac-roman" name="Helvetica"/>
+</fonttable><page
+ id="6381"
+ BoundingBox="0 0 1224 1584"
+ HeaderPosition="36"
+ FooterPosition="36"
+ PrintTrimMarks="yes"
+ HeightPages="2"
+ WidthPages="1"
+/></CDXML>
