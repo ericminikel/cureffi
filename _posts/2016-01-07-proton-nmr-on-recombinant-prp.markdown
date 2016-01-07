@@ -28,7 +28,7 @@ We got back an NMR spectrum, and our mentor sat down and walked us through what 
 
 As you can see, the first thing that jumps out at you visually is actually the least interesting: the Tris contamination. Here is the structure of Tris:
 
-![](/media/2015/12/tris.png)
+![](/media/2016/01/tris.png)
 
 The <u>H</u><sub>3</sub>C-OH hydrogens come in around 4 ppm on the NMR spectrum. The <u>H</u>O hydrogens would come in around 5 but get swallowed by the water subtraction. The <u>H</u><sub>2</sub>N hydrogens appear around -8.5 and -9.5. As the structure is drawn above, those two amide hydrogens would actually be equivalent, so after pondering it I *think* the reason we get two different peaks is that Tris is a buffer and these correspond to protonated (-N<u>H</u><sub>3</sub><sup>+</sup>) and non-protonated (-N<u>H</u><sub>2</sub>) molecules.
 
