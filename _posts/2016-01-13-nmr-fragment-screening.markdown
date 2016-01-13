@@ -4,8 +4,8 @@ title:  "NMR fragment screening"
 date:   2016-01-13 12:01:00
 author: ericminikel
 location: Cambridge, MA
-thumb120: 
-summary200: ""
+thumb120: http://www.cureffi.org/media/2016/01/fragment-thumbnail.png
+summary200: "For some difficult protein targets where conventional high throughput screening has failed, using NMR to screen low molecular weight fragments can yield starting points for med chem efforts."
 ---
 
 ### what is fragment screening?
