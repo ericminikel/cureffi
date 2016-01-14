@@ -26,13 +26,11 @@ We got back an NMR spectrum, and our mentor sat down and walked us through what 
 
 ![](/media/2016/01/huprp23-230-1h-nmr-overall.png)
 
-As you can see, the first thing that jumps out at you visually is actually the least interesting: the Tris contamination. Here is the structure of Tris:
+As you can see, the first thing that jumps out at you visually is actually the least interesting: the large peaks corresponding to small molecule contaminants. We think that these are probably Tris and/or imidazole, whose structure are as follows:
 
-![](/media/2016/01/tris.png)
+![](/media/2016/01/tris-imidazole.png)
 
-The <u>H</u><sub>3</sub>C-OH hydrogens come in around 4 ppm on the NMR spectrum. The <u>H</u>O hydrogens would come in around 5 but get swallowed by the water subtraction. The <u>H</u><sub>2</sub>N hydrogens appear around -8.5 and -9.5. As the structure is drawn above, those two amide hydrogens would actually be equivalent, so after pondering it I *think* the reason we get two different peaks is that Tris is a buffer and these correspond to protonated (-N<u>H</u><sub>3</sub><sup>+</sup>) and non-protonated (-N<u>H</u><sub>2</sub>) molecules.
-
-Why the Tris contamination? On reflection, we realized that Tris was (deliberately) present at 10 mM in our elution buffer when we made the protein, and we dialyzed the ~100 mL of protein solution we made in a total of just over 10 L of dialysis buffer. That's only a 100-fold dilution, so we would still expect Tris to be present at ~100 &mu;M in the solution in that NMR tube, which is probably four times higher a concentration than our protein. D'oh. Luckily, though, there are no other detectable contaminants, and since Tris is only three peaks you can just make up your mind to look past them, at the smaller but more interesting protein peaks below.
+Why are these contaminants here? On reflection, we realized that our elution buffer deliberately contains 10 mM Tris and 500 mM imidazole. We dialyzed the ~100 mL of protein solution we made in a total of just over 10 L of dialysis buffer to try to remove them. But that's only a 100-fold dilution, so we would still expect 5 mM imidazole and 100 &mu;M Tris in the solution in that NMR tube, both much higher concentrations than our protein, which is only about 25 &mu;M after concentrating it. D'oh. Luckily, though, there are only a few peaks here, so you can just make up your mind to look past them, at the smaller but more interesting protein peaks below.
 
 I've highlighted two areas that were interesting enough to zoom in on. The hydrogens in the two-ring system of the tryptophan side chains have a uniquely downfield chemical shift (far left). But you can also see the way that their chemical shift is influenced by the local environment around each tryptophan.
 
