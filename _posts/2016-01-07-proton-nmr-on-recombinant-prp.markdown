@@ -26,7 +26,7 @@ We got back an NMR spectrum, and our mentor sat down and walked us through what 
 
 ![](/media/2016/01/huprp23-230-1h-nmr-overall.png)
 
-As you can see, the first thing that jumps out at you visually is actually the least interesting: the large peaks corresponding to small molecule contaminants. We think that these are probably Tris and/or imidazole, whose structure are as follows:
+As you can see, the first thing that jumps out at you visually is actually the least interesting: the large peaks corresponding to small molecule contaminants. We think that these are probably Tris and/or imidazole, whose structures are as follows:
 
 ![](/media/2016/01/tris-imidazole.png)
 
