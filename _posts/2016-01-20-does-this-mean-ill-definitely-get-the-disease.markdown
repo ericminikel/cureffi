@@ -36,7 +36,7 @@ To avoid creating false suspense followed by disappointment, I'll spoil the surp
 
 But I'll also say, we carried with us at least some whiffs of doubt. There was no history of dementia in Sonia's family. In her entire massive family tree, her mother was the first in living memory to die of a neurodegenerative disease. It looked nothing like the classic picture of a dominant disease pedigree. Her mother was also the first South Asian ever to die of this particular subtype of prion disease, with this particular mutation. So even as we were taking night classes and starting our first jobs in biology labs, there was some part of us that was wondering: is it possible that this mutation just behaves a little differently on a South Asian genetic background? Or is it possible that we just *see* the families where everyone dies of this disease because that's who gets studied &mdash; and we don't see the families where no one gets the disease?
 
-![](/media/2016/01/photos_of_sonias_mom.png)
+![](/media/2016/01/photos-of-sonias-mom.png)
 
 *Sonia's mom in her youth (left) and helping Sonia get ready for our wedding in 2009 (right).*
 
