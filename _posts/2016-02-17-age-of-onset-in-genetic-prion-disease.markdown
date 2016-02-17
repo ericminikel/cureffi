@@ -48,7 +48,7 @@ So how to do it right? As others have observed, it is currently impossible to as
 
 I love the dark humor of those birthday cards that say "Happy birthday! You're a year older, and a year closer to death." But as any actuary knows, and as I've touched on in [this post](/2013/06/19/how-censoring-by-life-expectancy-affects-age-of-onset-distributions/), that's not actually how it works. On your birthday, you've aged a year, yes, but you've also avoided all the things that might have killed you in that year, and that's worth something. For instance, according to the U.S. Social Security Adminstration's [2011 Actuarial Life Tables](https://www.ssa.gov/oact/STATS/table4c6.html), an American female at birth has a life expectancy of about 81, but by age 70, her life expectancy has risen to 86 and 4 months. By her 71st birthday, her life expectancy rises further to 86 and 7 months. Thus, she's a year older, but only 9 months closer to death.
 
-![](/media/2016/02/happy_birthday.png)
+
 
 *[code](https://github.com/ericminikel/cureffi/blob/gh-pages/media/2016/02/happy_birthday.R), [data](https://github.com/ericminikel/cureffi/blob/gh-pages/media/2016/02/us_actuarial_life_table_2011.tsv)*
 
