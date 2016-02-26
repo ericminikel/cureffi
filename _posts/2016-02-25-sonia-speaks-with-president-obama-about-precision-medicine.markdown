@@ -3,7 +3,7 @@ layout: post
 title:  "Sonia speaks with President Obama about precision medicine"
 date:   2016-02-25 12:01:00
 author: ericminikel
-location: Cambridge, MA
+location: Washington, DC
 thumb120: http://www.cureffi.org/media/2016/02/precision-medicine-thumbnail.png
 summary200: "Today, at the Precision Medicine Initiative summit, Sonia spoke with President Obama about our story, prion disease, and precision medicine."
 ---
