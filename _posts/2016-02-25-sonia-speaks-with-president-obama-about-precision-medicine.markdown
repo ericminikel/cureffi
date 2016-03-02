@@ -24,6 +24,6 @@ You can read more on the [White House blog](https://www.whitehouse.gov/blog/2016
 + [New York Times article](http://www.nytimes.com/2016/02/26/us/politics/president-obama-weighs-in-on-data-from-genes.html) about the summit.
 + And finally, here is [an article](http://www.theatlantic.com/video/index/471861/precision-medicine-explained/) and 10-minute video produced by *The Atlantic* about the summit:
 
-<iframe src="http://www.theatlantic.com/video/iframe/471861/" frameborder="0" allowfullscreen></iframe>
+<iframe width="640" height="360" frameborder="0" webkitallowfullscreen="webkitallowfullscreen" allowfullscreen="allowfullscreen" mozallowfullscreen="mozallowfullscreen" src="http://www.theatlantic.com/video/iframe/471861/"></iframe>
 
 
