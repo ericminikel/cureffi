@@ -16,3 +16,14 @@ Here's a video of the event:
 
 You can read more on the [White House blog](https://www.whitehouse.gov/blog/2016/02/25/precision-medicine-health-care-tailored-you) and the [Broad Institute blog](https://www.broadinstitute.org/blog/broad-institute-joins-white-house-precision-medicine-summit-researchers-initiatives-drive-healt). For now, I just wanted to share the news, and say thank you, Mr. President, for giving us this opportunity, and thank you to everyone who helped us get here. It's been an amazing four years for Sonia and me, and we have so much work ahead of us. But however long the road ahead, what we saw today was a public commitment to empowering patients, to transforming the culture of science, and to ushering in a new era of smarter drug discovery. And all of that fills us with optimism.
 
+---
+
+*Update* - a few more links:
+
++ [A video of the entire summit](https://www.youtube.com/watch?v=3AMq759psUM), including amazing talks by several other patient researchers and advocates.
++ [New York Times article](http://www.nytimes.com/2016/02/26/us/politics/president-obama-weighs-in-on-data-from-genes.html) about the summit.
++ And finally, here is [an article](http://www.theatlantic.com/video/index/471861/precision-medicine-explained/) and 10-minute video produced by *The Atlantic* about the summit:
+
+<iframe src="http://www.theatlantic.com/video/iframe/471861/" frameborder="0" allowfullscreen></iframe>
+
+
