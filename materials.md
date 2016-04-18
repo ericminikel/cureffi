@@ -11,9 +11,9 @@ This page contains materials for publicity, speaking invitations, etc. For media
 
 Click on a photo for the high-resolution version. The name of the photographer to be credited appears in the filename.
 
-[![](/imgs/thumbnail_DSC_9305_by_Maria_Nemchuk.png)](imgs/DSC_9305_by_Maria_Nemchuk.jpg)
+[![](/imgs/thumbnail_DSC_9305_by_Maria_Nemchuk.png)](/imgs/DSC_9305_by_Maria_Nemchuk.jpg)
 
-[![](/imgs/thumbnail_DSC_9500_by_Maria_Nemchuk.png)](imgs/DSC_9500_by_Maria_Nemchuk.jpg)
+[![](/imgs/thumbnail_DSC_9500_by_Maria_Nemchuk.png)](/imgs/DSC_9500_by_Maria_Nemchuk.jpg)
 
 ### Bios
 
