@@ -51,7 +51,7 @@ Tn-seq has many applications beyond finding antibiotic resistance genes. For exa
 
 &dagger;R code for simulated Tn-seq data above:
 
-```r
+~~~ r
 set.seed(1)
 pos = 1:1000
 lb = rexp(n=1000,rate=1)
@@ -62,5 +62,5 @@ plot(pos,lb,type='h',col='black',axes=FALSE,ylim=c(1,5),xlab='',ylab='')
 mtext(side=2,text='LB',col='black',las=1,line=0)
 plot(pos,lb_amp,type='h',col='red',axes=FALSE,,ylim=c(1,5),xlab='',ylab='')
 mtext(side=2,text='LB+Amp',col='red',las=1,line=0)
-```
+~~~ 
 

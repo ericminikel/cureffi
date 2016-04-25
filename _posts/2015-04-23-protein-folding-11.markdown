@@ -52,7 +52,7 @@ See also Earl Dotter's [*The Quiet Sickness*](http://earldotter.com/exhibits-3/t
 
 The parallel beta-helix was first introduced in [week 3](/2015/02/19/protein-folding-03/). Some pathogens have parallel beta helices which they use to recognize sugars on the outside of host cells. One of the most famous examples with a known structure is that of the *Salmonella* phage P22 tailspike, whose function is to recognize and bind lipopolysaccharide. It is a homotrimer [[Steinbacher 1994], [PDB# 1TSP](http://www.rcsb.org/pdb/explore/explore.do?structureId=1TSP)]:
 
-```
+~~~ 
 fetch 1tsp
 bg_color white
 symexp sym,1tsp,(1tsp),3.0
@@ -61,7 +61,7 @@ show cartoon, 1tsp or sym04000000 or sym08000000
 color red, 1tsp
 color green, sym04000000
 color yellow, sym08000000
-```
+~~~ 
 
 ![](/media/2015/04/salmonella-phage-p22-tailspike.png)
 

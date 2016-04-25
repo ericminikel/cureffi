@@ -23,7 +23,7 @@ In our study we performed paired t tests on age of onset (or death) in parent-ch
 
 With that in mind, the first thing I set out to check in FamiLinx was whether children died younger than their parents. I exported from MySQL the data on all of the parent-child pairs where year of birth and death were available for both parent and child.
 
-```sql
+~~~ sql
 -- query to generate all parent-child pairs
 select   r.Child_id child_id, r.Parent_id parent_id,
          (yc.Dyear - yc.Byear) child_ad, (yp.Dyear - yp.Byear) parent_ad, -- ages of death
@@ -36,11 +36,11 @@ and      yc.Byear > -1 and yc.Dyear > -1 -- can't compute age of death if either
 and      yp.Byear > -1 and yp.Dyear > -1
 into outfile '/humgen/atgu1/fs03/eminikel/039famil/parent-child-pairs.txt'
 ;
-```
+~~~ 
 
 Switching to R, I performed some basic QC:
 
-```r
+~~~ r
 # parent-child ("pc") pairs
 pc = read.table('/humgen/atgu1/fs03/eminikel/039famil/parent-child-pairs.txt',header=FALSE,sep='\t')
 colnames(pc) = c('child_id','parent_id','child_ad','parent_ad','child_yob','parent_yob','child_yod','parent_yod')
@@ -50,7 +50,7 @@ colnames(pc) = c('child_id','parent_id','child_ad','parent_ad','child_yob','pare
 error_free_pairs = pc$child_ad >= 0 & pc$child_ad <= 120 & pc$parent_ad >=0 & pc$parent_ad <= 120 & pc$parent_yod >= pc$child_yob - 1
 sum(!error_free_pairs) # check the number of pairs that appear to have errors
 pc = pc[error_free_pairs,] # remove the errors
-```
+~~~ 
 
 And then a paired t test on age of death in all parent-child pairs. Sure enough, there were 14 years of "anticipation" between parent and child:
 
@@ -67,7 +67,7 @@ And then a paired t test on age of death in all parent-child pairs. Sure enough,
 
 At first glance this seems pretty non-intuitive: life expectancy has been on the rise for most of recent human history, so surely children should be living *longer* than their parents. But as pointed out in the seminal work on anticipation [[Penrose 1948]], everyone is someone's child, but people who die young never become someone's parent. The fact that the world contains parent-child pairs where the child dies in infancy, but no pairs where the parent dies in infancy, means that a paired t test will inevitably uncover a younger age of death for children than their parents. Was this the source of "anticipation" in FamiLinx? I sought to answer this question by setting different minimum age thresholds for including parents and children in the paired t test. For instance, consider a minimum age of 40: if we include only pairs where *both* parent and child survived to at least age 40, then we've ensured that the child at least had an opportunity to reproduce and didn't die in infancy. I therefore computed the paired difference in age of death for FamiLinx parent-child pairs with every possible minimum age threshold from 0 to 80 to see how this would affect "anticipation":
 
-```r
+~~~ r
 anticipation_vs_min_age = data.frame(min_age_of_death=integer(0),anticipation=numeric(0),p=numeric(0))
 for (min_age_of_death in 0:80) { # for every possible minimum age threshold, 0 to 80
     subset = pc$child_ad >= min_age_of_death & pc$parent_ad >= min_age_of_death # only include pairs where both survived to minimum age
@@ -76,7 +76,7 @@ for (min_age_of_death in 0:80) { # for every possible minimum age threshold, 0 t
     p = as.numeric(t_test_result$p.value) # p value for there being a difference
     anticipation_vs_min_age = rbind(anticipation_vs_min_age, c(min_age_of_death,anticipation,p))
 }
-```
+~~~ 
 
 Here are the results:
 
@@ -88,7 +88,7 @@ Yet that 1 year difference is still highly significant (p < 1e-15). With million
 
 It's tough to talk about anticipation, though, without also talking explicitly about year of birth. I went back to MySQL and exported the year of birth and year of death data for everyone who had them:
 
-```sql
+~~~ sql
 -- query to just get year of birth, year of death and age of death for everyone possible
 select   y.Byear yob, -- year of birth
          y.Dyear yod, -- year of death
@@ -98,7 +98,7 @@ where    y.Byear > -1
 and      y.Dyear > -1
 into outfile '/humgen/atgu1/fs03/eminikel/039famil/yob-yod-ad.txt'
 ;
-```
+~~~ 
 
 Consider this plot of age of death versus year of death:
 
@@ -129,15 +129,15 @@ Now, consider this. Year of birth and age of death are correlated (as the above 
 
 In our recent paper [[Minikel 2014]] we showed in a simulation that ascertainment bias alone could be enough to lead to an estimate of heritability over 100%, even when a trait is not at all heritable. We suggested that when one performs a regression analysis on parent age of onset (or death) and child age of onset (or death), it may be wise to including a child's year of birth as a covariate. In other words, instead of just:
 
-```r
+~~~ r
 m = lm(pc$child_ad ~ pc$parent_ad)
-```
+~~~ 
 
 I'd throw in child year of birth as well:
 
-```r
+~~~ r
 m = lm(pc$child_ad ~ pc$parent_ad + pc$child_yob)
-```
+~~~ 
 
 I thought the longevity data in FamiLinx would make an interesting test case for this framework. There is plenty of evidence from well-designed studies showing that longevity really truly is a heritable trait - for instance, a large twin study with virtually complete ascertainment reported ~25% heritability [[Herskind 1996]]. Yet as shown above, year of birth and age of death in FamiLinx exhibit a surprising correlation which is clearly related to ascertainment and not biology. One could imagine that would inflate heritability estimates. So does a simple estimate of the heritability of longevity based on parent-offspring regression change if we throw in a year of birth covariate?
 

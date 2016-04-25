@@ -36,13 +36,13 @@ I stared at these for a long time trying to decipher whether they actually repre
 
 My understanding is that transcripts deposited in RefSeq come mostly from older technologies, so I also wanted to check if the differences in splicing can be observed in slightly more modern RNA-seq data. Open access RNA-seq BAMs are shockingly difficult to find on the internet, but I did turn to the [Human BodyMap](/2013/07/11/tissue-specific-gene-expression-data-based-on-human-bodymap-2-0/) dataset, for which raw BAMs are [available via FTP](ftp://ftp.ensembl.org/pub/release-70/bam/homo_sapiens/genebuild/). I downloaded the brain BAM, and to identify reads that confidently span the exon-exon junction of *PRNP* mRNA, I `samtools view`ed the region of interest and `grep`ed for sequences unique to exon 1 and exon 2:
 
-```bash
+~~~ bash
 samtools view GRCh37.HumanBodyMap.brain.1.bam 20:4667151-4679881 | awk -v FS="\t" '{print $10}' | grep TCTCCTCACGACCG | grep ATGGCGAAC
-```
+~~~ 
 
 I obtained 46 reads, which I copied into a text file and aligned manually based on the unique sequences upstream and downstream of the putative alternative splicing region. Here's what I saw:
 
-```
+~~~ 
 NNTGACAGCCGCGGCGCCGCGAGCTTCTCCTCTCCTCACGACCGAG      AGCAGTCATTATGGCGAACCTTGGCTGCT
  CTGACAGCCGCGGCGCCGCGAGCTTCTCCTCTCCTCACGACCGAG  GCAGAGCAGTCATTATGGCGAACCTTCGCT
      CAGCCGCGGCGCCGCGAGCTTCTCCTCTCCTCACGACCGAG      AGCAGTCATTATGGCGAACCTTGGCTGCTGGATG
@@ -89,7 +89,7 @@ NNTGACAGCCGCGGCGCCGCGAGCTTCTCCTCTCCTCACGACCGAG      AGCAGTCATTATGGCGAACCTTGGCTGC
                    CGAGCTTCTCCTCTCCTCACGACCGAG  GCAGAGCAGTCATNATGGCGAAC
                      AGCTTCTCCTCTCCTCACGACCGAG  GCAGAGCAGTCATTATGGCGAACCT
                      AGCTTCTCCTCTCCTCACGACCGAG  GCAGAGCAGTCATTATGGCGAACCT
-```
+~~~ 
 
 After staring at this alignment, it became clear that there are in fact two distinct splicing events going on here. Of the 46 reads displayed here, 21 (47%) contain a CGAGGCAG sequence consistent with splicing at the canonical GT donor (herafter "type 1"). 23 (50%) contain a CGAGAGCAG sequence ("type 2"), and 2 (4%) contain a CGAGTCATTA sequence ("type 3"), both of which can only be explained by non-canonical splicing.
 
@@ -103,11 +103,11 @@ It would appear, then, that just over half of RNA-seq reads for *PRNP* in this s
 
 Does this GC splicing event in *PRNP* occur in all humans, or does it just happen to occur in Human BodyMap? I didn't find any other good public RNA-seq datasets, but a collaborator allowed me to have a look at a few BAMs from some human cortex RNA-seq samples. Here's what I found.
 
-```bash
+~~~ bash
 samtools view $bampath 20:4667151-4679881 | awk -v FS="\t" '{print $10}' | grep TCTCCTCACGACCG | grep ATGGCGAAC | grep CGAGGCAG | wc -l # type 1
 samtools view $bampath 20:4667151-4679881 | awk -v FS="\t" '{print $10}' | grep TCTCCTCACGACCG | grep ATGGCGAAC | grep CGAGAGCAG | wc -l # type 2
 samtools view $bampath 20:4667151-4679881 | awk -v FS="\t" '{print $10}' | grep TCTCCTCACGACCG | grep ATGGCGAAC | grep CGAGTCATTA | wc -l # type 3
-```
+~~~ 
 
 | BAM | type 1 | type 2 | type 3 | noncanonical |
 | ---- | ---- | ---- | ---- | ---- |

@@ -59,14 +59,14 @@ In the limit where A&rarr;right in the centromere and B&rarr;as far away as poss
 
 To review, the formulas for linkage and centromere linkage are as follows:
 
-```r
+~~~ r
 linkage = function(P,N,T) { 
     return (.5*(6*N+T)/(P+N+T))
 }
 cenlinkage = function(P,N,T) { 
     return (.5*T/(P+N+T))
 }
-```
+~~~ 
 
 ### More examples
 

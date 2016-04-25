@@ -52,11 +52,11 @@ One potentially interesting thing about *PRNP* translation is its reported regul
 
 The evidence for this mechanism applying to *PRNP* in particular is reported in [Figure 2J](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3378208/figure/F2/) and [Figures S4-5](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3378208/#SD1) of [[Moreno 2012]] and is based on polysome fractioning. Under stress conditions, *PRNP* mRNA shifts towards a heavier fraction, suggesting association with a greater number of ribosomes, and thus implying a greater translation rate. The shift illustrated here is rather subtle. So I'd really like to see some ribosome profiling data, hypothetically demonstrating that the abundance of ribosomes on the start codon of *PRNP*'s canonical ORF is increased under stress, before I'd feel certain that I believe that this mechanism really applies to *PRNP*. I say that, particularly because *PRNP* does not fit the canonical arrangement of uORFs depicted in [Figure 4](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC4461372/figure/F4/) of [[Jackson 2010]] or [Figure 3](http://www.sciencedirect.com/science/article/pii/S1097276510007562#gr3) of [[Spriggs 2010]]. According to those models, the last ORF before the canonical one should be in a different frame than the canonical ORF, and should overlap the canonical ORF, such that translation of the former precludes translation of the latter. In human *PRNP*, there are four uORFs, the last of which actually in the same frame as the fifth and canonical ORF, and ends long before the canonical ORF begins:
 
-```python
+~~~ python
 import re # python library for regular expressions
 human_prnp = 'ATTAAAGATGATTTTTACAGTCAATGAGCCACGTCAGGGAGCGATGGCACCCGCAGGCGGTATCAACTGATGCAAGTGTTCAAGCGAATCTCAACTCGTTTTTTCCGGTGACTCATTCCCGGCCCTGCTTGGCAGCGCTGCACCCTTTAACTTAAACCTCGGCCGGCCGCCCGCCGGGGGCACAGAGTGTGCGCCGGGCCGCGCGGCAATTGGTCCCCGCGCCGACCTCCGCCCGCGAGCGCCGCCGCTTCCCTTCCCCGCCCCGCGTCCCTCCCCCTCGGCCCCGCGCGTCGCCTGTCCTCCGAGCCAGTCGCTGACAGCCGCGGCGCCGCGAGCTTCTCCTCTCCTCACGACCGAGGCAGAGCAGTCATTATGGCGAAC' # human PRNP sequence up just past canonical ATG, from http://www.ncbi.nlm.nih.gov/nuccore/NM_000311.3
 [m.start() % 3 for m in re.finditer('ATG',human_prnp)] # calculate the reading frame of each ATG
-```
+~~~
 
 ![](/media/2015/10/human-prnp-and-its-uorfs.png)
 

@@ -38,7 +38,7 @@ Under a null hypothesis of no anticipation, we would expect families like Family
 
 Could this sort of ascertainment bias could be enough to explain Pocchiari's results? I opened up a text editor and an R terminal and got cracking. Within a few minutes I had written a simulation to generate 100,000 pairs where the parent's age of onset and the child's age of onset were drawn from the same distribution &mdash; 64&plusmn;10 years &mdash; but their years of birth were separated by 28&plusmn;6 years, and you could only ascertain people who got sick between 1989 and 2013.
 
-```r
+~~~ r
 # simulation
 set.seed(1)
 parent_yob = runif(n=100000,min=1700,max=2000) # generate parents born from 1700 through 2000
@@ -58,7 +58,7 @@ child_ascertainable = child_onset_year >= 1989 & child_onset_year <= 2013
 pair_ascertainable = parent_ascertainable & child_ascertainable
 t.test(parent_onset_age[pair_ascertainable],child_onset_age[pair_ascertainable],paired=TRUE,alternative='two.sided')
 # highly significant 17-year difference in age of onset
-```
+~~~ 
 
 Sure enough, the 1989 - 2013 year of onset cutoffs alone were enough to cause 17 years of "anticipation" in a paired t test. If this still doesn't seem intuitive, consider the following plot, which illustrates another artifact of ascertaining only people with onset between 1989 and 2013:
 

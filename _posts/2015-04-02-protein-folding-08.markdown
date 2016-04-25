@@ -80,14 +80,14 @@ They then asked whether the order of events was important. They diluted rubisco 
 
 The idea of a partially folded intermediate as substrate led to a question of exactly what structure the chaperones were recognizing in that intermediate. This remains somewhat mysterious, but we at least got some answers when the structure of GroE was solved [[Xu 1997], [PDB# 1AON](http://pdb.org/pdb/explore/explore.do?structureId=1AON)].
 
-```
+~~~ 
 fetch 1aon
 bg_color white
 hide everything
 show cartoon
 color 0x802A2A
 color 0xFCD116, chain O or chain P or chain Q or chain R or chain S or chain T or chain U
-```
+~~~ 
 
 ![](/media/2015/04/groels.png)
 

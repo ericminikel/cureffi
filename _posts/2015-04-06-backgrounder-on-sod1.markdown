@@ -18,16 +18,16 @@ This semester I'm doing a research rotation in [Lee Rubin's lab](http://www.scrb
 
 The *SOD1* gene (above) spans about 10kb of genomic sequence on chromosome 21, with five protein-coding exons encoding a 153-residue protein:
 
-```
+~~~ 
 >ENSG00000142168:ENST00000270142 peptide: ENSP00000270142 pep:KNOWN_protein_coding
 MATKAVCVLKGDGPVQGIINFEQKESNGPVKVWGSIKGLTEGLHGFHVHEFGDNTAGCTS
 AGPHFNPLSRKHGGPKDEERHVGDLGNVTADKDGVADVSIEDSVISLSGDHCIIGRTLVV
 HEKADDLGKGGNEESTKTGNAGSRLACGVIGIAQ
-```
+~~~ 
 
 Note that the translated sequence above is 154 residues, but like many cytosolic proteins [[Giglione 2004]], SOD1 undergoes N-terminal methionine excision, thus yielding a 153-residue protein. The residue numbering in common use in publications about *SOD1* is based on 153-residue counting and thus appears as shifted from this reference sequence by -1: for instance, people refer to D90A [[Al-Chalabi 1998]] and G93A [[Yang 2013]], which correspond to residues 91 and 94, respectively, in the above sequence or in any output generated programmatically by genomic tools. [In ExAC](http://exac.broadinstitute.org/gene/ENSG00000142168), the *SOD1* gene (canonical transcript ENST00000270142) has three predicted loss-of-function variants, all singletons. The protein is localized to the cytosol and the mitochondrial intermembrane space [[Kawamata & Manfredi 2010]]. SOD1 was known as an enzyme responsible for inactivating superoxide radicals before it was ever linked to ALS, and its crystal structure was solved in 1982 [[Tainer 1982], [PDB# 2SOD](http://www.rcsb.org/pdb/explore/explore.do?structureId=2SOD)]. It both functions *in vivo*, and crystallizes, as a dimer:
 
-```
+~~~ 
 fetch 2sod
 bg_color white
 hide everything
@@ -37,7 +37,7 @@ color yellow, chain Y
 show spheres, inorganic and (chain O or chain Y)
 color 0xC77F33, element Cu 
 color 0x7C7FAF, element Zn
-```
+~~~ 
 
 ![](/media/2015/04/2sod.png)
 

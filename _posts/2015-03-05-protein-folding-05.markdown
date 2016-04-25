@@ -48,7 +48,7 @@ Cytochrome c is a 104-residue protein responsible for moving electrons around du
 
 The original structure of horse heart cytochrome c does not appear to be in PDB, but I found a later structure [[PDB# 1OCD](http://pdb.org/pdb/explore/explore.do?structureId=1OCD), [Qi 1996]]:
 
-```
+~~~ 
 fetch 1ocd
 bg_color white
 hide everything
@@ -58,7 +58,7 @@ color yellow
 color red, resi 14 or resi 17 or resi 18 or resi 59 or resi 80
 show sticks, resi 14 or resi 17 or resi 18 or resi 59 or resi 80
 color black, organic
-```
+~~~ 
 
 ![](/media/2015/03/horse-heart-cytochrome-c.png)
 

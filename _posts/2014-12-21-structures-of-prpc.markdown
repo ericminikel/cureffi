@@ -21,14 +21,14 @@ In addition, according to [[Riek 1996]], in early attempts to produce recombinan
 
 The structure they determined is [[PDB# 1AG2](http://pdb.org/pdb/explore/explore.do?structureId=1AG2)], so I fired up [PyMOL](/2014/09/15/molecular-biology-pymol/) to have a look at it.
 
-```
+~~~ 
 bg_color white
 fetch 1ag2
 hide everything
 show cartoon
 spectrum
 show sticks, resi 179 or resi 214 # show the disulfide bridge
-```
+~~~ 
 
 ![](/media/2014/12/riek-1996-prpc-1.png)
 
@@ -36,10 +36,10 @@ Here, I've colored PrP<sup>C</sup> by residue number, so that the bottom-most re
 
 That cartoon view makes it seem that there is plenty of space in the protein, in contrast to how everyone calls the C terminus a "globular domain". So next I switched to surface view instead:
 
-```
+~~~ 
 hide cartoon
 show surface
-```
+~~~ 
 
 ![](/media/2014/12/riek-1996-prpc-2.png)
 
@@ -49,23 +49,23 @@ That's better - now it at least looks solid. Still, it is hardly a ball - its su
 
 The structure of PrP<sup>C</sup> has now been determined dozens of times (different species, different mutants, etc.) since Roland Riek and Kurt Wuthrich's original NMR structure [reviewed in [Surewicz & Apostol 2011]]. The first X-ray crystal structure came five years later, and used a slightly longer C-terminal fragment: HuPrP90-231 [[PDB# 1I4M](http://pdb.org/pdb/explore/explore.do?structureId=1I4M), [Knaus 2001]]. The assignment of residues to &alpha;-helices and &beta;-sheets is identical to that of [[Riek 1996]], but the tertiary structure looks utterly different, and the cysteines of the disulfide bond (sticks in red near bottom and yellow near top) do not face each other:
 
-```
+~~~ 
 bg_color white
 fetch 1i4m
 hide everything
 show cartoon
 spectrum
 show sticks, resi 179 or resi 214 # show the disulfide bridge
-```
+~~~ 
 
 ![](/media/2014/12/knaus-2001-prpc-1.png)
 
 Even if you view it as a surface, there's a big hole in the middle:
 
-```
+~~~ 
 hide cartoon
 show surface
-```
+~~~ 
 
 ![](/media/2014/12/knaus-2001-prpc-2.png)
 
@@ -73,14 +73,14 @@ It turns out that both of these differences are because the protein crystallized
 
 To visualize the dimer in PyMOL, you need to generate the symmetry mates:
 
-```
+~~~ 
 symexp sym,1i4m,(1i4m),3.0
 hide everything
 show cartoon, 1i4m
 show cartoon, sym02000000
 show sticks, resi 179 and (1i4m or sym02000000)
 show sticks, resi 214 and (1i4m or sym02000000)
-```
+~~~ 
 
 ![](/media/2014/12/knaus-2001-prpc-3.png)
 
@@ -90,25 +90,25 @@ Although they don't appear to line up perfectly, the cysteines of the disulfide 
 
 If we show only residues >191 in one copy of the protein and only residues <191 in the other copy, it starts to look much more like the NMR structure:
 
-```
+~~~ 
 hide everything, 1i4m and resi 191-231
 hide everything, sym02000000 and resi 1-190
-```
+~~~ 
 
 ![](/media/2014/12/knaus-2001-prpc-5.png)
 
 Now the surface looks more solid, too - no large gaps:
 
-```
+~~~ 
 show surface, 1i4m and resi 1-190
 show surface, sym02000000 and resi 191-231
-```
+~~~ 
 
 ![](/media/2014/12/knaus-2001-prpc-6.png)
 
 Later on, other groups crystallized PrP<sup>C</sup> in complex with antibody [Fabs](http://en.wikipedia.org/wiki/Fragment_antigen-binding), and obtained crystals of PrP that look much more like the NMR structure. It is not clear to me if using an antibody is necessary to prevent PrP from domain-swapping during crystallization, or if these investigators were simply interested in the structure of PrP when bound to an antibody. In any case, the first of these was MRC Prion Unit's structure of HuPrP 119-231 bound to ICSM-18 [[PDB# 2W9E](http://pdb.org/pdb/explore/explore.do?structureId=2W9E), [Antonyuk 2009]].
 
-```
+~~~ 
 bg_color white
 fetch 2w9e
 hide everything
@@ -116,20 +116,20 @@ show surface
 color teal, chain L # light chain ICSM-18 fab
 color teal, chain H # heavy chain POM1 fab
 color yellow, chain A # HuPrP
-```
+~~~ 
 
 ![](/media/2014/12/antonyuk-2009-prpc-1.png)
 
 PrP (yellow) is a tiny protein - it even appears small compared to the Fab (teal), which in turn is much smaller than a real antibody. Although PrP here has a structure close to that obtained via NMR, and is not domain-swapped, it does form an intermolecular beta-sheet with its neighbor:
 
-```
+~~~ 
 hide everything
 symexp sym,2w9e,(2w9e),3.0
 hide everything
 show cartoon, sym02-10000 and chain A
 show cartoon, sym08000000 and chain A
 color orange, sym08000000 and chain A
-```
+~~~ 
 
 ![](/media/2014/12/antonyuk-2009-prpc-2.png)
 
@@ -137,7 +137,7 @@ One review I read [[Surewicz & Apostol 2011]] noted that either of these dimeric
 
 Having learned how to use PyMOL and examine these structures, I also went back and looked at the crystal structure of mouse PrP bound to chlorpromazine and POM1 which Michael James and Adriano Aguzzi reported earlier this year [[PDB# 4MA8](http://pdb.org/pdb/explore/explore.do?structureId=4MA8), [Baral 2014]] and which I [blogged about](/2014/09/03/chlorpromazine-a-new-mechanism-of-action/) a few months ago:
 
-```
+~~~ 
 bg_color white
 fetch 4ma8
 hide everything
@@ -147,7 +147,7 @@ color teal, chain H # heavy chain POM1 fab
 color yellow, chain C # PrP
 color red, organic # small molecule
 show sticks, organic # small molecule
-```
+~~~ 
 
 ![](/media/2014/12/baral-2014-prpc-1.png)
 
@@ -157,7 +157,7 @@ Sure enough, chlorpromazine is shown sticking into one of those divots on the su
 
 Another structure I had always wanted to understand better is that of crystallized HuPrP D178N 129M, the mutant protein responsible for fatal familial insomnia [[PDB# 3HEQ](http://pdb.org/pdb/explore/explore.do?structureId=3HEQ), [Lee 2010]]. The authors crystallized HuPrP 129M or 129V with either a wild-type sequence, the D178N mutation or the F198S mutation. Surprisingly, the wild-type protein formed a domain-swapped dimer, but the mutants didn't - they instead formed intermolecular beta-sheets not unlike those from [[Antonyuk 2009]].  
 
-```
+~~~ 
 bg_color white
 hide everything
 show cartoon
@@ -169,13 +169,13 @@ show cartoon, chain A and 3heq
 show cartoon, chain B and sym07000000
 show sticks, resi 129
 show sticks, resi 178
-```
+~~~ 
 
 ![](/media/2014/12/lee-2010-prpc-1.png)
 
 The authors state that, compared to the impact of the F198S mutation on structure, "the structural consequences of the FFI and CJD D178N substitution are more subtle". If they're subtle even to the structural biologists, I expect I will have trouble discerning anything at all, but I figured I'd try and align the D178N structure with the HuPrP structure from [[Antonyuk 2009]]:
 
-```
+~~~ 
 hide everything, sym07000000
 hide sticks
 fetch 1ag2
@@ -184,7 +184,7 @@ show cartoon, 1ag2
 color blue, 1ag2
 align 1ag2, 3heq and chain A
 show sticks, resi 178 and (3heq and chain A or 1ag2)
-```
+~~~ 
 
 ![](/media/2014/12/lee-2010-d178n-vs-antonyuk-2009-1.png)
 

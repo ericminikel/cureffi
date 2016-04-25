@@ -52,23 +52,23 @@ In the lab it is considered most desirable to find Mendelian, single-locus mutat
 
 Let's say for example that our Cis<sup>R</sup> mutants are resistant to 100 &mu;g/mL of cisplatin. Consider our earlier *cis1* mutant, which was isolated from a mutagenesis screen and proved to be a single locus Mendelian mutation. If we perform a *cis1* &times; wt cross, we will find this:
 
-```r
+~~~ r
 set.seed(1)
 cisr = sample(c(0,100),size=100,replace=TRUE,prob=c(.5,.5))
 hist(cisr,col='#D18532',xlab='Max CisR (ug/mL)',ylab='Number of progeny',
     main='cis1 x wt progeny',border=NA,ylim=c(0,50))
-```
+~~~ 
 
 ![](/media/2014/09/cis1-wt-cross-histo.png)
 
 Now if we identify a Cis<sup>R</sup> strain out in nature, and cross it with wild-type, we might find the following:
 
-```r
+~~~ r
 set.seed(1)
 cisr = pmax(pmin(rnorm(n=100,m=50,s=30),rep(100,100)),rep(0,100))
 hist(cisr,breaks=10,col='#DB2929',xlab='Max CisR (ug/mL)',ylab='Number of progeny',
     main='CisR wild strain x wt progeny',border=NA,ylim=c(0,50))
-```
+~~~ 
 
 ![](/media/2014/09/cisr-wild-strain-x-wt-cross-histo.png)
 

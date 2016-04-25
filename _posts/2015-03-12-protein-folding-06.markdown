@@ -39,13 +39,13 @@ The review article [[Fowler 2007]] begins by defining amyloid. Amyloid is often 
 
 But Fowler et al opt for a slightly more specific molecular definition of "a fibrous quaternary structure formed by the assembly of protein or peptide monomers into intermolecularly hydrogen bonded &beta;-sheets". This still doesn't help me totally understand what people in the prion field mean when they refer to amyloid vs. non-amyloid PrP<sup>Sc</sup>, [e.g. [Rangel 2013]]. As an example of amyloid, Fowler offers the NMR structure of A&beta;1-42 reported by Roland Riek's group, with a 4.7&Aring; rung height consistent with measurements from X-ray fiber diffraction [[PDB# 2BEG](http://www.rcsb.org/pdb/explore.do?structureId=2BEG), [Luhrs 2005]]:
 
-```
+~~~ 
 fetch 2beg
 hide everything
 show cartoon
 bg_color white
 spectrum count, yellow_red
-```
+~~~ 
 
 ![](/media/2015/03/ab1-42-fibril.png)
 

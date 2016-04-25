@@ -25,37 +25,37 @@ SecB alone is protease sensitive, but becomes partially proteinase K-resistant w
 
 The crystal structure of SecB from *E. coli* [[PDB# 1QYN](http://www.rcsb.org/pdb/explore/explore.do?structureId=1QYN), [Dekker 2003]] reveals it to be a dimer-of-dimers. It has grooves where unfolded polypeptide chains bind. 
 
-```
+~~~ 
 fetch 1qyn
 bg_color white
 hide everything
 show cartoon
 spectrum count, yellow_red
-```
+~~~ 
 
 ![](/media/2015/05/secb_1qyn.png)
 
 SecY is the channel through which unfolded polypeptides must pass to reach the periplasm. In its structure [[PDB# 1RHZ](http://www.rcsb.org/pdb/explore/explore.do?structureId=1rhz), [van den Berg 2004]], whether you look in surface or cartoon mode, you surprisingly cannot see an obvious pore where the polypeptides pass through - in fact, it appears to be totally closed:
 
-```
+~~~ 
 fetch 1rhz
 bg_color white
 hide everything
 show surface
 spectrum count, yellow_red
-```
+~~~ 
 
 ![](/media/2015/05/secy_1rhz.png)
 
 This is incontrast to OmpA [[PDB# 1QJP](http://www.rcsb.org/pdb/explore/explore.do?structureId=1qjp), [Pautsch & Schulz 2000]], which has a permanent large hole which simply allows substrates to diffuse in and out. This hole appears filled in surface view but is immediately obvious in this cartoon view:
 
-```
+~~~ 
 fetch 1qjp
 bg_color white
 hide everything
 show cartoon
 spectrum count, yellow_red
-```
+~~~ 
 
 ![](/media/2015/05/ompa_1qjp.png)
 

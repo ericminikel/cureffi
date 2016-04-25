@@ -28,7 +28,7 @@ SOD1 in its native fold is a homodimer of 8-stranded Greek key beta barrels, wit
 
 As far as I can tell from staring at the structure, the metal ions at the catalytic site are coordinated by a total of six histidines:
 
-```
+~~~ 
 fetch 1sos
 bg_color white
 hide everything
@@ -38,7 +38,7 @@ show sticks, chain A and (resi 46+48+63+71+80+120)
 show spheres, inorganic and chain A
 color 0xC77F33, chain A and element Cu 
 color 0x7C7FAF, chain A and element Zn
-```
+~~~ 
 
 ![](/media/2015/04/sod1-catalytic-site.png)
 
@@ -73,11 +73,11 @@ In the several years after *SOD1* mutations were found to be causal in a subset 
 
 With regards to point #4 above, the correlation between expression level and age of onset are particularly compelling - here, I plot the data from [[Wong 1995] Table 1]:
 
-```r
+~~~ r
 protein_level = c(12.3,6.2,5.3,5.0)
 onset = c(3.75,5.5,6.5,7)
 plot(protein_level, onset, xlim=c(0,13), ylim=c(0,8), xlab='G37R SOD1 expression level (fold wild-type)', ylab='Age of onset (months)', pch=19, type='b', col='#FF2016')
-```
+~~~ 
 
 ![](/media/2015/04/sod1-expression-vs-age-of-onset.png)
 
@@ -137,32 +137,32 @@ Another argument against oxidative damage as the sole or primary driver of patho
 
 And what about the position of various mutants within the protein's structure? I saw references that claim that there are 90 [[Rowland & Shneider 2001]] or >100 [[Guegan & Przedborski 2003]] different reported disease-causing variants in *SOD1*, but none of these references actually *list* all of the disease variants, let alone cite all of the supporting literature evidence for each one. To try to get a list of all the reportedly pathogenic variants in *SOD1*, I instead visited [ClinVar](http://www.ncbi.nlm.nih.gov/clinvar), searched for SOD1, and selected display max 100 records, format tabular (text). I got [these results](/media/2015/04/clinvar_sod1_search_results.txt), which contain lots of rubbish but also 31 actual missense variants reported to cause disease. I extracted them with:
 
-```bash
+~~~ bash
 cat media/2015/04/clinvar_sod1_search_results.txt | egrep -o "p\.[A-Za-z0-9]+" | sed 's/p.//'
-```
+~~~ 
 
 And I got [this list](/media/2015/04/clinvar_sod1_amino_acid_changes.txt). ClinVar uses the canonical codon numbering scheme which includes the N-terminal methionine, whereas the structure of SOD1 that I'm using [[PDB# 2SOD](http://www.rcsb.org/pdb/explore/explore.do?structureId=2SOD)]], and all of the SOD1 literature, uses a numbering scheme shifted by -1, so I extracted the numbers, subtracted 1 from each, and turned it into an R vector with:
 
-```bash
+~~~ bash
 cat media/2015/04/clinvar_sod1_search_results.txt | egrep -o "p\.[A-Za-z0-9]+" | sed 's/p.//' | egrep -o "[0-9]+" | sort -n | uniq | awk 'BEGIN {print "c(" } {print ($1 -1)" ,"} END {print ")"}' | tr '\n' ' '
-``` 
+~~~  
 
 If we then plot the position of the disease-associated residues in the linear amino acid sequence, it looks pretty much random:
 
-```r
+~~~ r
 all_res = 1:153
 dz = c( 4 , 6 , 12 , 16 , 21 , 37 , 38 , 41 , 43 , 45 , 46 , 72 , 80 , 84 , 85 , 90 , 93 , 96 , 100 , 104 , 106 , 112 , 126 , 134 , 144 , 145 , 151 )
 plot(x=all_res, y=rep(1, length(all_res)), type='h', lwd=4, lend=1, col='#FFD700', axes=FALSE, xlab='SOD1 residue', ylab='', ylim=c(0,10))
 points(x=dz, y=rep(1, length(dz)), type='h', lwd=4, lend=1, col='#0000CD')
 axis(side=1, at=c(1,50,100,153), labels=c(1,50,100,153), lwd=0, lwd.ticks=1, cex.axis=.9)
 legend(x=1,y=2.5,c('disease-associated'),col='#0000CD',pch=15,bty='n')
-```
+~~~ 
 
 ![](/media/2015/04/sod1-disease-residues-in-linear-sequence.png)
 
 Even better, we can look at the positions of the disease-associated residues in the native structure. I swapped in a `awk '{print ($1 -1)"+"}' | tr -d '\n'` to get list of residues I could plug into my PyMOL code to highlight all of the reported disease residues in blue. I used the structure of recombinant human SOD1 [[PDB# 1SOS](http://pdb.org/pdb/explore/explore.do?structureId=1sos), [Parge 1992]]:
 
-```
+~~~ 
 fetch 1sos
 bg_color white
 hide everything
@@ -173,7 +173,7 @@ show sticks, chain A and (resi 4+6+12+16+21+37+38+41+43+45+46+72+80+84+85+90+93+
 show spheres, inorganic and chain A
 color 0xC77F33, chain A and element Cu 
 color 0x7C7FAF, chain A and element Zn
-```
+~~~ 
 
 ![](/media/2015/04/sod1-with-disease-residues-in-blue.png)
 
@@ -213,7 +213,7 @@ One the most impactful aspects of that study was that according to dynamic light
 
 Mutant SOD1 monomers have since been observed in mouse spinal cord extracts [[Karch 2009]] and stabilizing the dimer to prevent its dissociation is considered as one possible therapeutic strategy [[Wright 2013]], analogous to how [tafamidis](/2012/08/03/how-tafamidis-was-born/) stabilizes transthyretin tetramers. Here is a structure of an I113T SOD1 dimer bound to 5-fluorouiridine (5-FUrd), one of the proposed compounds to prevent dissociation into monomers [[PDB# 4A7S](http://www.rcsb.org/pdb/explore/explore.do?structureId=4a7s), [Wright 2013]]:
 
-```
+~~~ 
 fetch 4a7s
 bg_color white
 hide everything
@@ -222,7 +222,7 @@ color 0x0000CD, chain A
 color 0x444444, chain F
 show sticks, organic
 color 0xFFD700, organic
-```
+~~~ 
 
 ![](/media/2015/04/i113t-sod1-dimer-bound-to-5-furd.png)
 

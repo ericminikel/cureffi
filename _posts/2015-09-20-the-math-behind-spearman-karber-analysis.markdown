@@ -94,7 +94,7 @@ Intuitively, that one irritating positive replicate at -8 would seem to drag our
 
 Accordingly, both Dougherty and Hamilton state that the standard error formula (though curiously, not the best estimate formula) require that p be non-increasing. Each provides a formula for how to "smooth" the data if this condition is not met. Hamilton's is simpler &mdash; just average adjacent values until they're non-increasing. In other words, in R:
 
-```r
+~~~ r
 smooth_p = function(p) {
     if (length(p)<2) {
         return (p)
@@ -111,7 +111,7 @@ smooth_p = function(p) {
     }
     return (p)
 }
-```
+~~~ 
 
 Hamilton also offers another optional tweak, which is the trimmed Spearman-K&auml;rber estimator, in which basically you pick some tolerance value within which you'll round p up or down to 1 or 0. For instance, you can just choose to set all p < 10% to 0, and all p > 90% to 1. The logic behind this is apparently that you imagine your population (fish, in his case) vary in their intrinsic susceptibility to the thing being measured (a toxin, in his case), and you want to base your estimate more on the average fish and less on the handful of fish that are exceptionally susceptible or exceptionally resistant to the toxin. 
 
@@ -119,7 +119,7 @@ I'd argue that this particular logic makes more sense in a genetically heterogen
 
 All that being said, here's an R implementation of the formulae above, in R:
 
-```r
+~~~ r
 spearman_karber = function(x, n, p) {
     d = min(abs(diff(x))) # find d, the difference between dilutions
     if (any(abs(diff(x)) - d > .001)) { # .001 provides some numeric tolerance
@@ -144,7 +144,7 @@ x = -5:-9
 n = rep(4,5)
 p = c(1, .5, 0, .25, 0)
 spearman_karber(x,n,p)
-```
+~~~ 
 
 Armed with the understanding of these formulae, we can now ask how to maximize power in our experiments. As far as I can tell, absolutely everyone does log10 dilutions absolutely all of the time. Is that the right thing to do? Or, all else being equal, would you get a tighter and more accurate estimate of the true number of prion seeds by doing a smaller number of replicates on each of a tighter series of dilutions, or a larger number of replicates on more disperse series of dilutions?
 
@@ -152,7 +152,7 @@ I have wondered about these sorts of questions ever since learning about how the
 
 To try to figure out whether similar logic applies to endpoint dilutions, I cooked up this simulation. Here, I am randomly generating data on positive replicates on the assumption that the true P is determined by the Poisson distribution as discussed above.
 
-```r
+~~~ r
 simulate_sk = function (fold, true_seeds=NA, xmax=-1, xmin=-10, n_avail=100, n_iter=1) {
     d = log10(fold) # user gives a fold dilution, i.e. 10, and this determines d
     x = seq(xmax,xmin,-d) # figure out what the dilution values will be
@@ -184,13 +184,13 @@ for (i in 1:nf) {
     result$diff[i] = mean(res$diff, na.rm=TRUE) # remove NA because occasionally you'll happen to get an inconclusive result 
     result$se[i] = mean(res$se, na.rm=TRUE)
 }
-```
+~~~ 
 
 The result? First off, in this simulation, the Spearman-K&auml;rber estimator is biased. It's biased upward by about .25, so in other words, if your true number of prion seeds is 6.25 log10 units, the estimator will on average tell you it's 6.5 log10 units. My guess is that this apparent bias arises from the fact that I'm assuming the underlying probabilities are Poisson-distributed, which means an asymmetric S-curve, whereas the Spearman-K&auml;rber assumes symmetry. Who's right? I don't know. But in terms of standard error, perhaps surprisingly, it makes essentially no difference what dilution scheme you use. If you have 10 logs of range you want to cover, and 100 wells to use, it doesn't matter if you do 10 replicates at ten 10-fold dilutions, or 20 replicates at five 100-fold dilutions. The standard errors appear to be very slightly smaller around the 100-fold range than the 10-fold range, but I'm not certain this is even real.
 
 Here are what the data look like for the above simulation, with n=10,000 iterations on each simulated condition.
 
-```r
+~~~ r
 png('~/d/j/cureffi/media/2015/09/spearman-karber-simulation.png',width=800,height=500,res=100)
 par(mar=c(6,4,2,2))
 plot(NA, NA, xlim=c(0,3.25), ylim=c(-2,2), axes=FALSE, xlab='', ylab='',xaxs='i',yaxs='i')
@@ -203,7 +203,7 @@ axis(side=2, at=-2:2, labels=-2:2)
 mtext(side=1, text='dilution scheme', line=4)
 mtext(side=2, text='normalized log10 estimate', line=3)
 dev.off()
-```
+~~~ 
 
 ![](/media/2015/09/spearman-karber-simulation.png)
 

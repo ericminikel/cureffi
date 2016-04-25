@@ -72,14 +72,14 @@ I did not find a publication on PubMed or Google Scholar covering this work, so 
 
 According to *in silico* docking, the molecule is predicted to bind what they call "PDB-1", a set of residues defined in line 00380. I have highlighted these residues in teal in PyMOL on MRC Prion Unit's human PrP<sup>C</sup> structure [[PDB# 2W9E](http://pdb.org/pdb/explore/explore.do?structureId=2W9E), [Antonyuk 2009]]:
 
-```
+~~~ 
 bg_color white
 fetch 2w9e
 hide everything
 show surface, chain A
 color yellow
 color 0x36648B, chain A and (resi 134+135+136+137+150+154+155+157+158+159+160+209+210+213)
-```
+~~~ 
 
 ![](/media/2015/07/ds26_binding_site.png)
 
@@ -93,7 +93,7 @@ So is this finally the molecule that has been so elusive &mdash; a small molecul
 
 This is just a lead compound, and in its current form, at least, it is probably a long ways from being a drug. According to ChemDraw, this molecule has predicted logP of -3.49, meaning it's quite hydrophilic. For comparison, I used [rcdk](http://cran.r-project.org/web/packages/rcdk/index.html) to predict the XlogP for all 221 [FDA-approved CNS drugs](/2013/10/04/list-of-fda-approved-drugs-and-cns-drugs-with-smiles/). DS26 is more hydrophilic than any FDA-approved CNS drug:
 
-```r
+~~~ r
 require(rcdk)
 drugs = read.table('http://www.cureffi.org/wp-content/uploads/2013/10/drugs.txt',header=T,sep='\t',quote='',comment.char='')
 cns = parse.smiles(drugs$smiles[drugs$cns_drug])
@@ -111,7 +111,7 @@ arrows(x0=-3.49, x1=-3.49, y0=5, y1=1.5, length=.05, angle=30, code=2, col='#D91
 text(x=-3.49,y=5,labels='DS26',col='#D91309',pos=3,cex=.9)
 arrows(x0=-1, x1=0, y0=20, y1=20, length=.05, angle=30, code=2, col='#FF9912')
 text(x=-1,y=20,pos=2,labels='CNS drugs',col='#FF9912',cex=.9)
-```
+~~~ 
 
 ![](/media/2015/07/ds26_versus_cns_drugs.png)
 

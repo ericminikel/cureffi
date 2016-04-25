@@ -41,7 +41,7 @@ In any event, they observed:
 
 Based on all of this they conclude that GCN4 forms a parallel coiled coil. This was shown even more definitively when they came out with their X-ray structure of it two years later [[PDB# 2ZTA](http://pdb.org/pdb/explore/explore.do?structureId=2zta), [O'Shea 1991]]:
 
-```
+~~~ 
 fetch 2zta
 hide everything
 show cartoon
@@ -49,7 +49,7 @@ color red, chain A
 color yellow, chain B
 bg_color white
 show sticks
-```
+~~~ 
 
 ![](/media/2015/02/gcn4-coiled-coil.png)
 
@@ -98,13 +98,13 @@ In a **parallel &beta;-helix** fold, the same motif repeats in a regular fashion
 
 As an example of a &beta;-helix, here is the *Bordetella pertussis* virulence factor P.69 pertactin [[PDB# 1DAB](http://pdb.org/pdb/explore/explore.do?structureId=1DAB)] from [[Emsley 1996]]:
 
-```
+~~~ 
 fetch 1dab
 bg_color white
 hide everything
 show cartoon
 spectrum count, yellow_red
-```
+~~~ 
 
 ![](/media/2015/02/1dab-spectrum.png)
 

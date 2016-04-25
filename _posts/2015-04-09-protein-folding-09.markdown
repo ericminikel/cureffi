@@ -31,7 +31,7 @@ Red blood cells' job is to transport O<sub>2</sub> throughout the body. To do th
 
 Hemoglobin is a tetramer, often thought of as a dimer of dimers - two &alpha; and two &beta; subunits. See [[PDB# 1HBS](http://www.rcsb.org/pdb/explore/explore.do?structureId=1hbs), [Padlan & Love 1985]].
 
-```
+~~~ 
 fetch 1hbs
 bg_color white
 hide everything
@@ -40,7 +40,7 @@ color 0xB0171F, chain A or chain C
 color 0xFF9912, chain B or chain D
 show sticks, organic and (chain A or chain B or chain C or chain D)
 color 0x0000CD, organic
-```
+~~~ 
 
 ![](/media/2015/04/hbs-deoxy-1hbs.png)
 

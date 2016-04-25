@@ -50,20 +50,20 @@ Most alleles are bi-allelic, but that this depends on how many people you sequen
 
 &Dagger;In the >60,000 individuals in [ExAC](http://exac.broadinstitute.org), for instance, we have 10.4 million alt alleles at 9.6 million sites, with 92% of variable sites being bi-allelic.
 
-```sql
+~~~ sql
 select count(*) from exac_annos;
-```
+~~~ 
 
 Result: 10450724
 
-```sql
+~~~ sql
 select count(*) from (select CHROM, POS from exac_annos group by 1,2) subquery;
-```
+~~~ 
 
 Result: 9579712
 
 
-```sql
+~~~ sql
 select   case when N_ALT < 6 then N_ALT else '6 or more' end N_ALT, count(*) N_SITES
 from (
 select   CHROM, POS, count(*) N_ALT
@@ -72,7 +72,7 @@ group by 1,2) subquery
 group by 1
 order by 1
 ;
-```
+~~~ 
 
 | number of alt alleles | number of sites |
 |-----------|---------|
@@ -110,9 +110,9 @@ When compared to the reference genome, the average person has:
 
 \*\*The following SQL query on the [ExAC](http://exac.broadinstitute.org/) data double-counts homozygotes but most variants in any one individual's exome are heterozygous so this won't be off by too much:
 
-```sql
+~~~ sql
 select sum(AC+0.0)/(max(AN+0.0)/2) from exac_annos where Consequence like '%missense%';
-```
+~~~ 
 
 Result: 14694.49825
 

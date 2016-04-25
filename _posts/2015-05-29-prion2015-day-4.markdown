@@ -24,13 +24,13 @@ He discussed Zhijian Chen's discovery that the mammalian protein MAVS forms a pr
 
 Finally, they repeated the entire battery of experiments for a different putative functional mammalian prion, called ASC. The results were very similar to the results for MAVS. For both MAVS and ASC, they found that the prions do not meet the definition of amyloid - they have some morphological similarities but different tinctoral properties, for instance not binding ThT. The structure of these prions has now been solved to 3.8&Aring; by cryo-EM by [[Lu 2014]]. Here is the structure [PDB# [3J63](http://www.rcsb.org/pdb/explore/explore.do?structureId=3J63)]:
 
-```
+~~~ 
 fetch 3j63
 hide everything
 bg_color white
 show surface
 color 0xFF2015
-```
+~~~ 
 
 ![](/media/2015/05/3j63.png)
 

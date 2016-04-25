@@ -98,19 +98,19 @@ Nominally, the A allele seems to be more common in cases. To test whether this i
 
 This value can then be looked up in a table to get a p value. Steve McCarroll endorses [this Chi-square calculator](http://www.socscistatistics.com/tests/chisquare/Default2.aspx). You can do the whole calculation in R as follows: 
 
-```r
+~~~ r
 ctable = matrix(c(20,80,30,70),nrow=2)
 chisq.test(ctable)
-```
+~~~ 
 
 With the result:
 
-```
+~~~ 
     Pearson's Chi-squared test with Yates' continuity correction
 
 data:  ctable
 X-squared = 2.16, df = 1, p-value = 0.1416
-```
+~~~ 
 
 So in this case, the difference in allele frequency is not even nominally significant (p = .14).
 
@@ -120,17 +120,17 @@ An important fact to note about GWAS is that the associated allele is always see
 
 Now let's return to the above example but suppose that all the numbers are 100 times larger, such that the result is actually significant:
 
-```r
+~~~ r
 ctable = matrix(c(2000,8000,3000,7000),nrow=2)
 chisq.test(ctable)
-```
+~~~ 
 
-```
+~~~ 
     Pearson's Chi-squared test with Yates' continuity correction
 
 data:  ctable
 X-squared = 266.1336, df = 1, p-value < 2.2e-16
-```
+~~~ 
 
 Great - now the p value is less than 5e-8, which is the typical threshold for genome-wide significance (this concept is introduced below).
 

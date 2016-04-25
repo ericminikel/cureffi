@@ -24,7 +24,7 @@ With 3.6 residues per turn and 1.5&Aring; translation per residue, the alpha hel
 
 To reproduce the above figure, follow these steps in PyMOL (see also [this post](/2014/12/21/structures-of-prpc/)):
 
-```
+~~~ 
 bg_color white
 fetch 1i4m
 hide everything
@@ -36,7 +36,7 @@ color yellow, resi 148
 color green, resi 149
 color blue, resi 150
 color violet, resi 151
-```
+~~~ 
 
 A nice overview of supersecondary structures is [here](http://www.acsu.buffalo.edu/~sjpark6/pednotes/Motifs.pdf). Most &beta;&alpha;&beta; motifs are right-handed, though I always need to look at the diagram to remember exactly what that means spatially.
 

@@ -40,7 +40,7 @@ The first growth of protein crystals was achieved by J.D. Bernal and Dorothy Hod
 
 Until the structure was solved, people expected that myoglobin would possess, at the monomer level, the elegant symmetry of the myoglobin crystal. In fact, its structure is utterly asymmetric. The original structure is available as [[PDB# 1MBN](http://pdb.org/pdb/explore/explore.do?structureId=1mbn)]. I show it here in yellow, with the heme in red and sticks shown for the side chains of two histidines coordinating it:
 
-```
+~~~ 
 fetch 1mbn
 bg_color white
 hide everything
@@ -49,7 +49,7 @@ color yellow
 show sticks, organic
 color red, organic
 show sticks, resi 64 or resi 97
-```
+~~~ 
 
 ![](/media/2015/02/myoglobin-structure.png "myoglobin")
 

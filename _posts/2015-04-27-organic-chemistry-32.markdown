@@ -60,10 +60,10 @@ This ends up being [**Pascal's triangle**](http://en.wikipedia.org/wiki/Pascal%2
 
 In isopropanol, H<sub>B</sub> is split six times by H<sub>C</sub> for a septet. Rows of Pascal's triangle can be calculated quickly using the choose function, so a septet is (in R):
 
-```
+~~~ 
 > choose(6,0:6)
 [1]  1  6 15 20 15  6  1
-```
+~~~ 
 
 But then in addition to the 6 H<sub>C</sub>, H<sub>B</sub> is also being split by H<sub>A</sub>, so H<sub>B</sub> ends up being a doublet of septets, better known simply as a multiplet. 
 

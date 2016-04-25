@@ -105,17 +105,17 @@ In this figure they look at how the profiles change as ES cells lose pluripotenc
 
 The data from this study are [available on GEO](http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE30839) in the mm9 reference genome. I checked out their harringtonine profiling data for my favorite gene, *Prnp*, for which I *think* they have used the annotation [uc008mly.2](http://genome.ucsc.edu/cgi-bin/hgGene?hgg_gene=uc008mly.2&org=mouse), whose canonical start site should be at nucleotide 155. In bash:
 
-```bash
+~~~ bash
 wget ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE30nnn/GSE30839/suppl/GSE30839_GSM765295_ribo_mesc_harr150s-profiles.tar.gz
 gunzip GSE30839_GSM765295_ribo_mesc_harr150s-profiles.tar.gz
 tar -xvfGSE30839_GSM765295_ribo_mesc_harr150s-profiles.tar
 cd fp_mesc_harr150s/
 cat chr2\:131735655-131764173_45031_nt_counts.txt > ../prnp-mm9.txt
-```
+~~~ 
 
 And then in R:
 
-```r
+~~~ r
 setwd('~/d/sci/061bbs230/week09/')
 prnp = read.table('prnp-mm9.txt')
 plot(1:length(prnp$V1),prnp$V1,type='h',axes=FALSE,xlab='location',ylab='read depth',main='Harringtonine-arrested ribosome profiling\nof Prnp in mouse ES cells',cex.main=.8)
@@ -123,7 +123,7 @@ axis(side=2,at=(0:3)*10,labels=(0:3)*10,lwd=0,lwd.ticks=1,las=1)
 axis(side=1,at=c(155,155+765),labels=c('\ncanonical\nstart','\ncanonical\nstop'),lwd=1,lwd.ticks=1,cex.axis=.6)
 which(prnp$V1==max(prnp$V1))
 which(prnp$V1==max(prnp$V1[-139]))
-```
+~~~ 
 
 I was impressed to find there actually is some decent data for *Prnp* - I had thought it was not very highly expressed in ES cells and might not even be detectable. Here's what the profile looks like when ribosomes are arrested with harringtonine:
 

@@ -34,7 +34,7 @@ So why does ubiquitination and degradation of Ikaros and Aiolos result in any th
 
 That same year, two groups solved the structure of thalidomide and/or lenalidomide bound to cereblon and DDB1 [[Fischer 2014], [Chamberlain 2014]]. One of these structures [[PDB# 4TZ4](http://www.rcsb.org/pdb/explore/explore.do?structureId=4TZ4)] is shown below:
 
-```
+~~~ 
 fetch 4tz4
 bg_color white
 hide everything
@@ -43,7 +43,7 @@ color 0xFF9912, chain C
 color 0x0000CD, chain A
 show sticks, organic
 color 0x000000, organic
-```
+~~~ 
 
 ![](/media/2015/08/4tz4-annotated.png)
 
