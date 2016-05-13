@@ -63,6 +63,28 @@ These PrP23-144 amyloid fibrils can seed conversion of full-length PrP to a PK-r
 
 The exciting thing about these fibrils is that not only are they infectious, we can also solve their high-resolution structure using solid-state NMR. For background on the structural work, see [[Helmus 2008], [Helmus 2010], [Helmus 2011]]. The fibrils are extremely structurally homogeneous and they were able to solve the structure using <sup>15</sup>N and <sup>13</sup>C labeling. They have a PIRIBS structure with three beta sheets comprising &beta;1 112-115 MAVA, &betea;2 118-122 AGAVV, and &beta;3 130-139 LGSAMSRPII. They have a hypothesis as to how PrP<sup>C</sup> might be recruited to these fibrils (though I didn't understand the details). The structure allows them to predict which residues in mouse and hamster PrP govern the transmission barrier between those two species, and sure enough, they found that hamster PrP with M112V and M139I substitutions was susceptible to conversion by mouse prions.
 
+### Piero Parchi
+
+Dr. Parchi reviewed the many different subtypes of prion disease and their heterogeneous clinical presentations. The diversity of different clinical signs, as well as their rate of progression (often subacute but occasionally acute and confused with stroke) present a great diagnostic challenge. The purpose of today's talk is to present the study of CSF biomarkers for prion disease.
+
+Dr. Parchi's case series comprises 1,008 samples with CSF collection submitted for diagnostic tests between 2003-2014. These were all individuals where prion disease was suspected or at least included in the differential diagnosis. Here are some of the tests they ran:
+
++ 14-3-3 protein levels were semiquantitatively analyzed by Western blot.
++ Total tau (t-tau) and phosphotau (p-tau) were quantitatively analyzed using a commercial ELISA kit (Innogenetics).
++ Total PrP was quantified using a commercial ELISA kit made by AJ Roboscreen.
++ RT-QuIC was performed with SHaPrP23-231 as substrate and 15 &mu;L CSF as seed.
+
+Of the 1,008 samples, 337 ended up meeting criteria for definite, probable, or possible prion disease. Of the remainder, the most common final diagnoses ended up being vascular or mixed dementias, inflammatory diseases, Alzheimer's, and Lewy body dementia.
+
+Here are a few of their findings:
+
++ 14-3-3 was about 90% sensitive. Specificity depended upon what the true diagnosis ended up being &mdash; there was a very high false positive rate among CNS malignancies and inflammatory diseases.
++ p-tau results depended on *PRNP* codon 129 genotype. It was somewhat less sensitive in MV individuals.
++ Both 14-3-3 and p-tau performed poorly in atypical prion diseases such as MV2K and MM2T (sporadic FI).
++ RT-QuIC had 79% sensitivity in sCJD, 84% sensitivity in genetic CJD (mostly E200K and V210I), and 99% specificity, meaning that 99% of non-prion disease cases were negative. (The 99% number corresponds to 2 false positives out of 315 tested, and he noted that those 2 are not autopsy-confirmed so it is still possible that they may actually turn out to be prion disease).
++ Again, atypical forms were harder to detect: RT-QuIC only detected 3/6 MM 2C cases, 1/2 MM2T cases, and 0/1 VPSPr cases.
+
+
 ### Jiri Safar
 
 Dr. Safar began by presenting some data on the diagnostic accuracy of different CSF biomarkers in cases referred to the U.S. prion surveillance center for testing. In a retrospective cohort, RT-QuIC had 98.5% specificity and 92.1% sensitivity (in 126 prion disease cases). 14-3-3 and tau were substantially worse (I didn't catch the exact numbers). In a prospective cohort ascertained since April 2015, RT-QuIC had 100% specificity and 94% sensitivity (in 65 prion disease cases). 14-3-3 had only 40% specificity and 79.1% sensitivity; tau had 73.3% specificity and 93% sensitivity. He noted that the prospective cohort has the following bias: because many cases were collected recently, more rapidly progressive cases are more likely to already have autopsy validation and thus be included in the current data. Therefore the higher sensitivity in this cohort may in part reflect greater ease of detection of prions in very aggressive cases.
