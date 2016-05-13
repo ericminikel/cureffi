@@ -99,7 +99,7 @@ He began by reviewing some demographic aspects of Taiwan: the population is 23 m
 
 Dr. Chen also reviewed a few milestones in the history of Taiwan's prion surveillance. Prion surveillance was established after vCJD was identified in the UK [[Will 1996]], in part because Taiwan had imported 45,000 metric tons of beef from Britain. Among the measures they instituted was a cattle surveillance program including ELISA BSE testing for cattle with age >24 months or with CNS signs. Through 2010, they examined 6,238 cattle, 100% of which were negative for BSE. They had a clinical trial of quinacrine in 2005, which failed. Genetic testing was implemented beginning in 2003, and the first genetic cases was identified in 2006. In 2007 prion disease became listed as a notifiable disease. Although most cases are Han Chinese, they identified the first Austronesian case in 2007. They identified a vCJD case in 2010, a pilot who had lived in the U.K. from 1989-1997. This is one of three vCJD cases in Asia, all of whom had traveled to the U.K.
 
-From 1996-2006, the incidence of prion disease in Taiwan appeared to be only 0.5 - 0.6 cases per million population per year [[Lu 2010 Eur J Epidemiol]]. Similar to the situation in mainland China, autopsies are rare, with only 2 definite (autopsy-confirmed) cases recorded. "Sporadic" cases are significantly enriched for a family history of dementia compared to the general population, suggesting that there are genetic cases hiding among the sporadic cases. (The proportion of cases undergoing *PRNP* sequencing was not stated).
+From 1996-2006, the incidence of prion disease in Taiwan appeared to be only 0.5 - 0.6 cases per million population per year [[Lu 2010]]. Similar to the situation in mainland China, autopsies are rare, with only 2 definite (autopsy-confirmed) cases recorded. "Sporadic" cases are significantly enriched for a family history of dementia compared to the general population, suggesting that there are genetic cases hiding among the sporadic cases. (The proportion of cases undergoing *PRNP* sequencing was not stated).
 
 When they do genetic testing, they not only sequence blood DNA, they also create lymphoblast cell lines to bank as a future source of DNA.
 
@@ -145,6 +145,8 @@ When they do genetic testing, they not only sequence blood DNA, they also create
 [Helmus 2011]: http://www.ncbi.nlm.nih.gov/pubmed/21827207 "Helmus JJ, Surewicz K, Apostol MI, Surewicz WK, Jaroniec CP. Intermolecular alignment in Y145Stop human prion protein amyloid fibrils probed by solid-state NMR spectroscopy. J Am Chem Soc. 2011 Sep 7;133(35):13934-7. doi: 10.1021/ja206469q. Epub 2011 Aug 15. PubMed PMID: 21827207; PubMed Central PMCID: PMC3164902."
 
 [Will 1996]: http://www.ncbi.nlm.nih.gov/pubmed/8598754 "Will RG, Ironside JW, Zeidler M, Cousens SN, Estibeiro K, Alperovitch A, Poser S, Pocchiari M, Hofman A, Smith PG. A new variant of Creutzfeldt-Jakob disease in the UK. Lancet. 1996 Apr 6;347(9006):921-5. PubMed PMID: 8598754."
+
+[Lu 2010]: http://www.ncbi.nlm.nih.gov/pubmed/20333444 "Lu CJ, Sun Y, Chen SS. Incidence of Creutzfeldt-Jakob disease in Taiwan: a prospective 10-year surveillance. Eur J Epidemiol. 2010 May;25(5):341-7. doi: 10.1007/s10654-010-9446-4. Epub 2010 Mar 24. PubMed PMID: 20333444."
 
 
 
