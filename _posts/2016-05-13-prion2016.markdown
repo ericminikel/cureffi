@@ -1,0 +1,155 @@
+---
+layout: post
+title:  "Prion2016"
+date:   2016-05-13 12:01:00
+author: ericminikel
+location: Tokyo, Japan
+thumb120: 
+summary200: ""
+---
+
+![](/media/2016/05/prion2016-headline-1.png)
+
+*I arrived late this year and only caught a subset of talks on the final two days of the Prion conference. Here are my notes from a few of the talks.*
+
+### Zuzana Krejciova
+
+![](/media/2016/05/zuzana-krejciova-at-prion2016.png)
+
+Dr. Krejciova began this work in Mark Head's lab in Edinburgh and has continued the project since relocating to Stanley Prusiner's lab at UCSF.
+
+Dr. Krejciova lamented the fact that we still lack a human analogue of ScN2a cells. Solving this problem is important because small molecules that inhibit murine prions do not affect human prions. She reviewed a few possible reasons that might explain why prion propagation in human cells has proven so difficult:
+
++ Transformed cells may not represent the phenotypic environment of human prion diseases
++ Codon 129 incompatibility
++ Low PrP expression level
++ Lack of protein X
++ PrP<sup>Sc</sup> clearance exceeds rate of PrP<sup>Sc</sup> production
++ High rate of cell division
++ Tagging of PrP<sup>C</sup> comrpomises PrP<sup>Sc</sup> formation *in vitro* and *in vivo*
++ Culture conditions may inhibit prion propagation
+
+Gliosis is one of the pathological hallmarks of prion disease. Astrocytes have a role in "neurovascular and neurometabolic coupling", are a site for prion replication [[Diedrich 1991], [Raeber 1997], [Jeffrey 2004], [Cronier 2004], [Victoria 2016]], and interact with neurons in prion pathology [Gomez-Nicola 2013].
+
+Dr. Krejciova used human iPS cells to generate neurospheres, enrich them in astrocyte progenitors, mechanically dissociate them and isolate astrocyte progenitors, then terminally differentiate them using CNTF media for 2 weeks. She used protocols from [[Krencik & Zhang 2011], [Serio 2013]] Staining for A2B5 and GFAP confirmed astrocytic character, and they also confirmed PrP<sup>C</sup> expression. They used human CJD brain homogenates prepared using micro-pestle homogenization followed by fast-prep homogenization, sonication, clarification and 450 nm spin filtration to purify PrP<sup>Sc</sup>. Cells were then exposed to a 1% spin filtered homogenate for 24 hours, then rinsed with PBS and allowed to recover for 8 days in fresh media without brain homogenate. They also tested 3-day and 0-day recovery periods.
+
+They then tested for acute toxicity and found no differences in viability for cells exposed to brain homogenate, compared to unexposed cells. They then blotted for PK-resistant PrP<sup>Sc</sup> and found that it was present at low levels after a 0 day recovery and higher levels after a longer recovery.
+
+*PRNP* codon 129 genotype appeared to matter. When 129MM astrocytes were exposed to vCJD MM brain homogenate, they reproducibly obtained a strong, dose-dependent and time-dependent PK-resistant PrP phenotype. In contrast, VV astrocytes completely failed to propagate vCJD prions when exposed. VV astrocytes did, however, produce PK-resistant PrP when exposed to VV2 sCJD brain homogenate. MV astrocytes occasionally produced low levels of PrP<sup>Sc</sup> deposition, visible on immunocytochemistry, upon exposure to vCJD brain homogenate.
+
+She noted that when performing immunocytochemistry on the cells to detect PrP<sup>Sc</sup>, it was critical to use guanidine to denature PrP<sup>Sc</sup> and expose epitopes. Only after guanidine exposure was the level of PrP<sup>Sc</sup> deposition apparent.
+
+This work has now been submitted for publication. Please see poster 028 which will have more info on the role of astrocytes in prion disease.
+
+#### Q&A
+
+Claudio Soto: How many different prion strains can be propagated in this model?
+
+Dr. Krejciova: We're currently trying to achieve propagation of MM1 sCJD prions.
+
+Peter Klohn: How sensitive are these cells? How low a titer of brain homogenate can you use to infect them?
+
+Dr. Krejciova: We've only tried 1%, though that is actually a fairly low titer because you lose a lot of infectivity during the spin filtration.
+
+Me: What kind of scale can you achieve with this model? How many small molecules could you screen?
+
+Dr. Krejciova: We're hoping to move to a 96-well format. We have a half million compound library, so we'll have our work cut out for us.
+
+### Witold Surewicz
+
+Years ago, Dr. Surewicz's lab created recombinant HuPrP23-144, corresponding to the Y145X mutation, and found that it spontaneously forms amyloid fibrils [[Kundu 2003], [Vanik 2004], [Jones & Surewicz 2005]]. Another interesting finding is that if recombinant mouse PrP is seeded with hamster prions, it forms amyloid fibrils that are more morphologically similar to hamster prion fibrils than to mouse prion fibrils. Major determinants of morphological differences include residues 138-139 (human numbering), which are II in human, MI in mouse, and MM in Syrian hamster. 
+
+These PrP23-144 amyloid fibrils can seed conversion of full-length PrP to a PK-resistant isoform in PMCA, and can cause clinical disease in Tga20 mice sustained over at least 3 serial passages. The PK resistant pattern is pecular: short fragments (6-11 kDa) as well as typical scrapie-like fragments (28-35 kDa) and this is consistent between the PMCA and brain-derived prions. Epitope mapping has shown that these fragmnets are similar to the fragments observed in GSS. The fibrils can also cause disease in wild-type mice, albeit with very long incubation times.
+
+The exciting thing about these fibrils is that not only are they infectious, we can also solve their high-resolution structure using solid-state NMR. For background on the structural work, see [[Helmus 2008], [Helmus 2010], [Helmus 2011]]. The fibrils are extremely structurally homogeneous and they were able to solve the structure using <sup>15</sup>N and <sup>13</sup>C labeling. They have a PIRIBS structure with three beta sheets comprising &beta;1 112-115 MAVA, &betea;2 118-122 AGAVV, and &beta;3 130-139 LGSAMSRPII. They have a hypothesis as to how PrP<sup>C</sup> might be recruited to these fibrils (though I didn't understand the details). The structure allows them to predict which residues in mouse and hamster PrP govern the transmission barrier between those two species, and sure enough, they found that hamster PrP with M112V and M139I substitutions was susceptible to conversion by mouse prions.
+
+### Jiri Safar
+
+Dr. Safar began by presenting some data on the diagnostic accuracy of different CSF biomarkers in cases referred to the U.S. prion surveillance center for testing. In a retrospective cohort, RT-QuIC had 98.5% specificity and 92.1% sensitivity (in 126 prion disease cases). 14-3-3 and tau were substantially worse (I didn't catch the exact numbers). In a prospective cohort ascertained since April 2015, RT-QuIC had 100% specificity and 94% sensitivity (in 65 prion disease cases). 14-3-3 had only 40% specificity and 79.1% sensitivity; tau had 73.3% specificity and 93% sensitivity. He noted that the prospective cohort has the following bias: because many cases were collected recently, more rapidly progressive cases are more likely to already have autopsy validation and thus be included in the current data. Therefore the higher sensitivity in this cohort may in part reflect greater ease of detection of prions in very aggressive cases.
+
+He also presented some data on biophysical characterization of PrP<sup>Sc</sup> from MM1 vs. MM2 prion disease cases. By hydrogen/deuterium exchange, it is possible to tell that different residues of PrP are solvent-exposed in these two strains. They also differ in sedimentation velocity, conformational stability, and replication rate in PMCA and RT-QuIC. They have now discovered that although MM1 and MM2 are both detectable with RT-QuIC, MM2-seeded reactions tend to reach a lower peak fluorescence than MM1. MM2 patients also have a longer survival time on average. If peak fluorescence ultimately proves to predict individual patients' survival, that will be a holy grail and something that the Alzheimer's field has failed to achieve for many years.
+
+#### Q&A
+
+\[scientist from the Japanese CJD surveillance center\]: How do you interpret false positives in RT-QuIC?
+
+Jiri Safar: I think these may actually be people who are incubating prions. Based on the long asymptomatic incubation time of prions, it is not implausible that while we see 1.5 cases of symptomatic prion disease per million population per year, there might be another 7 individuals per million per year who die of other causes but have some level of genuine prodromal prion replication in their CNS.
+
+### Dong Xiaoping
+
+Dr. Dong comes from a background as a biologist, and represents the Chinese CDC in Beijing. The surveillance network for prion disease in China is relatively young, and currently only covers 12 provinces, chiefly in the eastern part of the country where the economy is more developed, with 15 sentinel hospitals acting as local reporting centers.
+
+They have a "3+3+3+3" reporting model. In cities where surveillance is mandated, any neurologist finding a suspected case has 3 days to report to a PI in the hospital, who in turn has 3 days to report to a PI in the local CDC, who must complete their epidemiologic investigation within 3 days and report to the national prion disease center at the Chinese CDC. The national center performs laboratory tests including CSF 14-3-3 testing, *PRNP* sequencing, and occasionally autopsies. However, autopsy rates are exceptionally low in China because culturally, people do not want anyone to touch their deceased loved one. The national center also analyzes epidemiological and clinical data in conjunction with the laboratory tests to confirm or reject the diagnosis of prion disease. This information is then reported back to the PI of the local CDC.
+
+The Chinese prion disease center was established in 2006, and the number of reported cases has increased dramatically over the past decade as surveillance has expanded and improved. In the 10 years, a total of 2,041 cases have been reported. Of those cases with *PRNP* testing, only ~10% had a mutation; the remainder were sporadic CJD.
+
+Although reporting is not mandated in provinces not covered by the surveillance program, they do sometimes ascertain cases from these provinces, and at this point they have had at least 1 case from every province except Tibet. They have also provided medical services for 4 overseas Chinese with CJD. Median age of onset for sCJD was 61, the male/female ratio is almost equal, 1.06:1, and almost all are Han Chinese; two were Hmong (苗族) from southwest China. The most common first symptom was rapidly progressive dementia, though some also had slowly progressive dementia, psychiatric, cerebellar, or pyramidal signs. Of probable CJD cases, ~3/4 were CSF 14-3-3 and MRI positive, and about half were EEG positive. A subset of cases also underwent total tau CSF testing. Among these cases, probable CJD cases did on average have elevated tau compared to cases that eventually were determined not to be CJD, although the distributions overlapped.
+
+In the general Han Chinese population, 94.1% of people are 129MM, 5.8% MV and 0.1% VV. Of prion disease cases, 129MM are 98%, MV are 2% and they have only ever seen one VV case. All genetic cases were 129MM. Median survival time is 6.1 months for sCJD, 3.1 months for genetic CJD, and 8.2 months for FFI. They did not find any factors (such as clinical presentation or economic demographic factors) that significantly influenced survival time. For exmaple, patients from families that are wealthier or live in better-off cities do not survive longer.
+
+Among genetic cases, the most commonly observed variants were D178N, T188K, and E200K. Genetic cases overall had younger age of onset than sporadic, typically in one's 50s. 16/27 FFI cases and 1/9 E200K cases had a family history. FFI cases were categorically negative for EEG, only rarely (4%) positive for MRI, and sometimes (33%) positive for 14-3-3.
+
+T188K is a mutation that seems almost unique to China, with only a few cases reported elsewhere in the world. As of March 2016, they have identified >30 T188K cases in China. Almost none had a family history, and the the permanent residences of the cases were geographically random and they were unable to find a blood relation between any of the families. 
+
+### Shun-Sheng Chen
+
+Dr. Chen has been responsible for prion surveillance in Taiwan for the past 20 years, and this is his retirement talk &mdash; he is currently 71 years old and will be retiring immediately following this lecture.
+
+He began by reviewing some demographic aspects of Taiwan: the population is 23 million, and is aging, with currently 12.5% of people over age 65. >99% of people are covered by public health insurance. More than half of neurologists in Taiwan were trained overseas, usually in the U.S., Europe, or Japan.
+
+Dr. Chen also reviewed a few milestones in the history of Taiwan's prion surveillance. Prion surveillance was established after vCJD was identified in the UK [[Will 1996]], in part because Taiwan had imported 45,000 metric tons of beef from Britain. Among the measures they instituted was a cattle surveillance program including ELISA BSE testing for cattle with age >24 months or with CNS signs. Through 2010, they examined 6,238 cattle, 100% of which were negative for BSE. They had a clinical trial of quinacrine in 2005, which failed. Genetic testing was implemented beginning in 2003, and the first genetic cases was identified in 2006. In 2007 prion disease became listed as a notifiable disease. Although most cases are Han Chinese, they identified the first Austronesian case in 2007. They identified a vCJD case in 2010, a pilot who had lived in the U.K. from 1989-1997. This is one of three vCJD cases in Asia, all of whom had traveled to the U.K.
+
+From 1996-2006, the incidence of prion disease in Taiwan appeared to be only 0.5 - 0.6 cases per million population per year [[Lu 2010 Eur J Epidemiol]]. Similar to the situation in mainland China, autopsies are rare, with only 2 definite (autopsy-confirmed) cases recorded. "Sporadic" cases are significantly enriched for a family history of dementia compared to the general population, suggesting that there are genetic cases hiding among the sporadic cases. (The proportion of cases undergoing *PRNP* sequencing was not stated).
+
+When they do genetic testing, they not only sequence blood DNA, they also create lymphoblast cell lines to bank as a future source of DNA.
+
+### Announcements
+
+[Prion2017](http://prion2017.org/) will be in Edinburgh. Prion2018 is tentatively in Berlin.
+
+
+
+
+
+
+
+
+
+
+[Diedrich 1991]: http://www.ncbi.nlm.nih.gov/pubmed/1671170 "Diedrich JF, Bendheim PE, Kim YS, Carp RI, Haase AT. Scrapie-associated prion  protein accumulates in astrocytes during scrapie infection. Proc Natl Acad Sci U  S A. 1991 Jan 15;88(2):375-9. PubMed PMID: 1671170; PubMed Central PMCID: PMC50813."
+
+[Raeber 1997]: http://www.ncbi.nlm.nih.gov/pubmed/9321385 "Raeber AJ, Race RE, Brandner S, Priola SA, Sailer A, Bessen RA, Mucke L, Manson J, Aguzzi A, Oldstone MB, Weissmann C, Chesebro B. Astrocyte-specific expression of hamster prion protein (PrP) renders PrP knockout mice susceptible to hamster scrapie. EMBO J. 1997 Oct 15;16(20):6057-65. PubMed PMID: 9321385; PubMed Central PMCID: PMC1326289."
+
+[Jeffrey 2004]: http://www.ncbi.nlm.nih.gov/pubmed/15174012 "Jeffrey M, Goodsir CM, Race RE, Chesebro B. Scrapie-specific neuronal lesions  are independent of neuronal PrP expression. Ann Neurol. 2004 Jun;55(6):781-92. PubMed PMID: 15174012."
+
+[Cronier 2004]: http://www.ncbi.nlm.nih.gov/pubmed/15302929 "Cronier S, Laude H, Peyrin JM. Prions can infect primary cultured neurons and  astrocytes and promote neuronal cell death. Proc Natl Acad Sci U S A. 2004 Aug 17;101(33):12271-6. Epub 2004 Aug 9. PubMed PMID: 15302929; PubMed Central PMCID: PMC514468."
+
+[Victoria 2016]: http://www.ncbi.nlm.nih.gov/pubmed/26857744 "Victoria GS, Arkhipenko A, Zhu S, Syan S, Zurzolo C. Astrocyte-to-neuron intercellular prion transfer is mediated by cell-cell contact. Sci Rep. 2016 Feb  9;6:20762. doi: 10.1038/srep20762. PubMed PMID: 26857744; PubMed Central PMCID: PMC4746738."
+
+[Gomez-Nicola 2013]: http://www.ncbi.nlm.nih.gov/pubmed/23392676 "Gómez-Nicola D, Fransen NL, Suzzi S, Perry VH. Regulation of microglial proliferation during chronic neurodegeneration. J Neurosci. 2013 Feb 6;33(6):2481-93. doi: 10.1523/JNEUROSCI.4440-12.2013. PubMed PMID: 23392676."
+
+[Krencik & Zhang 2011]: http://www.ncbi.nlm.nih.gov/pubmed/22011653/ "Krencik R, Zhang SC. Directed differentiation of functional astroglial subtypes from human pluripotent stem cells. Nat Protoc. 2011 Oct 13;6(11):1710-7. doi: 10.1038/nprot.2011.405. PubMed PMID: 22011653; PubMed Central PMCID: PMC3198813."
+
+[Serio 2013]: http://www.ncbi.nlm.nih.gov/pubmed/23401527 "Serio A, Bilican B, Barmada SJ, Ando DM, Zhao C, Siller R, Burr K, Haghi G, Story D, Nishimura AL, Carrasco MA, Phatnani HP, Shum C, Wilmut I, Maniatis T, Shaw CE, Finkbeiner S, Chandran S. Astrocyte pathology and the absence of non-cell autonomy in an induced pluripotent stem cell model of TDP-43 proteinopathy. Proc Natl Acad Sci U S A. 2013 Mar 19;110(12):4697-702. doi: 10.1073/pnas.1300398110. Epub 2013 Feb 11. PubMed PMID: 23401527; PubMed Central  PMCID: PMC3607024."
+
+[Kundu 2003]: http://www.ncbi.nlm.nih.gov/pubmed/14519851 "Kundu B, Maiti NR, Jones EM, Surewicz KA, Vanik DL, Surewicz WK. Nucleation-dependent conformational conversion of the Y145Stop variant of human prion protein: structural clues for prion propagation. Proc Natl Acad Sci U S A.  2003 Oct 14;100(21):12069-74. Epub 2003 Sep 30. PubMed PMID: 14519851; PubMed Central PMCID: PMC218714."
+
+[Vanik 2004]: http://www.ncbi.nlm.nih.gov/pubmed/15068810 "Vanik DL, Surewicz KA, Surewicz WK. Molecular basis of barriers for interspecies transmissibility of mammalian prions. Mol Cell. 2004 Apr 9;14(1):139-45. PubMed PMID: 15068810."
+
+[Jones & Surewicz 2005]: http://www.ncbi.nlm.nih.gov/pubmed/15820679 "Jones EM, Surewicz WK. Fibril conformation as the basis of species- and strain-dependent seeding specificity of mammalian prion amyloids. Cell. 2005 Apr  8;121(1):63-72. PubMed PMID: 15820679."
+
+[Helmus 2008]: http://www.ncbi.nlm.nih.gov/pubmed/18436646/ "Helmus JJ, Surewicz K, Nadaud PS, Surewicz WK, Jaroniec CP. Molecular conformation and dynamics of the Y145Stop variant of human prion protein in amyloid fibrils. Proc Natl Acad Sci U S A. 2008 Apr 29;105(17):6284-9. doi: 10.1073/pnas.0711716105. Epub 2008 Apr 24. PubMed PMID: 18436646; PubMed Central  PMCID: PMC2359773."
+
+[Helmus 2010]: http://www.ncbi.nlm.nih.gov/pubmed/20121096 "Helmus JJ, Surewicz K, Surewicz WK, Jaroniec CP. Conformational flexibility of Y145Stop human prion protein amyloid fibrils probed by solid-state nuclear magnetic resonance spectroscopy. J Am Chem Soc. 2010 Feb 24;132(7):2393-403. doi: 10.1021/ja909827v. PubMed PMID: 20121096; PubMed Central PMCID: PMC2838504."
+
+[Helmus 2011]: http://www.ncbi.nlm.nih.gov/pubmed/21827207 "Helmus JJ, Surewicz K, Apostol MI, Surewicz WK, Jaroniec CP. Intermolecular alignment in Y145Stop human prion protein amyloid fibrils probed by solid-state NMR spectroscopy. J Am Chem Soc. 2011 Sep 7;133(35):13934-7. doi: 10.1021/ja206469q. Epub 2011 Aug 15. PubMed PMID: 21827207; PubMed Central PMCID: PMC3164902."
+
+[Will 1996]: http://www.ncbi.nlm.nih.gov/pubmed/8598754 "Will RG, Ironside JW, Zeidler M, Cousens SN, Estibeiro K, Alperovitch A, Poser S, Pocchiari M, Hofman A, Smith PG. A new variant of Creutzfeldt-Jakob disease in the UK. Lancet. 1996 Apr 6;347(9006):921-5. PubMed PMID: 8598754."
+
+
+
+
+
+
+
+
