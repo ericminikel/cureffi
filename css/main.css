@@ -415,25 +415,35 @@ a:visited { color: #e65f00; }
 }
 
 
-/* table display. EVM 2014-07-20 */
+/* table display. adapted from GitHub's CSS at https://gist.github.com/andyferra/2554919 */
 /* ----------------------------------------------------------*/
 
 table {
-  border-collapse: collapse;
+  display: block;
+  width: 100%;
+  overflow: auto;
+  word-break: normal;
+  word-break: keep-all;
+  border-collapse: collapse; /* for some reason default seems to be border-collapse: separate; */
 }
 
-/* first row of tables is bold */
-table:first-child {
+table th {
   font-weight: bold;
+  background-color: #f8f8f8;
 }
 
-table td, th {
-    padding: 10px;
-    line-height: 20px;
-    border-top: 1px solid #eeeeee;
-    border-bottom: 1px solid #eeeeee;
-    text-align: middle;
-    vertical-align: middle;
+table th, table td {
+  padding: 6px 13px;
+  border: 1px solid #ddd;
+}
+
+table tr {
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
 }
 
 
