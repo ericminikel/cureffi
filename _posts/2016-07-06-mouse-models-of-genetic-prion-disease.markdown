@@ -51,7 +51,7 @@ The next table reviews reports of mice expressing PrP with mutations that cause 
 | (TgMHu2M)E199KPrP | [Friedman-Levi 2011] | E200K | human/mouse chimera | yes | yes | limited | |
 | ki-3F4-CJD | [Jackson 2013] | E200K | mouse with 3F4 epitope | yes | no | limited | |
 | Tg(BVPrP,I109,E200K) | [Watts 2016] | E200K | bank vole 109I | yes | yes | yes | |
-| Tg(HuPrP,V129,A224V) | [Watts 2015] | A224V | human 129V | no | n/a | n/a | \* |
+| Tg(HuPrP,V129,A224V) | [Watts 2015] | A224V | human 129V | no | n/a | n/a | no |
 | anchorless | [Chesebro 2005], [Trifilo 2008], [Chesebro 2010] | C-terminal nonsense mutations | mouse | yes | yes | yes | |
 | &Delta;GPI | [Stohr 2011] | C-terminal nonsense mutations | mouse | yes | yes | yes | |
 | Tg(BVPrP,I109,&Delta;GPI) | [Watts 2016] | C-terminal nonsense mutations | bank vole 109I | yes | yes | yes | |
