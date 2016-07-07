@@ -45,7 +45,7 @@ The next table reviews reports of mice expressing PrP with mutations that cause 
 | ki-3F4-FFI | [Jackson 2009] | D178N | mouse with 3F4 epitope | yes | no | limited | yes |
 | Tg(FFI) | [Bouybayoune 2015] | D178N | mouse; mouse with 3F4 epitope | yes | yes | no | |
 | Tg(BVPrP,I109,D178N) | [Watts 2016] | D178N | bank vole 109I | yes | yes | yes | |
-| SHaPrP<sup>C</sup>(T183A) | [Dearmond 1997] | T183A | no | n/a | n/a | |
+| SHaPrP<sup>C</sup>(T183A) | [Dearmond 1997] | T183A | Syrian hamster | no | n/a | n/a | |
 | Tg(MoPrP-E199K)5182 | [Telling 1996a] | E200K | mouse | no | no | no | | 
 | HuPrP200K,129M | [Asante 2009] | E200K | human 129M | no | n/a | n/a | yes |
 | (TgMHu2M)E199KPrP | [Friedman-Levi 2011] | E200K | human/mouse chimera | yes | yes | limited | |
