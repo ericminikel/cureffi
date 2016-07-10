@@ -1,0 +1,150 @@
+---
+layout: post
+title:  "CJD2016"
+date:   2016-07-10 12:01:00
+author: ericminikel
+location: Washington, DC
+thumb120: http://www.cureffi.org/media/2016/07/cjd2016_thumbnail.png
+summary200: "Plain language notes from the CJD Foundation's 2016 family conference."
+---
+
+![](/media/2016/07/washington_dc.png)
+
+*These are my plain-language notes from a few of the talks at the CJD Foundation's 2016 family conference held in Washington, D.C. July 8-10, 2016. These notes are not exhaustive &mdash; I have omitted some talks that I missed or that are unpublished work the investigators did not want to make public yet.*
+
+### Joel Watts
+
+![](/media/2016/07/joel_watts.png)
+
+Dr. Watts provided an introduction to why and how we use mice to study prion disease. He noted that working with mice is a privilege, and that we'd all like to use fewer mice in research, but there are a few reasons why mice are still essential for studying prions:
+
++ We don't currently have a way to study human prion replication in cultured cells. There are some *in vitro* (cell-free) methods but they don't recapitulate the whole story of what happens in the brain.
++ The brain is a complex organ with multiple cell types which cannot yet be recapitulated in a dish. In particular, although some cultured mouse cells can replicate prions, these cells don't die or seem to suffer any neurotoxicity due to being infected with prions.
++ Some processes, such as prion neuroinvasion from the periphery into the brain, can only be studied in the whole animal.
++ Drug development requires assessing a compound's ability to cross the blood-brain barrier or avoid being metabolized by the liver. Living animals are the only models we have for this.
+
+He then reviewed a few of the proofs of concept that we've learned from mouse models of prion disease. Mice genetically engineered to lack PrP (the protein that forms prions) cannot get prion disease [[Bueler 1993]]. Shutting off PrP production, even after mice are infected, can reverse the disease [[Mallucci 2003]]. An antibody against PrP can prevent peripheral (outside of the brain) prion disease from getting into the brain, although it doesn't work once the disease is already in the brain [[White 2003]]. All of these findings tell us that PrP is the target we would like to be able to hit with a drug for prion disease. Note that this is very different from Alzheimer's disease, for instance, where there are multiple genes and proteins involved in the disease, and it is not always clear which one is the right target for a drug. In prion disease, it is unequivocal that PrP is *the* protein essential for the disease, and if you can find a way to target it, you can treat the disease.
+
+The usual mouse model of prion disease is mice infected with prions. People have developed several small molecules that can extend survival time in these mice, sometimes by double or more [[Kawasaki 2007], [Wagner 2013], [Berry 2013]]. One thing we've learned from these studies is that the earlier you treat prion disease, the bigger effect you can have &mdash; one compound, when given prophylactically before the prion infection, extended survival time by four-fold [[Giles 2015]]. Some of these molecules allow prions to evolve and develop drug resistance [[Berry 2013]], kind of like antibiotic-resistant bacteria, but some molecules don't seem to cause drug resistance [[Giles 2016]]. Unfortunately, the reason none of these molecules are now in clinical trials is that although they work well against *mouse* prions, none of them work at all in mice genetically engineered to express human PrP and infected with human prions [[Berry 2013], [Lu & Giles 2013], [Giles 2015], [Giles 2016]].
+
+About 99% of studies of prions in mice use mice infected with prions, but infections only cause <1% of prion disease in humans. Most humans with prion disease develop it spontaneously, either by chance (sporadic prion disease) or due to a genetic mutation (genetic prion disease). Dr. Watts has therefore spent years working to create mouse models that develop spontaneous prion disease, as a closer analogy to prion disease in humans. The bank vole is a rodent that is uniquely susceptible to a wide variety of types of prions [[Watts 2014]], so Dr. Watts hypothesized that adding genetic mutations that cause disease in humans to bank vole PrP would result in mice that get spontaneous disease similar to that in humans. With support from CJD Foundation, he created mice that produce bank vole PrP with the D178N, E200K, or &Delta;GPI mutations, and characterized how these mice do indeed develop a spontaneous disease that is in many ways similar to genetic prion disease in humans [[Watts 2016]]. I have written a more detailed review of Dr. Watts' new work [here](/2016/07/06/mouse-models-of-genetic-prion-disease/). 
+
+### Zuzana Krejciova
+
+![](/media/2016/07/zuzana_krejciova.png)
+
+Dr. Krejciova presented her work on developing a human cell model of prion replication &mdash; I have previously blogged about her work at [Prion 2016](/2016/05/13/prion2016/). There is only one report in the literature of human prions propagating in cells [[Ladogana 1995]], but it wasn't sustained over the long term. Because people studying prion replication in mouse cells have been able to discover compounds that successfully treat prion disease in mice, but don't work against human prions [[Berry 2013]], she hopes that if we can develop a model where human cells propagate human prions, we could use them to find a compound effective against human prions.
+
+She started by trying the "low hanging fruit" of a cancer cell line (glioma) that divides rapidly and produces lots of PrP, but she wasn't able to infect them with prions. So she hypothesized that maybe non-dividing cells would be a more authentic model, since many/most cells in the adult human brain are non-dividing. She started with human induced pluripotent stem cells, differentiated them into astrocytes (a type of glia, a cell that helps neurons in the brain), and then made them stop dividing. 
+
+We refer to genetic changes in PrP by codon numbering &mdash; a codon is a position within the protein. I've written an introduction to the terminology [here](http://www.prionalliance.org/2013/12/09/what-does-it-mean-to-have-a-genetic-prion-disease/). There are two common versions of PrP in the general population - codon 129 can be M or V. Since everyone has two copies of the PrP gene, people can be MM, MV, or VV.
+
+Dr. Krejciova found that she could get variant CJD (vCJD) prions to replicate in her astrocytes, as long as the cells had the same version of PrP. All cases of vCJD in humans have been in people who have MM at codon 129, and accordingly, she found that she could get the prions to replicate only in cells that were also MM.
+
+This is an important step forward towards modeling human prions in cell culture. The procedure is currently fairly labor-intensive, the cells grow slowly, and can differ a bit from plate to plate of cells. So further work is required to get this model to a point where it could be used for discovering antiprion drugs.
+
+### Hermann Altmeppen
+
+![](/media/2016/07/hermann_altmeppen.png)
+
+Dr. Altmeppen is based in Eppendorf, Germany, which is part of Hamburg. He studies the proteases &mdash; enzymes that cut up proteins, which he depicts as scissors or pac-mans &mdash; that cut PrP. There are two places that PrP normally gets cut &mdash; one is right in the middle of the protein, called [alpha cleavage](/2013/06/26/proteolysis-of-prion-protein-in-the-central-region-alpha-and-beta-cleavage/), and the other is at the base of the protein, called [shedding](/2013/06/29/proteolytic-shedding-of-prion-protein/). It's called "shedding" because PrP is normally attached to the cell surface, and when it is cut it gets "shed" off of the cell.
+
+Dr. Altmeppen studies an enzyme called ADAM10 that appears to be responsible for most or all of the shedding of PrP. In cells, if you delete the gene for ADAM10, you don't get any PrP shedding. He wanted to study this in a mouse, but mice can't live without ADAM10, so he used a specially engineered mouse that has ADAM10 deleted only in some cells at some times of its life. In these mice, there is little or no shedding of PrP, and they get prion disease more rapidly than normal mice [[Altmeppen 2011], [Altmeppen 2015]]. This suggests that shedding is at least partially protective, and that maybe increasing shedding could be helpful. He is now investigating pharmacological approaches to encouraging shedding.
+
+In Q&A, Dr. Altmeppen acknowledged that there is some risk in targeting PrP shedding, becuase genetically engineered mice that produce "anchorless" PrP that is never attached to the cell (kind of like if it was always automatically shed) can be infected with prions [[Chesebro 2010], [Stohr 2011]]. He noted there is data suggesting that alpha cleavage is more protective [[Westergard 2011]], and might be the better therapeutic target. However, he said, the limitation is that we don't have as much clarity on what enzyme(s) are responsible for alpha cleavage &mdash; some people say it is ADAM10 and/or ADAM17, but his view is that the jury is still out on this.
+
+### Byron Caughey
+
+![](/media/2016/07/byron_caughey.png)
+
+Dr. Caughey introduced the therapeutic strategy of reducing PrP levels to treat prion disease. He introduced several proofs of concept for this, which I have also discussed [here](/2016/06/28/introductory-reading-list/) and some of which Joel Watts mentioned earlier today. PrP is the protein that forms prions and it is required for prion disease. Mice that produce more than the normal amount of PrP develop prion disease very rapidly [[Fischer 1996]], while mice that produce half the normal amount of PrP can survive prion infection much longer than normal mice [[Bueler 1994]], and mice that produce no PrP can never get prion disease [[Bueler 1993]]. Meanwhile, it appears that reducing the amount of PrP in the brain is probably safe. Mice genetically engineered to produce no PrP have only mild health issues [[Bueler 1992], [Bremer 2010]], and mice that produce half the normal amount of PrP are not known to have any health issues at all [[Bremer 2010]]. The few humans who have been identified to have only 1 working copy of the PrP gene, instead of the normal 2 copies, are healthy [[Minikel 2016]]. Based on all of these findings, reducing PrP levels seems to be a promising therapeutic strategy, and Dr. Caughey's lab is working on pursuing this strategy.
+
+### Roberto Chiesea
+
+![](/media/2016/07/roberto_chiesa.png)
+
+Dr. Chiesa began by discussing the pros and cons of different therapeutic strategies for prion disease. Prion disease occurs when a protein called PrP changes shape: the normal protein, PrP<sup>C</sup>, converts to a misfolded form called PrP<sup>Sc</sup>. Therapeutics to target PrP<sup>Sc</sup> might work, but because PrP<sup>Sc</sup> exists in a variety of conformations (shapes or ways of being folded), these also have the risk of being specific to only one strain or subtype of PrP<sup>Sc</sup>, as Joel Watts noted. Dr. Chiesa therefore favors the strategy of targeting PrP<sup>C</sup>, to reduce it (as Dr. Caughey discussed) or stabilize it to prevent misfolding.
+
+Dr. Chiesa investigated a series of porphyrin molecules and found one, called Zn(II)-BnPyP, that inhibits the formation of prions in protein misfolding cyclic amplification (PMCA), a procedure which uses sonic energy to amplify prions *in vitro*, in a cell-free system. He then tested it in prion-infected mouse cells, and found that it reduced the amount of misfolded PrP produced in these cells. To measure misfolded PrP, he used the enzyme proteinase K (PK), which can digest and break down normal proteins (including PrP<sup>C</sup>) but can't break down PrP<sup>Sc</sup>. In the process of doing this experiment, he also noticed that not only was PrP<sup>Sc</sup> reduced in the cells treated with Zn(II)-BnPyP, but also, the amount of PrP<sup>C</sup> was reduced as well. He then did time-series experiments in mouse hippocampal neurons, and found that treating the cells with Zn(II)-BnPyP at concentrations of 5 or 10 micromolar over 24 hours almost completely removed PrP from the cells. The effect was reversible: if you remove the compound, the PrP comes back.
+
+They then looked into how the compound works. They found that it doesn't affect the levels of PrP RNA, so it doesn't seem to affect how much PrP is produced. But when they treat the cells with chloroquine, a compound that blocks protein degradation, this prevents Zn(II)-BnPyP from having any effect on PrP levels. Therefore, they think Zn(II)-BnPyP reducesPrP levels by causing PrP to be degraded.
+
+To test the compound in an animal model, they treated mice with 10 mg/kg (about 0.3 milligrams per mouse) of compound via intraperitoneal delivery (the compound was injected directly into the body cavity) three times a week for two weeks, and then measured both compound levels and PrP levels in the brains of the mice. Because the compound is fluorescent, they could assess whether it was in the brain by *in vivo* fluorescence imaging, as well as by a technology called [HPLC](https://en.wikipedia.org/wiki/High-performance_liquid_chromatography). They found that the compound did seem to get into the brain, and there were about 2.9 micrograms of the compound per gram of brain tissue. Meanwhile, the PrP levels were reduced by about half. They looked for adverse side effects of the compound, but didn't find any problems in the mice. They therefore think this could be a therapeutic candidate molecule worthy of further study, and they are currently planning experiments to test its effects on the survival time of prion-infected mice.
+
+### "Making a Difference" panel
+
+![](/media/2016/07/making_a_difference_panel.png)
+
+*Photo by Zuzana Krejciova.*
+
+Amanda Kalinsky, Trevor Baierl, Sonia, and I spoke about the ways in which we've reacted to our risk for genetic prion disease. Trevor made a documentary about his mother's illness and his genetic testing journey, you can learn more [on Facebook](https://www.facebook.com/CjdDocumentary). Amanda has become an advocate for IVF/PGD and you can read more about her story in the [New York Times](http://www.nytimes.com/2014/02/04/health/ethics-questions-arise-as-genetic-testing-of-embryos-increases.html). Sonia and I became scientists to work on developing drugs for prion disease, you can read more in the [Boston Globe](https://www.bostonglobe.com/magazine/2016/02/17/husband-and-wife-race-cure-her-fatal-genetic-disease/SLnmAndVfrq9XO1NnLIgkL/story.html).
+
+### Ryan Maddox
+
+![](/media/2016/07/ryan_maddox.png)
+
+Dr. Maddox provided an overview and update on the activities of the U.S. Centers for Disease Control and Prevention (CDC) on surveilling prion disease. Most of his talk was similar to his remarks [last year](/2015/07/12/summaries-of-the-cjd2015-conference-talks/), so I won't go into all of the details here, but I wanted to highlight one important point he made. The *incidence* of prion disease is often quoted as 1 death or 1 new case per million population per year, though it may be higher, in the range of 1.5 or 2 per million per year. But because these figures are per year rather than lifetime risk per person, they make prion disease sound rarer than it is. The current estimate is that about 1 in every 6,000 deaths in the U.S. is caused by prion disease, meaning that for about 1 in every 6,000 people in the general population, prion disease will be their eventual cause of death.
+
+### Jiri Safar
+
+![](/media/2016/07/jiri_safar.png)
+
+Dr. Safar provided an overview of the activities of the surveillance center in Cleveland, and the improvements and upgrades they have made over the past few years. The most exciting improvement is the great increases in diagnostic accuracy brought about by RT-QuIC. A 5-year autopsy assessment of cases referred to the surveillance center revealed that end-stage clinical diagnosis of probable prion disease is only correct 61% of the time. Obviously, prion experts such as Brian Appleby and Michael Geschwind are the exception, as they are highly skilled in recognizing these diseases; the 61% figure reflects the relatively poorer understanding of prion disease by the average neurologist, who may only see 1 or 2 cases of prion disease in their career. It is therefore very important that the NPDPSC has dramatically improved its diagnostic capability in the past few years. Historically, cerebrospinal fluid protein markers such as 14-3-3 and total tau were used for diagnosis. The NPDPSC has now implemented second-generation RT-QuIC protocol [[Orru 2015]] which is sensitive enough to detect 21 attograms (an attogram is 10<sup>-18</sup> grams) of PrP<sup>Sc</sup>. Analysis of the patients tested so far by the surveillance center indicates that the test has >98% specificity and >92% sensitivity. This new level of diagnostic accuracy will be important for enabling clinical trials and the development of therapeutics.
+
+In Q&A, I asked whether all referred cases are tested by RT-QuIC, or only cases that are considered positive by the older, less accurate tests of 14-3-3 and/or tau. Dr. Safar said that when they first implemented RT-QuIC a couple of years ago, only cases with at least slightly elevated tau levels were tested, because implementing RT-QuIC at scale poses a significant logistical and financial challenge. However, they are now ramping up their capacity for RT-QuIC, and they expect to soon be testing 100% of referred cases.
+
+
+
+
+
+
+[Bueler 1992]: http://www.ncbi.nlm.nih.gov/pubmed/1373228 "Büeler H, Fischer M, Lang Y, Bluethmann H, Lipp HP, DeArmond SJ, Prusiner SB,  Aguet M, Weissmann C. Normal development and behaviour of mice lacking the neuronal cell-surface PrP protein. Nature. 1992 Apr 16;356(6370):577-82. PubMed PMID: 1373228."
+
+[Bueler 1993]: http://www.ncbi.nlm.nih.gov/pubmed/8100741 "Büeler H, Aguzzi A, Sailer A, Greiner RA, Autenried P, Aguet M, Weissmann C. Mice devoid of PrP are resistant to scrapie. Cell. 1993 Jul 2;73(7):1339-47. PubMed PMID: 8100741."
+
+[Bueler 1994]: http://www.ncbi.nlm.nih.gov/pubmed/8790598 "Büeler H, Raeber A, Sailer A, Fischer M, Aguzzi A, Weissmann C. High prion and PrPSc levels but delayed onset of disease in scrapie-inoculated mice heterozygous for a disrupted PrP gene. Mol Med. 1994 Nov;1(1):19-30. PubMed PMID: 8790598; PubMed Central PMCID: PMC2229922."
+
+[Ladogana 1995]: http://www.ncbi.nlm.nih.gov/pubmed/7776812 "Ladogana A, Liu Q, Xi YG, Pocchiari M. Proteinase-resistant protein in human neuroblastoma cells infected with brain material from Creutzfeldt-Jakob patient.  Lancet. 1995 Mar 4;345(8949):594-5. PubMed PMID: 7776812."
+
+[Fischer 1996]: http://www.ncbi.nlm.nih.gov/pubmed/8635458 "Fischer M, Rülicke T, Raeber A, Sailer A, Moser M, Oesch B, Brandner S, Aguzzi A, Weissmann C. Prion protein (PrP) with amino-proximal deletions restoring susceptibility of PrP knockout mice to scrapie. EMBO J. 1996 Mar 15;15(6):1255-64. PubMed PMID: 8635458; PubMed Central PMCID: PMC450028."
+
+[Mallucci 2003]: http://www.ncbi.nlm.nih.gov/pubmed/14593181 "Mallucci G, Dickinson A, Linehan J, Klöhn PC, Brandner S, Collinge J. Depleting neuronal PrP in prion infection prevents disease and reverses spongiosis. Science. 2003 Oct 31;302(5646):871-4. PubMed PMID: 14593181."
+
+[Safar 2005]: http://www.ncbi.nlm.nih.gov/pubmed/16186247 "Safar JG, DeArmond SJ, Kociuba K, Deering C, Didorenko S, Bouzamondo-Bernstein E, Prusiner SB, Tremblay P. Prion clearance in bigenic mice. J Gen Virol. 2005 Oct;86(Pt 10):2913-23. PubMed PMID: 16186247."
+
+[White 2003]: http://www.ncbi.nlm.nih.gov/pubmed/12621436 "White AR, Enever P, Tayebi M, Mushens R, Linehan J, Brandner S, Anstee D, Collinge J, Hawke S. Monoclonal antibodies inhibit prion replication and delay the development of prion disease. Nature. 2003 Mar 6;422(6927):80-3. PubMed PMID: 12621436."
+
+[Kawasaki 2007]: http://www.ncbi.nlm.nih.gov/pubmed/17881452/ "Kawasaki Y, Kawagoe K, Chen CJ, Teruya K, Sakasegawa Y, Doh-ura K. Orally administered amyloidophilic compound is effective in prolonging the incubation periods of animals cerebrally infected with prion diseases in a prion strain-dependent manner. J Virol. 2007 Dec;81(23):12889-98. Epub 2007 Sep 19. PubMed PMID: 17881452; PubMed Central PMCID: PMC2169081."
+
+[Bremer 2010]: http://www.ncbi.nlm.nih.gov/pubmed/20098419 "Bremer J, Baumann F, Tiberi C, Wessig C, Fischer H, Black P, Steele AD, Toyka KV, Nave KA, Weis J, Aguzzi A. Axonal prion protein is required for peripheral myelin maintenance. Nat Neurosci. 2010 Mar, 13 (3): 310-8. doi: 10.1038 / nn.2483. Epub 2010 Jan 24 PubMed PMID: 20098419"
+
+[Chesebro 2010]: http://www.ncbi.nlm.nih.gov/pubmed/20221436/ "Chesebro B, Race B, Meade-White K, Lacasse R, Race R, Klingeborn M, Striebel J, Dorward D, McGovern G, Jeffrey M. Fatal transmissible amyloid encephalopathy:  a new type of prion disease associated with lack of prion protein membrane anchoring. PLoS Pathog. 2010 Mar 5;6(3):e1000800. doi: 10.1371/journal.ppat.1000800. PubMed PMID: 20221436; PubMed Central PMCID: PMC2832701."
+
+[Stohr 2011]: http://www.ncbi.nlm.nih.gov/pubmed/22160704/ "Stöhr J, Watts JC, Legname G, Oehler A, Lemus A, Nguyen HO, Sussman J, Wille H, DeArmond SJ, Prusiner SB, Giles K. Spontaneous generation of anchorless prions in transgenic mice. Proc Natl Acad Sci U S A. 2011 Dec 27;108(52):21223-8. doi: 10.1073/pnas.1117827108. Epub 2011 Dec 12. PubMed PMID: 22160704; PubMed Central  PMCID: PMC3248514."
+
+[Altmeppen 2011]: http://www.ncbi.nlm.nih.gov/pubmed/21619641 "Altmeppen HC, Prox J, Puig B, Kluth MA, Bernreuther C, Thurm D, Jorissen E, Petrowitz B, Bartsch U, De Strooper B, Saftig P, Glatzel M. Lack of a-disintegrin-and-metalloproteinase ADAM10 leads to intracellular accumulation and loss of shedding of the cellular prion protein in vivo. Mol Neurodegener. 2011 May 27;6:36. doi: 10.1186/1750-1326-6-36. PubMed PMID: 21619641; PubMed Central PMCID: PMC3224557."
+
+[Westergard 2011]: http://www.ncbi.nlm.nih.gov/pubmed/22025612/ "Westergard L, Turnbaugh JA, Harris DA. A naturally occurring C-terminal fragment of the prion protein (PrP) delays disease and acts as a dominant-negative inhibitor of PrPSc formation. J Biol Chem. 2011 Dec 23;286(51):44234-42. doi: 10.1074/jbc.M111.286195. Epub 2011 Oct 24. PubMed PMID: 22025612; PubMed Central PMCID: PMC3243553."
+
+[Wagner 2013]: http://www.ncbi.nlm.nih.gov/pubmed/23604588 "Wagner J, Ryazanov S, Leonov A, Levin J, Shi S, Schmidt F, Prix C, Pan-Montojo F, Bertsch U, Mitteregger-Kretzschmar G, Geissen M, Eiden M, Leidel F, Hirschberger T, Deeg AA, Krauth JJ, Zinth W, Tavan P, Pilger J, Zweckstetter M, Frank T, Bähr M, Weishaupt JH, Uhr M, Urlaub H, Teichmann U, Samwer M, Bötzel K,  Groschup M, Kretzschmar H, Griesinger C, Giese A. Anle138b: a novel oligomer modulator for disease-modifying therapy of neurodegenerative diseases such as prion and Parkinson's disease. Acta Neuropathol. 2013 Jun;125(6):795-813. doi: 10.1007/s00401-013-1114-9. Epub 2013 Apr 19. PubMed PMID: 23604588; PubMed Central PMCID: PMC3661926."
+
+[Berry 2013]: http://www.ncbi.nlm.nih.gov/pubmed/24128760 "Berry DB, Lu D, Geva M, Watts JC, Bhardwaj S, Oehler A, Renslo AR, DeArmond SJ, Prusiner SB, Giles K. Drug resistance confounding prion therapeutics. Proc Natl Acad Sci U S A. 2013 Oct 29;110(44):E4160-9. doi: 10.1073/pnas.1317164110. Epub 2013 Oct 15. PubMed PMID: 24128760; PubMed Central PMCID: PMC3816483."
+
+[Lu & Giles 2013]: http://www.ncbi.nlm.nih.gov/pubmed/23965382 "Lu D, Giles K, Li Z, Rao S, Dolghih E, Gever JR, Geva M, Elepano ML, Oehler A, Bryant C, Renslo AR, Jacobson MP, Dearmond SJ, Silber BM, Prusiner SB. Biaryl amides and hydrazones as therapeutics for prion disease in transgenic mice. J Pharmacol Exp Ther. 2013 Nov;347(2):325-38. doi: 10.1124/jpet.113.205799. Epub 2013 Aug 21. PubMed PMID: 23965382; PubMed Central PMCID: PMC3807058."
+
+[Watts 2014]: http://www.ncbi.nlm.nih.gov/pubmed/24699458 "Watts JC, Giles K, Patel S, Oehler A, DeArmond SJ, Prusiner SB. Evidence that  bank vole PrP is a universal acceptor for prions. PLoS Pathog. 2014 Apr 3;10(4):e1003990. doi: 10.1371/journal.ppat.1003990. eCollection 2014 Apr. PubMed PMID: 24699458; PubMed Central PMCID: PMC3974871."
+
+[Giles 2015]: http://www.ncbi.nlm.nih.gov/pubmed/26224882 "Giles K, Berry DB, Condello C, Hawley RC, Gallardo-Godoy A, Bryant C, Oehler A, Elepano M, Bhardwaj S, Patel S, Silber BM, Guan S, DeArmond SJ, Renslo AR, Prusiner SB. Different 2-aminothiazole therapeutics produce distinct patterns of  scrapie prion neuropathology in mouse brains. J Pharmacol Exp Ther. 2015 Jul 29.  pii: jpet.115.224659. [Epub ahead of print] PubMed PMID: 26224882."
+
+[Watts 2016]: http://www.ncbi.nlm.nih.gov/pubmed/27350609 "Watts JC, Giles K, Bourkas ME, Patel S, Oehler A, Gavidia M, Bhardwaj S, Lee J, Prusiner SB. Towards authentic transgenic mouse models of heritable PrP prion  diseases. Acta Neuropathol. 2016 Jun 28. [Epub ahead of print] PubMed PMID: 27350609."
+
+[Altmeppen 2015]: http://www.ncbi.nlm.nih.gov/pubmed/25654651 "Altmeppen HC, Prox J, Krasemann S, Puig B, Kruszewski K, Dohler F, Bernreuther C, Hoxha A, Linsenmeier L, Sikorska B, Liberski PP, Bartsch U, Saftig P, Glatzel  M. The sheddase ADAM10 is a potent modulator of prion disease. Elife. 2015 Feb 5;4. doi: 10.7554/eLife.04260. PubMed PMID: 25654651; PubMed Central PMCID: PMC4346534."
+
+[Minikel 2016]: http://www.ncbi.nlm.nih.gov/pubmed/26791950 "Minikel EV, Vallabh SM, Lek M, Estrada K, Samocha KE, Sathirapongsasuti JF, McLean CY, Tung JY, Yu LP, Gambetti P, Blevins J, Zhang S, Cohen Y, Chen W, Yamada M, Hamaguchi T, Sanjo N, Mizusawa H, Nakamura Y, Kitamoto T, Collins SJ, Boyd A, Will RG, Knight R, Ponto C, Zerr I, Kraus TF, Eigenbrod S, Giese A, Calero M, de Pedro-Cuesta J, Haïk S, Laplanche JL, Bouaziz-Amar E, Brandel JP, Capellari S, Parchi P, Poleggi A, Ladogana A, O'Donnell-Luria AH, Karczewski KJ,  Marshall JL, Boehnke M, Laakso M, Mohlke KL, Kähler A, Chambert K, McCarroll S, Sullivan PF, Hultman CM, Purcell SM, Sklar P, van der Lee SJ, Rozemuller A, Jansen C, Hofman A, Kraaij R, van Rooij JG, Ikram MA, Uitterlinden AG, van Duijn  CM; Exome Aggregation Consortium (ExAC), Daly MJ, MacArthur DG. Quantifying prion disease penetrance using large population control cohorts. Sci Transl Med. 2016 Jan 20;8(322):322ra9. doi: 10.1126/scitranslmed.aad5169. PubMed PMID: 26791950."
+
+[Giles 2016]: http://www.ncbi.nlm.nih.gov/pubmed/27317802 "Giles K, Berry DB, Condello C, Dugger BN, Li Z, Oehler A, Bhardwaj S, Elepano  M, Guan S, Silber BM, Olson SH, Prusiner SB. Optimization of aryl amides that extend survival in prion-infected mice. J Pharmacol Exp Ther. 2016 Jun 17. pii: jpet.116.235556. [Epub ahead of print] PubMed PMID: 27317802."
+
+[Orru 2015]: http://www.ncbi.nlm.nih.gov/pubmed/25604790 "Orrú CD, Groveman BR, Hughson AG, Zanusso G, Coulthart MB, Caughey B. Rapid and sensitive RT-QuIC detection of human Creutzfeldt-Jakob disease using cerebrospinal fluid. MBio. 2015 Jan 20;6(1). pii: e02451-14. doi: 10.1128/mBio.02451-14. PubMed PMID: 25604790; PubMed Central PMCID: PMC4313917."
+
+
+
