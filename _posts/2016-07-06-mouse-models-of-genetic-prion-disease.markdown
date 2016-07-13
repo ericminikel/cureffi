@@ -38,7 +38,10 @@ The next table reviews reports of mice expressing PrP with mutations that cause 
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | PG14 | [Chiesa 1998] | 9-OPRI | mouse with 3F4 epitope | yes | sometimes | no |  | 
 | Tg(MoPrP-101L) | [Hsiao 1990], [Hsiao 1994], [Telling 1996a], [Nazor 2005] | P102L | mouse | yes | yes | limited | |
+| Prnp<sup>a101L</sup> | [Manson 1999] | P102L | mouse | no | n/a | n/a | yes |
 | HuPrP102L,129M | [Asante 2009] | P102L | human 129M | no | n/a | n/a | yes |
+| 113LBoPrP<sup>C</sup> | [Torres 2013] | P102L | cow | yes | yes | yes | |
+| TgSHaPrP(A117V) | [Hegde 1999] | A117V | Syrian hamster | yes | ? | | |
 | Tg(A116V) | [Yang 2009] | A117V | mouse with 129V | yes | yes | no | |
 | HuPrP117V,129V | [Asante 2013] | A117V | human 129V | no | n/a | n/a | yes |
 | Tg(CJD) | [Dossena 2008] | D178N | mouse with 3F4 epitope & 129V | yes | no | no | |
@@ -52,7 +55,7 @@ The next table reviews reports of mice expressing PrP with mutations that cause 
 | ki-3F4-CJD | [Jackson 2013] | E200K | mouse with 3F4 epitope | yes | no | limited | |
 | Tg(BVPrP,I109,E200K) | [Watts 2016] | E200K | bank vole 109I | yes | yes | yes | |
 | Tg(HuPrP,V129,A224V) | [Watts 2015] | A224V | human 129V | no | n/a | n/a | no |
-| anchorless | [Chesebro 2005], [Trifilo 2008], [Chesebro 2010] | C-terminal nonsense mutations | mouse | yes | yes | yes | |
+| anchorless | [Chesebro 2005], [Trifilo 2008], [Chesebro 2010] | C-terminal nonsense mutations | mouse | no | n/a | n/a | |
 | &Delta;GPI | [Stohr 2011] | C-terminal nonsense mutations | mouse | yes | yes | yes | |
 | Tg(BVPrP,I109,&Delta;GPI) | [Watts 2016] | C-terminal nonsense mutations | bank vole 109I | yes | yes | yes | |
 
@@ -64,7 +67,7 @@ With all that being said, I find the contents of Table 2 pretty interesting. Mos
 
 Perhaps we're lucky that spontaneous prion disease can even be modeled at all in mice, considering that mice only live 2 or 3 years and most of these mutations take 50 years to cause disease in humans. Still, as noted above, there are therapeutic reasons to want to be able to model the human disease process as closely as possible.
 
-Watts et al reasoned that because expression of bank vole 109I PrP causes spontaneous disease in mice [[Watts 2012]], this PrP sequence must be intrinsically prone to prion formation, and might therefore be a better starting point for modeling the effects of pathogenic mutations. And as Table 2 shows, the mouse models in the new paper do have some properties that all previous models have lacked [[Watts 2016]]. The prion disease in these mice is spontaneous, fatal, and transmissible, a combination that has been lacking in other models to date. The disease is also fairly rapid. In Table 2 above, I did not go into detail on the age at which the various mouse lines develop spontaneous disease, in part because there's too much information (some rows of the above table summarize data from multiple transgenic lines with different times to illness depending on PrP expression level), but many of the previously characterized mouse lines take a year or two to develop illness. The new bank vole D178N mice get sick in as little as 179 days (the Tg15965 line) and E200K in as little as 119 days (the Tg7271 line). And these mice have exceptionally short incubation times if inoculated with brain homogenate from terminally ill mice of the same genotype &mdash; on the order of 40-60 days.
+Watts et al reasoned that because expression of bank vole 109I PrP causes spontaneous disease in mice [[Watts 2012]], this PrP sequence must be intrinsically prone to prion formation, and might therefore be a better starting point for modeling the effects of pathogenic mutations. And as Table 2 shows, the mouse models in the new paper do have some properties that previous models have lacked [[Watts 2016]]. The prion disease in these mice is spontaneous, fatal, and transmissible, a combination that has been lacking in most other models to date. The disease is also fairly rapid. In Table 2 above, I did not go into detail on the age at which the various mouse lines develop spontaneous disease, in part because there's too much information (some rows of the above table summarize data from multiple transgenic lines with different times to illness depending on PrP expression level), but many of the previously characterized mouse lines take a year or two to develop illness. The new bank vole D178N mice get sick in as little as 179 days (the Tg15965 line) and E200K in as little as 119 days (the Tg7271 line). And these mice have exceptionally short incubation times if inoculated with brain homogenate from terminally ill mice of the same genotype &mdash; on the order of 40-60 days.
 
 The new mice are still not a perfect model of these mutations, however. Although each mutation does give rise to a distinct neuropathological profile, suggesting the initiation of distinct prion strains, the neuropathology is not exactly a deadringer for the corresponding mutations in humans. For instance, the D178N mice didn't have particularly dire thalamic pathology, as humans with D178N cis-129M tend to do. And in at least one key respect, all of the strains bear a closer resemblance to the prions generated in spontaneously sick mice expressing wild-type bank vole 109I PrP [[Watts 2012]] than they do to the corresponding human prion strains: these mice all develop an 8 kDa protease-resistant PrP fragment, in contrast to the 19 and 21 kDa fragments typically seen in human D178N cis-129M and E200K prion disease respectively. A final thought is that we believe that there probably exists a small but existent transmission barrier between human prions and bank vole PrP, because when human prions are inoculated into 109M bank voles, the incubation time shortens on second passage [[Watts 2014]]. That's one reason why the prions in these mice may not represent the exact same prion strain as seen in humans with the corresponding mutations.
 
@@ -94,6 +97,10 @@ So where does that leave us? If I had a therapeutic candidate with a mechanism o
 [DeArmond 1997]: http://www.ncbi.nlm.nih.gov/pubmed/9427256 "DeArmond SJ, Sánchez H, Yehiely F, Qiu Y, Ninchak-Casey A, Daggett V, Camerino AP, Cayetano J, Rogers M, Groth D, Torchia M, Tremblay P, Scott MR, Cohen FE, Prusiner SB. Selective neuronal targeting in prion disease. Neuron. 1997 Dec;19(6):1337-48. PubMed PMID: 9427256."
 
 [Chiesa 1998]: http://www.ncbi.nlm.nih.gov/pubmed/9883727 "Chiesa R, Piccardo P, Ghetti B, Harris DA. Neurological illness in transgenic  mice expressing a prion protein with an insertional mutation. Neuron. 1998 Dec;21(6):1339-51. PubMed PMID: 9883727."
+
+[Manson 1999]: http://www.ncbi.nlm.nih.gov/pubmed/10581259 "Manson JC, Jamieson E, Baybutt H, Tuzi NL, Barron R, McConnell I, Somerville R, Ironside J, Will R, Sy MS, Melton DW, Hope J, Bostock C. A single amino acid alteration (101L) introduced into murine PrP dramatically alters incubation time  of transmissible spongiform encephalopathy. EMBO J. 1999 Dec 1;18(23):6855-64. PubMed PMID: 10581259; PubMed Central PMCID: PMC1171748."
+
+[Hegde 1999]: http://www.ncbi.nlm.nih.gov/pubmed/10617204 "Hegde RS, Tremblay P, Groth D, DeArmond SJ, Prusiner SB, Lingappa VR. Transmissible and genetic prion diseases share a common pathway of neurodegeneration. Nature. 1999 Dec 16;402(6763):822-6. PubMed PMID: 10617204."
 
 [Nazor 2005]: http://www.ncbi.nlm.nih.gov/pubmed/15962001 "Nazor KE, Kuhn F, Seward T, Green M, Zwald D, Pürro M, Schmid J, Biffiger K, Power AM, Oesch B, Raeber AJ, Telling GC. Immunodetection of disease-associated mutant PrP, which accelerates disease in GSS transgenic mice. EMBO J. 2005 Jul 6;24(13):2472-80. Epub 2005 Jun 16. PubMed PMID: 15962001; PubMed Central PMCID:  PMC1173157."
 
@@ -132,6 +139,8 @@ So where does that leave us? If I had a therapeutic candidate with a mechanism o
 [Berry 2013]: http://www.ncbi.nlm.nih.gov/pubmed/24128760 "Berry DB, Lu D, Geva M, Watts JC, Bhardwaj S, Oehler A, Renslo AR, DeArmond SJ, Prusiner SB, Giles K. Drug resistance confounding prion therapeutics. Proc Natl Acad Sci U S A. 2013 Oct 29;110(44):E4160-9. doi: 10.1073/pnas.1317164110. Epub 2013 Oct 15. PubMed PMID: 24128760; PubMed Central PMCID: PMC3816483."
 
 [Lu & Giles 2013]: http://www.ncbi.nlm.nih.gov/pubmed/23965382 "Lu D, Giles K, Li Z, Rao S, Dolghih E, Gever JR, Geva M, Elepano ML, Oehler A, Bryant C, Renslo AR, Jacobson MP, Dearmond SJ, Silber BM, Prusiner SB. Biaryl amides and hydrazones as therapeutics for prion disease in transgenic mice. J Pharmacol Exp Ther. 2013 Nov;347(2):325-38. doi: 10.1124/jpet.113.205799. Epub 2013 Aug 21. PubMed PMID: 23965382; PubMed Central PMCID: PMC3807058."
+
+[Torres 2013]: http://www.ncbi.nlm.nih.gov/pubmed/24274622 "Torres JM, Castilla J, Pintado B, Gutiérrez-Adan A, Andréoletti O, Aguilar-Calvo P, Arroba AI, Parra-Arrondo B, Ferrer I, Manzanares J, Espinosa JC. Spontaneous generation of infectious prion disease in transgenic mice. Emerg Infect Dis. 2013 Dec;19(12):1938-47. doi: 10.3201/eid1912.130106. PubMed PMID: 24274622; PubMed Central PMCID: PMC3840888."
 
 [Watts 2014]: http://www.ncbi.nlm.nih.gov/pubmed/24699458 "Watts JC, Giles K, Patel S, Oehler A, DeArmond SJ, Prusiner SB. Evidence that  bank vole PrP is a universal acceptor for prions. PLoS Pathog. 2014 Apr 3;10(4):e1003990. doi: 10.1371/journal.ppat.1003990. eCollection 2014 Apr. PubMed PMID: 24699458; PubMed Central PMCID: PMC3974871."
 
