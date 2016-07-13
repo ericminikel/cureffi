@@ -40,7 +40,7 @@ The next table reviews reports of mice expressing PrP with mutations that cause 
 | Tg(MoPrP-101L) | [Hsiao 1990], [Hsiao 1994], [Telling 1996a], [Nazor 2005] | P102L | mouse | yes | yes | limited | |
 | Prnp<sup>a101L</sup> | [Manson 1999] | P102L | mouse | no | n/a | n/a | yes |
 | HuPrP102L,129M | [Asante 2009] | P102L | human 129M | no | n/a | n/a | yes |
-| 113LBoPrP<sup>C</sup> | [Torres 2013] | P102L | cow | yes | yes | yes | |
+| 113LBoPrP<sup>C</sup> | [Torres 2013] | P102L | cattle | yes | yes | yes | |
 | TgSHaPrP(A117V) | [Hegde 1999] | A117V | Syrian hamster | yes | ? | | |
 | Tg(A116V) | [Yang 2009] | A117V | mouse with 129V | yes | yes | no | |
 | HuPrP117V,129V | [Asante 2013] | A117V | human 129V | no | n/a | n/a | yes |
