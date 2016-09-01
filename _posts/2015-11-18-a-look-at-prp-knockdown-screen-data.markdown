@@ -49,14 +49,14 @@ All of the 5'UTR assays have an 'activity score' that is described as just a 'ca
 
 ![](/media/2015/11/prnp-vs-snca-app.png)
 
-I've labeled the axes as stretching from "inactive" to "active", but another way to think of it is that the truly inactive compounds are actually the ones in the middle; the compounds far to the bottom or left are actually *increasing* the number of photons detected &mdash; maybe they increase translation initiation, or are autofluorescent. Molecules that inhibit luciferase, globally depress translation, or kill cells should be in the upper right. The compounds of interest to me are those that considerably reduce luciferase signal expression from the *PRNP* 5'UTR (Z > 2.5), but have no effect one way or the other on the *SNCA* or *APP* 5'UTRs (|Z| < 1), labeled above as hits.
+I've labeled the axes as stretching from "inactive" to "active", but another way to think of it is that the truly inactive compounds are actually the ones in the middle; the compounds far to the bottom or left are actually *increasing* the number of photons detected &mdash; maybe they increase translation initiation, or are autofluorescent. Molecules that inhibit luciferase, globally depress translation, or kill cells should be in the upper right. The compounds of interest to me are those that considerably reduce luciferase signal expression from the *PRNP* 5'UTR (Z > 2.5), but have no effect one way or the other on the *SNCA* or *APP* 5'UTRs (\|Z\| < 1), labeled above as hits.
 
 These scatterplots naturally show only those compounds that are actually shared between the pairs of screens. But in fact, of the 335,011 compounds in the *PRNP* screen, 88% were screened against *SNCA*, and only 56% were screened against *APP*. 89% were screened against at least one of these two other targets. I decided that the presence of these counterscreens was sufficiently important that I was willing to just toss out the 11% that had only ever been screened against *PRNP*. So my criteria for hit calling would be:
 
 1. Z > 2.5 for *PRNP*
 2. Screened against at least one of *SNCA* and *APP*
-3. |Z| < 1 for *SNCA* if screened
-4. |Z| < 1 for *APP* if screened
+3. \|Z\| < 1 for *SNCA* if screened
+4. \|Z\| < 1 for *APP* if screened
 
 With this initial set of hits, I then filtered against all the other counterscreens for this particular project, plus the cytotoxicity data (above). For these I was less strict, only requiring that *if* the compound was tested, then it had to pass. Here's how the numbers sifted out:
 
@@ -123,7 +123,7 @@ Unlike the 5'UTR screen, this screen doesn't come ready-made with perfect counte
 
 ![](/media/2015/11/cell-surface-prp-vs-cytotox.png)
 
-I called as hits those compounds with Z > 2.5 for cell surface PrP and |max(Z)| < 2 for cytotoxicity. Because data from a confirmatory screen were available, I also removed compounds that were called Inactive in the confirmatory screen, though I retained those that weren't tested. Here's how the numbers shook out:
+I called as hits those compounds with Z > 2.5 for cell surface PrP and \|max(Z)\| < 2 for cytotoxicity. Because data from a confirmatory screen were available, I also removed compounds that were called Inactive in the confirmatory screen, though I retained those that weren't tested. Here's how the numbers shook out:
 
 | step | N |
 | ---- | ---- |
