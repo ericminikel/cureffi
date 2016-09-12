@@ -5,7 +5,7 @@ date:   2016-09-12 12:01:00
 author: ericminikel
 location: Cambridge, MA
 thumb120: http://www.cureffi.org/media/2016/09/itc_thumbnail.png
-summary200: ""
+summary200: "ITC measures the heat released by two molecules binding in solution in order to determine the thermodynaimc parameters of binding."
 ---
 
 ![](/media/2016/09/auto-itc200.png)
