@@ -65,7 +65,7 @@ Here's what I have been able to find in the literature about the effects of codo
 | pathogenic variant | codon 129 het vs. hom affects age of onset? | codon 129 het vs. hom affects disease duration? | parent and child age of onset correlated? |
 | ---- | ---- | ---- | ---- | 
 | 6-OPRI | Yes (10 years) [[Baker 1991], [Mead 2006]] | No [[Mead 2006]] | Yes [[Webb 2009]] |
-| P102L | No [[Kovacs 2005]], Marginal [[Mead 2006]], or Yes (7 years) [[Mead 2008]] | No [[Webb 2008]] | Yes [[Webb 2009]] |
+| P102L | No [[Kovacs 2005]], Marginal [[Mead 2006]], or Yes (7 years) [[Webb 2008]] | No [[Webb 2008]] | Yes [[Webb 2009]] |
 | A117V | No [[Kovacs 2005]] | ? | Yes [[Webb 2009]] |
 | D178N-129M | No [[Goldfarb 1992], [Kong 2004], [Kovacs 2005], [Mead 2006]] | Yes [[Kong 2004]] | ? |
 | E200K | No [[Gabizon 1993], [Kovacs 2005], [Mead 2006], [Minikel 2014]] | Yes [[Mitrova & Belay 2002], [Minikel 2014]] | No [[Minikel 2014]] |
