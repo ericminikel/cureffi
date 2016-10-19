@@ -99,7 +99,6 @@ penetrance = function(af_case, af_control, baseline_risk=assumed_baseline_risk) 
 }
 penetrance_confint = function (ac_case, n_case, ac_control, n_control, baseline_risk=assumed_baseline_risk) {
   # for a genotypic model, use 1*n_case; for allelic, use 2*n_case
-  # here, results are virtually identical.
   case_confint = binom.confint(x=ac_case,n=2*n_case,method='wilson')
   control_confint = binom.confint(x=ac_control,n=2*n_control,method='wilson')
   lower_bound = penetrance(case_confint$lower,control_confint$upper,baseline_risk)
