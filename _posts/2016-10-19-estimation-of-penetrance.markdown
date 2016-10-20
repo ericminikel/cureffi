@@ -92,12 +92,12 @@ Here is the R code I've written (originally [here](https://github.com/ericminike
 
 ~~~ R
 library(binom)
-penetrance = function(af_case, af_control, baseline_risk=assumed_baseline_risk) {
+penetrance = function(af_case, af_control, baseline_risk) {
   calculated_penetrance = af_case * baseline_risk / af_control
   estimated_penetrance = pmin(1,pmax(0,calculated_penetrance)) # trim to [0,1] support
   return (estimated_penetrance)
 }
-penetrance_confint = function (ac_case, n_case, ac_control, n_control, baseline_risk=assumed_baseline_risk) {
+penetrance_confint = function (ac_case, n_case, ac_control, n_control, baseline_risk) {
   # for a genotypic model, use 1*n_case; for allelic, use 2*n_case
   case_confint = binom.confint(x=ac_case,n=2*n_case,method='wilson')
   control_confint = binom.confint(x=ac_control,n=2*n_control,method='wilson')
