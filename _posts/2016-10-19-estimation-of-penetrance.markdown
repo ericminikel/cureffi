@@ -140,7 +140,7 @@ This work has already led to a change in prognosis for some individuals who had 
 
 ### application to *NR1H3*
 
-Multiple sclerosis (MS) is a complex disease with many genetic risk factors [[IMSGC 2011]], but no Mendelian form of the disease is known to exist. Earlier this year, a study reported that a missense variant in a nuclear hormone receptor &mdash; _NR1H3_ R415Q &mdash; causes the first-ever Mendelian form of MS [[Wang 2016]]. This claim was based on dominant segregation with disease in two families, but the LOD score was only 2.2 &mdash; below the threshold for genome-wide significance in family linkage studies, which is more like 3.0 or 3.6 [[Lander & Kruglyak 1995], [Kruglyak & Lander 1995]]. And the variant in question has an allele frequency of 0.031% in ExAC non-Finnish Europeans. That may not sound like a high allele frequency, but it turns out to be way too high for this variant to cause Mendelian MS [[Minikel & MacArthur 2016]].
+Multiple sclerosis (MS) is a complex disease with many genetic risk factors [[IMSGC 2011]], but no Mendelian form of the disease is known to exist. Earlier this year, a study reported that a missense variant in a nuclear hormone receptor &mdash; _NR1H3_ R415Q &mdash; causes the first-ever Mendelian form of MS [[Wang 2016]]. This claim was based on dominant segregation with disease in two families, but the LOD score was only 2.2 &mdash; below the threshold for genome-wide significance in family linkage studies, which is more like 3.0 or 3.6 [[Lander & Kruglyak 1995], [Kruglyak & Lander 1995]]. And the variant in question has an allele frequency of 0.031% in ExAC non-Finnish Europeans. That may not sound like a high allele frequency, but it turns out to be way too high for this variant to cause Mendelian MS [[Minikel & MacArthur 2016], [full text here](https://github.com/ericminikel/nr1h3/blob/master/text/matters_arising.md)].
 
 Consider that MS has a lifetime risk (in the general population) of 0.25% in women and 0.14% in men [[Alonso & Hernan 2008]]. If 0.06% of people in the general population are R415Q heterozygotes, and if even half them went on to develop MS, then this variant alone would account for 0.03% of the population developing MS. So if a total of 0.25% of people develop MS, then about 12% of them should have this variant. Instead, the variant was only found in 1 individual out of a case series of 2,053 MS patients [[Wang 2016]].
 
@@ -226,6 +226,6 @@ With all that said, population-based allele frequency estimation is still a good
 
 [Whiffin & Minikel 2016]: http://biorxiv.org/content/early/2016/09/02/073114 
 
-[Minikel & MacArthur 2016]: https://github.com/ericminikel/nr1h3/blob/nonindexed/text/matters_arising.md "Minikel EV, MacArthur DG. Publicly available data provide evidence against NR1H3 R415Q causing multiple sclerosis. October 19, 2016, Neuron 92, 336–338. doi:10.1016/j.neuron.2016.09.054"
+[Minikel & MacArthur 2016]: https://www.ncbi.nlm.nih.gov/pubmed/27764668 "Minikel EV, MacArthur DG. Publicly Available Data Provide Evidence against NR1H3 R415Q Causing Multiple Sclerosis. Neuron. 2016 Oct 19;92(2):336-338. doi: 10.1016/j.neuron.2016.09.054. PubMed PMID: 27764668."
 
 [Wang 2016b]: http://www.cell.com/neuron/fulltext/S0896-6273(16)30695-X
