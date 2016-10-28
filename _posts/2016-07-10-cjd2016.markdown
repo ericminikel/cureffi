@@ -59,7 +59,7 @@ In Q&A, Dr. Altmeppen acknowledged that there is some risk in targeting PrP shed
 
 Dr. Caughey introduced the therapeutic strategy of reducing PrP levels to treat prion disease. He introduced several proofs of concept for this, which I have also discussed [here](/2016/06/28/introductory-reading-list/) and some of which Joel Watts mentioned earlier today. PrP is the protein that forms prions and it is required for prion disease. Mice that produce more than the normal amount of PrP develop prion disease very rapidly [[Fischer 1996]], while mice that produce half the normal amount of PrP can survive prion infection much longer than normal mice [[Bueler 1994]], and mice that produce no PrP can never get prion disease [[Bueler 1993]]. Meanwhile, it appears that reducing the amount of PrP in the brain is probably safe. Mice genetically engineered to produce no PrP have only mild health issues [[Bueler 1992], [Bremer 2010]], and mice that produce half the normal amount of PrP are not known to have any health issues at all [[Bremer 2010]]. The few humans who have been identified to have only 1 working copy of the PrP gene, instead of the normal 2 copies, are healthy [[Minikel 2016]]. Based on all of these findings, reducing PrP levels seems to be a promising therapeutic strategy, and Dr. Caughey's lab is working on pursuing this strategy.
 
-### Roberto Chiesea
+### Roberto Chiesa
 
 ![](/media/2016/07/roberto_chiesa.png)
 
