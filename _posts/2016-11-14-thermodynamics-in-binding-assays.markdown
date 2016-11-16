@@ -8,7 +8,7 @@ thumb120:
 summary200: "Before you set out on a small molecule screen for your protein of interest, first make sure the thermodynamics make sense."
 ---
 
-Recently Sonia and I have been running multiple different assays looking for binding interactions between a protein and a small molecule ligand. Again and again, I find myself needing to think about whether the design of an experiment makes sense from a thermodynamic standpoint. And again and again, I find myself amazed to realize how little I really understand about thermodynamics, compared to what I thought I knew from biochemistry classes a took a few years ago, early in my biological education. So I had to sit down and spend some serious time wrapping my mind around it. This blog post will collect what I've learned.
+Recently Sonia and I have been running multiple different assays looking for binding interactions between a protein and a small molecule ligand. Again and again, I find myself needing to think about whether the design of an experiment makes sense from a thermodynamic standpoint. And again and again, I find myself amazed to realize how little I really understand about thermodynamics, compared to what I thought I knew from biochemistry classes I took a few years ago, early in my biological education. So I had to sit down and spend some serious time wrapping my mind around it. This blog post will collect what I've learned.
 
 If you took an [intro biochemistry](/2013/09/22/biochemistry-01-stereochemistry-thermodynamics-water-and-acid-base-chemistry/) or [molecular biology](/2014/09/05/molecular-biology-02/) class like I did, at some point you have seen the equation K<sub>d</sub> = \[A\]\[B\]/\[AB\], which describes the binding of two molecules A and B at equilibrium. Here, \[A\] is the *free* concentration of A, \[B\] the free concentration of B, and \[AB\] the concentration of AB complex. So let's write it:
 
@@ -48,7 +48,7 @@ This random-seeming ~38% figure &mdash; the proportion bound when \[A<sub>total<
 
 After playing with several examples, I realized that of the two answers allowed by the &plusmn; of the quadratic formula, the valid solution, the one that gives a proportion bound that is actually a valid proprtion, between 0 and 1 inclusive, always comes from the "-" version. We can therefore further simplify, and express the proportion of A bound as:
 
-$$ \Theta_A = \frac{([A_{total}] + [B_{total}] + K_d) \minus \sqrt{([A_{total}] + [B_{total}] + K_d)^2 - 4[A_{total}][B_{total}]}}{2 \times A_{total}} $$
+$$ \Theta_A = \frac{([A_{total}] + [B_{total}] + K_d) - \sqrt{([A_{total}] + [B_{total}] + K_d)^2 - 4[A_{total}][B_{total}]}}{2 \times A_{total}} $$
 
 ~~~ R
 proportion_a_bound = function (atot, btot, kd) {
