@@ -58,8 +58,8 @@ We ordered FeTMPyP from [Cayman Chemical](https://www.caymanchem.com/product/758
 
 Here's what my prep looked like:
 
-+ 25 &mu;M protein: dilute 3 &mu;L FeTMPyP (100 mM in water) in 297 &mu;L of the protein's dialysis buffer
-+ 1 mM compound: dilute 111 &mu;L of 112.5 &mu;M protein in 384 &mu;L of dialysis buffer and 5 &mu;L of water (to match the water the FeTMPyP is dissolved in &mdash; yes, I'm being that rigorous about buffer matching). Note that recombinant HuPrP90-231 weighs in at about 16 kDa, so this experiment costs about 0.5 mg of protein.
++ 1 mM compound: dilute 3 &mu;L FeTMPyP (100 mM in water) in 297 &mu;L of the protein's dialysis buffer
++ 25 &mu;M protein: dilute 111 &mu;L of 112.5 &mu;M protein in 384 &mu;L of dialysis buffer and 5 &mu;L of water (to match the water the FeTMPyP is dissolved in &mdash; yes, I'm being that rigorous about buffer matching). Note that recombinant HuPrP90-231 weighs in at about 16 kDa, so this experiment costs about 0.5 mg of protein.
 + buffer-only: combine 1386 &mu;L of dialysis buffer with 14 &mu;L of water (again, to match the solvent of the FeTMPyP)
 
 I added 400 &mu;L of protein to well A1, 125 &mu;L of compound to A2 and A5, and 400 &mu;L buffer to A3, A4, and A6.
