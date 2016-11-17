@@ -125,7 +125,7 @@ From reading up on DELs [[Kleiner 2010]] and talking to Alix and others in the l
 
 ![](/media/2016/11/ide_selection_results.png)
 
-*Above: Data shared by Alix Chan, from a DNA-encoded library selection against IDE. Each point represents one DNA barcode, x axis is rank abundance, y axis is fold enrichment in IDE selection vs. parent library. Note this is a linear x axis, so 20 simply means 20-fold enrichment. Red dots represent a cluster of closely related macrocycles which share "codons" A12, B08, and D5, but differ in codon C. Bold numbers (2, 5, and 6) indicate macrocycles that were re-synthezied and validated to bind in [[Maianti 2014]].*
+*Above: Data shared by Alix Chan, from a DNA-encoded library selection against IDE. Each point represents one DNA barcode, x axis is rank abundance, y axis is fold enrichment in IDE selection vs. parent library. Note this is a linear y axis, so 20 simply means 20-fold enrichment. Red dots represent a cluster of closely related macrocycles which share "codons" A12, B08, and D5, but differ in codon C. Bold numbers (2, 5, and 6) indicate macrocycles that were re-synthezied and validated to bind in [[Maianti 2014]].*
 
 If you see an SAR like the one pictured above, you're in business, and it's time to start re-synthesizing individual hits to test by an orthogonal assay such as STD-NMR, or a biochemical activity assay. The Liu lab does all of its resynthesis in-house, though Alix said in principle there's no reason you couldn't hire a CRO to do it.
 
