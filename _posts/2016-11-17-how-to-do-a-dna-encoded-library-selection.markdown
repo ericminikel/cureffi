@@ -50,7 +50,7 @@ Planning a DEL experiment in practice involves several key decisions about the a
 
 We essentially followed [this protocol](/media/2016/11/protocol_del_selection_alix_chan_2016-11-11.pdf), which is basically the procedure used in [[Kleiner 2010], [Maianti 2014]]. We did ours manually, but a similar automated protocol has also been published [[Decurtins 2016]].
 
-It is best to block off a full day for a DEL selection. Last Friday I arrived as 12 Oxford St. to meet Alix at 9:30a, and we finished just after 5:00p. And he's experienced &mdash; he said this was the 15th or so time he's done this &mdash; so if you're doing this for the first time it may take you even longer. On the flipside, that day we also did 14 selections against different protein targets in parallel, and while there are considerable economies of scale, it will probably be a bit quicker if you're only doing one or a few proteins.
+It is best to block off a full day for a DEL selection. Last Friday I arrived at 12 Oxford St. to meet Alix at 9:30a, and we finished just after 5:00p. And he's experienced &mdash; he said this was the 15th or so time he's done this &mdash; so if you're doing this for the first time it may take you even longer. On the flipside, that day we also did 14 selections against different protein targets in parallel, and while there are considerable economies of scale, it will probably be a bit quicker if you're only doing one or a few proteins.
 
 The first order of business is to get out everything you need. You'll want to get these things out to thaw on ice:
 
