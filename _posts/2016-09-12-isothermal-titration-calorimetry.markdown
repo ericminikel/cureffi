@@ -66,7 +66,9 @@ I added 400 &mu;L of protein to well A1, 125 &mu;L of compound to A2 and A5, and
 
 We ran the experiment under the standard protocol of 20 injections of 4 seconds (2 &mu;L) each, with 180 seconds between injections. It was done within 4 hours.
 
-The raw data is stored in text files; I haven't had a chance to really work on understanding their format yet but in case anyone wants to dig in, here they are:
+Here's a fiddly but important point. When you set up your experiment, be sure to specify filenames that are unique over the first 10 characters. The instrument's operating software will let you save with any length of filename with any length constant prefix, but when you later open your data in the instrument's *analysis* software (Origin Data Analysis), it will only load datasets by the first 10 characters of their filename, and it is literally unable to hold two datasets of the same 10-character name open at the same time. If you accidentally already gave your files long repetitive names, you're not out of luck, though: you can navigate to the raw .itc text files stored on disk and rename them. The filename itself is the only record of the experiment's name.
+
+I haven't had a chance to really work on understanding the format of these .itc raw text files yet but in case anyone wants to dig in, here they are:
 
 + [FeTMPyP2HuPrP902301.itc](/media/2016/09/FeTMPyP2HuPrP902301.itc) - binding experiment
 + [FeTMPyP2buffer1.itc](/media/2016/09/FeTMPyP2buffer1.itc) - buffer-only control
@@ -83,7 +85,7 @@ I found it very easy to get confused about which buttons to click in the softwar
 
 ![](/media/2016/09/itc_data_analysis.png)
 
-At the end of all that, you'll have a curve with a fitted line and parameters. Here's what my data looked like:
+At the end of all that, you'll have a curve with a fitted line and parameters. To make a nice 2-panel plot with the subtracted data as well as the model and fit, go to Analysis > Final Figure. If you want the legend with the fitted thermodynamic parameters to display, you have to copy and paste it over from the ADeltaH window where it was born. You may also want to fiddle with axis display increments as the defaults aren't always legible. Here's what my data looked like:
 
 [![](/media/2016/09/itc_prp_fetmpyp.png)](/media/2016/09/itc_prp_fetmpyp.pdf)
 
