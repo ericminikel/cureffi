@@ -1,0 +1,52 @@
+---
+layout: post
+title:  "Food and Drug Law 01: Introduction to FDA"
+date:   2017-01-03 12:00:00
+author: ericminikel
+tag: food-and-drug-law
+location: Cambridge, MA
+thumb120: 
+summary200: ""
+---
+
+*These are my notes from the readings for class meeting 1 of Harvard Law School's Food and Drug Law course, led by Prof. Peter Barton Hutt on January 3, 2017. Reading for today's class meeting is chapter 1 (pages 1-25) of [Food and Drug Law 4th Ed.](http://a.co/2SDYPhS).*
+
+Today's readings and course provided an introduction to the the U.S. Food and Drug Administration, including its history, regulatory scope, and its structure and function.
+
+### Key events in FDA's history
+
+Historical precedent for regulation of food safety extends back at least to Ancient Rome, where the laws banning *stellionatus* (fraud) prohibited selling adulterated or spoiled food, which scholars including Cato and Pliny the Elder had noted as a problem [[Hutt 1984]]. Medieval England had both civil and criminal penalties for selling unsafe or impure foods, and trade guilds also played a strong role in cracking down on such offenses. In the 1800s, the advent of chemistry made it possible to test for food adulterants, and the United States iteratively established mechanisms for chemical testing of foods. By 1901, this had taken the form of the USDA Bureau of Chemistry [[Hutt 1990]], the bureau which would eventually become the FDA.
+
+Over the course of the 1800s, Congress and the states passed various laws to regulate specific foods and drugs &mdash; the smallpox vaccine, imported drugs, tea, and so on, but there was no generalized scheme for regulation of food or drugs. Because urbanization was occurring and trade was on the rise, consumers and producers were increasingly separated from each other, and public concern about food and drug adulteration grew, with specific scandals spurring change. For instance, in the [St. Louis Tragedy](http://www.fda.gov/AboutFDA/WhatWeDo/History/ProductRegulation/100YearsofBiologicsRegulation/ucm070022.htm#TheSt.LouisTragedyandEnactmentofthe1902BiologicsControlAct), 13 children died of tetanus after receiving a tainted batch of diphtheria antitoxin (a biological [to this day](https://www.cdc.gov/diphtheria/downloads/protocol.pdf) produced from horse serum), Congress passed the Biologics Act in 1902. Upton Sinclair's *The Jungle*, which exposed repulsive meat-packing practices, was what finally precipitated the passage of the [Food and Drugs Act of 1906](https://en.wikipedia.org/wiki/Pure_Food_and_Drug_Act), which gave the USDA Bureau of Chemistry the power to regulate food and drugs that were traded in interstate commerce.
+
+The 1906 law was still incredibly loose, though, compared to the regulatory environment we know today. For instance, pharmacies could still sell narcotics over the counter, as long as the packaging was accurately labeled. Indeed, a 1917 report complained that the law lacked "any restriction whatever upon the use of many of the most virulent poisons in drugs." Procedurally speaking, one of the most profound differences versus today was postmarket enforcement (the 1906 law only provided for action against non-compliant products already on the market) as opposed to requiring premarket approval.
+
+Over subsequent decades the Bureau of Chemistry became the FDA, and there were various calls for expansions of FDA's powers. Another national tragedy eventually helped to spur change: in 1937, more than a hundred people died after taking a liquid formulation of the antibiotic sulfanilamide dissolved in the poisonous antifreeze diethylene glycol (see ["Elixir Sulfanilamide"](https://en.wikipedia.org/wiki/Elixir_sulfanilamide)). The following year, Congress passed the Food, Drug, and Cosmetic Act (FD&C) of 1938. This law brought cosmetics and medical devices under FDA's purview, expanded FDA's authority to regulate labeling (though not advertising, which fell to the Federal Trade Commission), banned poisonous ingredients, and heightened FDA's enforcement powers. Procedurally, the FD&C changed drug regulation from a system of postmarket enforcement to one of "premarket notification", with manufacturers required to demonstrate safety &mdash; but still not efficacy &mdash; before selling their product. The system was that drug manufacturers were required to provide FDA with 60 days' advance notice of a new product, and FDA could either deny the application, or if FDA did nothing, the product could be marketed by default (hence the term "premarket notification"). The FD&C remains the bedrock legal basis for FDA's existence and powers, and basically every piece of legislation concerning FDA since then has simply amended the FD&C.
+
+The next major expansion of FDA's power occurred in 1962, with the so-called Drug Amendments. Procedurally, these replaced the earlier system of "premarket notification" with a system of "premarket approval" where affirmative approval was required. And more substantively, these amendments tasked FDA with regulating not only the safety, but also the efficacy, of drugs, and also gave FDA the authority to regulate clinical trials. Together, these changes meant that FDA now governed the entire process of what drug makers needed to prove, and how they needed to prove it, in order to bring a drug to market.
+
+To date, Congress has amended the FD&C Act over a hundred times, most recently with the [21st Century Cures Act](/2016/12/13/21st-century-cures/). The majority of these >100 amendments have heightened FDA's regulatory power and expanded the scope of what it regulates. There have been a few notable exceptions, where Congress has restricted FDA's power: for instance, the Vitamin-Mineral Amendments of 1976 are the reason that FDA does not have much authority over vitamins and dietary supplements. But overall, FDA's regulatory power has steadily expanded, and this trend has persisted regardless of which political party holds power. FDA has come to regulate food, drugs, cosmetics, devices, animal feed and drugs, tobacco, and things that emit radiation: it even has a Memorandum of Understanding with the Federal Aviation Administration to jointly regulate laser light shows to make sure they don't blind pilots. In some cases, the expansion of FDA's power hasn't come from new regulation, but from FDA taking over roles previously played by other agencies &mdash; for instance, it took over the regulation of biologics, which since the Biologics Act of 1902 had been carried out by the National Institutes of Health. All told, FDA is now responsible for regulating products that comprise about 25% of U.S. GDP.
+
+![](/media/2017/01/fda_size_over_time.png)
+
+*Above: the FDA budget and number of personnel over time, data from p. 25 of [Hutt, Merrill, and Grossman, 2014, Food and Drug Law 4th Ed](http://a.co/2SDYPhS). Latest data point is 2010, with $3.29 billion and 12,381 employees.*
+
+### How FDA works
+
+Legally speaking, the Department of Health and Human Services is responsible for implementing the FD&C Act, and FDA is the division within HHS that does this. Originally, the Secretary of HHS appointed the FDA Commissioner, but Congress amended FD&C in 1988 such that the Commissioner is appointed by the President and approved by the Senate. This means that, whereas some other federal regulatory agencies are supposed to be "independent regulatory commissions" (Securities and Exchange Commission, Federal Trade Commission, etc.), the FDA is explicitly *not* independent. In principle, FDA could therefore be subjected to political pressure more easily than many other agencies, but our textbook argues that this is not the case in practice. Instead, FDA's public visibility and clear scientific basis for its decisions help to insulate it from political maneuvering. In addition, only its top-ranking officials are political appointees: Commissioner, Deputy Commissioner, Associate Commissioners and sometimes Chief Counsel (a position that Prof. Hutt once held). The rest of FDA's employees are career feds heavily insulated from political changes, and they are the ones who make almost all of the decisions.
+
+Indeed, FDA is described as being unique in just how bottom-up it is. FDA has an enormous regulatory scope, and the Commissioner cannot feasibly even be aware of, let alone have a hand in, any but a tiny fraction of its decisions. The >100 Congressional bills that have amended FD&C usually only provide direction in broad strokes; the details of how FDA will interpret Congress's will appear in the form of Guidances, of which there were over 2,000 in 2004-2014 alone, and these are drafted by career employees, not political appointees. And beyond Guidances, much of FDA's regulatory discretion and authority lies in the individual decisions of whether or not to approve a given drug (or other product), and here too, it is the FDA employees, not leadership, that decide.
+
+All that being said, FDA is also described as being more closely watched and more often questioned by Congress, the media, and the public, than perhaps any other regulatory agency. FDA comes before Congress for an average of about 30 oversight hearings per year. 
+
+FDA has its headquarters in Hyattsville, MD, home of the Commissioner and six "Centers" corresponding to six types of products that FDA regulates: drugs, biologics, food, devices, veterinary products, and tobacco. The Center for Drug Evaluation and Research (CDER) is the center responsible for drugs, including new approvals. FDA also has dozens of field offices around the country (and abroad) mostly concerned with enforcement and inspection, and runs the National Center for Toxicological Research in Jefferson, AR.
+
+FDA receives an appropriation from Congress but also, since 1992 and on an ever-increasing basis, gets its funding from "user fees" paid by the commercial entities whose products are being regulated.
+
+
+
+
+
+[Hutt 1984]: http://dx.doi.org/10.1146/annurev.nu.04.070184.000245 "Government Regulation of the Integrity of the Food Supply. Annual Review of Nutrition Vol. 4: 1-21 (Volume publication date July 1984). DOI: 10.1146/annurev.nu.04.070184.000245 Peter Barton Hutt"
+
+[Hutt 1990]: http://heinonline.org/HOL/LandingPage?handle=hein.journals/foodlj45&div=15&id=&page= "45 Food Drug Cosm. L.J. 17 (1990)  Symposium on the History of Fifty Years of Food Regulation under the Federal Food, Drug, and Cosmetic Act: A Historical Introduction"
