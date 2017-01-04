@@ -63,7 +63,7 @@ Covington & Burlington issues "e-alerts" with summaries of new legislation affec
 
 + 2007: [FDAAA](https://www.cov.com/~/media/files/corporate/publications/2007/10/food-and-drug-administration-amendments-act-of-2007.pdf)
 + 2012: [FDASIA](https://www.cov.com/-/media/files/corporate/publications/2012/08/fda_safety-innovation_act_2012.pdf)
-+ 2016: [21st Century Cures](https://www.cov.com/-/media/files/corporate/publications/2016/12/21st_century_cures_act_key_provisions_title_iii_development.pdf))
++ 2016: [21st Century Cures](https://www.cov.com/-/media/files/corporate/publications/2016/12/21st_century_cures_act_key_provisions_title_iii_development.pdf)
 
 
 
