@@ -1,0 +1,202 @@
+---
+layout: post
+title:  "Food and Drug Law 06: Regulation of Drugs"
+date:   2017-01-10 12:00:00
+author: ericminikel
+tag: food-and-drug-law
+location: Cambridge, MA
+thumb120: http://www.cureffi.org/media/2017/01/pdufa_thumbnail.png
+summary200: "An in-depth look at how FDA regulates drugs and evaluates new drugs."
+---
+
+*These are my notes from the readings for class meeting 6 of Harvard Law School's Food and Drug Law course, led by Prof. Peter Barton Hutt on January 10, 2017. Reading for today's class meeting is pp. 77-78, 89-101, 641-751 and 957-990 of [Food and Drug Law 4th Ed.](http://a.co/2SDYPhS).*
+
+### Definition of drugs
+
+Drugs (and devices and biologicals) require premarket approval from FDA for safety and efficacy, whereas food and cosmetics are less tightly regulated, and FDA has little control over vitamins and supplements. This means the regulatory hurdle a product must clear depends heavily upon whether it can be classified as a "drug", and therefore upon the definition of *drug*.
+
+The FD&C Act section 201(g)(1) defines a *drug* as:
+
+> A) articles recognized in the official United States Pharmacopoeia, official Homeopathic Pharmacopoeia of the United States, or official National Formulary, or any supplement to them; and
+> B) articles intended for use in the diagnosis, cure, mitigation, treatment, or prevention of disease in man or other animals; and
+> C) articles (other than food) intended to affect the structure or any function of the body of man or other animals; and
+> D) articles intended for use as a component of any article specified in clause (A), (B), or (C)...
+
+The Act's definition of *device* has criteria exactly paralleling (A), (B), and (C) above, but applying to "an instrument, apparatus, implement, machine, contrivance, implant, in vitro reagent, or other similar or related article, including any component, part, or accessory... which does not achieve its primary intended purposes through chemical action within or on the body of man or other animals and which is not dependent upon being metabolized for the achievement of its primary intended purposes."
+
+The courts have greatly limited the use of criterion (A) because it is based on inclusion in specific lists produced by private, non-governmental bodies. The *United States Pharmacopoeia and National Formulary* (USP-NF) that the FD&C refers to is a [paywalled](http://www.usp.org/usp-nf) collection of "monographs" (see [example](http://www.usp.org/sites/default/files/usp_pdf/EN/USPNF/sample_monograph.pdf)) listing various standards and protocols for each drug. It's produced by a non-governmental, non-profit organization called the United States Pharmacopeial Convention, better known as [USP](http://www.usp.org/). USP's list includes vitamins and minerals, and the Homeopathic Pharmacopeia also mentioned in (A) includes herbal supplements, yet none of these are now considered drugs by FDA, due to a series of court decisions. Most notably, in *United States vs. Ova II* (1975), the 3rd Circuit Court rejected FDA's ability to regulate a pregnancy test kit included in USP, because even though the FD&C Act explicitly says that inclusion in USP is sufficient to qualify for FDA regulation, this "run[s] afoul of the principle that a legislative body may not lawfully delegate its functions to a private citizen or organization." Instead, the court allowed a much more limited interpretation, that if the packaging is *labeled* "USP" to imply intended use as a drug, then FDA may enforce the product's adherence to USP's specified standards of quality and purity and so forth. If a substance is listed in USP but the packaging is not labeled USP, then FDA may not claim jurisdiction based solely on criterion (A). Obviously many things listed in USP *do* meet criteria (B) or (C) and thus can be regulated by FDA.
+
+Criteria (B) and (C) both concern "intended use." FDA's own interpretation of "intended use" is that it refers to the intent on the part of "the persons legally responsible for the labeling of drugs," and that this intent may be established by "labeling claims, advertising matter, or oral or written statements" or by the "circumstances surrounding the distribution." These "circumstances," such as the actions of downstream distributors, may in some cases suggest that the original manufacturer of the drug intended a use other than the use for which the product was explicitly labeled or advertised.
+
+In practice, FDA almost always relies on statements explicitly made by the manufacturer or distributor who it's going after. Only once has a court found evidence of "intent" absent any explicit statement: in *United States v. Travia* (2001), the courts found that selling nitrous oxide-filled ballons in the parking lot outside a concert, even absent any labeling or explicit oral or written statement, constituted sufficiently clear "intent" to allow FDA to intervene. Courts have also not been keen on allowing FDA to intervene based on the intent of a consumer or a third party (as opposed to manufacturer or distributor). In *National Nutritional Foods Ass'n v. Mathews* (1977), FDA had tried to regulate very high doses of vitamin A and D (>10,000 and >400 IU/day respectively) because naturopathic author Adelle Davis (not a vitamin manufacturer herself) had convinced readers to take huge doses and there were reports of toxicity. The courts decided that the dose cutoffs chosen were based on FDA's concern about toxicity, not "intent." (Note: that case concerned actions FDA had taken in 1972. By the time the case was decided, Congress had passed the Vitamin-Mineral Amendments of 1976, which thereafter explicitly forbade FDA from "classify[ing] any natural or synthetic vitamin or mineral (or combination thereof) as a drug solely because It exceeds the level of potency which [FDA] determines is nutritionally rational or useful".) 
+
+Criterion (C) explicitly excludes foods, but criterion (B) does not, and courts have therefore allowed FDA to classify some things as both drug and food. Alternatively, some things can be a drug in some cases and a food in other cases: FDA considers caffeine as a drug when it is the active ingredient in a pill but not when it is in a beverage.
+
+The distinction between biologicals and drugs was re-defined on June 30, 2003 (see pp. 1133-1134). Monoclonal antibodies and other proteins (everything from interferon to insulin) are now evaluated by CDER, while CBER retains authority over vaccines, allergenic extracts, blood, antitoxins, cellular therapies, and gene therapies. 
+
+### Prescription vs. over-the-counter drugs
+
+The 1951 Durham-Humphrey Amendments added FD&C section 503(b)(1), establishing that certain drugs are "not safe for use except under the supervision of a practitioner licensed by law to administer such drug," and therefore can only be sold per a prescription. FDA usually approves new drugs as prescription-only, and will not consider over-the-counter (OTC) status until at least 5 years later. FDA can do this of its own accord or in response to a drug manufactuer's petition (for on-patent drugs) or in response to anyone's petition (for off-patent drugs). FDA usually requires a study showing that consumers can understand the label, and a "home use study" showing that consumers actually follow the label.
+
+Two of the most famous instances are FDA's rejection of OTC status for statins [[Strom 2005]] and its approval of OTC status for the Plan B emergency contraceptive, see *[Tummino v. Hamburg]* (2013). 
+
+FDA established the now-familiar "Drug Facts" label standard for OTC drugs in 1997 (62 Fed. Reg. 9024 (February 27, 1997)).
+
+### Historical perspective on regulation of efficacy
+
+In lecture 1 it was explained that FDA did not begin requiring premarket review of drug efficacy until the 1962 Drug Amendments. But there has been at least some regulation of efficacy going back decades earlier.
+
+When the federal government first began regulating drugs through the 1906 Food and Drugs Act, it focused mostly on safety. It did outlaw "misbranding", but this was taken to concern only the ingredients or purity, rather than efficacy claims. In fact, the prevailing view at the time was that the regulation of efficacy would be impossible. A recent Supreme Court decision, *School of Magnetic Healing v. McAnnulty* (1902) had more or less decided as much. The American Judicial School of Magnetic Healing was an institution that taught mind-over-body healing, on the belief that "the human race does possess the innate power, through proper exercise of the faculty of the brain and mind, to largely control and remedy the ills that humanity is heir to". The Postmaster General deemed their business to be a form of mail fraud and had ordered mail addressed to the school to be seized and returned to sender. The Supreme Court found the Postmaster to be in the wrong, deciding that:
+
+> Just exactly to what extent the mental condition affects the body, no one can accurately and definitely say... There is no exact standard of absolute truth by which to prove the assertion false and a fraud. We may not believe in the efficacy of the treatment to the extent claimed by complainants, and we may have no sympathy with them in such claims, and yet their effectiveness is but matter of opinion in any court... Unless the question may be reduced to one of fact as distinguished from mere opinion, we think these statutes cannot be invoked for the purpose of stopping the delivery of mail matter.
+
+So under the original 1906 law, when FDA did at one point attempt to enforce against a false claim of anti-cancer efficacy, the courts threw it out in *United States v. Johnson* (1911), citing the above decision. Congress responded by passing the Sherley Amendment (1912) which made it so that claims of "curative or therapeutic effect" that are both "false *and* fraudulent" (emphasis added) count as misbranding. But even then, in *Seven Cases of Eckman's Alternative v. United States* (1916), the Supreme Court ruled that the language of claims needing to be both "false *and* fraudulent" meant that enforcement was only merited if the person selling the drug had intent to deceive. In other words, if the people selling the drug were wrong but did themselves *believe* the efficacy claims they were making, then that was just a difference of opinion and FDA couldn't crack down on them.
+
+The FD&C Act in 1938 finally changed the definition of misbranding to include instances where "labeling is false or misleading in any particular," and the courts upheld FDA's ability to enforce on this basis. In *Research Laboratories Inc. v. United States* (1944), the 9th Circuit Court held that FDA was justified in seizing bottles of Nue-Ovo, a bogus treatment for rheumatoid arthritis. The court opined that scientific advances had made the *McAnnulty* decision obsolete in some cases:
+
+> Questions which previously were subjects only of opinion have now been answered with certainty by the application of scientifically known facts. In the consideration of the *McAnnulty* rule, courts should give recognition to this advancement.
+
+This decision basically allowed FDA to crack down on efficacy claims under the "misbranding" provision of FD&C. The 1962 amendments established a different legal basis for efficacy regulation, though: they defined anything not yet approved or not yet recognized as safe and effective as being a "new drug" and required companies to apply to FDA for pre-market approval, presenting "evidence consisting of adequate and well-controlled investigations."
+
+### Access to unapproved drugs for desperately ill patients
+
+Ever since 1962, debates have raged over whether FDA should be able to prevent patients with serious, life-threatening diseases from taking unapproved medicines.
+
+One of the first major cases concerned amygdalin (marketed as Laetrile), a natural product purified from apricot kernels, then purported to possess anti-cancer properties, though clinical trials later failed to show efficacy [citation needed]. Two cancer patients who wanted access to the drug sued the FDA. The West Oklahoma District Court initially ruled in their favor in *Rutherford v. United States* (1977), citing a constitutional right to privacy and arguing that allowing access would NOT mean "the return of the traveling snake oil salesman", because "the right to use a harmless, unproven remedy is quite distinct from any alleged right to promote such". The 10th Circuit Court upheld that decision but on a different basis, saying that the FD&C Act does not apply to terminally ill patients because "efficacy" is undefined when the alternative is certain death: "What can 'effective' mean if the person... is going to die of cancer regardless of what may be done." The Supreme Court overruled both decisions, saying FDA absolutely had jurisdiction to keep those patients from taking amygdalin. In response, in 1977 Representative Symms led an attempt in Congress to overturn the efficacy provision of the FD&C Act, but was ultimately unsuccessful. Courts have since continued to uphold FDA's power to keep seriously ill patients from accessing unapproved therapies, see for instance *Abigail Alliance v. Von Eschenbach* (2008). (Interestingly, the dissent in that case argued that if the constitutional right to Due Process covers the rights "to marry, to fornicate, to have children, to control the education and upbringing of children, to perform varied sexual acts in private, and to control one's own body even if it results in one's own death or the death of a fetus" then surely it must also cover the right to attempt to save one's own life.)
+
+Another major challenge came from the so-called buyers' clubs during the HIV/AIDS epidemic, as dramatized in the film *Dallas Buyers' Club*. According to [this](http://www.slate.com/blogs/browbeat/2013/11/01/dallas_buyers_club_true_story_fact_and_fiction_in_the_matthew_mcconaughey.html), FDA looked the other way for the first few years of the buyers' clubs, but eventually cracked down.
+
+The FDA Modernization Act of 1997 formalized a procedure for patients to request "compassionate use" of a drug that had Investigational New Drug (IND) status but was not yet approved. (In practice, FDA almost always approves such requests, but drug companies are strongly disincentivized against providing the drug, because FDA will consider adverse events encountered in compassionate use in its review of safety, yet asymmetrically, compassionate use instances do not contribute to efficacy data - citation needed.)
+
+A recent development has been the introduction of Right To Try laws, which have [passed in 28 states and have been proposed at the federal level](https://www.statnews.com/pharmalot/2016/05/10/fda-experimental-drugs-right-to-try/).
+
+### Definition of "New Drugs"
+
+The 1962 amendments established a pre-market approval process only for "new drugs". Drugs that were already marketed as of 1962 (and for which labeling, dose, etc. did not change) got grandfathered in, as did drugs that had already been grandfathered in 1938, and drugs "generally recognized as safe and effective" (GRASE). In practice, however, the Supreme Court ruled that "GRASE" status requires the same level of evidence as it would take for FDA to approve a new drug, and that the grandfather clauses only apply if the drug has the *exact* same labeling and composition that it had before 1962. Therefore in practice neither GRASE nor the grandfather clauses actually shelter any drugs from enforcement if FDA deems them ineffective. For decisions see *Weinberger v. Hynson, Westcott & Dunning, Inc.* (1973) and *Weinberger v. Bentex Pharmaceuticals Inc.* (1973). 
+
+### Steps in new drug development
+
+An Investigational New Drug (IND) application must be submitted and approved in order for a drug to begin first-in-human studies and enter clinical testing. Technically, the amended FD&C Act's prohibition on interstate commerce on unapproved drugs would apply even to shipping a drug out to clinical trial sites in order to perform trials. The IND is the formal mechanism by which FDA exempts experimental new drugs from this prohibition.
+
+As explained in [FDA's IND overview](http://www.fda.gov/drugs/developmentapprovalprocess/howdrugsaredevelopedandapproved/approvalapplications/investigationalnewdrugindapplication/default.htm), an IND has three major parts:
+
++ **Animal studies.** The IND needs to show that enough animal testing has been done to demonstrate that the drug appears safe to put into humans, and to choose a starting dose. At a minimum, the data package should include pharmacokinetics, pharmacodynamics, and toxicity, and FDA has fairly specific recommendations for how to structure the studies, in [Guidance for Industry: Nonclinical Safety Studies (2010)](http://www.fda.gov/downloads/drugs/guidances/ucm073246.pdf). Toxicity studies should be performed under Good Laboratory Practices (GLP) in two mammalian species, at least one of which is not a rodent. There should be enough study of the drug's pharmacokinetics (what the body does to the drug), including ADME (absorption, distribution, metabolism, and excretion) to notice any worrisome metabolites and to identify potential organs of concern for toxicity. The drug's mechanism of action should be identified and there should be enough study of pharmacodynamics (what the drug does to the body) to be sure that the animals in which you're studying toxicity actually have relevant target engagement. Although target engagement data are expected, there is no requirement of preclinical efficacy studies per se (such as survival or other therapeutic benefit in a relevant animal model); the IND's focus is on making sure the drug appears safe enough to warrant testing in humans.
++ **Manufacturing information.** The FDA needs to be convinced that the applicant can produce the drug safely and reliably. Data should be presented on the "composition, manufacturer, stability, and controls".
++ **Clinical protocols and investigators.** The detailed protocol for Phase I (or Phase 0, see below) studies should be included &mdash; doses, timepoints, numbers, locations. It is recommended to include an IRB protocol and consent form; you don't need to already have IRB approval but you need to at least commit to obtaining it. And you need to information about the study investigators. FDA's goal is to make sure that investigators are qualified, research subjects will be appropriately informed and consented, and that no one will be exposed to undue risk. When Phase II and III studies are planned later, these are added as amendments to the IND.
+
+INDs are approved by default if FDA does not respond within 30 days. Reasons why FDA might issue a hold on the IND include bad clinical trial design, unqualified investigators, or unreasonable risk to clinical trial participants.
+
+After the IND, traditionally one would advance to a Phase I study. Since 2006, however, there is also a concept of a "Phase Zero" study, which FDA put forth in a Guidance entitled [Exploratory IND Studies](http://www.fda.gov/downloads/drugs/guidancecomplianceregulatoryinformation/guidances/ucm078933.pdf). The idea here is that animal models can only tell you so much, and so in some cases sponsors might find it useful to, very early in the development pipeline, do a very small study in humans to help decide, for instance, which of a few drug candidates is most promising. In such cases, FDA will accept an IND with less preclinical data than is usually expected, if the plan is to give only brief exposure to very low, subtherapeutic doses to humans. In such a study one would not expect to be able to evaluate efficacy, or safety, or even to identify the right dose, but one might be able to check a biomarker (say, drug distribution  to a tissue of interest, or qPCR for a induction of a splicing product of interest) to see if a drug is going to the right place or engaging the right target.
+
+The traditional clinical trial pipeline, especially for common diseases, involves three phases. The distinction between phases is less clear for rare diseases, where in many cases the design of trials is determined in case-by-case negotiations between the sponsor and FDA, more details below.
+
+Phase I is traditionally thought of as a safety study, but data from Phase I are also instrumental in seeing whether the drug engages its target, whether it has good enough pharmacokinetics in humans, and to determine the dose and other parameters for a Phase II study of efficacy. Because Phase I only tests the drug's safety in a small cohort over a short period of time, it won't necessarily catch rare or long-term adverse events. Phase I is usually quite safe since the doses escalate gradually and subjects are closely watched for adverse events, but there are occasional and highly publicized disasters in which people die or become severely ill &mdash; see for instance Tegenero's TGN1412 antibody [[Suntharalingam 2006]] or Biotrial's [BIA 10-2474](http://www.sciencemag.org/news/2016/02/french-company-bungled-clinical-trial-led-death-and-illness-report-says).
+
+Phase II is usually in a slightly larger cohort of people, still fairly closely monitored, and serves to generate preliminary evidence of efficacy.
+
+Phase III is a larger and longer study that can evaluate the risk-benefit profile of the drug, hopefully confirming the results of the Phase II while at the same time having long enough exposure in a large enough number of people to get a better read on safety.
+
+Starting from 1962, FDA generally required two "adequate and well-controlled investigations" (see next section for discussion of what this means) at the *P* < .05 threshold, but FDAMA in 1997 amended this to indicate that in some cases, one adequate and well-controlled trial would suffice [[Hutt 2007]]. In some cases, a Phase II trial is considered adequate enough, and a Phase III need never be conducted. Acceptance of only one trial, rather than two, usually requires *P* < .005 instead of *P* < .05. Particularly in rare diseases, there is a tremendous amount of flexibility (from FDA's perspective) or uncertainty (from drug companies' perspective) as to what evidence FDA will require in order to approve a drug. 
+
+Once the sponsor has done enough trials (often as pre-determined with FDA, see Special Protocol Assessments below) with sufficiently positive results, the sponsor submits a New Drug Application (NDA). An NDA typically includes the following sections in some form or another [[Hutt 2007]]:
+
++ Manufacturing information
++ Preclinical pharmacology + toxicity
++ Human pharmacology
++ Microbiology (what is this?)
++ Clinical data
++ Statistics
++ Proposed labeling
+
+NDAs tend to be quite long; I couldn't find an example NDA online, but for eteplirsen, for example, even the [NDA briefing document](http://www.fda.gov/downloads/advisorycommittees/committeesmeetingmaterials/drugs/peripheralandcentralnervoussystemdrugsadvisorycommittee/ucm497064.pdf) was 186 pages. FDA is not required to, but almost always does, convene an Advisory Committee to review NDAs, and it almost always follows the advice of the Advisory Committee. As review of an NDA is winding down and a drug appears to be nearing approval, the final few weeks tend to involve final negotiations over the exact labeling provided to doctors.
+
+### Clinical trial design
+
+The FD&C Act says that drugs can only be approved based "substantial evidence" of efficacy from "adequate and well-controlled investigations". FDA has defined "well-controlled" to mean that one of the following types of controls must be in place:
+
+1. **Placebo control.** Some patients get placebo and some get drug.
+2. **Dose control.** Different patients get at least two different doses of drug, again usually on a randomized, double-blind basis.
+3. **No treatment control.** Same as #1 but with no placebo. This might be used if there is good reason to not expect any placebo effect AND efficacy can be objectively measured.
+4. **Active treatment control.** Same as #1 but instead of placebo, some patients get standard of care (existing approved therapy). 
+5. **Historical control.** Whereas #1 - #4 are all expected to be randomized and concurrent, there is sometimes an option to compare to historical data on untreated individuals. Usually historical controls aren't as comparable to the treated patients as a randomized group would be, so FDA's standards for accepting historical controls are high &mdash; they state that this option is reserved for "special circumstances".
+
+The concept of an "adaptive trial design" simply means that people can be shuffled around between the different arms of the study (e.g. between doses or between placebo and drug) after the study has started, in order to maximize statistical power to see an effect, without increasing the false positive rate [[Bhatt & Mehta 2016]].
+
+Usually FDA wants to see a clinical endpoint (a measure of how a patient feels or functions) evaluated in trials, but in some cases a surrogate biomarker endpoint can be substituted &mdash; see more detailed discussion in my [Accelerated Approval post](/2016/10/20/the-deal-with-accelerated-approval/) though note that surrogate biomarker endpoints are not limited to Accelerated Approvals.
+
+### User fees and meetings between sponsors and FDA
+
+The Prescription Drug User Fee Act (PDUFA) of 1992 established a system where drug companies pay FDA "user fees" for the review of their products to supplement appropriations from Congress. As of 2017, for instance, the price tag for a New Drug Application is [$2.04 million](http://www.raps.org/Regulatory-Focus/News/2016/08/01/25478/FDA-Unveils-User-Fee-Rates-for-FY-2017/). As of 2012, user fees made up 62% of FDA's budget, and Congressional appropriations only 38%. While creating a user fee system, Congress and FDA have also enacted various mechanisms to enhance regulatory predictability and accountability by establishing deadlines and performance requirements for FDA review of drugs, and particularly, by establishing a system of regular, defined meetings between sponsors and FDA.
+
+PDUFA is often credited with reducing wait times for FDA review. Here are FDA-published data from our textbook on how PDUFA relates to New Drug Application review times:
+
+![](/media/2017/01/fda_nda_pdufa.png)
+
+*[Code to produce this plot](/media/2017/01/fda_efficiency.R). Data from [Food and Drug Law 4th Ed.](http://a.co/2SDYPhS) p. 749.*
+
+There are a huge number of details to be hammered out in the design of clinical trials, and sponsors want to make sure that they are doing the right experiments and collecting the right data to ultimately win FDA's approval. Therefore there is a formal structure for sponsors and FDA to meet regularly to discuss these details. The FDA Modernization Act (FDAMA) of 1997 further strengthened this process, adding requirements that minutes from these meetings be recorded and that FDA and sponsors can reach agreements in these meetings that will be written down and cannot be changed by FDA except in special circumstances. This is intended to provide regulatory predictability even if, for example, individual staff at FDA turn over, and is in contrast to the so-called "moving target syndrome" that sponsors had complained about before the 1990s.
+
+During the drug development process, meetings are routinely scheduled pre- and post- preclinical studies, pre-IND, end of Phase I, end of Phase II, pre-Phase III, post-Phase III, and pre-NDA, plus Special Protocol Assessments (see next paragraph). 30 days before a meeting, the sponsor submits a briefing document, and they can include questions for FDA, each of which FDA will respond to 2 days before the meeting, often with a yes/no answer.
+
+Most of these routine meetings are considered Type B meetings. If a meeting is needed to resolve a hold (see previous paragraph) or other roadblock, that's a Type A meeting, and any other meeting related to drug development is Type C. FDA promises to schedule Type A meetings within 30 days of request, Type B within 60 days, and Type C within 75 days. (For a recent example, see Appendix 1 of [Sarepta's eteplirsen NDA briefing](http://www.fda.gov/downloads/advisorycommittees/committeesmeetingmaterials/drugs/peripheralandcentralnervoussystemdrugsadvisorycommittee/ucm497064.pdf), p. 137-144, which lists all the key regulatory milestones including every meeting between Sarepta and FDA over eteplirsen). Some people have objected that these wait times are actually quite long for startup companies when you consider their burn rate.
+
+Another mechanism intended to establish regulatory predictability is a Special Protocol Assessment (SPA). In this mechanism, a sponsor can submit a protocol for a Phase III trial that will form the primary basis for efficacy claims in an NDA, and FDA will respond within 45 days as to whether success in said trial design would merit approval. If FDA says yes, this is essentially binding. According to the [2002 Guidance](http://www.fda.gov/downloads/drugs/guidancecomplianceregulatoryinformation/guidances/ucm080571.pdf) on SPAs, FDA can break its promise only if it identifies "public health concerns unrecognized at the time of protocol assessment," if the sponsor lied in its submission or failed to follow the protocol, or if "the director of the review division determines that a substantial scientific issue essential to determining the safety or efficacy of the drug has been identified after the testing has begun". In practice, FDA has so far never once backed out on an SPA commitment.
+
+Since 1962, after an NDA is submitted, FDA must decide whether to approve it within 180 days. In practice, however, FDA can request additional information, and then when that information is submitted, FDA can consider it a revision and thus reset the clock [[Merrill 1996]]. The 1962 amendments also provided that sponsors can challenge FDA's rejection of a drug in court [[Merrill 1996]], but almost no one ever does (perhaps for the reasons explained in [lecture 2](/2017/01/04/food-and-drug-law-02/)), and not once has anyone ever done so successfully. For a rare example of an attempt, see *Ubiotica Corp. v. FDA* (1970).
+
+### Controversies
+
+Controversy has long raged over whether FDA is too fast and loose (endangering consumers by approving drugs on too little evidence), or too cautious and slow (letting patients die by failing to approve drugs quickly enough). For a look at what this debate looked like 40 years ago, see [[Kennedy 1978], [Wardell 1978]
+]. One fact that is not disputed is that "R&D efficiency", defined as new drugs approved per research & development dollar spent, has declined by orders of magnitude over recent decades [[Scannell 2012]].
+
+In spite of the improvements in NDA review time since PDUFA, overall time that a drug spends under an IND has increased over time:
+
+![](/media/2017/01/fda_ind_time.png)
+
+*[Code to produce this plot](/media/2017/01/fda_efficiency.R). Data from [Food and Drug Law 4th Ed.](http://a.co/2SDYPhS) p. 750.*
+
+### Miscellanea
+
+An FDA regulation, 21 C.F.R. 56.103(a), defines what an Institutional Review Board (IRB) is, and that any clinical trial performed under an IND has to be reviewed and approved by one, with all participants giving informed consent. There are very rare, specific exceptions to the informed consent rule, including emergency situations where the patient is unconscious and in terminal condition without any alternative treatment.
+
+Historically, most clinical trials were conducted in middle-aged white men. Over the past 20 years, Congress and FDA have specifically enacted measures to require drugs to be tested in children, and there is now an exepctation of inclusion of women, elderly people, and people of other races in trials, with the statement that "Patients in clinical trials should, in general, reflect the population that will receive the drug when it is marketed" (58 FR 39410). There is one drug, [BiDil&reg;](https://www.bidil.com/), approved and labeled *only* for African-Americans.
+
+Trials increasingly have Data Monitoring Committees.
+
+Trials can be conducted overseas and as long as study design and execution are consistent with its standards, FDA will view the data as being equivalent to a U.S. trial.
+
+Since 1962, every imaginable type of investigator fraud has occurred in clinical trials, including just fabricating all of the data. Sponsors try to crack down on this by having Clinical Research Associates (CRAs) interview investigators periodically and review forms on patients, and FDA tries to crack down on this by disqualifying investigators who get caught, but no one has found a silver bullet to prevent all fraud.
+
+FDAMA in 1997 required FDA to establish a public-facing database of clinical trials, a mandate that was implemented in the form of [ClinicalTrials.gov](https://clinicaltrials.gov/). The site has been expanded and reformed over the years but continues to be heavily criticized for lack of enforcement (many trials, particularly NIH-funded ones, are not included), lack of detail (clinical trial protocols are not included), lack of results (only trials that later lead to drug approval are required to post results), and generally not being user-friendly enough.
+
+There have been efforts to harmonize the drug approval process between FDA and its European Union counterpart, the European Medicines Agency (EMA). 
+
+The "intent-to-treat" population refers to all people who were initially randomized, even if they failed to comply with the treatment regimen, didn't end up taking the drug or at least not in the dose they were supposed to, and thus could not possibly exhibit a benefit of the drug. FDA requires that the statistical analyses submitted to it for approval be based on "intent-to-treat," so non-compliance can significantly water down the observed efficacy and thus the case for approval.
+
+For antidotes or treatments for chemical toxins, biological agents, or radiation (anything from snake venom to bioterrorism), FDA can allow approval based solely on animal studies, without any human clinical trials. The rationale is that you could only study the thing by exposing people to the harmful agent in the first place, which would be unethical. (I'm not sure when/how this applies, as there certainly *are* human trials on people who've been exposed to something harmful: see [intravenous milk thistle for *Amanitas* mushroom poisoning](http://cenblog.org/terra-sigillata/2011/11/03/intravenous-milk-thistle-for-mushroom-poisoning/) and the *Ebola &Ccedil; Suffit!* study [[Henao-Restrepo 2016]]).
+
+Financial conflicts of interest (including working or consulting for pharma companies) are considered a bar to participation in an Advisory Committee, though FDA can grant waivers as long as it publicly discloses them. There have been various controversies and [reform proposals](https://www.statnews.com/2016/12/06/fda-drug-approvals-improvement/) regarding the conflict of interest policy.
+
+
+
+
+[Strom 2005]: https://www.ncbi.nlm.nih.gov/pubmed/15814874 "Strom BL. Statins and over-the-counter availability. N Engl J Med. 2005 Apr 7;352(14):1403-5. PubMed PMID: 15814874."
+
+[Tummino v. Hamburg]: http://harvardlawreview.org/2014/02/eastern-district-of-new-york-rejects-fda-limitations-on-plan-b-emergency-contraception-as-arbitrary-and-capricious-ae-tummino-v-hamburg-936-f-supp-2d-162-e-d-n-y-2013/ "Tummino v. Hamburg 936 F. Supp. 2d 162 (E.D.N.Y. 2013)"
+
+[Suntharalingam 2006]: https://www.ncbi.nlm.nih.gov/pubmed/16908486 "Suntharalingam G, Perry MR, Ward S, Brett SJ, Castello-Cortes A, Brunner MD, Panoskaltsis N. Cytokine storm in a phase 1 trial of the anti-CD28 monoclonal antibody TGN1412. N Engl J Med. 2006 Sep 7;355(10):1018-28. PubMed PMID: 16908486."
+
+[Bhatt & Mehta 2016]: https://www.ncbi.nlm.nih.gov/pubmed/27406349 "Bhatt DL, Mehta C. Adaptive Designs for Clinical Trials. N Engl J Med. 2016 Jul 7;375(1):65-74. doi: 10.1056/NEJMra1510061. Review. PubMed PMID: 27406349."
+
+[Merrill 1996]: http://dx.doi.org/10.2307/1073689 "Merrill, Richard A. The architecture of government regulation of medical products. Virginia Law Review (1996): 1753-1866."
+
+[Hutt 2007]: http://dx.doi.org/10.1002/9780470987391.ch20 "Peter Barton Hutt. Published Online: 25 OCT 2007. DOI: 10.1002/9780470987391.ch20 The Textbook of Pharmaceutical Medicine, Fifth Edition. Chapter 20. The Regulation of Drug Products by the United States Food and Drug Administration. John P Griffin BSc, PhD, MBBS, FRCP, FRCPath, FFPM1 andJohn O'Grady MD, FRCP, FFPM, FBIRA, MRCPath2"
+
+[Henao-Restrepo 2016]: https://www.ncbi.nlm.nih.gov/pubmed/28017403 "Henao-Restrepo AM, Camacho A, Longini IM, Watson CH, Edmunds WJ, Egger M, Carroll MW, Dean NE, Diatta I, Doumbia M, Draguez B, Duraffour S, Enwere G, Grais R, Gunther S, Gsell PS, Hossmann S, Watle SV, Kondé MK, Kéïta S, Kone S, Kuisma E, Levine MM, Mandal S, Mauget T, Norheim G, Riveros X, Soumah A, Trelle S, Vicari AS, Røttingen JA, Kieny MP. Efficacy and effectiveness of an rVSV-vectored vaccine in preventing Ebola virus disease: final results from the Guinea ring vaccination, open-label, cluster-randomised trial (Ebola Ça Suffit!). Lancet. 2016 Dec 23. pii: S0140-6736(16)32621-6. doi: 10.1016/S0140-6736(16)32621-6. [Epub ahead of print] PubMed PMID: 28017403."
+
+[Kennedy 1978]: https://www.ncbi.nlm.nih.gov/pubmed/621840 "Kennedy D. A calm look at 'drug lag'. JAMA. 1978 Jan 30;239(5):423-6. PubMed PMID: 621840."
+
+[Wardell 1978]: https://www.ncbi.nlm.nih.gov/pubmed/642132 "Wardell WM. A close inspection of the "calm look". Rhetorical amblyopia and selective amnesia at the Food and Drug Administration. JAMA. 1978 May 12;239(19):2004-11. PubMed PMID: 642132."
+
+[Scannell 2012]: https://www.ncbi.nlm.nih.gov/pubmed/22378269 "Scannell JW, Blanckley A, Boldon H, Warrington B. Diagnosing the decline in pharmaceutical R&D efficiency. Nat Rev Drug Discov. 2012 Mar 1;11(3):191-200. doi: 10.1038/nrd3681. Review. PubMed PMID: 22378269."
+
