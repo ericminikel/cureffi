@@ -40,7 +40,7 @@ The 1951 Durham-Humphrey Amendments added FD&C section 503(b)(1), establishing t
 
 Two of the most famous instances are FDA's rejection of OTC status for statins [[Strom 2005]] and its approval of OTC status for the Plan B emergency contraceptive, see *[Tummino v. Hamburg]* (2013). 
 
-FDA established the now-familiar "Drug Facts" label standard for OTC drugs in 1997 (62 Fed. Reg. 9024 (February 27, 1997)).
+FDA established the now-familiar "Drug Facts" label standard for OTC drugs in 1997 (62 FR 9024).
 
 ### Historical perspective on regulation of efficacy
 
@@ -128,7 +128,7 @@ Usually FDA wants to see a clinical endpoint (a measure of how a patient feels o
 
 The Prescription Drug User Fee Act (PDUFA) of 1992 established a system where drug companies pay FDA "user fees" for the review of their products to supplement appropriations from Congress. As of 2017, for instance, the price tag for a New Drug Application is [$2.04 million](http://www.raps.org/Regulatory-Focus/News/2016/08/01/25478/FDA-Unveils-User-Fee-Rates-for-FY-2017/). As of 2012, user fees made up 62% of FDA's budget, and Congressional appropriations only 38%. While creating a user fee system, Congress and FDA have also enacted various mechanisms to enhance regulatory predictability and accountability by establishing deadlines and performance requirements for FDA review of drugs, and particularly, by establishing a system of regular, defined meetings between sponsors and FDA.
 
-PDUFA is often credited with reducing wait times for FDA review. Here are FDA-published data from our textbook on how PDUFA relates to New Drug Application review times:
+PDUFA is often credited with reducing wait times for FDA review. Here are FDA-published data from our textbook on how PDUFA relates to New Drug Application review times for new molecular entities (NMEs):
 
 ![](/media/2017/01/fda_nda_pdufa.png)
 
@@ -147,7 +147,7 @@ Since 1962, after an NDA is submitted, FDA must decide whether to approve it wit
 ### Controversies
 
 Controversy has long raged over whether FDA is too fast and loose (endangering consumers by approving drugs on too little evidence), or too cautious and slow (letting patients die by failing to approve drugs quickly enough). For a look at what this debate looked like 40 years ago, see [[Kennedy 1978], [Wardell 1978]
-]. One fact that is not disputed is that "R&D efficiency", defined as new drugs approved per research & development dollar spent, has declined by orders of magnitude over recent decades [[Scannell 2012]].
+]. One fact that is not disputed is that "R&D efficiency", defined as new molecular entities (NMEs) approved per research & development dollar spent, has declined by orders of magnitude over recent decades [[Scannell 2012]].
 
 In spite of the improvements in NDA review time since PDUFA, overall time that a drug spends under an IND has increased over time:
 
@@ -173,7 +173,7 @@ There have been efforts to harmonize the drug approval process between FDA and i
 
 The "intent-to-treat" population refers to all people who were initially randomized, even if they failed to comply with the treatment regimen, didn't end up taking the drug or at least not in the dose they were supposed to, and thus could not possibly exhibit a benefit of the drug. FDA requires that the statistical analyses submitted to it for approval be based on "intent-to-treat," so non-compliance can significantly water down the observed efficacy and thus the case for approval.
 
-For antidotes or treatments for chemical toxins, biological agents, or radiation (anything from snake venom to bioterrorism), FDA can allow approval based solely on animal studies, without any human clinical trials. The rationale is that you could only study the thing by exposing people to the harmful agent in the first place, which would be unethical. (I'm not sure when/how this applies, as there certainly *are* human trials on people who've been exposed to something harmful: see [intravenous milk thistle for *Amanitas* mushroom poisoning](http://cenblog.org/terra-sigillata/2011/11/03/intravenous-milk-thistle-for-mushroom-poisoning/) and the *Ebola &Ccedil; Suffit!* study [[Henao-Restrepo 2016]]).
+For antidotes or treatments for chemical toxins, biological agents, or radiation (anything from snake venom to bioterrorism), FDA can allow approval based solely on animal studies, without any human clinical trials. The rationale is that you could only study the thing by exposing people to the harmful agent in the first place, which would be unethical. (I'm not sure when/how this applies, as there certainly *are* human trials on people who've been exposed to something harmful: see [intravenous milk thistle for *Amanitas* mushroom poisoning](http://cenblog.org/terra-sigillata/2011/11/03/intravenous-milk-thistle-for-mushroom-poisoning/) and the *Ebola &Ccedil;a Suffit!* vaccine study [[Henao-Restrepo 2016]]).
 
 Financial conflicts of interest (including working or consulting for pharma companies) are considered a bar to participation in an Advisory Committee, though FDA can grant waivers as long as it publicly discloses them. There have been various controversies and [reform proposals](https://www.statnews.com/2016/12/06/fda-drug-approvals-improvement/) regarding the conflict of interest policy.
 
