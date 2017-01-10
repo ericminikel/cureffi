@@ -160,7 +160,7 @@ Since 1962, after an NDA is submitted, FDA must decide whether to approve it wit
 ### Controversies
 
 Controversy has long raged over whether FDA is too fast and loose (endangering consumers by approving drugs on too little evidence), or too cautious and slow (letting patients die by failing to approve drugs quickly enough). For a look at what this debate looked like 40 years ago, see [[Kennedy 1978], [Wardell 1978]
-]. One fact that is not disputed is that "R&D efficiency", defined as new molecular entities (NMEs) approved per research & development dollar spent, has declined by orders of magnitude over recent decades [[Scannell 2012]].
+]. One fact that is not disputed is that "R&D efficiency", defined as [new molecular entities (NMEs) approved](http://www.fda.gov/Drugs/DevelopmentApprovalProcess/HowDrugsareDevelopedandApproved/DrugandBiologicApprovalReports/NDAandBLAApprovalReports/ucm373420.htm) per [research & development dollar spent](http://www.phrma.org/codes-and-guidelines/key-industry-and-phrma-facts), has declined by orders of magnitude over recent decades [[Scannell 2012]].
 
 In spite of the improvements in NDA review time since PDUFA, overall time that a drug spends under an IND has increased over time:
 
