@@ -85,7 +85,7 @@ Another major challenge came from the so-called buyers' clubs during the HIV/AID
 
 The FDA Modernization Act of 1997 formalized a procedure for patients to request "compassionate use" of a drug that had Investigational New Drug (IND) status but was not yet approved. (In practice, FDA usually approves such requests, but drug companies are disincentivized against providing the drug, because FDA will consider adverse events encountered in compassionate use in its review of safety, yet asymmetrically, compassionate use instances do not contribute to efficacy data - citation needed.)
 
-A recent development has been the introduction of Right To Try laws, which have [passed in 28 states and have been proposed at the federal level](https://www.statnews.com/pharmalot/2016/05/10/fda-experimental-drugs-right-to-try/).
+A recent development has been the introduction of Right To Try laws, which have [passed in 28 states and have been proposed at the federal level](https://www.statnews.com/pharmalot/2016/05/10/fda-experimental-drugs-right-to-try/). From a legal standpoint, however, these laws don't do much, as all they say is that patients have a right to *ask* companies for investigational drugs (which in fact they always had), they don't specify a right to *receive* the drugs.
 
 ### Steps in new drug development
 
