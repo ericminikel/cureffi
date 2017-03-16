@@ -128,4 +128,4 @@ summary(m)
 coxph(Surv(time=starting_age,time2=last_age,event=event,type='counting')~drug, data=nh_compare)
 ~~~
 
-Please leave a comment if you have suggestions! 
+I have [posted this question to Cross Validated](http://stats.stackexchange.com/questions/267936/how-to-compare-clinical-trial-data-to-a-natural-history-control) as well but was not allowed to include more than 2 links, hence the need for this post here. If you have an answer or suggestion, please leave a comment below and/or on the Cross Validated post. Thanks!
