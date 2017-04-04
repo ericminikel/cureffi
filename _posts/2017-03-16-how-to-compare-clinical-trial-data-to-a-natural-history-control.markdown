@@ -94,7 +94,7 @@ indiv_id|starting_age|last_age|event
 
 
 # C) hypothetical data from a retrospective natural history study
-data_b = read.table(sep='|',header=T,textConnection("
+data_c = read.table(sep='|',header=T,textConnection("
 indiv_id|age|event
 201|43|1
 202|53|1
