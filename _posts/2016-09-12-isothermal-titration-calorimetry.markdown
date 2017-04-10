@@ -64,9 +64,14 @@ Here's what my prep looked like:
 
 I added 400 &mu;L of protein to well A1, 125 &mu;L of compound to A2 and A5, and 400 &mu;L buffer to A3, A4, and A6.
 
-We ran the experiment under the standard protocol of 20 injections of 4 seconds (2 &mu;L) each, with 180 seconds between injections. It was done within 4 hours.
+The instrument's operating software is fiddly and not always intuitive, so here are a few points:
 
-Here's a fiddly but important point. When you set up your experiment, be sure to specify filenames that are unique over the first 10 characters. The instrument's operating software will let you save with any length of filename with any length constant prefix, but when you later open your data in the instrument's *analysis* software (Origin Data Analysis), it will only load datasets by the first 10 characters of their filename, and it is literally unable to hold two datasets of the same 10-character name open at the same time. If you accidentally already gave your files long repetitive names, you're not out of luck, though: you can navigate to the raw .itc text files stored on disk and rename them. The filename itself is the only record of the experiment's name.
++ Your ultimate goal is to get the Experiments tab to reflect the actual physical layout of your plate. The Sample Groups tab is simply a tool to help you populate the table on the Experiments tab. The Automation Method determines the number of wells per experiment. We use Plates Prerinse Syringe Clean, which gives 3-well experiments as I've described here.
++ In the "Data File" column of the Experiments tab, be sure to specify filenames that are unique over the first 10 characters. The instrument's operating software will let you save with any length of filename with any length constant prefix, but when you later open your data in the instrument's *analysis* software (Origin Data Analysis), it will only load datasets by the first 10 characters of their filename, and it is literally unable to hold two datasets of the same 10-character name open at the same time. If you accidentally already gave your files long repetitive names, you're not out of luck, though: you can navigate to the raw .itc text files stored on disk and rename them. The filename itself is the only record of the experiment's name.
++ The number and size of injections and other parameters are stored in an "ITC Method" on the Instrument Setup tab. The list of ITC Methods displayed here is simply a list of .inj files found in a particular directory (on our instrument, C:\\ITC200\\Setup). You can use Save As to create a new ITC Method, but save it in that same directory &mdash; if you save it in, say, a subdirectory with your name, it will *not* appear in the ITC Methods list.
++ After you fill out the Experiments tab, click "Validate" and the software will predict how much water, methanol, detergent, and waste capacity will be needed. Empty or refill bottles as appropriate. Only once this is done should you click Play.
+
+We ran the experiment under the standard protocol of 20 injections of 4 seconds (2 &mu;L) each, with 180 seconds between injections, and it was done within 4 hours.
 
 I haven't had a chance to really work on understanding the format of these .itc raw text files yet but in case anyone wants to dig in, here they are:
 
