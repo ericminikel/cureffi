@@ -115,6 +115,8 @@ In conclusion, we know that PrP mutations cause disease by a gain of function. W
 
 [Harris 2003]: https://www.ncbi.nlm.nih.gov/pubmed/14522850 "Harris DA. Trafficking, turnover and membrane topology of PrP. Br Med Bull. 2003;66:71-85. Review. PubMed PMID: 14522850."
 
+[Apetri 2004]: https://www.ncbi.nlm.nih.gov/pubmed/14761942 "Apetri AC, Surewicz K, Surewicz WK. The effect of disease-associated mutations on the folding pathway of human prion protein. J Biol Chem. 2004 Apr 23;279(17):18008-14. Epub 2004 Feb 2. PubMed PMID: 14761942."
+
 [Grasbon-Frodl 2004]: https://www.ncbi.nlm.nih.gov/pubmed/15558291 "Grasbon-Frodl E, Lorenz H, Mann U, Nitsch RM, Windl O, Kretzschmar HA. Loss of glycosylation associated with the T183A mutation in human prion disease. Acta Neuropathol. 2004 Dec;108(6):476-84. Epub 2004 Oct 26. PubMed PMID: 15558291."
 
 [Apetri 2006]: https://www.ncbi.nlm.nih.gov/pubmed/16939293/ "Apetri AC, Maki K, Roder H, Surewicz WK. Early intermediate in human prion protein folding as evidenced by ultrarapid mixing experiments. J Am Chem Soc. 2006 Sep 6;128(35):11673-8. PubMed PMID: 16939293; PubMed Central PMCID: PMC2856597."
@@ -126,6 +128,8 @@ In conclusion, we know that PrP mutations cause disease by a gain of function. W
 [Schiff 2008]: https://www.ncbi.nlm.nih.gov/pubmed/18410485 "Schiff E, Campana V, Tivodar S, Lebreton S, Gousset K, Zurzolo C. Coexpression of wild-type and mutant prion proteins alters their cellular localization and partitioning into detergent-resistant membranes. Traffic. 2008 Jul;9(7):1101-15.  doi: 10.1111/j.1600-0854.2008.00746.x. PubMed PMID: 18410485."
 
 [Jackson 2009]: http://www.ncbi.nlm.nih.gov/pubmed/19709627 "Jackson WS, Borkowski AW, Faas H, Steele AD, King OD, Watson N, Jasanoff A,Lindquist S. Spontaneous generation of prion infectivity in fatal familialinsomnia knockin mice. Neuron. 2009 Aug 27;63(4):438-50. doi:10.1016/j.neuron.2009.07.026. PubMed PMID: 19709627; PubMed Central PMCID:PMC2775465."
+
+[Hart 2009]: https://www.ncbi.nlm.nih.gov/pubmed/19321423 "Hart T, Hosszu LL, Trevitt CR, Jackson GS, Waltho JP, Collinge J, Clarke AR. Folding kinetics of the human prion protein probed by temperature jump. Proc Natl Acad Sci U S A. 2009 Apr 7;106(14):5651-6. doi: 10.1073/pnas.0811457106. Epub 2009 Mar 24. PubMed PMID: 19321423; PubMed Central PMCID: PMC2667024."
 
 [Lee 2010]: https://www.ncbi.nlm.nih.gov/pubmed/19927125/ "Lee S, Antony L, Hartmann R, Knaus KJ, Surewicz K, Surewicz WK, Yee VC. Conformational diversity in prion protein variants influences intermolecular beta-sheet formation. EMBO J. 2010 Jan 6;29(1):251-62. doi: 10.1038/emboj.2009.333. PubMed PMID: 19927125; PubMed Central PMCID: PMC2808380."
 
