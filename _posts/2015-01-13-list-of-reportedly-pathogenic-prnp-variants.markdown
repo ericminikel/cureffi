@@ -44,6 +44,7 @@ Today I set out to compile an exhaustive list of rare variants in *PRNP* which h
 | A133V | [Rowe 2007](http://www.ncbi.nlm.nih.gov/pubmed/17353478) |  |
 | Y145X | [Kitamoto 1993](http://www.ncbi.nlm.nih.gov/pubmed/8097911) |  |
 | R148H | [Krebs 2005](http://www.ncbi.nlm.nih.gov/pubmed/15776279/) | [Pastore 2005](http://www.ncbi.nlm.nih.gov/pubmed/16314483/) |
+| R156C | [Kenny 2017](https://www.ncbi.nlm.nih.gov/pubmed/28572272) | |
 | Q160X | [Finckh 2000](http://www.ncbi.nlm.nih.gov/pubmed/10631141/) | [Jayadev 2011](http://www.ncbi.nlm.nih.gov/pubmed/21416485/) |
 | Y163X | [Revesz 2009](http://www.ncbi.nlm.nih.gov/pubmed/19225789/) | [Mead 2013](http://www.ncbi.nlm.nih.gov/pubmed/24224623/) |
 | D167G | [Bishop 2009](http://www.ncbi.nlm.nih.gov/pubmed/20035629) |  |
