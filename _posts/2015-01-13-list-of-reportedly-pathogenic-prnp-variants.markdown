@@ -14,7 +14,7 @@ Today I set out to compile an exhaustive list of rare variants in *PRNP* which h
 + I compiled this list by reading two reviews [[Kong 2004], [Beck 2010]] and [OMIM #176640](http://www.omim.org/entry/176640) and by searching PubMed for new reports since 2010. After initial publication of this post, Simon Mead pointed out a few variants I had missed. Co-authors of [[Minikel 2016]] later pointed out further edits. As of the last updated date below, I think this is complete but if you know of something I missed, please leave a comment below.
 + I excluded any variants known to have an allele frequency >0.5% in at least one continental population, including 1-OPRD [[Palmer 1993]], and [G54S](http://exac.broadinstitute.org/variant/20-4680026-G-A), [M129V](http://exac.broadinstitute.org/variant/20-4680251-A-G), [G142S](http://exac.broadinstitute.org/variant/20-4680290-G-A), [N171S](http://exac.broadinstitute.org/variant/20-4680378-A-G), and [E219K](http://exac.broadinstitute.org/variant/20-4680521-G-A).
 
-**Last updated 2016-01-24, now contains 65 variants.**
+**Last updated 2017-06-06, now contains 67 variants.**
 
 | variant | first report | see also |
 | ---- | ---- | ---- |
