@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Recombinant prion protein QC"
-date:   2017-06-02 12:01:00
+date:   2017-06-07 12:01:00
 author: ericminikel
 location: Cambridge, MA
 thumb120: http://www.cureffi.org/media/2017/06/prp-qc-thumbnail.png
@@ -83,15 +83,13 @@ As you can see, the particle size estimated from the light scattering has quite 
 
 ### Coomassie gels to assess purity
 
-My colleague Emily Ricq ran a few of our different protein batches on a Coomassie gel to assess their purity. All looked at least 95% pure:
+My colleague Emily Ricq ran a few of our different protein batches on a Coomassie gel to assess their purity, for instance:
 
-+ *waiting for image from Emily*
+![](/media/2017/06/elr56_prp_coomassie.png)
 
-The one peculiarity she noted was that PrP19 (the high concentration HuPrP90-231 mentioned above) had about 10% apparent dimer content, after boiling in SDS. She hypothesized these were intermolecular disulfide dimers formed during the boiling in SDS for the gel, and sure enough, when she alkylated the protein with iodoacetamide prior to boiling, the dimers went away:
+All were the expected molecular weight (~22 kDa for full-length and ~16 kDa for truncated) and no other bands were really visible at all, so the purity is probably at least 95%.
 
-+ *waiting for image from Emily*
-
-So the conclusion, then, is that at least this one batch of protein has about 10% of the protein in a reduced state (PrP's native state is to be oxidized). A possible reason for this is that this batch was refolded at pH 8.0 and eluted in a gradient to 500 mM imidazole at pH 8.0 before being dialyzed into a pH 6.8 buffer. The pH 8.0 buffers are close enough to the cysteine side chain pKa of 8.37 ([source](http://academics.keene.edu/rblatchly/Chem220/hand/npaa/aawpka.htm)) that some of the intramolecular disulfide bonds may not have formed properly. In the future we may try eluting or even refolding at a lower pH to minimize this problem.
+One peculiarity she noted was that PrP19 (the high concentration HuPrP90-231 mentioned above) when run on a gel after boiling in SDS had about 10% apparent dimer content. She hypothesized these were intermolecular disulfide dimers formed during the boiling in SDS for the gel, and sure enough, when she alkylated the protein with iodoacetamide prior to boiling, the dimers went away. So the conclusion, then, is that at least this one batch of protein has about 10% of the protein in a reduced state (PrP's native state is to be oxidized). A possible reason for this is that this batch was refolded at pH 8.0 and eluted in a gradient to 500 mM imidazole at pH 8.0 before being dialyzed into a pH 6.8 buffer. The pH 8.0 buffers are close enough to the cysteine side chain pKa of 8.37 ([source](http://academics.keene.edu/rblatchly/Chem220/hand/npaa/aawpka.htm)) that some of the intramolecular disulfide bonds may not have formed properly. In the future we may try eluting or even refolding at a lower pH to minimize this problem.
 
 ### Positive control binders
 
