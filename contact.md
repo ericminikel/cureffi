@@ -5,7 +5,7 @@ permalink: /contact/
 header: true
 ---
 
-For media inquiries, please contact Paul Goldsmith <paulg@broadinstitute.org> or the Broad media line at 617-714-8600.
+For media inquiries, please contact the Broad Institute media line at 617-714-8600.
 
 For all other inquiries, please use the form below. I can also be reached on Twitter: [@cureffi](http://twitter.com/cureffi). Please note that I cannot respond to requests for help with the diagnosis or treatment of any disease.
 
