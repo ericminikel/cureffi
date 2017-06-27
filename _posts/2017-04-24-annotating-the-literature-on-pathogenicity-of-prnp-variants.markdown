@@ -16,7 +16,7 @@ To start to get at this problem, I recently took a deeper dive on the literature
 + **Homozygotes**. Almost all cases of genetic prion disease are in heterozygotes &mdash; people with just one mutant copy of the *PRNP* gene. But a few variants have been seen in homozygotes. For E200K, which has ample evidence for high penetrance and is found in some dense founder clusters around the world [[Lee 1999]], this isn't too surprising. But for a couple of variants that don't have evidence for high penetrance, the presence of an affected homozygote is suggestive that the variant at least confers an increased risk of prion disease. That's because these *PRNP* variants are so rare that even one affected homozygote can represent a very unlikely-by-chance deviation from Hardy-Weinberg equilibrium. Let me explain. The variants in question have allele frequencies <<0.1% in the general population (based on ExAC continental populations). A variant with, say, AF 0.1% has a het frequency of 2 in 1,000 and, under random breeding, a homozygote frequency of 1 in 1,000,000, so there are 2,000 hets out there for every 1 homozygote. Consider that 1 of the 4 known affected V203I individuals is a homozygote [[Komatsu 2014]], and 1 of 3 affected Q212P individuals is a homozygote [[Beck 2010], [Minikel 2016]]. In both cases, the homozygotes had no family history of the disease on either side of the family. Without doing any math, it's clear that these numbers are fairly unlikely to happen by chance if the variant confers no risk. Here, a likely explanation is that one mutant allele confers an elevated but still low risk, while two mutant alleles confer a higher risk. Thus, in these cases, an affected homozygote provides some evidence that a variant confers risk increased above the baseline.
 + **Case/control enrichment.** For completeness, I also noted the handful of variants for which we have evidence that the variant is [more common in cases than controls](/2016/10/19/estimation-of-penetrance/) [[Minikel 2016]], as this is evidence for increased risk or, with very strong enrichment, high penetrance.
 
-All that said, here's what I found:
+All that said, here's what I found (*last updated 2017-06-27*):
 
 | variant | evidence for high penetrance | evidence for increased risk | refs | comments |
 | ---- | ---- | ---- | ---- | ---- | 
@@ -30,7 +30,7 @@ All that said, here's what I found:
 | 6-OPRI | Mendelian segregation |  |    [Mead 2006](http://www.ncbi.nlm.nih.gov/pubmed/16923955/) | |
 | 7-OPRI | Mendelian segregation |  |    [Goldfarb 1991](http://www.ncbi.nlm.nih.gov/pubmed/1683708) | |
 | 8-OPRI | Mendelian segregation |  |    [Goldfarb 1991](http://www.ncbi.nlm.nih.gov/pubmed/1683708), [Laplanche 1999](http://www.ncbi.nlm.nih.gov/pubmed/10581230) | |
-| 9-OPRI | Mendelian segregation |  |   [Krasemann 1995](http://www.ncbi.nlm.nih.gov/pubmed/8750875) | |
+| 9-OPRI | Mendelian segregation, *de novo* |  |   [Krasemann 1995](http://www.ncbi.nlm.nih.gov/pubmed/8750875), [Sanchez-Valle 2008](https://www.ncbi.nlm.nih.gov/pubmed/18559465) | |
 | 12-OPRI | Mendelian segregation |  |   [Kumar 2011](http://www.ncbi.nlm.nih.gov/pubmed/21911696) | |
 | P84S |  |  |    [Jones 2014](http://www.ncbi.nlm.nih.gov/pubmed/24814844) |  |
 | S97N |  |  |    [Zheng 2008](http://www.ncbi.nlm.nih.gov/pubmed/18425766) |  |
@@ -46,6 +46,7 @@ All that said, here's what I found:
 | A133V |  |  |    [Rowe 2007](http://www.ncbi.nlm.nih.gov/pubmed/17353478) |  |
 | Y145X |  |  |    [Kitamoto 1993](http://www.ncbi.nlm.nih.gov/pubmed/8097911) |  |
 | R148H |  |  |    [Krebs 2005](http://www.ncbi.nlm.nih.gov/pubmed/15776279/) | |
+| R156C |  |  | [Kenny 2017](https://www.ncbi.nlm.nih.gov/pubmed/28572272) | |
 | Q160X | Mendelian segregation |  |    [Fong & Rojas 2016](https://www.ncbi.nlm.nih.gov/pubmed/27716661) | |
 | Y163X | Mendelian segregation |  |    [Mead 2013](http://www.ncbi.nlm.nih.gov/pubmed/24224623/) | |
 | D167G |  |  |    [Bishop 2009](http://www.ncbi.nlm.nih.gov/pubmed/20035629) |  |
