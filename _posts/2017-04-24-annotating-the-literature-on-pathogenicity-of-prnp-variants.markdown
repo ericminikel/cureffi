@@ -64,7 +64,7 @@ All that said, here's what I found (*last updated 2017-08-23*):
 | K194E |  |  |   [Takada 2017](https://www.ncbi.nlm.nih.gov/pubmed/27943639) | |
 | E196A |  |  |    [Zhang 2014](http://www.ncbi.nlm.nih.gov/pubmed/23787189) |  |
 | E196K | Mendelian segregation |  |   [Peoc'h 2000](http://www.ncbi.nlm.nih.gov/pubmed/10790216) | only proband genotyped |
-| F198S | Mendelian segregation |  |    [Hsiao 1992](http://www.ncbi.nlm.nih.gov/pubmed/1363810) |
+| F198S | Mendelian segregation |  |   [Dlouhy 1992](https://www.ncbi.nlm.nih.gov/pubmed/1363809), [Hsiao 1992](http://www.ncbi.nlm.nih.gov/pubmed/1363810) |
 | F198V |  |  |    [Zheng 2008](http://www.ncbi.nlm.nih.gov/pubmed/18425766) |  |
 | E200G |  |  |    [Kim 2013](http://www.ncbi.nlm.nih.gov/pubmed/24330864) |  |
 | E200K | Mendelian segregation |  homozygote, case/control enrichment |   [Hsiao 1991](http://www.ncbi.nlm.nih.gov/pubmed/2008182) |
