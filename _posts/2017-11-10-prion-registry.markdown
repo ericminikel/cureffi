@@ -10,7 +10,7 @@ summary200: "Introducing PrionRegistry.org: an online registry for people who wa
 
 ![](/media/2017/11/signing-up-for-prion-registry.png)
 
-We're proud to announce the launch of [Prion Registry](https://prionregistry.org/), an online registry for people who want to participate in research on prion disease. This includes everyone: symptomatic patients, people who are healthy but at risk, and people who don't have any particular risk but just want to volunteer for research. Sonia has explained the motivation and goals of the registry in detail in a [blog post](http://www.prionalliance.org/2017/11/07/online-research-participant-registry-launched/), but here is a quick rundown for CureFFI.org readers.
+We're proud to announce the launch of [Prion Registry](https://prionregistry.org/), an online registry for people who want to participate in research on prion disease. This includes everyone: symptomatic patients, people who are healthy but at risk, and people who don't have any particular risk but just want to volunteer for research. Sonia has explained the motivation and goals of the registry in detail in a [blog post](http://www.prionalliance.org/2017/11/10/online-research-participant-registry-launched/), but here is a quick rundown for CureFFI.org readers.
 
 ### Why do we need an online registry?
 
