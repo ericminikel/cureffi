@@ -4,6 +4,10 @@ title: Javascript widgets to generate PubMed markdown citations
 permalink: /tools/pubmed-markdown-citations/
 ---
 
+*Update 2017-11-30*: Updates to Chrome in June 2017 broke this code by making alert text non-selectable. I've filed [a bug report](https://bugs.chromium.org/p/chromium/issues/detail?id=729881#). Until if/when Google fixes this, I am now using [this python script](https://github.com/ericminikel/citedown) instead.
+
+<hr>
+
 This blog is written in [redcarpet markdown](https://github.com/vmg/redcarpet) and I cite papers in PubMed *a lot*. I wanted a quick way to convert a PubMed link into a citation that I could paste into my posts. This is the best I've figured out so far - it takes a few steps and it's not perfect.
 
 For starters, make sure your bookmarks bar is showing. In Chrome:
