@@ -58,7 +58,7 @@ So you see, there's actually an error in the first sentence at top. When I said 
 
 ![](/media/2016/06/prion_strains.png)
 
-Prion strains have defined operationally by a range of features: differences in incubation times, transmission properties to different species, neuropathological profiles and attendant symptomatic presentations, protease sensitivities and cleavage sites, and sensitivity to inhibition by small molecules. But at the root of all of these phenotypic differences, we believe that what prion strains *are* is different conformations of PrP<sup>Sc</sup>.
+Prion strains have been defined operationally by a range of features: differences in incubation times, transmission properties to different species, neuropathological profiles and attendant symptomatic presentations, protease sensitivities and cleavage sites, and sensitivity to inhibition by small molecules. But at the root of all of these phenotypic differences, we believe that what prion strains *are* is different conformations of PrP<sup>Sc</sup>.
 
 How do we know? We still don't know the structure, at atomic resolution, of any prion strain. But there is ample indirect evidence that strains differ in conformation. Here are three of the most classic demonstrations of it:
 
