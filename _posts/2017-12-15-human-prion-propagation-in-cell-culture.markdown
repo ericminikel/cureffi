@@ -5,7 +5,7 @@ date:   2017-12-15 12:01:00
 author: ericminikel
 location: Cambridge, MA
 thumb120: http://www.cureffi.org/media/2017/12/imr32-thumbnail.png
-summary200: "Human prions have been successfully propagated in cell culture. But it's not yet scalable enough for drug screening."
+summary200: "Human prions have been successfully propagated in cell culture. The key: moving away from immortalized cell lines."
 ---
 
 It's time to talk again about cell culture systems as tools for prion disease research. I blogged a ["brief history"](/2013/12/10/a-brief-history-of-prion-propagation-in-cell-culture/) of this topic four years ago, which remains a decent read on the subject, but I missed a few interesting lines of research, and some interesting new developments have happened since 2013.
