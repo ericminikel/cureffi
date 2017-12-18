@@ -63,7 +63,7 @@ Here's a table summarizing everything I described above:
 
 | variant | allele frequency | acquired | sporadic | genetic |
 | ---- | ---- | ---- | ---- | ---- |
-| M129V | ~30% worldwide | Nearly complete protection from vCJD and kuru but increased risk of HGH CJD. | Heterozygotes have ~&#x02153; the risk of homozygotes | No known effect for most mutations. Later onset for 6-OPRI mutation. |
+| M129V | ~30% worldwide | Nearly complete protection from vCJD and kuru but increased risk of HGH CJD. | Heterozygotes have ~1/3 the risk of either homozygous genotype. | No known effect for most mutations. Later onset for 6-OPRI mutation. |
 | E219K | ~6% in Japan | No effect. | ~20-fold reduced risk in heterozygotes. Homozygous effect unknown. | Not clear. |
 | G127V | ~1% in Papua New Guinea | Nearly complete protection from kuru. | Evidence for protection from mouse study, but no human data. | No data. |
 
