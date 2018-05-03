@@ -14,7 +14,7 @@ Today I set out to compile an exhaustive list of rare variants in *PRNP* which h
 + I compiled this list by reading two reviews [[Kong 2004], [Beck 2010]] and [OMIM #176640](http://www.omim.org/entry/176640) and by searching PubMed for new reports since 2010. After initial publication of this post, Simon Mead pointed out a few variants I had missed. Co-authors of [[Minikel 2016]] later pointed out further edits. As of the last updated date below, I think this is complete but if you know of something I missed, please leave a comment below.
 + I excluded any variants known to have an allele frequency >0.5% in at least one continental population, including 1-OPRD [[Palmer 1993]], and [G54S](http://exac.broadinstitute.org/variant/20-4680026-G-A), [M129V](http://exac.broadinstitute.org/variant/20-4680251-A-G), [G142S](http://exac.broadinstitute.org/variant/20-4680290-G-A), [N171S](http://exac.broadinstitute.org/variant/20-4680378-A-G), and [E219K](http://exac.broadinstitute.org/variant/20-4680521-G-A).
 
-**Last updated 2017-06-06, now contains 67 variants.**
+**Last updated 2018-05-03, now contains 68 variants.**
 
 | variant | first report | see also |
 | ---- | ---- | ---- |
@@ -46,9 +46,10 @@ Today I set out to compile an exhaustive list of rare variants in *PRNP* which h
 | R148H | [Krebs 2005](http://www.ncbi.nlm.nih.gov/pubmed/15776279/) | [Pastore 2005](http://www.ncbi.nlm.nih.gov/pubmed/16314483/) |
 | R156C | [Kenny 2017](https://www.ncbi.nlm.nih.gov/pubmed/28572272) | |
 | Q160X | [Finckh 2000](http://www.ncbi.nlm.nih.gov/pubmed/10631141/) | [Jayadev 2011](http://www.ncbi.nlm.nih.gov/pubmed/21416485/) |
-| Y163X | [Revesz 2009](http://www.ncbi.nlm.nih.gov/pubmed/19225789/) | [Mead 2013](http://www.ncbi.nlm.nih.gov/pubmed/24224623/) |
+| Y163X | [Revesz 2009](http://www.ncbi.nlm.nih.gov/pubmed/19225789/), [Capellari 2018](https://doi.org/10.1002/acn3.568) | [Mead 2013](http://www.ncbi.nlm.nih.gov/pubmed/24224623/) |
 | D167G | [Bishop 2009](http://www.ncbi.nlm.nih.gov/pubmed/20035629) |  |
 | D167N | [Beck 2010](http://www.ncbi.nlm.nih.gov/pubmed/20583301) |  |
+| Y169X | [Capellari 2018](https://doi.org/10.1002/acn3.568) |  |
 | V176G | [Simpson 2013](http://www.ncbi.nlm.nih.gov/pubmed/23857164) |  |
 | D178Efs25X | [Mastuzono 2013](http://www.ncbi.nlm.nih.gov/pubmed/23577609) |  |
 | D178N | [Goldfarb 1991](http://www.ncbi.nlm.nih.gov/pubmed/1671440) | [Medori 1992](http://www.ncbi.nlm.nih.gov/pubmed/1346338), [Goldfarb 1992](http://www.ncbi.nlm.nih.gov/pubmed/1439789) |
