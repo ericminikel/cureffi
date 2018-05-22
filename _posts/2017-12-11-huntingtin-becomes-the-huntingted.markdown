@@ -32,7 +32,15 @@ The huntingtin ASO, like nusinersen, was dosed intrathecally, through a lumbar p
 
 We'll look forward to hearing the full details about this trial hopefully sometime next year. But today's news is one step forward toward the idea that for brain diseases caused by a misbehaving protein, it is possible to design a drug to lower the amount of that protein in the brain. To me, that's a great cause for hope.
 
+<hr>
 
+*Update 2018-05-22*
+
+The underlying data were finally announced in a [press release](http://ir.ionispharma.com/news-releases/news-release-details/ionis-htt-rx-rg6042-top-line-data-demonstrate-significant) and [at a conference](https://twitter.com/HDBuzzFeed/status/969377991351390208) in March. At the two highest doses, the ASO lowered mutant huntingtin by 40% in CSF. And the drug was safe: among the 46 people enrolled in the trial, there were no serious adverse events.
+
+This is incredibly exciting news, but it's also important to remember that this doesn't yet prove that the drug is clinically effectve. The results from animal models suggest that 40% reduction in mutant huntingtin should be beneficial [[Kordasiewicz 2012]], but it is still conceivable that in humans, 40% might prove to be too little knockdown, or even that it might prove to be too much knockdown (because it's essential to have some huntingtin around). To figure out whether the drug is effective at slowing progression or improving symptoms of HD, the expectation is that next there will be a pivotal trial in a larger number of HD patients. We're still awaiting details of what that trial will consist of.
+
+For more perspective on what the results mean, see HDBuzz's [post on the conference announcement](https://en.hdbuzz.net/255) and [Q&A about the press release and next steps](https://en.hdbuzz.net/258).
 
 
 [Wu 2004]: https://www.ncbi.nlm.nih.gov/pubmed/14960586/ "Wu H, Lima WF, Zhang H, Fan A, Sun H, Crooke ST. Determination of the role of the human RNase H1 in the pharmacology of DNA-like antisense drugs. J Biol Chem. 2004 Apr 23;279(17):17181-9. Epub 2004 Feb 11. PubMed PMID: 14960586."
