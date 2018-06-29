@@ -8,7 +8,7 @@ thumb120: http://www.cureffi.org/media/2015/10/prnp-mrna-thumbnail.png
 summary200: "If you want to find a compound to reduce PrP expression without affecting a lot of other proteins, what could possibly be its mechansim of action?"
 ---
 
-In [a recent post](/2015/09/22/small-molecules-to-alter-one-proteins-expression) I discussed proofs of principle for using small molecules to target one protein's expression level. One take-home from that post is that if you want to target your protein of interest with any specificity, it is useful to find something unique about that protein, or its transcript or gene. Accordingly, this post will review what is known about PrP's journey from the genome to the ribosome, and whether there might be any opportunities for specific intervention along the way.
+In [a recent post](/2015/09/23/small-molecules-to-reduce-one-proteins-expression) I discussed proofs of principle for using small molecules to target one protein's expression level. One take-home from that post is that if you want to target your protein of interest with any specificity, it is useful to find something unique about that protein, or its transcript or gene. Accordingly, this post will review what is known about PrP's journey from the genome to the ribosome, and whether there might be any opportunities for specific intervention along the way.
 
 ### chromatin state
 
