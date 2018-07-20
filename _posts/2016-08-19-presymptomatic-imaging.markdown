@@ -42,6 +42,10 @@ This plot shows that the limited data available from these eight patients in fiv
 
 There is no doubt that longitudinal studies of imaging in presymptomatic people are important. At the same time, all of the evidence so far makes me wonder whether biochemical biomarkers may be able to provide a much earlier diagnosis than imaging in prion disease. Evidence from animal models is suggestive in this regard. In mice infected with ME7 prions, diffusion-weighted MRI revealed changes only at 126 days post-infection (dpi), well after the earliest behavioral symptoms (burrowing changes were apparently observed at 84 dpi) and only slightly before the beginning of terminal-stage disease (described as being at 133 dpi) [[Broom 2007]]. In contrast, in hamsters intracerebrally infected with prions by various routes, prion seeds were detectable by RT-QuIC in both brain and CSF at least as early as 30 dpi, in animals that don't develop clinical signs until 90 dpi, and die around 120 dpi [[Orru 2012]]. Because RT-QuIC is highly sensitive and specific on both CSF and nasal brushings in symptomatic prion disease patients [[Atarashi 2011], [McGuire 2012], [Orru 2014], [Orru 2015]], it will be important to determine how early before onset, if at all, prion seeds can be detected in presymptomatic people at risk for genetic prion disease.
 
+<hr>
+
+*Update: Here is one more presymptomatic imaging paper, on E200K carriers from Israel: [[Cohen 2015]]. The findings are similar to the papers reviewed above.*
+
 [Brown 1986]: http://www.ncbi.nlm.nih.gov/pubmed/3539001 "Brown P, Cathala F, Castaigne P, Gajdusek DC. Creutzfeldt-Jakob disease: clinical analysis of a consecutive series of 230 neuropathologically verified cases. Ann Neurol. 1986 Nov;20(5):597-602. PubMed PMID: 3539001."
 
 [Perani 1993]: http://www.ncbi.nlm.nih.gov/pubmed/8255458 "Perani D, Cortelli P, Lucignani G, Montagna P, Tinuper P, Gallassi R, Gambetti P, Lenzi GL, Lugaresi E, Fazio F. [18F]FDG PET in fatal familial insomnia: the functional effects of thalamic lesions. Neurology. 1993 Dec;43(12):2565-9. PubMed PMID: 8255458."
@@ -87,6 +91,8 @@ There is no doubt that longitudinal studies of imaging in presymptomatic people 
 [Orru 2014]: http://www.ncbi.nlm.nih.gov/pubmed/25099576 "Orrú CD, Bongianni M, Tonoli G, Ferrari S, Hughson AG, Groveman BR, Fiorini M, Pocchiari M, Monaco S, Caughey B, Zanusso G. A test for Creutzfeldt-Jakob disease using nasal brushings. N Engl J Med. 2014 Aug 7;371(6):519-29. doi: 10.1056/NEJMoa1315200. Erratum in: N Engl J Med. 2014 Nov 6;371(19):1852. PubMed  PMID: 25099576; PubMed Central PMCID: PMC4186748."
 
 [Orru 2015]: http://www.ncbi.nlm.nih.gov/pubmed/25604790 "Orrú CD, Groveman BR, Hughson AG, Zanusso G, Coulthart MB, Caughey B. Rapid and sensitive RT-QuIC detection of human Creutzfeldt-Jakob disease using cerebrospinal fluid. MBio. 2015 Jan 20;6(1). pii: e02451-14. doi: 10.1128/mBio.02451-14. PubMed PMID: 25604790; PubMed Central PMCID: PMC4313917."
+
+[Cohen 2015]: https://www.ncbi.nlm.nih.gov/pubmed/25522698 "Cohen OS, Chapman J, Korczyn AD, Nitsan Z, Appel S, Hoffmann C, Rosenmann H, Kahana E, Lee H. Familial Creutzfeldt-Jakob disease with the E200K mutation: longitudinal neuroimaging from asymptomatic to symptomatic CJD. J Neurol. 2015 Mar;262(3):604-13. doi: 10.1007/s00415-014-7615-1. Epub 2014 Dec 19. PubMed PMID: 25522698."
 
 [Sevigny 2016]: http://www.ncbi.nlm.nih.gov/pubmed/26885819 "Sevigny J, Suhy J, Chiao P, Chen T, Klein G, Purcell D, Oh J, Verma A, Sampat  M, Barakos J. Amyloid PET Screening for Enrichment of Early-Stage Alzheimer Disease Clinical Trials: Experience in a Phase 1b Clinical Trial. Alzheimer Dis Assoc Disord. 2016 Jan-Mar;30(1):1-7. doi: 10.1097/WAD.0000000000000144. PubMed PMID: 26885819."
 
