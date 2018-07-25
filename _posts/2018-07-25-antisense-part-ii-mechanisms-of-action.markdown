@@ -1,0 +1,229 @@
+---
+layout: post
+title:  "Antisense part II: mechanisms of action"
+date:   2018-07-25 12:01:00
+author: ericminikel
+location: Cambridge, MA
+thumb120: http://www.cureffi.org/media/2018/07/aso-moa-thumbnail.png
+summary200: "By binding a target RNA, an antisense oligonucleotide can reduce RNA abundance, change splicing, or increase or decrease translation."
+---
+
+*This post is second in a series of posts on the science of antisense oligonucleotides as therapeutics.*
+
+In my [last post in this series](/2018/07/10/antisense-part-i-the-basics/) I talked about the basics of what antisense oligonucleotides (ASOs) are, and why they seem promising as a therapeutic strategy for prion disease. This post will discuss their mechanisms of action in more detail.
+
+ASOs are designed to bind a target RNA through Watson-Crick base pairing: C-G, A-T. They can then modulate the stability, processing, or activity of that RNA through a number of different mechanisms [[Bennett 2017]]. I'll break these into four clearly defined categories of effects the ASO can have, plus a grab-bag of "Other":
+
+**1. RNA knockdown.** ASO recruits RNAse H to cleave and degrade the RNA, lowering RNA levels and thereby lowering protein levels.
+**2. Splice modulation.** ASO causes an exon to be preferentially included or excluded.
+**3. Inhibiting translation.** ASO sterically blocks translation machinery, lowering protein but not RNA levels.
+**4. Increasing translation.** ASO blocks upstream open reading frames (uORFs) or other inhibitory elements in the 5'UTR, increasing translation efficiency.
+**5. Other.** There are also a handful of other, less clearly characterized mechanisms of action which I will cover briefly.
+
+The vast majority of the ASOs in clinical trials in humans today, of which there are tens, have one of the first two effects: either RNA knockdown or splice modulation [[Bennett 2017]]. The steric block mechanism is, as far as I can tell, mostly used as a tool in zebrafish [[Bill 2009]], and the discovery that ASOs can increase translation is still pretty recent [[Liang 2016], [Liang 2017b]]. Here I will cover these four mechanisms with a bit of detail and then very briefly touch on some things in the "Other" category.
+
+What determines the mechanism of action of an ASO? It appears to be a function mainly of two variables: sequence and chemistry. The sequence determines where in the RNA the ASO will bind. The chemistry determines whether it is RNAse H-cleavable, as will be reviewed in more detail in the next post. Here, I'll go through each of these mechanisms one by one, and then at the end I'll have a table comparing them.
+
+### 1. RNA knockdown
+
+![](/media/2018/07/aso-diagram-1-rna-knockdown.png)
+
+There are a great many diseases where what you want is to lower the abundance of one specific RNA and therefore its specific protein product. This is the case for prion disease and for many other gain-of-function diseases &mdash; for just a few examples in the CNS, see Ionis's ASOs for *HTT* (Huntington's disease) [[Kordasiewicz 2012]], *SOD1* (ALS) [[Smith 2006], [Miller 2013], [Winer 2013], [McCampbell 2018]], *C9orf72* (ALS) [[Lagier-Tourenne 2013]], *MAPT* (tauopathies) [[DeVos 2017]], and *ATXN2* (spinocerebellar ataxia type 2) [[Scoles 2017]]. There are also examples where the disease is loss-of-function but you can alleviate it by knockding down a different gene in the pathway &mdash; for instance, the approved ASO drug mipomersen targets *APOB* in the liver to reduce LDL in people who are lacking *LDLR* [[Raal 2010]], and the drug volanesorsen, currently awaiting regulatory decisions from FDA and EMA, targets *APOC3* to lower triglycerides in people lacking *LPL* [[Gaudet 2014]].
+
+In all of these cases, we know that the mechanism of action is lowering of the target RNA, rather than inhibition of translation, because the ASOs were discovered through qPCR-based cellular screens. For a bit about how these screens work, see the "Strategy" section and Figure 1 of the paper on Ionis's former collaboration with the Prusiner lab on *PRNP* ASOs [[Nazor Friberg 2012]], or the associated patent [[US20110269818A1](https://patents.google.com/patent/US20110269818A1/)]. As far as I could tell from the reading I did, ASOs to lower RNA levels do not require any specific sequence motif or any specific functional location within the targeted RNA molecule, but nonetheless, finding a reasonably potent ASO is non-trivial &mdash; it cannot be predicted informatically and does require screening.
+
+How exactly do these ASOs lower their target RNA molecules? Decades ago, it was already suspected [[Uhlmann & Peyman 1990]] that the mechanism of RNA-lowering ASOs might rely on an enzyme called RNAse H, which had been found in cell-free systems to cleave RNA-DNA duplexes but not RNA-RNA duplexes [[Minshull & Hunt 1986]]. But conclusive evidence for the role of RNAse H (specifically the human enzyme RNAse H1, encoded by the gene *RNASEH1*) has come more recently. It was found that overexpression of RNAse H1 (in cell lines or in mouse liver) increased the potency of ASOs, meaning, the percent knockdown was increased for any given dose [[Wu 2004]]. Because RNAse H1 is essential [[Cerritelli 2003]], the converse experiment, of constitutively knocking out the gene, couldn't be done. But conditional knockout of RNAse H1 in the mouse liver using a Cre system was found to abolish the activity of ASOs in that tissue [[Lima 2016]]. Immunocytofluorescence studies have shown ASOs to be localized to both the cytoplasm and the nucleus [[Crooke 2017]], and it turns out that RNAse H1 is active in cleaving ASO-RNA duplexes in both of these compartments as well [[Liang 2017a]]. Thus, RNAse H-mediated ASOs can target introns as well as exonic or untranslated regions of an RNA molecule, and some act exclusively through cleavage of pre-mRNA in the nucleus &mdash; see for instance the kinetics of RNA knockdown by a *SOD1* intron-targeting oligo in Figure 6 of [[Liang 2017a]].
+
+An incredible amount of literature exists on RNAse H1, and I only managed to scrape the surface. There is a crystal structure (PDB [2QK9](https://www.rcsb.org/structure/2QK9)) of RNAse H1 bound to a DNA-RNA duplex [[Nowotny 2007]], and a lot is known about its preferred cut sites [[Wu 1999]], functional domains [[Wu 2001]], and tolerance/preference for different chemical substitutions on the ASO backbone [[Lima 2007]]. It was counterintuitive to me that RNAse H should be active in the nucleus, because isn't the nucleus full of natural DNA-RNA duplexes that arise during transcription, and how does the cell make sure these don't get cleaved at random? I didn't find a clear answer to this in any of the papers I read, but it is generally held that RNAse H1 actually has a native function involved in DNA replication. I didn't find any references with a clear delineation of its native function in the nucleus, but the embryonic lethal phenotype in mice appears to arise from a defect in mitochondrial DNA replication [[Cerritelli 2003]], and recessive hypomorphic missense mutations in humans likewise cause a disease of mitochondrial DNA replication deficiency [[Reyes 2015]]. Regardless of what RNAse H1 normally does, the evidence is clear that RNA-lowering ASOs act through RNAse H1 and are active in the nucleus.
+
+### 2. Splice modulation
+
+![](/media/2018/07/aso-diagram-2-splice-modulation.png)
+
+A number of ASOs in the clinic today are splice modulators. Nusinersen (formerly known as ISIS 396443), the approved ASO drug for spinal muscular atrophy, targets the *SMN2* pre-mRNA in order to induce exon 7 inclusion and thus increase production of a full-length SMN2 protein that can substitute for the SMN1 protein that is missing in SMA patients [[Finkel 2017]]. Eteplirsen for Duchenne muscular dystrophy [[Mendell 2013]] targets the *DMD* transcript to promote exclusion of exon 51 in the subset of Duchenne patients where this either skips over their mutation or restores the proper reading frame [[Aartsma-Rus 2009]]. Several other splice-modulating ASOs are in trials right now, mostly for various exons of *DMD* [[Bennett 2017]]. Thus, ASOs can be designed to promote either the inclusion or exclusion of an exon of interest.
+
+How does an ASO bring about a change in splicing? I took a close look at the development of nusinersen to try to understand the process. The goal was to cause *SMN2* exon 7 to be included in the mature mRNA. A study had identified a "silencer" (intronic splicing silencer N1 or ISS-N1) in intron 7, just past the end of exon 7 [[Singh 2006]]. The "silencer" was just 15 nucleotides long and it started 9 nucleotides after the end of exon 7. Deleting or mutating it dramatically increased exon 7 inclusion, and binding it with an ASO mimicked this effect [[Singh 2006]]. Ionis screened ASOs targeting different positions within exon 7 [[Hua 2007]] and then in the surrounding intronic regions [[Hua 2008]] and they were able to identify very potent ASOs targeting the silencer [[Hua 2008]]. By looking at what proteins were bound to the RNA and by doing overexpression experiments in cells, they were able to determine that the silencer was a binding site for proteins hnRNP A1 and A2, which are splice repressors (they prevent exon inclusion), and the ASOs targeting this site prevent them from binding [[Hua 2008]]. The ASOs proved effective in mouse models of SMA [[Hua 2008], [Hua 2010]] and soon went on to detailed pharmacological studies [[Rigo 2014]] and then the clinic [[Chiriboga 2016], [Finkel 2016], [Finkel 2017]].
+
+Nusinersen, then, acts by binding an intronic silencer in the pre-mRNA, and occluding a splice repressor protein from binding there. The mechanism of ASOs like eteplirsen, that promote exon exclusion, is less clear. One study found ASOs to 15 different *DMD* exons could all result in exon skipping, regardless of any obvious sequence motifs or splice site characteristics [[Aartsma-Rus 2002]]. The authors speculated that simply binding anywhere in the exon may interfere with the splice machinery [Aartsma-Rus 2003]]. There are probably a variety of other mechanisms by which an ASO could modulate splicing too. For example, one chemistry of ASO (2'-fluoro) was found to recruit the ILF2/3 protein complex, thus promoting exon exclusion [[Rigo 2012]].
+
+Regardless of exact mechanism, all of the splice-modulating ASOs I was able to read about acted locally rather than distally, meaning, they were targeted to a sequence in or near the exon of interest. Thus, finding a splice-modulating ASO involves a more constrained search space than finding an RNAse H ASO. Just as above, the method for finding them involves a qPCR screen in cultured cells, though you need primers spanning an exon junction with the exon of interest (and in the case of nusinersen they also needed a restriction enzyme digestion step to distinguish *SMN2* from *SMN1*) [[Hua 2007], [Hua 2008]]. Obviously, splice modulating ASOs can only work if they are active in the nucleus, and they can bind introns. A number of ASO backbone chemistries are resistant to RNAse H cleavage [[Bennett 2017]] and these can be used to make sure your would-be splice-modulating ASO doesn't inadvertently result in knockdown. ASO chemistries will be reviewed in greater detail in the next post in this series.
+
+### 3. Inhibiting translation
+
+![](/media/2018/07/aso-diagram-3-translation-inhibition.png)
+
+By binding a target RNA, an ASO can prevent the ribosome from translating the RNA, and thus reduce protein level without reducing RNA level. This is known as a "steric block" of translation. As far as I know, there are no approved drugs nor drug candidates in clinical trials that have this mechanism [[Bennett 2017]]. Indeed, after several Google Scholar searches, I was unable to find an example of a paper where a steric block ASO has even been used in a mouse. Instead, this mechanism seems to be used chiefly or exclusively in zebrafish, where it is a common research tool for doing gene knockdowns [[Nasevicius & Ekker 2000], [Bill 2009]]. The preferred chemistry here is a phosphorodiamidate backbone (also known as morpholino or PMO).
+
+Intrinsic to this mechanism of action is that the ASO's activity is in the cytoplasm, where translation occurs, as opposed to in the nucleus, and the ASO must target a site in the mature mRNA. Indeed, apparently most steric blocking ASOs target a sequence either in the 5'UTR just upstream of the start codon [[Faria 2001]] or within &#126;25 bases past the start codon [[Summerton 1999]]. Unlike with qPCR for RNAse H or splice modulating oligos, there is no generalizable method for empirical screening of steric blocking oligos &mdash; one would need a different protein-based quantification method for each target of interest. From what I could gather online, it seems that most researchers are not doing extensive screening of steric block ASOs &mdash; one primer suggests that "if available, the level of knockdown should be assessed using an antibody to the protein of interest" [[Bill 2009]], implying that reseachers routinely buy steric block ASOs that have been synthesized based on informatic predictions alone, and that empirical demonstration of knockdown is left as an exercise.
+
+There has been some recent controversy in the zebrafish community about how much people should or shouldn't rely on steric block ASOs as research tools [[Blum 2015], [Stainier 2015]], because one major study found that they failed to phenocopy genetic mutants across a range of different genes [[Kok 2015]]. Some current guidelines suggest that these compounds should be used less in isolation and more in conjunction with genetic tools such as CRISPR [[Stainer 2017]].
+
+### 4. Increasing translation
+
+![](/media/2018/07/aso-diagram-4-translation-increase.png)
+
+There are a great many human diseases where the therapeutic goal would be to increase protein abundance, so if ASOs targeting uORFs could achieve this, they might have broad applicability. Work on this mechanism is still nascent but two recent papers suggest a couple of ways this could be achieved.
+
+The first mechanism, involving upstream open reading frames (uORFs), is complicated and requires a bit of background. The translation rate of certain human genes can be regulated by upstream open reading frames (uORFs), as mentioned previously on this blog [here](/2015/10/21/is-there-anything-special-about-prps-expression/) and [here](/2014/11/13/biolit-09/). The mechanism is as follows. in order to properly translate an mRNA, the ribosome must associate with the canonical start codon (AUG) for the correct open reading frame. If there are other AUGs upstream of, and out-of-frame relative to, that canonical AUG, then ribosomes may initiate translation at those AUGs instead of the canonical one. This translation is not only non-productive (it doesn't translate the in-frame amino acid sequence) but also competitive (the ribosomes that are already midstream translating out-of-frame can block the association of other ribosomes to the in-frame canonical AUG). The canonical example of a gene regulated in this manner is *ATF4* [[Harding 2000], [Vattem & Wek 2004]], whose translation rate paradoxically increases at times when translation of other transcripts is suppressed in response to cell stress, thanks to reduced initiation at its uORFs. But more recent evidence has shown that a large fraction, perhaps about half, of all human genes have uORFs that affect translation efficiency [[Calvo 2009], [Barbosa 2013]]. In the recent paper on ASO targeting of uORFs [[Liang 2016]], they designed ASOs against four different genes' uORFs, and were able to achieve +30% to +150% increase in protein abundance. Funnily enough, one of the targets was *RNASEH1*, perhaps chosen because the authors had abundant experience quantifying RNAse H1 from their studies of its role in ASO activity (see above).
+
+The other mechanism, reported last year, simply goes after other translation-inhibitory elements in the 5'UTR, chiefly large stem-loop structures [[Liang 2017b]]. Some RNA molecules have particularly long 5'UTRs that fold back on themselves, forming stems and loops that somehow inhibit translation, perhaps just because there is less single-stranded RNA for translation initiation factors to bind. By targeting these inhibitory structures, the authors were able to achieve up to +170% increases in protein level, including for therapeutically relevant targets such as *LDLR*.
+
+As far as I could find, all this work is still in the early mechanistic stages &mdash; I did not find any drug candidates in preclinical or clinical development with these mechanisms.
+
+### 5. Other mechanisms
+
+There are probably many other mechanisms out there, either waiting to be discovered, or already discovered and waiting for me to read about them. But I'll just briefly mention a few things in the "other" category.
+
+One really old review I read [[Uhlmann & Peyman 1990]] claimed that inhibition of transcription was another mechanism of ASOs. But it didn't give much detail, and they only cited two examples. One was in bacteria and cited as conference talk with no paper associated; the other was of the human oncogene *MYC* but was purely based on an *in vitro* system [[Cooney 1988]]. None of the more recent reviews that I read mentioned a transcription-inhibiting mechanism, so I am guessing this idea either didn't validate *in vivo* or at least hasn't been developed further.
+
+Another set of mechanisms involves micro-RNA. micro-RNAs or miRs are naturally occurring 22-nucleotide RNA molecules that bind the 3'UTRs of mRNAs in an antisense fashion. They were first discovered in *C. elegans* [[Lee 1993], [Wightman 1993]], as reviewed in [BBS 230](/2014/11/06/biolit-08/), and are now known to be present in humans as well. miRs generally act to decrease the abundance of the protein encoded by the mRNA they target. miRs themselves act by a variety of mechanisms, including directing RNA cleavage (by Argonaute, the same protein responsible for siRNA activity), destabilizing the mRNA or reducing its translation rate [[Bartel 2009]]. It seems natural, then, that synthetic ASOs might aim to either mimic or block the activity of natural miRs, and indeed, ASOs have been developed to do both of these things. To my knowledge there are no approved drugs, but one drug candidate in clinical trials, miravirsen, is directed against human miR-122 and is being tested against hepatitis C [[van der Ree 2016]]. For some *in vivo* data, see the ASO against miR-33 for atherosclerosis [[Rotllan 2013]]. Yet another ASO, MRDX34, is not an antagonist but rather a mimetic of miR-34a and is being tested in cancer [[Beg 2017]]. I didn't find a ton of papers on the mechanism of these ASOs, but it may not always be as simple as the ASO acting as, or binding, the miR. One study found that miravirsen not only binds miR-122, it also binds its precursor (pri-miR-122) and prevents its processing by Drosha (the enzyme that cuts a miR out of a longer RNA sequence), thus reducing the amount of miR-122 [[Gebert 2014]].
+
+Many reviews of ASOs include short interfering RNAs (siRNA), since after all, siRNAs are also strings of nucleotides designed to be reverse complement to a gene of interest, and thus qualify as antisense oligonucleotides. I'm mostly excluding siRNA from this and other posts in this series, but for completeness I will briefly mention them here. Like many ASOs, siRNAs result in RNA knockdown, but they do so via a different mechanism independent of RNAse H, instead relying on the complexes Dicer, RISC, and Argonaute [[Corey 2007], [Davidson & McCray 2011]]. Many siRNA drugs are in clinical trials and one, the peripherally delivered patisiran targeting *TTR* to treat hereditary transthyretin amyloidosis, appears to be close to approval [[Morrison 2018]].
+
+Because I'm focusing in this blog post on *antisense* oligonucleotides, meaning, those designed to be reverse-complementary to a targeted gene, I haven't touched on aptameric mechanisms of action, meaning, things that oligonucleotides can do by directly binding proteins rather than by binding RNA in a sequence-dependent manner. But there is at least one approved drug that is an oligonucleotide with an aptameric mechanism &mdash; [pegatinib](https://www.drugbank.ca/drugs/DB04895), approved for macular degeneration, is a PEG-conjugated 28-mer oligonucleotide that binds and blocks the activity of VEGF. And it's worth also mentioning that multiple studies have found that phosphorothioate oligonucleotides (PS oligos), the backbone chemistry often used in ASOs, bind PrP in a sequence-independent manner and can reduce prion load in cell culture [[Kocisko 2006], [Karpuj 2007], [Nazor Friberg 2012]]. The Prusiner lab argued that this "complicates any interpretation" of their ASO studies in prion-infected mice [[Nazor Friberg 2012]], because they were uncertain whether RNAse H-mediated PrP knockdown, or an aptameric mechanism, mediated the *in vivo* benefit they observed. We will address this question in future publications on ASOs for prion disease.
+
+Finally, there are lots of other cool things ASOs can do, but as far as I can tell, most ultimately boil down to one of the above-listed mechanisms. For example, an ASO developed for Angelman syndrome upregulates *UBE3A* RNA, but it does so by targeting the long non-coding RNA (lncRNA) that suppresses *UBE3A*, using a conventional RNAse H mechanism [[Meng 2015]].
+
+### Comparison
+
+Here is a table comparing some key attributes of the above mechanisms of action.
+
+| effect | target | screening strategy | MoA |
+| ---- | ---- | ---- | ---- |
+| RNA knockdown | pre-mRNA; can be introns, exons, or UTRs | qPCR screen for RNA abundance | RNAse H1 cleavage |
+| splice modulation | pre-mRNA; can be specific splice enhancers or silencers, or just exons | qPCR screen with primers spanning exon junction | splice enhancers/suppressors such as hnRNP A1/A2, or possibly steric block of splice machinery |
+| inhibiting translation | 5'UTR or first ~25 bases after start codon | none generalizable; requires protein quantification assay | steric block of translation machinery |
+| increasing translation | 5'UTR stem-loops or uORFs | none generalizable; requires protein quantification assay | disrupts inhibitory secondary structures in RNA, or inhibitory uORFs |
+
+As the table makes clear, different mechanisms can be achieved by targeting different sites within the RNA molecule to achieve different specific functions. In addition, different chemistries of ASO may permit one mechanism and prohibit another, for example, some chemistries are not RNAse H-cleavable. My next post in this series will review the different chemistries of ASOs.
+
+
+[Minshull & Hunt 1986]: https://www.ncbi.nlm.nih.gov/pubmed/3018671 "Minshull J, Hunt T. The use of single-stranded DNA and RNase H to promote quantitative 'hybrid arrest of translation' of mRNA/DNA hybrids in reticulocyte lysate cell-free translations. Nucleic Acids Res. 1986 Aug 26;14(16):6433-51. PubMed PMID: 3018671; PubMed Central PMCID: PMC311656."
+
+[Cooney 1988]: https://www.ncbi.nlm.nih.gov/pubmed/3293213 "Cooney M, Czernuszewicz G, Postel EH, Flint SJ, Hogan ME. Site-specific oligonucleotide binding represses transcription of the human c-myc gene in vitro. Science. 1988 Jul 22;241(4864):456-9. PubMed PMID: 3293213."
+
+[Uhlmann & Peyman 1990]: https://dx.doi.org/10.1021/cr00102a001 "Eugen Uhlmann, and Anusch Peyman. Antisense oligonucleotides: a new therapeutic principle. Chem. Rev., 1990, 90 (4), pp 543–584 DOI: 10.1021/cr00102a001 Publication Date: June 1990"
+
+[Lee 1993]: https://www.ncbi.nlm.nih.gov/pubmed/8252621 "Lee RC, Feinbaum RL, Ambros V. The C. elegans heterochronic gene lin-4 encodes small RNAs with antisense complementarity to lin-14. Cell. 1993 Dec 3;75(5):843-54. PubMed PMID: 8252621."
+
+[Wightman 1993]: https://www.ncbi.nlm.nih.gov/pubmed/8252622 "Wightman B, Ha I, Ruvkun G. Posttranscriptional regulation of the heterochronic gene lin-14 by lin-4 mediates temporal pattern formation in C. elegans. Cell. 1993 Dec 3;75(5):855-62. PubMed PMID: 8252622."
+
+[Summerton 1999]: https://www.ncbi.nlm.nih.gov/pubmed/10807004/ "Summerton J. Morpholino antisense oligomers: the case for an RNase H-independent structural type. Biochim Biophys Acta. 1999 Dec 10;1489(1):141-58.  Review. PubMed PMID: 10807004."
+
+[Wu 1999]: https://www.ncbi.nlm.nih.gov/pubmed/10497183 "Wu H, Lima WF, Crooke ST. Properties of cloned and expressed human RNase H1. J Biol Chem. 1999 Oct 1;274(40):28270-8. PubMed PMID: 10497183."
+
+[Harding 2000]: https://www.ncbi.nlm.nih.gov/pubmed/11106749/ "Harding HP, Novoa I, Zhang Y, Zeng H, Wek R, Schapira M, Ron D. Regulated translation initiation controls stress-induced gene expression in mammalian cells. Mol Cell. 2000 Nov;6(5):1099-108. PubMed PMID: 11106749."
+
+[Nasevicius & Ekker 2000]: https://www.ncbi.nlm.nih.gov/pubmed/11017081/ "Nasevicius A, Ekker SC. Effective targeted gene 'knockdown' in zebrafish. Nat  Genet. 2000 Oct;26(2):216-20. PubMed PMID: 11017081."
+
+[Wu 2001]: https://www.ncbi.nlm.nih.gov/pubmed/11319219 "Wu H, Lima WF, Crooke ST. Investigating the structure of human RNase H1 by site-directed mutagenesis. J Biol Chem. 2001 Jun 29;276(26):23547-53. Epub 2001 Apr 23. PubMed PMID: 11319219."
+
+[Faria 2001]: https://www.ncbi.nlm.nih.gov/pubmed/11135550/ "Faria M, Spiller DG, Dubertret C, Nelson JS, White MR, Scherman D, Hélène C, Giovannangeli C. Phosphoramidate oligonucleotides as potent antisense molecules in cells and in vivo. Nat Biotechnol. 2001 Jan;19(1):40-4. PubMed PMID: 11135550."
+
+[Aartsma-Rus 2002]: https://www.ncbi.nlm.nih.gov/pubmed/12206800 "Aartsma-Rus A, Bremmer-Bout M, Janson AA, den Dunnen JT, van Ommen GJ, van Deutekom JC. Targeted exon skipping as a potential gene correction therapy for Duchenne muscular dystrophy. Neuromuscul Disord. 2002 Oct;12 Suppl 1:S71-7. PubMed PMID: 12206800."
+
+[Cerritelli 2003]: https://www.ncbi.nlm.nih.gov/pubmed/12667461 "Cerritelli SM, Frolova EG, Feng C, Grinberg A, Love PE, Crouch RJ. Failure to  produce mitochondrial DNA results in embryonic lethality in Rnaseh1 null mice. Mol Cell. 2003 Mar;11(3):807-15. PubMed PMID: 12667461."
+
+[Aartsma-Rus 2003]: https://www.ncbi.nlm.nih.gov/pubmed/12668614 "Aartsma-Rus A, Janson AA, Kaman WE, Bremmer-Bout M, den Dunnen JT, Baas F, van Ommen GJ, van Deutekom JC. Therapeutic antisense-induced exon skipping in cultured muscle cells from six different DMD patients. Hum Mol Genet. 2003 Apr 15;12(8):907-14. PubMed PMID: 12668614."
+
+[Wu 2004]: https://www.ncbi.nlm.nih.gov/pubmed/14960586 "Wu H, Lima WF, Zhang H, Fan A, Sun H, Crooke ST. Determination of the role of  the human RNase H1 in the pharmacology of DNA-like antisense drugs. J Biol Chem.  2004 Apr 23;279(17):17181-9. Epub 2004 Feb 11. PubMed PMID: 14960586."
+
+[Vattem & Wek 2004]: https://www.ncbi.nlm.nih.gov/pubmed/15277680/ "Vattem KM, Wek RC. Reinitiation involving upstream ORFs regulates ATF4 mRNA translation in mammalian cells. Proc Natl Acad Sci U S A. 2004 Aug 3;101(31):11269-74. Epub 2004 Jul 26. PubMed PMID: 15277680; PubMed Central PMCID: PMC509193."
+
+[Smith 2006]: https://www.ncbi.nlm.nih.gov/pubmed/16878173 "Smith RA, Miller TM, Yamanaka K, Monia BP, Condon TP, Hung G, Lobsiger CS, Ward CM, McAlonis-Downes M, Wei H, Wancewicz EV, Bennett CF, Cleveland DW. Antisense oligonucleotide therapy for neurodegenerative disease. J Clin Invest. 2006 Aug;116(8):2290-6. Epub 2006 Jul 27. PubMed PMID: 16878173; PubMed Central PMCID: PMC1518790."
+
+[Singh 2006]: https://www.ncbi.nlm.nih.gov/pubmed/16449646 "Singh NK, Singh NN, Androphy EJ, Singh RN. Splicing of a critical exon of human Survival Motor Neuron is regulated by a unique silencer element located in  the last intron. Mol Cell Biol. 2006 Feb;26(4):1333-46. PubMed PMID: 16449646; PubMed Central PMCID: PMC1367187."
+
+[Kocisko 2006]: https://www.ncbi.nlm.nih.gov/pubmed/16495266/ "Kocisko DA, Vaillant A, Lee KS, Arnold KM, Bertholet N, Race RE, Olsen EA, Juteau JM, Caughey B. Potent antiscrapie activities of degenerate phosphorothioate oligonucleotides. Antimicrob Agents Chemother. 2006 Mar;50(3):1034-44. PubMed PMID: 16495266; PubMed Central PMCID: PMC1426446."
+
+[Karpuj 2007]: https://www.ncbi.nlm.nih.gov/pubmed/17592554/ "Karpuj MV, Giles K, Gelibter-Niv S, Scott MR, Lingappa VR, Szoka FC, Peretz D, Denetclaw W, Prusiner SB. Phosphorothioate oligonucleotides reduce PrP levels and prion infectivity in cultured cells. Mol Med. 2007 Mar-Apr;13(3-4):190-8. PubMed PMID: 17592554; PubMed Central PMCID: PMC1892763."
+
+[Hua 2007]: https://www.ncbi.nlm.nih.gov/pubmed/17355180/ "Hua Y, Vickers TA, Baker BF, Bennett CF, Krainer AR. Enhancement of SMN2 exon  7 inclusion by antisense oligonucleotides targeting the exon. PLoS Biol. 2007 Apr;5(4):e73. PubMed PMID: 17355180; PubMed Central PMCID: PMC1820610."
+
+[Lima 2007]: https://www.ncbi.nlm.nih.gov/pubmed/17028158 "Lima WF, Rose JB, Nichols JG, Wu H, Migawa MT, Wyrzykiewicz TK, Siwkowski AM,  Crooke ST. Human RNase H1 discriminates between subtle variations in the structure of the heteroduplex substrate. Mol Pharmacol. 2007 Jan;71(1):83-91. Epub 2006 Oct 6. PubMed PMID: 17028158."
+
+[Nowotny 2007]: https://www.ncbi.nlm.nih.gov/pubmed/17964265 "Nowotny M, Gaidamakov SA, Ghirlando R, Cerritelli SM, Crouch RJ, Yang W. Structure of human RNase H1 complexed with an RNA/DNA hybrid: insight into HIV reverse transcription. Mol Cell. 2007 Oct 26;28(2):264-76. Erratum in: Mol Cell.  2007 Nov 9;28(3):513. PubMed PMID: 17964265."
+
+[Corey 2007]: https://www.ncbi.nlm.nih.gov/pubmed/18060019/ "Corey DR. Chemical modification: the key to clinical application of RNA interference? J Clin Invest. 2007 Dec;117(12):3615-22. Review. PubMed PMID: 18060019; PubMed Central PMCID: PMC2096450."
+
+[Hua 2008]: https://www.ncbi.nlm.nih.gov/pubmed/18371932 "Hua Y, Vickers TA, Okunola HL, Bennett CF, Krainer AR. Antisense masking of an hnRNP A1/A2 intronic splicing silencer corrects SMN2 splicing in transgenic mice. Am J Hum Genet. 2008 Apr;82(4):834-48. doi: 10.1016/j.ajhg.2008.01.014. Epub 2008 Mar 27. PubMed PMID: 18371932; PubMed Central PMCID: PMC2427210."
+
+[Bill 2009]: https://www.ncbi.nlm.nih.gov/pubmed/19374550/ "Bill BR, Petzold AM, Clark KJ, Schimmenti LA, Ekker SC. A primer for morpholino use in zebrafish. Zebrafish. 2009 Mar;6(1):69-77. doi: 10.1089/zeb.2008.0555. Review. PubMed PMID: 19374550; PubMed Central PMCID: PMC2776066."
+
+[Bartel 2009]: https://www.ncbi.nlm.nih.gov/pubmed/19167326 "Bartel DP. MicroRNAs: target recognition and regulatory functions. Cell. 2009  Jan 23;136(2):215-33. doi: 10.1016/j.cell.2009.01.002. Review. PubMed PMID: 19167326; PubMed Central PMCID: PMC3794896."
+
+[Aartsma-Rus 2009]: https://www.ncbi.nlm.nih.gov/pubmed/19156838 "Aartsma-Rus A, Fokkema I, Verschuuren J, Ginjaar I, van Deutekom J, van Ommen  GJ, den Dunnen JT. Theoretic applicability of antisense-mediated exon skipping for Duchenne muscular dystrophy mutations. Hum Mutat. 2009 Mar;30(3):293-9. doi:  10.1002/humu.20918. Review. PubMed PMID: 19156838."
+
+[Calvo 2009]: https://www.ncbi.nlm.nih.gov/pubmed/19372376 "Calvo SE, Pagliarini DJ, Mootha VK. Upstream open reading frames cause widespread reduction of protein expression and are polymorphic among humans. Proc Natl Acad Sci U S A. 2009 May 5;106(18):7507-12. doi: 10.1073/pnas.0810916106. Epub 2009 Apr 16. PubMed PMID: 19372376; PubMed Central PMCID: PMC2669787."
+
+[Hua 2010]: https://www.ncbi.nlm.nih.gov/pubmed/20624852 "Hua Y, Sahashi K, Hung G, Rigo F, Passini MA, Bennett CF, Krainer AR. Antisense correction of SMN2 splicing in the CNS rescues necrosis in a type III SMA mouse model. Genes Dev. 2010 Aug 1;24(15):1634-44. doi: 10.1101/gad.1941310.  Epub 2010 Jul 12. PubMed PMID: 20624852; PubMed Central PMCID: PMC2912561."
+
+[Raal 2010]: https://www.ncbi.nlm.nih.gov/pubmed/20227758 "Raal FJ, Santos RD, Blom DJ, Marais AD, Charng MJ, Cromwell WC, Lachmann RH, Gaudet D, Tan JL, Chasan-Taber S, Tribble DL, Flaim JD, Crooke ST. Mipomersen, an apolipoprotein B synthesis inhibitor, for lowering of LDL cholesterol concentrations in patients with homozygous familial hypercholesterolaemia: a randomised, double-blind, placebo-controlled trial. Lancet. 2010 Mar 20;375(9719):998-1006. doi: 10.1016/S0140-6736(10)60284-X. PubMed PMID: 20227758."
+
+[Davidson & McCray 2011]: https://www.ncbi.nlm.nih.gov/pubmed/21499294/ "Davidson BL, McCray PB Jr. Current prospects for RNA interference-based therapies. Nat Rev Genet. 2011 May;12(5):329-40. doi: 10.1038/nrg2968. Review. PubMed PMID: 21499294."
+
+[Kordasiewicz 2012]: https://www.ncbi.nlm.nih.gov/pubmed/22726834 "Kordasiewicz HB, Stanek LM, Wancewicz EV, Mazur C, McAlonis MM, Pytel KA, Artates JW, Weiss A, Cheng SH, Shihabuddin LS, Hung G, Bennett CF, Cleveland DW.  Sustained therapeutic reversal of Huntington's disease by transient repression of huntingtin synthesis. Neuron. 2012 Jun 21;74(6):1031-44. doi: 10.1016/j.neuron.2012.05.009. PubMed PMID: 22726834; PubMed Central PMCID: PMC3383626."
+
+[Rigo 2012]: https://www.ncbi.nlm.nih.gov/pubmed/22504300 "Rigo F, Hua Y, Chun SJ, Prakash TP, Krainer AR, Bennett CF. Synthetic oligonucleotides recruit ILF2/3 to RNA transcripts to modulate splicing. Nat Chem Biol. 2012 Apr 15;8(6):555-61. doi: 10.1038/nchembio.939. PubMed PMID: 22504300;  PubMed Central PMCID: PMC5021312."
+
+[Barbosa 2013]: https://www.ncbi.nlm.nih.gov/pubmed/23950723 "Barbosa C, Peixeiro I, Romão L. Gene expression regulation by upstream open reading frames and human disease. PLoS Genet. 2013;9(8):e1003529. doi: 10.1371/journal.pgen.1003529. Epub 2013 Aug 8. Review. PubMed PMID: 23950723; PubMed Central PMCID: PMC3738444."
+
+[Rotllan 2013]: https://www.ncbi.nlm.nih.gov/pubmed/23702658/ "Rotllan N, Ramírez CM, Aryal B, Esau CC, Fernández-Hernando C. Therapeutic silencing of microRNA-33 inhibits the progression of atherosclerosis in Ldlr-/- mice--brief report. Arterioscler Thromb Vasc Biol. 2013 Aug;33(8):1973-7. doi: 10.1161/ATVBAHA.113.301732. Epub 2013 May 23. PubMed PMID: 23702658; PubMed Central PMCID: PMC4157595."
+
+[Lagier-Tourenne 2013]: https://www.ncbi.nlm.nih.gov/pubmed/24170860 "Lagier-Tourenne C, Baughn M, Rigo F, Sun S, Liu P, Li HR, Jiang J, Watt AT, Chun S, Katz M, Qiu J, Sun Y, Ling SC, Zhu Q, Polymenidou M, Drenner K, Artates JW, McAlonis-Downes M, Markmiller S, Hutt KR, Pizzo DP, Cady J, Harms MB, Baloh RH, Vandenberg SR, Yeo GW, Fu XD, Bennett CF, Cleveland DW, Ravits J. Targeted degradation of sense and antisense C9orf72 RNA foci as therapy for ALS and frontotemporal degeneration. Proc Natl Acad Sci U S A. 2013 Nov 19;110(47):E4530-9. doi: 10.1073/pnas.1318835110. Epub 2013 Oct 29. PubMed PMID:  24170860; PubMed Central PMCID: PMC3839752."
+
+[Miller 2013]: https://www.ncbi.nlm.nih.gov/pubmed/23541756 "Miller TM, Pestronk A, David W, Rothstein J, Simpson E, Appel SH, Andres PL, Mahoney K, Allred P, Alexander K, Ostrow LW, Schoenfeld D, Macklin EA, Norris DA, Manousakis G, Crisp M, Smith R, Bennett CF, Bishop KM, Cudkowicz ME. An antisense oligonucleotide against SOD1 delivered intrathecally for patients with SOD1 familial amyotrophic lateral sclerosis: a phase 1, randomised, first-in-man study. Lancet Neurol. 2013 May;12(5):435-42. doi: 10.1016/S1474-4422(13)70061-9.  Epub 2013 Mar 29. Erratum in: Lancet Neurol. 2013 May;12(5):423. PubMed PMID: 23541756; PubMed Central PMCID: PMC3712285."
+
+[Winer 2013]: https://www.ncbi.nlm.nih.gov/pubmed/23147550 "Winer L, Srinivasan D, Chun S, Lacomis D, Jaffa M, Fagan A, Holtzman DM, Wancewicz E, Bennett CF, Bowser R, Cudkowicz M, Miller TM. SOD1 in cerebral spinal fluid as a pharmacodynamic marker for antisense oligonucleotide therapy. JAMA Neurol. 2013 Feb;70(2):201-7. doi: 10.1001/jamaneurol.2013.593. PubMed PMID: 23147550; PubMed Central PMCID: PMC3812918."
+
+[Mendell 2013]: https://www.ncbi.nlm.nih.gov/pubmed/23907995 "Mendell JR, Rodino-Klapac LR, Sahenk Z, Roush K, Bird L, Lowes LP, Alfano L, Gomez AM, Lewis S, Kota J, Malik V, Shontz K, Walker CM, Flanigan KM, Corridore M, Kean JR, Allen HD, Shilling C, Melia KR, Sazani P, Saoud JB, Kaye EM; Eteplirsen Study Group. Eteplirsen for the treatment of Duchenne muscular dystrophy. Ann Neurol. 2013 Nov;74(5):637-47. doi: 10.1002/ana.23982. Epub 2013 Sep 10. PubMed PMID: 23907995."
+
+[Gaudet 2014]: https://www.ncbi.nlm.nih.gov/pubmed/25470695 "Gaudet D, Brisson D, Tremblay K, Alexander VJ, Singleton W, Hughes SG, Geary RS, Baker BF, Graham MJ, Crooke RM, Witztum JL. Targeting APOC3 in the familial chylomicronemia syndrome. N Engl J Med. 2014 Dec 4;371(23):2200-6. doi: 10.1056/NEJMoa1400284. PubMed PMID: 25470695."
+
+[Rigo 2014]: https://www.ncbi.nlm.nih.gov/pubmed/24784568 "Rigo F, Chun SJ, Norris DA, Hung G, Lee S, Matson J, Fey RA, Gaus H, Hua Y, Grundy JS, Krainer AR, Henry SP, Bennett CF. Pharmacology of a central nervous system delivered 2'-O-methoxyethyl-modified survival of motor neuron splicing oligonucleotide in mice and nonhuman primates. J Pharmacol Exp Ther. 2014 Jul;350(1):46-55. doi: 10.1124/jpet.113.212407. Epub 2014 Apr 30. PubMed PMID: 24784568; PubMed Central PMCID: PMC4056267."
+
+[Gebert 2014]: https://www.ncbi.nlm.nih.gov/pubmed/24068553 "Gebert LF, Rebhan MA, Crivelli SE, Denzler R, Stoffel M, Hall J. Miravirsen (SPC3649) can inhibit the biogenesis of miR-122. Nucleic Acids Res. 2014 Jan;42(1):609-21. doi: 10.1093/nar/gkt852. Epub 2013 Sep 24. PubMed PMID: 24068553; PubMed Central PMCID: PMC3874169."
+
+[Blum 2015]: https://www.ncbi.nlm.nih.gov/pubmed/26506304 "Blum M, De Robertis EM, Wallingford JB, Niehrs C. Morpholinos: Antisense and Sensibility. Dev Cell. 2015 Oct 26;35(2):145-9. doi: 10.1016/j.devcel.2015.09.017. Review. PubMed PMID: 26506304."
+
+[Meng 2015]: https://www.ncbi.nlm.nih.gov/pubmed/25470045 "Meng L, Ward AJ, Chun S, Bennett CF, Beaudet AL, Rigo F. Towards a therapy for Angelman syndrome by targeting a long non-coding RNA. Nature. 2015 Feb 19;518(7539):409-12. doi: 10.1038/nature13975. Epub 2014 Dec 1. PubMed PMID: 25470045; PubMed Central PMCID: PMC4351819."
+
+[Reyes 2015]: https://www.ncbi.nlm.nih.gov/pubmed/26094573 "Reyes A, Melchionda L, Nasca A, Carrara F, Lamantea E, Zanolini A, Lamperti C, Fang M, Zhang J, Ronchi D, Bonato S, Fagiolari G, Moggio M, Ghezzi D, Zeviani M.  RNASEH1 Mutations Impair mtDNA Replication and Cause Adult-Onset Mitochondrial Encephalomyopathy. Am J Hum Genet. 2015 Jul 2;97(1):186-93. doi: 10.1016/j.ajhg.2015.05.013. Epub 2015 Jun 18. PubMed PMID: 26094573; PubMed Central PMCID: PMC4572567."
+
+[Kok 2015]: https://www.ncbi.nlm.nih.gov/pubmed/25533206 "Kok FO, Shin M, Ni CW, Gupta A, Grosse AS, van Impel A, Kirchmaier BC, Peterson-Maduro J, Kourkoulis G, Male I, DeSantis DF, Sheppard-Tindell S, Ebarasi L, Betsholtz C, Schulte-Merker S, Wolfe SA, Lawson ND. Reverse genetic screening  reveals poor correlation between morpholino-induced and mutant phenotypes in zebrafish. Dev Cell. 2015 Jan 12;32(1):97-108. doi: 10.1016/j.devcel.2014.11.018. Epub 2014 Dec 18. PubMed PMID: 25533206; PubMed Central PMCID: PMC4487878."
+
+[Stainier 2015]: https://www.ncbi.nlm.nih.gov/pubmed/25584794 "Stainier DY, Kontarakis Z, Rossi A. Making sense of anti-sense data. Dev Cell. 2015 Jan 12;32(1):7-8. doi: 10.1016/j.devcel.2014.12.012. PubMed PMID: 25584794."
+
+[van der Ree 2016]: https://www.ncbi.nlm.nih.gov/pubmed/26503793 "van der Ree MH, van der Meer AJ, van Nuenen AC, de Bruijne J, Ottosen S, Janssen HL, Kootstra NA, Reesink HW. Miravirsen dosing in chronic hepatitis C patients results in decreased microRNA-122 levels without affecting other microRNAs in plasma. Aliment Pharmacol Ther. 2016 Jan;43(1):102-13. doi: 10.1111/apt.13432. Epub 2015 Oct 26. PubMed PMID: 26503793."
+
+[Liang 2016]: https://www.ncbi.nlm.nih.gov/pubmed/27398791 "Liang XH, Shen W, Sun H, Migawa MT, Vickers TA, Crooke ST. Translation efficiency of mRNAs is increased by antisense oligonucleotides targeting upstream open reading frames. Nat Biotechnol. 2016 Aug;34(8):875-80. doi: 10.1038/nbt.3589. Epub 2016 Jul 11. PubMed PMID: 27398791."
+
+[Lima 2016]: https://www.ncbi.nlm.nih.gov/pubmed/27131367/ "Lima WF, Murray HM, Damle SS, Hart CE, Hung G, De Hoyos CL, Liang XH, Crooke ST. Viable RNaseH1 knockout mice show RNaseH1 is essential for R loop processing, mitochondrial and liver function. Nucleic Acids Res. 2016 Jun 20;44(11):5299-312. doi: 10.1093/nar/gkw350. Epub 2016 Apr 29. PubMed PMID: 27131367; PubMed Central  PMCID: PMC4914116."
+
+[Beg 2017]: https://www.ncbi.nlm.nih.gov/pubmed/27917453 "Beg MS, Brenner AJ, Sachdev J, Borad M, Kang YK, Stoudemire J, Smith S, Bader  AG, Kim S, Hong DS. Phase I study of MRX34, a liposomal miR-34a mimic, administered twice weekly in patients with advanced solid tumors. Invest New Drugs. 2017 Apr;35(2):180-188. doi: 10.1007/s10637-016-0407-y. Epub 2016 Dec 5. PubMed PMID: 27917453; PubMed Central PMCID: PMC5893501."
+
+[Chiriboga 2016]: https://www.ncbi.nlm.nih.gov/pubmed/26865511/ "Chiriboga CA, Swoboda KJ, Darras BT, Iannaccone ST, Montes J, De Vivo DC, Norris DA, Bennett CF, Bishop KM. Results from a phase 1 study of nusinersen (ISIS-SMN(Rx)) in children with spinal muscular atrophy. Neurology. 2016 Mar 8;86(10):890-7. doi: 10.1212/WNL.0000000000002445. Epub 2016 Feb 10. PubMed PMID: 26865511; PubMed Central PMCID: PMC4782111."
+
+[Finkel 2016]: https://www.ncbi.nlm.nih.gov/pubmed/27939059/ "Finkel RS, Chiriboga CA, Vajsar J, Day JW, Montes J, De Vivo DC, Yamashita M, Rigo F, Hung G, Schneider E, Norris DA, Xia S, Bennett CF, Bishop KM. Treatment of infantile-onset spinal muscular atrophy with nusinersen: a phase 2, open-label, dose-escalation study. Lancet. 2016 Dec 17;388(10063):3017-3026. doi: 10.1016/S0140-6736(16)31408-8. Epub 2016 Dec 7. PubMed PMID: 27939059."
+
+[Finkel 2017]: https://www.ncbi.nlm.nih.gov/pubmed/29091570/ "Finkel RS, Mercuri E, Darras BT, Connolly AM, Kuntz NL, Kirschner J, Chiriboga CA, Saito K, Servais L, Tizzano E, Topaloglu H, Tulinius M, Montes J, Glanzman AM, Bishop K, Zhong ZJ, Gheuens S, Bennett CF, Schneider E, Farwell W, De Vivo DC; ENDEAR Study Group. Nusinersen versus Sham Control in Infantile-Onset Spinal Muscular Atrophy. N Engl J Med. 2017 Nov 2;377(18):1723-1732. doi: 10.1056/NEJMoa1702752. PubMed PMID: 29091570."
+
+[Scoles 2017]: https://www.ncbi.nlm.nih.gov/pubmed/28405024 "Scoles DR, Meera P, Schneider MD, Paul S, Dansithong W, Figueroa KP, Hung G, Rigo F, Bennett CF, Otis TS, Pulst SM. Antisense oligonucleotide therapy for spinocerebellar ataxia type 2. Nature. 2017 Apr 20;544(7650):362-366. doi: 10.1038/nature22044. Epub 2017 Apr 12. PubMed PMID: 28405024."
+
+[DeVos 2017]: https://www.ncbi.nlm.nih.gov/pubmed/28123067/ "DeVos SL, Miller RL, Schoch KM, Holmes BB, Kebodeaux CS, Wegener AJ, Chen G, Shen T, Tran H, Nichols B, Zanardi TA, Kordasiewicz HB, Swayze EE, Bennett CF, Diamond MI, Miller TM. Tau reduction prevents neuronal loss and reverses pathological tau deposition and seeding in mice with tauopathy. Sci Transl Med. 2017 Jan 25;9(374). pii: eaag0481. doi: 10.1126/scitranslmed.aag0481. PubMed PMID: 28123067; PubMed Central PMCID: PMC5792300."
+
+[Liang 2017a]: https://www.ncbi.nlm.nih.gov/pubmed/28663102 "Liang XH, Sun H, Nichols JG, Crooke ST. RNase H1-Dependent Antisense Oligonucleotides Are Robustly Active in Directing RNA Cleavage in Both the Cytoplasm and the Nucleus. Mol Ther. 2017 Sep 6;25(9):2075-2092. doi: 10.1016/j.ymthe.2017.06.002. Epub 2017 Jun 27. PubMed PMID: 28663102; PubMed Central PMCID: PMC5589097."
+
+[Liang 2017b]: https://www.ncbi.nlm.nih.gov/pubmed/28934489/ "Liang XH, Sun H, Shen W, Wang S, Yao J, Migawa MT, Bui HH, Damle SS, Riney S,  Graham MJ, Crooke RM, Crooke ST. Antisense oligonucleotides targeting translation inhibitory elements in 5' UTRs can selectively increase protein levels. Nucleic Acids Res. 2017 Sep 19;45(16):9528-9546. doi: 10.1093/nar/gkx632. PubMed PMID: 28934489; PubMed Central PMCID: PMC5766168."
+
+[Stainier 2017]: https://www.ncbi.nlm.nih.gov/pubmed/29049395 "Stainier DYR, Raz E, Lawson ND, Ekker SC, Burdine RD, Eisen JS, Ingham PW, Schulte-Merker S, Yelon D, Weinstein BM, Mullins MC, Wilson SW, Ramakrishnan L, Amacher SL, Neuhauss SCF, Meng A, Mochizuki N, Panula P, Moens CB. Guidelines for morpholino use in zebrafish. PLoS Genet. 2017 Oct 19;13(10):e1007000. doi: 10.1371/journal.pgen.1007000. eCollection 2017 Oct. PubMed PMID: 29049395; PubMed Central PMCID: PMC5648102."
+
+[Crooke 2017]: https://www.ncbi.nlm.nih.gov/pubmed/28244996 "Crooke ST, Wang S, Vickers TA, Shen W, Liang XH. Cellular uptake and trafficking of antisense oligonucleotides. Nat Biotechnol. 2017 Mar;35(3):230-237. doi: 10.1038/nbt.3779. Epub 2017 Feb 27. Review. PubMed PMID:  28244996."
+
+[McCampbell 2018]: https://www.ncbi.nlm.nih.gov/pubmed/30010620 "McCampbell A, Cole T, Wegener AJ, Tomassy GS, Setnicka A, Farley BJ, Schoch KM, Hoye ML, Shabsovich M, Sun L, Luo Y, Zhang M, Thankamony S, Salzman DW, Cudkowicz M, Graham DL, Bennett CF, Kordasiewicz HB, Swayze EE, Miller TM. Antisense oligonucleotides extend survival and reverse decrement in muscle response in ALS models. J Clin Invest. 2018 Jul 16. pii: 99081. doi: 10.1172/JCI99081. [Epub ahead of print] PubMed PMID: 30010620."
+
+[Morrison 2018]: https://www.ncbi.nlm.nih.gov/pubmed/29487392/ "Morrison C. Alnylam prepares to land first RNAi drug approval. Nat Rev Drug Discov. 2018 Feb 28;17(3):156-157. doi: 10.1038/nrd.2018.20. PubMed PMID: 29487392."
+
+
+
+
