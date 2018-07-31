@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Molecular Biology 29: 'Paul Anderson\'s research seminar"
+title:  "Molecular Biology 29: 'Paul Anderson\\'s research seminar"
 date:   2014-12-03 12:01:00
 author: ericminikel
 tag: bcmp-200

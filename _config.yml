@@ -5,6 +5,7 @@ github_username: ericminikel
 description: "Not if, when."
 baseurl: ""
 url: "http://www.cureffi.org"
+future: true
 
 # Build settings
 markdown: kramdown

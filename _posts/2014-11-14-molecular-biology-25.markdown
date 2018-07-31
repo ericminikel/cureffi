@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Molecular Biology 25: 'Stirling Churchman\'s research seminar'"
+title:  "Molecular Biology 25: 'Stirling Churchman\\'s research seminar'"
 date:   2014-11-14 12:01:00
 author: ericminikel
 tag: bcmp-200

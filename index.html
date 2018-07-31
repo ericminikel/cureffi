@@ -25,7 +25,7 @@ layout: default
       {% for post in site.posts %}
         {% assign j = j | plus: 1 %}
       {% endfor %}
-      {% assign k = j - i %}
+      {% assign k = j | minus: i %}
       <a href="{{ "/archives" }}">{{ k }} more posts in archives&rarr;</a>
     </li>
     <li>subscribe to <a href="{{ "/feed.xml" | prepend: site.baseurl }}">RSS</a></li>
