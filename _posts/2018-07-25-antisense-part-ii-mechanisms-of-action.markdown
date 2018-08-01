@@ -52,7 +52,7 @@ Regardless of exact mechanism, all of the splice-modulating ASOs I was able to r
 
 ![](/media/2018/07/aso-diagram-3-translation-inhibition.png)
 
-By binding a target RNA, an ASO can prevent the ribosome from translating the RNA, and thus reduce protein level without reducing RNA level. This is known as a "steric block" of translation. As far as I know, there are no approved drugs nor drug candidates in clinical trials that have this mechanism [[Bennett 2017]]. Indeed, after several Google Scholar searches, I was unable to find an example of a paper where a steric block ASO has even been used in a mouse. Instead, this mechanism seems to be used chiefly or exclusively in zebrafish, where it is a common research tool for doing gene knockdowns [[Nasevicius & Ekker 2000], [Bill 2009]]. The preferred chemistry here is a phosphorodiamidate backbone (also known as morpholino or PMO).
+By binding a target RNA, an ASO can prevent the ribosome from translating the RNA, and thus reduce protein level without reducing RNA level. This is known as a "steric block" of translation. As far as I know, there are no approved drugs nor drug candidates currently in clinical trials that are translation-blocking ASOs [[Bennett 2017]]. Indeed, this mechanism of action seems little used in mammals: so far I have found only a few examples of translation-blocking ASOs that have been tested in rodents or pigs [[Arora 2002], [Kipshidze 2002],[McCaffrey 2003]], and just one Phase I trial in humans [[Iversen 2003], [Devi 2005]]. Instead, this mechanism seems to be used chiefly in zebrafish, where it is a common research tool for doing gene knockdowns [[Nasevicius & Ekker 2000], [Bill 2009]]. The preferred chemistry here is a phosphorodiamidate backbone (also known as morpholino or PMO).
 
 Intrinsic to this mechanism of action is that the ASO's activity is in the cytoplasm, where translation occurs, as opposed to in the nucleus, and the ASO must target a site in the mature mRNA. Indeed, apparently most steric blocking ASOs target a sequence either in the 5'UTR just upstream of the start codon [[Faria 2001]] or within &#126;25 bases past the start codon [[Summerton 1999]]. Unlike with qPCR for RNAse H or splice modulating oligos, there is no generalizable method for empirical screening of steric blocking oligos &mdash; one would need a different protein-based quantification method for each target of interest. From what I could gather online, it seems that most researchers are not doing extensive screening of steric block ASOs &mdash; one primer suggests that "if available, the level of knockdown should be assessed using an antibody to the protein of interest" [[Bill 2009]], implying that reseachers routinely buy steric block ASOs that have been synthesized based on informatic predictions alone, and that empirical demonstration of knockdown is left as an exercise.
 
@@ -122,13 +122,23 @@ As the table makes clear, different mechanisms can be achieved by targeting diff
 
 [Aartsma-Rus 2002]: https://www.ncbi.nlm.nih.gov/pubmed/12206800 "Aartsma-Rus A, Bremmer-Bout M, Janson AA, den Dunnen JT, van Ommen GJ, van Deutekom JC. Targeted exon skipping as a potential gene correction therapy for Duchenne muscular dystrophy. Neuromuscul Disord. 2002 Oct;12 Suppl 1:S71-7. PubMed PMID: 12206800."
 
+[Arora 2002]: https://www.ncbi.nlm.nih.gov/pubmed/12425463 "Arora V, Hannah TL, Iversen PL, Brand RM. Transdermal use of phosphorodiamidate morpholino oligomer AVI-4472 inhibits cytochrome P450 3A2 activity in male rats. Pharm Res. 2002 Oct;19(10):1465-70. PubMed PMID: 12425463."
+
+[Kipshidze 2002]: https://www.ncbi.nlm.nih.gov/pubmed/12020498 "Kipshidze NN, Kim HS, Iversen P, Yazdi HA, Bhargava B, New G, Mehran R, Tio F, Haudenschild C, Dangas G, Stone GW, Iyer S, Roubin GS, Leon MB, Moses JW. Intramural coronary delivery of advanced antisense oligonucleotides reduces neointimal formation in the porcine stent restenosis model. J Am Coll Cardiol. 2002 May 15;39(10):1686-91. PubMed PMID: 12020498."
+
+[McCaffrey 2003]: https://www.ncbi.nlm.nih.gov/pubmed/12883495 "McCaffrey AP, Meuse L, Karimi M, Contag CH, Kay MA. A potent and specific morpholino antisense inhibitor of hepatitis C translation in mice. Hepatology. 2003 Aug;38(2):503-8. PubMed PMID: 12883495."
+
 [Cerritelli 2003]: https://www.ncbi.nlm.nih.gov/pubmed/12667461 "Cerritelli SM, Frolova EG, Feng C, Grinberg A, Love PE, Crouch RJ. Failure to  produce mitochondrial DNA results in embryonic lethality in Rnaseh1 null mice. Mol Cell. 2003 Mar;11(3):807-15. PubMed PMID: 12667461."
+
+[Iversen 2003]: https://www.ncbi.nlm.nih.gov/pubmed/12855625 "Iversen PL, Arora V, Acker AJ, Mason DH, Devi GR. Efficacy of antisense morpholino oligomer targeted to c-myc in prostate cancer xenograft murine model and a Phase I safety study in humans. Clin Cancer Res. 2003 Jul;9(7):2510-9. PubMed PMID: 12855625."
 
 [Aartsma-Rus 2003]: https://www.ncbi.nlm.nih.gov/pubmed/12668614 "Aartsma-Rus A, Janson AA, Kaman WE, Bremmer-Bout M, den Dunnen JT, Baas F, van Ommen GJ, van Deutekom JC. Therapeutic antisense-induced exon skipping in cultured muscle cells from six different DMD patients. Hum Mol Genet. 2003 Apr 15;12(8):907-14. PubMed PMID: 12668614."
 
 [Wu 2004]: https://www.ncbi.nlm.nih.gov/pubmed/14960586 "Wu H, Lima WF, Zhang H, Fan A, Sun H, Crooke ST. Determination of the role of  the human RNase H1 in the pharmacology of DNA-like antisense drugs. J Biol Chem.  2004 Apr 23;279(17):17181-9. Epub 2004 Feb 11. PubMed PMID: 14960586."
 
 [Vattem & Wek 2004]: https://www.ncbi.nlm.nih.gov/pubmed/15277680/ "Vattem KM, Wek RC. Reinitiation involving upstream ORFs regulates ATF4 mRNA translation in mammalian cells. Proc Natl Acad Sci U S A. 2004 Aug 3;101(31):11269-74. Epub 2004 Jul 26. PubMed PMID: 15277680; PubMed Central PMCID: PMC509193."
+
+[Devi 2005]: https://www.ncbi.nlm.nih.gov/pubmed/15897595 "Devi GR, Beer TM, Corless CL, Arora V, Weller DL, Iversen PL. In vivo bioavailability and pharmacokinetics of a c-MYC antisense phosphorodiamidate morpholino oligomer, AVI-4126, in solid tumors. Clin Cancer Res. 2005 May 15;11(10):3930-8. PubMed PMID: 15897595."
 
 [Smith 2006]: https://www.ncbi.nlm.nih.gov/pubmed/16878173 "Smith RA, Miller TM, Yamanaka K, Monia BP, Condon TP, Hung G, Lobsiger CS, Ward CM, McAlonis-Downes M, Wei H, Wancewicz EV, Bennett CF, Cleveland DW. Antisense oligonucleotide therapy for neurodegenerative disease. J Clin Invest. 2006 Aug;116(8):2290-6. Epub 2006 Jul 27. PubMed PMID: 16878173; PubMed Central PMCID: PMC1518790."
 
