@@ -138,6 +138,10 @@ As Sonia explained in her post, there is a lot of science that we need to do in 
 
 [Smith 2006]: https://www.ncbi.nlm.nih.gov/pubmed/16878173/ "Smith RA, Miller TM, Yamanaka K, Monia BP, Condon TP, Hung G, Lobsiger CS, Ward CM, McAlonis-Downes M, Wei H, Wancewicz EV, Bennett CF, Cleveland DW. Antisense oligonucleotide therapy for neurodegenerative disease. J Clin Invest. 2006 Aug;116(8):2290-6. Epub 2006 Jul 27. PubMed PMID: 16878173; PubMed Central PMCID: PMC1518790."
 
+[Kocisko 2006]: https://www.ncbi.nlm.nih.gov/pubmed/16495266/ "Kocisko DA, Vaillant A, Lee KS, Arnold KM, Bertholet N, Race RE, Olsen EA, Juteau JM, Caughey B. Potent antiscrapie activities of degenerate phosphorothioate oligonucleotides. Antimicrob Agents Chemother. 2006 Mar;50(3):1034-44. PubMed PMID: 16495266; PubMed Central PMCID: PMC1426446."
+
+[Karpuj 2007]: https://www.ncbi.nlm.nih.gov/pubmed/17592554/ "Karpuj MV, Giles K, Gelibter-Niv S, Scott MR, Lingappa VR, Szoka FC, Peretz D, Denetclaw W, Prusiner SB. Phosphorothioate oligonucleotides reduce PrP levels and prion infectivity in cultured cells. Mol Med. 2007 Mar-Apr;13(3-4):190-8. PubMed PMID: 17592554; PubMed Central PMCID: PMC1892763."
+
 [Richt 2007]: http://www.ncbi.nlm.nih.gov/pubmed/17195841/ "Richt JA, Kasinathan P, Hamir AN, Castilla J, Sathiyaseelan T, Vargas F, Sathiyaseelan J, Wu H, Matsushita H, Koster J, Kato S, Ishida I, Soto C, Robl JM, Kuroiwa Y. Production of cattle lacking prion protein. Nat Biotechnol. 2007 Jan;25(1):132-8. Epub 2006 Dec 31. PubMed PMID: 17195841; PubMed Central PMCID: PMC2813193."
 
 [White 2008]: https://www.ncbi.nlm.nih.gov/pubmed/18632556 "White MD, Farmer M, Mirabile I, Brandner S, Collinge J, Mallucci GR. Single treatment with RNAi against prion protein rescues early neuronal dysfunction and  prolongs survival in mice with prion disease. Proc Natl Acad Sci U S A. 2008 Jul  22;105(29):10238-43. doi: 10.1073/pnas.0802759105. Epub 2008 Jul 16. PubMed PMID: 18632556; PubMed Central PMCID: PMC2474561."

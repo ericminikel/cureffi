@@ -192,6 +192,8 @@ Again, there's a whole world of other amazing scientific literature out there on
 
 [Telling 1996]: http://www.ncbi.nlm.nih.gov/pubmed/8953038 "Telling GC, Parchi P, DeArmond SJ, Cortelli P, Montagna P, Gabizon R, Mastrianni J, Lugaresi E, Gambetti P, Prusiner SB. Evidence for the conformation  of the pathologic isoform of the prion protein enciphering and propagating prion  diversity. Science. 1996 Dec 20;274(5295):2079-82. PubMed PMID: 8953038."
 
+[Shibuya 1998]: http://www.ncbi.nlm.nih.gov/pubmed/9629853 "Shibuya S, Higuchi J, Shin RW, Tateishi J, Kitamoto T. Codon 219 Lys allele of PRNP is not found in sporadic Creutzfeldt-Jakob disease. Ann Neurol. 1998 Jun;43(6):826-8. PubMed PMID: 9629853."
+
 [Safar 1998]: http://www.ncbi.nlm.nih.gov/pubmed/9771749 "Safar J, Wille H, Itri V, Groth D, Serban H, Torchia M, Cohen FE, Prusiner SB. Eight prion strains have PrP(Sc) molecules with different conformations. Nat Med. 1998 Oct;4(10):1157-65. PubMed PMID: 9771749."
 
 [Prusiner 1998]: http://www.ncbi.nlm.nih.gov/pubmed/9811807 "Prusiner SB. Prions. Proc Natl Acad Sci U S A. 1998 Nov 10;95(23):13363-83. Review. PubMed PMID: 9811807; PubMed Central PMCID: PMC33918."
@@ -219,6 +221,8 @@ Again, there's a whole world of other amazing scientific literature out there on
 [Richt 2007]: http://www.ncbi.nlm.nih.gov/pubmed/17195841/ "Richt JA, Kasinathan P, Hamir AN, Castilla J, Sathiyaseelan T, Vargas F, Sathiyaseelan J, Wu H, Matsushita H, Koster J, Kato S, Ishida I, Soto C, Robl JM, Kuroiwa Y. Production of cattle lacking prion protein. Nat Biotechnol. 2007 Jan;25(1):132-8. Epub 2006 Dec 31. PubMed PMID: 17195841; PubMed Central PMCID: PMC2813193."
 
 [Yu 2009]: http://www.ncbi.nlm.nih.gov/pubmed/18951376 "Yu G, Chen J, Xu Y, Zhu C, Yu H, Liu S, Sha H, Chen J, Xu X, Wu Y, Zhang A, Ma J, Cheng G. Generation of goats lacking prion protein. Mol Reprod Dev. 2009 Jan;76(1):3. doi: 10.1002/mrd.20960. PubMed PMID: 18951376."
+
+[Mead 2009]: https://www.ncbi.nlm.nih.gov/pubmed/19923577 "Mead S, Whitfield J, Poulter M, Shah P, Uphill J, Campbell T, Al-Dujaily H, Hummerich H, Beck J, Mein CA, Verzilli C, Whittaker J, Alpers MP, Collinge J. A novel protective prion protein variant that colocalizes with kuru exposure. N Engl J Med. 2009 Nov 19;361(21):2056-65. doi: 10.1056/NEJMoa0809716. PubMed PMID: 19923577."
 
 [Ghaemmaghami & Ahn 2009]: http://www.ncbi.nlm.nih.gov/pubmed/19956709 "Ghaemmaghami S, Ahn M, Lessard P, Giles K, Legname G, DeArmond SJ, Prusiner SB. Continuous quinacrine treatment results in the formation of drug-resistant prions. PLoS Pathog. 2009 Nov;5(11):e1000673. doi: 10.1371/journal.ppat.1000673.  Epub 2009 Nov 26. PubMed PMID: 19956709; PubMed Central PMCID: PMC2777304."
 
