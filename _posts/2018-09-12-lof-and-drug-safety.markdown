@@ -52,7 +52,7 @@ Here is the mean (and 95%CI indicating our certainty about that mean) obs/exp va
 
 ![](/media/2018/09/forest_lof_oe.png)
 
-The average gene in general has 48% of its expected amount of LoF variation. The numbers for the other gene lists fall out exactly as you'd expect: olfactory receptors, which are notoriously dispensable in humans, have almost 100% of their expected LoF variation, and genes known to tolerate homozygous LoF in humans also have more LoF variants than the average gene. Recessive disease genes are close to average, while dominant disease genes are more depleted for LoF, and genes known to be esssential in cell culture or associated with diseases of haploinsufficiency are even more severely depleted. 
+The average gene in general has 48% of its expected amount of LoF variation. The numbers for the other gene lists fall out exactly as you'd expect: olfactory receptors, which are notoriously dispensable in humans, have almost 100% of their expected LoF variation, and genes known to tolerate homozygous LoF in humans also have more LoF variants than the average gene. Recessive disease genes are close to average, while dominant disease genes are more depleted for LoF, and genes known to be essential in cell culture or associated with diseases of haploinsufficiency are even more severely depleted. 
 
 Against this backdrop, what may seem surprising is that drug targets are actually on average *more* depleted for LoF than all genes are. But is this really surprising?
 
