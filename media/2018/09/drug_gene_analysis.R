@@ -1,4 +1,4 @@
-setwd('~/d/j/cureffi/media/2018/09')
+setwd('~/j/cureffi/media/2018/09')
 options(stringsAsFactors=FALSE)
 require(sqldf)
 require(binom)
@@ -85,10 +85,12 @@ blekhman_ad|Autosomal dominant
 core_essentials_hart|Essential in culture
 clingen_level3_genes_2015_02_27|ClinGen Haploinsufficient
 fda_approved_drug_targets|DrugBank FDA-approved
-gpcr|GPCRs
+gpcr|Top 'druggable' families*
 kinases|Kinases
 gwascatalog|GWAS hits
 "),sep='|',header=TRUE)
+# above - note that the file named "gpcr" is actually multiple druggable families.
+# this erratum is explained in the post.
 
 # Forest plot for pHI > .9
 lof_oe = list_metadata[1:8,]

@@ -58,11 +58,13 @@ Against this backdrop, what may seem surprising is that drug targets are actuall
 
 ### problem 1: confounding by gene class
 
-When drugs are broken down by target class, the two largest classes are GPCRs and kinases [[Russ & Lampel 2005]]. In our dataset, these collectively account for 65% of drug targets. If we look at the set of all GPCRs and all kinases (regardless of whether targeted by drugs), we find that these too are depleted for LoF variation compared to all genes.
+When drugs are broken down by target class, most of them fall into a few large families of classically "druggable" targets [[Russ & Lampel 2005]]. We looked at the classically "druggable" families listed in the [Guide to Pharmacology](http://www.guidetopharmacology.org/), as well as a [list of kinases from UniProt](http://www.uniprot.org/docs/pkinfam). In our dataset, these two lists collectively account for 65% of drug targets. If we look at the sets of all of these genes (regardless of whether targeted by drugs), we find that these too are depleted for LoF variation compared to all genes.
 
 ![](/media/2018/09/forest_lof_oe2.png)
 
-One story you could tell here is that it's not necessarily the case that more strongly LoF-constrained genes make better drug targets. It's just that, at least as of this historical moment, the pharmaceutical industry has so far been relatively successful at finding chemical matter against kinases and GPCRs, two classes that happen to be more LoF-constrained than average.
+*\*Erratum: a previous version of this post incorrectly labeled this data point as "GPCRs". In fact, it includes GPCRs as well as ion channels, catalytic receptors, transporters, and enzymes catalogued by [Guide to Pharmacology](http://www.guidetopharmacology.org/).*
+
+One story you could tell here is that it's not necessarily the case that more strongly LoF-constrained genes make better drug targets. It's just that, at least as of this historical moment, the pharmaceutical industry has so far been relatively successful at finding chemical matter against certain families of proteins that happen to be more LoF-constrained than average.
 
 That is just one example. I'll briefly mention another, also shown in the above figure. At least some drug targets were selected because of their association to human disease, and it's also been shown that genes that contain GWAS hits (i.e. disease-associated genes) are on average more LoF-constrained than other genes &mdash; see Fig 3E and Supp Figure 5 of [[Lek 2016]]. In the dataset used here, drug targets are about 2.4-fold enriched for GWAS hits (*P* = 2 &times; 10<sup>-10</sup>, two-sided Fisher's exact test), and GWAS hits, like GPCRs and kinases, are more depleted for LoF variation than the average gene.
 
@@ -124,7 +126,7 @@ The first question is, what is the evidence that a reduction in PrP gene dosage 
 
 The second question is, even if there were a more severe knockout phenotype, would that put a stop to our drug development efforts? As you see from this post, even genes with a lethal knockout phenotype and plenty of evidence that loss-of-function variants are not well-tolerated in the human genome can still be viable drug targets. Everything depends on the details.
 
-*The code to produce the plots and analyses in this post is [available on GitHub](https://github.com/ericminikel/cureffi/blob/gh-pages/media/2018/06/drug_gene_analysis.R).*
+*The code to produce the plots and analyses in this post is [available on GitHub](https://github.com/ericminikel/cureffi/blob/gh-pages/media/2018/09/drug_gene_analysis.R).*
 
 [Ohashi 2003]: https://www.ncbi.nlm.nih.gov/pubmed/12920113 "Ohashi K, Osuga J, Tozawa R, Kitamine T, Yagyu H, Sekiya M, Tomita S, Okazaki  H, Tamura Y, Yahagi N, Iizuka Y, Harada K, Gotoda T, Shimano H, Yamada N, Ishibashi S. Early embryonic lethality caused by targeted disruption of the 3-hydroxy-3-methylglutaryl-CoA reductase gene. J Biol Chem. 2003 Oct 31;278(44):42936-41. Epub 2003 Aug 14. PubMed PMID: 12920113."
 
