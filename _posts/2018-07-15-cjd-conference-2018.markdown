@@ -162,6 +162,8 @@ Dr. Maddox also spoke about variant CJD, of which four cases have been observed 
 
 Dr. Steele is at the American Red Cross where they are studying the potential for risk of prion disease transmission through blood transfusion. It is known that variant CJD has been transmitted by blood transfusion [[Llewelyn 2004], [Davidson 2014]], but so far there is no evidence that sporadic CJD has ever been transmitted by blood transfusion. The Red Cross's study likewise finds no evidence for transfusion risk in sporadic CJD. They have collected data on 71 blood donors who later died of sporadic CJD, and 894 traceable recipients of the donated blood followed for an average of several years, for a total of 4,205 person-years of follow-up. None of those individuals had CJD as a cause of death.
 
+*Update 2018-11-07: CJD Foundation has now posted [YouTube videos](https://cjdfoundation.org/2018-presentations) of several of the talks.*
+
 [Gibbs 1968]: https://www.ncbi.nlm.nih.gov/pubmed/5661299 "Gibbs CJ Jr, Gajdusek DC, Asher DM, Alpers MP, Beck E, Daniel PM, Matthews WB. Creutzfeldt-Jakob disease (spongiform encephalopathy): transmission to the chimpanzee. Science. 1968 Jul 26;161(3839):388-9. PubMed PMID: 5661299."
 
 [Brown 1998]: https://www.ncbi.nlm.nih.gov/pubmed/9521256 "Brown P, Cervenáková L, McShane L, Goldfarb LG, Bishop K, Bastian F, Kirkpatrick J, Piccardo P, Ghetti B, Gajdusek DC. Creutzfeldt-Jakob disease in a  husband and wife. Neurology. 1998 Mar;50(3):684-8. PubMed PMID: 9521256."
