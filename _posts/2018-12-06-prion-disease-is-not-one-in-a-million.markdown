@@ -19,7 +19,7 @@ To understand why there is confusion, we need to define three different terms fo
 | term | definition |
 | ---- | ---- |
 | **incidence** | the number of new cases of a given disease per year, per population |
-| **prevalence** | the number of people sick with a given disease at any given moment in time |
+| **prevalence** | the number of people sick with a given disease at any given moment in time, per population |
 | **lifetime risk** | the probability that a random person in the population will eventually develop a given disease |
 
 These metrics are all inter-related, of course, but they measure different things, and the numbers can turn out very different. Let's take a look at how the numbers shake out in prion disease.
