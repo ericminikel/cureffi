@@ -8,6 +8,8 @@ thumb120: http://www.cureffi.org/media/2018/09/lof_constraint_thumbnail.png
 summary200: "Large genetic datasets now allow us to quantify how well each human gene tolerates loss-of-function. Can this metric be used to predict adverse events of new drugs?"
 ---
 
+<b><i>This post (and much more) is now a bioRxiv pre-print: [[Minikel 2019]]. See [this post](/2019/01/28/using-human-lof-variants-to-evaluate-drug-targets/) for more information!</i></b>
+
 ![](/media/2018/09/q75x-igv.png)
 
 *Sequencing reads showing a nonsense variant in PRNP, a gene for which antisense oligonucleotides to lower expression are in development.*
@@ -154,4 +156,5 @@ The second question is, even if there were a more severe knockout phenotype, wou
 
 [Nagashima 2018]: https://www.ahajournals.org/doi/abs/10.1161/circ.118.suppl_18.S_566-b "BASIC SCIENCE VASCULAR BIOLOGY (ATHEROSCLEROSIS/HEMOSTASIS/LIPID METABOLISM) Abstract 5520: Lethal Hepatic Failure with Steatosis in Liver-Sepecific 3-Hydroxy-3-Methylglutaryl Coenzyme A Reductase Knockout Mice Shuichi* Nagashima , Hiroaki Yagyu , Fumiko Tazoe , Ken Ohashi , Manabu Takahashi , Kenta Okada , Michiaki Miyamoto , Shori Wang , Toshihiro Inaba , Kazuhiro Eto , Jun-ichi Osuga , and Shun Ishibashi Originally published22 Mar 2018Circulation. 2018;118:S_566"
 
+[Minikel 2019]: https://www.biorxiv.org/content/10.1101/530881v1 "Minikel EV, Karczewski KJ, Martin HC, Cummings BB, Whiffin N, Alfoldi J, Trembath RC, van Heel DA, Daly MJ, Schreiber SL, MacArthur DG. Evaluating potential drug targets through human loss-of-function genetic variation. bioRxiv. 2019 Jan 28;530881."
 
