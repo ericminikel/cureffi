@@ -200,7 +200,7 @@ After you poured off the final round of supernatant, you were left with pellets 
 
 The bad news, at least in the Caughey lab, is that it has been found that the column in the AKTA Explorer FPLC machine has just enough capacity to purify PrP from 750 mL worth of bacterial culture, but not quite enough to purify PrP from a whole 1L. Until now, you've been working with four Falcon tubes in parallel. If your pellets are unusually small for some reason, you could combine them all, but if they are a normal size, your best bet is to throw one in the -20&deg;C for a rainy day, and proceed with purifying the contents of just the other three. This <a href="http://en.wikipedia.org/wiki/User:FGBD/Hotdog_bun_deficit">hotdog bun deficit problem</a> is one of the more annoying chokepoints in the whole recombinology process.
 
-If you started making your GdnHCl solution last night, finish it today by Q.S.ing to 50 mL and filtering through a 0.22 &mu;m filter syringe. For the three pellets you're using, mix each with 14 mL of the 8M GdnHCl solution, and grind them up on the tissue homogenizer like last time. Then set them on the rotisserie for 50 minutes. 
+If you started making your GdnHCl solution last night, finish it today by Q.S.ing to 50 mL and filtering through a 0.22 &mu;m filter syringe. For the three pellets you're using, mix each with 14 mL of the 8M GdnHCl solution, and grind them up on the tissue homogenizer like last time. Then set them on the rotisserie for 50 minutes. (*Note added 2019-04-10: Since implementing this protocol at the Broad Institute, we have found that we get our best yields when we leave the PrP in 8M GdnHCl at 4&deg;C for at least one week. One theory is this gives the intramolecular disulfide bonds time to form. We've noticed that some published papers likewise specifically call for leaving PrP in guanidine for two or more days [[Mehlhorn 1996], [McDonald 2019]].*)
 
 In the meantime, while you are waiting for the PrP to denature, you can set up several other things. In the particular case of using the AKTA Explorer, you need to clean lines A and B with 5 minutes' flow of dH<sub>2</sub>O, adding these settings from the control software's Manual menu:
 
@@ -370,6 +370,11 @@ As shown above, at 130 mM NaCl, our batch of rMoPrP23-231 was plenty robust enou
 
 We owe a huge debt of gratitude to Andy Hughson, who patiently trained us on all of this and has spent countless hours fine-tuning this protocol.
 
+[Mehlhorn 1996]: https://www.ncbi.nlm.nih.gov/pubmed/8611544 "Mehlhorn I, Groth D, Stöckel J, Moffat B, Reilly D, Yansura D, Willett WS, Baldwin M, Fletterick R, Cohen FE, Vandlen R, Henner D, Prusiner SB. High-level expression and characterization of a purified 142-residue polypeptide of the prion protein. Biochemistry. 1996 Apr 30;35(17):5528-37. PubMed PMID: 8611544."
+
 [Fox & Blommel 2009]: http://www.ncbi.nlm.nih.gov/pubmed/19365792 "Fox BG, Blommel PG. Autoinduction of protein expression. Curr Protoc Protein Sci. 2009 Apr;Chapter 5:Unit 5.23. doi: 10.1002/0471140864.ps0523s56. PubMed PMID: 19365792."
 
 [Studier 2005]: http://www.ncbi.nlm.nih.gov/pubmed/15915565 "Studier FW. Protein production by auto-induction in high density shaking cultures. Protein Expr Purif. 2005 May;41(1):207-34. PubMed PMID: 15915565."
+
+[McDonald 2019]: https://www.ncbi.nlm.nih.gov/pubmed/30956132 "McDonald AJ, Leon DR, Markham KA, Wu B, Heckendorf CF, Schilling K, Showalter  HD, Andrews PC, McComb ME, Pushie MJ, Costello CE, Millhauser GL, Harris DA. Altered Domain Structure of the Prion Protein Caused by Cu(2+) Binding and Functionally Relevant Mutations: Analysis by Cross-Linking, MS/MS, and NMR. Structure. 2019 Mar 28. pii: S0969-2126(19)30086-3. doi: 10.1016/j.str.2019.03.008. [Epub ahead of print] PubMed PMID: 30956132."
+
