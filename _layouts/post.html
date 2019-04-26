@@ -9,6 +9,7 @@ layout: default
   </header>
 
   <article class="post-content">
+  {% if page.deprecated %}<table><tr><td><img class="size-full wp-image-3622 alignleft" alt="deprecated" src="/media/2019/04/deprecated.png"/><p style="text-align:center;"><strong>Read with caution!</strong></p><p>This post was written during early stages of trying to understand a complex scientific problem, and we didn't get everything right. The original author no longer endorses the content of this post. It is being left online for historical reasons, but read at your own risk.</p></td></tr></table></p>{% endif %}
   {{ content }}
   </article>
 
@@ -17,7 +18,7 @@ layout: default
   {% assign author = site.data.authors[page.author] %}
   
   <!-- Output author details if some exist. -->
-  {% if author %}
+  {% if author %}{% unless page.deprecated %}
       <div class="author-info">
             {% if author.image100 %}<div style="float: left; clear: left; padding-right: 15px;"><img src="{{ author.image100 }}" /></div>{% endif %}
             <div style="clear: none;">
@@ -30,7 +31,7 @@ layout: default
             </div> 
         </div> 
         <div style="clear: both;" />
-  {% endif %}
+  {% endunless %}{% endif %}
 </div>
 
 <div id="disqus_thread"></div>
