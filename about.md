@@ -5,7 +5,7 @@ header: true
 permalink: /about/
 ---
 
-![Eric Minikel](/imgs/e-2015-09-10-800x500.png)
+![Eric Minikel](/media/2019/04/e-2019-04-30.png)
 
 My name is **Eric Vallabh Minikel** and I’m on a lifelong quest to develop a treatment or cure for human prion diseases. I originally trained as a city planner at M.I.T. and was working as a software engineer and data analyst in the transportation sector when, in December 2011, I got some bad news. My wife and the love of my life, Sonia Vallabh, tested positive for a mutation (*PRNP* D178N cis-129M) that causes genetic prion disease, and that had claimed her mother's life one year earlier. Sonia was 27 at the time. The mean age of disease onset for her mutation is around 50, and the mutation is highly penetrant, meaning she is exceptionally likely to develop the disease unless a treatment or cure is found.
 
