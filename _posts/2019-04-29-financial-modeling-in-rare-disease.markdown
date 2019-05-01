@@ -32,7 +32,7 @@ To me, the biggest lesson from playing with this model has been to observe just 
 
 You can see at a glance that the total area of the black bars is greater than the total area of the red bars. This reflects the fact that, in nominal terms, the drug would be profitable &mdash; a company would stand to net $211 million by investing in this drug today.
 
-The devil is in the discounting and in the risk. Here is a plot of these factors impact the picture:
+The devil is in the discounting and in the risk. Here is a plot of how these factors impact the picture:
 
 ![](/media/2019/04/npv-discount-probability.png)
 
