@@ -30,7 +30,7 @@ To me, the biggest lesson from playing with this model has been to observe just 
 
 ![](/media/2019/04/npv-nominal.png)
 
-You can see at a glance that the total area of the black bars is greater than the total area of the red bars. This reflects the fact that, in nominal terms, the drug would be profitable &mdash; a company would stand to net $387 million by investing in this drug today.
+You can see at a glance that the total area of the black bars is greater than the total area of the red bars. This reflects the fact that, in nominal terms, the drug would be profitable &mdash; a company would stand to net $547 million by investing in this drug today.
 
 The devil is in the discounting and in the risk. Here is a plot of how these factors impact the picture:
 
@@ -46,7 +46,7 @@ Of course, some drugs are expected to be so cheap and quick to develop, so likel
 
 ![](/media/2019/04/npv-adjusted.png)
 
-Now you can tell at a glance that the area of the red bars is much greater than the area of the black bars &mdash; with lag time and risk accounted for, developing the drug is now expected to result in a net loss of $4 million in today's dollars. So this spreadsheet represents a drug that would not end up being developed.
+Now you can tell at a glance that the area of the red bars is much greater than the area of the black bars &mdash; with lag time and risk accounted for, developing the drug is now expected to result in a net loss of $6 million in today's dollars. So this spreadsheet represents a drug that would not end up being developed.
 
 What if that's the drug for your disease? What can you do about this? In the rest of this post, I will try to understand the major factors that go into each of the four principal variables in the model &mdash; revenue, cost, lag time, and probability of success &mdash; because therein might lie a mandate for what patient organizations and patient-scientists need to do in order to transform an impossible disease into a "developable" one.
 
@@ -65,7 +65,7 @@ What might patients be able to do to push these factors in the right direction? 
 The costs include everything a company puts into developing, producing, testing, and selling a drug. The nature and amount of costs vary a lot by the phase of the project [[Morgan 2011], [DiMasi 2016]]:
 
 + **Preclinical development costs.** These are the costs of inventing the drug and bringing it to the point of being ready for human testing. Depending on the type of drug, this could start from screening small molecule libraries or raising and humanizing an antibody; regardless, it probably ends with Good Laboratory Practices toxicity studies to enable Phase I. I have sometimes heard the claim that preclinical costs pale in comparison to clinical-phase costs, but I have yet to see data to back this up. In the Tufts study of drug development costs [[DiMasi 2016]], pre-human costs were just under half as much as clinical costs in out-of-pocket terms. But because preclinical costs are incurred earlier, they inflate more when you apply a discount rate, and so the "capitalized" costs for preclinical development were actually almost as high as for clinical development. Rather than preclinical costs being negligible, I think the truth is just that they are very hard to estimate. Many people won't even bother to do any modeling until they are ready to move to the clinical stage. In the spreadsheet I have used the simplistic approach of modeling preclinical costs based on a guess of how many staff with what salaries will be busy doing preclinical development for how many years.
-+ **Clinical development costs.** Models for clinical trials are basically cost per patient times number of patients, in each phase, plus some multiplier to account for salaries and other internal costs that the company must bear. Note that if your disease is rare, your trials are by necessity small, which &mdash; provided they're still feasible and well-powered &mdash; is actually an advantage.
++ **Clinical development costs.** Models for clinical trials are basically cost per patient times number of patients, in each phase (I used $41,000 per patient per year from [[Moore 2018]]), plus some multiplier to account for salaries and other internal costs that the company must bear. Note that if your disease is rare, your trials are by necessity small, which &mdash; provided they're still feasible and well-powered &mdash; is actually an advantage.
 + **Post-approval costs.** Detailed models might include a lot of things that are both boring and that you have no control over, like the pharma company's overhead rate, the cost of hiring a sales team to sell the drug, the costs of chemical synthesis or biological production, the distribution cold chain, and so on. There may also be royalty or IP costs. A common model is that the company (usually a major pharma) conducting clinical trials and eventually marketing the drug didn't invent the drug &mdash; instead, they are partnered with, or licensing IP from, a biotech startup or an academic medical center that helped develop the drug. Therefore, from the pharma company's perspective these partnership or licensing deals come through as a cost.
 
 Of all these different costs, what can patients exert any influence over? The biggest potential area that I see is to push on clinical trial size and duration. From the patient perspective, you may be thinking you want large trials because you want every patient in your community to have the chance to enroll, but what you want even more is small, quick, efficient trials that result in the drug being approved swiftly so that then everyone can take it, and this latter goal dovetails with the need for trials to be small enough to be feasible even if your disease is rare, and affordable enough for a company to bother investing in developing the drug in the first place.
@@ -116,5 +116,6 @@ There are a lot of caveats to everything in this post. Every disease is differen
 
 [DiMasi 2016]: https://www.ncbi.nlm.nih.gov/pubmed/26928437 "DiMasi JA, Grabowski HG, Hansen RW. Innovation in the pharmaceutical industry: New estimates of R&D costs. J Health Econ. 2016 May;47:20-33. doi: 10.1016/j.jhealeco.2016.01.012. Epub 2016 Feb 12. PubMed PMID: 26928437."
 
+[Moore 2018]: https://www.ncbi.nlm.nih.gov/pubmed/30264133 "Moore TJ, Zhang H, Anderson G, Alexander GC. Estimated Costs of Pivotal Trials for Novel Therapeutic Agents Approved by the US Food and Drug Administration, 2015-2016. JAMA Intern Med. 2018 Nov 1;178(11):1451-1457. doi: 10.1001/jamainternmed.2018.3931. PubMed PMID: 30264133; PubMed Central PMCID: PMC6248200."
 
 
