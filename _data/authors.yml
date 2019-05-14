@@ -2,6 +2,5 @@
 ericminikel:
     name: Eric Vallabh Minikel
     twitter: cureffi
-    linkedin: https://www.linkedin.com/in/ericminikel
-    image100: /imgs/e-100px.jpg
-    bio: '<a href="http://www.cureffi.org/about/">Eric Vallabh Minikel</a> is on a lifelong quest to cure human prion disease. He is a Harvard Medical School biology PhD student in the <a href="https://www.broadinstitute.org/chembio/lab_schreiber/home.php">Schreiber Lab</a> at the Broad Institute, and also works on human genomics in the <a href="http://macarthurlab.org/">MacArthur Lab</a>.'
+    image100: /imgs/e-100px.png
+    bio: '<a href="http://www.cureffi.org/about/">Eric Vallabh Minikel</a> is on a lifelong quest to prevent prion disease. He is a scientist based at the Broad Institute of MIT and Harvard.'
