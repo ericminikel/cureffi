@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Prion2019 Day 1: Biomarker Workshop"
+title:  "Prion2019 day 1: biomarker workshop"
 date:   2019-05-21 12:01:00
 author: ericminikel
 location: Edmonton, AB
