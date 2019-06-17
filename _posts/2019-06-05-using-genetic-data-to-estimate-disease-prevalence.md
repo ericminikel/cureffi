@@ -60,7 +60,7 @@ I would argue that circularity is a risk that one should be aware of, and much o
 
 All that being said, allele frequency information is only informative about how common a disease is, to the extent that you are confident about the penetrance of all the genetic variants being included.
 
-To see why this is so, first consider the simplest case: all cases of a disease are attributable to a single genetic variant, and that variant always causes the disease. Here, the lifetime risk in the general population is equal to the frequency of the disease-causing genotype. We'll call these variables P(D) for probability of developing disease, and P(G) for probability of disease-causing genotype. For allele frequency *p*, this means that for a recessive disease, P(D) = P(G) = p<sup>2</sup>, and for a dominant disease, P(D) = P(G) = 2p(1-p) &asymp; 2p.
+To see why this is so, first consider the simplest case: all cases of a disease are attributable to a single genetic variant, and that variant always causes the disease. Here, the lifetime risk in the general population is equal to the frequency of the disease-causing genotype. We'll call these variables P(D) for probability of developing disease, and P(G) for probability of disease-causing genotype. For allele frequency *p*, this means that for a recessive disease, P(D) = P(G) = p<sup>2</sup>. For a dominant disease, P(D) = P(G) = 2p(1-p) &asymp; 2p, or, if heterozygotes are fertile and homozygotes viable, P(D) = P(G) = p<sup>2</sup> + 2p(1-p) &asymp; 2p.
 
 Next suppose that the variant is not fully penetrant, but instead has penetrance between 0 and 1 denoted by P(D\|G), meaning, probability of developing disease given the causal genotype. Now, instead of just P(D) = P(G), we have P(D) = P(G) &times; P(D\|G).
 
