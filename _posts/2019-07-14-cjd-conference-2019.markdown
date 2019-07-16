@@ -3,7 +3,7 @@ layout: post
 title:  "CJD Foundation Family Conference 2019"
 date:   2019-07-14 12:01:00
 author: ericminikel
-location: Cambridge, MA
+location: Washington, D.C.
 thumb120: http://www.cureffi.org/media/2019/07/dc-2019-thumbnail.png
 summary200: "Plain language notes from the CJD Foundation Family Conference in Washington, D.C., July 12-14, 2019."
 ---
