@@ -68,6 +68,8 @@ Second, the treatments are not part of a clinical trial, and that means that the
 
 Everyone who has been touched by prion disease is desperate for there to be an effective treatment. This is the cause to which I have now devoted my life, and I am optimistic about the progress we can bring about in our lifetimes. But biomedical research is a slow, iterative process &mdash; getting a candidate therapeutic to its first-in-human dose takes years, and even after that, the path to an effective therapy is not always a straight line.
 
+*Update 2019-10-11: UCL has [announced](https://www.ucl.ac.uk/news/2019/oct/sixth-patient-receives-pioneering-treatment-cjd) that the 6th & final patient has begun receiving PRN100, and that 4 of the 6 patients treated so far have now died.*
+
 [Barber 1970]: https://www.ncbi.nlm.nih.gov/pubmed/4983875 "Barber TW, Brockway JA, Higgins LS. The density of tissues in and about the head. Acta Neurol Scand. 1970;46(1):85-92. PubMed PMID: 4983875."
 
 [Poduslo 1994]: https://www.ncbi.nlm.nih.gov/pubmed/8202551/ "Poduslo JF, Curran GL, Berg CT. Macromolecular permeability across the blood-nerve and blood-brain barriers. Proc Natl Acad Sci U S A. 1994 Jun 7;91(12):5705-9. PubMed PMID: 8202551; PubMed Central PMCID: PMC44065."
