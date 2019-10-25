@@ -5,7 +5,7 @@ date:   2019-10-25 12:01:00
 author: ericminikel
 location: Cambridge, MA
 thumb120: http://www.cureffi.org/media/2019/10/anastasia-khvorova-lecture-thumbnail.png
-summary200: ""
+summary200: "99% protein knockdown, 6 month durability, and broad brain distribution with fully chemically stabilized, divalent siRNAs."
 ---
 
 ![](/media/2019/10/anastasia-khvorova-lecture.png)
