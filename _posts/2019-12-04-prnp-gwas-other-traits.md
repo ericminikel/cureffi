@@ -98,7 +98,7 @@ A summary of these data (Table 1) reveals that only the two SNPs located physica
 | 20_4445885_G_A | -240,465 | 3 | hypertension \| Non-cancer illness code, self-reported, High ... | 9.4% |
 | 20_4599109_G_A | -87,241 | 1 | High light scatter reticulocyte percentage | 9.4% |
 | **20_4696446_G_A** | **10,096\*** | **2** | **Creutzfeldt-Jakob disease (variant), Creutzfeldt-Jakob disea...** | **28.7%** |
-| **20_4699605_A_G** | **13,255\*** | **1** | **Creutzfeldt-Jakob disease** | **40.0%** |
+| **20_4699605_A_G** | **13,255\*\*** | **1** | **Creutzfeldt-Jakob disease** | **40.0%** |
 | 20_4721739_G_A | 35,389 | 1 | Dark brown \| Hair colour (natural, before greying) | 8.9% |
 | 20_4795437_C_T | 109,087 | 1 | DNA methylation variation (age effect) | 7.5% |
 | 20_4805434_T_C | 119,084 | 1 | Breast cancer | 6.2% |
