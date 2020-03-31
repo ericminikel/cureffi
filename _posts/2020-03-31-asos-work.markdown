@@ -1,0 +1,160 @@
+---
+layout: post
+title:  "ASOs work"
+date:   2020-03-31 12:01:00
+author: ericminikel
+location: Cambridge, MA
+thumb120: http://www.cureffi.org//media/2020/03/dose-response-thumbnail.png
+summary200: "The data on efficacy of PrP-lowering ASOs in prion-infected mice support further advancement of ASOs towards the clinic."
+---
+
+### introduction
+
+Sonia and I have been working with Ionis Pharmaceuticals to advance antisense oligonucleotides (ASOs) to lower prion protein in the brain as a drug for prion disease. In the time since we [announced](http://www.prionalliance.org/2018/07/09/developing-an-antisense-drug-for-prion-disease/) this project publicly a couple of years ago, I've blogged about [what ASOs are](/2018/07/10/antisense-part-i-the-basics/), [how they work](/2018/07/25/antisense-part-ii-mechanisms-of-action/), their [chemical composition](/2018/08/28/antisense-part-iii-chemistries/), [distribution in the body and in cells](/2019/06/18/antisense-part-iv-pharmacokinetics-and-cell-biology/), and [safety profile](/2019/08/29/antisense-part-v-safety/). I've shared how our [biomarker development projects](/2019/04/04/measuring-prp-in-spinal-fluid-two-different-ways/) and [MGH clinical study](/2019/12/17/first-results-mgh-clinical-research-study/) tie into this drug development project, and [how we've interfaced with regulators](/2020/03/19/our-preventive-clinical-strategy/) to chart a path for clinical trials. In this post, I'll share the large body of evidence we've now amassed from our studies of ASOs in mice. We set out to ask whether ASOs work against prion disease, as well as how well they work, how they work, when they work, against what prion strains they work, and what outcomes they change for the mice.
+
+The short answer is the title of this post: ASOs work.
+
+More specifically:
+
++ ASOs are effective against prion disease.
++ They work by lowering PrP.
++ They are effective in proportion to how much they lower PrP.
++ They work against multiple prion strains.
++ If administered early and often, they are as good as knocking out one allele of the PrP gene.
++ If administered later on, they can still extend survival and affect disease-relevant biomarkers.
+
+All this we've learned from a large battery of mouse experiments conducted both in our lab at the Broad Institute, as well as by collaborators at NIAID Rocky Mountain Labs (Byron Caughey's lab) and McLaughlin Research Institute (Deborah Cabin's lab), presented in one paper published last year [[Raymond 2019]] and another just pre-printed this week [[Minikel 2020]].
+
+We believe that the evidence that now supports advancing ASOs into clinical trials is strong. Stronger than we've seen for any other therapeutic concept in prion disease that has come and gone in the eight years we've been at this. First and foremost, the data are just good &mdash; and that's what I'll spend most of this post on. In addition, the replication across three independent study sites lends a special credibility to our findings. We have sought to elevate our studies in terms of rigor and openness: in all but the first study we did at the Broad, all animal assessments were undertaken by technicians blinded to the animals' treatment status, and we have made athe raw, individual-level animal data available in public GitHub repositories ([aso_survival](https://github.com/ericminikel/aso_survival/) and [prp_lowering](https://github.com/ericminikel/prp_lowering/)). Importantly, the project has legs: Ionis Pharmaceuticals has publicly committed to developing an ASO drug for prion disease. Finally, to whatever extent that studies in mice can bear on studies in humans, I think the data lend optimism about the prospects for clinical development of ASOs, a topic I'll circle back to at the end.
+
+### ASOs work
+
+Here is the survival curve from the first mouse study that Sonia and I ever did:
+
+![](/media/2020/03/asos-work-1.png)
+
+*Adapted from [[Raymond 2019]] Figure 2.*
+
+We infected mice with prions, gave them 2 doses of ASO &mdash; one prophylactic and one follow-up dose &mdash; and they lived 61-76% longer than controls. And as far as we can tell, it was an extension of healthy life, as the mice maintained body weights on par with uninfected animals well past the point where controls died. At the same time that we were doing this, Byron Caughey's lab did a similar study with a very similar result:
+
+![](/media/2020/03/asos-work-2.png)
+
+*Adapted from [[Raymond 2019]] Figure 2.*
+
+Here, with 3 smaller doses, they extended survival by 81-98%. And again, the onset of disease, as defined by observation of symptoms, was likewise delayed, while the progression from onset to death was about the same regardless of treatment &mdash; healthy life was extended.
+
+### How ASOs work
+
+When we first met with Ionis scientists in 2014 to launch this project, one of the things they most wanted to see was evidence as to *how* their drugs worked against prion disease &mdash; what was the mechanism of action. Years earlier, they had previously collaborated with the Prusiner lab at UCSF, and so they already had some idea that ASOs worked [[Nazor Friberg 2012]]. But they had also seen evidence that ASOs, which are [designed to bind RNA]((/2018/07/25/antisense-part-ii-mechanisms-of-action/)), also happened to bind prion protein itself [[Kocisko 2006], [Karpuj 2007], [Nazor Friberg 2012]]. If this direct binding of the protein contributed to the efficacy of ASOs, that could make drug development complicated in all sorts of ways.
+
+But what we saw in the above studies is that only ASOs that have a sequence that is antisense to the PrP gene, and that lower PrP, are effective in mice. You can see that both we and Byron Caughey's lab included a control ASO (in brown) that does not target PrP RNA, and it didn't extend survival at all. Soon after, we replicated this finding with a new set of ASOs, of a different chemical composition, that Ionis sent us:
+
+![](/media/2020/03/asos-work-3.png)
+
+*Adapted from [[Minikel 2020]] Figure 1.*
+
+Once again, the ASO that wasn't designed to bind PrP RNA, and didn't lower PrP, did nothing.
+
+Why? We found it preplexing that there was so much evidence that ASOs bind PrP *in vitro* and in cell culture and yet that this didn't seem to do anything *in vivo*. We launched a whole series of *in vitro* studies to understand the interaction between ASOs and PrP [[Reidenbach & Minikel 2019]]. We confirmed that all the ASOs we were studying did bind PrP, and that the affinity was similar between our ASOs that did versus didn't work *in vivo*, as well as one of the ASOs the Prusiner lab had studied. But we also saw that when high concentrations of ASOs and PrP were mixed, they aggregated into big clumps, which we could characterize by various biophysical techniques but which we could also see with the naked eye &mdash; notie how the solution at right is cloudy:
+
+![](/media/2020/03/asos-work-4.png)
+
+*Adapted from [[Reidenbach & Minikel 2019] Figure 2.*
+
+Aggregation is often a source of misleading results in *in vitro* and cell culture assays. Compounds that aggregate or cause aggregation can often be "false positives" at least in some sense &mdash; which isn't to say they necessarily do nothing, but just that their activity is highly dependent on conditions in a way that makes them a lot less likely to translate from an *in vitro* system into *in vivo*. Indeed, we found that just upping the salt concentration to physiological conditions decreased the strength of the "binding" quite a bit. That doesn't mean that everything ever published about ASOs interacting with PrP is wrong &mdash; in fact, it's pretty clear that in cell culture, the direct binding of the protein does do something real. And in fact, Byron Caughey's lab showed years ago that, in animals *peripherally* infected with prions (the infection is introduced outside of the brain rather than directly into the brain), prophylactic doses of random oligo, not targeted to PrP RNA, could extend survival substantially [[Kocisko 2006]]. But when prions are in the brain, this does not seem to be the case. It could just be that conditions at the cell surface are different in the brain, and/or, it could just be pharmacokinetics: when ASOs are dosed periodically into cerebrospinal fluid, their concentration quickly drops below the nanomolar levels required for ASO-PrP binding. In any case, we've convinced ourselves and Ionis that the ASO-PrP binding is not a factor in how ASOs are effective *in vivo*, and that greatly simplifies their process of designing the drug and our process of thinking about [how a biomarker could read out the drug's effect](/2020/03/19/our-preventive-clinical-strategy/).
+
+### Dose-response
+
+We knew going in, from heterozygous knockout animals. that lowering PrP by 50% is enough to more than double survival time after prion infection [[Bueler 1994]]. But we often got the question, how much do you need to lower PrP to be successful? Is there some "threshold to effect"? To try to answer this question we did a dose-response experiment:
+
+![](/media/2020/03/asos-work-5.png)
+
+*Adapted from [[Minikel 2020]] Figure 2.*
+
+Even the lowest dose, which achieved just 21% knockdown, gave us a 15% increase in survival time. But survival time moved in lockstep with PrP lowering as we went to higher and higher doses. This is important because, as we think about CSF PrP as surrogate biomarker endpoint for clinical trials in prion disease, we will want to know how much we need to lower it in order to believe that we've impacted disease. Overall we think there are two take-homes here:
+
++ Lowering PrP by any amount is good
++ Lowering PrP by more is better
+
+### Strains
+
+Prion strains have been the stumbling block of some of the most promising antiprion compounds previously invented. The Prusiner lab's IND24 succeeded spectacularly against mouse RML prions but did nothing against human prions [[Berry 2013]]. Thus, figuring out if PrP-lowering ASOs work against multiple prion strains was particularly important to us. We haven't yet had the opportunity to evaluate ASOs against human prions in humanized mice, but we did evaluate five different mouse prion strains.
+
+We saw efficacy against five out of five prion strains tested [[Minikel 2020]]. The ASOs worked if given early, and they also still worked later on, though it was more complicated, with not all animals benefitting. In the ASO studies, we didn't see any big differences between strains. We also studied the course of prion disease from these five different strains in heterozygous knockout animals. Here, there appeared to be some difference of degree, but no difference of kind: heterozygous knockout was quite effective against some strains (increasing survival at least +63%) and wildly effective against others (increasing survival up to +163%), but overall, it was effective against all five prion strains. In one study, we also infected animals with prions from animals that had been treated with ASOs, to see if drug resistance had developed &mdash; but the ASOs still worked, so we did not see any evidence of drug resistance. Thus, just as we expected since PrP is the constituent of all prions regardless of strain, lowering PrP appears so far to be a universal strategy against prions.
+
+### Early chronic treatment
+
+In most of the studies above, we gave two doses of ASO. In the clinic, we expect that people would get a dose every few months, indefinitely. Presumably, keeping PrP low by dosing over and over is better than just lowering it transiently. We did a chronic dosing study to examine the limit of ASO efficacy with indefinite dosing, and to ask how late in progression towards disease the dosing could be initiated. We found that as long as ASO treatment was started early enough &mdash; anytime up to 78 dpi, around when early neuropathology becomes detectable, we could basically replicate the effect of heterozygous knockout, delaying disease by 3-fold ("early ASO" curve):
+
+![](/media/2020/03/asos-work-6.png)
+
+*Adapted from [[Minikel 2020]] Figure 5.*
+
+We also tried waiting longer, until 105 or 120 dpi ("late ASO" above), when neuropathology is prominent and symptoms may &mdash; depending on who you ask and what you measure, or even which mouse you test &mdash; be setting in. At these timepoints, in this particular study, we could only delay disease by about 19%. But the result in these later treatment studies turns out to depends a lot on what you measure and how long you follow the mice.
+
+### Late treatment
+
+In fact, our first glimpse of how ASOs can work later in prion disease came from an experiment Byron Caughey's lab did very early on. They gave mice a single dose of ASO at 120 days post-infection, a timepoint when, in their hands, the mice are just a couple weeks away from obvious symptoms. Here's what they saw:
+
+![](/media/2020/03/asos-work-7.png)
+
+*Adapted from [[Raymond 2019]] Figure 3.*
+
+Again, they saw efficacy &mdash; ASO 1 extended the time to terminal disease by about 55%. Some of that efficacy came from delaying onset (+33%) while some came from slowing the symptomatic course of disease (&#x7e;3x). We later did a nearly identical experiment at Broad, but with a different set of ASOs, and got almost the exact same result [[Minikel 2020]], again following the mice to terminal disease, which was delayed 68%. But in the study described in the previous section, where we followed mice to an endpoint of having five prion disease symptoms, we only delayed that endpoint by 19%. As far as we can tell, both are true: late intervention may delay symptoms, or slow the accumulation of early symptoms, by a bit, while it may also slow the progression from early symptoms to terminal disease by a more dramatic amount.
+
+An aside &mdash; at this 120 day timepoint, Byron's lab also found that ASO 2 was not tolerated at all (green curve above). Indeed, the ASOs used in our mice are all just tool compounds that did not go through nearly the level of optimization and toxicology testing that a clinical drug candidate goes through. Several of these tool compounds have tolerability issues when the mice are in a neuropathological stage of prion disease, which is a limitation in many of our studies.
+
+Our collaborator Deborah Cabin at McLaughlin Research Institute also conducted two studies in which she infected mice with prions, waited for a marker of neuropathology to rise, and then treated the mice with one dose of ASO. We were thrilled to see that it is possible to wait until you see neuronal damage, measured by plasma NfL levels, or astrocytosis, measured through live animal imaging, treat with ASO, and actually bring those markers back down:
+
+![](/media/2020/03/asos-work-8.png)
+
+*Adapted from [[Minikel 2020]] Figure 4.*
+
+All of these "late" timepoints, though, precede the development of what I would call obvious symptoms. I have looked in many cages of prion-infected mice at 120 days post-infection, and they generally look pretty normal. Occasionally I could point to reduced nest-building or lethargy and say, "are those mice getting sick?" but rarely could I be sure. Indeed, Dr. Cabin led a natural history study of these mice (included in our paper [[Minikel 2020]] but a topic for a future post) and, long story short, 120 days is right on the cusp of when, group-wise, you can just barely start to show statistical differences between infected and uninfected animals, but it doesn't mean that every animal is sick, nor that the illness is clear and unambiguous. So what if we treat even later, when the animals are clearly sick?
+
+We treated animals at timepoints of 120, 132, 143, and 156 days post-infection, and followed them to terminal disease. Even at 143 dpi, when every individual animal had begun to lose weight compared to its personal peak, we saw at least some efficacy:
+
+![](/media/2020/03/asos-work-9.png)
+
+*Adapted from [[Minikel 2020]] Figure 6.*
+
+At this stage, not every mouse benefitted. But you can see a hump in the survival curve &mdash; a minority of mice lived much longer than controls. People who study other diseases might at first glance dismiss this as "post-hockery" &mdash; after all, one can always concoct some weak yet true statement like "X% of mice lived longer than average". But anyone who's studied prion diseased mice knows that mice infected with this dose of prions simply are not going to be alive after 200 days unless a therapeutic worked. The standard deviation on endpoint in controls is 7 days, and the mice that outlived the controls outlived them by 85 days. Thus, our interpretation is that while some mice may have suffered from the poor tolerability of the ASO and/or were sick enough to hit their weight loss endpoint before the ASO kicked in, the ASO actually had a substantial effect on survival when it had time to kick in. It did not, unfortunately, reverse weight loss or symptoms or loss of nest-building, and when we tried dosing even later, at 156 dpi, ASO treatment did nothing. So there *is* such a thing as being too late to do any good, but in principle, PrP lowering can extend survival even at a frankly symptomatic disease stage.
+
+### conclusions
+
+When we first got into prion research, we thought the most promising things out there were the antiprion small molecules discovered in cell culture phenotypic screens. But of the four chemical series being explored back then &mdash; 2-aminothiazoles, arylamides, cpd-b, and anle138b &mdash; none have been advanced clinically for prion disease. (Anle138b is now in a Phase I trial in healthy volunteers, [NCT04208152](https://clinicaltrials.gov/ct2/show/NCT04208152), but is being developed for multiple system atrophy and not PrP prion disease). In the post-mortem, I think most researchers would argue that the main roadblock was strain specificity: all four series turned out to be effective against mouse but not human prion strains [[Berry 2013], [Lu & Giles 2013], [Giles 2015], [Giles 2016]].
+
+But I want to argue that these compounds actually had another roadblock ahead of them too: the lack of a well-supported path for clinical development in prion disease. Imagine an alternate universe where IND24 *had* turned out to work against human prions in humanized mice. One could try to test it in symptomatic prion disease patients, but this would truly be a Hail Mary, because, in mice, IND24 loses its efficacy around 90 days post-infection, well before the onset of first symptoms [[Giles 2015]]. Sure, mice aren't humans, and things that work in mice often fail in humans, but, the cynic in me says that things that fail in mice don't often turn out to work in humans. Alternatively, one could try treating pre-symptomatic individuals at risk for prion disease. This is well-supported by the *in vivo* data, as IND24, after all, could quadruple survival time in prion-infected mice if given prophylactically [[Giles 2015]]. But then what on Earth do you measure to figure out whether the drug worked? It's numerically impractical to randomize pre-symptomatic people all the way to symptom onset [[Minikel 2019]]. IND24 does impact neuropathological markers such as NfL [[Hirouchi 2019]], which is promising. But practically speaking, the data so far suggest that, cross-sectionally, not many pre-symptomatic mutation carriers are in a prodromal neuropathological state at any given time [[Vallabh 2019]]. Too few, probably, for a neuropathological biomarker to be the sole basis for a clinical trial today, though one could certainly play a supporting role, and it is certainly worth further study to see if we can identify earlier markers.
+
+Against this backdrop, I believe that the *in vivo* data we now have in hand provide a basis for two potential clinical paths for ASOs, or any other PrP-lowering drug, in prion disease. First, there is some potential for efficacy at a symptomatic disease stage. I take this with a lot of caveats because we don't know how mouse timepoints relate to human timepoints and there is a risk of recruiting patients too late, when the drug may no longer be effective, or no longer be as effective as it could be. So treating sick patients shouldn't be our only plan, but the *in vivo* data do suggest a possibility of efficacy. Moreover, the fact that ASOs can actually reverse neuropathological biomarkers could provide additional molecular readouts in such a trial. Second, PrP lowering is at its most effective in pre-symptomatic disease stages, before prominent neuropathology. Because most mutation carriers have normal biomarker profiles at any given time [[Vallabh 2019]], we have a real opportunity in the clinic to intercept at-risk people at a stage before neuropathology has set in. In this population, CSF PrP could be used to read out the effect of an ASO or other PrP-lowering drug, and all our *in vivo* data suggest that lowering PrP should dose-dependently predict a delay in disease, supporting the use of this biomarker as a surrogate primary endpoint. And if some fraction of these pre-symptomatic people *do* turn out to have elevated NfL or other prodromal biomarkers, a potential reversal of those markers could provide excellent supporting data as a secondary or exploratory endpoint.
+
+Generating the data described above consumed a large fraction of the last three years of our lives. The reward is that, while PrP lowering was already a well-supported strategy, I now believe we have much more deeply validated this therapeutic hypothesis and established the parameters that govern its efficacy. While much work still lies ahead to get ASOs into clinical trials, I am more optimistic than ever about our prospects for a practical therapy for prion disease.
+
+[Bueler 1994]: https://www.ncbi.nlm.nih.gov/pubmed/8790598 "Büeler H, Raeber A, Sailer A, Fischer M, Aguzzi A, Weissmann C. High prion and PrPSc levels but delayed onset of disease in scrapie-inoculated mice heterozygous for a disrupted PrP gene. Mol Med. 1994 Nov;1(1):19-30. PubMed PMID: 8790598; PubMed Central PMCID: PMC2229922."
+
+[Kocisko 2006]: https://www.ncbi.nlm.nih.gov/pubmed/16495266 "Kocisko DA, Vaillant A, Lee KS, Arnold KM, Bertholet N, Race RE, Olsen EA, Juteau JM, Caughey B. Potent antiscrapie activities of degenerate phosphorothioate oligonucleotides. Antimicrob Agents Chemother. 2006 Mar;50(3):1034-44. PubMed PMID: 16495266; PubMed Central PMCID: PMC1426446."
+
+[Karpuj 2007]: https://www.ncbi.nlm.nih.gov/pubmed/17592554 "Karpuj MV, Giles K, Gelibter-Niv S, Scott MR, Lingappa VR, Szoka FC, Peretz D, Denetclaw W, Prusiner SB. Phosphorothioate oligonucleotides reduce PrP levels and prion infectivity in cultured cells. Mol Med. 2007 Mar-Apr;13(3-4):190-8. PubMed  PMID: 17592554; PubMed Central PMCID: PMC1892763."
+
+[Nazor Friberg 2012]: https://www.ncbi.nlm.nih.gov/pubmed/23344724 "Nazor Friberg K, Hung G, Wancewicz E, Giles K, Black C, Freier S, Bennett F, Dearmond SJ, Freyman Y, Lessard P, Ghaemmaghami S, Prusiner SB. Intracerebral Infusion of Antisense Oligonucleotides Into Prion-infected Mice. Mol Ther Nucleic Acids. 2012 Feb 7;1:e9. doi: 10.1038/mtna.2011.6. PubMed PMID: 23344724; PubMed Central PMCID: PMC3381600."
+
+[Lu & Giles 2013]: https://www.ncbi.nlm.nih.gov/pubmed/23965382 "Lu D, Giles K, Li Z, Rao S, Dolghih E, Gever JR, Geva M, Elepano ML, Oehler A, Bryant C, Renslo AR, Jacobson MP, Dearmond SJ, Silber BM, Prusiner SB. Biaryl amides and hydrazones as therapeutics for prion disease in transgenic mice. J Pharmacol Exp Ther. 2013 Nov;347(2):325-38. doi: 10.1124/jpet.113.205799. Epub 2013 Aug 21. PubMed PMID: 23965382; PubMed Central PMCID: PMC3807058."
+
+[Berry 2013]: https://www.ncbi.nlm.nih.gov/pubmed/24128760 "Berry DB, Lu D, Geva M, Watts JC, Bhardwaj S, Oehler A, Renslo AR, DeArmond SJ, Prusiner SB, Giles K. Drug resistance confounding prion therapeutics. Proc Natl Acad Sci U S A. 2013 Oct 29;110(44):E4160-9. doi: 10.1073/pnas.1317164110. Epub 2013 Oct 15. PubMed PMID: 24128760; PubMed Central PMCID: PMC3816483."
+
+[Giles 2015]: https://www.ncbi.nlm.nih.gov/pubmed/26224882 "Giles K, Berry DB, Condello C, Hawley RC, Gallardo-Godoy A, Bryant C, Oehler A, Elepano M, Bhardwaj S, Patel S, Silber BM, Guan S, DeArmond SJ, Renslo AR, Prusiner SB. Different 2-Aminothiazole Therapeutics Produce Distinct Patterns of  Scrapie Prion Neuropathology in Mouse Brains. J Pharmacol Exp Ther. 2015 Oct;355(1):2-12. doi: 10.1124/jpet.115.224659. Epub 2015 Jul 29. PubMed PMID: 26224882; PubMed Central PMCID: PMC4576665."
+
+[Giles 2016]: https://www.ncbi.nlm.nih.gov/pubmed/27317802 "Giles K, Berry DB, Condello C, Dugger BN, Li Z, Oehler A, Bhardwaj S, Elepano  M, Guan S, Silber BM, Olson SH, Prusiner SB. Optimization of Aryl Amides that Extend Survival in Prion-Infected Mice. J Pharmacol Exp Ther. 2016 Sep;358(3):537-47. doi: 10.1124/jpet.116.235556. Epub 2016 Jun 17. PubMed PMID: 27317802; PubMed Central PMCID: PMC4998675."
+
+[Hirouchi 2019]: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6738495/ "Prion 2019 Abstract 210. Neurofilament light chain (NfL) as a possible biomarker for drug efficacy in mouse models of neurodegenerative diseases. Masakazu Hirouchi, Atsushi Aoyagi, Annalise Bond, Kurt Giles, Carlo Condello and Stanley B. Prusiner. In: Westaway, Schaetzl & Keough, PRION 2019 emerging concepts, https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6738495/"
+
+[Raymond 2019]: https://www.ncbi.nlm.nih.gov/pubmed/31361599 "Raymond GJ, Zhao HT, Race B, Raymond LD, Williams K, Swayze EE, Graffam S, Le  J, Caron T, Stathopoulos J, O'Keefe R, Lubke LL, Reidenbach AG, Kraus A, Schreiber SL, Mazur C, Cabin DE, Carroll JB, Minikel EV, Kordasiewicz H, Caughey  B, Vallabh SM. Antisense oligonucleotides extend survival of prion-infected mice. JCI Insight. 2019 Jul 30;5. pii: 131175. doi: 10.1172/jci.insight.131175. PubMed  PMID: 31361599; PubMed Central PMCID: PMC6777807."
+
+[Minikel 2019]: https://www.ncbi.nlm.nih.gov/pubmed/31171647 "Minikel EV, Vallabh SM, Orseth MC, Brandel JP, Haïk S, Laplanche JL, Zerr I, Parchi P, Capellari S, Safar J, Kenny J, Fong JC, Takada LT, Ponto C, Hermann P,  Knipper T, Stehmann C, Kitamoto T, Ae R, Hamaguchi T, Sanjo N, Tsukamoto T, Mizusawa H, Collins SJ, Chiesa R, Roiter I, de Pedro-Cuesta J, Calero M, Geschwind MD, Yamada M, Nakamura Y, Mead S. Age at onset in genetic prion disease and the design of preventive clinical trials. Neurology. 2019 Jul 9;93(2):e125-e134. doi: 10.1212/WNL.0000000000007745. Epub 2019 Jun 6. PubMed PMID: 31171647; PubMed Central PMCID: PMC6656649."
+
+[Reidenbach & Minikel 2019]: https://www.ncbi.nlm.nih.gov/pubmed/31861275 "Reidenbach AG, Minikel EV, Zhao HT, Guzman SG, Leed AJ, Mesleh MF, Kordasiewicz HB, Schreiber SL, Vallabh SM. Characterization of the Prion Protein  Binding Properties of Antisense Oligonucleotides. Biomolecules. 2019 Dec 18;10(1). pii: E1. doi: 10.3390/biom10010001. PubMed PMID: 31861275; PubMed Central PMCID: PMC7022474."
+
+[Vallabh 2019]: http://dx.doi.org/10.1101/2019.12.13.19014217 "Vallabh SM, Minikel EV, Williams VJ, Carlyle R, McManus AJ, Wennick CD, Bolling A, Trombetta BA, Urick D, Nobuhara CK, Gerber J, Duddy H, Lachmann I, Stehmann C, Collins SJ, Blennow K, Zetterberg H, Arnold SE. Cerebrospinal fluid and plasma biomarkers in individuals at risk for genetic prion disease. medRxiv. 2019 Dec 15. http://dx.doi.org/10.1101/2019.12.13.19014217"
+
+[Minikel 2020]: https://doi.org/10.1101/2020.03.27.011940 "Minikel EV, Zhao HT, Le J, O’Moore J, Pitstick R, Graffam S, Carlson GA, Kriz J, Kim JB, Ma J, Wille H, Aiken J, McKenzie D, Doh-ura K, Beck M, O’Keefe R, Stathopoulos J, Caron T, Schreiber SL, Carroll JB, Kordasiewicz HB, Cabin DE, Vallabh SM. Prion protein lowering is a disease-modifying therapy across prion strains, disease stages, and endpoints. bioRxiv. 2020 Jan 1;2020.03.27.011940."
+
