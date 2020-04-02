@@ -55,7 +55,7 @@ But what we saw in the above studies is that only ASOs that have a sequence that
 
 Once again, the ASO that wasn't designed to bind PrP RNA, and didn't lower PrP, did nothing.
 
-Why? We found it preplexing that there was so much evidence that ASOs bind PrP *in vitro* and in cell culture and yet that this didn't seem to do anything *in vivo*. We launched a whole series of *in vitro* studies to understand the interaction between ASOs and PrP [[Reidenbach & Minikel 2019]]. We confirmed that all the ASOs we were studying did bind PrP, and that the affinity was similar between our ASOs that did versus didn't work *in vivo*, as well as one of the ASOs the Prusiner lab had studied. But we also saw that when high concentrations of ASOs and PrP were mixed, they aggregated into big clumps, which we could characterize by various biophysical techniques but which we could also see with the naked eye &mdash; notie how the solution at right is cloudy:
+Why? We found it preplexing that there was so much evidence that ASOs bind PrP *in vitro* and in cell culture and yet that this didn't seem to do anything *in vivo*. We launched a whole series of *in vitro* studies to understand the interaction between ASOs and PrP [[Reidenbach & Minikel 2019]]. We confirmed that all the ASOs we were studying did bind PrP, and that the affinity was similar between our ASOs that did versus didn't work *in vivo*, as well as one of the ASOs the Prusiner lab had studied. But we also saw that when high concentrations of ASOs and PrP were mixed, they aggregated into big clumps, which we could characterize by various biophysical techniques but which we could also see with the naked eye &mdash; notice how the solution at right is cloudy:
 
 ![](/media/2020/03/asos-work-4.png)
 
