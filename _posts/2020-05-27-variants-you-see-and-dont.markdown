@@ -86,19 +86,19 @@ For me personally, the most important take-home here has been how lucky we are t
 
 [Samocha 2017]: https://doi.org/10.1101/148353 "Kaitlin E. Samocha, Jack A. Kosmicki, Konrad J. Karczewski, Anne H. O’Donnell-Luria, Emma Pierce-Hoffman, Daniel G. MacArthur, Benjamin M. Neale, Mark J. Daly bioRxiv 148353; doi: https://doi.org/10.1101/148353"
 
-[Karczewski 2020]: https://doi.org/10.1038/s41586-020-2308-7 "Karczewski, K. J. et al. The mutational constraint spectrum quantified from variation in 141,456 humans. Naturehttps://doi.org/10.1038/s41586-020-2308-7 (2020)."
+[Karczewski 2020]: https://www.nature.com/articles/s41586-020-2308-7 "Karczewski, K. J. et al. The mutational constraint spectrum quantified from variation in 141,456 humans. Naturehttps://doi.org/10.1038/s41586-020-2308-7 (2020)."
 
-[Minikel 2020]: https://doi.org/10.1038/s41586-020-2267-z "Minikel, E. V. et al. Evaluating drug targets through human loss-of-function genetic variation. Naturehttps://doi.org/10.1038/s41586-020-2267-z (2020)."
+[Minikel 2020]: https://www.nature.com/articles/s41586-020-2267-z "Minikel, E. V. et al. Evaluating drug targets through human loss-of-function genetic variation. Naturehttps://doi.org/10.1038/s41586-020-2267-z (2020)."
 
-[Cummings 2020]: https://doi.org/10.1038/s41586-020-2329-2 "Cummings, B. B. et al. Transcript expression-aware annotation improves rare variant interpretation. Naturehttps://doi.org/10.1038/s41586-020-2329-2 (2020)."
+[Cummings 2020]: https://www.nature.com/articles/s41586-020-2329-2 "Cummings, B. B. et al. Transcript expression-aware annotation improves rare variant interpretation. Naturehttps://doi.org/10.1038/s41586-020-2329-2 (2020)."
 
-[Whiffin 2020a]: https://doi.org/10.1038/s41591-020-0893-5 "Whiffin, N. et al. The effect of LRRK2 loss-of-function variants in humans. Nature Med. https://doi.org/10.1038/s41591-020-0893-5 (2020)."
+[Whiffin 2020a]: https://www.nature.com/articles/s41591-020-0893-5 "Whiffin, N. et al. The effect of LRRK2 loss-of-function variants in humans. Nature Med. https://doi.org/10.1038/s41591-020-0893-5 (2020)."
 
-[Whiffin 2020b]: https://doi.org/10.1038/s41467-019-10717-9 "Whiffin, N. et al. Characterising the loss-of-function impact of 5′ untranslated region variants in whole genome sequence data from 15,708 individuals. Nat. Commun. https://doi.org/10.1038/s41467-019-10717-9 (2019)."
+[Whiffin 2020b]: https://www.nature.com/articles/s41467-019-10717-9 "Whiffin, N. et al. Characterising the loss-of-function impact of 5′ untranslated region variants in whole genome sequence data from 15,708 individuals. Nat. Commun. https://doi.org/10.1038/s41467-019-10717-9 (2019)."
 
-[Collins & Brand 2020]: https://doi.org/10.1038/s41586-020-2287-8 "Collins, R. L. et al. A structural variation reference for medical and population genetics. Naturehttps://doi.org/10.1038/s41586-020-2287-8 (2020)."
+[Collins & Brand 2020]: https://www.nature.com/articles/s41586-020-2287-8 "Collins, R. L. et al. A structural variation reference for medical and population genetics. Naturehttps://doi.org/10.1038/s41586-020-2287-8 (2020)."
 
-[Wang 2020]: https://doi.org/10.1038/s41467-019-12438-5 "Wang, Q. et al. Landscape of multi-nucleotide variants in 125,748 human exomes and 15,708 genomes. Nat. Commun. https://doi.org/10.1038/s41467-019-12438-5 (2020)."
+[Wang 2020]: https://www.nature.com/articles/s41467-019-12438-5 "Wang, Q. et al. Landscape of multi-nucleotide variants in 125,748 human exomes and 15,708 genomes. Nat. Commun. https://doi.org/10.1038/s41467-019-12438-5 (2020)."
 
 
 
