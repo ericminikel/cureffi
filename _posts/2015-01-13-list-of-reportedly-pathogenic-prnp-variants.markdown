@@ -14,7 +14,7 @@ Today I set out to compile an exhaustive list of rare variants in *PRNP* which h
 + I compiled this list by reading two reviews [[Kong 2004], [Beck 2010]] and [OMIM #176640](http://www.omim.org/entry/176640) and by searching PubMed for new reports since 2010. After initial publication of this post, Simon Mead pointed out a few variants I had missed. Co-authors of [[Minikel 2016]] later pointed out further edits. As of the last updated date below, I think this is complete but if you know of something I missed, please leave a comment below.
 + I excluded any variants known to have an allele frequency >0.5% in at least one continental population, including 1-OPRD [[Palmer 1993]], and [G54S](http://exac.broadinstitute.org/variant/20-4680026-G-A), [M129V](http://exac.broadinstitute.org/variant/20-4680251-A-G), [G142S](http://exac.broadinstitute.org/variant/20-4680290-G-A), [N171S](http://exac.broadinstitute.org/variant/20-4680378-A-G), and [E219K](http://exac.broadinstitute.org/variant/20-4680521-G-A).
 
-**Last updated 2018-07-11, now contains 69 variants.**
+**Last updated 2020-06-09, now contains 71 variants.**
 
 | variant | first report | see also |
 | ---- | ---- | ---- |
@@ -40,6 +40,7 @@ Today I set out to compile an exhaustive list of rare variants in *PRNP* which h
 | A117V | [Tateishi 1990](http://www.ncbi.nlm.nih.gov/pubmed/1699173) | [Hsiao 1991](http://www.ncbi.nlm.nih.gov/pubmed/1674116) |
 | 129insLGGLGGYV | [Hinnell 2011](http://www.ncbi.nlm.nih.gov/pubmed/21282596) |  |
 | G131V | [Panegyres 2001](http://www.ncbi.nlm.nih.gov/pubmed/11709001) | [Jansen 2012](http://www.ncbi.nlm.nih.gov/pubmed/22558438) |
+| G131R | [Alshaikh 2020] | |
 | S132I | [Hilton 2009](http://www.ncbi.nlm.nih.gov/pubmed/19187063) |  |
 | A133V | [Rowe 2007](http://www.ncbi.nlm.nih.gov/pubmed/17353478) |  |
 | Y145X | [Kitamoto 1993](http://www.ncbi.nlm.nih.gov/pubmed/8097911) |  |
@@ -60,6 +61,7 @@ Today I set out to compile an exhaustive list of rare variants in *PRNP* which h
 | T188A | [Collins 2000](http://www.ncbi.nlm.nih.gov/pubmed/10891990) |  |
 | T188K | [Finckh 2000](http://www.ncbi.nlm.nih.gov/pubmed/10631141/) | [Roeber 2008](http://www.ncbi.nlm.nih.gov/pubmed/18478114/) |
 | T188R | [Windl 1999](http://www.ncbi.nlm.nih.gov/pubmed/10987652) | [Roeber 2008](http://www.ncbi.nlm.nih.gov/pubmed/18478114/), [Tartaglia 2010](http://www.ncbi.nlm.nih.gov/pubmed/21107135/) |
+| V189I | [Di Fede 2019](https://www.ncbi.nlm.nih.gov/pubmed/30606247) | |
 | T193I | [Kotta 2006](http://www.ncbi.nlm.nih.gov/pubmed/17129366) |  |
 | E196A | [Zhang 2014](http://www.ncbi.nlm.nih.gov/pubmed/23787189) |  |
 | E196K | [Peoc'h 2000](http://www.ncbi.nlm.nih.gov/pubmed/10790216) |  |
@@ -81,6 +83,7 @@ Today I set out to compile an exhaustive list of rare variants in *PRNP* which h
 | Q217R | [Hsiao 1992](http://www.ncbi.nlm.nih.gov/pubmed/1363810) |  |
 | Y218N | [Alzualde 2010](http://www.ncbi.nlm.nih.gov/pubmed/20613639) |  |
 | A224V | [Watts 2015](http://www.ncbi.nlm.nih.gov/pubmed/26094969)\* |  |
+| Y225C | [Bagyinszky & Yang 2019] | |
 | Y226X | [Jansen 2010](http://www.ncbi.nlm.nih.gov/pubmed/19911184) |  |
 | Q227X | [Jansen 2010](http://www.ncbi.nlm.nih.gov/pubmed/19911184) |  |
 | M232R | [Hitoshi 1993](http://www.ncbi.nlm.nih.gov/pubmed/8138811) | [Hoque 1996](http://www.ncbi.nlm.nih.gov/pubmed/8922054) |
@@ -97,5 +100,10 @@ Today I set out to compile an exhaustive list of rare variants in *PRNP* which h
 [Palmer 1993]: http://www.ncbi.nlm.nih.gov/pubmed/8100163 "Palmer MS, Mahal SP, Campbell TA, Hill AF, Sidle KC, Laplanche JL, Collinge J. Deletions in the prion protein gene are not associated with CJD. Hum Mol Genet. 1993 May;2(5):541-4. PubMed PMID: 8100163."
 
 [Minikel 2016]: http://www.ncbi.nlm.nih.gov/pubmed/26791950 "Minikel EV, Vallabh SM, Lek M, Estrada K, Samocha KE, Sathirapongsasuti JF, McLean CY, Tung JY, Yu LP, Gambetti P, Blevins J, Zhang S, Cohen Y, Chen W, Yamada M, Hamaguchi T, Sanjo N, Mizusawa H, Nakamura Y, Kitamoto T, Collins SJ, Boyd A, Will RG, Knight R, Ponto C, Zerr I, Kraus TF, Eigenbrod S, Giese A, Calero M, de Pedro-Cuesta J, Haïk S, Laplanche JL, Bouaziz-Amar E, Brandel JP, Capellari S, Parchi P, Poleggi A, Ladogana A, O'Donnell-Luria AH, Karczewski KJ,  Marshall JL, Boehnke M, Laakso M, Mohlke KL, Kähler A, Chambert K, McCarroll S, Sullivan PF, Hultman CM, Purcell SM, Sklar P, van der Lee SJ, Rozemuller A, Jansen C, Hofman A, Kraaij R, van Rooij JG, Ikram MA, Uitterlinden AG, van Duijn  CM; Exome Aggregation Consortium (ExAC), Daly MJ, MacArthur DG. Quantifying prion disease penetrance using large population control cohorts. Sci Transl Med. 2016 Jan 20;8(322):322ra9. doi: 10.1126/scitranslmed.aad5169. PubMed PMID: 26791950."
+
+[Bagyinszky & Yang 2019]: https://www.ncbi.nlm.nih.gov/pubmed/31447551 "Bagyinszky E, Yang Y, Giau VV, Youn YC, An SSA, Kim S. Novel prion mutation (p.Tyr225Cys) in a Korean patient with atypical Creutzfeldt-Jakob disease. Clin Interv Aging. 2019 Aug 2;14:1387-1397. doi: 10.2147/CIA.S210909. eCollection 2019. PubMed PMID: 31447551; PubMed Central PMCID: PMC6683949."
+
+
+[Alshaikh 2020]: https://doi.org/10.1212/NXG.0000000000000454 "Jumana T. Alshaikh, Kefeng Qin, Lili Zhao, James A. Mastrianni. A novel PRNP-G131R variant associated with familial prion disease. Neurol Genet Aug 2020, 6 (4) e454; DOI: 10.1212/NXG.0000000000000454"
 
 
