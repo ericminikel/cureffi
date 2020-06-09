@@ -4,7 +4,7 @@ title:  "List of reportedly pathogenic PRNP variants"
 date:   2015-01-13 12:00
 author: ericminikel
 location: Boston, MA
-summary200: "65 different genetic variants in the PRNP gene have been reported to cause prion disease, including missense, nonsense, frameshift, and in-frame insertion and deletions."
+summary200: "72 different genetic variants in the PRNP gene have been reported to cause prion disease, including missense, nonsense, frameshift, and in-frame insertion and deletions."
 ---
 
 Today I set out to compile an exhaustive list of rare variants in *PRNP* which have been reported to be pathogenic. I am posting this list here as a reference. Here are some disclaimers:
@@ -14,7 +14,7 @@ Today I set out to compile an exhaustive list of rare variants in *PRNP* which h
 + I compiled this list by reading two reviews [[Kong 2004], [Beck 2010]] and [OMIM #176640](http://www.omim.org/entry/176640) and by searching PubMed for new reports since 2010. After initial publication of this post, Simon Mead pointed out a few variants I had missed. Co-authors of [[Minikel 2016]] later pointed out further edits. As of the last updated date below, I think this is complete but if you know of something I missed, please leave a comment below.
 + I excluded any variants known to have an allele frequency >0.5% in at least one continental population, including 1-OPRD [[Palmer 1993]], and [G54S](http://exac.broadinstitute.org/variant/20-4680026-G-A), [M129V](http://exac.broadinstitute.org/variant/20-4680251-A-G), [G142S](http://exac.broadinstitute.org/variant/20-4680290-G-A), [N171S](http://exac.broadinstitute.org/variant/20-4680378-A-G), and [E219K](http://exac.broadinstitute.org/variant/20-4680521-G-A).
 
-**Last updated 2020-06-09, now contains 71 variants.**
+**Last updated 2020-06-09, now contains 72 variants.**
 
 | variant | first report | see also |
 | ---- | ---- | ---- |
@@ -63,6 +63,7 @@ Today I set out to compile an exhaustive list of rare variants in *PRNP* which h
 | T188R | [Windl 1999](http://www.ncbi.nlm.nih.gov/pubmed/10987652) | [Roeber 2008](http://www.ncbi.nlm.nih.gov/pubmed/18478114/), [Tartaglia 2010](http://www.ncbi.nlm.nih.gov/pubmed/21107135/) |
 | V189I | [Di Fede 2019](https://www.ncbi.nlm.nih.gov/pubmed/30606247) | |
 | T193I | [Kotta 2006](http://www.ncbi.nlm.nih.gov/pubmed/17129366) |  |
+| K194E | [Takada 2017](https://www.ncbi.nlm.nih.gov/pubmed/27943639) | |
 | E196A | [Zhang 2014](http://www.ncbi.nlm.nih.gov/pubmed/23787189) |  |
 | E196K | [Peoc'h 2000](http://www.ncbi.nlm.nih.gov/pubmed/10790216) |  |
 | F198S | [Farlow 1989](http://www.ncbi.nlm.nih.gov/pubmed/2812321) | [Hsiao 1992](http://www.ncbi.nlm.nih.gov/pubmed/1363810) |
