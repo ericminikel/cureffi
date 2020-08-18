@@ -5,7 +5,7 @@ date:   2020-08-18 12:01:00
 author: ericminikel
 location: Cambridge, MA
 thumb120: http://www.cureffi.org/media/2020/08/plasma-nfl-thumbnail.png
-summary200: "New data suggest prodromal change up to 2 years before onset in some people, but any use in clinical trials or treatment plans must first account for genotype, age, and the cross-sectional picture."
+summary200: "New data suggest prodromal change up to 2 years before onset in some people. Application in clinical trials or treatment plans must first account for genotype, age, and the cross-sectional picture."
 ---
 
 ![](/media/2020/08/queen-square.png)
