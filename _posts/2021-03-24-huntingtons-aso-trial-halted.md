@@ -46,11 +46,11 @@ But, many of you who are still reading this post are here because your family ha
 
 So consider one such worst case scenario. You're a patient with an incurable disease and high hopes for a new type of drug. The therapeutic hypothesis is rock solid &mdash; lowering the causal protein &mdash; and the drug gets to Phase III. Then, the sky falls: the iDMC stops the trial on finding that there have been 18 deaths in the drug group and just 2 in the placebo group. No one knows why these people died, but somehow, the unthinkable has happened: the drug is much, much worse than nothing. Is all hope lost? This all happened in 2016. The disease: transthyretin amyloidosis. The new drug modality: RNAi. The drug candidate: revusiran, which targets _TTR_. The [sky fell](https://www.fiercebiotech.com/biotech/alnylam-plunges-after-deaths-sees-it-pull-phiii-blockbuster-candidate-revusiran), and to this day, no one knows for sure why more people died on drug [[Judge 2020]]. Alnylam's stock lost 50% overnight. But it was all the dark before dawn. They [pivoted](https://www.nature.com/articles/nrd.2016.226). All it took was two years' time and a different delivery mechanism (intravenous nanoparticle-encapsulated RNA rather than subcutaneous GalNAc-conjuagated RNA). In 2018, [patisiran](/2018/08/13/fda-approval-of-the-first-rnai-drug/) proved effective at lowering _TTR_ and improving outcomes in transthyretin amyloidosis, and it became the first approved RNAi drug. And by the way, there's now an approved ASO for _TTR_ too: inotersen. A good therapeutic hypothesis is bigger than just one drug or one modality.
 
-ASOs, for their part, have been around 30+ years, and have many times been declared dead on arrival, then hailed as a savior, then declared dead again. Look at Ionis's stock price for the past 5 days, and thanks to the auto-scaled y-axis, you see a cliff at the end of the world:
+ASOs, for their part, have been around 30+ years, and have many times been declared dead on arrival, then hailed as a savior, then declared dead again. Look at Ionis's stock price for the past 5 days, and thanks to the auto-scaled y-axis, you see a cliff at the end of the world: 
 
 ![](/media/2021/03/ions-5day.png)
 
-But zoom out to 5 years, and this is but one of many ups and downs:
+But zoom out to 5 years, and this is but one of many ups and downs: 
 
 ![](/media/2021/03/ions-5year.png)
 
