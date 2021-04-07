@@ -4,7 +4,7 @@ title:  "Ionis pivots on PRNP candidate"
 date:   2021-04-07 12:01:00
 author: ericminikel
 location: Cambridge, MA
-thumb120: http://www.cureffi.org/2021/04/ionis-statement-thumbnail.png
+thumb120: http://www.cureffi.org/media/2021/04/ionis-statement-thumbnail.png
 summary200: "Ionis's preclinical program has pivoted from one PRNP-targeting ASO to another. They remain committed to prion disease, with a new goal of human trials in late 2022."
 ---
 
