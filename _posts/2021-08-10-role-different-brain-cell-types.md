@@ -171,5 +171,5 @@ What about biomarkers? We will want to measure PrP in cerebrospinal fluid (CSF) 
 
 [Jafar-Nejad & Powers 2021]: https://pubmed.ncbi.nlm.nih.gov/33367834/ "Jafar-Nejad P, Powers B, Soriano A, Zhao H, Norris DA, Matson J, DeBrosse-Serra B, Watson J, Narayanan P, Chun SJ, Mazur C, Kordasiewicz H, Swayze EE, Rigo F. The atlas of RNase H antisense oligonucleotide distribution and activity in the CNS of rodents and non-human primates following central administration. Nucleic Acids Res. 2021 Jan 25;49(2):657-673. doi: 10.1093/nar/gkaa1235. PMID: 33367834; PMCID: PMC7826274."
 
-[Lakkaraju & Sorce 2021]: ttps://doi.org/10.1101/2021.01.03.425136 "Glial activation in prion diseases is strictly nonautonomous and requires neuronal PrPSc. Asvin KK Lakkaraju, Silvia Sorce, Assunta Senatore, Mario Nuvolone, Jingjing Guo, Petra Schwarz, Rita Moos, Pawel Pelczar, Adriano Aguzzi. bioRxiv Posted January 08, 2021."
+[Lakkaraju & Sorce 2021]: https://doi.org/10.1101/2021.01.03.425136 "Glial activation in prion diseases is strictly nonautonomous and requires neuronal PrPSc. Asvin KK Lakkaraju, Silvia Sorce, Assunta Senatore, Mario Nuvolone, Jingjing Guo, Petra Schwarz, Rita Moos, Pawel Pelczar, Adriano Aguzzi. bioRxiv Posted January 08, 2021."
 
