@@ -56,7 +56,7 @@ For all that, when I look at that CDC manual on quantifying LDL, I remember just
 
 [Vallabh 2020b]: https://pubmed.ncbi.nlm.nih.gov/32552681/ "Vallabh SM, Minikel EV, Williams VJ, Carlyle BC, McManus AJ, Wennick CD, Bolling A, Trombetta BA, Urick D, Nobuhara CK, Gerber J, Duddy H, Lachmann I, Stehmann C, Collins SJ, Blennow K, Zetterberg H, Arnold SE. Cerebrospinal fluid and plasma biomarkers in individuals at risk for genetic prion disease. BMC Med. 2020 Jun 18;18(1):140. doi: 10.1186/s12916-020-01608-8. PMID: 32552681; PMCID: PMC7302371."
 
-[Mortberg 2021]: https://doi.org/10.1101/2021.11.01.2126561 "Mortberg MA, Zhao HT, Reidenbach AG, Gentile JE, Kuhn E, O’Moore J, Dooley PM, Mazur C, Allen SW, Trombetta BA, McManus A, Moore MR, Liu J, Cabin DE, Kordasiewicz HB, Mathews J, Arnold SE, Vallabh SM, Minikel EV. **Regional variability, genotypic effects, and pharmacodynamic impact on prion protein concentration in the central nervous system.** _medRxiv_. 2021 Nov 1. doi: 10.1101/2021.11.01.21265619"
+[Mortberg 2021]: https://doi.org/10.1101/2021.11.01.21265619 "Mortberg MA, Zhao HT, Reidenbach AG, Gentile JE, Kuhn E, O’Moore J, Dooley PM, Mazur C, Allen SW, Trombetta BA, McManus A, Moore MR, Liu J, Cabin DE, Kordasiewicz HB, Mathews J, Arnold SE, Vallabh SM, Minikel EV. **Regional variability, genotypic effects, and pharmacodynamic impact on prion protein concentration in the central nervous system.** _medRxiv_. 2021 Nov 1. doi: 10.1101/2021.11.01.21265619"
 
 
 
