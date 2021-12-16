@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "The Lancet Summit: Presymptomatic Prevention and Treatment of Neurodegenerative Diseases"
+title:  "The Lancet Summit: presymptomatic prevention and treatment of neurodegenerative diseases"
 date:   2021-12-16 12:01:00
 author: ericminikel
 location: Cambridge, MA
