@@ -4,7 +4,7 @@ title:  "Results in from PRN100 antibody first-in-human dosing"
 date:   2022-03-17 12:01:00
 author: ericminikel
 location: Cambridge, MA
-thumb120: https://www.cureffi.org/media/2022/03/prn100-thumbnail.png
+thumb120: http://www.cureffi.org/media/2022/03/prn100-thumbnail.png
 summary200: "A monoclonal antibody against PrP tested in 6 patients showed neither obvious efficacy nor obvious toxicity. Is there a path forward?"
 ---
 
