@@ -96,6 +96,16 @@ Third, how do these trial results affect the potential duration or size of futur
 
 Looking forward, unfortunately, it may be a frustratingly long time until we know much more. The next two Phase III trials of CNS ASOs that I'm aware of have study completion dates in 2024: _FUS_ in ALS ([NCT04768972](https://clinicaltrials.gov/ct2/show/NCT04768972)) and _GFAP_ in Alexander disease ([NCT04849741](https://clinicaltrials.gov/ct2/show/NCT04849741)). The tofersen prevention trial ([NCT04856982](https://clinicaltrials.gov/ct2/show/NCT04856982)) has a completion date in 2026. Until these milestones, our next insights about CNS ASOs in humans may simply come from deeper analyses of the data from tominersen and tofersen. As Dr. Miller said in his remarks, this is a new dataset, and we haven't asked all the questions we want to yet.
 
+<hr>
+
+_Update June 7, 2022_
+
+Biogen has now released longer-term follow-up data from the open label extension phase of the trial, see [press release](https://investors.biogen.com/news-releases/news-release-details/new-12-month-tofersen-data-presented-encals-meeting-show) and [slide deck](https://investors.biogen.com/static-files/4e9393b8-0f67-47a3-a331-05ef3ac7fc63). The new analysis follows patients for a total of 12 months, comparing people who started on tofersen to those who were started on placebo and then transitioned to tofersen after 6 months, controlling for baseline NfL rather than mutation. The new analysis shows nominally significant differences between these "early tofersen" and "delayed tofersen" groups on ALSFRS-R, respiratory strength, muscle strength, and survival. The ALSFRS-R plot is below.
+
+![](/media/2022/06/tofersen-alsfrs-r-12-month-followup.png)
+
+Overall these findings appear to provide some encouraging supportive data suggesting that tofersen might have a beneficial effect, just over a longer time window than the trial was originally designed to accommodate.
+
 [Reaume 1996]: https://pubmed.ncbi.nlm.nih.gov/8673102/ "Reaume AG, Elliott JL, Hoffman EK, Kowall NW, Ferrante RJ, Siwek DF, Wilcox HM, Flood DG, Beal MF, Brown RH Jr, Scott RW, Snider WD. Motor neurons in Cu/Zn superoxide dismutase-deficient mice develop normally but exhibit enhanced cell death after axonal injury. Nat Genet. 1996 May;13(1):43-7. doi: 10.1038/ng0596-43. PMID: 8673102."
 
 [Cedarbaum 1999]: https://pubmed.ncbi.nlm.nih.gov/10540002/ "Cedarbaum JM, Stambler N, Malta E, Fuller C, Hilt D, Thurmond B, Nakanishi A. The ALSFRS-R: a revised ALS functional rating scale that incorporates assessments of respiratory function. BDNF ALS Study Group (Phase III). J Neurol Sci. 1999 Oct 31;169(1-2):13-21. doi: 10.1016/s0022-510x(99)00210-5. PMID: 10540002."
