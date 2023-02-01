@@ -16,7 +16,9 @@ To start to get at this problem, I recently took a deeper dive on the literature
 + **Homozygotes**. Almost all cases of genetic prion disease are in heterozygotes &mdash; people with just one mutant copy of the *PRNP* gene. But a few variants have been seen in homozygotes. For E200K, which has ample evidence for high penetrance and is found in some dense founder clusters around the world [[Lee 1999]], this isn't too surprising. But for a couple of variants that don't have evidence for high penetrance, the presence of an affected homozygote is suggestive that the variant at least confers an increased risk of prion disease. That's because these *PRNP* variants are so rare that even one affected homozygote can represent a very unlikely-by-chance deviation from Hardy-Weinberg equilibrium. Let me explain. The variants in question have allele frequencies <<0.1% in the general population (based on ExAC continental populations). A variant with, say, AF 0.1% has a het frequency of 2 in 1,000 and, under random breeding, a homozygote frequency of 1 in 1,000,000, so there are 2,000 hets out there for every 1 homozygote. Consider that 1 of the 4 known affected V203I individuals is a homozygote [[Komatsu 2014]], and 1 of 3 affected Q212P individuals is a homozygote [[Beck 2010], [Minikel 2016]]. In both cases, the homozygotes had no family history of the disease on either side of the family. Without doing any math, it's clear that these numbers are fairly unlikely to happen by chance if the variant confers no risk. Here, a likely explanation is that one mutant allele confers an elevated but still low risk, while two mutant alleles confer a higher risk. Thus, in these cases, an affected homozygote provides some evidence that a variant confers risk increased above the baseline.
 + **Case/control enrichment.** For completeness, I also noted the handful of variants for which we have evidence that the variant is [more common in cases than controls](/2016/10/19/estimation-of-penetrance/) [[Minikel 2016]], as this is evidence for increased risk or, with very strong enrichment, high penetrance.
 
-All that said, here's what I found (*last updated 2020-06-09*):
+All that said, here's what I found:
+
+_This table was last updated 2023-01-17. If you use these data please cite the latest published version: [[Goldman & Vallabh 2022]]._
 
 | variant | evidence for high penetrance | evidence for increased risk | refs | comments |
 | ---- | ---- | ---- | ---- | ---- | 
@@ -45,6 +47,7 @@ All that said, here's what I found (*last updated 2020-06-09*):
 | G131R |  |  | [Alshaikh 2020] |  positive family history |
 | S132I | Mendelian segregation |  |   [Hilton 2009](http://www.ncbi.nlm.nih.gov/pubmed/19187063) | extensive family history, only proband genotyped |
 | A133V |  |  |    [Rowe 2007](http://www.ncbi.nlm.nih.gov/pubmed/17353478) |  |
+| R136S |  | 2 homozygotes | [Ximelis & Moreno 2021] |  |
 | Y145X |  |  |    [Kitamoto 1993](http://www.ncbi.nlm.nih.gov/pubmed/8097911) |  |
 | R148H |  |  |    [Krebs 2005](http://www.ncbi.nlm.nih.gov/pubmed/15776279/) | |
 | R156C |  |  | [Kenny 2017](https://www.ncbi.nlm.nih.gov/pubmed/28572272) | |
@@ -70,6 +73,7 @@ All that said, here's what I found (*last updated 2020-06-09*):
 | E196K | Mendelian segregation |  |   [Peoc'h 2000](http://www.ncbi.nlm.nih.gov/pubmed/10790216) | only proband genotyped |
 | F198S | Mendelian segregation |  |   [Dlouhy 1992](https://www.ncbi.nlm.nih.gov/pubmed/1363809), [Hsiao 1992](http://www.ncbi.nlm.nih.gov/pubmed/1363810) |
 | F198V |  |  |    [Zheng 2008](http://www.ncbi.nlm.nih.gov/pubmed/18425766) |  |
+| E200D |  | homozygote | [Hassan 2021] |  |
 | E200G |  |  |    [Kim 2013](http://www.ncbi.nlm.nih.gov/pubmed/24330864) |  |
 | E200K | Mendelian segregation |  homozygote, case/control enrichment |   [Hsiao 1991](http://www.ncbi.nlm.nih.gov/pubmed/2008182) |
 | T201S |  |  |   [Parvez 2010](http://www.esc-archive.eu/barcelona10/bar_s8_poster.asp) |  |
@@ -93,7 +97,7 @@ All that said, here's what I found (*last updated 2020-06-09*):
 | M232T |  |  |    [Bratosiewicz 2000](http://www.ncbi.nlm.nih.gov/pubmed/11693719) |  |
 | P238S |  |  |    [Windl 1999](http://www.ncbi.nlm.nih.gov/pubmed/10987652) |  |
 
-In total, then, 27 out of the 72 have evidence for either Mendelian segregation or *de novo* status according to these criteria. These are all likely to be high penetrance variants. For some of these we can say definitively that penetrance is high, when the family is large or when there is dramatic case/control enrichment. For the rest it's likely, although it's conceivable for some variants that the penetrance is somewhat more modest and maybe there just happened to be a family with three affecteds by coincidence.
+In total, then, 27 out of the 74 have evidence for either Mendelian segregation or *de novo* status according to these criteria. These are all likely to be high penetrance variants. For some of these we can say definitively that penetrance is high, when the family is large or when there is dramatic case/control enrichment. For the rest it's likely, although it's conceivable for some variants that the penetrance is somewhat more modest and maybe there just happened to be a family with three affecteds by coincidence.
 
 There are also probably some variants that are genuinely high penetrance but have no boxes checked above. For instance, sometimes a family history just isn't available for a patient, or there is a history of disease but the family never speaks about it and so the younger generation doesn't know, or the family history appears negative only due to adoption or a non-paternity event, or the variant is *de novo* but the parents are already deceased and there are no siblings, so it is impossible to prove that it's *de novo*. When there's only one patient and the variant is also ultra-rare in controls, it's hard to say anything completely definitive.
 
@@ -135,3 +139,11 @@ As a future direction, there are additional sources of information that should b
 [Bagyinszky & Yang 2019]: https://www.ncbi.nlm.nih.gov/pubmed/31447551 "Bagyinszky E, Yang Y, Giau VV, Youn YC, An SSA, Kim S. Novel prion mutation (p.Tyr225Cys) in a Korean patient with atypical Creutzfeldt-Jakob disease. Clin Interv Aging. 2019 Aug 2;14:1387-1397. doi: 10.2147/CIA.S210909. eCollection 2019. PubMed PMID: 31447551; PubMed Central PMCID: PMC6683949."
 
 [Alshaikh 2020]: https://doi.org/10.1212/NXG.0000000000000454 "Jumana T. Alshaikh, Kefeng Qin, Lili Zhao, James A. Mastrianni. A novel PRNP-G131R variant associated with familial prion disease. Neurol Genet Aug 2020, 6 (4) e454; DOI: 10.1212/NXG.0000000000000454"
+
+[Hassan 2021]: https://pubmed.ncbi.nlm.nih.gov/34182938/ "Hassan A, Campbell T, Darwent L, Odd H, Green A, Collinge J, Mead S. Case report of homozygous E200D mutation of PRNP in apparently sporadic Creutzfeldt-Jakob disease. BMC Neurol. 2021 Jun 28;21(1):248. doi: 10.1186/s12883-021-02274-w. PMID: 34182938; PMCID: PMC8237416."
+
+[Ximelis & Moreno 2021]: https://pubmed.ncbi.nlm.nih.gov/34663460/ "Ximelis T, Marín-Moreno A, Espinosa JC, Eraña H, Charco JM, Hernández I, Riveira C, Alcolea D, González-Roca E, Aldecoa I, Molina-Porcel L, Parchi P, Rossi M, Castilla J, Ruiz-García R, Gelpi E, Torres JM, Sánchez-Valle R. Homozygous R136S mutation in PRNP gene causes inherited early onset prion disease. Alzheimers Res Ther. 2021 Oct 18;13(1):176. doi: 10.1186/s13195-021-00912-6. PMID: 34663460; PMCID: PMC8524886."
+
+[Goldman & Vallabh 2022]: https://pubmed.ncbi.nlm.nih.gov/35819418/ "Goldman JS, Vallabh SM. Genetic counseling for prion disease: Updates and best practices. Genet Med. 2022 Oct;24(10):1993-2003. doi: 10.1016/j.gim.2022.06.003. Epub 2022 Jul 12. PMID: 35819418."
+
+
