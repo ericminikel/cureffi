@@ -125,5 +125,5 @@ I've [said before](/2020/03/19/our-preventive-clinical-strategy/), we should asp
 
 [Mok 2023]: https://pubmed.ncbi.nlm.nih.gov/36975162/ "Mok TH, Nihat A, Majbour N, Sequeira D, Holm-Mercer L, Coysh T, Darwent L, Batchelor M, Groveman BR, Orrù CD, Hughson AG, Heslegrave A, Laban R, Veleva E, Paterson RW, Keshavan A, Schott J, Swift IJ, Heller C, Rohrer JD, Gerhard A, Butler C, Rowe JB, Masellis M, Chapman M, Lunn MP, Bieschke J, Jackson GS, Zetterberg H, Caughey B, Rudge P, Collinge J, Mead S. Seed amplification and neurodegeneration marker trajectories in individuals at risk of prion disease. Brain. 2023 Mar 28:awad101. doi: 10.1093/brain/awad101. Epub ahead of print. PMID: 36975162."
 
-[Minikel & Vallabh 2023]: https://pubmed.ncbi.nlm.nih.gov/37161596/ "Vallabh Minikel E, Vallabh SM. Where have prions been all our lives? Brain. 2023 May 10:awad143. doi: 10.1093/brain/awad143. Epub ahead of print. PMID: 37161596."
+[Minikel & Vallabh 2023]: https://pubmed.ncbi.nlm.nih.gov/37161596/ "Minikel EV, Vallabh SM. Where have prions been all our lives? Brain. 2023 May 10:awad143. doi: 10.1093/brain/awad143. Epub ahead of print. PMID: 37161596."
 
