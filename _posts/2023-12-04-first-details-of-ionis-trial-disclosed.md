@@ -4,7 +4,7 @@ title:  "First details of Ionis trial disclosed"
 date:   2023-12-04 12:01:00
 author: ericminikel
 location: Cambridge, MA
-thumb120: 
+thumb120: https://www.cureffi.org/media/2023/12/clinicaltrials-posting-thumbnail.png
 summary200: "56 symptomatic participants, double crossover with placebo, 24 weeks, primary endpoint adverse events, secondary endpoints of pharmacokinetics & PrP lowering."
 ---
 
