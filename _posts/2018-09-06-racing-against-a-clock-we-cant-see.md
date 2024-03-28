@@ -12,7 +12,7 @@ summary200: "Our new study shows that age of onset in prion disease is wildly va
 
 *We need to develop a drug to prevent prion disease before it strikes, but we can't predict when it will strike.*
 
-I'm proud to announce that as of last week, our new study on age of onset in genetic prion disease is now available on bioRxiv [[Minikel 2018]]. The public dataset and source code for the study are in a [public GitHub repository](https://github.com/ericminikel/prnp_onset).
+I'm proud to announce that as of last week, our new study on age of onset in genetic prion disease is now available on bioRxiv [[Minikel 2018]] (_update: final published version is [[Minikel 2019]]_). The public dataset and source code for the study are in a [public GitHub repository](https://github.com/ericminikel/prnp_onset).
 
 ### motivation
 
@@ -100,6 +100,6 @@ I want to give a huge thanks to all the collaborators who contributed data to th
 
 [Minikel 2018]: https://www.biorxiv.org/content/early/2018/08/29/401406 "Minikel EV, Vallabh SM, Orseth MC, Brandel J-P, Haik S, Laplanche J-L, Zerr I, Parchi P, Capellari S, Safar J, Kenny J, Fong JC, Takada LT, Ponto C, Hermann P, Knipper T, Stehmann C, Kitamoto T, Ae R, Hamaguchi T, Sanjo N, Tsukamoto T, Mizusawa H, Collins SJ, Chiesa R, Roiter I, de Pedro-Cuesta J, Calero M, Geschwind MD, Yamada M, Nakamura Y, Mead S. Age of onset in genetic prion disease and the design of preventive clinical trials. bioRxiv [Internet]. 2018 Jan 1; Available from: http://biorxiv.org/content/early/2018/08/29/401406.abstract"
 
-
+[Minikel 2019]: https://pubmed.ncbi.nlm.nih.gov/31171647/ "Minikel EV, Vallabh SM, Orseth MC, Brandel JP, Haïk S, Laplanche JL, Zerr I, Parchi P, Capellari S, Safar J, Kenny J, Fong JC, Takada LT, Ponto C, Hermann P, Knipper T, Stehmann C, Kitamoto T, Ae R, Hamaguchi T, Sanjo N, Tsukamoto T, Mizusawa H, Collins SJ, Chiesa R, Roiter I, de Pedro-Cuesta J, Calero M, Geschwind MD, Yamada M, Nakamura Y, Mead S. Age at onset in genetic prion disease and the design of preventive clinical trials. Neurology. 2019 Jul 9;93(2):e125-e134. doi: 10.1212/WNL.0000000000007745. Epub 2019 Jun 6. PMID: 31171647; PMCID: PMC6656649."
 
 
