@@ -1,0 +1,19 @@
+codon	ac	cat	name	yval	pos	phenotype	ref
+20	1	true	G20Gfs84X	0.3	3	healthy	Minikel 2016
+37	2	true	R37X	0.3	3	healthy	Minikel 2016; this work
+41	1	true	Q41X	0.2	4	unknown	this work
+69	2	curated		NA	NA		this work
+75	1	true	Q75X	0.3	3	healthy	Minikel 2016
+81	1	true	W81X	0.2	4	unknown	this work
+99	1	true	W99X	0.3	3	unknown	this work
+131	1	true	G131X	0.3	3	healthy	Minikel 2016
+145	1	gof	Y145X	0.2	3	dementia	Kitamoto 1993
+160	5	gof	Q160X	0.15	2	dementia	Finckh 2000; Jayadev 2011; Fong & Rojas 2016
+162	1	gof	Y162X	0.4	2	dementia	Bommarito 2018
+163	7	gof	Y163X	0.4	4	dementia	Mead 2013; Capellari 2018
+169	2	gof	Y169X	0.15	3	dementia	Capellari 2018
+178	1	gof	D178Efs25X	0.3	4	dementia	Matsuzono 2013
+186	1	gof	Q186X	0.2	4	dementia	Minikel 2016
+226	1	gof	Y226X	0.3	2	dementia	Jansen 2010
+227	1	gof	Q227X	0.3	4	dementia	Jansen 2010
+234	1	gof	L234Pfs7X	0.2	4	dementia	this work

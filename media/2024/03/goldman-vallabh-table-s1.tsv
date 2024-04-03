@@ -1,0 +1,75 @@
+Variant	HGVS 	Evidence for high penetrance	Evidence for increased risk	References	Comments
+P39L	NM000311.5:p.Pro39Leu			4	
+2-OPRD	*			5,6	
+1-OPRI	*			7,8	
+2-OPRI	*			9	
+3-OPRI	*			10	
+4-OPRI	*			11	most cases have negative family history
+5-OPRI	*	Mendelian segregation		12	
+6-OPRI	*	Mendelian segregation		13		
+7-OPRI	*	Mendelian segregation		14	
+8-OPRI	*	Mendelian segregation		14,15	
+9-OPRI	*	Mendelian segregation, de novo		16,17	
+12-OPRI	*	Mendelian segregation		18	
+P84S	NM000311.5:p.Pro84Ser			19	
+S97N	NM000311.5:p.Ser97Asn			20	
+P102L	NM000311.5:p.Pro102Leu	Mendelian segregation	case/control enrichment	21	
+P105L	NM000311.5:p.Pro105Leu	Mendelian segregation		22	2 sibs affected & genotyped, 1 ungenotyped parent likely affected
+P105S	NM000311.5:p.Pro105Ser			23	
+P105T	NM000311.5:p.Pro105Thr	Mendelian segregation		24	
+G114V	NM000311.5:p.Gly114Val	Mendelian segregation		25,26	pedigree suggests high penetrance though not 100%
+A117V	NM000311.5:p.Ala117Val	Mendelian segregation	case/control enrichment	27	
+129insLGGLGGYV	NM000311.5:p.129insLGGLGGYV	de novo		28	
+G131V	NM000311.5:p.Gly131Val			29,30	positive family history in one case
+G131R	NM000311.5:p.Gly131Arg			31	positive family history
+S132I	NM000311.5:p.Ser132Ile	Mendelian segregation		32	extensive family history, only proband genotyped
+A133V	NM000311.5:p.Ala133Val			33	
+R136S	NM000311.5:p.Arg136Ser		2 homozygotes	34	
+Y145X	NM000311.5:p.Tyr145Ter			35	
+R148H	NM000311.5:p.Arg148His			36	
+R156C	NM000311.5:p.Arg156Cys			37	
+Q160X	NM000311.5:p.Gln160Ter	Mendelian segregation		38	
+Y162X	NM000311.5:p.Tyr162Ter	Mendelian segregation		39	
+Y163X	NM000311.5:p.Tyr163Ter	Mendelian segregation		40,41	
+D167G	NM000311.5:p.Asp167Gly			42	
+D167N	NM000311.5:p.Asp167Asn			43	
+Y169X	NM000311.5:p.Tyr169Ter	Mendelian segregation		41	
+V176G	NM000311.5:p.Val176Gly			44	
+D178Efs25X	NM000311.5:p.Asp178Glufs25Ter	Mendelian segregation		45	only proband genotyped
+D178N	NM000311.5:p.Asp178Asn	Mendelian segregation, de novo	case/control enrichment	46,47	
+V180I	NM000311.5:p.Val180Ile		case/control enrichment	48	
+T183A	NM000311.5:p.Thr183Ala	Mendelian segregation		49	
+H187R	NM000311.5:p.His187Arg	Mendelian segregation		50	
+T188A	NM000311.5:p.Thr188Ala			51	
+T188K	NM000311.5:p.Thr188Lys			52	multiple cases with negative family history
+T188R	NM000311.5:p.Thr188Arg			52,53	
+V189I	NM000311.5:p.Val189Ile			54	
+T193I	NM000311.5:p.Thr193Ile			55	
+K194E	NM000311.5:p.Lys194Glu			56	
+E196A	NM000311.5:p.Glu196Ala			57	
+E196K	NM000311.5:p.Glu196Lys	Mendelian segregation		58	only proband genotyped
+F198S	NM000311.5:p.Phe198Ser	Mendelian segregation		59,60	
+F198V	NM000311.5:p.Phe198Val			20	
+E200D	NM000311.5:p.Glu200Asp			61	
+E200G	NM000311.5:p.Glu200Gly			62	
+E200K	NM000311.5:p.Glu200Lys	Mendelian segregation	homozygote, case/control enrichment	27	
+T201S	NM000311.5:p.Thr201Ser			63	
+D202G	NM000311.5:p.Asp202Gly	Mendelian segregation		64	only proband genotyped
+D202N	NM000311.5:p.Asp202Asn			65	
+V203I	NM000311.5:p.Val203Ile		homozygote	66	
+R208C	NM000311.5:p.Arg208Cys			20	
+R208H	NM000311.5:p.Arg208His			67	
+V210I	NM000311.5:p.Val210Ile		case/control enrichment	68,69	
+E211D	NM000311.5:p.Glu211Asp	Mendelian segregation		70	supplement describes one family with 3 affected
+E211Q	NM000311.5:p.Glu211Gln			58	2 sibs affected
+Q212P	NM000311.5:p.Gln212Pro		homozygote	43	
+I215V	NM000311.5:p.Ile215Val			71	
+Q217R	NM000311.5:p.Gln217Arg			60	2 affected
+Y218N	NM000311.5:p.Tyr218Asn	Mendelian segregation		72	
+A224V	NM000311.5:p.Ala224Val			73	
+Y225C	NM000311.5:p.Tyr225Cys			74	
+Y226X	NM000311.5:p.Tyr226Ter			75	
+Q227X	NM000311.5:p.Gln227Ter			75	
+M232R	NM000311.5:p.Met232Arg			48	
+M232T	NM000311.5:p.Met232Thr			76	
+P238S	NM000311.5:p.Pro238Ser			77	

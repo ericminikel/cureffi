@@ -1,0 +1,11 @@
+country	start_year	end_year	definite_plus_probable	prnp_sequenced	proportion_sequenced	with_rare_variants	proportion_with_rare_variants	2-OPRD	1-OPRI	2-OPRI	3-OPRI	4-OPRI	5-OPRI	6-OPRI	7-OPRI	8-OPRI	9-OPRI	10-OPRI	OPRI_length_unspecified	A2V	G54S	P84S	G88A	G94S	H96Y	P102L	P105L	P105S	P105T	G114V	A117V	G131V	S132I	A133V	R148H	Q160X	Y163X	D167G	V176G	D178N	V180I	T183A	Q186X	H187A	H187R	T188A	T188K	T188R	E196A	E196K	F198S	E200G	E200K	V203I	R208H	V210I	E211Q	E211D	Q212P	I215V	Y218N	A224V	Y226X	Q227X	M232R	V180I_and_M232R_in_trans	variant_not_specified
+Australia	1993	2014	553	152	27%	31	6%																			2			3					1					1	3						1							11			4											5
+France	1991	2013	2383	1774	74%	196	8%		2		1	1	2	2	1	10										10					3									34	1									3			101	5	1	13	5	1									
+Germany	1993	2015	2690	1307	49%	125	5%		1		1	3	10		1					1						7			2						1					32							2			8			28		2	19	2										5
+Italy	1993	2013	1684	1054	63%	396	24%												9							59														18	1									2			123	3	7	171	3										
+Japan	1999	2014	2144	1533	72%	464	22%												8							83	12													5	218												63	4	1	1									63	4	2
+Netherlands	1993	2013	409	163	40%	22	5%	3					1		1																8	1								4													2										1	1			
+Spain	1993	2013	1280	749	59%	127	10%			1		2	1										1		1	1					1									65													52							1	1						
+U.K.	1990	2013	1963	1088	55%	173	9%					13	13	35	2			1			1	1				34	1				12		1				2	1		12													38			3	1		2								
+U.S.	2000	2014	2919	2640	90%	361	12%		4	5		4	12	15			4				4			1		25		1		1	9			1	2	1				36	5	3	1	1	7		1	12	1		5	1	153	5	4	36						1					
+TOTAL			16025	10460	65%	1895	12%	3	7	6	2	23	39	52	5	10	4	1	17	1	5	1	1	1	1	221	13	1	5	1	33	1	1	2	3	1	2	1	1	209	225	3	1	1	7	1	3	12	1	13	5	1	571	17	15	247	11	1	2	1	1	1	1	1	63	4	12
