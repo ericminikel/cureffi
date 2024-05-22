@@ -1,0 +1,41 @@
+---
+layout: post
+title:  "A big step forward for brain delivery of gene therapies"
+date:   2024-05-22
+author: ericminikel
+location: Cambridge, MA
+thumb120: 
+summary200: "An engineered AAV binding the human transferrin receptor makes gene therapy for a whole brain disease seem less like science fiction."
+---
+
+For years, Sonia and I have been getting the question in Q&A at our talks, "Why isn't this a solved problem thanks to CRISPR?". In 2019 I wrote a blog post about [what gene therapy can & can't do](/2019/07/23/what-gene-therapy-can-and-cant-do-today/) to try to sum up why it's not so simple. There were/are a tremendous number of ideas (CRISPR is one of them) about what a gene therapy could do for prion disease conditioned on getting into the right cells. But the conclusion of that post is that all of these ideas rely on a way of delivering the gene cargo to the 100 billion neurons of the adult human brain, and as of 2019, that was not yet achievable.
+
+The past 5 years have brought enormous progress. Sonia and others from our lab attended ASGCT in Baltimore earlier this month, and learned about just how many academic and commercial groups are trying to design better ways to deliver gene therapies to the brain. Most of these efforts take the form of engineered AAV capsids. AAV is a virus that people have engineered to lack the ability to replicate itself, so it can be manufactured to deliver a gene cargo. A naturally occurring variant, AAV9, has been used in FDA-approved gene therapies, but its usefulness appears limited to focal delivery to a small tissue (such as the retina) or to infantile or at most pediatric onset diseases, though even then, the doses are so high as to have significant safety risks, while still having limited efficacy. In adults, AAV9 just doesn't go where you need it to go.
+
+In 2016, Ben Deverman and others showed that by making libraries of AAV9 with a certain peptide sequence randomly mutated, injecting them into mice, and then sequencing to see which mutants got into the brain, you could iteratively pan for variants of AAV with better and better brain transduction [[Deverman 2016]]. The variant they discovered in that paper, named PHP.B, and its successor, PHP.eB [[Chan 2017]], proved to be marvelously useful tools for research in mice. Sadly, though, their receptor turned out to be _Ly6a_, a mouse gene that humans don't even have a version of [[Huang 2019]]. So those vectors weren't going to be useful in actual clinical application. Several other groups used similar approaches to discover enhanced AAVs, and unfortunately it turns out that nearly all of these bind either _Ly6a_ or _Ly6c1_, another mouse gene without a human equivalent [[Huang 2023]]. It started to look like panning for better AAVs in mice might be a dead end. Many groups started to do the same work in monkeys, and at ASGCT in 2023, there were several such presentations. But these efforts often found AAVs that were only slightly better than AAV9, lacking the really dramatic enhancement seen in mice, perhaps because it was hard to do monkey research at the same kind of scale that mouse research is done. Moreover, some presentations noted that an engineered AAV that worked in one species of monkey would fail in another, raising doubts as to whether they would work in humans.
+
+A few key insights of all the above work were that:
+
+1. It's possible to engineer AAVs that get into the brain much better than AAV9, like 30 or 100 times better, by just changing several amino acids.
+2. Until you know the receptor your AAV binds, it's very hard to have any confidence that it will translate across species.
+
+The Deverman lab piloted a new approach. Instead of panning in animals, blind to what receptor you might get out, just purify the receptor that you _want_ to bind, stick it on some beads, and pan for viruses that bind the beads [[Huang 2023]].
+
+The big news last week is that this approach appears to be bearing fruit: the Deverman lab announced the development of a vector that binds the human transferrin receptor (TfR) [[Huang & Chan 2024]]. TfR has been used as a receptor to facilitate the uptake of other brain therapies such as antibodies and protein therapeutics, so it's got some clinical validation behind it. They were able to discover an AAV that binds TfR, and gets taken up into the brain 50 times more than AAV9, only in mice that have human TfR. Not only do they know the receptor, they know the exact binding site within human TfR, in a region called the apical domain. Based on the sequence there, they can predict that the AAV will be human-specific, and indeed, it does not seem to provide any enhanced uptake in wild-type mice or even in cells expressing monkey TfR, consistent with there being at least one critical amino acid mismatch.
+
+What I love about this story is that we're no longer flying bind. With knowledge of the receptor and exact binding site, translation across species becomes a more rational exercise, and not just a roll of the dice. A humanized mouse is still a mouse, and translation to humans is still no guarantee, but the odds are a lot better than they were. And presumably, engineering and further improving the AAV also become a lot easier. Many other groups are working on similar efforts, but these data are the most impressive I've seen so far.
+
+To be sure, many challenges still lie ahead. Engineering for enhanced receptor binding is one task, but immunogenicity, manufacturability, and other parameters may still need to be optimized. For any brand new discovery, the road to first-in-human application is years long. And AAVs have some inherent limitations, like that they can only be dosed once &mdash; after that, you're immune &mdash; and the inability to re-dose makes it hard to titrate the exact level of activity you want. Indeed, some people have pre-existing immunity and may not be able to receive AAV therapies at all.
+
+Despite all the caveats, this is exciting news. After years of gene therapy for a whole brain disease being very hypothetical, it has started to feel a lot more real.
+
+
+[Deverman 2016]: https://pubmed.ncbi.nlm.nih.gov/26829320/ "Deverman BE, Pravdo PL, Simpson BP, Kumar SR, Chan KY, Banerjee A, Wu WL, Yang B, Huber N, Pasca SP, Gradinaru V. Cre-dependent selection yields AAV variants for widespread gene transfer to the adult brain. Nat Biotechnol. 2016 Feb;34(2):204-9. doi: 10.1038/nbt.3440. Epub 2016 Feb 1. PMID: 26829320; PMCID: PMC5088052."
+
+[Chan 2017]: https://pubmed.ncbi.nlm.nih.gov/28671695/ "Chan KY, Jang MJ, Yoo BB, Greenbaum A, Ravi N, Wu WL, Sánchez-Guardado L, Lois C, Mazmanian SK, Deverman BE, Gradinaru V. Engineered AAVs for efficient noninvasive gene delivery to the central and peripheral nervous systems. Nat Neurosci. 2017 Aug;20(8):1172-1179. doi: 10.1038/nn.4593. Epub 2017 Jun 26. PMID: 28671695; PMCID: PMC5529245."
+
+[Huang 2019]: https://pubmed.ncbi.nlm.nih.gov/31725765/ "Huang Q, Chan KY, Tobey IG, Chan YA, Poterba T, Boutros CL, Balazs AB, Daneman R, Bloom JM, Seed C, Deverman BE. Delivering genes across the blood-brain barrier: LY6A, a novel cellular receptor for AAV-PHP.B capsids. PLoS One. 2019 Nov 14;14(11):e0225206. doi: 10.1371/journal.pone.0225206. PMID: 31725765; PMCID: PMC6855452."
+
+[Huang 2023]: https://pubmed.ncbi.nlm.nih.gov/37467291/ "Huang Q, Chen AT, Chan KY, Sorensen H, Barry AJ, Azari B, Zheng Q, Beddow T, Zhao B, Tobey IG, Moncada-Reid C, Eid FE, Walkey CJ, Ljungberg MC, Lagor WR, Heaney JD, Chan YA, Deverman BE. Targeting AAV vectors to the central nervous system by engineering capsid-receptor interactions that enable crossing of the blood-brain barrier. PLoS Biol. 2023 Jul 19;21(7):e3002112. doi: 10.1371/journal.pbio.3002112. PMID: 37467291; PMCID: PMC10355383."
+
+[Huang & Chan 2024]: https://pubmed.ncbi.nlm.nih.gov/38753766/ "Huang Q, Chan KY, Wu J, Botticello-Romero NR, Zheng Q, Lou S, Keyes C, Svanbergsson A, Johnston J, Mills A, Lin CY, Brauer PP, Clouse G, Pacouret S, Harvey JW, Beddow T, Hurley JK, Tobey IG, Powell M, Chen AT, Barry AJ, Eid FE, Chan YA, Deverman BE. An AAV capsid reprogrammed to bind human transferrin receptor mediates brain-wide gene delivery. Science. 2024 May 16:eadm8386. doi: 10.1126/science.adm8386. Epub ahead of print. PMID: 38753766."
