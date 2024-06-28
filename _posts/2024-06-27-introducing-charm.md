@@ -40,6 +40,6 @@ On biology: the success with CHARM is also, to me, a reminder that biology is va
 
 [Muhuri 2022]: https://pubmed.ncbi.nlm.nih.gov/35283274/ "Muhuri M, Levy DI, Schulz M, McCarty D, Gao G. Durability of transgene expression after rAAV gene therapy. Mol Ther. 2022 Apr 6;30(4):1364-1380. doi: 10.1016/j.ymthe.2022.03.004. Epub 2022 Mar 10. PMID: 35283274; PMCID: PMC9077371."
 
-[Neumann & Bertozzi 2024]: TBD "Neumann & Bertozzi 2024"
+[Neumann & Bertozzi 2024]: https://pubmed.ncbi.nlm.nih.gov/38935715/ "Neumann EN, Bertozzi TM, Wu E, Serack F, Harvey JW, Brauer PP, Pirtle CP, Coffey A, Howard M, Kamath N, Lenz K, Guzman K, Raymond MH, Khalil AS, Deverman BE, Minikel EV, Vallabh SM, Weissman JS. Brainwide silencing of prion protein by AAV-mediated delivery of an engineered compact epigenetic editor. Science. 2024 Jun 28;384(6703):ado7082. doi: 10.1126/science.ado7082. Epub 2024 Jun 28. PMID: 38935715."
 
 
