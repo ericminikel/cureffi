@@ -8,6 +8,8 @@ thumb120: https://www.cureffi.org/2024/10/aav_thumbnail.png
 summary200: "Notes from an AAV primer by Ken Chan"
 ---
 
+![](/media/2024/10/aav_model.png)
+
 _Ken Chan from the Deverman Lab at the Broad Institute visited our lab to give us a primer on AAV. Here are my notes._
 
 Today we have a really impressive arsenal of gene-based medicines &mdash; gene replacement, base editing, prime editing, tRNAs, CRISPRoff, CHARM, and so on &mdash; that could theoretically treat or cure almost all genetic diseases _if_ you could get them into the right cells. Delivery &mdash; the task of getting your therapeutic gene of interest into those cells &mdash; is _the_ principal challenge for genomic medicine. Delivery requires packaging DNA or RNA in a shell that protects it from degradation by nucleases, evades immune response, attaches to the surface of the correct cells, get the genetic material internalized into the cell, and then get it localized into the correct compartment (cytosol for RNA delivery, or nucleus for DNA delivery). Viruses evolved to do all of these things. Therefore, viruses are the obvious place to look for a way to deliver genes therapeutically.
@@ -110,6 +112,16 @@ The structure of a gene of interest (GOI) to package in an AAV can look like thi
 People use many different promoters in GOIs. These can include inducible ones like TET, cell type-specific ones to restrict expression to desired cells like hSyn, GFAP, MECP2, or broad spectrum promoters like EFS, EF1a, CMV, Ubc.  Inclusion of introns in the GOI can help to stabilize the mRNA and increase efficiency of mRNA export from the nucleus. In the UTRs, uORFs and miR target sites can be used to regulate or restrict expression. The polyadenylation signal (polyA or pA) helps with mRNA stability, nuclear export, and translation efficiency.
 
 In sum, AAVs are a 25 nm non-enveloped viral capsid that can be used as a versatile single-stranded DNA (ssDNA) vector with a capacity of 4.7 kb.
+
+#### Q&A
+
+Q. What factors tell the host cell that AAV DNA is foreign?
+
+A. Initially it is single-stranded and non-methylated, both of which are unusual. But once AAV ssDNA has entered, it actually hijacks cellular machinery to make it double-stranded and chromatinized. Indeed, AAV has + and - strands which are both present in manufacturing, and we think that half of capsids get filled with + and half with -. In cells that are doubly transduced, by one of each, they will actually become double stranded. However, people do also sometimes manipulate AAV structure to try to maximize its looped-in-on-itself-ness, because they think that conversion to dsDNA is a rate-limiting step. AAV transduction also requires a Golgi apparatus receptor called AAVR, which helps the DNA get to the Golgi and then nucleus. AAVR knockout is very difficult to transduce. The rate of uncoating can matter in host cell recognition.
+
+Q. What limits the size of cargo to 4.7kb?
+
+A. Literally the fit of all the DNA in there. 
 
 [Atchison 1965]: https://pubmed.ncbi.nlm.nih.gov/14325163/ "ATCHISON RW, CASTO BC, HAMMON WM. ADENOVIRUS-ASSOCIATED DEFECTIVE VIRUS PARTICLES. Science. 1965 Aug 13;149(3685):754-6. doi: 10.1126/science.149.3685.754. PMID: 14325163."
 
