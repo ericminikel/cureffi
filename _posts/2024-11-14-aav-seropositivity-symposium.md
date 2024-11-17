@@ -12,11 +12,11 @@ summary200: "Notes from a 1-day symposium on treating seropositive patients with
 
 _Parent Project Muscular Dystrophy (PPMD) organized a 1-day symposium at the Broad Institute entitled "Accelerating gene therapy clinical trials in seropositive patients," focusing on AAV therapy in AAV seropositive patients. These are my notes. These talks were very fast and my notes likely contain errors &mdash; if you spot one, please [contact me](https://www.cureffi.org/contact/)._
 
-### 8:45 - 9:00am Welcome Remarks \| Michelle Rengarajan, Harvard Medical School & Mass General Brigham
+### Welcome Remarks \| Michelle Rengarajan, Harvard Medical School & Mass General Brigham
 
 Dr. Rengarajan (pictured at top) is an endocrinologist at MGH, part of the Ladders to Cures initiative at Broad, and a parent of two Duchenne boys. She is wearing all of these hats today. The reason for today's symposium: AAV is the mainstay of gene therapy, but half or more of potential patients are seropositive, and we currently cannot re-dose AAV therapies.
 
-### 9:00 - 9:15am Clinical trial experience in patients with pre-existing antibodies to AAV \| Kathy High, Rockefeller University
+### Clinical trial experience in patients with pre-existing antibodies to AAV \| Kathy High, Rockefeller University
 
 Dr. High's talk will present the experience up to now with administering AAV to seropositive therapy in clinical trials, and what happens later on with patients who do not qualify for the trials.
 
@@ -42,7 +42,7 @@ Potential solutions to pre-existing antibodies are:
     + IgG-cleaving endopeptidase [[Leborgne 2020]]
     + Ablate B cells and plasma cells. A three-drug regimen of rituximab, cyclophosphamide and prednisone trialed at MGH was reported to completely abolish antibody titers in 100% of patients [[Zonozi 2021]]. That study (which was in patients with an autoimmune disease, not AAV-related) went on 24 months, but for AAV you would only need a much shorter regimen.
 
-### 9:15 - 9:30am AAV Gene Therapy: Caregiver Perspective \| Annie Ganot Solid Biosciences
+### AAV Gene Therapy: Caregiver Perspective \| Annie Ganot Solid Biosciences
 
 [Solid](https://www.solidbio.com/) was founded by the Ganot family in 2013 in response to their son's Duchenne diagnosis. They initiated an AAV trial in 2019, only to find that their own son was excluded due to seropositivity. They are now in Phase I/II ([NCT06138639](https://clinicaltrials.gov/study/NCT06138639)) with a second-generation AAV-vectored microdystrophin construct called SGT-003. They are also committed to solving the seropositivity problem.
 
@@ -56,7 +56,7 @@ Q. Do you see any patient education gaps we need to address?
 
 A. We're lucky that the Duchenne community is incredibly activated and networked. People generally have high awareness of the issues. A special challenge is for families with multiple affected sons, how to stage their participation in trials. Some families will have their older son participate in a trial today, while they hold out for the older, less-affected son to remain seronegative and receive a next-generation, better AAV therapy in the future.
 
-### 9:30 - 9:45am Overview of human immune responses to AAV \| Federico Mingozzi, Nava Therapeutics
+### Overview of human immune responses to AAV \| Federico Mingozzi, Nava Therapeutics
 
 Here is Dr. Mingozzi's timeline of immunity issues in AAV therapy:
 
@@ -88,7 +88,7 @@ Q. What about rapamycin?
 
 A. Rapamycin is the same thing as sirolumis. It's been used in combination with prednisone, for several months post-AAV infusion. It's also been used in combination with rituximab.
 
-### 9:45 - 10:00am Strategies to Modulate AAV Specific Adaptive Responses \| Shari Gordon, AskBio
+### Strategies to Modulate AAV Specific Adaptive Responses \| Shari Gordon, AskBio
 
 Dr. Gordon is senior director of immunology at AskBio. 
 
@@ -106,7 +106,7 @@ Could CTLA4-Ig make it possible to give a second dose? They gave mice AAVrh32.33
 
 ![](/media/2024/11/gordon-ctla4-ig-2.png)
 
-### 10:15 - 10:30am AAV-specific antibodies modulate immune responses to AAV \| Klaudia Kuranda, formerly Spark Therapeutics
+### AAV-specific antibodies modulate immune responses to AAV \| Klaudia Kuranda, formerly Spark Therapeutics
 
 A large recent survey of AAV pre-existing immunity found that seropositivity differs by capsid and increases with age [[Wang 2024]]. 
 
@@ -114,7 +114,7 @@ Clinical trials have demonstrated cases of thrombotic microangiopathy (TMA), a p
 
 To date, the evidence for save AAV gene therapy administration in seropositive patients is limited to AAV5 and one patient with AAV2. (\*I think this refers to [[Pipe 2023]] and [[Manno 2006]] respectively).
 
-### 10:30 - 10:45am Overview of AAV Antibody Assay Development & Efforts Toward Standardization \| Brian Long, 4D Molecular Therapeutics (4DMT)
+### Overview of AAV Antibody Assay Development & Efforts Toward Standardization \| Brian Long, 4D Molecular Therapeutics (4DMT)
 
 3 aspects of AAV determine its immunogenicity:
 
@@ -137,7 +137,7 @@ Why aren't these assays more standardized? Actually there are multiple guidances
 
 For Biomarin's valoctogene, the pivotal Phase III excluded AAV5 TAb+ individuals. FDA approved a companion diagnostic, and the label for valoctogene requires seronegativity. However, in that Phase III, there were 3 individuals who screened negative for TAb but later turned out to have been positive, and 11 individuals who screened negative for NAb but turned out to have been positive. In all cases, these people still had reasonable Factor VIII expression, albeit slightly lower than the totally negative people [[Long 2024]].
 
-### 10:45 - 11:00am Applying learnings from the SARS-CoV-2 pandemic to assessing AAV seropositivity \| Tomas Baldwin, University College London
+### Applying learnings from the SARS-CoV-2 pandemic to assessing AAV seropositivity \| Tomas Baldwin, University College London
 
 Dr. Baldwin's uses mass spec to try to overcome known problems with measuring immune response to AAV [[Schulz 2023]]. His assay multiplexedly measure immune complexes against patient serum. They can measure many different IgG and complement in one shot, in about 3 hours time. They tested this a lot on SARS-CoV-2 and it correlates well with the gold standard Roche assay. They were ready to roll it out in the UK, but then the UK stopped testing for COVID. They then pivoted to AAV. They validated their platform for AAV and then tested it in a cohort of N=15 pre- and post-onasemnogene SMA patients. 58% were IgG1-positive pre-therapy. IgG1 went up massively after onasemnogene treatment in 100% of patients, continued to rise through 8 months post-infusion, and correlated with a strong complement response across the entire complement pathway. IgG2 rose only slightly after treatment, and only in the already-seropositive people. IgG4 had pre-existing binding in some patients but did not rise after treatment.
 
@@ -145,7 +145,7 @@ Can the antibody or complement response predict severe adverse events? They have
 
 They can also use their assay to assess cross-reactivity between AAV8 and 9.
 
-### 11:00 - 11:15am Anti-AAV Seroprevalence in a DMD Cohort & Assessment of Impact on Efficacy Preclinically \| Sharon McGonigle, Solid Biosciences
+### Anti-AAV Seroprevalence in a DMD Cohort & Assessment of Impact on Efficacy Preclinically \| Sharon McGonigle, Solid Biosciences
 
 Solid is developing SGT-003, an AAV-vectored microdystrophin for Duchenne. It uses AAV-SLB101 which is a muscle-tropic novel engineered capsid based on AAV9 but with a 7 amino acid insertion. It provides improved biodistribution and transduction in muscle and reduces liver transduction. It encodes a unique microdystrophin gene. The FIH study called Inspire Duchenne ([NCT06138639](https://clinicaltrials.gov/study/NCT06138639)) launched in 2024 and 3 patients have been dosed at 1e14 vg/kg. Biomarker and 90-day biopsy expression data on first 3 patients will be released in Q1 2025. 
 
@@ -157,19 +157,21 @@ Because TAb and NAb are correlated, she'll only talk about TAb for the rest of t
 
 While preclinical studies can help decide a cutoff, there will always be some patients above that cutoff. They are very interested in IgG depleting or degrading strategies, immunomodulation, and so on to allow them to address more patients.
 
-### 11:15 - 11:30am Abs to AAV: durability, cross reactivity, & window for dosing \| Roberto Calcedo, Affinia Therapeutics
+### Abs to AAV: durability, cross reactivity, & window for dosing \| Roberto Calcedo, Affinia Therapeutics
 
 Prevalence of AAV seropositivity is pretty much the same anywhere in the world and in healthy vs. patient populations [[Calcedo 2009], [Verma 2023]]. Newborns get anti-AAV antibodies from their mothers but the titer declines in the months after birth [[Calcedo 2011]].
 
 Seropositivity is high for a wide range of natural AAVs. Only 2-3% of people are seropositive for AAVrh32.33, but no one wants to use this because it's extremely immunogenic. They studied the natural history of AAV immunity in a social population of chimpanzees [[Calcedo & Wilson 2016]], and found that once immunity to AAV8 is acquired there is generally some cross-reactivity to other serotypes. In humans, too, cross-reactivity is prevalent, though people may have higher titer for one type than for another. In an intramuscular AAV1 _AAT_ gene therapy trial, they saw that patients developed responses not only to AAV1 but to AAV2, 8, and 3B as well [[Mueller 2013]]. In NHPs (cynomolgus and rhesus) dosed with 3e12 vg/kg intravenous AAV8, even modest NAb titers blocked intravenous AAV and shifted biodistribution away from liver and towards spleen [[Wang 2011]]. But note this is dose-dependent and you may be able to overcome it at higher doses. When titers are low, NAb and TAb are not well correlated. For intramuscular delivery, moderate NAb titer does not affect potency; only at 1:320 do you get reduced transduction. Same for intrathecal administration in Giant Axonal Neuropathy (GAN) [[Bharucha-Goebel 2024]].
 
-### 11:30 - 11:45am Studying the impact of AAV seropositivity in nonhuman primate models \| Juliette Hordeaux, Gemma Therapeutics
+### Studying the impact of AAV seropositivity in nonhuman primate models \| Juliette Hordeaux, Gemma Therapeutics
 
+NHP are generally a good model for studying AAV gene therapy immunogenicity, although because they have amino acid differences versus human transgenes, they are in some cases more likely to have adaptive immune responses to the transgene. Seropositivity prevalence to AAV9 is similar in momkey as in human. 
 
+They split a group of cynomolgus macaques into those with and without pre-existing antibodies (NAb titer > or < 1:5). They dosed 5e13 vg/kg AAVhu68 with a therapeutic transgene under the CAG promoter [[Hordeaux 2023]]. The ALT elevation was actually worse in the animals without pre-existing antibodies. But the NAbs, by preventing transduction, also prevented liver toxicity. They also tested injecting 3e13 vg per animal intra-cisterna magna (ICM). They used an FcRn antibody to counter pre-existing NAbs and were able to achieve cardiac transduction with systemic administration [[Horiuchu 2023]].
 
-### 11:45 - 12:30pm Panel Discussion + Q&A with Session 2 speakers
+Overal conclusion, in all their NHP models they never saw a safety issue with pre-existing antibody titers. The only issue is efficacy.
 
-### 1:15 - 1:30pm Intrathecal Gene Therapy for Giant Axonal Neuropathy: Immunological Considerations & Observations \| Carsten Bonnemann, NIH
+### Intrathecal Gene Therapy for Giant Axonal Neuropathy: Immunological Considerations & Observations \| Carsten Bonnemann, NIH
 
 Giant axonal neuropathy (GAN) is caused by loss of function of gigaxonin (_GAN_), an E3 ubiquitin ligase adaptor required for breakdown of intermediate filaments. All different intermediate filaments such as GFAP, NfL, vimention, and even keratin in hair are affected. 
 
@@ -185,7 +187,7 @@ They argued based on a Bayesian analysis that was a 90+% posterior probability t
 
 There was no evidence for DRG tox, and indeed, clinical sensory endpoints moved in a positive direction suggesting there was rescue of DRGs by the therapy.
 
-### 1:30 - 1:45pm Toward AAV gene therapy in seropositive Crigler-Najjar patients \| Giuseppe Ronzitti, INSERM / Genethon
+### Toward AAV gene therapy in seropositive Crigler-Najjar patients \| Giuseppe Ronzitti, INSERM / Genethon
 
 Crigler-Najjar syndrome is a deficiency of _UGT1A1_ in hepatocytes which if untreated causes severe neurotoxicity and death. Prevalence is 1 in 1 million births. The standard of care is phototherapy, in which patients must be exposed to blue light 10 - 14 hours every day, which allows bilirubin to be converted to other molecules that can be broken down. The only cure is liver transplant but then the patients require lifelong immunosuppression and really, having had a liver transplant is just a different disease.
 
@@ -195,7 +197,7 @@ To manage seropositivity, they wanted to use an IgG degrading enzyme called "imm
 
 They did a bunch of preclinical studies (Leborgne unpublished). In cynomolgus macaques (N=2 per group) they tested whether IdeS treatment 2 mg/kg at 2 days pre-AAV could improve efficacy of 2.5e13 vg/kg AAV9. It gave a slight increase in VGCN per diploid genome and a larger increase in transgene mRNA expression. Then they used NZW rabbits to do an AAV re-dose study. They dosed AAV8 vector 5e12 vg/kg, then waited ~2 months, then dosed IdeS 1 mg/kg then 2 days later dosed AAV8-hFIX 1e13 vg/kg. IdeS resulted in a >10-fold decrease in anti-AAV8 NAb titers. They are now announcing a new trial which will be open to seropositive patients who were excluded from the first trial. And they are hoping that eventually this will allow re-dosing.
 
-### 1:45 - 2:00pm AAV Redosing \| Barry Byrne, University of Florida
+### AAV Redosing \| Barry Byrne, University of Florida
 
 Hours after a 1e13 to 1e14 vg/kg dose of AAV systemically, the virus concentration is 1e11 per mL in blood. That high initial exposure injures endothelia and contributes to innate immunity, which kicks in within hours of dose while adaptive immunity takes days or weeks [[Mendell 2022]]. Pre-existing antibodies do contribute, but no matter how high the pre-existing titer, these antibodies are undetectable at 1 hour post-dose because they all get saturated by the AAV and then cleared. 
 
@@ -223,7 +225,7 @@ They have submitted an IND together with Muscular Dystrophy Association (MDA) to
 
 They are also exploring a novel approach to manage pre-existing immunity, called MODE, which leverages ASGPR.
 
-### 2:00 - 2:15pm Pretreatment of cynomolgus macaques with prednisolone, rapamycin, & rituximab inhibits capsid-specific humoral immune responses to high-dose AAV gene therapy \| Barbara Sullivan, Ultragenyx
+### Pretreatment of cynomolgus macaques with prednisolone, rapamycin, & rituximab inhibits capsid-specific humoral immune responses to high-dose AAV gene therapy \| Barbara Sullivan, Ultragenyx
 
 Today's talk will focus on two detailed NHP studies.
 
@@ -235,7 +237,7 @@ In NHP they gave "PRR" (prednisolone/rituximab/rapamycin) for 29 days before a 2
 
 PRR yielded a 1,000-fold increase in serum AAV, but uptake into tissues was only 2x higher in liver and not detectably better in any other tissue.
 
-### 2:15 - 2:30pm Immunomodulation strategies for overcoming antibody responses to AAV \| Nicholas Giovannone, Regeneron
+### Immunomodulation strategies for overcoming antibody responses to AAV \| Nicholas Giovannone, Regeneron
 
 In AAV-naive individuals, the question is can we immunosuppress the individuals at their first dose to keep them immune naive and preserve the possibility of re-dosing. In seropositive individuals the qeustion is how to supress their NAbs to enable treatment.
 
@@ -245,7 +247,7 @@ They use CD40 humanized mice. They prophylactically dose 40 mg/kg anti-CD40, the
 
 What about pre-existing immunity? This is a problem because it is harder to kill the cells that are already making the antibodies. Terminally differentiated B cells lack common B cell markers. They are highly secreting and can hang out in bone marrow for literally decades. They are the source of most circulating antibodies. They are the source of long-lived AAV immunity. Anti-CD20 antibodies such as rituximab deplete early B and memory B cells but not plasma cells and so won't fully suppress antibody secretion. Regeneron wanted to test a strategy of plasma cell depletion. They use bispecific antibodies which express B cell maturation antigen (BCMA) and CD3 which is expressed on T cells. Bringing them together induces cytotoxic killing of plasma cells by the T cells. As early B turn into mature B and then plasma cells, BCMA is upregulated at precisely the stage where rituximab stops working. Regeneron made BCMA- and CD3- double humanized mice. They had controls and 3 experimental arms: BCMAxCD3 to kill plasma cells, anti-CD19/CD20 to deplete B cells, and efgartigimod to accelerate IgG clearance. (The reason why you need efgartigimod is that the clearance of existing IgG is too slow, 7 days in mice and 21 days in human. You need FcRn blockade to get them degraded.) Animals got AAV first dose at day 0 to simulate pre-existing immunity, then got immunosuppressive regimens beginning day 70 or so. None of the monotherapies was helpful. BCMAxCD3 and efgartigimod in combination brought titer down by a log or two. All 3 therapies in combination brought antibody titers down to undetectable. Why did we need all 3? It's possible that because we only waited 70 days there is still primary B cell response that we need to kill B cells in order to suppress. But it also turns out that efgartigimod is highly immunogenic in mice and they develop anti-drug antibodies which not only clear the efgartigimod but also are cross-reactive against BCMAxCD3, thus totally tanking the efficacy of the therapy. The triple therapy also restored transduction of a 2nd AAV dose to a level equal to the 1st dose, whereas any monotherapy didn't work and the dual therapy only partially restored.
 
-### 2:30 - 3:15pm Panel Discussion + Q&A with Session 3 speakers
+### Panel Discussion + Q&A with Session 3 speakers
 
 There are multiple reasons to suppress initial immune response. One is to be able to re-dose years from now if response wanes &mdash; less a risk for neurons but an issue for muscle. Another is to be able to split doses over multiple smaller doses because we are saturating cellular receptors in the large doses we give. A third is to be able to do within-subject dose escalation over a 3-month or 6-month period. We need to socialize this with the agency. And the bar for enabling re-dosing in a 3- or 6-month window may be lower than "remote" re-dosing. Anti-CD40s may be a key part of enabling this.
 
@@ -257,7 +259,7 @@ There is a temptation to operationalize the immunosuppressive regimen and do wha
 
 Has anyone tried anti-CD19 antibodies in humans for AAV? Nope. And it can't be done in NHP because they are all non-cross-reactive.
 
-### 3:35 - 3:50pm Engineering receptor-targeted antibody-evading capsids for CNS gene therapy \| Ben Deverman, Broad Institute
+### Engineering receptor-targeted antibody-evading capsids for CNS gene therapy \| Ben Deverman, Broad Institute
 
 Dr. Deverman focuses on engineering AAVs to use the vasculature to reach all regions of the CNS. His efforts to engineer AAVs to cross the blood-brain barrier have focused on known human receptors, chiefly transferrin receptor (TfR1). Their new vector, BI-hTfR1, has [achieved](/2024/05/22/step-forward-brain-delivery/) widespread delivery [[Huang & Chan 2024]]. They have now generated 2nd generation versions where they can achieve that same high level of transduction with 2e12 vg/kg, which is 50-fold lower than the FDA-approved doses for onasemnogene and delandistrogene.
 
@@ -265,11 +267,30 @@ Their other challenge is to engineer in antibody-evading technology to enable AA
 
 The antibody-evading scaffolds can also be scaffolds for other tropism-enhancing insertions. They wanted to test whether they could also do this for Sharif Tabebordbar's MyoAAV capsid to retain both engineered properties. Sure enough, they found a different antibody-evading amino acid sequence that was compatible with MyoAAV, evading antibodies while preserving the enhanced muscle uptake and decreased liver transduction.
 
-### 4:05 - 4:20pm T-cells: Friend or Foe in Gene Therapy? \| Allison Keeler, UMass Worcester
+### T-cells: Friend or Foe in Gene Therapy? \| Allison Keeler, UMass Worcester
 
-### 4:30 - 5:05pm Fireside chat with Jim Wilson (Gemma Therapeutics) & Peter Marks (FDA)
+Today we've heard a lot about cytotoxic T cells but not about T regulatory cells (Tregs, pronounced T-regs), the T cells associated with immune tolerance, which are our friends.
 
-### 5:05 - 5:15pm Closing Remarks \| Jim Wilson Gemma Therapeutics
+In some trials such as hemophilia, they observed T cells stimulated by capsid to produce interferon gamma [[Nathwani 2011], [Rangarajan 2017]]. They managed this with corticosteroids. But there was also an alpha-1 antitrypsin trial cited earlier [[Mueller 2013]] where they did no immunosuppression and they did see CD8 cells but they also saw Tregs. And 2 patients even had pre-existing immunity. But this was intramuscular so the immune response is very different.
+
+While many trials pre-screen for humoral immunity as an exclusion criterion, no one is screening for cellular immunity. Even prevalence is not as well documented. One recent study did both IgG and ELISpot screening on donors [[Xicluna 2024]]. They found that there were individuals who were IgG-negative but not truly naive, because they had ELIspot positivity. It's been suggested that the pre-existing T cell response is primarily CD8-mediated. 
+
+How would pre-existing immunity influence T cell response to AAV gene therapy? Surprisingly in HOPE-B [[Coppens 2024]] there was actually less T cell response in patients with pre-existing NAbs. Dr. Keeler's lab is working on engineering AAV-directed Tregs [[Arjomandnejad 2021]]. T cell response can cause loss of transgene expression and they showed in a mouse model that the engineered Tregs preserve transgene expression.
+
+### Fireside chat with Jim Wilson (Gemma Therapeutics) & Peter Marks (FDA)
+
+Peter Marks said that FDA CBER is "leaning in" to AAV gene therapies and wishes they could see dozens per year. They view rare diseases as a great proving ground to get AAV gene therapy right. So many diseases are potentially approachable by AAV but no one is going to make AAV for a common disease yet. He spoke about 3 FDA CBER initiatives to improve regulatory pathways for AAV gene therapy:
+
+1. Continuous communication. The traditional way FDA communicates is that sponsors request a type A, B, C, or D meeting and then wait 30 - 75 days to have one scheduled. A lot of wall time is wasted just waiting. One lesson learned from Operation Warp Speed for SARS-CoV-2 vaccines was that continuous feedback and conversation with sponsors can accelerate things a lot. The model is that sponsors ask questions to a Regulatory Project Manager who interface with the team (FDA scientists) and if necessary, set up a call. This will require a lot more resources &mdash; meaning more staff time &mdash; so if they're going to do it more broadly they need data to show that it actually improves things. Accordingly right now they are in a pilot with 4 programs in CBER and 3 in CDER, and gathering data on whether this continuous communication model reduces the frequency of clinical holds and other quantifiable milestones. If they can convince themselves that it shortens development time they will expand the pilot.
+2. Using Accelerated Approval more. We could debate how appropriate Accelerated Approval is in common diseases, but for rare diseases, it is clearly critical to getting therapies to patients in need in a timely fashion. Moreover, it ensures there is still more oversight on safety than you have in a Right To Try scenario. It is still very rigorous and scientific, while being more feasible and appropriate to disease biology.
+3. A pilot with EMA to enable a single joint submission to both agencies and pre-agreed criteria for evaluation at both agencies. The hope is there will be fewer gaps where a therapy approved in the U.S. is still unavailable to E.U. patients. Moreover, by doubling the market size with minimal additional effort on the sponsor's part, it will incentivize more investment in drug development.
+
+Scientists at CBER are transitioning to a new framework for statistical evaluation of drugs. The old model was based on frequentist statistics and having very strict statistical cutoffs and numbers of trials. The new model is more of a flexible "totality of the evidence" approach. It is still statistically rigorous, but the statistical models can be Bayesian. This will mean we occasionally have products that get Accelerated Approval and later have to be pulled from market because they fail confirmatory trials. Hopefully that will be rare. 
+
+He also talked about strategies for engaging with FDA. He said if you have a disagreement with FDA, the first thing to check is whether you have a common understanding of the scientific evidence. Often disagreements are because the two sides are not looking at the same dataset. It's like marriage counseling - you want to make sure that each party is hearing the other one. So it's good after you present evidence to ask FDA to mirror it back to you to see if they understood the key messages and both sides are on the same page about what the evidence says. If ultimately you feel you're getting advice that doesn't make sense scientifically, you can ask for supervisory review, meaning, escalating to the next higher level of review. As long as it is done politely, it's not bad for the relationship.
+
+After being profoundly short-staffed a couple years ago, where is FDA today with regards to staffing and responsiveness? As part of recent PDUFA updates they've added 125 new staff to CBER focusing on cell and gene therapy -- 100 in the office for cell and gene therapy, and 25 in stats, finance, and inspections. This has reduced wait times for meetings significantly, reduced the number of "written response only" meeting responses, and 50% fewer clinical holds. Also one reason why short-staffing was so severe for a while is that pulling people off of their normal duties for pandemic response was very inefficient. A lot of things done in response to pandemic response &mdash; both COVID-19 and at a smaller scale, mpox &mdash; were things that can be done very much more efficiently if you do it every day. So they are putting together a specialized staff to respond to emergencies, so that another outbreak would not require pulling people off of their normal duties.
+
 
 
 [Kay 2000]: https://pubmed.ncbi.nlm.nih.gov/10700178/ "Kay MA, Manno CS, Ragni MV, Larson PJ, Couto LB, McClelland A, Glader B, Chew AJ, Tai SJ, Herzog RW, Arruda V, Johnson F, Scallan C, Skarsgard E, Flake AW, High KA. Evidence for gene transfer and expression of factor IX in haemophilia B patients treated with an AAV vector. Nat Genet. 2000 Mar;24(3):257-61. doi: 10.1038/73464. PMID: 10700178."
@@ -283,6 +304,8 @@ The antibody-evading scaffolds can also be scaffolds for other tropism-enhancing
 [Calcedo 2009]: https://pubmed.ncbi.nlm.nih.gov/19133809/ "Calcedo R, Vandenberghe LH, Gao G, Lin J, Wilson JM. Worldwide epidemiology of neutralizing antibodies to adeno-associated viruses. J Infect Dis. 2009 Feb 1;199(3):381-90. doi: 10.1086/595830. PMID: 19133809; PMCID: PMC10826927."
 
 [Wang 2011]: https://pubmed.ncbi.nlm.nih.gov/21476868/ "Wang L, Calcedo R, Bell P, Lin J, Grant RL, Siegel DL, Wilson JM. Impact of pre-existing immunity on gene transfer to nonhuman primate liver with adeno-associated virus 8 vectors. Hum Gene Ther. 2011 Nov;22(11):1389-401. doi: 10.1089/hum.2011.031. Epub 2011 Jun 8. PMID: 21476868; PMCID: PMC3225046."
+
+[Nathwani 2011]: https://pubmed.ncbi.nlm.nih.gov/22149959/ "Nathwani AC, Tuddenham EG, Rangarajan S, Rosales C, McIntosh J, Linch DC, Chowdary P, Riddell A, Pie AJ, Harrington C, O'Beirne J, Smith K, Pasi J, Glader B, Rustagi P, Ng CY, Kay MA, Zhou J, Spence Y, Morton CL, Allay J, Coleman J, Sleep S, Cunningham JM, Srivastava D, Basner-Tschakarjan E, Mingozzi F, High KA, Gray JT, Reiss UM, Nienhuis AW, Davidoff AM. Adenovirus-associated virus vector-mediated gene transfer in hemophilia B. N Engl J Med. 2011 Dec 22;365(25):2357-65. doi: 10.1056/NEJMoa1108046. Epub 2011 Dec 10. PMID: 22149959; PMCID: PMC3265081."
 
 [Calcedo 2011]: https://pubmed.ncbi.nlm.nih.gov/21775517/ "Calcedo R, Morizono H, Wang L, McCarter R, He J, Jones D, Batshaw ML, Wilson JM. Adeno-associated virus antibody profiles in newborns, children, and adolescents. Clin Vaccine Immunol. 2011 Sep;18(9):1586-8. doi: 10.1128/CVI.05107-11. Epub 2011 Jul 20. PMID: 21775517; PMCID: PMC3165215."
 
@@ -303,6 +326,8 @@ The antibody-evading scaffolds can also be scaffolds for other tropism-enhancing
 [Falese 2017]: https://pubmed.ncbi.nlm.nih.gov/29106404/ "Falese L, Sandza K, Yates B, Triffault S, Gangar S, Long B, Tsuruda L, Carter B, Vettermann C, Zoog SJ, Fong S. Strategy to detect pre-existing immunity to AAV gene therapy. Gene Ther. 2017 Dec;24(12):768-778. doi: 10.1038/gt.2017.95. Epub 2017 Nov 6. PMID: 29106404; PMCID: PMC5746592."
 
 [Jordan 2017]: https://pubmed.ncbi.nlm.nih.gov/28767349/ "Jordan SC, Lorant T, Choi J, Kjellman C, Winstedt L, Bengtsson M, Zhang X, Eich T, Toyoda M, Eriksson BM, Ge S, Peng A, Järnum S, Wood KJ, Lundgren T, Wennberg L, Bäckman L, Larsson E, Villicana R, Kahwaji J, Louie S, Kang A, Haas M, Nast C, Vo A, Tufveson G. IgG Endopeptidase in Highly Sensitized Patients Undergoing Transplantation. N Engl J Med. 2017 Aug 3;377(5):442-453. doi: 10.1056/NEJMoa1612567. Erratum in: N Engl J Med. 2017 Oct 26;377(17):1700. doi: 10.1056/NEJMx170015. PMID: 28767349."
+
+[Rangarajan 2017]: https://pubmed.ncbi.nlm.nih.gov/29224506/ "Rangarajan S, Walsh L, Lester W, Perry D, Madan B, Laffan M, Yu H, Vettermann C, Pierce GF, Wong WY, Pasi KJ. AAV5-Factor VIII Gene Transfer in Severe Hemophilia A. N Engl J Med. 2017 Dec 28;377(26):2519-2530. doi: 10.1056/NEJMoa1708483. Epub 2017 Dec 9. PMID: 29224506."
 
 [Kuranda 2018]: https://pubmed.ncbi.nlm.nih.gov/30352429/ "Kuranda K, Jean-Alphonse P, Leborgne C, Hardet R, Collaud F, Marmier S, Costa Verdera H, Ronzitti G, Veron P, Mingozzi F. Exposure to wild-type AAV drives distinct capsid immunity profiles in humans. J Clin Invest. 2018 Dec 3;128(12):5267-5279. doi: 10.1172/JCI122372. Epub 2018 Oct 22. PMID: 30352429; PMCID: PMC6264647."
 
@@ -332,6 +357,8 @@ The antibody-evading scaffolds can also be scaffolds for other tropism-enhancing
 
 [Gorovits 2021]: https://pubmed.ncbi.nlm.nih.gov/34529177/ "Gorovits B, Azadeh M, Buchlis G, Harrison T, Havert M, Jawa V, Long B, McNally J, Milton M, Nelson R, O'Dell M, Richards K, Vettermann C, Wu B. Evaluation of the Humoral Response to Adeno-Associated Virus-Based Gene Therapy Modalities Using Total Antibody Assays. AAPS J. 2021 Sep 16;23(6):108. doi: 10.1208/s12248-021-00628-3. PMID: 34529177; PMCID: PMC8445016."
 
+[Arjomandnejad 2021]: https://pubmed.ncbi.nlm.nih.gov/34853797/ "Arjomandnejad M, Sylvia K, Blackwood M, Nixon T, Tang Q, Muhuri M, Gruntman AM, Gao G, Flotte TR, Keeler AM. Modulating immune responses to AAV by expanded polyclonal T-regs and capsid specific chimeric antigen receptor T-regulatory cells. Mol Ther Methods Clin Dev. 2021 Oct 28;23:490-506. doi: 10.1016/j.omtm.2021.10.010. PMID: 34853797; PMCID: PMC8605179."
+
 [Gross 2022]: https://pubmed.ncbi.nlm.nih.gov/35464422/ "Gross DA, Tedesco N, Leborgne C, Ronzitti G. Overcoming the Challenges Imposed by Humoral Immunity to AAV Vectors to Achieve Safe and Efficient Gene Transfer in Seropositive Patients. Front Immunol. 2022 Apr 7;13:857276. doi: 10.3389/fimmu.2022.857276. PMID: 35464422; PMCID: PMC9022790."
 
 [Mendell 2022]: https://pubmed.ncbi.nlm.nih.gov/35356756/ "Mendell JR, Connolly AM, Lehman KJ, Griffin DA, Khan SZ, Dharia SD, Quintana-Gallardo L, Rodino-Klapac LR. Testing preexisting antibodies prior to AAV gene transfer therapy: rationale, lessons and future considerations. Mol Ther Methods Clin Dev. 2022 Feb 26;25:74-83. doi: 10.1016/j.omtm.2022.02.011. PMID: 35356756; PMCID: PMC8933338."
@@ -347,6 +374,10 @@ The antibody-evading scaffolds can also be scaffolds for other tropism-enhancing
 [Pipe 2023]: https://pubmed.ncbi.nlm.nih.gov/36812434/ "Pipe SW, Leebeek FWG, Recht M, Key NS, Castaman G, Miesbach W, Lattimore S, Peerlinck K, Van der Valk P, Coppens M, Kampmann P, Meijer K, O'Connell N, Pasi KJ, Hart DP, Kazmi R, Astermark J, Hermans CRJR, Klamroth R, Lemons R, Visweshwar N, von Drygalski A, Young G, Crary SE, Escobar M, Gomez E, Kruse-Jarres R, Quon DV, Symington E, Wang M, Wheeler AP, Gut R, Liu YP, Dolmetsch RE, Cooper DL, Li Y, Goldstein B, Monahan PE. Gene Therapy with Etranacogene Dezaparvovec for Hemophilia B. N Engl J Med. 2023 Feb 23;388(8):706-718. doi: 10.1056/NEJMoa2211644. PMID: 36812434."
 
 [Schulz 2023]: https://pubmed.ncbi.nlm.nih.gov/36635967/ "Schulz M, Levy DI, Petropoulos CJ, Bashirians G, Winburn I, Mahn M, Somanathan S, Cheng SH, Byrne BJ. Binding and neutralizing anti-AAV antibodies: Detection and implications for rAAV-mediated gene therapy. Mol Ther. 2023 Mar 1;31(3):616-630. doi: 10.1016/j.ymthe.2023.01.010. Epub 2023 Jan 11. PMID: 36635967; PMCID: PMC10014285."
+
+[Hordeaux 2023]: https://pubmed.ncbi.nlm.nih.gov/37033976/ "Hordeaux J, Ramezani A, Tuske S, Mehta N, Song C, Lynch A, Lupino K, Chichester JA, Buza EL, Dyer C, Yu H, Bell P, Weimer JM, Do H, Wilson JM. Immune transgene-dependent myocarditis in macaques after systemic administration of adeno-associated virus expressing human acid alpha-glucosidase. Front Immunol. 2023 Mar 22;14:1094279. doi: 10.3389/fimmu.2023.1094279. PMID: 37033976; PMCID: PMC10073725."
+
+[Horiuchu 2023]: https://pubmed.ncbi.nlm.nih.gov/36719773/ "Horiuchi M, Hinderer CJ, Shankle HN, Hayashi PM, Chichester JA, Kissel C, Bell P, Dyer C, Wilson JM. Neonatal Fc Receptor Inhibition Enables Adeno-Associated Virus Gene Therapy Despite Pre-Existing Humoral Immunity. Hum Gene Ther. 2023 Oct;34(19-20):1022-1032. doi: 10.1089/hum.2022.216. Epub 2023 Mar 17. PMID: 36719773."
 
 [Wang 2024]: https://pubmed.ncbi.nlm.nih.gov/39399494/ "Wang X, Klann PJ, Wiedtke E, Sano Y, Fischer N, Schiller L, Elfert A, Güttsches AK, Weyen U, Grimm D, Vorgerd M, Bayer W. Seroprevalence of binding and neutralizing antibodies against 18 adeno-associated virus types in patients with neuromuscular disorders. Front Immunol. 2024 Sep 27;15:1450858. doi: 10.3389/fimmu.2024.1450858. PMID: 39399494; PMCID: PMC11466838."
 
@@ -364,5 +395,6 @@ The antibody-evading scaffolds can also be scaffolds for other tropism-enhancing
 
 [Huang & Chan 2024]: https://pubmed.ncbi.nlm.nih.gov/38753766/ "Huang Q, Chan KY, Wu J, Botticello-Romero NR, Zheng Q, Lou S, Keyes C, Svanbergsson A, Johnston J, Mills A, Lin CY, Brauer PP, Clouse G, Pacouret S, Harvey JW, Beddow T, Hurley JK, Tobey IG, Powell M, Chen AT, Barry AJ, Eid FE, Chan YA, Deverman BE. An AAV capsid reprogrammed to bind human transferrin receptor mediates brain-wide gene delivery. Science. 2024 Jun 14;384(6701):1220-1227. doi: 10.1126/science.adm8386. Epub 2024 May 16. PMID: 38753766."
 
+[Xicluna 2024]: https://pubmed.ncbi.nlm.nih.gov/38581431/ "Xicluna R, Avenel A, Vandamme C, Devaux M, Jaulin N, Couzinié C, Le Duff J, Charrier A, Guilbaud M, Adjali O, Gernoux G. Prevalence Study of Cellular Capsid-Specific Immune Responses to AAV2, 4, 5, 8, 9, and rh10 in Healthy Donors. Hum Gene Ther. 2024 May;35(9-10):355-364. doi: 10.1089/hum.2023.225. Epub 2024 Apr 19. PMID: 38581431."
 
-
+[Coppens 2024]: https://pubmed.ncbi.nlm.nih.gov/38437857/ "Coppens M, Pipe SW, Miesbach W, Astermark J, Recht M, van der Valk P, Ewenstein B, Pinachyan K, Galante N, Le Quellec S, Monahan PE, Leebeek FWG; HOPE-B Investigators. Etranacogene dezaparvovec gene therapy for haemophilia B (HOPE-B): 24-month post-hoc efficacy and safety data from a single-arm, multicentre, phase 3 trial. Lancet Haematol. 2024 Apr;11(4):e265-e275. doi: 10.1016/S2352-3026(24)00006-1. Epub 2024 Mar 1. PMID: 38437857."
