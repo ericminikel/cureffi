@@ -10,7 +10,7 @@ summary200: "Notes from a 1-day symposium on treating seropositive patients with
 
 ![](/media/2024/11/michelle-rengarajan.png)
 
-_Parent Project Muscular Dystrophy (PPMD) organized a 1-day symposium at the Broad Institute entitled "Accelerating gene therapy clinical trials in seropositive patients," focusing on AAV therapy in AAV seropositive patients. These are my notes. These talks were very fast and my notes likely contain errors &mdash; if you spot one, please [contact me](https://www.cureffi.org/contact/)._
+_Parent Project Muscular Dystrophy (PPMD) organized a 1-day symposium at the Broad Institute entitled "Accelerating gene therapy clinical trials in seropositive patients," focusing on AAV therapy in AAV seropositive patients. These are my notes. These talks were very fast and my notes likely contain errors &mdash; if you spot one, please [contact me](https://www.cureffi.org/contact/). The video of the event is available [here](https://www.youtube.com/live/xKFhnMYgtnQ?si=-9cU9BYFFJ_zBp4y)._
 
 ### Welcome Remarks \| Michelle Rengarajan, Harvard Medical School & Mass General Brigham
 
