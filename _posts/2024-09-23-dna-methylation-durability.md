@@ -62,7 +62,7 @@ The reasons for pessimism:
 
 The reasons for optimism:
 
-+ Neurons are post-mitotic, which means there is no risk of methylation loss through either replication errors or dilution, both of which would otherwise be risks [[Dmitirjeva 2018], [Ming & Zhang 2020]]
++ Neurons are post-mitotic, which means there is no risk of methylation loss through either replication errors or dilution, both of which would otherwise be risks [[Dmitrijeva 2018], [Ming & Zhang 2020]]
 + Erosion of mC to hmC is highly _PRNP_ is a specific process. Arguably, _PRNP_ is unlikely to be targeted for demethylation, and is not near any highly transcribed genes.
 + Some demethylation could be tolerated before _PRNP_ reactivation would occur.
 + A properly tuned self-silencing CHARM construct could be designed to reactivate before _PRNP_ reactivates. The promoter driving CHARM would need to be designed to be slightly more prone to reactivation than the _PRNP_ promoter.
