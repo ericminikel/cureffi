@@ -18,7 +18,7 @@ To start to get at this problem, I recently took a deeper dive on the literature
 
 All that said, here's what I found:
 
-_This table was last updated 2023-01-17. If you use these data please cite the latest published version: [[Goldman & Vallabh 2022]]._
+_This table was last updated 2025-01-21. If you use these data please cite the latest published version: [[Goldman & Vallabh 2022]]._
 
 | variant | evidence for high penetrance | evidence for increased risk | refs | comments |
 | ---- | ---- | ---- | ---- | ---- | 
@@ -40,6 +40,7 @@ _This table was last updated 2023-01-17. If you use these data please cite the l
 | P105L | Mendelian segregation |  |    [Yamada 1999](http://www.ncbi.nlm.nih.gov/pubmed/10408557) | 2 sibs affected & genotyped, 1 ungenotyped parent likely affected |
 | P105S |  |  |    [Tunnell 2008](http://www.ncbi.nlm.nih.gov/pubmed/18955686/) | 
 | P105T | Mendelian segregation |  |   [Rogaeva 2006](http://www.ncbi.nlm.nih.gov/pubmed/16831973) |
+| T107I | Mendelian segregation |  | [Holm-Mercer 2025](https://pubmed.ncbi.nlm.nih.gov/39789805/) |
 | G114V | Mendelian segregation |  |   [Rodriguez 2005](http://www.ncbi.nlm.nih.gov/pubmed/15851745), [Liu 2010](http://www.ncbi.nlm.nih.gov/pubmed/20028338) | pedigree suggests penetrance high though not 100% |
 | A117V | Mendelian segregation | case/control enrichment |   [Hsiao 1991](http://www.ncbi.nlm.nih.gov/pubmed/1674116) |
 | 129insLGGLGGYV | *de novo* |  |  [Hinnell 2011](http://www.ncbi.nlm.nih.gov/pubmed/21282596) |  |
