@@ -5,7 +5,7 @@ header: true
 permalink: /about/
 ---
 
-![Eric Minikel](/media/2019/05/DSC_7748_eric_2019-05-09-photo-by-maria-nemchuk.png)
+![Eric Minikel](/media/2025/03/eric-and-sonia.png)
 
 My name is **Eric Vallabh Minikel** and I’m on a lifelong quest to prevent prion disease.
 
