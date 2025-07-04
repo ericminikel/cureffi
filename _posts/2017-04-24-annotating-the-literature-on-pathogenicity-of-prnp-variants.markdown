@@ -50,6 +50,7 @@ _This table was last updated 2025-01-21. If you use these data please cite the l
 | A133V |  |  |    [Rowe 2007](http://www.ncbi.nlm.nih.gov/pubmed/17353478) |  |
 | R136S |  | 2 homozygotes | [Ximelis & Moreno 2021] |  |
 | Y145X |  |  |    [Kitamoto 1993](http://www.ncbi.nlm.nih.gov/pubmed/8097911) |  |
+| E146G | Mendelian segregation |  | [Coysh 2025](https://pubmed.ncbi.nlm.nih.gov/40156621/) | |
 | R148H |  |  |    [Krebs 2005](http://www.ncbi.nlm.nih.gov/pubmed/15776279/) | |
 | R156C |  |  | [Kenny 2017](https://www.ncbi.nlm.nih.gov/pubmed/28572272) | |
 | Q160X | Mendelian segregation |  |    [Fong & Rojas 2016](https://www.ncbi.nlm.nih.gov/pubmed/27716661) | |
@@ -98,7 +99,7 @@ _This table was last updated 2025-01-21. If you use these data please cite the l
 | M232T |  |  |    [Bratosiewicz 2000](http://www.ncbi.nlm.nih.gov/pubmed/11693719) |  |
 | P238S |  |  |    [Windl 1999](http://www.ncbi.nlm.nih.gov/pubmed/10987652) |  |
 
-In total, then, 27 out of the 74 have evidence for either Mendelian segregation or *de novo* status according to these criteria. These are all likely to be high penetrance variants. For some of these we can say definitively that penetrance is high, when the family is large or when there is dramatic case/control enrichment. For the rest it's likely, although it's conceivable for some variants that the penetrance is somewhat more modest and maybe there just happened to be a family with three affecteds by coincidence.
+In total, then, 28 out of the 75 have evidence for either Mendelian segregation or *de novo* status according to these criteria. These are all likely to be high penetrance variants. For some of these we can say definitively that penetrance is high, when the family is large or when there is dramatic case/control enrichment. For the rest it's likely, although it's conceivable for some variants that the penetrance is somewhat more modest and maybe there just happened to be a family with three affecteds by coincidence.
 
 There are also probably some variants that are genuinely high penetrance but have no boxes checked above. For instance, sometimes a family history just isn't available for a patient, or there is a history of disease but the family never speaks about it and so the younger generation doesn't know, or the family history appears negative only due to adoption or a non-paternity event, or the variant is *de novo* but the parents are already deceased and there are no siblings, so it is impossible to prove that it's *de novo*. When there's only one patient and the variant is also ultra-rare in controls, it's hard to say anything completely definitive.
 
