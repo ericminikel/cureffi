@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Evidence that the effect of C-terminal truncating varints in PRNP may be position-dependent"
+title:  "Evidence that the effect of C-terminal truncating variants in PRNP may be position-dependent"
 date:   2025-07-04
 author: ericminikel
 location: Cambridge, MA
