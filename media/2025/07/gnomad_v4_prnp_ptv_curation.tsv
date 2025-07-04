@@ -1,0 +1,34 @@
+variant	allele_count	include	comments
+W7X	1	FALSE	Read support is strong, however there exists a possibility for rescue by alternate start codon M8 (whether this would still yield a functioning signal peptide is unknown).
+F12CfsX6	1	TRUE	Read support is strong
+W16X	1	TRUE	Read support is strong
+W31X	1	TRUE	Read support is strong
+G35AfsX75	1	TRUE	Read support is strong
+R37X	9	TRUE	Read support is strong for 2/2 with reads available; variant seen before and prior high
+Q41X	1	TRUE	Read support is strong
+Y49X	1	TRUE	Read support is strong
+Q59SfsX51	1	TRUE	Read support is strong, not in cis with the other Q5 frameshift
+Q59RfsX51	2	TRUE	Read support is strong, not in cis with the other Q5 frameshift
+H69MfsX41	10	FALSE	The two H69 frameshifts always occur in cis. One is a 47 bp deletion and the other is a 1 bp deletion, so in total they are a 48 bp in-frame deletion of two octapeptide repeats (2-OPRD)
+H69PfsX20	10	FALSE	The two H69 frameshifts always occur in cis. One is a 47 bp deletion and the other is a 1 bp deletion, so in total they are a 48 bp in-frame deletion of two octapeptide repeats (2-OPRD)
+Q75SfsX35	1	TRUE	Read support is strong for 2/2 with reads available.
+W73X	2	TRUE	Read support is strong
+Q75X	1	TRUE	Read support is strong; variant seen before
+Q83TfsX22	4	TRUE	Despite being filtered, the read support looks very strong for all 4
+W89X	1	TRUE	Read support is strong
+Q91X	1	TRUE	Read support is strong
+W99X	2	TRUE	Read support is strong
+G124AfsX11	3	TRUE	Read support strong in all 3. Always occurs in cis to 129V.
+Y128X	1	TRUE	Read support is strong
+P137AfsX8	1	TRUE	Read support strong. In cis to 129V.
+S143MfsX63	1	TRUE	Read support is strong
+H155LfsX12	1	TRUE	Read support is strong
+Y157X	1	TRUE	No reads available but quality is high; for SNPs, errors are very rare, so assume it's real
+N159QfsX10	1	TRUE	Read support is strong
+Q186X	1	TRUE	Read support is strong
+E196X	6	TRUE	Read support is strong for 6/6
+Q217X	1	TRUE	Read support is strong
+Q223RfsX18	1	TRUE	Read support is strong
+Y226X	1	TRUE	No reads available but quality is high; for SNPs, errors are very rare, so assume it's real
+G229X	2	TRUE	Read support is strong for 2/2
+L250RfsX2	1	FALSE	No raw read data available but genotype quality is >95 and expected functional impact is none because result would likely still be a functional GPI anchor of similar length; therefore prior is high.
