@@ -4,8 +4,8 @@ title:  "Evidence that the effect of C-terminal truncating varints in PRNP may b
 date:   2025-07-04
 author: ericminikel
 location: Cambridge, MA
-thumb120: 
-summary200: ""
+thumb120: https://www.cureffi.org/media/2025/07/ptv_thumbnail.png
+summary200: "We tracked down information on 12 of the 15 variants in gnomAD v4, and the results are interesting."
 ---
 
 Last year I [blogged about](/2024/04/03/learn-prnp-gnomad-v4/) _PRNP_ in [gnomAD v4](https://gnomad.broadinstitute.org/), which now contains DNA from 807,192 people, and with it, possibly some new insights about prion biology. One surprise was that there were more protein-truncating variants (PTVs) at the C-terminus of _PRNP_ than we expected. This led me to hypothesize their effects might be position-dependent. This blog post is a deeper dive on that question.
