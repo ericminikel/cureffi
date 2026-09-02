@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Blood-brain barrier primer"
+title:  "Robert Thorne: blood-brain barrier primer"
 date:   2026-07-13
 author: ericminikel
 location: Cambridge, MA
