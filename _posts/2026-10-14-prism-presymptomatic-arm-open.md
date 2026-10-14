@@ -8,7 +8,7 @@ thumb120:
 summary200: "For the first time ever, a PrP-lowering drug will be tested in pre-symptomatic individuals at high genetic risk for prion disease."
 ---
 
-Today we're proud to announce that PRiSM (NN112), our first-in-human clinical trial of PrP-siRNA, has begun enrolling pre-symptomatic participants at high genetic risk of prion disease. Potential participants can learn more on the study's [ClinicalTrials.gov posting](https://clinicaltrials.gov/study/NCT07444580) as well as official announcements on the Prion Alliance blog and our Community Statement. People interested in participating in the trial should contact a study site to ask to be screened for eligibility.
+Today we're proud to announce that PRiSM (NN112), our first-in-human clinical trial of PrP-siRNA, has begun enrolling pre-symptomatic participants at high genetic risk of prion disease. Potential participants can learn more on the study's [ClinicalTrials.gov posting](https://clinicaltrials.gov/study/NCT07444580) as well as official announcements on the [Prion Alliance blog](https://www.prionalliance.org/2026/10/14/presymptomatic-arm-of-prism-now-open/) and our [Community Statement](/media/2026/10/NN112_Community_Statement_2026-10-14.pdf). People interested in participating in the trial should contact a study site to ask to be screened for eligibility.
 
 This blog post will review how we got here, what we hope to accomplish, and what might come next.
 
