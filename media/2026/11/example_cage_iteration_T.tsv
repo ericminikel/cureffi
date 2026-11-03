@@ -1,0 +1,23 @@
+expt	animal	cage	inoculation_date	dod	prion_endpoint	acm	dpi	inoculum	treatment	cohort	disp	color	lty	cage_id	group
+T	TX2	TX	2018-02-28	2018-07-23	TRUE	TRUE	145	RML	PBS	pooled	RML controls (all cohorts)	#8E2323	1	T_TX	treated
+T	TP3	TP	2018-02-28	2018-08-01	TRUE	TRUE	154	RML	PBS	pooled	RML controls (all cohorts)	#8E2323	1	T_TP	treated
+T	TP2	TP	2018-02-28	2018-07-27	TRUE	TRUE	149	RML	PBS	pooled	RML controls (all cohorts)	#8E2323	1	T_TP	treated
+T	TJ1	TJ	2018-02-28	2018-07-18	TRUE	TRUE	140	RML	PBS	pooled	RML controls (all cohorts)	#8E2323	1	T_TJ	treated
+T	TJ1	TJ	2018-02-28	2018-07-18	TRUE	TRUE	140	RML	PBS	pooled	RML controls (all cohorts)	#8E2323	1	T_TJ	treated
+T	TP3	TP	2018-02-28	2018-08-01	TRUE	TRUE	154	RML	PBS	pooled	RML controls (all cohorts)	#8E2323	1	T_TP	treated
+T	TX4	TX	2018-02-28	2018-08-03	TRUE	TRUE	156	RML	PBS	pooled	RML controls (all cohorts)	#8E2323	1	T_TX	treated
+T	TP1	TP	2018-02-28	2018-08-01	TRUE	TRUE	154	RML	PBS	pooled	RML controls (all cohorts)	#8E2323	1	T_TP	treated
+T	TP2	TP	2018-02-28	2018-07-27	TRUE	TRUE	149	RML	PBS	pooled	RML controls (all cohorts)	#8E2323	1	T_TP	treated
+T	TX3	TX	2018-02-28	2018-07-18	TRUE	TRUE	140	RML	PBS	pooled	RML controls (all cohorts)	#8E2323	1	T_TX	treated
+T	TX4	TX	2018-02-28	2018-08-03	TRUE	TRUE	156	RML	PBS	pooled	RML controls (all cohorts)	#8E2323	1	T_TX	treated
+T	TAH3	TAH	2018-02-28	2018-07-18	TRUE	TRUE	140	RML	PBS	pooled	RML controls (all cohorts)	#8E2323	1	T_TAH	untreated
+T	TG2	TG	2018-02-28	2018-07-18	TRUE	TRUE	140	RML	PBS	pooled	RML controls (all cohorts)	#8E2323	1	T_TG	untreated
+T	TAH3	TAH	2018-02-28	2018-07-18	TRUE	TRUE	140	RML	PBS	pooled	RML controls (all cohorts)	#8E2323	1	T_TAH	untreated
+T	TAH3	TAH	2018-02-28	2018-07-18	TRUE	TRUE	140	RML	PBS	pooled	RML controls (all cohorts)	#8E2323	1	T_TAH	untreated
+T	TZ4	TZ	2018-02-28	2018-07-27	TRUE	TRUE	149	RML	PBS	pooled	RML controls (all cohorts)	#8E2323	1	T_TZ	untreated
+T	TZ3	TZ	2018-02-28	2018-07-25	TRUE	TRUE	147	RML	PBS	pooled	RML controls (all cohorts)	#8E2323	1	T_TZ	untreated
+T	TG2	TG	2018-02-28	2018-07-18	TRUE	TRUE	140	RML	PBS	pooled	RML controls (all cohorts)	#8E2323	1	T_TG	untreated
+T	TZ3	TZ	2018-02-28	2018-07-25	TRUE	TRUE	147	RML	PBS	pooled	RML controls (all cohorts)	#8E2323	1	T_TZ	untreated
+T	TG3	TG	2018-02-28	2018-07-18	TRUE	TRUE	140	RML	PBS	pooled	RML controls (all cohorts)	#8E2323	1	T_TG	untreated
+T	TAH1	TAH	2018-02-28	2018-07-30	TRUE	TRUE	152	RML	PBS	pooled	RML controls (all cohorts)	#8E2323	1	T_TAH	untreated
+T	TG4	TG	2018-02-28	2018-07-20	TRUE	TRUE	142	RML	PBS	pooled	RML controls (all cohorts)	#8E2323	1	T_TG	untreated
